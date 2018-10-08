@@ -2,6 +2,7 @@
 
 <div class="container">
   <div class="file-list">
+      
     <mat-tab-group>
       <mat-tab label="{{filesList}}" *ngFor="let filesList of filesLists">
         <div *ngIf="filesList=='Recent Files'">
@@ -14,15 +15,12 @@
         </div>
         <div *ngIf="filesList=='All Files'">{{filesList}}</div>
       </mat-tab>
-      
     </mat-tab-group>
-    <div class="sort">
-        <button mat-button [matMenuTriggerFor]="menu" (click)="rotate()">Sort By Client <span><i class="fas fa-angle-down"></i></span></button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>Item 1</button>
-          <button mat-menu-item>Item 2</button>
-        </mat-menu>
-    </div>
+    
   </div>
+</div>
+
+<div class="filter">
+    <app-filter></app-filter>
 </div>
 

@@ -22,11 +22,7 @@ export class ContainerComponent implements OnInit {
   selected;
   cards = [1,2,3,4,5,6,7,8,9,10];
   cardDatas;
-  foods = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
-  ];
+
 
 
   constructor(private dataService: DataService) { 

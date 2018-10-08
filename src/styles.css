@@ -48,9 +48,33 @@ mat-radio-button .mat-radio-label-content{
 .mat-list .mat-list-item .mat-list-item-content{
     padding: 0px 0px;
 }
-.cdk-global-overlay-wrapper, .cdk-overlay-container{
+/* .cdk-global-overlay-wrapper, .cdk-overlay-container{
     top: 36px;
-}
+} */
 .mat-tab-label-content, .mat-button-wrapper{
     font-size: 15px;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-underline{
+    background-color: rgba(0,0,0,0);
+}
+.mat-form-field-appearance-legacy .mat-form-field-underline{
+    height: 0px;
+}
+.mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label, .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label{
+    -webkit-transform: translateY(0) scale(1) perspective(100px) translateZ(0);
+    transform: translateY(0) scale(1) perspective(100px) translateZ(0);
+    visibility: hidden;
+}
+.mat-form-field-ripple{
+    width: 0%;
+}
+.mat-form-field.mat-focused .mat-form-field-ripple{
+    background-color: transparent;
+}
+.mat-form-field.mat-focused .mat-form-field-ripple, .mat-form-field.mat-form-field-invalid .mat-form-field-ripple{
+    visibility: hidden;    
+}
+.mat-select{
+    
 }

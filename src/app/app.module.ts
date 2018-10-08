@@ -18,6 +18,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 import {DataService} from './data.service';
+import {AppcontrolService} from './controlservice/appcontrol.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -26,6 +27,8 @@ import { ContainerComponent } from './components/container/container.component';
 import { CardComponent } from './components/card/card.component';
 import { ReasoncodesComponent } from './components/reasoncodes/reasoncodes.component';
 import { FlowchartComponent } from './components/flowchart/flowchart.component';
+import { FilterComponent } from './filter/filter.component';
+import { BackdropComponent } from './components/backdrop/backdrop.component';
 
 const routes = [
   {path: 'page1', component: ContainerComponent},
@@ -40,7 +43,9 @@ const routes = [
     ContainerComponent,
     CardComponent,
     ReasoncodesComponent,
-    FlowchartComponent
+    FlowchartComponent,
+    FilterComponent,
+    BackdropComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +68,7 @@ const routes = [
     MatSelectModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [DataService, MatDatepickerModule],
+  providers: [DataService, MatDatepickerModule,AppcontrolService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

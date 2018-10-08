@@ -1,10 +1,12 @@
 .container{
     width: 100%;
+    height: auto;
+    z-index: -1;
 }
 
 .file-list{
     display: block;
-    height: 4rem;
+    height: auto;
     width: 94%;
     margin-left: 3%;
     position: relative;
@@ -34,17 +36,8 @@
 /* .mat-tab-label .mat-ripple .ng-star-inserted .mat-tab-label-active{
     color: #2A7DE1;
 } */
-.sort{
+.filter{
     position: absolute;
-    top: 50%;
-    transform: translate(0,-71%);
-    right: 0;
-    z-index: 100;
-}
-.sort button{
-    border-radius: 18px;
-    width: 155px;
-}
-.sort .mat-button{
-    background-color: #fff;
+    top: 53.38px;
+    right: 3%;
 }

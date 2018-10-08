@@ -1,5 +1,7 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import {trigger,transition,style,animate,state} from '@angular/animations';
+
+import {AppcontrolService} from '../../controlservice/appcontrol.service';
 
 @Component({
   selector: 'app-card',
@@ -19,14 +21,14 @@ export class CardComponent implements OnInit, OnChanges{
 
   @Input() cardData;
   localData;
-  overlay = false;
+  @Output() overlay: EventEmitter<boolean> = new EventEmitter<boolean>();
   createSOP = "Create New SOP";
   editSOP = "Edit SOP";
   currentStatus;
   myIndex;
   
 
-  constructor() {
+  constructor(private controlBackdrop:AppcontrolService) {
     //console.log(this.cardData)
    }
 
@@ -39,31 +41,26 @@ export class CardComponent implements OnInit, OnChanges{
    }
 
   onCreateSOP(){
-    this.overlay = true;
+    //this.overlay.emit(true);
+    this.controlBackdrop.setOverlay(true);
     this.currentStatus = this.createSOP;
   }
 
   onEdit(){
-    this.overlay = true;
+    this.controlBackdrop.setOverlay(true);
     this.currentStatus = this.editSOP;
   }
 
-  onOverlayClose(){
-    this.overlay = false;
-  }
+  // onOverlayClose(){
+  //   this.overlay = false;
+  // }
 
-  preventPropagation(event){
-    event.stopPropagation();
-  }
+  // preventPropagation(event){
+  //   event.stopPropagation();
+  // }
 
-  onClose(){
-    this.overlay = false;
-  }
-
-  condition(i){
-    console.log(i)
-    return true;
-  }
-
+  // onClose(){
+  //   this.overlay = false;
+  // }
   
 }

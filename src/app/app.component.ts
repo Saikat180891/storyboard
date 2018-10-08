@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
+import {AppcontrolService} from './controlservice/appcontrol.service';
+
 
 @Component({
   selector: 'app-root',
@@ -6,6 +8,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  constructor(private _constrolService:AppcontrolService){
+
+  }
   title = 'project-test';
+  // @Output() overlayH: EventEmitter<any> = new EventEmitter<any>();
   
+  // fn(){
+  //   this.overlayH.emit(1);
+  //   console.log("hello")
+  // }
 }

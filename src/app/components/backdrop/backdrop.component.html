@@ -1,0 +1,55 @@
+
+<div class="overlay" *ngIf="_appController.getOverlay()" (click)="onOverlayClose()" @fadeIn>
+    <div class="dialog" (click)="preventPropagation($event)" >
+      <div class="dialog-group border padding-all">
+        <div class="dialog-element">
+          <span>{{currentStatus}}</span>
+          <span class="close" (click)="onClose()"><i class="fas fa-times"></i></span>
+        </div>
+      </div>
+      <div class="dialog-group padding-all margin-top-10">
+          <div class="input-box">
+              <input type="text" id="ASN-box" placeholder="Automation System Name">
+          </div>
+      </div>
+      <div class="dialog-group padding-all">
+          <div class="input-box">
+              <input type="text" id="charge-code" placeholder="Charge Code">
+              <input class="datepicker" id="date" placeholder="Due Date" matInput [matDatepicker]="picker">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+          </div>
+      </div>
+      <div class="dialog-group padding-all height-auto">
+          <div class="input-box">
+            <label for="">Assign To</label>
+              <input type="text" id="ASN-box" placeholder="Type name or email address">
+          </div>
+      </div>
+      <div class="dialog-group padding-all height-auto height-max">
+          <ul>
+            <li><img src="https://blueridgeboxerrescue.com/wp-content/uploads/2015/01/Different-Amazon-Logo-small.png"/>
+              <span>Shubhrangshu Naval</span>
+              <span class="list-close">
+                <!-- <button mat-raised-button color="primary"> -->
+                  <i class="fas fa-times"></i>
+                <!-- </button> -->
+              </span>
+            </li>
+            <li>Item 1</li>
+            <li>Item 1</li>
+            <li>Item 1</li>
+            <li>Item 1</li>
+            <li>Item 1</li>
+          </ul>
+      </div>
+      <div class="dialog-group padding-all fixed-bottom">
+        <div class="button-box">
+            <button mat-raised-button color="primary">CREATE NEW</button>
+            <button mat-raised-button (click)="onClose()">CANCEL</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+  
