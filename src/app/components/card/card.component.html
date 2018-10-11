@@ -17,7 +17,7 @@
           <img [src]="localData.logo" [alt]="localData ? localData.title : ''">
         </div>
         <span class="title">{{ localData ? localData.title : ''}}</span>
-        <span class="edit" (click)="onEdit()"><i class="fas fa-pen"></i></span>
+        <span class="edit" (click)="onEdit(localData)"><i class="fas fa-pen"></i></span>
       </mat-toolbar>
       <mat-divider></mat-divider>
       <div class="codes">
@@ -28,10 +28,10 @@
         <p>Assignee's</p>
         <!-- display only 3 profiles from the profile image holder array => localData.image -->
         <div class="aname" *ngIf="localData">
-          <ng-container *ngFor="let imageURL of localData.image; let i=index;">
-            <img class="image-profile-pic" [src]="imageURL" [alt]="imageURL" *ngIf="i<3">
+          <ng-container *ngFor="let imageURL of localData.assigneeList; let i=index;">
+            <img class="image-profile-pic" [src]="imageURL[0]" [alt]="imageURL[0]" *ngIf="i<3">
           </ng-container>
-          <span *ngIf="localData.image.length>3; else lessThan">+{{localData.image.length-3}}</span>
+          <span *ngIf="localData.assigneeList.length>3; else lessThan">+{{localData.assigneeList.length-3}}</span>
           <ng-template #lessThan>
             <span></span>
           </ng-template>
@@ -46,59 +46,3 @@
   </div>
 </ng-template>
 <!-- code for existing card ends here -->
-
-<!-- Overlay code starts here -->
-<!-- 
-<div class="overlay" *ngIf="overlay" (click)="onOverlayClose()" @fadeIn>
-  <div class="dialog" (click)="preventPropagation($event)" >
-    <div class="dialog-group border padding-all">
-      <div class="dialog-element">
-        <span>{{currentStatus}}</span>
-        <span class="close" (click)="onClose()"><i class="fas fa-times"></i></span>
-      </div>
-    </div>
-    <div class="dialog-group padding-all margin-top-10">
-        <div class="input-box">
-            <input type="text" id="ASN-box" placeholder="Automation System Name">
-        </div>
-    </div>
-    <div class="dialog-group padding-all">
-        <div class="input-box">
-            <input type="text" id="charge-code" placeholder="Charge Code">
-            <input class="datepicker" id="date" placeholder="Due Date" matInput [matDatepicker]="picker">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </div>
-    </div>
-    <div class="dialog-group padding-all height-auto">
-        <div class="input-box">
-          <label for="">Assign To</label>
-            <input type="text" id="ASN-box" placeholder="Type name or email address">
-        </div>
-    </div>
-    <div class="dialog-group padding-all height-auto height-max">
-        <ul>
-          <li><img src="https://blueridgeboxerrescue.com/wp-content/uploads/2015/01/Different-Amazon-Logo-small.png"/>
-            <span>Shubhrangshu Naval</span>
-            <span class="list-close">
-              
-                <i class="fas fa-times"></i>
-              
-            </span>
-          </li>
-          <li>Item 1</li>
-          <li>Item 1</li>
-          <li>Item 1</li>
-          <li>Item 1</li>
-          <li>Item 1</li>
-        </ul>
-    </div>
-    <div class="dialog-group padding-all fixed-bottom">
-      <div class="button-box">
-          <button mat-raised-button color="primary">CREATE NEW</button>
-          <button mat-raised-button (click)="onClose()">CANCEL</button>
-      </div>
-    </div>
-  </div>
-</div>
-   -->

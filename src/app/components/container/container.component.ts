@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { DataService } from '../../data.service';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 
@@ -17,7 +17,7 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
   ]
 })
 
-export class ContainerComponent implements OnInit {
+export class ContainerComponent implements OnInit, OnChanges {
   filesLists: string[] = ['Recent Files', 'All Files'];
   selected;
   cards = [1,2,3,4,5,6,7,8,9,10];
@@ -25,12 +25,15 @@ export class ContainerComponent implements OnInit {
 
 
 
-  constructor(private dataService: DataService) { 
-    this.cardDatas = this.dataService.getData();
+  constructor(private _dataService: DataService) { 
+    this.cardDatas = _dataService.getData();
   }
 
   ngOnInit() {
-    //console.log(this.cardDatas)
+    console.log("container",this.cardDatas)
+  }
+  ngOnChanges(){
+    
   }
 
   state: string = 'default';

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angu
 import {trigger,transition,style,animate,state} from '@angular/animations';
 
 import {AppcontrolService} from '../../controlservice/appcontrol.service';
+import {DataService} from '../../data.service';
 
 @Component({
   selector: 'app-card',
@@ -21,14 +22,15 @@ export class CardComponent implements OnInit, OnChanges{
 
   @Input() cardData;
   localData;
-  @Output() overlay: EventEmitter<boolean> = new EventEmitter<boolean>();
+  // @Output() overlay: EventEmitter<boolean> = new EventEmitter<boolean>();
   createSOP = "Create New SOP";
   editSOP = "Edit SOP";
   currentStatus;
   myIndex;
+  cardID;
   
 
-  constructor(private controlBackdrop:AppcontrolService) {
+  constructor(private _UIcontrolerService:AppcontrolService, private _dataService:DataService) {
     //console.log(this.cardData)
    }
 
@@ -41,26 +43,17 @@ export class CardComponent implements OnInit, OnChanges{
    }
 
   onCreateSOP(){
-    //this.overlay.emit(true);
-    this.controlBackdrop.setOverlay(true);
-    this.currentStatus = this.createSOP;
+    this._UIcontrolerService.setOverlay(true);
+    this._UIcontrolerService.overlayHeaderAssigner(this.createSOP);
+    //console.log(this._UIcontrolerService.currentState);
   }
 
-  onEdit(){
-    this.controlBackdrop.setOverlay(true);
-    this.currentStatus = this.editSOP;
+  onEdit(cardData){
+    this._UIcontrolerService.setOverlay(true);
+    this._UIcontrolerService.overlayHeaderAssigner(this.editSOP);
+    this._UIcontrolerService.setCardEdit(cardData);
+    this._UIcontrolerService.data.emit(cardData)
+    //console.log(cardHolder)
   }
-
-  // onOverlayClose(){
-  //   this.overlay = false;
-  // }
-
-  // preventPropagation(event){
-  //   event.stopPropagation();
-  // }
-
-  // onClose(){
-  //   this.overlay = false;
-  // }
   
 }

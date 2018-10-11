@@ -1,55 +1,187 @@
 
-<div class="overlay" *ngIf="_appController.getOverlay()" (click)="onOverlayClose()" @fadeIn>
-    <div class="dialog" (click)="preventPropagation($event)" >
-      <div class="dialog-group border padding-all">
+<div class="overlay" *ngIf="_UIControllerService.getOverlay()" (click)="onOverlayClose()" @fadeIn>
+
+<!-- This is for editing new SOP -->
+    <div class="dialog" (click)="preventPropagation($event)" *ngIf="_UIControllerService.getOverlayHeader()==createSOP">
+
+      <div class="dialog-group border padding-all color-main-blue">
         <div class="dialog-element">
-          <span>{{currentStatus}}</span>
+          <span>{{createSOP}}</span>
           <span class="close" (click)="onClose()"><i class="fas fa-times"></i></span>
         </div>
       </div>
-      <div class="dialog-group padding-all margin-top-10">
+
+      <div class="dialog-group padding-all margin-top-10 margin-bottom-10">
           <div class="input-box">
-              <input type="text" id="ASN-box" placeholder="Automation System Name">
+              <input type="text" id="ASN-box" placeholder="Automation System Name" 
+              [(ngModel)]="automationSystemName">
           </div>
       </div>
-      <div class="dialog-group padding-all">
+
+      <div class="dialog-group padding-all margin-bottom-10">
           <div class="input-box">
-              <input type="text" id="charge-code" placeholder="Charge Code">
-              <input class="datepicker" id="date" placeholder="Due Date" matInput [matDatepicker]="picker">
+              <input type="text" id="ASN-box" placeholder="Client Name" [(ngModel)]="clientName">
+          </div>
+      </div>
+
+      <div class="dialog-group padding-all margin-bottom-10">
+          <div class="input-box">
+              <input type="text" id="charge-code" placeholder="Charge Code" [(ngModel)]="chargeCode">
+
+              <input class="datepicker" 
+              id="date" placeholder="Due Date" 
+              matInput 
+              [matDatepicker]="picker" 
+              [(ngModel)]="selectedDate" 
+              readonly>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
           </div>
       </div>
-      <div class="dialog-group padding-all height-auto">
-          <div class="input-box">
-            <label for="">Assign To</label>
-              <input type="text" id="ASN-box" placeholder="Type name or email address">
+
+      <div class="dialog-group padding-all upload height-auto">
+        <div class="relative pointer">
+          <button mat-stroked-button>
+            <img class="preview-logo" *ngIf="imagePath" [src]="imagePath" [alt]="imagePath">
+            <span class="client-logo" *ngIf="!imagePath">Upload Client Logo</span>
+            <span *ngIf="!imagePath"><small>(Max Size 200px-200px)</small></span>
+            <span *ngIf="!imagePath"><i class="fas fa-download"></i>CHOOSE FILE</span>
+          </button>
+          <input type="file" (change)="onFileSelected($event)"/>
+        </div>
+      </div>
+
+      <div class="dialog-group padding-all height-auto padding-top-0" id="add-assign">
+          <div class="input-box padding-top-0 relative">
+            <label for="ASN-box">Assign To</label>
+            <input type="text" id="ASN-box" placeholder="Type name or email address" [(ngModel)]="assigneeName" (keyup)="onKeyPress()">
+            <div class="autocomplete" *ngIf="options; else load">
+              <ng-container *ngFor="let option of options; let i=index">
+                  <span class="autocomplete-item" *ngIf="i<3" (click)="onSelect(option)">{{option}}</span>
+              </ng-container>
+            </div>
+            <!-- <ng-template #load>
+              <div class="autocomplete">
+                <mat-progress-spinner
+                  class="example-margin"
+                  [color]="color"
+                  [mode]="mode"
+                  [value]="value">
+                </mat-progress-spinner>
+              </div>
+            </ng-template> -->
+              <button (click)="addAssignee()">ADD</button>
           </div>
       </div>
-      <div class="dialog-group padding-all height-auto height-max">
-          <ul>
-            <li><img src="https://blueridgeboxerrescue.com/wp-content/uploads/2015/01/Different-Amazon-Logo-small.png"/>
-              <span>Shubhrangshu Naval</span>
-              <span class="list-close">
-                <!-- <button mat-raised-button color="primary"> -->
-                  <i class="fas fa-times"></i>
-                <!-- </button> -->
+
+      <div class="dialog-group padding-all height-auto height-max margin-bottom-10">
+          <ul *ngIf="userDatas">
+            <li *ngFor="let userData of userDatas" @fadeOut>
+              <img [src]="userData[0]"/>
+              <span>{{userData[1]}}</span>
+              <span class="list-close" (click)="onRemove(userData)">
+                <i class="fas fa-times"></i>
               </span>
             </li>
-            <li>Item 1</li>
-            <li>Item 1</li>
-            <li>Item 1</li>
-            <li>Item 1</li>
-            <li>Item 1</li>
           </ul>
       </div>
-      <div class="dialog-group padding-all fixed-bottom">
+
+      <div class="dialog-group padding-all fixed-bottom height-auto margin-bottom-10">
         <div class="button-box">
-            <button mat-raised-button color="primary">CREATE NEW</button>
+            <button mat-raised-button color="primary" (click)="onCreateNew()">CREATE NEW</button>
             <button mat-raised-button (click)="onClose()">CANCEL</button>
         </div>
       </div>
+
     </div>
+
+<!-- This is for editing SOP -->
+    <div class="dialog" (click)="preventPropagation($event)" *ngIf="_UIControllerService.getOverlayHeader()==editSOP">
+
+        <div class="dialog-group border padding-all color-main-blue">
+          <div class="dialog-element">
+            <span>{{editSOP}}</span>
+            <span class="close" (click)="onClose()"><i class="fas fa-times"></i></span>
+          </div>
+        </div>
+  
+        <div class="dialog-group padding-all margin-top-10 margin-bottom-10">
+            <div class="input-box">
+                <input type="text" id="ASN-box" placeholder="Automation System Name" 
+                [ngModel]="editAutomationSystemName" 
+                (ngModelChange)="onEditASN($event)"
+                >
+            </div>
+        </div>
+  
+        <div class="dialog-group padding-all margin-bottom-10">
+            <div class="input-box">
+                <input type="text" id="ASN-box" placeholder="Client Name" 
+                [ngModel]="editClientName"
+                (ngModelChange)="onEditClientName($event)"
+                >
+            </div>
+        </div>
+  
+        <div class="dialog-group padding-all margin-bottom-10">
+            <div class="input-box">
+                <input type="text" id="charge-code" placeholder="Charge Code" 
+                [ngModel]="editChargeCode"
+                (ngModelChange)="onEditCargeCode($event)"
+                >
+  
+                <input class="datepicker" 
+                id="date" placeholder="Due Date" 
+                matInput 
+                [matDatepicker]="picker" 
+                [ngModel]="editSelectedDate" 
+                readonly
+                >
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </div>
+        </div>
+  
+        <div class="dialog-group padding-all upload height-auto">
+          <div class="relative pointer">
+            <button mat-stroked-button>
+              <img class="preview-logo" *ngIf="imagePath" [src]="imagePath" [alt]="imagePath">
+              <span class="client-logo" *ngIf="!imagePath">Upload Client Logo</span>
+              <span *ngIf="!imagePath"><small>(Max Size 200px-200px)</small></span>
+              <span *ngIf="!imagePath"><i class="fas fa-download"></i>CHOOSE FILE</span>
+            </button>
+            <input type="file" (change)="onFileSelected($event)"/>
+          </div>
+        </div>
+  
+        <div class="dialog-group padding-all height-auto padding-top-0" id="add-assign">
+            <div class="input-box padding-top-0">
+              <label for="ASN-box">Assign To</label>
+              <input type="text" id="ASN-box" placeholder="Type name or email address" [(ngModel)]="assigneeName">
+                <button (click)="addAssignee()">ADD</button>
+            </div>
+        </div>
+  
+        <div class="dialog-group padding-all height-auto height-max margin-bottom-10">
+            <ul *ngIf="userDatas">
+              <li *ngFor="let userData of userDatas" @fadeOut>
+                <img [src]="userData[0]"/>
+                <span>{{userData[1]}}</span>
+                <span class="list-close" (click)="onRemove(userData)">
+                  <i class="fas fa-times"></i>
+                </span>
+              </li>
+            </ul>
+        </div>
+  
+        <div class="dialog-group padding-all fixed-bottom height-auto margin-bottom-10">
+          <div class="button-box">
+            <button mat-raised-button color="primary" (click)="onSave()">SAVE</button>
+            <button mat-raised-button (click)="onClose()">CANCEL</button>
+          </div>
+        </div>
+  
+      </div>
   </div>
     
   

@@ -28,8 +28,16 @@
 .row{
     width: 100%;
     display: inline-grid;
-    grid-template-columns: repeat(auto-fit,minmax(25rem,1fr));
+    grid-template-columns: repeat(auto-fit,minmax(25rem,27.8rem));
 }
+
+@media only screen and (max-width: 11in) {
+    .row{
+        grid-template-columns: repeat(auto-fit,minmax(25rem,25.8rem));
+    }
+}
+
+
 .grid-item{
     margin: 0 20px 20px 0;
 }
