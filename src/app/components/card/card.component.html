@@ -14,9 +14,9 @@
   <div class="header" [id]="localData ? localData.id : ''">
       <mat-toolbar [style.background-color]="localData ? localData.themeColor : ''">
         <div class="logo" *ngIf="localData">
-          <img [src]="localData.logo" [alt]="localData ? localData.title : ''">
+          <img [src]="localData.logo" [alt]="localData ? localData.clientName : ''">
         </div>
-        <span class="title">{{ localData ? localData.title : ''}}</span>
+        <span class="title">{{ localData ? localData.clientName : ''}}<span class="automation-system-name">{{ localData ? localData.title : ''}}</span></span>
         <span class="edit" (click)="onEdit(localData)"><i class="fas fa-pen"></i></span>
       </mat-toolbar>
       <mat-divider></mat-divider>
@@ -27,9 +27,9 @@
       <div class="assigne">
         <p>Assignee's</p>
         <!-- display only 3 profiles from the profile image holder array => localData.image -->
-        <div class="aname" *ngIf="localData">
+        <div class="aname" *ngIf="localData.assigneeList">
           <ng-container *ngFor="let imageURL of localData.assigneeList; let i=index;">
-            <img class="image-profile-pic" [src]="imageURL[0]" [alt]="imageURL[0]" *ngIf="i<3">
+            <img class="image-profile-pic" [src]="imageURL.image" [alt]="imageURL.assignTo" *ngIf="i<3">
           </ng-container>
           <span *ngIf="localData.assigneeList.length>3; else lessThan">+{{localData.assigneeList.length-3}}</span>
           <ng-template #lessThan>

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http'; 
 
 import {MatDividerModule} from '@angular/material/divider';
 import {MatMenuModule} from '@angular/material/menu';
@@ -23,6 +24,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import {DataService} from './data.service';
 import {AppcontrolService} from './controlservice/appcontrol.service';
+import {ContainerService} from '../app/components/container/container.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -33,6 +35,7 @@ import { ReasoncodesComponent } from './components/reasoncodes/reasoncodes.compo
 import { FlowchartComponent } from './components/flowchart/flowchart.component';
 import { FilterComponent } from './filter/filter.component';
 import { BackdropComponent } from './components/backdrop/backdrop.component';
+import { CfilterComponent } from './components/shared/cfilter/cfilter.component';
 
 const routes = [
   {path: 'page1', component: ContainerComponent},
@@ -49,7 +52,8 @@ const routes = [
     ReasoncodesComponent,
     FlowchartComponent,
     FilterComponent,
-    BackdropComponent
+    BackdropComponent,
+    CfilterComponent
   ],
   imports: [
     BrowserModule,
@@ -72,9 +76,10 @@ const routes = [
     MatSelectModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
+    HttpClientModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [DataService, MatDatepickerModule,AppcontrolService],
+  providers: [DataService, MatDatepickerModule,AppcontrolService, ContainerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -90,6 +90,9 @@
     opacity: 0.5;
 }
 .title{
+    position: absolute;
+    left: 100px;
+    top: 25px;
     color: #fff;
     font-size: 15px;
 }
@@ -313,4 +316,12 @@ li span{
 }
 .image-profile-pic{
     margin-right: 5px;
+}
+.automation-system-name{
+    position: absolute;
+    top: 20px;
+    left: 0;
+}
+mat-toolbar span .automation-system-name{
+    font-size: 15px;
 }

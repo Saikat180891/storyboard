@@ -19,3 +19,41 @@
     background-color: #E4E4E4;
     cursor: pointer;
 }
+.input-box input[type="text"], .datepicker{
+    height: 35px;
+    border-radius: 2px;
+    background-color: #fff;
+    outline: none;
+    padding-left: 10px;
+    font-size: 14px;
+    border: 1px solid #D1D1D1;
+    font-weight: 500;
+}
+
+.input-box input[type="text"].validators{
+    border: 1px solid rgb(245, 117, 117);
+}
+.validation-message{
+    color: rgb(245, 117, 117);
+}
+#date{
+    width: 47%;
+    padding-left: 50px;
+}
+.preloader{
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 10000;
+    /* left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); */
+}
+.spinner{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

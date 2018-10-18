@@ -9,6 +9,12 @@ export class AppcontrolService {
   currentState;
   private editCard = [];
 
+  lastNumber:number = 0;
+  ID:number = 0;
+  colorPicker:string[] =["#0033A1", "#2A7DE1", "#40C0C4", "#54585A", "#8677C4", "#94BEF0"];
+
+  reloadSatus = true;
+
   data = new EventEmitter<any>();
 
   constructor() { }
@@ -50,17 +56,33 @@ export class AppcontrolService {
 
   setCardEdit(cardToEdit){
     this.editCard[0] = cardToEdit;
-    //console.log("Due Date = " + this.editCard.dueDate)
-    
-    setTimeout(()=>{
-      console.log(this.editCard)
-    },2000)
-    
   }
 
   getCardEditValues(){
     // console.log(this.editCard)
     return this.editCard;
+  }
+
+  getUniqueNumber(){
+    this.lastNumber += 1;
+    if(this.lastNumber == 5){
+      this.lastNumber = 0;
+    }
+    return this.lastNumber;
+  }
+
+  getID(){
+    this.ID += 1;
+    return this.ID; 
+  }
+
+  firstZero(value){
+    let temp = value.toString().split("");
+    if(temp.length>1){
+      return value;
+    }else{
+      return 0 + "" + value;
+    }
   }
 
 }

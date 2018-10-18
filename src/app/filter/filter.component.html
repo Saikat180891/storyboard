@@ -6,10 +6,17 @@
 </mat-menu> -->
 
 
-  <mat-form-field class="sort">
+  <!-- <mat-form-field class="sort">
       <mat-select placeholder="Sort By Client">
         <mat-option *ngFor="let food of foods" [value]="food.value">
           {{food.viewValue}}
         </mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field> -->
+<div class="filter-container sort" (click)="onClickDropdown()">
+    <input type="text" placeholder="Sort By Client" [(ngModel)]="selectedValue" readonly>
+    <span><i class="fas fa-angle-down"></i></span>
+</div>
+<div class="dropdown" *ngIf="expandDropdown">
+  <span *ngFor="let option of options" (click)="onSelect(option)">{{option}}</span>
+</div>
