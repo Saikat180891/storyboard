@@ -139,6 +139,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     })
   }
 
+
   ngOnChanges(){
   }
 
@@ -220,7 +221,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    */
   onFileSelected(fileSelected){
     if (fileSelected.target.files && fileSelected.target.files[0]) {
-      let reader = new FileReader();
+      let reader:any = new FileReader();
 
       reader.readAsDataURL(fileSelected.target.files[0]);
       //console.log(reader, fileSelected)
@@ -355,7 +356,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     if(sum == 0){
       this.openPreloader = true;
       this.postPayload = {
-        id: 17,
+        id: 18,
         title: this.automationSystemName,
         dueDate: this.formatDate(this.selectedDate),
         rCodes: 5,
@@ -364,7 +365,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
         logo: this.imagePath ? this.imagePath : 'https://statewideguttercompany.com/wp-content/uploads/2012/07/logo-placeholder.jpg',
       }
     
-      this._dataService.addData(this.postPayload)
+      this._dataService.postData(this.postPayload)
       .subscribe(
         (res)=> {
           console.log(res);

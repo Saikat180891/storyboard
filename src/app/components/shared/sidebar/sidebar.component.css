@@ -1,0 +1,14 @@
+.sidebar{
+    position: fixed;
+    top: 3.4375rem;
+    left: -260px;
+    width: 300px;
+    height: 100%;
+    background-color: #54585A;
+    z-index: 100;
+}
+.hamburger{
+    position: absolute;
+    top: 12px;
+    right: 0;
+}

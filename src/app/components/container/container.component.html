@@ -8,8 +8,9 @@
         <div *ngIf="filesList=='Recent Files'">
           <div class="container top-padding">
             <div class="row">
-                <!-- <div class="card grid-item"><app-card></app-card></div> -->
-                <div class="card grid-item" *ngFor="let cardData of _ContainerService.cardContents"><app-card [cardData]="cardData"></app-card></div>
+              <div class="card grid-item" *ngFor="let cardData of _ContainerService.cardContents">
+                <app-card [cardData]="cardData"></app-card>
+              </div>
             </div>
           </div>
         </div>

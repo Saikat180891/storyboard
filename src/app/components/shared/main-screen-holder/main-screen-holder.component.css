@@ -1,0 +1,21 @@
+.main-container{
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding-left: 40px;
+}
+.sub-container{
+    display: inline-block;
+    background-color: red;
+    width: calc(50% - 20px);
+    /* height: calc(100vh - 3rem - 3.4375rem - 4.5rem); */
+    height: 100%;
+    margin: 0 10px;
+}
+.sub-container:first-child{
+    float: left;
+}
+.sub-container:last-child{
+    float: right;
+}

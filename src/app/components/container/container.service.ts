@@ -18,7 +18,7 @@ export class ContainerService{
     getdataFromDB(){
         this.cardContents = [];
         this.cardContents.push(this.createNewCard);
-        this._dataService.getJSON()
+        this._dataService.fetchData()
         .subscribe(data => {
           data.forEach((element)=>{
             this.cardContents.push({

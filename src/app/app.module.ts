@@ -36,11 +36,25 @@ import { FlowchartComponent } from './components/flowchart/flowchart.component';
 import { FilterComponent } from './filter/filter.component';
 import { BackdropComponent } from './components/backdrop/backdrop.component';
 import { CfilterComponent } from './components/shared/cfilter/cfilter.component';
+import { CapitalizeDirective } from './directives/capitalize.directive';
+import { AddStepsComponent } from './components/add-steps/add-steps.component';
+import { AddScreenComponent } from './components/shared/add-screen/add-screen.component';
+import { ScreenHolderComponent } from './components/shared/screen-holder/screen-holder.component';
+import { AddStepsHolderComponent } from './components/shared/add-steps-holder/add-steps-holder.component';
+import { ReadBoxComponent } from './components/shared/read-box/read-box.component';
+import { TypeBoxComponent } from './components/shared/type-box/type-box.component';
+import { ClickBoxComponent } from './components/shared/click-box/click-box.component';
+import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
+import { NavHeaderComponent } from './components/shared/nav-header/nav-header.component';
+import { BreadcrumbComponent } from './components/shared/breadcrumb/breadcrumb.component';
+import { CollapseButtonComponent } from './components/shared/collapse-button/collapse-button.component';
+import { MainScreenHolderComponent } from './components/shared/main-screen-holder/main-screen-holder.component';
 
 const routes = [
   {path: 'page1', component: ContainerComponent},
   {path: 'page2', component: ReasoncodesComponent},
-  {path: 'page3', component: FlowchartComponent}
+  {path: 'page3', component: FlowchartComponent},
+  {path: 'add-steps', component: AddStepsComponent}
 ];
 
 @NgModule({
@@ -53,7 +67,20 @@ const routes = [
     FlowchartComponent,
     FilterComponent,
     BackdropComponent,
-    CfilterComponent
+    CfilterComponent,
+    CapitalizeDirective,
+    AddStepsComponent,
+    AddScreenComponent,
+    ScreenHolderComponent,
+    AddStepsHolderComponent,
+    ReadBoxComponent,
+    TypeBoxComponent,
+    ClickBoxComponent,
+    SidebarComponent,
+    NavHeaderComponent,
+    BreadcrumbComponent,
+    CollapseButtonComponent,
+    MainScreenHolderComponent
   ],
   imports: [
     BrowserModule,

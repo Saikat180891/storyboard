@@ -121,12 +121,16 @@ export class DataService {
   /**
    * Get the data from the server to load the cards
    */
-  getJSON(){
+  fetchData(){
     //  return this.http.get<any[]>("../assets/dummy_data/card_data.json");
     return this.http.get<any[]>(`${this.url}/cards`);
   }
 
-  addData(body){
+  fetchDataWithLimits(startLimit, endLimit){
+    return this.http.get<any[]>(`${this.url}/cards`);
+  }
+
+  postData(body){
     return this.http.post(`${this.url}/cards`, body);
   }
 

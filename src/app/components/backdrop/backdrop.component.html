@@ -22,7 +22,8 @@
               type="text" 
               [ngClass]="{'ASN-box':true, 'validators':validateClientName===true}" 
               placeholder="Client Name" 
-              [(ngModel)]="clientName">
+              [(ngModel)]="clientName"
+              appCapitalize>
           </div>
           <small [ngClass]="{'validation-message':validateClientName===true}" *ngIf="validateClientName">
             <em>{{validateClientNameMessage}}</em>
@@ -36,7 +37,7 @@
               [ngClass]="{'ASN-box':true, 'validators':validateAutomationSystemName===true}" 
               placeholder="Automation System Name" 
               [(ngModel)]="automationSystemName"
-              >
+              appCapitalize>
           </div>
           <small [ngClass]="{'validation-message':validateAutomationSystemName===true}" *ngIf="validateAutomationSystemName">
             <em>{{validateAutomationSystemNameMessage}}</em>

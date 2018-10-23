@@ -22,16 +22,14 @@ export class CardComponent implements OnInit, OnChanges{
 
   @Input() cardData;
   localData;
-  // @Output() overlay: EventEmitter<boolean> = new EventEmitter<boolean>();
   createSOP = "Create New SOP";
   editSOP = "Edit SOP";
   currentStatus;
   myIndex;
   cardID;
-  
+  // imagePath = 'https://statewideguttercompany.com/wp-content/uploads/2012/07/logo-placeholder.jpg';
 
   constructor(private _UIcontrolerService:AppcontrolService, private _dataService:DataService) {
-    //console.log(this.cardData)
    }
 
    ngOnInit(){
@@ -39,13 +37,11 @@ export class CardComponent implements OnInit, OnChanges{
    }
    ngOnChanges(){
     this.localData = this.cardData;
-    //console.log(this.localData)
    }
 
   onCreateSOP(){
     this._UIcontrolerService.setOverlay(true);
     this._UIcontrolerService.overlayHeaderAssigner(this.createSOP);
-    //console.log(this._UIcontrolerService.currentState);
   }
 
   onEdit(cardData){
@@ -53,7 +49,6 @@ export class CardComponent implements OnInit, OnChanges{
     this._UIcontrolerService.overlayHeaderAssigner(this.editSOP);
     this._UIcontrolerService.setCardEdit(cardData);
     this._UIcontrolerService.data.emit(cardData)
-    //console.log(cardHolder)
   }
   
 }

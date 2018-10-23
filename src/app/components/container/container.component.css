@@ -3,7 +3,6 @@
     height: auto;
     z-index: -1;
 }
-
 .file-list{
     display: block;
     height: auto;
@@ -21,23 +20,14 @@
     border-radius: 2px;
     overflow: hidden;
 }
-/* mat-grid-tile.mat-grid-tile{
-    margin-right: 20px;
-    margin-bottom: 20px;
-} */
 .row{
     width: 100%;
     display: inline-grid;
-    grid-template-columns: repeat(auto-fit,minmax(25rem,1fr));
+    grid-template-columns: repeat(auto-fill,minmax(25rem,1fr));
 }
-
-
 .grid-item{
     margin: 0 20px 20px 0;
 }
-/* .mat-tab-label .mat-ripple .ng-star-inserted .mat-tab-label-active{
-    color: #2A7DE1;
-} */
 .filter{
     position: absolute;
     top: 53.38px;

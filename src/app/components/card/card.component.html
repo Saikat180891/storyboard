@@ -13,8 +13,7 @@
 <ng-template #newCard>
   <div class="header" [id]="localData ? localData.id : ''">
       <mat-toolbar [style.background-color]="localData ? localData.themeColor : ''">
-        <div class="logo" *ngIf="localData">
-          <img [src]="localData.logo" [alt]="localData ? localData.clientName : ''">
+        <div class="logo" *ngIf="localData" [ngStyle]="{'background-image': 'url(' + localData.logo + ')'}">
         </div>
         <span class="title">{{ localData ? localData.clientName : ''}}<span class="automation-system-name">{{ localData ? localData.title : ''}}</span></span>
         <span class="edit" (click)="onEdit(localData)"><i class="fas fa-pen"></i></span>
@@ -27,6 +26,7 @@
       <div class="assigne">
         <p>Assignee's</p>
         <!-- display only 3 profiles from the profile image holder array => localData.image -->
+
         <div class="aname" *ngIf="localData.assigneeList">
           <ng-container *ngFor="let imageURL of localData.assigneeList; let i=index;">
             <img class="image-profile-pic" [src]="imageURL.image" [alt]="imageURL.assignTo" *ngIf="i<3">
