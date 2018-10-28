@@ -1,8 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-html, body { height: 100%; }
+html, body { height: 100vh; }
 *{box-sizing: border-box;}
-body { margin: 0; font-family: 'Roboto', sans-serif; background-color: #eee;}
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #eee;
+    /* overflow-x: hidden; */
+    /* height: 100vh; */
+}
 .mat-btn{
     background-color: #fff;
 }

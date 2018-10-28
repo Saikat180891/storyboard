@@ -5,7 +5,7 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
+  styleUrls: ['./header.component.scss'],
   animations:[
     trigger('rotatedState', [
       state('default', style({ transform: 'rotate(0)' })),

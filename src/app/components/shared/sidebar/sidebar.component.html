@@ -1,7 +1,76 @@
-<div class="sidebar" [@openClose]="isOpen ? 'open' : 'closed'">
-  <div class="hamburger hamburger--arrow">
+
+<div [@openClose]="isOpen ? 'open' : 'closed'" [ngClass]="{'sidebar':true, 'shadow':isOpen}">
+  <div class="hamburger">
     <div class="hamburger-box" (click)="toggle()">
-      <div class="hamburger-inner"></div>
+      <div class="hamburger-inner" [ngClass]="{'hamburger-inner-cross':isOpen}"></div>
     </div>
   </div>
+
+  
+
+
+  <div class="if-open" *ngIf="isOpen">
+    <div class="header">
+
+      <div class="header-container header-container-top-35">
+        <div class="header-container-logo"></div>
+        <div class="header-container-heading"><span>{{"Cornell Project"}}</span></div>
+        <div class="header-container-reason-code">
+          <span>{{"Reason Code 1"}} <i class="fa fa-caret-down"></i></span>
+        </div>
+      </div>
+
+      <div class="header-container header-container-height-60 header-container-top-90">
+        <div class="header-container-assignees">Assignee's</div>
+        <div class="header-container-images">
+          <img src="../../../../assets/pics/img5.jpg" alt="">
+          <img src="../../../../assets/pics/img5.jpg" alt="">
+          <img src="../../../../assets/pics/img5.jpg" alt="">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="user-container">
+      <div class="user-story">
+        <span>{{'User Story Name 1'}} </span> <span><i class="fa fa-caret-down"></i></span>
+      </div>
+  
+      <div class="sections">
+          <app-custom-accordian [sectionName]="'Section name 1'"></app-custom-accordian>
+          <app-custom-accordian [sectionName]="'Section name 2'"></app-custom-accordian>
+          <app-custom-accordian [sectionName]="'Section name 3'"></app-custom-accordian>
+          <app-custom-accordian [sectionName]="'Section name 1'"></app-custom-accordian>
+          <app-custom-accordian [sectionName]="'Section name 2'"></app-custom-accordian>
+          <app-custom-accordian [sectionName]="'Section name 3'"></app-custom-accordian>
+          <app-custom-accordian [sectionName]="'Section name 1'"></app-custom-accordian>
+          <app-custom-accordian [sectionName]="'Section name 2'"></app-custom-accordian>
+          <app-custom-accordian [sectionName]="'Section name 3'"></app-custom-accordian>
+          <app-custom-accordian [sectionName]="'Section name 1'"></app-custom-accordian>
+          <app-custom-accordian [sectionName]="'Section name 2'"></app-custom-accordian>
+          <app-custom-accordian [sectionName]="'Section name 3'"></app-custom-accordian>
+          <app-custom-accordian [sectionName]="'Section name 1'"></app-custom-accordian>
+          <app-custom-accordian [sectionName]="'Section name 2'"></app-custom-accordian>
+          <app-custom-accordian [sectionName]="'Section name 3'"></app-custom-accordian>
+          <app-custom-accordian [sectionName]="'Section name 1'"></app-custom-accordian>
+          <app-custom-accordian [sectionName]="'Section name 2'"></app-custom-accordian>
+          <app-custom-accordian [sectionName]="'Section name 3'"></app-custom-accordian>
+      </div>
+      
+    </div>
+    
+
+    <div class="footer">
+      <div class="footer-btn">Add New Section</div>
+      <div class="btn-arrow-holder">
+        <div class="btn-arrow up"><i class="fas fa-angle-up"></i></div>
+        <div class="btn-arrow down"><i class="fas fa-angle-down"></i></div>
+      </div>
+    </div>
+  </div>
+  
+
+</div>
+
+<div class="sidebar-overlay" @fadeIn *ngIf="isOpen" (click)="toggle()">
 </div>

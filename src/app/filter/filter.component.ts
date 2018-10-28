@@ -12,7 +12,7 @@ export enum KEY_CODE {
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.css']
+  styleUrls: ['./filter.component.scss']
 })
 export class FilterComponent implements OnInit {
   foods = [
@@ -40,10 +40,6 @@ export class FilterComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent) {
-    //console.log(event)
-    // if (event.keyCode === KEY_CODE.ESCAPE) {
-    //   this.expandDropdown = false;
-    // } 
 
     //1150 - 1320
     //120 - 275
@@ -60,6 +56,7 @@ export class FilterComponent implements OnInit {
   }
 
   onClickDropdown(){
+    console.log(this.expandDropdown)
     this.expandDropdown = !this.expandDropdown;
   }
 

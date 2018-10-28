@@ -8,7 +8,7 @@ import {ContainerService} from './container.service';
 @Component({
   selector: 'app-container',
   templateUrl: './container.component.html',
-  styleUrls: ['./container.component.css'],
+  styleUrls: ['./container.component.scss'],
 //   animations:[
 //     trigger('rotatedState', [
 //       state('default', style({ transform: 'rotate(0)' })),

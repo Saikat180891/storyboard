@@ -3,7 +3,7 @@ import { Component, OnInit, AfterViewInit, HostListener, ElementRef, Renderer2 }
 @Component({
   selector: 'app-flowchart',
   templateUrl: './flowchart.component.html',
-  styleUrls: ['./flowchart.component.css']
+  styleUrls: ['./flowchart.component.scss']
 })
 export class FlowchartComponent implements OnInit, AfterViewInit {
   private mouseDown:boolean = false;

@@ -7,7 +7,7 @@ import {DataService} from '../../data.service';
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.css'],
+  styleUrls: ['./card.component.scss'],
   animations: [
     trigger('fadeIn',[
       state('void', style({opacity:0, top:'-100%'})),

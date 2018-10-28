@@ -1,5 +1,18 @@
-<div class="container">
-  <div class="screen previous">1</div>
-  <div class="screen focussed">2</div>
-  <div class="screen next">3</div>
+<div class="carousal">
+
+  <div class="image-1-holder" [ngStyle]="{'background-image':'url('+prev+')'}"></div>
+  
+  <div class="image-2-holder">
+    <img [src]="focus" alt="">
+  </div>
+
+  <div class="footer">
+    <div class="btn-add-screen">Add new screen</div>
+    <label class="label-nav" for="">Navigate Screens</label>
+    <div class="btn-holder">
+      <div class="btn-arrow" (click)="previous()"><i class="fas fa-angle-up"></i></div>
+      <div class="btn-arrow" (click)="next()"><i class="fas fa-angle-down"></i></div>
+    </div>
+  </div>
+
 </div>

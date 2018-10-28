@@ -1,0 +1,68 @@
+.accordian{
+  display: block;
+  width: 100%;
+  background-color: #54585A;
+  min-height: 35px;
+  max-height: auto;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  overflow: hidden;
+}
+.expansion-panel-header{
+  display: block;
+  height: 35px;
+  line-height: 35px;
+  padding-left: 20px;
+  color: #fff;
+  background-color: #393939;
+  cursor: pointer;
+}
+.expansion-panel-header-expanded{
+  /* border-bottom: 1px solid #ccc; */
+  background-color: #2A7DE1;
+  
+}
+.expansion-panel-collapsed{
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+}
+.expansion-panel-collapsed::-webkit-scrollbar{
+  display: none;
+}
+.expansion-panel-collapsed::-moz-scrollbar{
+  display: none;
+}
+.slide-holder{
+  display: block;
+  position: relative;
+  height: auto;
+  width: 100%;
+  overflow: hidden;
+  padding: 10px 20px 10px 20px ;
+}
+.slide-holder:hover{
+  background-color: #ccc;
+}
+.slide-holder img{
+  width: 100%;
+  height: 100px;
+}
+.slide-holder span{
+  display: block;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  color: #fff;
+}
+.slide-holder:hover .carrat{
+  position: absolute;
+  background-color: #393939;
+  width: 18px;
+  height: 18px;
+  top: 50%;
+  transform: translate(0,-50%) rotate(45deg);
+  right: -9px;
+}

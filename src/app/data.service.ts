@@ -15,10 +15,10 @@ export class DataService {
   lastNumber:number = 0;
   ID:number = 0;
   colorPicker:string[] =["#0033A1", "#2A7DE1", "#40C0C4", "#54585A", "#8677C4", "#94BEF0"]
-  url = 'http://localhost:3000';
+  url = 'http://127.0.0.1:8000/sop.json';
   cardContent = [
     {
-      id: this.getID(),
+      id: 0,
     },
     /*
     {
@@ -123,15 +123,15 @@ export class DataService {
    */
   fetchData(){
     //  return this.http.get<any[]>("../assets/dummy_data/card_data.json");
-    return this.http.get<any[]>(`${this.url}/cards`);
+    return this.http.get<any[]>(`${this.url}`);
   }
 
   fetchDataWithLimits(startLimit, endLimit){
-    return this.http.get<any[]>(`${this.url}/cards`);
+    return this.http.get<any[]>(`${this.url}`);
   }
 
   postData(body){
-    return this.http.post(`${this.url}/cards`, body);
+    return this.http.post(`${this.url}`, body);
   }
 
   handleError(err){

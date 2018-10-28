@@ -19,8 +19,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
-
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material';
 
 import {DataService} from './data.service';
 import {AppcontrolService} from './controlservice/appcontrol.service';
@@ -49,6 +49,8 @@ import { NavHeaderComponent } from './components/shared/nav-header/nav-header.co
 import { BreadcrumbComponent } from './components/shared/breadcrumb/breadcrumb.component';
 import { CollapseButtonComponent } from './components/shared/collapse-button/collapse-button.component';
 import { MainScreenHolderComponent } from './components/shared/main-screen-holder/main-screen-holder.component';
+import { AuthComponent } from './auth/auth.component';
+import { CustomAccordianComponent } from './components/shared/custom-accordian/custom-accordian.component';
 
 const routes = [
   {path: 'page1', component: ContainerComponent},
@@ -80,7 +82,9 @@ const routes = [
     NavHeaderComponent,
     BreadcrumbComponent,
     CollapseButtonComponent,
-    MainScreenHolderComponent
+    MainScreenHolderComponent,
+    AuthComponent,
+    CustomAccordianComponent
   ],
   imports: [
     BrowserModule,
@@ -102,8 +106,10 @@ const routes = [
     MatButtonToggleModule,
     MatSelectModule,
     MatAutocompleteModule,
+    MatFormFieldModule,
     MatProgressSpinnerModule,
     HttpClientModule,
+    MatInputModule,
     RouterModule.forRoot(routes)
   ],
   providers: [DataService, MatDatepickerModule,AppcontrolService, ContainerService],

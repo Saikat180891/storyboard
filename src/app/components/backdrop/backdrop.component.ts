@@ -15,7 +15,7 @@ export enum KEY_CODE {
 @Component({
   selector: 'app-backdrop',
   templateUrl: './backdrop.component.html',
-  styleUrls: ['./backdrop.component.css'],
+  styleUrls: ['./backdrop.component.scss'],
   animations: [
     trigger('fadeIn',[
       state('void', style({opacity:0, top:'-100%'})),
@@ -102,7 +102,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
           this.editAutomationSystemName = data.title;
           this.editClientName = data.clientName;
           this.editChargeCode = data.chargeCode;
-          this.editSelectedDate = this.arrangeDateInCorrectFormat(data.dueDate);
+          this.editSelectedDate = this.arrangeDateInCorrectFormat(data.due_date);
           this.editAssignees = data.assigneeList;
           this.editImagePath = data.logo;
           this.editAssignees = data.assigneeList;
@@ -358,7 +358,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
       this.postPayload = {
         id: 18,
         title: this.automationSystemName,
-        dueDate: this.formatDate(this.selectedDate),
+        due_date: this.formatDate(this.selectedDate),
         rCodes: 5,
         chargeCode: this.chargeCode,
         clientName: this.clientName,
@@ -368,16 +368,25 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
       this._dataService.postData(this.postPayload)
       .subscribe(
         (res)=> {
-          console.log(res);
+          console.log("Response ",res);
           if(res){
             this.onOverlayClose();
-            this._ContainerService.getdataFromDB();
+            this._ContainerService.cardContents.push(
+              {
+                themeColor: this._ContainerService.colorPicker[this._ContainerService.getUniqueNumber()],
+                reasonCodes: 0,
+                ...res
+              }
+            );
+            console.log(this._ContainerService.cardContents)
+            //this._ContainerService.getdataFromDB();
             this.automationSystemName = '';
             this.clientName = '';
             this.chargeCode = '';
             this.selectedDate = '';
             this.createAssignees = [];
-        //this.cardDatas = this._ContainerService.cardContents;
+            //this.cardDatas = this._ContainerService.cardContents;
+            //this._ContainerService.cardContents.push(res);
           }
           this.openPreloader = false;
         },
