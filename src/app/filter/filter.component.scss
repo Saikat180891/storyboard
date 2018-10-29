@@ -1,8 +1,8 @@
-.sort{
-    position: relative;
-    top: 35px;
-    z-index: 2;
-}
+// .sort{
+//     position: relative;
+//     top: 2vh;
+//     z-index: 200;
+// }
 .sort span{
     position: absolute;
     top: 0;
@@ -69,7 +69,7 @@
     width: 155px;
     height: auto;
     z-index: 1;
-    padding-top: 25px;
+    padding-top: 35px;
     background-color: #fff;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);
     overflow: hidden;

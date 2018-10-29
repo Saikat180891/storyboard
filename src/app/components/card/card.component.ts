@@ -27,6 +27,8 @@ export class CardComponent implements OnInit, OnChanges{
   currentStatus;
   myIndex;
   cardID;
+  nextPage;
+  queryParams;
   // imagePath = 'https://statewideguttercompany.com/wp-content/uploads/2012/07/logo-placeholder.jpg';
 
   constructor(private _UIcontrolerService:AppcontrolService, private _dataService:DataService) {
@@ -44,7 +46,9 @@ export class CardComponent implements OnInit, OnChanges{
     this._UIcontrolerService.overlayHeaderAssigner(this.createSOP);
   }
 
-  onEdit(cardData){
+  onEdit(event, cardData){
+    event.stopPropagation();
+    // event.preventDefault();
     this._UIcontrolerService.setOverlay(true);
     this._UIcontrolerService.overlayHeaderAssigner(this.editSOP);
     this._UIcontrolerService.setCardEdit(cardData);

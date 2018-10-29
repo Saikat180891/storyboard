@@ -53,10 +53,10 @@ import { AuthComponent } from './auth/auth.component';
 import { CustomAccordianComponent } from './components/shared/custom-accordian/custom-accordian.component';
 
 const routes = [
-  {path: 'page1', component: ContainerComponent},
-  {path: 'page2', component: ReasoncodesComponent},
+  {path: 'projects', component: ContainerComponent},
+  {path: 'projects/reason-codes', component: ReasoncodesComponent},
   {path: 'page3', component: FlowchartComponent},
-  {path: 'add-steps', component: AddStepsComponent}
+  {path: 'projects/reason-codes/add-steps', component: AddStepsComponent}
 ];
 
 @NgModule({

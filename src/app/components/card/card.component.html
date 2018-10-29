@@ -11,12 +11,16 @@
 <!-- code for blank card ends here -->
 <!-- code for existing card starts here -->
 <ng-template #newCard>
-  <div class="header" [id]="localData ? localData.id : ''" routerLink="/page2">
+  <div 
+  routerLink="/projects/reason-codes" 
+  class="header" 
+  [id]="localData ? localData.id : ''"
+  >
       <mat-toolbar [style.background-color]="localData ? localData.themeColor : ''">
         <div class="logo" *ngIf="localData" [ngStyle]="{'background-image': 'url(' + localData.logo + ')'}">
         </div>
         <span class="title">{{ localData ? localData.clientName : ''}}<span class="automation-system-name">{{ localData ? localData.title : ''}}</span></span>
-        <span class="edit" (click)="onEdit(localData)"><i class="fas fa-pen"></i></span>
+        <span class="edit" (click)="onEdit($event, localData)"><i class="fas fa-pen"></i></span>
       </mat-toolbar>
       <mat-divider></mat-divider>
       <div class="codes">

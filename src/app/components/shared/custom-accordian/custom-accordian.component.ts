@@ -18,7 +18,7 @@ export enum KEY_CODE {
       state('void', style({height:'0px'})),
       // state('*', style({opacity:1, right:'0'})),
       transition('void <=> *',[
-        animate('0.5s ease-in')
+        animate('0.1s ease-in')
       ])
     ])
   ]

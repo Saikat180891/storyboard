@@ -2,6 +2,7 @@
   display: block;
   width: 100%;
   height: 100%;
+  border-right: 1px solid #54585A;
 }
 .image-1-holder, .image-2-holder, .footer{
   overflow: hidden;
@@ -33,7 +34,16 @@
   margin: 1rem 0 1rem 0;
   background-color: #fff;
   padding: 0 10px 0 10px;
-  
+  position: relative;
+}
+.image-2-holder-carrat{
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: #54585A;
+  top: 50%;
+  transform: translate(0,-50%) rotate(45deg);
+  right: -6px;
 }
 .image-2-holder img{
   width: 100%;

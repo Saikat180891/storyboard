@@ -45,6 +45,16 @@
 }
 .slide-holder:hover{
   background-color: #ccc;
+  cursor: pointer;
+}
+.slide-holder:hover .carrat{
+  position: absolute;
+  background-color: #393939;
+  width: 18px;
+  height: 18px;
+  top: 50%;
+  transform: translate(0,-50%) rotate(45deg);
+  right: -9px;
 }
 .slide-holder img{
   width: 100%;
@@ -56,13 +66,4 @@
   height: 30px;
   line-height: 30px;
   color: #fff;
-}
-.slide-holder:hover .carrat{
-  position: absolute;
-  background-color: #393939;
-  width: 18px;
-  height: 18px;
-  top: 50%;
-  transform: translate(0,-50%) rotate(45deg);
-  right: -9px;
 }
