@@ -29,7 +29,7 @@ export class ContainerService{
     getdataFromDB(){
         this.cardContents = [];
         this.cardContents.push(this.createNewCard);
-        this._dataService.fetchData()
+        this._dataService.fetchData('/sop.json')
         .subscribe(data => {
           data.forEach((element)=>{
             this.cardContents.push({

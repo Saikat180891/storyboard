@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-add-screen',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-screen.component.scss']
 })
 export class AddScreenComponent implements OnInit {
+  @Input() headerPayload;
 
   constructor() { }
 

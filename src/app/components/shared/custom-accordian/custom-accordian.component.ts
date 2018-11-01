@@ -24,13 +24,17 @@ export enum KEY_CODE {
   ]
 })
 export class CustomAccordianComponent implements OnInit {
-  @Input('sectionName') sectionName;
+  @Input('screenDetails') screenDetails;
 
   expand:boolean = false;
+
+  screens = [];
 
   constructor() { }
 
   ngOnInit() {
+    // this.screeContainer.push(this.screenDetails);
+    // console.log(this.screeContainer)
   }
 
   onExpand(event){

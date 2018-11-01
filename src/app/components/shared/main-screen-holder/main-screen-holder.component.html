@@ -1,8 +1,8 @@
 <div class="main-container">
   <div class="sub-container">
-      <app-screen-holder></app-screen-holder>
+      <app-screen-holder (res)="getPayload($event)"></app-screen-holder>
   </div>
-  <div class="sub-container">
+  <div class="sub-container bg-white">
       <app-add-steps-holder></app-add-steps-holder>
   </div>
 </div>

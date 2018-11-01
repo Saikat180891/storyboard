@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Observable, of} from 'rxjs';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { catchError } from 'rxjs/operators'
-//import { url } from 'inspector';
+import { Observable, of } from 'rxjs';
 
 
 @Injectable({
@@ -15,33 +11,12 @@ export class DataService {
   lastNumber:number = 0;
   ID:number = 0;
   colorPicker:string[] =["#0033A1", "#2A7DE1", "#40C0C4", "#54585A", "#8677C4", "#94BEF0"]
-  url = 'http://127.0.0.1:8000/sop.json';
+  apiUrl = 'http://127.0.0.1:8000';
   cardContent = [
     {
       id: 0,
     },
-    /*
-    {
-      id: this.getID(),
-      title:"PQR Projects",
-      themeColor: this.colorPicker[this.getUniqueNumber()],
-      dueDate: "6/11/2018",
-      reasonCodes: this.firstZero(6),
-      chargeCode: "xxxx",
-      clientName: "saikat paul",
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1000px-Cornell_University_seal.svg.png',
-      assignees: [
-        {assignTo: "saikat", profilePic: "siaka"}
-      ],
-      assigneeList: [   ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Shubhrangshu Naval'],
-                        ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Shubhrangshu Naval'],
-                        ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Shubhrangshu Naval'],
-                        ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Shubhrangshu Naval'],
-                        
-                    ]   
-      
-    }*/
-
+    
   ];
 
   backdropData = [
@@ -121,17 +96,18 @@ export class DataService {
   /**
    * Get the data from the server to load the cards
    */
-  fetchData(){
+  fetchData(param){
     //  return this.http.get<any[]>("../assets/dummy_data/card_data.json");
-    return this.http.get<any[]>(`${this.url}`);
+    return this.http.get<any[]>(this.apiUrl + param);
   }
 
   fetchDataWithLimits(startLimit, endLimit){
-    return this.http.get<any[]>(`${this.url}`);
+    return this.http.get<any[]>(this.apiUrl);
   }
 
-  postData(body){
-    return this.http.post(`${this.url}`, body);
+  postData(param, body){
+    console.log(this.apiUrl + param , body)
+    return this.http.post(this.apiUrl + param, body);
   }
 
   handleError(err){

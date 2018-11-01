@@ -4,50 +4,85 @@
 }
 .header{
     display: inline-block;
-    height: 4rem;
-    width: 94%;
-    margin-left: 3%;
-    border-bottom: 2px solid #ccc;
-    line-height: 4rem;
-    position: relative;
-}
-.pname{
-    font-size: 30px;
-    color: rgb(172, 172, 172);
-}
-.assign{
-    position: absolute;
-    right: 100px;
-}
-.mat-expansion-panel-header{
-    padding: 36px 25px;
-}
-.mat-expansion-panel{
-    background-color: #fff;
-}
-.expansion-container{
-    height: 4rem;
+    height: 60px;
     width: 100%;
-    display: block;
-    background-color: #eee;
-    border-bottom: 2px solid #ccc;
-    margin: 0;
+    background-color: #fff;
+    line-height: 60px;
+    font-size: 14px;
+    position: relative;
+
+    &__images{
+      height: auto;
+      position: absolute;
+      top: 0;
+      left: 310px;
+
+      img{
+        width: 26px;
+        height: 26px;
+        margin: 17px 5px 17px 5px;
+        border-radius: 2px;
+      }
+    }
+
+    &__btn{
+      position: absolute;
+      top: 50%;
+      right: 30px;
+      transform: translateY(-50%);
+
+      .btn{
+        width: 180px;
+        height: 30px;
+        border-radius: 2px;
+        line-height: 30px;
+        font-weight: 500;
+        font-size: 14px;
+        text-align: center;
+        background-color: #2A7DE1;
+        color: #fff;
+        cursor: pointer;
+      }
+      
+    }
 }
-.expansion-container:last-child{
-    border-bottom: 0px solid #ccc;
+.edit{
+  margin-left: 30px;
+  cursor: pointer;
+  color: #707070;
 }
-mat-expansion-panel .mat-expansion-panel-body{
-    padding: 0;
-    margin: 0;
+.heading{
+  color: #2A7DE1;
+  height: 60px;
+  line-height: 60px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 30px;
+
+  &__name{
+
+  }
+  &__id{
+
+  }
+  &__divider{
+    color: #707070;
+  }
+  &__assignees{
+    color: #707070;
+    margin-left: 40px;
+  }
+  &__date{
+    margin-left: 170px;
+    color: #707070;
+
+    &__icon{
+      color: #F47074;
+      font-size: 15px;
+    }
+  }
 }
-.btn{
-    display: block;
-    padding: 5px 20px;
-    background-color: #777;
-    color: #fff;
-    border-radius: 3px;
-    font-size: 12px;
-}
-.mat-expansion-panel-header:not([aria-disabled=true]){
-    cursor: auto;
+/* Reason Code Accordian*/
+.accordian-container{
+margin: 30px;
 }

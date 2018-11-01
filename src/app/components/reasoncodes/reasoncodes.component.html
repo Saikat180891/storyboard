@@ -1,40 +1,32 @@
 <div class="container">
   <div class="header">
-    <span class="pname">Cornell Project 2</span>
-    <span class="assign">Assignee's <span class="date">Due Date 12/09/18</span></span>
+    <div class="heading">
+      <span class="heading__name">AON Project 2</span>
+      <span class="heading__divider"> | </span>
+      <span class="heading__id">AON001</span>
+      <span class="heading__assignees">Assignee's</span>
+      <span class="heading__date">
+        <i class="heading__date__icon far fa-calendar-alt"></i>
+         Date {{'12/12/12'}}
+      </span>
+      <i class="heading__date__icon edit fas fa-pen"></i>
+    </div>
+
+    <div class="header__images">
+      <img src="../../../assets/pics/img5.jpg" alt="">
+      <img src="../../../assets/pics/img5.jpg" alt="">
+      <img src="../../../assets/pics/img5.jpg" alt="">
+    </div>
+
+    <div class="header__btn">
+      <div class="btn">NEW REASON CODE</div>
+    </div>
   </div>
+
+  <div class="accordian-container">
+    <app-reason-code-accordian></app-reason-code-accordian>
+  </div>
+
 </div>
 
-<mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Reason Code 1
-        </mat-panel-title>
-        <mat-panel-description>
-          RC Name
-        </mat-panel-description>
-        <mat-panel-description>
-          Status
-        </mat-panel-description>
-        <mat-panel-description>
-          User Story identified
-        </mat-panel-description>
-        <mat-panel-description>
-          Effort Estimation
-        </mat-panel-description>
-        <mat-panel-description>
-          Release Sprint
-        </mat-panel-description>
-        <mat-panel-description>
-          Dev Ready
-        </mat-panel-description>
-        <mat-panel-description>
-          <a class="btn" routerLink="/projects/reason-codes/add-steps">View Flowchart</a>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <div class="expansion-container"></div>
-      <div class="expansion-container"></div>
-      <div class="expansion-container"></div>
-    </mat-expansion-panel>
-  </mat-accordion>
+

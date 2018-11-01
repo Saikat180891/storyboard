@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-main-screen-holder',
@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainScreenHolderComponent implements OnInit {
 
+  @Output() mainScreenPayload = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
+
+  }
+
+  getPayload(event){
+    this.mainScreenPayload.emit(event)
+    console.log("This is the response ",event)
   }
 
 }

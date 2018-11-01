@@ -12,7 +12,7 @@
 <!-- code for existing card starts here -->
 <ng-template #newCard>
   <div 
-  routerLink="/projects/reason-codes" 
+  routerLink="/projects/add-steps" 
   class="header" 
   [id]="localData ? localData.id : ''"
   >
@@ -24,7 +24,7 @@
       </mat-toolbar>
       <mat-divider></mat-divider>
       <div class="codes">
-        <h1 [style.color]="localData ? localData.themeColor : ''">{{ localData ? localData.reasonCodes : ''}}</h1>
+        <h1 [style.color]="localData ? localData.themeColor : ''">{{ localData ? 0 : '0'}}</h1>
         <p [style.color]="localData ? localData.themeColor : ''">Reason codes</p>
       </div>
       <div class="assigne">

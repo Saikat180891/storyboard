@@ -1,72 +1,29 @@
 <div class="accordian">
   <div class="expansion-panel-header" (click)="onExpand($event)"
   [ngClass]="{'expansion-panel-header-expanded':expand}">
-    <span>{{sectionName}}</span>
+    <span>{{screenDetails.section_name}}</span> 
+    <span class="info">
+      <i class="fas fa-info-circle">
+        <span class="tooltip">{{screenDetails.description}}</span>
+      </i>
+    </span>
   </div>
   <div class="expansion-panel-collapsed" *ngIf="expand" @hide>
 
-    <div class="slide-holder">
-      <span>{{'Screen Name'}}</span>
-      <img src="../../../../assets/pics/img5.jpg" alt="">
-      <span>{{'2.1.1 - 2.1.4'}}</span>
-      <div class="carrat"></div>
-    </div>
-
-    <div class="slide-holder">
+    <div *ngIf="screens.length > 0; else placeholder">
+      <div class="slide-holder" *ngFor="let screen of screens">
         <span>{{'Screen Name'}}</span>
         <img src="../../../../assets/pics/img5.jpg" alt="">
         <span>{{'2.1.1 - 2.1.4'}}</span>
         <div class="carrat"></div>
       </div>
+    </div>
 
+    <ng-template #placeholder>
       <div class="slide-holder">
-          <span>{{'Screen Name'}}</span>
-          <img src="../../../../assets/pics/img5.jpg" alt="">
-          <span>{{'2.1.1 - 2.1.4'}}</span>
-          <div class="carrat"></div>
-        </div>
-
-        <div class="slide-holder">
-            <span>{{'Screen Name'}}</span>
-            <img src="../../../../assets/pics/img5.jpg" alt="">
-            <span>{{'2.1.1 - 2.1.4'}}</span>
-            <div class="carrat"></div>
-          </div>
-
-          <div class="slide-holder">
-              <span>{{'Screen Name'}}</span>
-              <img src="../../../../assets/pics/img5.jpg" alt="">
-              <span>{{'2.1.1 - 2.1.4'}}</span>
-              <div class="carrat"></div>
-            </div>
-            <div class="slide-holder">
-                <span>{{'Screen Name'}}</span>
-                <img src="../../../../assets/pics/img5.jpg" alt="">
-                <span>{{'2.1.1 - 2.1.4'}}</span>
-                <div class="carrat"></div>
-              </div>
-    
-              <div class="slide-holder">
-                  <span>{{'Screen Name'}}</span>
-                  <img src="../../../../assets/pics/img5.jpg" alt="">
-                  <span>{{'2.1.1 - 2.1.4'}}</span>
-                  <div class="carrat"></div>
-                </div>
-
-                <div class="slide-holder">
-                    <span>{{'Screen Name'}}</span>
-                    <img src="../../../../assets/pics/img5.jpg" alt="">
-                    <span>{{'2.1.1 - 2.1.4'}}</span>
-                    <div class="carrat"></div>
-                  </div>
-        
-                  <div class="slide-holder">
-                      <span>{{'Screen Name'}}</span>
-                      <img src="../../../../assets/pics/img5.jpg" alt="">
-                      <span>{{'2.1.1 - 2.1.4'}}</span>
-                      <div class="carrat"></div>
-                    </div>
-    
+        <img src="../../../../assets/pics/Group 2785@2x.png" alt="">
+      </div>
+    </ng-template>
 
   </div>
 </div>

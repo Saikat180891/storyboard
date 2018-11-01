@@ -7,9 +7,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddStepsComponent implements OnInit {
 
+  applDetails = {
+    applicationName: '',
+    screenName: '',
+    tabName: ''
+  }
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  // payload.append('applicationName', this.applicationName);
+  //     payload.append('screenName', this.screenName);
+  //     payload.append('tabName', this.tabName);
+  //     payload.append('screenImage', this.previewScreen);
+
+  onReceivePayload(payload){
+    this.applDetails = {
+      applicationName: payload.get('applicationName'),
+      screenName: payload.get('applicationName'),
+      tabName: payload.get('tabName')
+    }
+    console.log( this.applDetails)
   }
 
 }

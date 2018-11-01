@@ -1,8 +1,14 @@
-<div class="add-screen">
-  <div class="add-screen-holder">
-    <span><input type="text" placeholder="Application name"></span>
-    <span><input type="text" placeholder="Screen name"></span>
-    <span><input type="text" placeholder="Tab name"></span>
-    <span><button class="btn btn-main-blue">Add New Step</button></span>
-  </div>
+<div class="container">
+    <div class="add-screen" style="padding-left:75px;">
+      <span><input type="text" placeholder="Application name" [(ngModel)]="headerPayload.applicationName"></span>
+      <span><input type="text" placeholder="Screen name" [(ngModel)]="headerPayload.screenName"></span>
+      <span><input type="text" placeholder="Tab name" [(ngModel)]="headerPayload.tabName"></span>
+    </div>
+      
+    <div class="add-screen">
+      <span class="abs-right-40">Total Steps</span>
+      <span class="abs-right-20"><button class="btn btn-main-blue">Add New Step</button></span>
+    </div>
+    <div class="divider"></div>
 </div>
+

@@ -67,3 +67,40 @@
   line-height: 30px;
   color: #fff;
 }
+.info{
+  float: right;
+  margin-right: 15px;
+
+  i{
+    position: relative;
+
+    .tooltip{
+      position: fixed;
+      top: 215px;
+      left: 230px;
+      max-width: 200px;
+      height: auto;
+      border-radius: 10px;
+      // border-bottom-left-radius: 0;
+      padding: 20px;
+      border: 1px solid #777;
+      color: #777;
+      background-color: #fff;
+      overflow: hidden;
+      visibility: hidden;
+    }
+    // .tooltip::after{
+    //   content: "";
+    //   width: 20px;
+    //   height: 20px;
+    //   background-color: #fff;
+    //   position: absolute;
+    //   top: 31px;
+    //   left: -11px;
+    //   transform: rotate(45deg);
+    // }
+  }
+  i:hover .tooltip{
+    visibility: visible;
+  }
+}

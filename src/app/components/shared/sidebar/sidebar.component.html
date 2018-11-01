@@ -36,32 +36,17 @@
         <span>{{'User Story Name 1'}} </span> <span><i class="fa fa-caret-down"></i></span>
       </div>
   
-      <div class="sections">
-          <app-custom-accordian [sectionName]="'Section name 1'"></app-custom-accordian>
-          <app-custom-accordian [sectionName]="'Section name 2'"></app-custom-accordian>
-          <app-custom-accordian [sectionName]="'Section name 3'"></app-custom-accordian>
-          <app-custom-accordian [sectionName]="'Section name 1'"></app-custom-accordian>
-          <app-custom-accordian [sectionName]="'Section name 2'"></app-custom-accordian>
-          <app-custom-accordian [sectionName]="'Section name 3'"></app-custom-accordian>
-          <app-custom-accordian [sectionName]="'Section name 1'"></app-custom-accordian>
-          <app-custom-accordian [sectionName]="'Section name 2'"></app-custom-accordian>
-          <app-custom-accordian [sectionName]="'Section name 3'"></app-custom-accordian>
-          <app-custom-accordian [sectionName]="'Section name 1'"></app-custom-accordian>
-          <app-custom-accordian [sectionName]="'Section name 2'"></app-custom-accordian>
-          <app-custom-accordian [sectionName]="'Section name 3'"></app-custom-accordian>
-          <app-custom-accordian [sectionName]="'Section name 1'"></app-custom-accordian>
-          <app-custom-accordian [sectionName]="'Section name 2'"></app-custom-accordian>
-          <app-custom-accordian [sectionName]="'Section name 3'"></app-custom-accordian>
-          <app-custom-accordian [sectionName]="'Section name 1'"></app-custom-accordian>
-          <app-custom-accordian [sectionName]="'Section name 2'"></app-custom-accordian>
-          <app-custom-accordian [sectionName]="'Section name 3'"></app-custom-accordian>
+      <div class="sections" *ngIf="numberOfSections">
+          <app-custom-accordian 
+          [screenDetails]="numberOfSection" 
+          *ngFor="let numberOfSection of numberOfSections"></app-custom-accordian>
       </div>
       
     </div>
     
 
     <div class="footer">
-      <div class="footer-btn">Add New Section</div>
+      <div class="footer-btn" (click)="onCreateSections()">Add New Section</div>
       <div class="btn-arrow-holder">
         <div class="btn-arrow up"><i class="fas fa-angle-up"></i></div>
         <div class="btn-arrow down"><i class="fas fa-angle-down"></i></div>
@@ -72,5 +57,23 @@
 
 </div>
 
-<div class="sidebar-overlay" @fadeIn *ngIf="isOpen" (click)="toggle()">
+<div class="sidebar-overlay" @fadeIn *ngIf="isOpen">
+  <div class="popup" *ngIf="addSectionStatus">
+    <div class="popup__head">
+      <span>Add New Screen</span>
+      <span (click)="onAddSectionClose()"><i class="fas fa-times"></i></span>
+    </div>
+    <div class="popup__body">
+      <input type="text" placeholder="Section Name" [(ngModel)]="createSectionName">
+      <textarea name="" id="" cols="30" rows="10" placeholder="Description" [(ngModel)]="createSectionDescription"></textarea>
+    </div>
+    <div class="popup__footer">
+      <div class="btn-horizontal">
+        <div class="btn btn__blue" (click)="addSection()">ADD SECTION</div>
+        <div class="btn btn__white" (click)="onAddSectionClose()">CANCEL</div>
+      </div>
+    </div>
+  </div>
 </div>
+
+

@@ -51,12 +51,13 @@ import { CollapseButtonComponent } from './components/shared/collapse-button/col
 import { MainScreenHolderComponent } from './components/shared/main-screen-holder/main-screen-holder.component';
 import { AuthComponent } from './auth/auth.component';
 import { CustomAccordianComponent } from './components/shared/custom-accordian/custom-accordian.component';
+import { ReasonCodeAccordianComponent } from './components/shared/reason-code-accordian/reason-code-accordian.component';
 
 const routes = [
   {path: 'projects', component: ContainerComponent},
   {path: 'projects/reason-codes', component: ReasoncodesComponent},
   {path: 'page3', component: FlowchartComponent},
-  {path: 'projects/reason-codes/add-steps', component: AddStepsComponent}
+  {path: 'projects/add-steps', component: AddStepsComponent}
 ];
 
 @NgModule({
@@ -84,7 +85,8 @@ const routes = [
     CollapseButtonComponent,
     MainScreenHolderComponent,
     AuthComponent,
-    CustomAccordianComponent
+    CustomAccordianComponent,
+    ReasonCodeAccordianComponent
   ],
   imports: [
     BrowserModule,

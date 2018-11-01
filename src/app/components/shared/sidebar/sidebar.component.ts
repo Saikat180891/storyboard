@@ -1,5 +1,7 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 import {trigger,transition,style,animate,state} from '@angular/animations';
+
+import {DataService} from '../../../data.service';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -40,6 +42,16 @@ export enum KEY_CODE {
 export class SidebarComponent implements OnInit {
   panelOpenState = false;
 
+  /**
+   * numberOfSections is an array
+   */
+  numberOfSections = [];
+  imageCounter = 0;
+  sectionName = '';
+  createSectionName:string = '';
+  createSectionDescription:string = '';
+  addSectionStatus:boolean = false;
+
     /**
    * Hide backdrop when escape is pressed
    * @param event 
@@ -52,14 +64,47 @@ export class SidebarComponent implements OnInit {
     } 
   }
 
-  constructor() { }
+  constructor(private el: ElementRef, private _apiService: DataService) { }
 
   ngOnInit() {
+    
   }
 
   isOpen = false;
  
   toggle() {
     this.isOpen = !this.isOpen;
+    setTimeout(()=>{
+      this.el.nativeElement.querySelector(".sections").style.height = `${(Number(window.screen.height) - (150 + 100 + 50 + 100))}px`;
+    }, 100)
+  }
+
+  onAddSectionClose(){
+    this.addSectionStatus = false;
+  }
+
+  onCreateSections(){
+    this.addSectionStatus = true;
+    // this.imageCounter++;
+    
+  }
+
+  addSection(){
+    
+    let payload = {section_name: this.createSectionName, description: this.createSectionDescription}
+    console.log(payload)
+    this._apiService.postData('/sop/reasoncode/userstories/1/sections.json', payload)
+      .subscribe(
+        response =>{
+          console.log(response)
+          this.numberOfSections.push(
+            {
+              ...response
+            }
+            );
+          console.log(response);
+        }
+      )
+    this.addSectionStatus = false;
   }
 }
