@@ -7,10 +7,8 @@
 
     <div class="img-upload" *ngIf="imageNotAvailable; else imageAvailable">
       <div class="img-upload-container">
-        <h2>Drag & Drop an Image</h2>
-        <h1><i class="far fa-plus-square"></i></h1>
-        <h2>or</h2>
-        <div class="btn btn__blue btn__float-none margin-0" (click)="addNewScreenOverlay()">ADD NEW SCREEN</div>
+        <!-- <h2>Click on Add new screen to begin</h2> -->
+        <div class="btn btn__lg btn__float-none margin-0" (click)="addNewScreenOverlay()">Click here to begin</div>
       </div>
     </div>
 
@@ -20,7 +18,7 @@
   </div>
 
   <div class="footer">
-    <div class="btn-add-screen" *ngIf="!insertImageStatus"  (click)="addNewScreenOverlay()">Add new screen
+    <div class="btn-add-screen" *ngIf="!imageNotAvailable"  (click)="addNewScreenOverlay()">Add new screen
     </div>
     <label class="label-nav" for="">Navigate Screens</label>
     <div class="btn-holder">
@@ -34,7 +32,7 @@
 
 
 
-<div class="overlay top-3" *ngIf="addNewScreen" @fadeInOut>
+<div class="overlay" *ngIf="_screenHolderService.addNewScreen" @fadeInOut>
   <div class="popup">
     <div class="popup__head">
       <span>Add New Screen</span>

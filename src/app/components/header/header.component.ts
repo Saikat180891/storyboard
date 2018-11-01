@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 
+import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
 
 @Component({
   selector: 'app-header',
@@ -17,15 +18,15 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private _msAdalSvc: MsAdalAngular6Service
+  ) { }
 
   ngOnInit() {
   }
 
-  state: string = 'default';
-
-    rotate() {
-        this.state = (this.state === 'default' ? 'rotated' : 'default');
-    }
+  logout() {
+    this._msAdalSvc.logout();
+  }
 
 }

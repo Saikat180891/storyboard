@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; 
+import { MsAdalAngular6Module, AuthenticationGuard } from 'microsoft-adal-angular6';
 
 import {MatDividerModule} from '@angular/material/divider';
 import {MatMenuModule} from '@angular/material/menu';
@@ -21,6 +22,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 import {DataService} from './data.service';
 import {AppcontrolService} from './controlservice/appcontrol.service';
@@ -52,12 +55,20 @@ import { MainScreenHolderComponent } from './components/shared/main-screen-holde
 import { AuthComponent } from './auth/auth.component';
 import { CustomAccordianComponent } from './components/shared/custom-accordian/custom-accordian.component';
 import { ReasonCodeAccordianComponent } from './components/shared/reason-code-accordian/reason-code-accordian.component';
+import { CustomDropDownComponent } from './components/shared/custom-drop-down/custom-drop-down.component';
 
 const routes = [
-  {path: 'projects', component: ContainerComponent},
-  {path: 'projects/reason-codes', component: ReasoncodesComponent},
-  {path: 'page3', component: FlowchartComponent},
-  {path: 'projects/add-steps', component: AddStepsComponent}
+  {path: '', component: AuthComponent, pathMatch: 'full'},
+  {path: 'login', component: AuthComponent },
+  {path: 'projects', component: ContainerComponent, canActivate: [AuthenticationGuard]},
+
+  // {path: 'projects/reason-codes', component: ReasoncodesComponent},
+  // {path: 'page3', component: FlowchartComponent},
+  // {path: 'projects/add-steps', component: AddStepsComponent}
+
+  {path: 'projects/reason-codes', component: ReasoncodesComponent, canActivate: [AuthenticationGuard]},
+  {path: 'page3', component: FlowchartComponent, canActivate: [AuthenticationGuard]},
+  {path: 'projects/add-steps/:id', component: AddStepsComponent, canActivate: [AuthenticationGuard]}
 ];
 
 @NgModule({
@@ -86,7 +97,8 @@ const routes = [
     MainScreenHolderComponent,
     AuthComponent,
     CustomAccordianComponent,
-    ReasonCodeAccordianComponent
+    ReasonCodeAccordianComponent,
+    CustomDropDownComponent
   ],
   imports: [
     BrowserModule,
@@ -105,6 +117,8 @@ const routes = [
     MatNativeDateModule,
     MatListModule,
     FormsModule,
+    MatTooltipModule,
+    MatIconModule,
     MatButtonToggleModule,
     MatSelectModule,
     MatAutocompleteModule,
@@ -112,9 +126,18 @@ const routes = [
     MatProgressSpinnerModule,
     HttpClientModule,
     MatInputModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    MsAdalAngular6Module.forRoot({
+      tenant: '217024cc-23bf-42d2-a7cf-d270166db3e2',
+      clientId: 'd2b68bba-05ea-4053-811d-6f62047adf21',
+      // redirectUri: envProd.production ? envProd.azure.redirectUri : envDev.azure.redirectUri,
+      redirectUri: window.location.origin,
+      endpoints: { },
+      navigateToLoginRequestUrl: true,
+      cacheLocation: 'localStorage'
+    }),
   ],
-  providers: [DataService, MatDatepickerModule,AppcontrolService, ContainerService],
+  providers: [DataService, MatDatepickerModule,AppcontrolService, ContainerService, AuthenticationGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

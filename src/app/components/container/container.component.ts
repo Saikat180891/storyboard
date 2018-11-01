@@ -40,29 +40,4 @@ export class ContainerComponent implements OnInit {
       this._ContainerService.getdataFromDB();
       this.cardDatas = this._ContainerService.cardContents;
   }
-
-  // getdataFromDB(){
-  //   this._dataService.getJSON()
-  //   .subscribe(data => {
-  //     data.forEach((element)=>{
-  //       this.cardDatas.push({
-  //         themeColor: this._UIControllerService.colorPicker[this._UIControllerService.getUniqueNumber()],
-  //         reasonCodes: this._UIControllerService.firstZero(Number(element.rCodes)),
-  //         ...element
-  //       })
-  //     })
-  //       console.log("GET", this.cardDatas)
-  //      }
-  //    );
-  // }
-
-  state: string = 'default';
-
-    rotate() {
-        this.state = (this.state === 'default' ? 'rotated' : 'default');
-    }
-
-
-    
-
 }

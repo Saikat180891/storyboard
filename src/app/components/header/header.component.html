@@ -1,13 +1,27 @@
 <nav class="navbar">
   <div class="brand" routerLink="/projects">Storyboard</div>
+
+  
+
   <div class="profile">
+
     <span class="profile__name">John Doe</span>
+
     <span class="profile__pic">
-      <img src="https://image.freepik.com/free-icon/apple-logo_318-40184.jpg" alt="John Doe">
-      <span class="arrow-menu" (click)="rotate()">
-        <i class="fas fa-angle-down"></i>  
-      </span>
+      <img src="../../../assets/pics/92979836-stock-vector-profile-anonymous-face-icon-gray-silhouette-person-male-default-avatar-photo-placeholder-isolated-on.jpg" alt="John Doe">
     </span>
+
+    <span class="arrow-menu">
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <i class="fas fa-angle-down"></i>  
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <span (click)="logout()">Logout</span>
+        </button>
+      </mat-menu>
+    </span>
+
   </div>
 </nav>
 <!-- [@rotatedState]='state' -->

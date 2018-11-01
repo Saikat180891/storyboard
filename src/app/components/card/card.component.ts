@@ -3,6 +3,8 @@ import {trigger,transition,style,animate,state} from '@angular/animations';
 
 import {AppcontrolService} from '../../controlservice/appcontrol.service';
 import {DataService} from '../../data.service';
+import {CardService} from './card.service';
+import {ContainerService} from '../container/container.service';
 
 @Component({
   selector: 'app-card',
@@ -27,15 +29,19 @@ export class CardComponent implements OnInit, OnChanges{
   currentStatus;
   myIndex;
   cardID;
-  nextPage;
-  queryParams;
+  context = 1;
+  // @Output() cardContent = new EventEmitter();
   // imagePath = 'https://statewideguttercompany.com/wp-content/uploads/2012/07/logo-placeholder.jpg';
 
-  constructor(private _UIcontrolerService:AppcontrolService, private _dataService:DataService) {
-   }
+  constructor(
+    private _UIcontrolerService:AppcontrolService, 
+    private _dataService:DataService,
+    private _cardService:CardService,
+    private _containerService: ContainerService
+    ) { }
 
    ngOnInit(){
-    console.log(this.myIndex)
+    this._cardService.cardContent = this.cardData;
    }
    ngOnChanges(){
     this.localData = this.cardData;
@@ -46,8 +52,12 @@ export class CardComponent implements OnInit, OnChanges{
     this._UIcontrolerService.overlayHeaderAssigner(this.createSOP);
   }
 
-  onEdit(event, cardData){
+  onPrevent(event){
     event.stopPropagation();
+  }
+
+  onEdit(event, cardData){
+    // event.stopPropagation();
     // event.preventDefault();
     this._UIcontrolerService.setOverlay(true);
     this._UIcontrolerService.overlayHeaderAssigner(this.editSOP);

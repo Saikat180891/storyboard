@@ -291,6 +291,16 @@
   margin-left: 20px;
   cursor: pointer;
 
+  &__lg{
+    width: 300px;
+    height: 100px;
+    font-size: 30px;
+    line-height: 100px; 
+    background-color: transparent;
+    border: 2px dashed #ccc;
+    color: #ccc;
+  }
+
   &__blue{
     background-color: #2A7DE1;
     color: #fff;

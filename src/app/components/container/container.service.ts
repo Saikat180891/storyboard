@@ -38,7 +38,7 @@ export class ContainerService{
               ...element
             })
           })
-            console.log("GET", this.cardContents)
+            // console.log("GET", this.cardContents)
            }
          );
       }

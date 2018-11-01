@@ -3,27 +3,26 @@
   [ngClass]="{'expansion-panel-header-expanded':expand}">
     <span>{{screenDetails.section_name}}</span> 
     <span class="info">
-      <i class="fas fa-info-circle">
-        <span class="tooltip">{{screenDetails.description}}</span>
-      </i>
+      <i class="fas fa-info-circle" matTooltip="{{screenDetails.description}}"
+      matTooltipClass="tooltip-white" [matTooltipPosition]="'right'"></i>
     </span>
   </div>
   <div class="expansion-panel-collapsed" *ngIf="expand" @hide>
 
-    <div *ngIf="screens.length > 0; else placeholder">
+    <div *ngIf="screens.length > 0">
+
       <div class="slide-holder" *ngFor="let screen of screens">
         <span>{{'Screen Name'}}</span>
         <img src="../../../../assets/pics/img5.jpg" alt="">
         <span>{{'2.1.1 - 2.1.4'}}</span>
         <div class="carrat"></div>
       </div>
+
     </div>
 
-    <ng-template #placeholder>
-      <div class="slide-holder">
-        <img src="../../../../assets/pics/Group 2785@2x.png" alt="">
-      </div>
-    </ng-template>
+    <div class="slide-holder" (click)="onAddScreen()">
+      <img src="../../../../assets/pics/Group 2785@2x.png" alt="placeholder">
+    </div>
 
   </div>
 </div>

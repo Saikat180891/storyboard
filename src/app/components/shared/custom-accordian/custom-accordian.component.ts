@@ -1,5 +1,7 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Input, HostListener, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import {trigger,transition,style,animate,state} from '@angular/animations';
+import {TooltipPosition} from '@angular/material';
+import {FormControl} from '@angular/forms';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -13,6 +15,7 @@ export enum KEY_CODE {
   selector: 'app-custom-accordian',
   templateUrl: './custom-accordian.component.html',
   styleUrls: ['./custom-accordian.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('hide',[
       state('void', style({height:'0px'})),
@@ -25,6 +28,11 @@ export enum KEY_CODE {
 })
 export class CustomAccordianComponent implements OnInit {
   @Input('screenDetails') screenDetails;
+
+  @Output() addNewScreen = new EventEmitter();
+
+  positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
+  
 
   expand:boolean = false;
 
@@ -41,6 +49,10 @@ export class CustomAccordianComponent implements OnInit {
     console.log(event)
     event.stopPropagation();
     this.expand = !this.expand;
+  }
+
+  onAddScreen(){
+    this.addNewScreen.emit(true);
   }
 
 }

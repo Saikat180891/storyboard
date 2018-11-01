@@ -13,8 +13,10 @@
     <div class="header">
 
       <div class="header-container header-container-top-35">
-        <div class="header-container-logo"></div>
-        <div class="header-container-heading"><span>{{"Cornell Project"}}</span></div>
+        <img class="header-container-logo" src="clientLogo"/>
+        <div class="header-container-heading">
+          <span>{{clientData?clientData.clientName:''}}</span>
+        </div>
         <div class="header-container-reason-code">
           <span>{{"Reason Code 1"}} <i class="fa fa-caret-down"></i></span>
         </div>
@@ -37,14 +39,13 @@
       </div>
   
       <div class="sections" *ngIf="numberOfSections">
-          <app-custom-accordian 
+          <app-custom-accordian (addNewScreen)="onAddNewScreenRequest($event)"
           [screenDetails]="numberOfSection" 
           *ngFor="let numberOfSection of numberOfSections"></app-custom-accordian>
       </div>
       
     </div>
     
-
     <div class="footer">
       <div class="footer-btn" (click)="onCreateSections()">Add New Section</div>
       <div class="btn-arrow-holder">
@@ -53,7 +54,6 @@
       </div>
     </div>
   </div>
-  
 
 </div>
 
@@ -61,7 +61,7 @@
   <div class="popup" *ngIf="addSectionStatus">
     <div class="popup__head">
       <span>Add New Screen</span>
-      <span (click)="onAddSectionClose()"><i class="fas fa-times"></i></span>
+      <span (click)="onCloseAddSection()"><i class="fas fa-times"></i></span>
     </div>
     <div class="popup__body">
       <input type="text" placeholder="Section Name" [(ngModel)]="createSectionName">
@@ -70,7 +70,7 @@
     <div class="popup__footer">
       <div class="btn-horizontal">
         <div class="btn btn__blue" (click)="addSection()">ADD SECTION</div>
-        <div class="btn btn__white" (click)="onAddSectionClose()">CANCEL</div>
+        <div class="btn btn__white" (click)="onCloseAddSection()">CANCEL</div>
       </div>
     </div>
   </div>

@@ -34,14 +34,6 @@ export class AppcontrolService {
     return this.overlayStatus;
   }
 
-  // showOverlay(){
-  //   return this.overlayStatus = true;
-  // }
-
-  // hideOverlay(){
-  //   return this.overlayStatus = false;
-  // }
-
   /**
    * Write dialog box header
    * @param value 
