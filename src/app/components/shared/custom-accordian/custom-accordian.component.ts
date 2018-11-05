@@ -2,6 +2,9 @@ import { Component, OnInit, Input, HostListener, ViewEncapsulation, Output, Even
 import {trigger,transition,style,animate,state} from '@angular/animations';
 import {TooltipPosition} from '@angular/material';
 import {FormControl} from '@angular/forms';
+import {ScreenHolderService} from '../screen-holder/screen-holder.service';
+
+import {hideAccordian} from '../../../animation';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -16,15 +19,7 @@ export enum KEY_CODE {
   templateUrl: './custom-accordian.component.html',
   styleUrls: ['./custom-accordian.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  animations: [
-    trigger('hide',[
-      state('void', style({height:'0px'})),
-      // state('*', style({opacity:1, right:'0'})),
-      transition('void <=> *',[
-        animate('0.1s ease-in')
-      ])
-    ])
-  ]
+  animations: [hideAccordian]
 })
 export class CustomAccordianComponent implements OnInit {
   @Input('screenDetails') screenDetails;
@@ -33,26 +28,36 @@ export class CustomAccordianComponent implements OnInit {
 
   positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
   
+  screenSelected;
 
-  expand:boolean = false;
+  expand:boolean = true;
 
   screens = [];
 
-  constructor() { }
+  constructor(private _screenHolderService: ScreenHolderService) { }
 
   ngOnInit() {
-    // this.screeContainer.push(this.screenDetails);
-    // console.log(this.screeContainer)
+    this.screens = this._screenHolderService.carousal;
   }
 
   onExpand(event){
-    console.log(event)
+    // console.log(event)
     event.stopPropagation();
     this.expand = !this.expand;
   }
 
   onAddScreen(){
     this.addNewScreen.emit(true);
+  }
+
+  onSelect(screen, index){
+    console.log(screen, index);
+    this.screenSelected = index;
+    let screenID = this._screenHolderService.carousal.indexOf(screen);
+  }
+
+  onStopPropagation(event){
+    event.stopPropagation();
   }
 
 }

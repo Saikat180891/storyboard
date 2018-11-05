@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; 
 import { MsAdalAngular6Module, AuthenticationGuard } from 'microsoft-adal-angular6';
 
@@ -56,6 +56,7 @@ import { AuthComponent } from './auth/auth.component';
 import { CustomAccordianComponent } from './components/shared/custom-accordian/custom-accordian.component';
 import { ReasonCodeAccordianComponent } from './components/shared/reason-code-accordian/reason-code-accordian.component';
 import { CustomDropDownComponent } from './components/shared/custom-drop-down/custom-drop-down.component';
+import { NotFoundComponent } from './components/shared/not-found/not-found.component';
 
 const routes = [
   {path: '', component: AuthComponent, pathMatch: 'full'},
@@ -68,7 +69,8 @@ const routes = [
 
   {path: 'projects/reason-codes', component: ReasoncodesComponent, canActivate: [AuthenticationGuard]},
   {path: 'page3', component: FlowchartComponent, canActivate: [AuthenticationGuard]},
-  {path: 'projects/add-steps/:id', component: AddStepsComponent, canActivate: [AuthenticationGuard]}
+  {path: 'projects/add-steps/:id', component: AddStepsComponent, canActivate: [AuthenticationGuard]},
+  {path: '**', component: AuthComponent}
 ];
 
 @NgModule({
@@ -98,7 +100,8 @@ const routes = [
     AuthComponent,
     CustomAccordianComponent,
     ReasonCodeAccordianComponent,
-    CustomDropDownComponent
+    CustomDropDownComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -117,6 +120,7 @@ const routes = [
     MatNativeDateModule,
     MatListModule,
     FormsModule,
+    ReactiveFormsModule,
     MatTooltipModule,
     MatIconModule,
     MatButtonToggleModule,

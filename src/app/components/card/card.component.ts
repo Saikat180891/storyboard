@@ -64,5 +64,16 @@ export class CardComponent implements OnInit, OnChanges{
     this._UIcontrolerService.setCardEdit(cardData);
     this._UIcontrolerService.data.emit(cardData)
   }
+
+  onDelete(localData){
+    this._dataService.delete('/sop',localData.id + '.json')
+      .subscribe(response=>{
+        this._containerService.cardContents.forEach((element, index)=>{
+          if(element.id == localData.id){
+            this._containerService.cardContents.splice(index, 1);
+          }
+        })
+      })
+  }
   
 }

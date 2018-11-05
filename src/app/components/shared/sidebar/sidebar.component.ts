@@ -4,7 +4,7 @@ import {AddStepsService} from '../../add-steps/add-steps.service';
 import {DataService} from '../../../data.service';
 import {ScreenHolderService} from '../screen-holder/screen-holder.service';
 
-
+import {popupInOut, openClose} from '../../../animation';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -18,29 +18,7 @@ export enum KEY_CODE {
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss', './hamburgers.min.scss'],
-  animations: [
-    trigger('openClose', [
-      state('open', style({
-        left: '0'
-      })),
-      state('closed', style({
-        left: '-180px'
-      })),
-      transition('open => closed', [
-        animate('0.1s')
-      ]),
-      transition('closed => open', [
-        animate('0.1s')
-      ]),
-    ]),
-    trigger('fadeIn',[
-      state('void', style({opacity:0})),
-      // state('*', style({opacity:1, right:'0'})),
-      transition('void <=> *',[
-        animate('0.1s ease-in')
-      ])
-    ])
-  ]
+  animations: [openClose, popupInOut]
 })
 export class SidebarComponent implements OnInit {
   panelOpenState = false;
@@ -95,9 +73,9 @@ export class SidebarComponent implements OnInit {
 
   onAddNewScreenRequest(event){
     this._screenHolderService.addNewScreen = event;
+    this._screenHolderService.ifEdit = event;
     console.log(event)
     this.toggle();
-
   }
 
   onCloseAddSection(){
@@ -116,7 +94,7 @@ export class SidebarComponent implements OnInit {
     if(this.createSectionName != ''){
       let payload = {section_name: this.createSectionName, description: this.createSectionDescription}
     console.log(payload)
-    this._apiService.postData('/sop/reasoncode/userstories/1/sections.json', payload)
+    this._apiService.postData('/sop/reasoncode/userstories/2/sections.json', payload)
       .subscribe(
         response =>{
           console.log(response)

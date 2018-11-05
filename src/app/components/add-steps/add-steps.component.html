@@ -2,6 +2,6 @@
 <div class="container">
   <app-nav-header></app-nav-header>
   <app-add-screen [headerPayload]="applDetails"></app-add-screen>
-  <app-main-screen-holder (mainScreenPayload)="onReceivePayload($event)"></app-main-screen-holder>
+  <app-main-screen-holder (screenTracker)="screenTracker($event)"></app-main-screen-holder>
   <app-sidebar></app-sidebar>
 </div>

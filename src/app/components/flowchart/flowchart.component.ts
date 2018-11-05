@@ -42,7 +42,7 @@ export class FlowchartComponent implements OnInit, AfterViewInit {
   }
 
   onMouseDown(event){
-    console.log("pressed")
+    // console.log("pressed")
     this.mouseDown = true;
     this.startX = event.offsetX;
     this.startY = event.offsetY;
@@ -50,7 +50,7 @@ export class FlowchartComponent implements OnInit, AfterViewInit {
 
   onMouseUp(event){
     this.mouseDown = false
-    console.log("released")
+    // console.log("released")
     this.endX = event.offsetX;
     this.endY = event.offsetY;
   } 

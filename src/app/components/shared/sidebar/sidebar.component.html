@@ -53,11 +53,12 @@
         <div class="btn-arrow down"><i class="fas fa-angle-down"></i></div>
       </div>
     </div>
+    
   </div>
 
 </div>
 
-<div class="sidebar-overlay" @fadeIn *ngIf="isOpen">
+<div class="sidebar-overlay" @popupInOut *ngIf="isOpen">
   <div class="popup" *ngIf="addSectionStatus">
     <div class="popup__head">
       <span>Add New Screen</span>

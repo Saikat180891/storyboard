@@ -16,7 +16,6 @@ export class DataService {
     {
       id: 0,
     },
-    
   ];
 
   backdropData = [
@@ -106,13 +105,17 @@ export class DataService {
   }
 
   postData(param, body){
-    console.log(this.apiUrl + param , body)
     return this.http.post(this.apiUrl + param, body);
   }
 
-  handleError(err){
-    console.log(err)
+  delete(param, id){
+    return this.http.delete(this.apiUrl + param + '/' + id);
   }
+
+  update(param, id, body){
+    return this.http.put(this.apiUrl + param + '/' + id, body);
+  }
+
 }
 
 interface CardContents{

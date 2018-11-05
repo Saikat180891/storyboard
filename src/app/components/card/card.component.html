@@ -12,7 +12,7 @@
 <!-- code for existing card starts here -->
 <ng-template #newCard>
   <div 
-  [routerLink]="['/projects/add-steps', localData ? localData.id : '']" 
+  [routerLink]="['/projects/add-steps', localData.id]" 
   class="header" 
   [id]="localData ? localData.id : ''"
   >
@@ -28,7 +28,7 @@
             <button mat-menu-item (click)="onEdit($event, localData)">
               <span>Edit</span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="onDelete(localData)">
               <span>Delete</span>
             </button>
           </mat-menu>

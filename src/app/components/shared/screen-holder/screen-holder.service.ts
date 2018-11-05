@@ -5,6 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class ScreenHolderService{
   addNewScreen: boolean = false;
-
+  ifEdit:boolean =true;
   carousal = [];
 }

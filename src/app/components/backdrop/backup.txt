@@ -1,0 +1,130 @@
+
+  onCreateNew2(){
+    let successStatus = {
+      clientName: 0,
+      automationSystemName: 0,
+      chargeCode: 0,
+      selectedDate: 0
+    };
+    let patternToMatch = /[0-9]/g;
+    //console.log(patternToMatch.test(this.clientName))
+    /**
+     * Check if client name is blank or contains numbers,
+     * if the condition is true then show the message and make the clientName 
+     * property of the successStatus object 1, successStatus.clientName = 1 ==>
+     * this will be used to validate if all the fields are correct or not
+     */
+    if(this.clientName === '' || patternToMatch.test(this.clientName)){
+      this.validateClientName = true;
+      this.validateClientNameMessage = "*Client name cannot be blank or contain numbers";
+      successStatus.clientName = 1;
+    }else{
+      this.validateClientName = false;
+      successStatus.clientName = 0;
+    }
+    /**
+     * check if the automation system name is blank or contains numbers, if it contains numbers then
+     * validation fails
+     */
+    if(this.automationSystemName === '' || patternToMatch.test(this.clientName)){
+      this.validateAutomationSystemName = true;
+      this.validateAutomationSystemNameMessage = "*Automation system name cannot be blank";
+      successStatus.automationSystemName = 2;
+    }else{
+      this.validateAutomationSystemName = false;
+      successStatus.automationSystemName = 0;
+    }
+    /**
+     * Check if the charge code is blank or not
+     */
+    if(this.chargeCode === ''){
+      this.validateChargeCode = true;
+      this.validateChargeCodeMessage = "*Please enter a valid charge code";
+      successStatus.chargeCode = 3;
+    }else{
+      this.validateChargeCode = false;
+      successStatus.chargeCode = 0;
+    }
+    /**
+     * Check if the user has entered due date or not
+     */
+    if(!this.selectedDate){
+      this.validateSelectedDate = true;
+      this.border = "1px solid rgb(245, 117, 117)";
+      this.validateChargeCodeMessage = "*Please choose the date from the datepicker";
+      successStatus.selectedDate = 4;
+    }else{
+      this.validateSelectedDate = false;
+      successStatus.selectedDate = 0;
+      this.border = "1px solid #D1D1D1";
+    }
+    /**
+     * Check for charge code and due date
+     */
+    if(this.chargeCode === '' && !this.selectedDate){
+      this.validateChargeCode = this.validateSelectedDate = true;
+      this.border = "1px solid rgb(245, 117, 117)";
+      this.validateChargeCodeMessage = "*Please enter a valid charge code and due date";
+      successStatus.chargeCode = 3;
+      successStatus.selectedDate = 4;
+    }else{
+      this.validateSelectedDate = this.validateSelectedDate = false;
+      successStatus.chargeCode = 0;
+      successStatus.selectedDate = 0;
+      this.border = "1px solid #D1D1D1";
+    }
+    /**
+     * This is the checklist, i.e. if there are validation errors in the above 
+     * code the sum won't be zero and hence the API call is not executed
+     */
+    let sum = 0;
+    for(let status in successStatus){
+      sum += parseInt(successStatus[status]);
+      console.log(sum, successStatus[status], status);
+    }
+    console.log("Sum = ", sum)
+    /**
+     * If the sum is zero only then the api is called to store the create new SOP data to 
+     * database
+     */
+    if(sum == 0){
+      this.openPreloader = true;
+      this.postPayload = {
+        id: 18,
+        title: this.automationSystemName,
+        due_date: this.formatDate(this.selectedDate),
+        rCodes: 5,
+        chargeCode: this.chargeCode,
+        clientName: this.clientName,
+        logo: this.imagePath ? this.imagePath : 'https://statewideguttercompany.com/wp-content/uploads/2012/07/logo-placeholder.jpg',
+      }
+    
+      this._dataService.postData('/sop.json', this.postPayload)
+      .subscribe(
+        (res)=> {
+          console.log("Response ",res);
+          if(res){
+            this.onOverlayClose();
+            this._ContainerService.cardContents.push(
+              {
+                themeColor: this._ContainerService.colorPicker[this._ContainerService.getUniqueNumber()],
+                reasonCodes: 0,
+                ...res
+              }
+            );
+            console.log(this._ContainerService.cardContents)
+            //this._ContainerService.getdataFromDB();
+            this.automationSystemName = '';
+            this.clientName = '';
+            this.chargeCode = '';
+            this.selectedDate = '';
+            this.createAssignees = [];
+            //this.cardDatas = this._ContainerService.cardContents;
+            //this._ContainerService.cardContents.push(res);
+          }
+          this.openPreloader = false;
+        },
+        (err)=> console.log(err)
+      );
+    }
+  }

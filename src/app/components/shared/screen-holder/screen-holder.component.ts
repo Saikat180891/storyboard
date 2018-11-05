@@ -4,25 +4,27 @@ import {trigger,transition,style,animate,state} from '@angular/animations';
 import {DataService} from '../../../data.service';
 import {ScreenHolderService} from './screen-holder.service';
 
+import {popupInOut} from '../../../animation';
+
+export enum KEY_CODE {
+  RIGHT_ARROW = 39,
+  LEFT_ARROW = 37,
+  ESCAPE = 27,
+  ENTER = 13
+}
+
 
 
 @Component({
   selector: 'app-screen-holder',
   templateUrl: './screen-holder.component.html',
   styleUrls: ['./screen-holder.component.scss'],
-  animations: [
-    trigger('fadeInOut',[
-      state('void', style({opacity:0})),
-      // state('*', style({opacity:1, right:'0'})),
-      transition('void <=> *',[
-        animate('100ms ease-in')
-      ])
-    ])
-  ]
+  animations: [popupInOut]
 })
 export class ScreenHolderComponent implements OnInit {
 
-  @Output() res = new EventEmitter();
+  // @Output() res = new EventEmitter();
+  @Output() currentScreen = new EventEmitter();
 
   imgs = [1,2,3,4,5,6];
   prev="";
@@ -67,9 +69,20 @@ export class ScreenHolderComponent implements OnInit {
     private el: ElementRef, 
     private _apiService: DataService,
     private _screenHolderService: ScreenHolderService
-    ) {
-    
-   }
+    ) { }
+
+
+    /**
+   * Hide backdrop when escape is pressed
+   * @param event 
+   */
+  @HostListener('document:keyup.escape', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    //console.log(event)
+    if (event.keyCode === KEY_CODE.ESCAPE) {
+      this.onClose();
+    } 
+  }
 
   ngOnInit() {
     // this.addNewScreen = this._screenHolderService.addNewScreen;
@@ -82,7 +95,7 @@ export class ScreenHolderComponent implements OnInit {
 
   addNewScreenOverlay(){
     this._screenHolderService.addNewScreen = !this._screenHolderService.addNewScreen;
-    this.ifEdit = true;
+    this._screenHolderService.ifEdit = true;
   }
   onClose(){
     this._screenHolderService.addNewScreen = false;
@@ -103,6 +116,7 @@ export class ScreenHolderComponent implements OnInit {
         let getlastScreen = this.currentScreenTracker - 1;
         this.insertImage = this._screenHolderService.carousal[getlastScreen].get('screenImage');
         this.updateScreenTracker(this._screenHolderService.carousal[getlastScreen]);
+        this.currentScreen.emit(this.currentScreenTracker);
   
         let lastScreen = this.currentScreenTracker - 1;
         if(lastScreen < 0){
@@ -128,6 +142,7 @@ export class ScreenHolderComponent implements OnInit {
 
       this.insertImage = this._screenHolderService.carousal[getNextScreen].get('screenImage');
       this.updateScreenTracker(this._screenHolderService.carousal[getNextScreen]);
+      this.currentScreen.emit(this.currentScreenTracker);
     }
   }
   reset(){
@@ -148,10 +163,11 @@ export class ScreenHolderComponent implements OnInit {
       payload.append('tabName', this.tabName);
       payload.append('screenImage', this.previewScreen);
 
-      this.res.emit(payload);
+      // this.res.emit(payload);
 
       this._screenHolderService.carousal.push(payload);
       this.updateScreenTracker(payload);
+      this.currentScreen.emit(this.currentScreenTracker);
       console.log("Carousal Service ",this._screenHolderService.carousal)
 
       if(this._screenHolderService.carousal.length > 1){
@@ -201,7 +217,7 @@ export class ScreenHolderComponent implements OnInit {
   }
 
   onEdit(){
-    this.ifEdit = false;
+    this._screenHolderService.ifEdit = false;
     this._screenHolderService.addNewScreen = true;
     this.previewImageStatus = false;
 
@@ -211,6 +227,21 @@ export class ScreenHolderComponent implements OnInit {
     this.previewScreen = this._screenHolderService.carousal[this.currentScreenTracker].get('screenImage');
 
     console.log(this._screenHolderService.carousal[this.currentScreenTracker]);
+  }
+
+  onSave(){
+    let payload = new FormData();
+
+    payload.append('applicationName', this.applicationName);
+    payload.append('screenName', this.screenName);
+    payload.append('tabName', this.tabName);
+    payload.append('screenImage', this.previewScreen);
+
+    // this.res.emit(payload);
+    this.insertImage = payload.get('screenImage') + '';
+    this._screenHolderService.carousal[this.currentScreenTracker] = payload;
+    this.currentScreen.emit(this.currentScreenTracker);
+    this.onClose();
   }
 
   onFileSelected(fileSelected){

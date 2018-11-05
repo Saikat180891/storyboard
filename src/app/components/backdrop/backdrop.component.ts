@@ -1,9 +1,14 @@
 import { Component, OnInit, Input, OnChanges, AfterViewInit, AfterContentInit, HostListener } from '@angular/core';
-import {trigger,transition,style,animate,state} from '@angular/animations';
+import {FormBuilder, FormGroup, FormControlName, FormControl, Validators} from '@angular/forms';
+import {slideDown, hideInOut} from '../../animation';
 
 import {AppcontrolService} from '../../controlservice/appcontrol.service';
 import {DataService} from '../../data.service';
 import {ContainerService} from '../container/container.service';
+import { eventNames } from 'cluster';
+import { element } from 'protractor';
+
+
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -16,24 +21,7 @@ export enum KEY_CODE {
   selector: 'app-backdrop',
   templateUrl: './backdrop.component.html',
   styleUrls: ['./backdrop.component.scss'],
-  animations: [
-    trigger('fadeIn',[
-      state('void', style({opacity:0, top:'-100%'})),
-      // state('*', style({opacity:1, right:'0'})),
-      transition('void <=> *',[
-        animate('200ms ease-in')
-      ])
-    ]),
-    trigger('fadeOut',[
-      transition('void => *',[
-        style({height: "0px"}),
-        animate(100, style({height: "26px"}))
-      ]),
-      transition('* => void',[
-        animate(100, style({height: "0px"}))
-      ])
-    ])
-  ]
+  animations: [slideDown, hideInOut]
 })
 
 export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
@@ -46,20 +34,16 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   editSOP = "Edit SOP";
   openPreloader:boolean = false;
 
-  arr = ["Saikat paul", "sujit", "Aadesh", "kanishka", "Manjit", "rakesh", "ayush", "arpit", "arijit", "venkat", "Bhavana", "manbir", "shankar"]
+  arr = ["Saikat paul", "sujit", "Aadesh", "kanishka", "Manjit", "rakesh", "ayush", "arpit", "arijit", "venkat", "Bhavana", "manbir", "shankar"];
 
   /**
    * This variables are used while creating a new card
    */
-  automationSystemName = '';
-  clientName = '';
-  chargeCode = '';
-  selectedDate;
+
   createAssignees = [];
-  postPayload;
 
   /**
-   * Validate create SOP form
+   * Validate SOP form
    */
   validateAutomationSystemName:boolean = false;
   validateClientName:boolean = false;
@@ -70,44 +54,53 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * These variables are used to display messages using string interpolation technique
    * The "border" variable is used to change the border color of the due date box
    */
-  validateAutomationSystemNameMessage:string = '';
-  validateClientNameMessage:string = '';
-  validateChargeCodeMessage:string = '';
-  validateSelectedDateMessage:string = '';
-  border;
+  validateClientNameMessage:string = "*Client name cannot be blank or contain numbers";
+  validateAutomationSystemNameMessage:string = "*Automation system name cannot be blank";
+  validateChargeCodeMessage:string = "*Please enter a valid charge code or due date";
+
+  border = "1px solid #D1D1D1";
 
   /**
-   * This variables are used while editing a card
+   * This variables are used while rearranging the date
    */
-  editFields;
-  editAutomationSystemName;
-  editClientName;
-  editChargeCode;
   editSelectedDate;
-  editImagePath;
-  editAssignees = [];
 
   options;
 
   ID;
 
+  sopForm = this.formBuilder.group({
+            id: [''],
+            clientName: ['', Validators.required],
+            automationSystemName: ['', Validators.required],
+            chargeCode: ['', Validators.required],
+            due_date: ['', Validators.required],
+            rCodes: [''],
+            logo: ['']
+          });
+ 
+
   constructor(private _UIControllerService:AppcontrolService,
               private _dataService:DataService,
-              private _ContainerService:ContainerService) 
-  {
-    this._UIControllerService.data.subscribe(
-        (data:any)=>{
-          console.log("dataFrom_UIControllerService ",data)
-          this.ID = data.id;
-          this.editAutomationSystemName = data.title;
-          this.editClientName = data.clientName;
-          this.editChargeCode = data.chargeCode;
-          this.editSelectedDate = this.arrangeDateInCorrectFormat(data.due_date);
-          this.editAssignees = data.assigneeList;
-          this.editImagePath = data.logo;
-          this.editAssignees = data.assigneeList;
-        }
-      );
+              private _ContainerService:ContainerService,
+              private formBuilder: FormBuilder) {
+
+              this._UIControllerService.data.subscribe(
+                  (data:any)=>{
+                    console.log("dataFrom_UIControllerService ",data)
+
+                    this.sopForm.patchValue({
+                      id: data.id,
+                      clientName: data.clientName,
+                      automationSystemName: data.title,
+                      chargeCode: data.chargeCode,
+                      due_date: this.arrangeDateInCorrectFormat(data.due_date),
+                      rCodes: 5,
+                      logo: this.imagePath ? this.imagePath : 'https://statewideguttercompany.com/wp-content/uploads/2012/07/logo-placeholder.jpg'
+                    });
+                    console.log("the edited sop form is ", this.sopForm.value);
+                  }
+                );
   }
 
   /**
@@ -201,10 +194,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    */
   onClose(){
     this._UIControllerService.setOverlay(false);
-    this.automationSystemName = '';
-    this.clientName = '';
-    this.chargeCode = '';
-    this.selectedDate = '';
     this.imagePath = '';
     this.createAssignees = [];
     this.validateAutomationSystemName = false;
@@ -213,6 +202,20 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     this.validateSelectedDate = false;
     this.border = "1px solid #D1D1D1";
     this.assigneeName = '';
+  
+    /**
+     * Clear the form
+     */
+    this.sopForm.setValue({
+      id: '',
+      clientName: '',
+      automationSystemName: '',
+      chargeCode: '',
+      due_date: '',
+      rCodes: '',
+      logo: ''
+    });
+
   }
 
   /**
@@ -222,12 +225,9 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   onFileSelected(fileSelected){
     if (fileSelected.target.files && fileSelected.target.files[0]) {
       let reader:any = new FileReader();
-
       reader.readAsDataURL(fileSelected.target.files[0]);
-      //console.log(reader, fileSelected)
       reader.onload = (fileSelected) => {
         this.imagePath = fileSelected.target.result;
-        console.log(fileSelected.target)
       }
     }
   }
@@ -265,112 +265,58 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   /**
    * Create a new SOP on click
    */
-  onCreateNew(){
-    let successStatus = {
-      clientName: 0,
-      automationSystemName: 0,
-      chargeCode: 0,
-      selectedDate: 0
-    };
-    let patternToMatch = /[0-9]/g;
-    //console.log(patternToMatch.test(this.clientName))
-    /**
-     * Check if client name is blank or contains numbers,
-     * if the condition is true then show the message and make the clientName 
-     * property of the successStatus object 1, successStatus.clientName = 1 ==>
-     * this will be used to validate if all the fields are correct or not
-     */
-    if(this.clientName === '' || patternToMatch.test(this.clientName)){
-      this.validateClientName = true;
-      this.validateClientNameMessage = "*Client name cannot be blank or contain numbers";
-      successStatus.clientName = 1;
-    }else{
-      this.validateClientName = false;
-      successStatus.clientName = 0;
-    }
-    /**
-     * check if the automation system name is blank or contains numbers, if it contains numbers then
-     * validation fails
-     */
-    if(this.automationSystemName === '' || patternToMatch.test(this.clientName)){
-      this.validateAutomationSystemName = true;
-      this.validateAutomationSystemNameMessage = "*Automation system name cannot be blank";
-      successStatus.automationSystemName = 2;
-    }else{
-      this.validateAutomationSystemName = false;
-      successStatus.automationSystemName = 0;
-    }
-    /**
-     * Check if the charge code is blank or not
-     */
-    if(this.chargeCode === ''){
-      this.validateChargeCode = true;
-      this.validateChargeCodeMessage = "*Please enter a valid charge code";
-      successStatus.chargeCode = 3;
-    }else{
-      this.validateChargeCode = false;
-      successStatus.chargeCode = 0;
-    }
-    /**
-     * Check if the user has entered due date or not
-     */
-    if(!this.selectedDate){
-      this.validateSelectedDate = true;
-      this.border = "1px solid rgb(245, 117, 117)";
-      this.validateChargeCodeMessage = "*Please choose the date from the datepicker";
-      successStatus.selectedDate = 4;
-    }else{
-      this.validateSelectedDate = false;
-      successStatus.selectedDate = 0;
-      this.border = "1px solid #D1D1D1";
-    }
-    /**
-     * Check for charge code and due date
-     */
-    if(this.chargeCode === '' && !this.selectedDate){
-      this.validateChargeCode = this.validateSelectedDate = true;
-      this.border = "1px solid rgb(245, 117, 117)";
-      this.validateChargeCodeMessage = "*Please enter a valid charge code and due date";
-      successStatus.chargeCode = 3;
-      successStatus.selectedDate = 4;
-    }else{
-      this.validateSelectedDate = this.validateSelectedDate = false;
-      successStatus.chargeCode = 0;
-      successStatus.selectedDate = 0;
-      this.border = "1px solid #D1D1D1";
-    }
-    /**
-     * This is the checklist, i.e. if there are validation errors in the above 
-     * code the sum won't be zero and hence the API call is not executed
-     */
-    let sum = 0;
-    for(let status in successStatus){
-      sum += parseInt(successStatus[status]);
-      console.log(sum, successStatus[status], status);
-    }
-    console.log("Sum = ", sum)
-    /**
-     * If the sum is zero only then the api is called to store the create new SOP data to 
-     * database
-     */
-    if(sum == 0){
-      this.openPreloader = true;
-      this.postPayload = {
-        id: 18,
-        title: this.automationSystemName,
-        due_date: this.formatDate(this.selectedDate),
-        rCodes: 5,
-        chargeCode: this.chargeCode,
-        clientName: this.clientName,
-        logo: this.imagePath ? this.imagePath : 'https://statewideguttercompany.com/wp-content/uploads/2012/07/logo-placeholder.jpg',
+
+
+   validateForm(object){
+    let validationStatus = [];
+
+    for (let key in this.sopForm.value) {
+      if(key == 'clientName'){
+        validationStatus[0] = !(this.sopForm.value[key] == '');
+        this.validateClientName = !validationStatus[0];
       }
-    
-      this._dataService.postData('/sop.json', this.postPayload)
+
+      if(key == 'automationSystemName'){
+        validationStatus[1] = !(this.sopForm.value[key] == '');
+        this.validateAutomationSystemName = !validationStatus[1];
+      }
+
+      if(key == 'chargeCode'){
+        validationStatus[2] = !(this.sopForm.value[key] == '');
+        this.validateChargeCode = !validationStatus[2];
+      }
+
+      if(key == 'due_date'){
+        validationStatus[3] = !(this.sopForm.value[key] == 'NaN/NaN/NaN');
+        this.validateSelectedDate = !validationStatus[3];
+        this.border = !validationStatus[3]?"1px solid rgb(245, 117, 117)":"1px solid #D1D1D1";
+      }
+    }
+
+    let sum = 0;
+    for(let i of validationStatus){
+      if(i == false){
+        sum = sum + 1;
+      }
+    }
+
+    return sum;
+   }
+
+  onCreateNew(){
+    this.sopForm.value.due_date = this.formatDate(this.sopForm.value.due_date);
+
+    let validationCheck = this.validateForm(this.sopForm.value);
+
+    if(validationCheck == 0){
+      this.openPreloader = true;
+      console.log("the created sop form is ", this.sopForm.value);
+
+      this._dataService.postData('/sop.json',  this.sopForm.value)
       .subscribe(
         (res)=> {
           console.log("Response ",res);
           if(res){
-            this.onOverlayClose();
             this._ContainerService.cardContents.push(
               {
                 themeColor: this._ContainerService.colorPicker[this._ContainerService.getUniqueNumber()],
@@ -379,58 +325,55 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
               }
             );
             console.log(this._ContainerService.cardContents)
-            //this._ContainerService.getdataFromDB();
-            this.automationSystemName = '';
-            this.clientName = '';
-            this.chargeCode = '';
-            this.selectedDate = '';
-            this.createAssignees = [];
-            //this.cardDatas = this._ContainerService.cardContents;
-            //this._ContainerService.cardContents.push(res);
           }
           this.openPreloader = false;
+          this.onOverlayClose();
+          setTimeout(()=>{
+            this.openPreloader = false;
+          });
         },
         (err)=> console.log(err)
       );
+
     }
+
+    
   }
 
   /**
    * Save an editted card
    */
   onSave(){
-    console.log(this.editAutomationSystemName)
-    console.log(this.editClientName)
-    console.log(this.editChargeCode)
-    console.log(this.editSelectedDate)
-    console.log(this.editImagePath)
-  }
+    this.sopForm.value.due_date = this.formatDate(this.sopForm.value.due_date);
+    
+    let validationCheck = this.validateForm(this.sopForm.value);
 
-  /**
-   * The (ngModelChange) event edits the editAutomationSystemName property
-   * @param editedASN 
-   */
-  onEditASN(editedASN){
-    this.editAutomationSystemName = editedASN;
-    console.log(editedASN)
-  }
+    if(validationCheck == 0){
+      this.openPreloader = true;
+      console.log("the edited sop form is ", this.sopForm.value);
 
-  /**
-   * The (ngModelChange) event edits the editCN property
-   * @param editCN 
-   */
-  onEditClientName(editCN){
-    this.editClientName = editCN;
-    console.log(editCN)
-  }
+        this._dataService.update('/sop', this.sopForm.value.id + '.json', this.sopForm.value)
+        .subscribe(response=>{
+          this._ContainerService.cardContents.forEach((element, index)=>{
+            if(element.id == this.sopForm.value.id){
+              this._ContainerService.cardContents[index] = {
+                themeColor: this._ContainerService.colorPicker[this._ContainerService.getUniqueNumber()],
+                reasonCodes: 0,
+                ...response
+              }
+            }
+          })
+          this.openPreloader = false;
+          this.onOverlayClose();
 
-  /**
-   * The (ngModelChange) event edits the editCC property
-   * @param editCC 
-   */
-  onEditCargeCode(editCC){
-    this.editChargeCode = editCC;
-    console.log(editCC)
+          setTimeout(()=>{
+            this.openPreloader = false;
+          });
+      });
+
+    }
+
+    
   }
 
   /**
@@ -439,7 +382,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    */
   formatDate(date){
     let dateStr = new Date(date)
-    let strDate =  "" + dateStr.getDate() + "/" + dateStr.getMonth() + "/" + dateStr.getFullYear();
+    let strDate =  "" + dateStr.getDate() + "/" + (dateStr.getMonth()+1) + "/" + dateStr.getFullYear();
     return strDate;
   }
   

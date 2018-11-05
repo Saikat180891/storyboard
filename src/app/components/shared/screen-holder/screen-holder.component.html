@@ -3,7 +3,7 @@
   <div class="image-1-holder" [ngStyle]="{'background-image':'url('+prev+')'}"></div>
   
   <div class="image-2-holder">
-    <div *ngIf="displayEditButton" class="btn btn__white edit-image" (click)="onEdit()">Edit</div>
+    <div *ngIf="displayEditButton" class="btn btn__white edit-image" (click)="onEdit()">EDIT SCREEN</div>
 
     <div class="img-upload" *ngIf="imageNotAvailable; else imageAvailable">
       <div class="img-upload-container">
@@ -32,7 +32,7 @@
 
 
 
-<div class="overlay" *ngIf="_screenHolderService.addNewScreen" @fadeInOut>
+<div class="overlay" *ngIf="_screenHolderService.addNewScreen" @popupInOut>
   <div class="popup">
     <div class="popup__head">
       <span>Add New Screen</span>
@@ -45,8 +45,8 @@
       <input type="text" name="" id="" placeholder="Screen Name" [(ngModel)]="screenName">
       <input type="text" name="" id="" placeholder="Tab Name" [(ngModel)]="tabName">
       <div class="btn-horizontal">
-        <div *ngIf="ifEdit" class="btn btn__blue btn__float-none btn__width" (click)="onAdd()">ADD</div>
-        <div *ngIf="!ifEdit" class="btn btn__blue btn__float-none btn__width" (click)="onSave()">SAVE</div>
+        <div *ngIf="_screenHolderService.ifEdit" class="btn btn__blue btn__float-none btn__width" (click)="onAdd()">ADD</div>
+        <div *ngIf="!_screenHolderService.ifEdit" class="btn btn__blue btn__float-none btn__width" (click)="onSave()">SAVE</div>
         <div class="btn btn__white btn__float-none btn__width" (click)="onClose()">CANCEL</div>
       </div>
     </div>

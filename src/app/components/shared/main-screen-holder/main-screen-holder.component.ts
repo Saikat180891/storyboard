@@ -7,7 +7,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class MainScreenHolderComponent implements OnInit {
 
-  @Output() mainScreenPayload = new EventEmitter();
+  // @Output() mainScreenPayload = new EventEmitter();
+  @Output() screenTracker = new EventEmitter();
 
   constructor() { }
 
@@ -16,8 +17,13 @@ export class MainScreenHolderComponent implements OnInit {
   }
 
   getPayload(event){
-    this.mainScreenPayload.emit(event)
-    console.log("This is the response ",event)
+    // this.mainScreenPayload.emit(event)
+    // console.log("This is the response ",event)
+  }
+
+  getCurrentScreen(event){
+    console.log("This is the Current Screen ",event)
+    this.screenTracker.emit(event)
   }
 
 }
