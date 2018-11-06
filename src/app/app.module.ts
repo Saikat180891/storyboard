@@ -28,6 +28,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {DataService} from './data.service';
 import {AppcontrolService} from './controlservice/appcontrol.service';
 import {ContainerService} from '../app/components/container/container.service';
+import {PreloaderService} from '../app/components/shared/preloader/preloader.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -57,6 +58,7 @@ import { CustomAccordianComponent } from './components/shared/custom-accordian/c
 import { ReasonCodeAccordianComponent } from './components/shared/reason-code-accordian/reason-code-accordian.component';
 import { CustomDropDownComponent } from './components/shared/custom-drop-down/custom-drop-down.component';
 import { NotFoundComponent } from './components/shared/not-found/not-found.component';
+import { PreloaderComponent } from './components/shared/preloader/preloader.component';
 
 const routes = [
   {path: '', component: AuthComponent, pathMatch: 'full'},
@@ -101,7 +103,8 @@ const routes = [
     CustomAccordianComponent,
     ReasonCodeAccordianComponent,
     CustomDropDownComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    PreloaderComponent
   ],
   imports: [
     BrowserModule,
@@ -141,7 +144,7 @@ const routes = [
       cacheLocation: 'localStorage'
     }),
   ],
-  providers: [DataService, MatDatepickerModule,AppcontrolService, ContainerService, AuthenticationGuard],
+  providers: [DataService, MatDatepickerModule,AppcontrolService, ContainerService, AuthenticationGuard, PreloaderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

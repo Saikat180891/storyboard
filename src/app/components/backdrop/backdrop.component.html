@@ -73,7 +73,6 @@
                 [ngClass]="{'datepicker':true, 'validators':validateChargeCode===true}"
                 [ngStyle]="{'border':validateChargeCode?border:false}"
               >
-
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
               
@@ -89,10 +88,10 @@
       <div class="dialog-group padding-all upload height-auto">
         <div class="relative pointer">
           <button mat-stroked-button>
-            <img class="preview-logo" *ngIf="imagePath" [src]="imagePath" [alt]="imagePath">
-            <span class="client-logo" *ngIf="!imagePath">Upload Client Logo</span>
-            <span *ngIf="!imagePath"><small>(Max Size 200px-200px)</small></span>
-            <span *ngIf="!imagePath"><i class="fas fa-download"></i>CHOOSE FILE</span>
+            <img class="preview-logo" *ngIf="sopForm.value.logo" [src]="sopForm.value.logo" [alt]="sopForm.value.logo">
+            <span class="client-logo" *ngIf="!sopForm.value.logo">Upload Client Logo</span>
+            <span *ngIf="!sopForm.value.logo"><small>(Max Size 200px-200px)</small></span>
+            <span *ngIf="!sopForm.value.logo"><i class="fas fa-download"></i>CHOOSE FILE</span>
           </button>
           <input type="file" (change)="onFileSelected($event)"/>
         </div>
@@ -104,10 +103,9 @@
             <input type="text" id="ASN-box" placeholder="Type name or email address" (keyup)="onKeyPress()">
             <div class="autocomplete" *ngIf="options; else load">
               <ng-container *ngFor="let option of options; let i=index">
-                  <span class="autocomplete-item" *ngIf="i<3" (click)="onSelect(option)">{{option}}</span>
+                <span class="autocomplete-item" *ngIf="i<3" (click)="onSelect(option)">{{option}}</span>
               </ng-container>
             </div>
-
               <button (click)="addAssignee(true)">ADD</button>
           </div>
       </div>
@@ -146,11 +144,7 @@
 
     </div>
 <!-- ------------------------------------------------------------------------------------- -->
-    <div class="preloader" (click)="preventPropagation($event)" *ngIf="openPreloader">
-      <div class="spinner">
-        <mat-spinner></mat-spinner>
-      </div>
-    </div>
+<app-preloader></app-preloader>
 <!-- ------------------------------------------------------------------------------------- -->
   </div>
     

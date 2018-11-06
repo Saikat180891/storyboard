@@ -5,9 +5,7 @@ import {slideDown, hideInOut} from '../../animation';
 import {AppcontrolService} from '../../controlservice/appcontrol.service';
 import {DataService} from '../../data.service';
 import {ContainerService} from '../container/container.service';
-import { eventNames } from 'cluster';
-import { element } from 'protractor';
-
+import {PreloaderService} from '../shared/preloader/preloader.service';
 
 
 export enum KEY_CODE {
@@ -32,7 +30,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
 
   createSOP = "Create New SOP";
   editSOP = "Edit SOP";
-  openPreloader:boolean = false;
 
   arr = ["Saikat paul", "sujit", "Aadesh", "kanishka", "Manjit", "rakesh", "ayush", "arpit", "arijit", "venkat", "Bhavana", "manbir", "shankar"];
 
@@ -83,7 +80,8 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   constructor(private _UIControllerService:AppcontrolService,
               private _dataService:DataService,
               private _ContainerService:ContainerService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private _preloaderService: PreloaderService) {
 
               this._UIControllerService.data.subscribe(
                   (data:any)=>{
@@ -96,7 +94,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
                       chargeCode: data.chargeCode,
                       due_date: this.arrangeDateInCorrectFormat(data.due_date),
                       rCodes: 5,
-                      logo: this.imagePath ? this.imagePath : 'https://statewideguttercompany.com/wp-content/uploads/2012/07/logo-placeholder.jpg'
+                      logo: data.logo
                     });
                     console.log("the edited sop form is ", this.sopForm.value);
                   }
@@ -227,7 +225,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
       let reader:any = new FileReader();
       reader.readAsDataURL(fileSelected.target.files[0]);
       reader.onload = (fileSelected) => {
-        this.imagePath = fileSelected.target.result;
+        this.sopForm.value.logo = fileSelected.target.result;
       }
     }
   }
@@ -309,9 +307,9 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     let validationCheck = this.validateForm(this.sopForm.value);
 
     if(validationCheck == 0){
-      this.openPreloader = true;
+      this._preloaderService.openPreloader = true;
       console.log("the created sop form is ", this.sopForm.value);
-
+/*
       this._dataService.postData('/sop.json',  this.sopForm.value)
       .subscribe(
         (res)=> {
@@ -326,18 +324,18 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
             );
             console.log(this._ContainerService.cardContents)
           }
-          this.openPreloader = false;
+          this._preloaderService.openPreloader = false;
           this.onOverlayClose();
           setTimeout(()=>{
-            this.openPreloader = false;
+            this._preloaderService.openPreloader = false;
           });
         },
         (err)=> console.log(err)
       );
-
+*/
     }
 
-    
+    this._preloaderService.openPreloader = false;
   }
 
   /**
@@ -349,7 +347,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     let validationCheck = this.validateForm(this.sopForm.value);
 
     if(validationCheck == 0){
-      this.openPreloader = true;
+      this._preloaderService.openPreloader = true;
       console.log("the edited sop form is ", this.sopForm.value);
 
         this._dataService.update('/sop', this.sopForm.value.id + '.json', this.sopForm.value)
@@ -362,12 +360,12 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
                 ...response
               }
             }
-          })
-          this.openPreloader = false;
+          });
+          this._preloaderService.openPreloader = false;
           this.onOverlayClose();
 
           setTimeout(()=>{
-            this.openPreloader = false;
+            this._preloaderService.openPreloader = false;
           });
       });
 
