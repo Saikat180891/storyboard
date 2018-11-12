@@ -9,12 +9,12 @@ body {
     /* overflow-x: hidden; */
     /* height: 100vh; */
 }
-.mat-btn{
-    background-color: #fff;
-}
-.mat-tab-header, .mat-tab-nav-bar{
-    border-bottom: 2px solid rgba(0,0,0,.12);
-}
+// .mat-btn{
+//     background-color: #fff;
+// }
+// .mat-tab-header, .mat-tab-nav-bar{
+//     border-bottom: 2px solid rgba(0,0,0,.12);
+// }
 .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar{
     background-color: #2A7DE1;
 }
@@ -29,62 +29,62 @@ mat-ink-bar.mat-ink-bar{
     margin: 0;
     padding: 0;
 } */
-.mat-toolbar-row, .mat-toolbar-single-row{
-    height: 125px;
-}
-mat-expansion-panel-header.mat-expansion-panel-header{
-    background-color: #fff;
-}
+// .mat-toolbar-row, .mat-toolbar-single-row{
+//     height: 125px;
+// }
+// mat-expansion-panel-header.mat-expansion-panel-header{
+//     background-color: #fff;
+// }
 /* mat-expansion-panel-header.mat-expansion-panel-header:hover{
     background-color: blue;
 } */
 /* .mat-expansion-panel{
     background-color: red;
 } */
-mat-expansion-panel .mat-expansion-panel-body{
-    padding: 0;
-    margin: 0;
-}
-.mat-expansion-panel-header:not([aria-disabled=true]){
-    cursor: auto;
-}
-mat-radio-button .mat-radio-label-content{
-    padding-right: 30px;
-}
-.mat-list .mat-list-item .mat-list-item-content{
-    padding: 0px 0px;
-}
+// mat-expansion-panel .mat-expansion-panel-body{
+//     padding: 0;
+//     margin: 0;
+// }
+// .mat-expansion-panel-header:not([aria-disabled=true]){
+//     cursor: auto;
+// }
+// mat-radio-button .mat-radio-label-content{
+//     padding-right: 30px;
+// }
+// .mat-list .mat-list-item .mat-list-item-content{
+//     padding: 0px 0px;
+// }
 /* .cdk-global-overlay-wrapper, .cdk-overlay-container{
     top: 36px;
 } */
-.mat-tab-label-content, .mat-button-wrapper{
-    font-size: 15px;
-}
+// .mat-tab-label-content, .mat-button-wrapper{
+//     font-size: 15px;
+// }
 
-.mat-form-field-appearance-legacy .mat-form-field-underline{
-    background-color: rgba(0,0,0,0);
-}
-.mat-form-field-appearance-legacy .mat-form-field-underline{
-    height: 0px;
-}
-.mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label, .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label{
-    -webkit-transform: translateY(0) scale(1) perspective(100px) translateZ(0);
-    transform: translateY(0) scale(1) perspective(100px) translateZ(0);
-    visibility: hidden;
-}
-.mat-form-field-ripple{
-    width: 0%;
-}
-.mat-form-field.mat-focused .mat-form-field-ripple{
-    background-color: transparent;
-}
-.mat-form-field.mat-focused .mat-form-field-ripple, .mat-form-field.mat-form-field-invalid .mat-form-field-ripple{
-    visibility: hidden;    
-}
-mat-select.mat-select .mat-select-trigger .mat-select-value span.mat-select-placeholder::placeholder{
-    color: red;
-    background-color: red;
-}
+// .mat-form-field-appearance-legacy .mat-form-field-underline{
+//     background-color: rgba(0,0,0,0);
+// }
+// .mat-form-field-appearance-legacy .mat-form-field-underline{
+//     height: 0px;
+// }
+// .mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label, .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label{
+//     -webkit-transform: translateY(0) scale(1) perspective(100px) translateZ(0);
+//     transform: translateY(0) scale(1) perspective(100px) translateZ(0);
+//     visibility: hidden;
+// }
+// .mat-form-field-ripple{
+//     width: 0%;
+// }
+// .mat-form-field.mat-focused .mat-form-field-ripple{
+//     background-color: transparent;
+// }
+// .mat-form-field.mat-focused .mat-form-field-ripple, .mat-form-field.mat-form-field-invalid .mat-form-field-ripple{
+//     visibility: hidden;    
+// }
+// mat-select.mat-select .mat-select-trigger .mat-select-value span.mat-select-placeholder::placeholder{
+//     color: red;
+//     background-color: red;
+// }
 
 
 /*
@@ -282,7 +282,6 @@ li span{
 .height-max{
     max-height: 73px;
     overflow: auto;
-    
 }
 .height-max::-webkit-scrollbar {
     display: none;

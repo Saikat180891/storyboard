@@ -5,6 +5,7 @@ import {FormControl} from '@angular/forms';
 import {ScreenHolderService} from '../screen-holder/screen-holder.service';
 
 import {hideAccordian} from '../../../animation';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -30,9 +31,18 @@ export class CustomAccordianComponent implements OnInit {
   
   screenSelected;
 
+  dragging:boolean = true;
+  dragBox;
+
   expand:boolean = true;
 
+  hover:boolean = false;
+
   screens = [];
+
+  // @HostListener('click', ['$event']) onclick(btn){
+  //   console.log("Hostlistener ", btn)
+  // }
 
   constructor(private _screenHolderService: ScreenHolderService) { }
 
@@ -50,14 +60,29 @@ export class CustomAccordianComponent implements OnInit {
     this.addNewScreen.emit(true);
   }
 
+  onrightClick(event){
+    console.log(event)
+  }
+
   onSelect(screen, index){
-    console.log(screen, index);
     this.screenSelected = index;
     let screenID = this._screenHolderService.carousal.indexOf(screen);
   }
 
   onStopPropagation(event){
     event.stopPropagation();
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this._screenHolderService.carousal, event.previousIndex, event.currentIndex);
+  }
+
+  onMouseDown(index){
+    this.dragging = false;
+  }
+
+  onMouseUp(index){
+    this.dragging = true;
   }
 
 }

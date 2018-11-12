@@ -1,82 +1,41 @@
-.expansion-panel{
+.reason-carousal{
+  // background-color: red;
   width: 100%;
-  height: auto;
-  border-top: 5px solid #40C0C4;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.16);
-  
-
-  &-body{
-    width: 100%;
-    height: auto;
-    background-color: #EEF2F6;
-
-    
-  }
-
-  &-header{
-    height: 90px;
-    position: relative;
-    background-color: #ffffff;
-
-    &-btn-box{
-      position: absolute;
-      top: calc(50%);
-      transform: translateY(-5%);
-      right: 10px;
-      display: flex;
-    }
-
-    table{
-      width: 85%;
-      padding-top: 18px;
-      margin-left: 20px;
-      // background-color: red;
-      
-    }
-  }
-}
-th{
-  color: #0033A1;
-  font-weight: 500;
-  text-align: center;
-  // border: 1px solid #000;
-}
-td input{
-  width: 100%;
-  border: 1px solid #D1D1D1;
-  padding-left: 5px;
-  height: 30px;
-  border-radius: 2px;
-}
-.btn{
-  width: 90px;
-  height: 30px;
-  text-align: center;
-  line-height: 30px;
-  border-radius: 2px;
-  font-weight: 500;
-  margin-right: 20px;
-  cursor: pointer;
-
-  &-main-blue{
-    background-color: #2A7DE1;
-    color: #fff;
-  }
-  &-main-white{
-    background-color: #FFF;
-    color: #54585A;
-    border: 1px solid #54585A;
-  }
-}
-
-.expansion-panel-body table{
-  width: 85%;
-  height: 100px;
-  margin-left: 20px;
+  height: 135px;
   position: relative;
-}
-.absolute{
-  position: absolute;
-  top: 50%;
-  right: 30px;
+
+
+  .btn-arrow{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 40px;
+    text-align: center;
+    line-height: 135px;
+    font-size: 30px;
+    color: #707070;
+    background-color: rgba(204, 204, 204, 0);
+    transition: all 0.1s;
+    cursor: pointer;
+
+    &:hover{
+      background-color: rgba(204, 204, 204, 0.5);
+    }
+  }
+  .btn-left{
+    left: 0;
+  }
+  .btn-right{
+    right: 0;
+  }
+  .carousal-card-container{
+    position: absolute;
+    top: 0;
+    left: 40px;
+    width: calc(100% - 80px);
+    height: 100%;
+    background-color: red;
+    display: flex;
+    justify-content: space-around;
+  }
 }

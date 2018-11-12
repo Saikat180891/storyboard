@@ -1,0 +1,151 @@
+.step-container{
+  width: 100%;
+  height: auto;
+  border: 1px solid #D1D1D1;
+  margin-bottom: 20px;
+  box-shadow: 0px 1px 2px rgba($color: #000000, $alpha: 0.15);
+
+  .collapsable{
+    margin: 15px;
+    max-height: 300px;
+    height: auto;
+    transition: all 0.2s ease-out;
+  }
+  .hide{
+    overflow: hidden;
+    max-height: 50px;
+  }
+}
+.header{
+  width: 100%;
+  height: 30px;
+  background-color: rgba($color: #E5E5E5, $alpha: 0.7);
+  position: relative;
+
+  .select{
+    display: block;
+    position: absolute;
+    height: 30px;
+    line-height: 30px;
+    top: 50%;
+    left: 44px;
+    transform: translateY(-50%);
+    color: #2A7DE1;
+    cursor: pointer;
+  }
+
+  .collapse-color{
+    color: #ffffff;
+  }
+
+  .col-btn{
+    display: block;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+  }
+
+  .rotate{
+    transform: rotate(180deg);
+  }
+
+  .divider{
+    border-left: 1px solid #ffffff;
+  }
+
+  .option-btn{
+    right: 30px;
+    width: 60px;
+  }
+
+  .read-db{
+    right: 90px;
+    width: 100px;
+    color: #2A7DE1;
+  }
+
+  .read-db-color{
+    color: #ffffff;
+  }
+}
+.collapse-bg{
+  background-color: #2A7DE1;
+}
+
+.form-group{
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+input[type="text"], input[type="number"]{
+  border: 1px solid #D1D1D1;
+  height: 30px;
+  border-radius: 2px;
+  padding-left: 10px;
+}
+input[type="number"]{
+  padding-left: 2px;
+}
+.w-small{
+  width: 50px;
+}
+.w-2{
+  width: 21vw;
+}
+.w-3{
+  width: 18.5vw;
+}
+.w-4{
+  width: 12vw;
+}
+.w-full{
+  width: 100%;
+}
+.mr{
+  margin-right: 1%;
+}
+.ml{
+  margin-left: 1%;
+}
+.add-calc{
+  display: block;
+  line-height: 30px;
+  font-size: 14px;
+  text-align: center;
+  font-weight: 500;
+  color: #2A7DE1;
+  cursor: pointer;
+}
+.margin-right{
+  margin-right: 2%;
+}
+.w-half{
+  width: 48%;
+}
+
+fieldset {
+  border:0 none;
+  padding: 0;
+  margin: 0;
+}
+
+@media (min-width: 1368px) {
+  .w-4{
+    width: 13vw;
+  }
+  .w-3{
+    width: 20vw;
+  }
+
+  .w-2{
+    width: 22vw;
+  }
+}

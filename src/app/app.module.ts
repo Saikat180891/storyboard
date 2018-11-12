@@ -24,6 +24,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import {DataService} from './data.service';
 import {AppcontrolService} from './controlservice/appcontrol.service';
@@ -59,6 +60,11 @@ import { ReasonCodeAccordianComponent } from './components/shared/reason-code-ac
 import { CustomDropDownComponent } from './components/shared/custom-drop-down/custom-drop-down.component';
 import { NotFoundComponent } from './components/shared/not-found/not-found.component';
 import { PreloaderComponent } from './components/shared/preloader/preloader.component';
+import { ReasonCardComponent } from './components/shared/reason-code-accordian/reason-card/reason-card.component';
+import { AddReasonCardComponent } from './components/shared/reason-code-accordian/add-reason-card/add-reason-card.component';
+import { StepsComponent } from './components/shared/add-steps-holder/steps/steps.component';
+import { StepContainerComponent } from './components/shared/add-steps-holder/step-container/step-container.component';
+import { SelectComponent } from './components/shared/select/select.component';
 
 const routes = [
   {path: '', component: AuthComponent, pathMatch: 'full'},
@@ -104,7 +110,12 @@ const routes = [
     ReasonCodeAccordianComponent,
     CustomDropDownComponent,
     NotFoundComponent,
-    PreloaderComponent
+    PreloaderComponent,
+    ReasonCardComponent,
+    AddReasonCardComponent,
+    StepsComponent,
+    StepContainerComponent,
+    SelectComponent
   ],
   imports: [
     BrowserModule,
@@ -119,6 +130,7 @@ const routes = [
     MatExpansionModule,
     MatRadioModule,
     MatDialogModule,
+    DragDropModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatListModule,

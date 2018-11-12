@@ -48,3 +48,18 @@ export const hideAccordian = trigger('hide',[
     animate('0.1s ease-in')
   ])
 ])
+
+export const hideSteps = trigger('hideSteps',[
+  state('open', style({
+    height: 'auto'
+  })),
+  state('closed', style({
+    height: '50px'
+  })),
+  transition('open => closed', [
+    animate('1s')
+  ]),
+  transition('closed => open', [
+    animate('1s')
+  ]),
+])

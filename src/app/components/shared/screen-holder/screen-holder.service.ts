@@ -7,4 +7,6 @@ export class ScreenHolderService{
   addNewScreen: boolean = false;
   ifEdit:boolean =true;
   carousal = [];
+  currentScreen;
+  steps = [];
 }

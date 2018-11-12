@@ -90,6 +90,7 @@ export class ScreenHolderComponent implements OnInit {
   }
   updateScreenTracker(payLoad){
     this.currentScreenTracker = this._screenHolderService.carousal.indexOf(payLoad);
+    this._screenHolderService.currentScreen = this.currentScreenTracker;
     console.log("The current status tracker =",this.currentScreenTracker)
   }
 

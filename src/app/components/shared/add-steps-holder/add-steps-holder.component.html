@@ -1,1 +1,8 @@
-<div class="container">Add Steps</div>
+<div class="container" *ngIf="this._screenHolderService.steps">
+  <app-steps *ngFor="let step of this._screenHolderService.steps"></app-steps>
+</div>
+
+
+<!-- <div class="container">
+  <app-steps></app-steps>
+</div> -->

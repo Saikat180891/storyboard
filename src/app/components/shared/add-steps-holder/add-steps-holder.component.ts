@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ScreenHolderService} from '../screen-holder/screen-holder.service';
 
 @Component({
   selector: 'app-add-steps-holder',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddStepsHolderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _screenHolderService: ScreenHolderService) { }
 
   ngOnInit() {
+    console.log(this._screenHolderService.steps)
   }
 
 }

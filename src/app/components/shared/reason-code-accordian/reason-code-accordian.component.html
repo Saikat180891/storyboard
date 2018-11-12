@@ -1,57 +1,10 @@
-<div class="new-rc-box">
-  <div class="expansion-panel">
-    <div class="expansion-panel-header">
-      <table>
-        <tr>
-          <th>Reason Code#</th>
-          <th>RC Name</th>
-          <th>Status</th>
-          <th>User Story Identified</th>
-          <th>Effort Estimation(Hrs)</th>
-          <th>Release sprint</th>
-          <th>Dev Ready</th>
-        </tr>
-        <tr>
-          <td><input type="number"></td>
-          <td><input type="text"></td>
-          <td><input type="text"></td>
-          <td><input type="text"></td>
-          <td><input type="text"></td>
-          <td><input type="text"></td>
-          <td><input type="text"></td>
-        </tr>
-      </table>
-      <div class="expansion-panel-header-btn-box">
-        <div class="btn btn-main-blue margin-L20">
-          CREATE
-        </div>
-        <div class="btn btn-main-white">
-          CANCEL
-        </div>
-      </div>
-    </div>
-    <div class="expansion-panel-body">
-        <table>
-            <tr>
-              <th>User Story#</th>
-              <th>US Name</th>
-              <th>Status</th>
-              <th>Test Case Identified</th>
-              <th>Effort Estimation(Hrs)</th>
-              <th>Release sprint</th>
-              <th>Dev Ready</th>
-            </tr>
-          <tr>
-            <td><input type="number"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-          </tr>
-        </table>
-        <div class="btn btn-main-blue">ADD STEPS</div>
-    </div>
+
+<div class="reason-carousal">
+  <div class="btn-arrow btn-left" (click)="moveLeft()"><i class="fas fa-angle-left"></i></div>
+  <div class="carousal-card-container">
+    <ng-container *ngFor="let i of current">
+      <app-reason-card [data]='i'></app-reason-card>
+    </ng-container>
   </div>
+  <div class="btn-arrow btn-right" (click)="moveRight()"><i class="fas fa-angle-right"></i></div>
 </div>

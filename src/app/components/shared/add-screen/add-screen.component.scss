@@ -43,6 +43,8 @@ span{
     border: 0px solid;
     color: #fff;
     font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
 }
 .btn-light-blue{
     background-color: #40C0C4;
@@ -80,4 +82,7 @@ input[type="text"]::placeholder{
   right: 40%;
   color: #2A7DE1;
   font-weight: 500;
+}
+::ng-deep .mat-menu-panel{
+  width: 150px;
 }

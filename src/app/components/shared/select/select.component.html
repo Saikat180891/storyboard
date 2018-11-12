@@ -1,0 +1,8 @@
+<div class="select">
+  <input type="text" [placeholder]="placeholder" readonly [value]="selected">
+  <span class="down-caret" (click)="onOpen()"><i class="fas fa-angle-down"></i></span>
+  <div *ngIf="isOpen && options" class="select-dropdown">
+    <span *ngFor="let option of options" (click)="onSelect($event, option)">{{option}}</span>
+  </div>
+  <div *ngIf="isOpen" class="overlay custom-overlay" (click)="onOpen()"></div>
+</div>

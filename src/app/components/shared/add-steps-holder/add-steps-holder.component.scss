@@ -1,3 +1,18 @@
 .container{
-  margin-left: 20px;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar{
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #ECECEC; 
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgb(54, 54, 54); 
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
 }

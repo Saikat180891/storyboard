@@ -3,6 +3,7 @@ import {trigger,transition,style,animate,state} from '@angular/animations';
 import {AddStepsService} from '../../add-steps/add-steps.service';
 import {DataService} from '../../../data.service';
 import {ScreenHolderService} from '../screen-holder/screen-holder.service';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 import {popupInOut, openClose} from '../../../animation';
 
@@ -90,24 +91,29 @@ export class SidebarComponent implements OnInit {
     this.createSectionDescription = '';
   }
 
+  drop(event: CdkDragDrop<string[]>) {
+    
+    // moveItemInArray(this.movies, event.previousIndex, event.currentIndex);
+  }
+
   addSection(){
     if(this.createSectionName != ''){
       let payload = {section_name: this.createSectionName, description: this.createSectionDescription}
-    console.log(payload)
-    this._apiService.postData('/sop/reasoncode/userstories/2/sections.json', payload)
-      .subscribe(
-        response =>{
-          console.log(response)
-          this.numberOfSections.push(
-            {
-              ...response
-            }
-            );
-          console.log(response);
-        }
-      )
-    this.addSectionStatus = false;
-    this.resetForm();
+      console.log(payload)
+      this._apiService.postData('/sop/reasoncode/userstories/2/sections.json', payload)
+        .subscribe(
+          response =>{
+            console.log(response)
+            this.numberOfSections.push(
+              {
+                ...response
+              }
+              );
+            console.log(response);
+          }
+        )
+      this.addSectionStatus = false;
+      this.resetForm();
     }else{
       alert("Atleast section name is required");
     }

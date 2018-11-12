@@ -12,23 +12,34 @@
     </i>
     </span>
   </div>
-  <div class="expansion-panel-collapsed border-bottom" *ngIf="expand" @hide>
+  <div class="expansion-panel-collapsed border-bottom" *ngIf="expand" @hide (contextmenu)="onrightClick($event)">
 
-    <div *ngIf="screens.length > 0">
+    <div cdkDropList *ngIf="screens.length > 0" (cdkDropListDropped)="drop($event)">
 
-      <div [id]="i" (click)="onSelect(screen, i)" class="slide-holder" *ngFor="let screen of screens; let i = index" [ngClass]="{'active': screenSelected == i}">
+      <div 
+      [id]="i" 
+      (click)="onSelect(screen, i)" 
+      class="slide-holder" 
+      *ngFor="let screen of screens; let i = index" 
+      [ngClass]="{'active': screenSelected == i}" 
+      cdkDrag
+      (mousedown)="onMouseDown(i)" 
+      (mouseup)="onMouseUp(i)">
         <span>{{screen.get('screenName')}}</span>
-        <img [src]="screen.get('screenImage')" alt="">
+        <img [src]="screen.get('screenImage')" alt="screen.get('screenName')">
         <span>{{'2.1.1 - 2.1.4'}}</span>
         <div class="carrat"></div>
+        <div class="image-overlay"></div>
       </div>
 
     </div>
 
     <div class="slide-holder border-0" (click)="onAddScreen()">
-      <span></span>
-      <img src="../../../../assets/pics/Group 2785@2x.png" alt="placeholder">
-      <span></span>
+      <div>
+        <span></span>
+        <img src="../../../../assets/pics/Group 2785@2x.png" alt="placeholder">
+        <span></span>
+      </div>
     </div>
 
   </div>

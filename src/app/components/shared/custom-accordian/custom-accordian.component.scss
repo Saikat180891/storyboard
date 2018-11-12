@@ -27,6 +27,7 @@
   max-height: 100%;
   overflow-y: auto;
   background-color: #777777;
+  margin-top: 5px;
 }
 .expansion-panel-collapsed::-webkit-scrollbar{
   display: none;
@@ -40,13 +41,14 @@
   height: auto;
   width: 100%;
   overflow: hidden;
-  // border-bottom: 2px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
   padding: 10px 20px 10px 20px ;
+  cursor: pointer;
 }
 .slide-holder:hover{
   background-color: #ccc;
-  cursor: pointer;
 }
+
 .border-0{
   border: 0px solid;
 }
@@ -76,41 +78,11 @@
 
   i{
     position: relative;
-
-    .tooltip{
-      position: fixed;
-      top: 215px;
-      left: 230px;
-      max-width: 200px;
-      height: auto;
-      border-radius: 10px;
-      // border-bottom-left-radius: 0;
-      padding: 20px;
-      border: 1px solid #777;
-      color: #777;
-      background-color: #fff;
-      overflow: hidden;
-      visibility: hidden;
-    }
-    // .tooltip::after{
-    //   content: "";
-    //   width: 20px;
-    //   height: 20px;
-    //   background-color: #fff;
-    //   position: absolute;
-    //   top: 31px;
-    //   left: -11px;
-    //   transform: rotate(45deg);
-    // }
   }
   i:hover .tooltip{
     visibility: visible;
   }
 }
-// .tooltip-white {
-//   background: #fff;
-//   color: #000000;
-// }
 .margin{
   margin: 20px 0 20px 0;
 }
@@ -123,6 +95,31 @@
 .active:active{
   background-color: #40C0C4;
 }
-.border-bottom{
-  // border-bottom: 5px solid #2A7DE1;
+.cdk-drag-preview {
+  box-sizing: border-box;
+  background-color: #777777 !important;
+  border: 5px solid #40C0C4 !important;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+.cdk-drag-placeholder {
+  border: 5px dashed #cccccc;
+  border-radius: 5px;
+}
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.slide-holder.cdk-drop-list-dragging .slide-holder:not(.cdk-drag-placeholder) {
+  
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.image-overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
 }
