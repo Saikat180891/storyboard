@@ -1,5 +1,14 @@
-<div class="container" *ngIf="this._screenHolderService.steps">
-  <app-steps *ngFor="let step of this._screenHolderService.steps"></app-steps>
+
+<!-- <div class="header">
+  <ul>
+    <li class="active">tab1<span>&times;</span></li>
+    <li>tab1 <span>&times;</span></li>
+    <li>tab1</li>
+  </ul>
+</div> -->
+
+<div class="container">
+  <app-steps *ngFor="let step of _screenHolderService.steps; let i = index" [screenNumber]="this._screenHolderService.currentScreen" [id]="i"></app-steps>
 </div>
 
 

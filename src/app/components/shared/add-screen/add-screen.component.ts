@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {ScreenHolderService} from '../screen-holder/screen-holder.service';
+import {StepService} from '../add-steps-holder/steps/step.service';
+import {AddScreenService} from './add-screen.service';
 
 @Component({
   selector: 'app-add-screen',
@@ -11,27 +13,31 @@ export class AddScreenComponent implements OnInit {
 
   currentScreenTitle;
 
-  tempObj = {};
 
   tasks = ['Operation', 'Condition', 'Loop'];
 
-  constructor(private _screenHolderService: ScreenHolderService) { }
+  constructor(private _screenHolderService: ScreenHolderService,
+              private _stepService: StepService,
+              private _addScreen: AddScreenService) { }
 
   ngOnInit() {
   }
 
   onSelect(task){
-    console.log(this._screenHolderService.currentScreen);
-    this.currentScreenTitle = this._screenHolderService.carousal[this._screenHolderService.currentScreen].get('applicationName') + '_' + 
-                              this._screenHolderService.carousal[this._screenHolderService.currentScreen].get('screenName')      + '_' +
-                              this._screenHolderService.carousal[this._screenHolderService.currentScreen].get('tabName');
+
     if(task === 'Operation'){
-      console.log(this.currentScreenTitle);
-      this.tempObj["title"] = this.currentScreenTitle+'_'+task;
-      this.tempObj["currentScreen"] = this._screenHolderService.currentScreen;
-      console.log(this.tempObj)
-      this._screenHolderService.steps.push(this.tempObj);
+      // this._addScreen.tempObj["screenDetails"] = {
+      //   applicationName: this._screenHolderService.carousal[this._screenHolderService.currentScreen].get('applicationName'),
+      //   screenName: this._screenHolderService.carousal[this._screenHolderService.currentScreen].get('screenName'),
+      //   tabName: this._screenHolderService.carousal[this._screenHolderService.currentScreen].get('tabName')
+      // };
+      this._addScreen.tempObj["currentScreen"] = this._screenHolderService.currentScreen;
+      this._screenHolderService.steps.push(this._addScreen.tempObj.numberOfSteps);
+      // console.log(task,this._screenHolderService.carousal2[this._screenHolderService.currentScreen].steps);
+      // this._screenHolderService.steps.push(1);
     }
+    console.log(this._screenHolderService.steps)
+    // console.log(this._screenHolderService.carousal2[this._screenHolderService.currentScreen].steps)
   }
 
 }

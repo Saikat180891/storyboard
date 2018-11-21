@@ -25,8 +25,8 @@
       cdkDrag
       (mousedown)="onMouseDown(i)" 
       (mouseup)="onMouseUp(i)">
-        <span>{{screen.get('screenName')}}</span>
-        <img [src]="screen.get('screenImage')" alt="screen.get('screenName')">
+        <span>{{screen.screenName}}</span>
+        <img [src]="screen.image_url" alt="screen.screenName">
         <span>{{'2.1.1 - 2.1.4'}}</span>
         <div class="carrat"></div>
         <div class="image-overlay"></div>

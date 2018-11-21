@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ElementRef, OnInit } from '@angular/core';
 import {AppcontrolService} from './controlservice/appcontrol.service';
 
 
@@ -7,16 +7,25 @@ import {AppcontrolService} from './controlservice/appcontrol.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  constructor(private _constrolService:AppcontrolService){
+  constructor(private _constrolService:AppcontrolService,
+              private el:ElementRef){
 
   }
-  title = 'project-test';
-  // @Output() overlayH: EventEmitter<any> = new EventEmitter<any>();
-  
-  // fn(){
-  //   this.overlayH.emit(1);
-  //   console.log("hello")
-  // }
+  ngOnInit(){
+    // let refreshClearInterval;
+    // this.el.nativeElement.addEventListener("click", function() { 
+    //   clearInterval(refreshClearInterval);
+    //   refresh();
+    // });
+
+    // function refresh(){
+    //   refreshClearInterval = setInterval(()=>{
+    //     window.location.reload();
+    //   }, 3000);
+    // }
+    // refresh();
+
+  }  
 }

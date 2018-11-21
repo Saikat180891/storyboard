@@ -5,6 +5,7 @@ import {AppcontrolService} from '../../controlservice/appcontrol.service';
 import {DataService} from '../../data.service';
 import {CardService} from './card.service';
 import {ContainerService} from '../container/container.service';
+import {PreloaderService} from '../shared/preloader/preloader.service';
 
 @Component({
   selector: 'app-card',
@@ -30,6 +31,7 @@ export class CardComponent implements OnInit, OnChanges{
   myIndex;
   cardID;
   context = 1;
+  id = '0';
   // @Output() cardContent = new EventEmitter();
   // imagePath = 'https://statewideguttercompany.com/wp-content/uploads/2012/07/logo-placeholder.jpg';
 
@@ -37,10 +39,12 @@ export class CardComponent implements OnInit, OnChanges{
     private _UIcontrolerService:AppcontrolService, 
     private _dataService:DataService,
     private _cardService:CardService,
-    private _containerService: ContainerService
+    private _containerService: ContainerService,
+    private _preloader: PreloaderService
     ) { }
 
    ngOnInit(){
+    this.localData = this.cardData;
     this._cardService.cardContent = this.cardData;
    }
    ngOnChanges(){
@@ -66,14 +70,16 @@ export class CardComponent implements OnInit, OnChanges{
   }
 
   onDelete(localData){
+    this._preloader.openPreloader = true;
     this._dataService.delete('/sop',localData.id + '.json')
-      .subscribe(response=>{
+      .subscribe(response => {
         this._containerService.cardContents.forEach((element, index)=>{
           if(element.id == localData.id){
             this._containerService.cardContents.splice(index, 1);
           }
+          this._preloader.openPreloader = false;
         })
-      })
+      });
   }
   
 }

@@ -1,10 +1,10 @@
 import { Component, OnInit, HostListener, ElementRef, Output, EventEmitter } from '@angular/core';
-import { DomSanitizer  } from '@angular/platform-browser';
-import {trigger,transition,style,animate,state} from '@angular/animations';
+
 import {DataService} from '../../../data.service';
 import {ScreenHolderService} from './screen-holder.service';
-
-import {popupInOut} from '../../../animation';
+import {CommondbService} from '../../../commondb.service';
+import {popupInOut, hideAccordian} from '../../../animation';
+import {AddScreenService} from '../add-screen/add-screen.service';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -19,7 +19,7 @@ export enum KEY_CODE {
   selector: 'app-screen-holder',
   templateUrl: './screen-holder.component.html',
   styleUrls: ['./screen-holder.component.scss'],
-  animations: [popupInOut]
+  animations: [popupInOut, hideAccordian]
 })
 export class ScreenHolderComponent implements OnInit {
 
@@ -30,7 +30,7 @@ export class ScreenHolderComponent implements OnInit {
   prev="";
   focus = "";
   nxt="";
-
+  hover:boolean = false;
   
 
   /**
@@ -40,6 +40,13 @@ export class ScreenHolderComponent implements OnInit {
   screenName = '';
   tabName = '';
   previewScreen = '';
+  imageFile;
+
+  imageDimension = {
+    width : "auto",
+    height: "auto"
+  }
+  
   previewImageStatus:boolean = true;
   fileLocation = '';
 
@@ -64,11 +71,18 @@ export class ScreenHolderComponent implements OnInit {
     screenImage: ''
   };
 
+  sliderHeight;
+  editTopBtn;
+
+  pos = 0;
+
   img_no:number = 0;
   constructor(
     private el: ElementRef, 
     private _apiService: DataService,
-    private _screenHolderService: ScreenHolderService
+    private _screenHolderService: ScreenHolderService,
+    private _commonDB: CommondbService,
+    private _addScreen: AddScreenService
     ) { }
 
 
@@ -87,65 +101,91 @@ export class ScreenHolderComponent implements OnInit {
   ngOnInit() {
     // this.addNewScreen = this._screenHolderService.addNewScreen;
     // console.log(this.addNewScreen)
-  }
-  updateScreenTracker(payLoad){
-    this.currentScreenTracker = this._screenHolderService.carousal.indexOf(payLoad);
-    this._screenHolderService.currentScreen = this.currentScreenTracker;
-    console.log("The current status tracker =",this.currentScreenTracker)
+    if(window.innerWidth > 1368){
+      this.sliderHeight = 650;
+      this.editTopBtn = 0;
+    }else{
+      this.sliderHeight = 450;
+    }
+    console.log(window.innerWidth, this.sliderHeight);
+
+    if(this._screenHolderService.carousal){
+      this.imageNotAvailable = false;
+    }
   }
 
+  onHover(){
+    this.hover = false;
+  }
+
+  onUnHover(){
+    this.hover = true;
+  }
+
+  /**
+   * Update screen tracker
+   * @param payLoad 
+   */
+  updateScreenTracker(payLoad){
+    this._screenHolderService.currentScreen = this._screenHolderService.carousal.indexOf(payLoad);
+    console.log("The current status tracker =",this._screenHolderService.currentScreen)
+  }
+
+  /**
+   * open add screen
+   */
   addNewScreenOverlay(){
     this._screenHolderService.addNewScreen = !this._screenHolderService.addNewScreen;
     this._screenHolderService.ifEdit = true;
   }
+
+  /**
+   * close add screen
+   */
   onClose(){
     this._screenHolderService.addNewScreen = false;
     this.reset();
   }
-  previous(){
-    if(this._screenHolderService.carousal.length == 1){
-      alert("There is no image to display");
-    }else if(this._screenHolderService.carousal.length == 0){
-      alert("Please add a new screen to begin");
-    }else if(this._screenHolderService.carousal.length < 0){
-      alert("No more screen to display");
-    }else if(this.currentScreenTracker == 0){
-      alert("No more image to display");
-      this.prev = '';
-      this.updateScreenTracker(this._screenHolderService.carousal[0]);
-    }else{
-        let getlastScreen = this.currentScreenTracker - 1;
-        this.insertImage = this._screenHolderService.carousal[getlastScreen].get('screenImage');
-        this.updateScreenTracker(this._screenHolderService.carousal[getlastScreen]);
-        this.currentScreen.emit(this.currentScreenTracker);
   
-        let lastScreen = this.currentScreenTracker - 1;
-        if(lastScreen < 0){
-          this.prev = '';
-        }else{
-          this.prev = this._screenHolderService.carousal[lastScreen].get('screenImage');
-        }
-        
-    }
+  /**
+   * go to the previous screen
+   */
+  previous(){
 
+    if(this.pos == parseInt("-"+(this._screenHolderService.carousal.length - 1) * this.sliderHeight)){
+      alert("No more screen to display");
+    }else{
+      this.pos = this.pos - this.sliderHeight;
+      this._screenHolderService.currentScreen = this._screenHolderService.currentScreen - 1;
+      // this._screenHolderService.currentScreen = this.currentScreenTracker;
+      this.currentScreen.emit(this._screenHolderService.currentScreen);
+      console.log("The current status tracker =",this._screenHolderService.currentScreen);
+    }
+    
+    // console.log("the previous image index is", this.counter, this. pos)
   }
 
+  /**
+   * go to the next screen
+   */
   next(){
-    if(this._screenHolderService.carousal.length == 1){
-      alert("There is no image to display");
-    }else if(this._screenHolderService.carousal.length == 0){
-      alert("Please add a new screen to begin");
-    }else if(this._screenHolderService.carousal.length == this.currentScreenTracker + 1){
-      alert("No more image to display");
-    }else{  
-      let getNextScreen = this.currentScreenTracker + 1;
-      this.prev = this._screenHolderService.carousal[this.currentScreenTracker].get('screenImage');
-
-      this.insertImage = this._screenHolderService.carousal[getNextScreen].get('screenImage');
-      this.updateScreenTracker(this._screenHolderService.carousal[getNextScreen]);
-      this.currentScreen.emit(this.currentScreenTracker);
+    
+    if(this.pos == 0){
+      alert("No more screen to display");
+    }else{
+      this.pos = this.pos + this.sliderHeight;
+      this._screenHolderService.currentScreen = this._screenHolderService.currentScreen + 1;
+      // this._screenHolderService.currentScreen = this.currentScreenTracker;
+      this.currentScreen.emit(this._screenHolderService.currentScreen);
+      console.log("The current status tracker =",this._screenHolderService.currentScreen);
     }
+    
+    // console.log("the next image index is", this.counter, this. pos)
   }
+
+  /**
+   * reset all fields
+   */
   reset(){
     this.applicationName = '';
     this.screenName = '';
@@ -155,6 +195,9 @@ export class ScreenHolderComponent implements OnInit {
     this.previewImageStatus = true;
   }
 
+  /**
+   * add screen on btn click
+   */
   onAdd(){
     if(this.applicationName != '' && this.screenName != '' && this.tabName != '' && this.previewScreen != ''){
       let payload = new FormData();
@@ -162,54 +205,27 @@ export class ScreenHolderComponent implements OnInit {
       payload.append('applicationName', this.applicationName);
       payload.append('screenName', this.screenName);
       payload.append('tabName', this.tabName);
-      payload.append('screenImage', this.previewScreen);
-
-      // this.res.emit(payload);
-
-      this._screenHolderService.carousal.push(payload);
-      this.updateScreenTracker(payload);
-      this.currentScreen.emit(this.currentScreenTracker);
-      console.log("Carousal Service ",this._screenHolderService.carousal)
-
-      if(this._screenHolderService.carousal.length > 1){
-        let lastScreen = this.currentScreenTracker - 1;
-        this.prev = this._screenHolderService.carousal[lastScreen].get('screenImage');
-        console.log(lastScreen);
-      }
-
-      /*
-      this._apiService.postData('sop/reasoncode/userstories/1/sections/6.json', payload)
+      payload.append('screenImage', this.imageFile);
+      
+      this._apiService.postData('/sop/reasoncode/userstories/8/sections/31.json', payload)
       .subscribe(
         response =>{
-          console.log(response)
-          
-          this.carousalContainer.push(
-            {
-              ...response
-            }
-          );
+
+          this._screenHolderService.carousal.push(response);
+          this.updateScreenTracker(response);
+          this.currentScreen.emit(this._screenHolderService.currentScreen);
+          console.log("Carousal Service ",this._screenHolderService.carousal);
+          this._screenHolderService.payload = this._screenHolderService.carousal[this._screenHolderService.currentScreen];
+          console.log("Response for uploading screen",response);
         }
-      )
-      */
-
-      // console.log(payload.get('applicationName'))
-      // console.log(payload.get('screenName'))
-
-      // let payload = {
-      //   applicationName: this.applicationName,
-      //   screenName: this.screenName,
-      //   tabName: this.tabName,
-      //   screenImage: this.previewScreen
-      // }
-      // console.log("Payload = ", payload)
-      // this.carousalContainer.push(payload);
+      );
       
 
       this._screenHolderService.addNewScreen = this.imageNotAvailable = false;
       this.previewImageStatus = this.displayEditButton = true;
+      this.pos = 0;
 
-      // console.log(this.carousalContainer);
-      this.insertImage = payload.get('screenImage') + '';
+      // this.insertImage = payload.get('screenImage') + '';
       this.reset();
       
     }else{
@@ -217,46 +233,123 @@ export class ScreenHolderComponent implements OnInit {
     }
   }
 
+  /**
+   * edit screen on btn click
+   */
   onEdit(){
     this._screenHolderService.ifEdit = false;
     this._screenHolderService.addNewScreen = true;
     this.previewImageStatus = false;
 
-    this.applicationName = this._screenHolderService.carousal[this.currentScreenTracker].get('applicationName');
-    this.screenName = this._screenHolderService.carousal[this.currentScreenTracker].get('screenName');
-    this.tabName = this._screenHolderService.carousal[this.currentScreenTracker].get('tabName');
-    this.previewScreen = this._screenHolderService.carousal[this.currentScreenTracker].get('screenImage');
-
-    console.log(this._screenHolderService.carousal[this.currentScreenTracker]);
+    this.applicationName = this._screenHolderService.carousal[this._screenHolderService.currentScreen].applicationName;
+    this.screenName = this._screenHolderService.carousal[this._screenHolderService.currentScreen].screenName;
+    this.tabName = this._screenHolderService.carousal[this._screenHolderService.currentScreen].tabName;
+    this.previewScreen = this._screenHolderService.carousal[this._screenHolderService.currentScreen].image_url;
+    console.log(this._screenHolderService.currentScreen);
+    console.log(this._screenHolderService.carousal[this._screenHolderService.currentScreen]);
   }
 
+  /**
+   * save edited screen on btn click
+   */
   onSave(){
-    let payload = new FormData();
+    let payload;
+    if(typeof this.imageFile == 'string'){
+      payload = {
+        applicationName: this.applicationName,
+        screenName: this.screenName,
+        tabName: this.tabName
+      }
+    }else{
+      payload = new FormData();
+      payload.append('applicationName', this.applicationName);
+      payload.append('screenName', this.screenName);
+      payload.append('tabName', this.tabName);
+      payload.append('screenImage', this.imageFile);
+    }
 
-    payload.append('applicationName', this.applicationName);
-    payload.append('screenName', this.screenName);
-    payload.append('tabName', this.tabName);
-    payload.append('screenImage', this.previewScreen);
-
-    // this.res.emit(payload);
-    this.insertImage = payload.get('screenImage') + '';
-    this._screenHolderService.carousal[this.currentScreenTracker] = payload;
-    this.currentScreen.emit(this.currentScreenTracker);
+    this._apiService.update('/sop/reasoncode/userstories/sections/screens', this._screenHolderService.carousal[this._screenHolderService.currentScreen].id + '.json', payload)
+      .subscribe(response =>{
+        // console.log(response);
+        this._screenHolderService.carousal[this._screenHolderService.currentScreen] = response;
+      });
+    this.currentScreen.emit(this._screenHolderService.currentScreen);
     this.onClose();
   }
 
+  onDelete(){
+
+    this._apiService.delete('/sop/reasoncode/userstories/8/sections/screens/destroy', this._screenHolderService.carousal[this._screenHolderService.currentScreen].id + '.json')
+      .subscribe(response=>{
+        this._screenHolderService.carousal.splice(this._screenHolderService.currentScreen, 1);
+        this._screenHolderService.currentScreen = this._screenHolderService.currentScreen - 1;
+
+        if(this._screenHolderService.currentScreen == -1){
+          this.pos = this.pos + this.sliderHeight;
+          this._screenHolderService.currentScreen = 0;
+        }
+        
+        if(this._screenHolderService.carousal.length == 0){
+          this.imageNotAvailable = true;
+        }
+        
+        console.log(response, this._screenHolderService.carousal);
+      })
+  }
+
+  /**
+   * convert file to base64
+   */
   onFileSelected(fileSelected){
     if (fileSelected.target.files && fileSelected.target.files[0]) {
       let reader:any = new FileReader();
-      
+      //the file is stored in imageFile
+      this.imageFile = fileSelected.target.files[0];
+      //file name is stored in fileLocation
       this.fileLocation = fileSelected.target.files[0].name;
+      //file is converted to base64 for preview
       reader.readAsDataURL(fileSelected.target.files[0]);
       reader.onload = (fileSelected) => {
+        //calculated file dimension
+        this.getImageDimension(fileSelected.target.result);
+        //close add screen preview dialog box
         this.previewImageStatus = false;
+        //base64 string data is generated and asigned to previewScreen
         this.previewScreen = fileSelected.target.result;
       }
     }
   }
 
+  /**
+   * get dimension of the file
+   * @param file 
+   */
+  getImageDimension(file){
+    var image = new Image();
+    image.src = file;
+    let sliderHeight = this.sliderHeight;
+    let imageDimension = {
+      height: "auto",
+      width: "auto"
+    };
+    image.onload = function() {
+      // access image size here 
+      // console.log("Image width is ",image.width);
+      // console.log("Image height is ",image.height);
+      if(image.height > sliderHeight){
+        imageDimension.height = sliderHeight + "px";
+        imageDimension.width = sliderHeight + "px";
+      }
+    };
+    this.imageDimension = imageDimension;
+  }
+
+  JSONtoFormData(json){
+    let formData = new FormData();
+      for(let fieldValue in json){
+        formData.append(fieldValue, json[fieldValue])
+      }
+      return formData;
+  }
 
 }

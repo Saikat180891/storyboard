@@ -27,6 +27,7 @@
     "microsoft-adal-angular6": "^1.0.0",
     "mongodb": "^3.1.8",
     "mongoose": "^5.3.9",
+    "ng2-nvd3": "^2.0.0",
     "nodemon": "^1.18.6",
     "rxjs": "^6.0.0",
     "web-animations-js": "^2.3.1",

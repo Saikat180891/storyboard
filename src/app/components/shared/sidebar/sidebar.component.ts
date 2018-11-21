@@ -1,11 +1,12 @@
 import { Component, OnInit, HostListener, ElementRef, Input } from '@angular/core';
-import {trigger,transition,style,animate,state} from '@angular/animations';
 import {AddStepsService} from '../../add-steps/add-steps.service';
 import {DataService} from '../../../data.service';
 import {ScreenHolderService} from '../screen-holder/screen-holder.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
+
 import {popupInOut, openClose} from '../../../animation';
+import { STICKY_DIRECTIONS } from '@angular/cdk/table';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -22,10 +23,10 @@ export enum KEY_CODE {
   animations: [openClose, popupInOut]
 })
 export class SidebarComponent implements OnInit {
+  @Input('sections') sections;
   panelOpenState = false;
   isOpen = false;
   clientData;
-  clientLogo;
   logoPlaceholder = "../../../../assets/pics/logo-placeholder.jpg";
   /**
    * numberOfSections is an array
@@ -43,7 +44,6 @@ export class SidebarComponent implements OnInit {
    */
   @HostListener('document:keyup.escape', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    //console.log(event)
     if (event.keyCode === KEY_CODE.ESCAPE) {
       this.isOpen = false;
       this.resetForm();
@@ -57,13 +57,16 @@ export class SidebarComponent implements OnInit {
     private _screenHolderService: ScreenHolderService) { }
 
   ngOnInit() {
-   this.clientData = this._addStepsService.clientData;
-   this.clientLogo = this.clientData.logo?this.logoPlaceholder:this.logoPlaceholder;
-   console.log("Side bar reads ",this.clientData)
+    //get client data from the add step service when the page loads
+    this.clientData = this._addStepsService.clientData;
+
+    //get all previously created sections and display them on the sidebar
+    this.numberOfSections = this.sections;
   }
 
-  
- 
+  /**
+   * Sidebar open/close
+   */
   toggle() {
     this.isOpen = !this.isOpen;
     this.onCloseAddSection();
@@ -72,20 +75,33 @@ export class SidebarComponent implements OnInit {
     }, 100)
   }
 
+  /**
+   * Request to open add screen dialog box
+   * @param event 
+   */
   onAddNewScreenRequest(event){
     this._screenHolderService.addNewScreen = event;
     this._screenHolderService.ifEdit = event;
-    console.log(event)
     this.toggle();
   }
 
+  /**
+   * close add section dialog box
+   */
   onCloseAddSection(){
     this.addSectionStatus = false;
   }
 
+  /**
+   * open add section dialog box
+   */
   onCreateSections(){
     this.addSectionStatus = true;
   }
+
+  /**
+   * reset create add section 
+   */
   resetForm(){
     this.createSectionName = '';
     this.createSectionDescription = '';
@@ -96,22 +112,16 @@ export class SidebarComponent implements OnInit {
     // moveItemInArray(this.movies, event.previousIndex, event.currentIndex);
   }
 
+  /**
+   * Add new section api call method
+   */
   addSection(){
     if(this.createSectionName != ''){
       let payload = {section_name: this.createSectionName, description: this.createSectionDescription}
-      console.log(payload)
-      this._apiService.postData('/sop/reasoncode/userstories/2/sections.json', payload)
-        .subscribe(
-          response =>{
-            console.log(response)
-            this.numberOfSections.push(
-              {
-                ...response
-              }
-              );
-            console.log(response);
-          }
-        )
+      this._apiService.postData('/sop/reasoncode/userstories/8/sections.json', payload)
+        .subscribe(response =>{
+          this.numberOfSections.push({...response});
+        });
       this.addSectionStatus = false;
       this.resetForm();
     }else{

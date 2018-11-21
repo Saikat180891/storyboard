@@ -1,5 +1,5 @@
 <div class="select">
-  <input type="text" [placeholder]="placeholder" readonly [value]="selected">
+  <div><input type="text" [placeholder]="placeholder" readonly [value]="selected"></div>
   <span class="down-caret" (click)="onOpen()"><i class="fas fa-angle-down"></i></span>
   <div *ngIf="isOpen && options" class="select-dropdown">
     <span *ngFor="let option of options" (click)="onSelect($event, option)">{{option}}</span>

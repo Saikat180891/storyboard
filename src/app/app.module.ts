@@ -4,6 +4,10 @@ import { RouterModule } from '@angular/router';
 import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; 
 import { MsAdalAngular6Module, AuthenticationGuard } from 'microsoft-adal-angular6';
+import { NvD3Module } from 'ng2-nvd3';
+
+import 'd3';
+import 'nvd3';
 
 import {MatDividerModule} from '@angular/material/divider';
 import {MatMenuModule} from '@angular/material/menu';
@@ -25,6 +29,7 @@ import {MatInputModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatTableModule} from '@angular/material/table';
 
 import {DataService} from './data.service';
 import {AppcontrolService} from './controlservice/appcontrol.service';
@@ -65,6 +70,7 @@ import { AddReasonCardComponent } from './components/shared/reason-code-accordia
 import { StepsComponent } from './components/shared/add-steps-holder/steps/steps.component';
 import { StepContainerComponent } from './components/shared/add-steps-holder/step-container/step-container.component';
 import { SelectComponent } from './components/shared/select/select.component';
+import { ChartsComponent } from './components/shared/charts/charts.component';
 
 const routes = [
   {path: '', component: AuthComponent, pathMatch: 'full'},
@@ -115,10 +121,12 @@ const routes = [
     AddReasonCardComponent,
     StepsComponent,
     StepContainerComponent,
-    SelectComponent
+    SelectComponent,
+    ChartsComponent
   ],
   imports: [
     BrowserModule,
+    NvD3Module,
     BrowserAnimationsModule,
     MatDividerModule,
     MatMenuModule,
@@ -145,6 +153,7 @@ const routes = [
     MatProgressSpinnerModule,
     HttpClientModule,
     MatInputModule,
+    MatTableModule,
     RouterModule.forRoot(routes),
     MsAdalAngular6Module.forRoot({
       tenant: '217024cc-23bf-42d2-a7cf-d270166db3e2',
@@ -156,7 +165,7 @@ const routes = [
       cacheLocation: 'localStorage'
     }),
   ],
-  providers: [DataService, MatDatepickerModule,AppcontrolService, ContainerService, AuthenticationGuard, PreloaderService],
+  providers: [DataService, MatDatepickerModule,AppcontrolService, ContainerService, AuthenticationGuard, PreloaderService, ContainerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

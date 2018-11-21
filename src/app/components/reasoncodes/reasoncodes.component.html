@@ -1,10 +1,14 @@
 <app-header></app-header>
 <div class="container">
   <div class="header">
+
     <div class="heading">
       <span class="heading__name">AON Project 2</span>
       <span class="heading__divider"> | </span>
       <span class="heading__id">AON001</span>
+    </div>
+
+    <div class="assignee-box">
       <span class="heading__assignees">Assignee's</span>
       <span class="heading__date">
         <i class="heading__date__icon far fa-calendar-alt"></i>
@@ -19,15 +23,130 @@
       <img src="../../../assets/pics/img5.jpg" alt="">
     </div>
 
-    <div class="header__btn">
-      <div class="btn">NEW REASON CODE</div>
+    <span class="extra">+3</span>
+    <div class="divider middle" [ngStyle]="{'left':'245px'}"></div>
+    <div class="select">
+      <app-select [placeholder]="'Select'" [options]="options"></app-select>
+    </div>
+    <div class="divider middle" [ngStyle]="{'left':'465px'}"></div>
+    <div class="middle header__btn">
+      <button mat-flat-button>ADD NEW RC</button>
     </div>
   </div>
-
-  <div class="accordian-container">
-    <app-reason-code-accordian></app-reason-code-accordian>
-  </div>
-
 </div>
 
+<div class="flex charts">
+    <app-charts></app-charts>
+    <app-charts></app-charts>
+    <app-charts></app-charts>
+</div>
 
+<div class="table">
+    <!-- <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field> -->
+      <!-- ['Sprint', 'U/S', 'User Story Name', 'Priority', 'Rules Approved', 'Verified Test Cases', 'FTE', 'Dev Hrs', 'Notes', 'Status'] -->
+      <!-- {sprint: 1, us: 1, uname: 'lorem ipsum', priority: 'high', rules: 'yes', verified: 'yes', fte: 2.3, devhrs: 32, notes: 'hello', status: 'testing'} -->
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
+      
+          <!-- ID Column -->
+          <ng-container matColumnDef="Sprint">
+            <th mat-header-cell *matHeaderCellDef> Sprint <i class="fas fa-caret-down"></i></th>
+            <td mat-cell *matCellDef="let row"> {{row.sprint}} </td>
+          </ng-container>
+      
+          <!-- Progress Column -->
+          <ng-container matColumnDef="U/S">
+            <th mat-header-cell *matHeaderCellDef> U/S <i class="fas fa-caret-down"></i></th>
+            <td mat-cell *matCellDef="let row"> {{row.us}} </td>
+          </ng-container>
+      
+          <!-- Name Column -->
+          <ng-container matColumnDef="User Story Name">
+            <th mat-header-cell *matHeaderCellDef> User Story Name <i class="fas fa-caret-down"></i></th>
+            <td mat-cell *matCellDef="let row"> {{row.uname}} </td>
+          </ng-container>
+      
+          <!-- Color Column -->
+          <ng-container matColumnDef="Priority">
+            <th mat-header-cell *matHeaderCellDef> Priority <i class="fas fa-caret-down"></i></th>
+            <td mat-cell *matCellDef="let row"> {{row.priority}} </td>
+          </ng-container>
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="Rules Approved">
+            <th mat-header-cell *matHeaderCellDef> Rules Approved <i class="fas fa-caret-down"></i></th>
+            <td mat-cell *matCellDef="let row"> {{row.rules}} </td>
+          </ng-container>
+      
+          <!-- Progress Column -->
+          <ng-container matColumnDef="Verified Test Cases">
+            <th mat-header-cell *matHeaderCellDef> Verified Test Cases <i class="fas fa-caret-down"></i></th>
+            <td mat-cell *matCellDef="let row"> {{row.verified}} </td>
+          </ng-container>
+      
+          <!-- Name Column -->
+          <ng-container matColumnDef="FTE">
+            <th mat-header-cell *matHeaderCellDef> FTE <i class="fas fa-caret-down"></i></th>
+            <td mat-cell *matCellDef="let row"> {{row.fte}} </td>
+          </ng-container>
+      
+          <!-- Color Column -->
+          <ng-container matColumnDef="Dev Hrs">
+            <th mat-header-cell *matHeaderCellDef> Dev Hrs <i class="fas fa-caret-down"></i></th>
+            <td mat-cell *matCellDef="let row"> {{row.devhrs}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="Notes">
+            <th mat-header-cell *matHeaderCellDef> Notes </th>
+            <td mat-cell *matCellDef="let row"> {{row.notes}} </td>
+          </ng-container>
+      
+          <!-- Color Column -->
+          <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+          </ng-container>
+
+          <!-- Color Column -->
+          <ng-container matColumnDef="btn">
+            <th mat-header-cell *matHeaderCellDef>
+              <button id="add-us" mat-stroked-button class="btn-flat-blue btn-lg">ADD U/S</button>
+            </th>
+            <td mat-cell *matCellDef="let row"> {{row.btn}} </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      
+        <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+      </div>
+      <div class="flat-box">
+        <div class="list">
+          <div class="item" [ngStyle]="{'width': '50px'}"><app-select [placeholder]="'Select'" [options]="options"></app-select></div>
+
+          <div class="item" [ngStyle]="{'width': '30px'}"><input type="text" placeholder="0" [ngStyle]="{'width': '30px'}"></div>
+
+          <div class="item"[ngStyle]="{'width': '150px'}"><input type="text" placeholder="0" [ngStyle]="{'width': '122px'}"></div>
+
+          <div class="item" [ngStyle]="{'width': '82px'}"><input type="text" placeholder="lorem" [ngStyle]="{'width': '82px'}"></div>
+
+          <div class="item" [ngStyle]="{'width': '100px'}"><app-select [placeholder]="'Select'" [options]="options"></app-select></div>
+
+          <div class="item" [ngStyle]="{'width': '120px'}"><app-select [placeholder]="'Select'" [options]="options"></app-select></div>
+
+          <div class="item" [ngStyle]="{'width': '50px'}"><input type="text" placeholder="FTE" [ngStyle]="{'width': '50px'}"></div>
+
+          <div class="item"><input type="text" placeholder="Hrs" [ngStyle]="{'width': '50px'}"></div>
+
+          <div class="item"><input type="text" placeholder="Notes" [ngStyle]="{'width': '150px'}"></div>
+
+          <div class="item" [ngStyle]="{'width': '150px'}"><app-select [placeholder]="'Select'" [options]="options"></app-select></div>
+
+          <div class="item" [ngStyle]="{'width': '150px'}">1</div>
+        </div>
+      </div>
+</div>

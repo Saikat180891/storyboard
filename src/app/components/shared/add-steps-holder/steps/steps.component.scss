@@ -137,6 +137,10 @@ fieldset {
   margin: 0;
 }
 
+.select{
+  width: 155px;
+}
+
 @media (min-width: 1368px) {
   .w-4{
     width: 13vw;
@@ -144,8 +148,10 @@ fieldset {
   .w-3{
     width: 20vw;
   }
-
   .w-2{
     width: 22vw;
+  }
+  .select{
+    width: 250px;
   }
 }

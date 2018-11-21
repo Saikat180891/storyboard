@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {ScreenHolderService} from '../screen-holder/screen-holder.service';
 
 @Component({
   selector: 'app-main-screen-holder',
@@ -10,7 +11,7 @@ export class MainScreenHolderComponent implements OnInit {
   // @Output() mainScreenPayload = new EventEmitter();
   @Output() screenTracker = new EventEmitter();
 
-  constructor() { }
+  constructor(private _screenHolderService: ScreenHolderService) { }
 
   ngOnInit() {
 
@@ -19,10 +20,11 @@ export class MainScreenHolderComponent implements OnInit {
   getPayload(event){
     // this.mainScreenPayload.emit(event)
     // console.log("This is the response ",event)
+    
   }
 
   getCurrentScreen(event){
-    console.log("This is the Current Screen ",event)
+    // console.log("This is the Current Screen ",event)
     this.screenTracker.emit(event)
   }
 

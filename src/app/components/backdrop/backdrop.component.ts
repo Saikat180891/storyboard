@@ -69,7 +69,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   sopForm = this.formBuilder.group({
             id: [''],
             clientName: ['', Validators.required],
-            automationSystemName: ['', Validators.required],
+            title: ['', Validators.required],
             chargeCode: ['', Validators.required],
             due_date: ['', Validators.required],
             rCodes: [''],
@@ -86,17 +86,16 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
               this._UIControllerService.data.subscribe(
                   (data:any)=>{
                     console.log("dataFrom_UIControllerService ",data)
-
                     this.sopForm.patchValue({
                       id: data.id,
                       clientName: data.clientName,
-                      automationSystemName: data.title,
+                      title: data.title,
                       chargeCode: data.chargeCode,
                       due_date: this.arrangeDateInCorrectFormat(data.due_date),
                       rCodes: 5,
                       logo: data.logo
                     });
-                    console.log("the edited sop form is ", this.sopForm.value);
+                    this.filePreview = this.sopForm.value.logo;
                   }
                 );
   }
@@ -200,6 +199,8 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     this.validateSelectedDate = false;
     this.border = "1px solid #D1D1D1";
     this.assigneeName = '';
+    this.filePreview = '';
+    
   
     /**
      * Clear the form
@@ -207,7 +208,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     this.sopForm.setValue({
       id: '',
       clientName: '',
-      automationSystemName: '',
+      title: '',
       chargeCode: '',
       due_date: '',
       rCodes: '',
@@ -215,17 +216,19 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     });
 
   }
-
+  filePreview;
   /**
    * To select and preview image for logo
    * @param fileSelected
    */
   onFileSelected(fileSelected){
     if (fileSelected.target.files && fileSelected.target.files[0]) {
+      this.sopForm.value.logo = fileSelected.target.files[0];
+      console.log(this.sopForm.value.logo)
       let reader:any = new FileReader();
       reader.readAsDataURL(fileSelected.target.files[0]);
       reader.onload = (fileSelected) => {
-        this.sopForm.value.logo = fileSelected.target.result;
+        this.filePreview = fileSelected.target.result;
       }
     }
   }
@@ -274,7 +277,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
         this.validateClientName = !validationStatus[0];
       }
 
-      if(key == 'automationSystemName'){
+      if(key == 'title'){
         validationStatus[1] = !(this.sopForm.value[key] == '');
         this.validateAutomationSystemName = !validationStatus[1];
       }
@@ -303,26 +306,28 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
 
   onCreateNew(){
     this.sopForm.value.due_date = this.formatDate(this.sopForm.value.due_date);
-
     let validationCheck = this.validateForm(this.sopForm.value);
 
     if(validationCheck == 0){
       this._preloaderService.openPreloader = true;
       console.log("the created sop form is ", this.sopForm.value);
-/*
-      this._dataService.postData('/sop.json',  this.sopForm.value)
+
+      let formData = this.JSONtoFormData(this.sopForm.value);
+
+      this._dataService.postData('/sop.json',  formData)
       .subscribe(
-        (res)=> {
-          console.log("Response ",res);
-          if(res){
+        (response)=> {
+          console.log("Response ",response);
+          if(response){
             this._ContainerService.cardContents.push(
               {
                 themeColor: this._ContainerService.colorPicker[this._ContainerService.getUniqueNumber()],
                 reasonCodes: 0,
-                ...res
+                ...response,
+                logo: response["image_url"]
               }
             );
-            console.log(this._ContainerService.cardContents)
+            console.log("this is the service contents", this._ContainerService.cardContents)
           }
           this._preloaderService.openPreloader = false;
           this.onOverlayClose();
@@ -332,10 +337,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
         },
         (err)=> console.log(err)
       );
-*/
     }
-
-    this._preloaderService.openPreloader = false;
   }
 
   /**
@@ -350,14 +352,21 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
       this._preloaderService.openPreloader = true;
       console.log("the edited sop form is ", this.sopForm.value);
 
-        this._dataService.update('/sop', this.sopForm.value.id + '.json', this.sopForm.value)
+      let formData = this.JSONtoFormData(this.sopForm.value);
+      if(typeof formData.get("logo") === "string"){
+        formData.delete("logo");
+      }
+
+
+        this._dataService.update('/sop', this.sopForm.value.id + '.json', formData)
         .subscribe(response=>{
           this._ContainerService.cardContents.forEach((element, index)=>{
             if(element.id == this.sopForm.value.id){
               this._ContainerService.cardContents[index] = {
                 themeColor: this._ContainerService.colorPicker[this._ContainerService.getUniqueNumber()],
                 reasonCodes: 0,
-                ...response
+                ...response,
+                logo: response["image_url"]
               }
             }
           });
@@ -407,5 +416,13 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     this.editSelectedDate.setDate(Number(newDate[0]));
     console.log(this.editSelectedDate)
     return this.editSelectedDate;
+  }
+
+  JSONtoFormData(json){
+    let formData = new FormData();
+      for(let fieldValue in json){
+        formData.append(fieldValue, json[fieldValue])
+      }
+      return formData;
   }
 }

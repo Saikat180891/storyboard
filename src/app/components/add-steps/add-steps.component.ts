@@ -5,6 +5,8 @@ import {ContainerService} from '../container/container.service';
 import { ActivatedRoute } from '@angular/router';
 import {AddStepsService} from './add-steps.service';
 import {ScreenHolderService} from '../shared/screen-holder/screen-holder.service';
+import {DataService} from '../../data.service';
+import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-add-steps',
@@ -21,31 +23,43 @@ export class AddStepsComponent implements OnInit {
 
   clientId:number;
 
+  sections = [];
+  
+
   constructor(
     private _containerService: ContainerService, 
     private route: ActivatedRoute,
     private _addStepsService: AddStepsService,
-    private _screenHolderService: ScreenHolderService) { }
+    private _screenHolderService: ScreenHolderService,
+    private _apiService: DataService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.clientId = parseInt(params.id);
-      // console.log(params)
    });
 
     this._containerService.cardContents.forEach((element)=>{
       if(element.id == this.clientId){
         this._addStepsService.clientData = element;
-        // console.log("add steps reads ",this._addStepsService.clientData)
         return;
       }
-    })
-  }
+    });
 
-  // payload.append('applicationName', this.applicationName);
-  //     payload.append('screenName', this.screenName);
-  //     payload.append('tabName', this.tabName);
-  //     payload.append('screenImage', this.previewScreen);
+    let section = {};
+
+    this.sections = this._addStepsService.getPreviouslyCreatedSections();
+    this.sections.forEach((element)=>{
+      section[element['section_name'] + " " + element['id']] = this._addStepsService.getScreens(8,element['id']);
+    });
+
+    this._screenHolderService.sections = section;
+    console.log("Section Data",this._screenHolderService.sections);
+    this._screenHolderService.carousal = this._addStepsService.getScreens(8,31);
+    this._screenHolderService.currentScreen = this._screenHolderService.carousal.length - 1;
+    // this._screenHolderService.position = 0;
+    console.log("Screen Data",this._screenHolderService.carousal);
+
+  }
 
   onReceivePayload(payload){
     // this.applDetails = {
@@ -58,11 +72,11 @@ export class AddStepsComponent implements OnInit {
 
   screenTracker(event){
     this.applDetails = {
-      applicationName: this._screenHolderService.carousal[event].get('applicationName'),
-      screenName: this._screenHolderService.carousal[event].get('screenName'),
-      tabName: this._screenHolderService.carousal[event].get('tabName')
+      applicationName: this._screenHolderService.carousal[event].applicationName,
+      screenName: this._screenHolderService.carousal[event].screenName,
+      tabName: this._screenHolderService.carousal[event].tabName
     }
-    console.log("received ", event);
+    // console.log("received ", event);
   }
 
 }

@@ -3,5 +3,5 @@
   <app-nav-header></app-nav-header>
   <app-add-screen [headerPayload]="applDetails"></app-add-screen>
   <app-main-screen-holder (screenTracker)="screenTracker($event)"></app-main-screen-holder>
-  <app-sidebar></app-sidebar>
+  <app-sidebar [sections]="sections"></app-sidebar>
 </div>

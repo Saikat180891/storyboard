@@ -13,7 +13,7 @@
     <div class="header">
 
       <div class="header-container header-container-top-35">
-        <img class="header-container-logo" src="clientLogo"/>
+        <img class="header-container-logo" [src]="clientData.logo?clientData.logo:logoPlaceholder"/>
         <div class="header-container-heading">
           <span>{{clientData?clientData.clientName:''}}</span>
         </div>
@@ -37,13 +37,11 @@
       <div class="user-story">
         <span>{{'User Story Name 1'}} </span> <span><i class="fa fa-caret-down"></i></span>
       </div>
-  
       <div class="sections" *ngIf="numberOfSections">
-          <app-custom-accordian (addNewScreen)="onAddNewScreenRequest($event)"
-          [screenDetails]="numberOfSection" 
-          *ngFor="let numberOfSection of numberOfSections"></app-custom-accordian>
+        <app-custom-accordian (addNewScreen)="onAddNewScreenRequest($event)"
+        [screenDetails]="numberOfSection" 
+        *ngFor="let numberOfSection of numberOfSections"></app-custom-accordian>
       </div>
-      
     </div>
     
     <div class="footer">
@@ -55,7 +53,6 @@
     </div>
     
   </div>
-
 </div>
 
 <div class="sidebar-overlay" @popupInOut *ngIf="isOpen">

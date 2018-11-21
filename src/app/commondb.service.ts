@@ -3,13 +3,11 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class StepService {
+export class CommondbService {
 
-  steptype:string;
+  cardContents = [];
 
-  execute(fn){
-    fn();
-  }
+  carouselScreens = [];
 
   constructor() { }
 }

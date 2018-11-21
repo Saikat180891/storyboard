@@ -1,5 +1,8 @@
-import { Component, OnInit, AfterViewInit, AfterContentInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterContentInit, Input } from '@angular/core';
 import { FormControl,  FormGroup, FormBuilder } from '@angular/forms';
+import {StepService} from './step.service';
+import {ScreenHolderService} from '../../screen-holder/screen-holder.service';
+import {AddScreenService} from '../../add-screen/add-screen.service';
 
 @Component({
   selector: 'app-steps',
@@ -7,6 +10,9 @@ import { FormControl,  FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./steps.component.scss']
 })
 export class StepsComponent implements OnInit, AfterViewInit, AfterContentInit {
+
+  @Input('screenNumber') currentScreenId;
+  @Input ('id') id;
 
   selected:string = 'Read';
 
@@ -60,21 +66,24 @@ export class StepsComponent implements OnInit, AfterViewInit, AfterContentInit {
   });
   
 
-  foods = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
-  ];
-
 
   constructor(private readGroup: FormBuilder,
               private typeGroup: FormBuilder,
               private uiinterGroup: FormBuilder,
               private clacGroup: FormBuilder,
-              private parentGroup: FormBuilder) {  }
+              private parentGroup: FormBuilder,
+              private _stepService: StepService,
+              private _screenHolderService: ScreenHolderService,
+              private _addScreenService: AddScreenService) {  }
 
   ngOnInit() {
-    console.log("called")
+    //The default step type is made 'Read' with the below data
+    this._addScreenService.tempObj.numberOfSteps.push(
+      {
+        stepID: this.id, 
+        steptype: this.selected ? this.selected: 'Read', 
+        stepData: this.operationDetails.value.read
+      });
   }
   ngAfterViewInit(){
 
@@ -84,12 +93,30 @@ export class StepsComponent implements OnInit, AfterViewInit, AfterContentInit {
   ngAfterContentInit(){
     
   }
-  
 
   onSelect(stepType){
     this.selected = stepType;
-
-    
+    console.log("ok")
+    this._addScreenService.tempObj.numberOfSteps[this.id].steptype = this.selected;
+    console.log("not ok")
+    this.onUpdate();
+    // switch(stepType){
+    //   case 'Read':
+    //   this._addScreenService.tempObj.numberOfSteps[this.id].stepData = this.operationDetails.value.read;
+    //   break;
+    //   case 'Type':
+    //   this._addScreenService.tempObj.numberOfSteps[this.id].stepData = this.operationDetails.value.type;
+    //   break;
+    //   case 'UI Interaction':
+    //   this._addScreenService.tempObj.numberOfSteps[this.id].stepData = this.operationDetails.value.uiinter;
+    //   break;
+    //   case 'Calculation':
+    //   this._addScreenService.tempObj.numberOfSteps[this.id].stepData = this.operationDetails.value.calculation;
+    //   break;
+    //   default:
+    //   break;
+    // }
+    // console.log(this._addScreenService.tempObj)
   }
 
   onCollapse(){
@@ -114,20 +141,45 @@ export class StepsComponent implements OnInit, AfterViewInit, AfterContentInit {
 
   onDelete(){
 
-    if(this.selected === 'Read'){
-      console.log(this.operationDetails.value.read);
-    }else if(this.selected === 'Type'){
-      console.log(this.operationDetails.value.type);
-    }else if(this.selected === 'UI Interaction'){
-      this.operationDetails.value.uiinter.uiinterSelected = this.UIInterSelected;
-      this.operationDetails.value.uiinter.uiinterSelected = this.UIInterClick;
-      console.log(this.operationDetails.value.uiinter);
-    }else if(this.selected === 'Calculation'){
-      this.operationDetails.value.calculation.calcparam1 = this.param1;
-      this.operationDetails.value.calculation.calcparam2 = this.param2;
-      console.log(this.operationDetails.value.calculation);
-    }
-    console.log(this.operationDetails.value);
+    // if(this.selected === 'Read'){
+    //   console.log(this.operationDetails.value.read);
+    // }else if(this.selected === 'Type'){
+    //   console.log(this.operationDetails.value.type);
+    // }else if(this.selected === 'UI Interaction'){
+    //   this.operationDetails.value.uiinter.uiinterSelected = this.UIInterSelected;
+    //   this.operationDetails.value.uiinter.uiinterClickOptionSelected = this.UIInterClick;
+    //   console.log(this.operationDetails.value.uiinter);
+    // }else if(this.selected === 'Calculation'){
+    //   this.operationDetails.value.calculation.calcparam1 = this.param1;
+    //   this.operationDetails.value.calculation.calcparam2 = this.param2;
+    //   console.log(this.operationDetails.value.calculation);
+    // }
+    console.log(this._addScreenService.tempObj);
   }
 
+  onUpdate(){
+
+    switch(this.selected){
+      case 'Read':
+      this._addScreenService.tempObj.numberOfSteps[this.id].stepData = this.operationDetails.value.read;
+      break;
+      case 'Type':
+      this._addScreenService.tempObj.numberOfSteps[this.id].stepData = this.operationDetails.value.type;
+      break;
+      case 'UI Interaction':
+      this.operationDetails.value.uiinter.uiinterSelected = this.UIInterSelected;
+      this.operationDetails.value.uiinter.uiinterClickOptionSelected = this.UIInterClick;
+      this._addScreenService.tempObj.numberOfSteps[this.id].stepData = this.operationDetails.value.uiinter;
+      break;
+      case 'Calculation':
+      this.operationDetails.value.calculation.calcparam1 = this.param1;
+      this.operationDetails.value.calculation.calcparam2 = this.param2;
+      this._addScreenService.tempObj.numberOfSteps[this.id].stepData = this.operationDetails.value.calculation;
+      break;
+      default:
+      break;
+    }
+    // console.log(this._addScreenService.tempObj);
+  }
+  
 }

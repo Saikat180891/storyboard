@@ -31,13 +31,18 @@ export class ContainerComponent implements OnInit {
 
   cardDatas;
 
+
   ngOnInit() {
     /**
      * Fetch data to load the cards
      */
       // this.getdataFromDB();
-     
+     setTimeout(()=>{
       this._ContainerService.getdataFromDB();
       this.cardDatas = this._ContainerService.cardContents;
+
+      console.log("card datas",this.cardDatas)
+     }, 1000);
+      
   }
 }

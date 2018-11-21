@@ -1,6 +1,6 @@
 <!-- Card design starts here -->
 <!-- code for blank card starts here -->
-<div class="container" id="0"  *ngIf="localData.id=='0'; else newCard">
+<div class="container" id="0"  *ngIf="localData.id===0">
   <a class="new-sop" (click)="onCreateSOP()">
     <span>
       <i class="far fa-plus-square"></i>
@@ -8,10 +8,11 @@
     {{createSOP}}
   </a>
 </div>
-<!-- code for blank card ends here -->
+
+
 <!-- code for existing card starts here -->
-<ng-template #newCard>
-  <div 
+<div class="container" *ngIf="localData.id != 0">
+  <div
   [routerLink]="['/projects/add-steps', localData.id]" 
   class="header" 
   [id]="localData ? localData.id : ''"
@@ -61,5 +62,5 @@
         <span>Due Date</span><span>{{ localData ? localData.due_date : ''}}</span>
       </div>
   </div>
-</ng-template>
-<!-- code for existing card ends here -->
+</div>
+

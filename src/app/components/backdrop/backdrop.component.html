@@ -42,7 +42,7 @@
               [ngClass]="{'ASN-box':true, 'validators':validateAutomationSystemName===true}" 
               placeholder="Automation System Name" 
               required 
-              formControlName = "automationSystemName"
+              formControlName = "title"
               >
 
           </div>
@@ -88,10 +88,10 @@
       <div class="dialog-group padding-all upload height-auto">
         <div class="relative pointer">
           <button mat-stroked-button>
-            <img class="preview-logo" *ngIf="sopForm.value.logo" [src]="sopForm.value.logo" [alt]="sopForm.value.logo">
-            <span class="client-logo" *ngIf="!sopForm.value.logo">Upload Client Logo</span>
-            <span *ngIf="!sopForm.value.logo"><small>(Max Size 200px-200px)</small></span>
-            <span *ngIf="!sopForm.value.logo"><i class="fas fa-download"></i>CHOOSE FILE</span>
+            <img class="preview-logo" *ngIf="filePreview" [src]="filePreview" [alt]="filePreview">
+            <span class="client-logo" *ngIf="!filePreview">Upload Client Logo</span>
+            <span *ngIf="!filePreview"><small>(Max Size 200px-200px)</small></span>
+            <span *ngIf="!filePreview"><i class="fas fa-download"></i>CHOOSE FILE</span>
           </button>
           <input type="file" (change)="onFileSelected($event)"/>
         </div>
