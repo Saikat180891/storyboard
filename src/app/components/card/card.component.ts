@@ -24,6 +24,7 @@ import {PreloaderService} from '../shared/preloader/preloader.service';
 export class CardComponent implements OnInit, OnChanges{
 
   @Input() cardData;
+  rippleColor = 'rbga(0,0,0,0.2)';
   localData;
   createSOP = "Create New SOP";
   editSOP = "Edit SOP";

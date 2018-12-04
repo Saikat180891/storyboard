@@ -3,150 +3,182 @@
   <div class="header">
 
     <div class="heading">
-      <span class="heading__name">AON Project 2</span>
+      <span class="heading__name">{{_reasonCode.currentProject?_reasonCode.currentProject.clientName:''}}</span>
       <span class="heading__divider"> | </span>
-      <span class="heading__id">AON001</span>
+      <span class="heading__id">{{_reasonCode.currentProject?_reasonCode.currentProject.title:''}}</span>
     </div>
 
-    <div class="assignee-box">
-      <span class="heading__assignees">Assignee's</span>
-      <span class="heading__date">
-        <i class="heading__date__icon far fa-calendar-alt"></i>
-         Date {{'12/12/12'}}
-      </span>
-      <i class="heading__date__icon edit fas fa-pen"></i>
-    </div>
-
-    <div class="header__images">
-      <img src="../../../assets/pics/img5.jpg" alt="">
-      <img src="../../../assets/pics/img5.jpg" alt="">
-      <img src="../../../assets/pics/img5.jpg" alt="">
-    </div>
-
-    <span class="extra">+3</span>
-    <div class="divider middle" [ngStyle]="{'left':'245px'}"></div>
-    <div class="select">
-      <app-select [placeholder]="'Select'" [options]="options"></app-select>
-    </div>
-    <div class="divider middle" [ngStyle]="{'left':'465px'}"></div>
     <div class="middle header__btn">
-      <button mat-flat-button>ADD NEW RC</button>
+      <button class="btn btn-flat-blue btn-lg clearfill" (click)="onOpenAddSprint()">ADD/EDIT SPRINT</button>
     </div>
   </div>
 </div>
 
 <div class="flex charts">
-    <app-charts></app-charts>
-    <app-charts></app-charts>
-    <app-charts></app-charts>
+  <app-charts [options]="currentSprintOptions" [data]="_reasonCode.totalSprintData" [title]="'Project Status'"></app-charts>
+  <app-charts [options]="currentSprintOptions" [data]="_reasonCode.currentSprintData" [title]="'Current Sprint'" [selectOptions]="_reasonCode.sprintConfig"></app-charts>
+  <app-charts [title]="'FTE'"></app-charts>
 </div>
 
-<div class="table">
-    <!-- <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-      </mat-form-field> -->
-      <!-- ['Sprint', 'U/S', 'User Story Name', 'Priority', 'Rules Approved', 'Verified Test Cases', 'FTE', 'Dev Hrs', 'Notes', 'Status'] -->
-      <!-- {sprint: 1, us: 1, uname: 'lorem ipsum', priority: 'high', rules: 'yes', verified: 'yes', fte: 2.3, devhrs: 32, notes: 'hello', status: 'testing'} -->
-      <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource">
-      
-          <!-- ID Column -->
-          <ng-container matColumnDef="Sprint">
-            <th mat-header-cell *matHeaderCellDef> Sprint <i class="fas fa-caret-down"></i></th>
-            <td mat-cell *matCellDef="let row"> {{row.sprint}} </td>
-          </ng-container>
-      
-          <!-- Progress Column -->
-          <ng-container matColumnDef="U/S">
-            <th mat-header-cell *matHeaderCellDef> U/S <i class="fas fa-caret-down"></i></th>
-            <td mat-cell *matCellDef="let row"> {{row.us}} </td>
-          </ng-container>
-      
-          <!-- Name Column -->
-          <ng-container matColumnDef="User Story Name">
-            <th mat-header-cell *matHeaderCellDef> User Story Name <i class="fas fa-caret-down"></i></th>
-            <td mat-cell *matCellDef="let row"> {{row.uname}} </td>
-          </ng-container>
-      
-          <!-- Color Column -->
-          <ng-container matColumnDef="Priority">
-            <th mat-header-cell *matHeaderCellDef> Priority <i class="fas fa-caret-down"></i></th>
-            <td mat-cell *matCellDef="let row"> {{row.priority}} </td>
-          </ng-container>
-
-          <!-- ID Column -->
-          <ng-container matColumnDef="Rules Approved">
-            <th mat-header-cell *matHeaderCellDef> Rules Approved <i class="fas fa-caret-down"></i></th>
-            <td mat-cell *matCellDef="let row"> {{row.rules}} </td>
-          </ng-container>
-      
-          <!-- Progress Column -->
-          <ng-container matColumnDef="Verified Test Cases">
-            <th mat-header-cell *matHeaderCellDef> Verified Test Cases <i class="fas fa-caret-down"></i></th>
-            <td mat-cell *matCellDef="let row"> {{row.verified}} </td>
-          </ng-container>
-      
-          <!-- Name Column -->
-          <ng-container matColumnDef="FTE">
-            <th mat-header-cell *matHeaderCellDef> FTE <i class="fas fa-caret-down"></i></th>
-            <td mat-cell *matCellDef="let row"> {{row.fte}} </td>
-          </ng-container>
-      
-          <!-- Color Column -->
-          <ng-container matColumnDef="Dev Hrs">
-            <th mat-header-cell *matHeaderCellDef> Dev Hrs <i class="fas fa-caret-down"></i></th>
-            <td mat-cell *matCellDef="let row"> {{row.devhrs}} </td>
-          </ng-container>
-
-          <!-- Name Column -->
-          <ng-container matColumnDef="Notes">
-            <th mat-header-cell *matHeaderCellDef> Notes </th>
-            <td mat-cell *matCellDef="let row"> {{row.notes}} </td>
-          </ng-container>
-      
-          <!-- Color Column -->
-          <ng-container matColumnDef="Status">
-            <th mat-header-cell *matHeaderCellDef> Status </th>
-            <td mat-cell *matCellDef="let row"> {{row.status}} </td>
-          </ng-container>
-
-          <!-- Color Column -->
-          <ng-container matColumnDef="btn">
-            <th mat-header-cell *matHeaderCellDef>
-              <button id="add-us" mat-stroked-button class="btn-flat-blue btn-lg">ADD U/S</button>
-            </th>
-            <td mat-cell *matCellDef="let row"> {{row.btn}} </td>
-          </ng-container>
-      
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      
-        <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+<div class="flex table">
+  <mat-tab-group>
+    <mat-tab label="All U/S">
+      <div class="flex">
+        <app-table [sprint]="_reasonCode.sprintConfig"></app-table>
       </div>
-      <div class="flat-box">
-        <div class="list">
-          <div class="item" [ngStyle]="{'width': '50px'}"><app-select [placeholder]="'Select'" [options]="options"></app-select></div>
+    </mat-tab>
+    <mat-tab label="Deleted U/S" (click)="onSelectDeletedUS()">
+      <div class="flex">
+        <app-delete-table></app-delete-table>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
 
-          <div class="item" [ngStyle]="{'width': '30px'}"><input type="text" placeholder="0" [ngStyle]="{'width': '30px'}"></div>
 
-          <div class="item"[ngStyle]="{'width': '150px'}"><input type="text" placeholder="0" [ngStyle]="{'width': '122px'}"></div>
+<!-- Create new sprint -->
+<div class="overlay animate-scale" [ngClass]="{'animate-scale-active':openAddSprint}">
+  <div class="modal">
+    <div class="header">
+      <span>Add Sprints</span>
+      <span (click)="onCloseAddSprint()"><i class="fas fa-times"></i></span>
+    </div>
+    <div class="modal-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Sprint#</th>
+            <th>Name</th>
+            <th>Start Date</th>
+            <th>Duration</th>
+            <th>End Date</th>
+            <th class="sprint-close"></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="_reasonCode.sprintConfig">
 
-          <div class="item" [ngStyle]="{'width': '82px'}"><input type="text" placeholder="lorem" [ngStyle]="{'width': '82px'}"></div>
+            <tr [id]="sprint.id" *ngFor="let sprint of _reasonCode.sprintConfig">
+              <td>Sprint#</td>
+              <td>
+                <input class="text-box" type="text" [(ngModel)]="sprint.sprint_name" (keyup)="onEditSprint($event, sprint.id, sprint)">
+              </td>
+              <td class="p-relative">
+                <input class="text-box date" [matDatepicker]="picker" type="text" placeholder="Choose a date" [value]="sprint.start_date" (ngModelChange)="onEditSprint($event, sprint.id, sprint)" readonly>
+                <div class="p-absolute date-picker-pos">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </div>
+              </td>
+              <td>
+                <input class="text-box" type="text" [(ngModel)]="sprint.duration" (keyup)="onEditSprint($event, sprint.id, sprint)">
+              </td>
+              <td>
+                <input class="text-box" type="text" [(ngModel)]="sprint.end_date" (keyup)="onEditSprint($event, sprint.id, sprint)">
+              </td>
+              <td (click)="onDeleteSprint(sprint.id)" class="sprint-close">
+                <i class="fas fa-times"></i>
+              </td>
+            </tr>
 
-          <div class="item" [ngStyle]="{'width': '100px'}"><app-select [placeholder]="'Select'" [options]="options"></app-select></div>
+            <tr>
+              <td>Sprint#</td>
+              <td><input class="text-box" type="text" [(ngModel)]="addSprintPayload.sprint_name" placeholder="Sprint Name" (keyup)="validateSprint(addSprintPayload)"></td>
+              <td class="p-relative">
+                <input class="text-box date" [matDatepicker]="picker" type="text" placeholder="Choose a date" [(ngModel)]="addSprintPayload.start_date" readonly [disabled]="validateSprintConfig.start_date" (click)="validateSprint(addSprintPayload)">
+                <div class="p-absolute date-picker-pos">
+                  <mat-datepicker-toggle matSuffix [for]="picker" (click)="validateSprint(addSprintPayload)"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </div>
+              </td>
+              <td>
+                <div class="p-relative">
+                  <input class="text-box p-absolute p-duration p-left" type="text" [(ngModel)]="addSprintPayload.duration" readonly placeholder="Weeks" [disabled]="validateSprintConfig.duration">
+                  <div class="arrow">
+                    <button (click)="onArrowUp()" [disabled]="validateSprintConfig.duration"><i class="fas fa-caret-up"></i></button>
+                    <button (click)="onArrowDown()" [disabled]="validateSprintConfig.duration"><i class="fas fa-caret-down"></i></button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <input class="text-box" type="text" [(ngModel)]="addSprintPayload.end_date" readonly placeholder="End Date" [disabled]="validateSprintConfig.end_date">
+              </td>
+              <td class="sprint-close"> </td>
+            </tr>
+          
+          
+        </tbody>
+      </table>
+    </div>
+    <div class="add-btn">
+      <button class="btn btn-flat-blue btn-flat-ash" (click)="onSaveSprint()">ADD SPRINT</button>
+    </div>
+    <div class="footer">
+      <div class="flex flex-wrapper">
+        <button class="btn btn-flat-blue btn-blue btn-primary" (click)="onCloseAddSprint()">OK</button>
+        <button class="btn btn-flat-grey btn-primary" (click)="onCloseAddSprint()">CANCEL</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-          <div class="item" [ngStyle]="{'width': '120px'}"><app-select [placeholder]="'Select'" [options]="options"></app-select></div>
 
-          <div class="item" [ngStyle]="{'width': '50px'}"><input type="text" placeholder="FTE" [ngStyle]="{'width': '50px'}"></div>
 
-          <div class="item"><input type="text" placeholder="Hrs" [ngStyle]="{'width': '50px'}"></div>
+<div class="overlay opacity" *ngIf="_reasonCode.movemodal">
+  <div id="move-user-story">
+    <div class="modal">
+      <div class="header">
+        <span>Move User Story</span>
+        <span><i class="fas fa-times"></i></span>
+      </div>
+      <div class="sub-header">Drag & Drop U/S from one box to another</div>
 
-          <div class="item"><input type="text" placeholder="Notes" [ngStyle]="{'width': '150px'}"></div>
+      <div class="move-box flex">
+        <div class="banner">
+          <div class="dropdown">
+            <app-select [placeholder]="'Select'" [options]="options"></app-select>
+          </div>
+          <div class="drag-box">
+              <div
+              cdkDropList
+              #todoList="cdkDropList"
+              [cdkDropListData]="todo"
+              [cdkDropListConnectedTo]="[doneList]"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}} <span><i class="fas fa-arrows-alt"></i></span></div>
+              </div>
+          </div>
+        </div>
+        
+        <div class="banner">
+          <div class="dropdown">
+            <app-select [placeholder]="'Select'" [options]="options"></app-select>
+          </div>
+          <div class="drag-box">
+              <div
+              cdkDropList
+              #doneList="cdkDropList"
+              [cdkDropListData]="done"
+              [cdkDropListConnectedTo]="[todoList]"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}} <span><i class="fas fa-arrows-alt"></i></span></div>
+              </div>
+          </div>
+        </div>
 
-          <div class="item" [ngStyle]="{'width': '150px'}"><app-select [placeholder]="'Select'" [options]="options"></app-select></div>
+      </div>
 
-          <div class="item" [ngStyle]="{'width': '150px'}">1</div>
+      <div class="footer">
+        <div class="footer-note">
+            *Note: You can only move U/S for the same clients only
+        </div>
+
+        <div class="footer-buttons flex">
+          <button class="btn btn-flat-blue btn-blue">OK</button>
+          <button class="btn btn-flat-grey" (click)="onCancel()">CANCEL</button>
         </div>
       </div>
+    </div>
+  </div>
 </div>

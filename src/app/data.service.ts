@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+// import { Observable, of } from 'rxjs';
 
 
 @Injectable({
@@ -9,9 +9,10 @@ import { Observable, of } from 'rxjs';
 
 export class DataService {
   lastNumber:number = 0;
+  production:boolean = false;
   ID:number = 0;
   colorPicker:string[] =["#0033A1", "#2A7DE1", "#40C0C4", "#54585A", "#8677C4", "#94BEF0"]
-  apiUrl = 'http://127.0.0.1:8000';
+  apiUrl = this.production ? window.location.origin :'http://127.0.0.1:8000';
   cardContent = [
     {
       id: 0,
@@ -96,7 +97,6 @@ export class DataService {
    * Get the data from the server to load the cards
    */
   fetchData(param){
-    //  return this.http.get<any[]>("../assets/dummy_data/card_data.json");
     return this.http.get<any[]>(this.apiUrl + param);
   }
 

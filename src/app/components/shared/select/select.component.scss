@@ -50,6 +50,8 @@
     left: -1px;
     width: 100%;
     height: auto;
+    max-height: 150px;
+    overflow: auto;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
     background-color: #ffffff;
@@ -58,6 +60,7 @@
     border-right: 1px solid #D1D1D1;
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
     z-index: 10000;
+    cursor: pointer;
 
     span{
       display: block;
@@ -66,6 +69,8 @@
       line-height: 30px;
       background-color: #ffffff;
       padding-left: 10px;
+      text-align: left;
+      z-index: 10000;
 
       &:hover{
         background-color: #D1D1D1;

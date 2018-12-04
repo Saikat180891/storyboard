@@ -15,6 +15,10 @@ export class SelectComponent implements OnInit {
 
   @Input('placeholder') placeholder;
 
+  @Input('value') value;
+
+  @Input('objectOptions') objectOptions;
+
   constructor() { }
 
   ngOnInit() {
@@ -26,7 +30,14 @@ export class SelectComponent implements OnInit {
 
   onSelect(event, option){
     event.stopPropagation();
-    this.selected = option;
+    this.selected = this.value = option;
+    this.optionSelected.emit(option);
+    this.isOpen = false;
+  }
+
+  onSelectObj(event, option){
+    event.stopPropagation();
+    // this.selected = this.value = option;
     this.optionSelected.emit(option);
     this.isOpen = false;
   }

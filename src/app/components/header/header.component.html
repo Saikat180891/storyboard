@@ -5,10 +5,10 @@
 
   <div class="profile">
 
-    <span class="profile__name">John Doe</span>
+    <span class="profile__name">{{userName}}</span>
 
     <span class="profile__pic">
-      <img src="../../../assets/pics/92979836-stock-vector-profile-anonymous-face-icon-gray-silhouette-person-male-default-avatar-photo-placeholder-isolated-on.jpg" alt="John Doe">
+      <img src="../../../assets/pics/default.jpg" [alt]="userName">
     </span>
 
     <span class="arrow-menu">
@@ -16,8 +16,8 @@
         <i class="fas fa-angle-down"></i>  
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>
-          <span (click)="logout()">Logout</span>
+        <button mat-menu-item  (click)="logout()">
+          <span>Logout</span>
         </button>
       </mat-menu>
     </span>

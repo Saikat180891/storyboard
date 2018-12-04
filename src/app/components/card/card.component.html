@@ -1,6 +1,6 @@
 <!-- Card design starts here -->
 <!-- code for blank card starts here -->
-<div class="container" id="0"  *ngIf="localData.id===0">
+<div class="container" id="0"  *ngIf="localData.id===0" matRipple [matRippleColor]="rippleColor">
   <a class="new-sop" (click)="onCreateSOP()">
     <span>
       <i class="far fa-plus-square"></i>
@@ -11,9 +11,9 @@
 
 
 <!-- code for existing card starts here -->
-<div class="container" *ngIf="localData.id != 0">
+<div class="container" *ngIf="localData.id != 0" matRipple [matRippleColor]="rippleColor">
   <div
-  [routerLink]="['/projects/add-steps', localData.id]" 
+  [routerLink]="['/projects/reason-codes', localData.id]" 
   class="header" 
   [id]="localData ? localData.id : ''"
   >

@@ -90,7 +90,18 @@ mat-ink-bar.mat-ink-bar{
 /*
 backdrop css
 */
-
+*::-webkit-scrollbar{
+  width: 5px;
+}
+*::-webkit-scrollbar-track {
+  background: #ECECEC; 
+}
+*::-webkit-scrollbar-thumb {
+  background: rgb(105, 105, 105); 
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
 .overlay{
     position: fixed;
     top: 0;
@@ -182,12 +193,7 @@ input[type="file"] {
     cursor: pointer !important;
     overflow: hidden;
 }
-/* .input-box i{
-    position: absolute;
-    top: 145px;
-    left: 275px;
-    cursor: pointer;
-} */
+
 .input-box label{
     font-size: 14px;
     display: block;
@@ -337,9 +343,45 @@ li span{
 /**
   newly added
 */
+.btn{
+  min-width: 30px;
+  min-height: 30px;
+  background-color: #fff;
+}
 .btn-flat-blue{
   border-radius: 2px;
   background-color: #fff;
   border: 1px solid #2A7DE1;
   color: #2A7DE1;
+  font-weight: 700;
 }
+
+.btn-flat-grey{
+  border-radius: 2px;
+  background-color: #fff;
+  border: 1px solid #54585A;
+  color: #54585A;
+}
+
+.btn-blue{
+  background: #2A7DE1;
+  color: #fff;
+}
+.btn-primary{
+  width: 90px;
+}
+.btn-flat-ash{
+  background-color: #EFEFEF;
+  border: 0 solid;
+  color: #2A7DE1;
+}
+
+.rotate-90{
+  // display: block;
+  transform-origin: 50% 50%;
+  transform: rotate(90deg);
+}
+
+
+
+

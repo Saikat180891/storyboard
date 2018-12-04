@@ -1,13 +1,27 @@
 <div class="container">
-  <div class="header">{{'Chart'}}</div>
+  <div class="header">
+    <span>{{title}}</span> <span *ngIf="selectedSprint"> ({{selectedSprint}})</span>
+  </div>
   <div class="option">
-    <span><i class="fas fa-ellipsis-v"></i></span>
+    <!-- <span><i class="fas fa-ellipsis-v"></i></span> -->
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <ng-container>
+      <mat-menu #menu="matMenu">
+        <button [id]="selectOption.id" mat-menu-item (click)="onSelect(selectOption.id)" *ngFor="let selectOption of selectOptions">
+          <span>{{selectOption.sprint_name}}</span>
+        </button>
+      </mat-menu>
+    </ng-container>
+    
+
   </div>
   <div class="chart">
     <nvd3 [options]="options" [data]="data"></nvd3>
-    <div class="title">
+    <div class="title" *ngIf="false">
       <span>12/20</span>
-      <small>hello</small>
+      <small>days left</small>
     </div>
   </div>
 </div>

@@ -38,24 +38,29 @@ export class ContainerService{
     }
 
     getdataFromDB(){
-      this.cardContents = [];
-      this.cardContents.push(this.createNewCard);
-      this._dataService.fetchData('/sop.json')
-      .subscribe(data => {
-        console.log("Response received GET", data)
+      
+      if(this.cardContents.length > 1){
 
-        data.forEach((element)=>{
-          this.cardContents.push({
-            themeColor: this._UIControlService.colorPicker[this.getUniqueNumber()],
-            reasonCodes: this._UIControlService.firstZero(Number(element.rCodes)),
-            ...element,
-            logo: element["image_url"]
+      }else{
+        this.cardContents = [];
+        this.cardContents.push(this.createNewCard);
+        this._dataService.fetchData('/sop.json')
+        .subscribe(data => {
+          console.log("Response received GET", data)
+
+          data.forEach((element)=>{
+            this.cardContents.push({
+              themeColor: this._UIControlService.colorPicker[this.getUniqueNumber()],
+              reasonCodes: this._UIControlService.firstZero(Number(element.rCodes)),
+              ...element,
+              logo: element["image_url"]
+            });
           });
-        });
-        this._centralDB.cardContents = this.cardContents;
-          console.log("GET", this._centralDB.cardContents);
-          }
-        );
+          this._centralDB.cardContents = this.cardContents;
+            console.log("GET", this._centralDB.cardContents);
+            }
+          );
+        }
       }
 
 }

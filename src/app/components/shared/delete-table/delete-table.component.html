@@ -1,0 +1,47 @@
+<div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th class="table-header">Sprint#</th>
+          <th class="table-header">U/S#</th>
+          <th class="table-header">User Story Name</th>
+          <th class="table-header">Priority</th>
+          <th class="table-header">Rules Approved</th>
+          <th class="table-header">Verified Test Cases</th>
+          <th class="table-header">FTE</th>
+          <th class="table-header">Dev Hrs</th>
+          <th class="table-header">Notes</th>
+          <th class="table-header">Status</th>
+          <th class="table-header">
+            
+          </th>
+        </tr>
+      </thead>
+  
+      <tbody>
+  
+        <ng-container *ngFor="let data of _deleteTable.deletedUserStories; let i = index">
+          <tr [id]="data.id" *ngIf="id!=data.id; else edit">
+              <td>{{data.sprint_id}}</td>
+              <td>{{data.us_number}}</td>
+              <td>{{data.us_name}}</td>
+              <td>{{data.priority}}</td>
+              <td>{{data.rules_approved}}</td>
+              <td>{{data.verified_test_cases}}</td>
+              <td>{{data.ftes}}</td>
+              <td>{{data.dev_hrs}}</td>
+              <td>{{data.notes}}</td>
+              <td>{{data.status}}</td>
+              <td class="table-header p-relative">
+                <div [ngStyle]="{'width': '100%'}" class="p-center flex">
+                  <button class="btn btn-flat-blue clearfill" (click)="onRestore(data.id)">
+                    RESTORE
+                  </button>
+                </div>
+              </td>
+            </tr>
+        </ng-container>
+        
+      </tbody>
+    </table>
+  </div>

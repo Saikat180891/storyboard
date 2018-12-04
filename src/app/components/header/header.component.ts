@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, transition, style, animate, state } from '@angular/animations';
-
+import {HeaderService} from './header.service';
 import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
 
 @Component({
@@ -18,11 +18,23 @@ import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
 })
 export class HeaderComponent implements OnInit {
 
+  userName: string = '';
+  userImage;
+
   constructor(
-    private _msAdalSvc: MsAdalAngular6Service
+    private _msAdalSvc: MsAdalAngular6Service,
+    private _userInfo: HeaderService
   ) { }
 
   ngOnInit() {
+    // this._userInfo.getUserName();
+    // this._msAdalSvc.LoggedInUserName()
+    // family_name: "Paul"
+    // given_name: "Saikat"
+    this.userName = this._msAdalSvc.userInfo.profile.name;
+    this.userImage = this._msAdalSvc.userInfo.profile.aio;
+    console.log(this._msAdalSvc.userInfo)
+    
   }
 
   logout() {

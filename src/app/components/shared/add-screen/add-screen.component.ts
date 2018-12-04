@@ -32,9 +32,9 @@ export class AddScreenComponent implements OnInit {
       //   tabName: this._screenHolderService.carousal[this._screenHolderService.currentScreen].get('tabName')
       // };
       this._addScreen.tempObj["currentScreen"] = this._screenHolderService.currentScreen;
-      this._screenHolderService.steps.push(this._addScreen.tempObj.numberOfSteps);
+      // this._screenHolderService.steps.push(this._addScreen.tempObj.numberOfSteps);
       // console.log(task,this._screenHolderService.carousal2[this._screenHolderService.currentScreen].steps);
-      // this._screenHolderService.steps.push(1);
+      this._screenHolderService.steps.push(1);
     }
     console.log(this._screenHolderService.steps)
     // console.log(this._screenHolderService.carousal2[this._screenHolderService.currentScreen].steps)

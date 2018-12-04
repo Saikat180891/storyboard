@@ -6,7 +6,7 @@
     <mat-tab-group>
       <mat-tab label="{{filesList}}" *ngFor="let filesList of filesLists">
         <div *ngIf="filesList=='Recent Files'">
-          <div class="container top-padding">
+          <div class="top-padding">
             <div class="row">
               <div class="card grid-item" *ngFor="let cardData of _ContainerService.cardContents">
                 <app-card [cardData]="cardData"></app-card>

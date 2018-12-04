@@ -1,6 +1,8 @@
 .container{
     width: 100%;
-    margin-bottom: 2rem;
+    margin-bottom: 5.5rem;
+    position: relative;
+    top: 3.4375rem;
 }
 .header{
     display: flex;
@@ -93,19 +95,29 @@
 .middle{
   position: absolute;
   top: 50%;
+  right: 0;
   transform: translateY(-50%);
 }
 .header__btn{
-  left: 490px;
+  right: 30px;
 
   button{
-    background-color: #F5F5F5;
+    background-color: #ffffff;
     color: #2A7DE1;
   }
 }
 .flex{
   display: flex;
   justify-content: space-between;
+}
+
+@media (min-width: 1368px){
+  .flex{
+    justify-content: space-around;
+  }
+  .modal-table{
+    max-height: 55vh;
+  }
 }
 .charts{
   width: 100%;
@@ -114,103 +126,224 @@
 }
 
 .table{
-  padding: 40px 25px;
-  position: relative;
+  display: flex;
+  width: calc(100% - 50px);
+  margin-left: 25px;
+  margin-top: 25px;
+}
 
-  .flat-box{
+.animate-scale{
+  top: -100%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  overflow: hidden;
+}
+
+.animate-scale-active{
+  top: 0;
+  opacity: 1;
+}
+
+.modal{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  height: 65vh;
+  background-color: #fff;
+  border-radius: 2px;
+  overflow: hidden;
+
+  .header{
     position: absolute;
-    width: calc(100% - 50px);
-    height: 65px;
-    top: 105px;
-    left: 25px;
-    background-color: red;
-    line-height: 65px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #333333;
+    color: #fff;
 
-    .list{
-      display: flex;
-      justify-content: space-evenly;
-      align-content: center;
+    span:first-child{
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: inline-block;
+      height: 50px;
+      width: 200px;
+      padding-left: 15px;
+      line-height: 50px;
+      font-size: 18px;
+      letter-spacing: 2px;
+      font-weight: 500;
+    }
+    span:last-child{
+      height: 50px;
+      width: 50px;
+      line-height: 50px;
+      text-align: center;
+      font-size: 18px;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
 
-      .item{
-        text-align: center;
-        width: calc((100% - 50px)/11);
-        border: 1px solid black;
-      }
+  .modal-table{
+    margin-top: 50px;
+    width: 100%;
+    max-height: 40vh;
+    overflow: auto;
 
-      .item:nth-child(2n+1){
-        background-color: blue;
+    table{
+      width: 100%;
+      border: none;
+      border-spacing: 0 1px;
+      border-collapse: inherit;
+      border-color: #707070;
+      
+
+      thead, tbody{
+        width: 100%;
+        height: 50px;
+        background-color: #E6F0FA;
+
+        tr{
+          height: 50px;
+          border: 1px solid #707070;
+
+          th, td{
+            width: auto;
+          }
+          td{
+            background-color: #ffffff;
+            text-align: right;
+            width: 145px;
+          }
+          th{
+            font-size: 14px;
+            text-align: left;
+            padding-left: 15px;
+            font-weight: 500;
+          }
+          .sprint-close{
+            width: 50px;
+            text-align: center;
+            color: #707070;
+            cursor: pointer;
+          }
+        }
       }
     }
   }
 }
 
-table {
-  width: 100%;
+.text-box{
+  width: 130px;
+  height: 35px;
   border: 1px solid #D1D1D1;
-}
-
-.mat-form-field {
+  border-radius: 2px;
+  margin-left: 15px;
+  padding-left: 10px;
   font-size: 14px;
+}
+.p-left{
+  left: 0;
+}
+
+.footer{
   width: 100%;
-}
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 100px;
+  // background-color: red;
 
-td, th {
-  width: auto;
-  max-width: 100px;
-  height: 65px;
-  text-align: center;
-  border: 1px solid black;
-}
 
-::ng-deep tr.mat-header-row{
-  height: 65px;
-  margin-bottom: 65px;
-}
-
-::ng-deep .mat-elevation-z8{
-  box-shadow: 0 0px 0px 0px rgba(0,0,0,.2),
-              0 0px 0px 0px rgba(0,0,0,.14),
-              0 0px 0px 0px rgba(0,0,0,.12);
-}
-
-::ng-deep th.mat-header-cell{
-  background-color: #E6F0FA;
-}
-
-::ng-deep td[_ngcontent-c5], th[_ngcontent-c5]{
-  width: auto;
-}
-
-::ng-deep th.mat-header-cell, th.mat-header-cell{
-  text-align: center;
-}
-
-::ng-deep td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type, th.mat-header-cell:last-of-type{
-  padding-right: 0;
-}
-
-::ng-deep .mat-stroked-button{
-  
-}
-
-::ng-deep td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type{
-  padding-left: 0;
-}
-
-button#add-us{
-  border: 1px solid #2A7DE1;
-}
-
-.btn-lg{
-  width: 148px;
-}
-
-.fa-caret-down{
-  cursor: pointer;
-}
-
-@media (min-width:1369px){
-  .flex{
-    justify-content: space-around;
+  .flex-wrapper{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
   }
 }
+
+.p-relative{
+  position: relative;
+}
+
+.p-absolute{
+  position: absolute;
+}
+
+.p-duration{
+  top: -18px;
+}
+.arrow{
+  position: absolute;
+  height: 35px;
+  width: 35px;
+  border: 1px solid #D1D1D1;
+  border-radius: 2px;
+  background-color: #ffffff;
+  top: -18px;
+  right: -1px;
+
+  button{
+    display: block;
+    outline: none;
+    border: none;
+    background-color: #fff;
+    color: #2A7DE1;
+    cursor: pointer;
+  }
+
+  button:first-child{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    text-align: center;
+  }
+  button:last-child{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    text-align: center;
+  }
+
+  button:hover{
+    background: #cccccc;
+  }
+}
+
+.date-picker-pos{
+  top: 5px;
+  left: 12px;
+}
+
+.date{
+  padding-left: 30px;
+}
+.add-btn{
+  // background-color: red;
+  padding: 15px;
+
+  .btn{
+    width: 150px;
+  }
+}
+
+::ng-deep .mat-datepicker-content .mat-calendar {
+  width: 250px;
+  height: 300px;
+}
+
+::ng-deep .mat-calendar-body-selected{
+  background-color: #2A7DE1;
+}
+

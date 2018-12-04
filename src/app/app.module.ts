@@ -30,11 +30,14 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatTableModule} from '@angular/material/table';
+import {MatRippleModule} from '@angular/material/core';
 
 import {DataService} from './data.service';
 import {AppcontrolService} from './controlservice/appcontrol.service';
 import {ContainerService} from '../app/components/container/container.service';
 import {PreloaderService} from '../app/components/shared/preloader/preloader.service';
+import {TableService} from './components/shared/table/table.service';
+import {DeleteTableService} from './components/shared/delete-table/delete-table.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -71,6 +74,9 @@ import { StepsComponent } from './components/shared/add-steps-holder/steps/steps
 import { StepContainerComponent } from './components/shared/add-steps-holder/step-container/step-container.component';
 import { SelectComponent } from './components/shared/select/select.component';
 import { ChartsComponent } from './components/shared/charts/charts.component';
+import { TableComponent } from './components/shared/table/table.component';
+import { CreateRowComponent } from './components/shared/table/create-row/create-row.component';
+import { DeleteTableComponent } from './components/shared/delete-table/delete-table.component';
 
 const routes = [
   {path: '', component: AuthComponent, pathMatch: 'full'},
@@ -81,7 +87,7 @@ const routes = [
   // {path: 'page3', component: FlowchartComponent},
   // {path: 'projects/add-steps', component: AddStepsComponent}
 
-  {path: 'projects/reason-codes', component: ReasoncodesComponent, canActivate: [AuthenticationGuard]},
+  {path: 'projects/reason-codes/:id', component: ReasoncodesComponent, canActivate: [AuthenticationGuard]},
   {path: 'page3', component: FlowchartComponent, canActivate: [AuthenticationGuard]},
   {path: 'projects/add-steps/:id', component: AddStepsComponent, canActivate: [AuthenticationGuard]},
   {path: '**', component: AuthComponent}
@@ -122,7 +128,10 @@ const routes = [
     StepsComponent,
     StepContainerComponent,
     SelectComponent,
-    ChartsComponent
+    ChartsComponent,
+    TableComponent,
+    CreateRowComponent,
+    DeleteTableComponent
   ],
   imports: [
     BrowserModule,
@@ -143,6 +152,7 @@ const routes = [
     MatNativeDateModule,
     MatListModule,
     FormsModule,
+    MatRippleModule,
     ReactiveFormsModule,
     MatTooltipModule,
     MatIconModule,
@@ -165,7 +175,17 @@ const routes = [
       cacheLocation: 'localStorage'
     }),
   ],
-  providers: [DataService, MatDatepickerModule,AppcontrolService, ContainerService, AuthenticationGuard, PreloaderService, ContainerService],
+  providers: [
+    DataService, 
+    MatDatepickerModule,
+    AppcontrolService, 
+    ContainerService, 
+    AuthenticationGuard, 
+    PreloaderService, 
+    ContainerService, 
+    TableService, 
+    DeleteTableService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

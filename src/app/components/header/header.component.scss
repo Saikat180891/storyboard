@@ -2,8 +2,10 @@
     display: block;
     width: 100%;
     height: 3.4375rem;
-    position: relative;
+    position: fixed;
+    margin-bottom: 0; 
     background-color: #2A7DE1;
+    z-index: 100;
 }
 .brand{
     display: inline-block;

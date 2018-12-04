@@ -8,7 +8,7 @@
 
   .header{
     padding-left: 20px;
-    color: #333333;
+    color: #2A7DE1;
     height: 40px;
     line-height: 40px;
     width: 100%;
@@ -50,13 +50,13 @@
     top: 0;
     right: 0;
 
-    span{
+    button{
       display: block;
       height: 40px;
       width: 40px;
       line-height: 40px;
       text-align: center;
-      border-left: 1px solid #D1D1D1;
+      border-left: 0px solid #D1D1D1;
       cursor: pointer;
 
       i{
@@ -64,4 +64,13 @@
       }
     }
   }
+}
+
+::ng-deep .container[_ngcontent-c7] .option[_ngcontent-c7] button[_ngcontent-c7]{
+  border-left: none;
+}
+
+::ng-deep .mat-menu-content:not(:empty){
+  max-height: 150px;
+  overflow: auto;
 }
