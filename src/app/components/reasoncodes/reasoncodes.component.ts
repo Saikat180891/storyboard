@@ -209,9 +209,13 @@ export class ReasoncodesComponent implements OnInit {
       //call the getUserStory() API and displat the graph data
       this._reasonCode.getTotalCharData(this._reasonCode.sopId);
 
+      this._reasonCode.getProjectStatus(this._reasonCode.sopId);
+
       this._reasonCode.getCurrentSprintData();
 
       this._reasonCode.getBenefits(this._reasonCode.sopId);
+
+      this._reasonCode.getSprintStatus(this._reasonCode.sopId);
 
       this._containerService.cardContents.forEach(element => {
         if(element.id == this._reasonCode.sopId){

@@ -58,7 +58,6 @@ export class SprintConfigComponent implements OnInit {
       this.spinner.hide();
     }
       this.spinner.hide();
-
     console.log(this.addNewRow)
   }
 
@@ -80,6 +79,27 @@ export class SprintConfigComponent implements OnInit {
   onDeleteRow(selected){
     this.addNewRow.splice(selected, 1);
     console.log(selected)
+  }
+
+  createEndDate(startDate, numberOfDaysToAdd, operation){
+    let someDate = startDate;
+    switch(operation){
+      case 'add':
+      someDate.setDate(someDate.getDate() + 7); 
+      break;
+      case 'substract':
+      someDate.setDate(someDate.getDate() - 7); 
+      break;
+      default:
+      break;
+    }
+    
+    let dd = someDate.getDate();
+    let mm = someDate.getMonth() + 1;
+    let y = someDate.getFullYear();
+    this.addNewRow.forEach(element=>{
+      element.end_date = mm + '/'+ dd + '/'+ y;
+    })
   }
 
   // {

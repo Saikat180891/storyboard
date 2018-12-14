@@ -1,15 +1,15 @@
 <div class="container">
   <div class="header">
-    <span>{{title}}</span> <span *ngIf="selectedSprint"> ({{selectedSprint}})</span>
+    <span>{{title}} <span *ngIf="projectStatus.current_sprint">-</span> {{projectStatus.current_sprint}}</span> <span *ngIf="selectedSprint"> ({{selectedSprint}})</span>
   </div>
-  <div class="option" *ngIf="data.length">
-    <span>{{'4.3'}}</span>
+  <div class="option" *ngIf="data.length && projectStatus">
+    <span>{{(projectStatus.benefits).toFixed(1)}}</span>
     <span>Benefits</span>
   </div>
   <div class="chart" *ngIf="data.length; else message">
     <nvd3 [options]="options" [data]="data"></nvd3>
-    <div class="title" *ngIf="meter">
-      <span>12/20</span>
+    <div class="title" *ngIf="meter && projectStatus">
+      <span>{{projectStatus.days_left}}/{{projectStatus.total_days}}</span>
       <small>days left</small>
     </div>
   </div>

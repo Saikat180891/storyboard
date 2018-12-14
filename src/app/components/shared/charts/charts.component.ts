@@ -17,6 +17,7 @@ export class ChartsComponent implements OnInit {
   @Input('title') title;
   @Input('selectOptions') selectOptions;
   @Input('meter') meter:boolean;
+  @Input('projectStatus') projectStatus;
   selectedSprint;
 
 
@@ -31,7 +32,7 @@ export class ChartsComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log("XYZ",this.projectStatus)
   //   this.options = {
   //     chart: {
   //         type: 'pieChart',

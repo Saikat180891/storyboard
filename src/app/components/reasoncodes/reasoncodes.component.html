@@ -17,9 +17,9 @@
   
       </div>
       <div class="flex charts">
-        <app-charts [meter]="true" [options]="pieChartOptions" [data]="_reasonCode.totalSprintData" [title]="'Project Status'"></app-charts>
-        <app-charts [meter]="true" [options]="pieChartOptions" [data]="_reasonCode.currentSprintData" [title]="'Current Sprint'" [selectOptions]="_reasonCode.sprintConfig"></app-charts>
-        <app-charts [meter]="false" [options]="barChartOptions" [title]="'Benefits'" [data]="_reasonCode.benefitsChartData"></app-charts>
+        <app-charts [projectStatus]="_reasonCode.totalProjectStatus" [meter]="true" [options]="pieChartOptions" [data]="_reasonCode.totalSprintData" [title]="'Project Status'"></app-charts>
+        <app-charts [projectStatus]="_reasonCode.currentSprintDuration" [meter]="true" [options]="pieChartOptions" [data]="_reasonCode.currentSprintData" [title]="'Current Sprint'" [selectOptions]="_reasonCode.sprintConfig"></app-charts>
+        <app-charts [projectStatus]="_reasonCode.totalProjectStatus" [meter]="false" [options]="barChartOptions" [title]="'Benefits'" [data]="_reasonCode.benefitsChartData"></app-charts>
       </div>
     </div>
   </ng-container>
@@ -29,7 +29,7 @@
 
   <div class="userstory-container" [ngClass]="{'userstory-container-active':fixToTop}">
     <mat-tab-group class="userstory-container-tabs">
-      <mat-tab label="All U/S">
+      <mat-tab label="Open U/S">
         <!-- <div class="filter-selected">
 
         </div> -->
@@ -38,7 +38,12 @@
           <app-userstory-card *ngFor="let userStory of _reasonCode.userStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
         </div>
       </mat-tab>
-      <mat-tab label="Deleted U/S" (click)="onSelectDeletedUS()">
+      <mat-tab label="Completed U/S">
+        <div class="flex">
+          <!-- <app-delete-table></app-delete-table> -->
+        </div>
+      </mat-tab>
+      <mat-tab label="Deleted U/S">
         <div class="flex">
           <!-- <app-delete-table></app-delete-table> -->
         </div>

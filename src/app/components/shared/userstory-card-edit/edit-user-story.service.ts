@@ -27,6 +27,8 @@ export class EditUserStoryService {
             this._rcService.userStories[pos] = response;
           }
         });
+        this._rcService.getTotalCharData(this._rcService.sopId);
+        this._rcService.getChartData(this._rcService.sopId);
         console.log("Edit us", response);
       }, 
       error=>{console.error(error)}

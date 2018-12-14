@@ -18,6 +18,8 @@ export class ReasonCodeService {
   openCreateSideBar:boolean = false;
   openEditSideBar:boolean = false;
   benefitsChartData = [];
+  totalProjectStatus = [];
+  currentSprintDuration = [];
 
   constructor(private _api:DataService,
               private __preLoad: PreloaderService) { }
@@ -43,7 +45,7 @@ export class ReasonCodeService {
       .subscribe(response=>{
         this.currentProject = response;
         console.log("The sop is ", this.currentProject);
-      })
+      });
   }
 
   getSprint(){
@@ -97,6 +99,8 @@ export class ReasonCodeService {
     this._api.fetchData(api)
       .subscribe(response=>{
         this.userStories = response.reverse();
+        this.getTotalCharData(this.sopId);
+        this.getChartData(this.sopId);
       });
       console.log("the userstories are", this.userStories)
   }
@@ -109,10 +113,26 @@ export class ReasonCodeService {
             let pos = this.userStories.indexOf(element);
             this.userStories.splice(pos, 1);
             this.getTotalCharData(this.sopId);
+            this.getChartData(this.sopId);
           }
         });
         // this.getDeletedUserStories();
         console.log(`Rpw with id ${id} deleted successfully.`);
+      });
+  }
+
+  getProjectStatus(id){
+    this._api.fetchData(`/sop/${id}/duration.json`)
+      .subscribe(response=>{
+        this.totalProjectStatus = response[0];
+        console.log("Total project status", this.totalProjectStatus);
+      });
+  }
+
+  getSprintStatus(id){
+    this._api.fetchData(`/sop/${id}/currentSprint/duration.json`)
+      .subscribe(response=>{
+        this.currentSprintDuration = response[0];
       });
   }
   
