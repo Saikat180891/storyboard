@@ -217,6 +217,10 @@ export class ReasoncodesComponent implements OnInit {
 
       this._reasonCode.getSprintStatus(this._reasonCode.sopId);
 
+      this._reasonCode.getCompletedUserStories(this._reasonCode.sopId);
+
+      this._reasonCode.getDeletedUserStories(this._reasonCode.sopId);
+
       this._containerService.cardContents.forEach(element => {
         if(element.id == this._reasonCode.sopId){
           this.currentProject = element;

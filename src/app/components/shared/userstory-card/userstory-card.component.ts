@@ -53,5 +53,6 @@ export class UserstoryCardComponent implements OnInit {
 
   onDelete(id){
     this.__rcService.deleteUserStory(id);
+    // this.__rcService.getDeletedUserStories(this.__rcService.sopId);
   }
 }

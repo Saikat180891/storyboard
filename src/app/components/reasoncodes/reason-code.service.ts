@@ -20,6 +20,8 @@ export class ReasonCodeService {
   benefitsChartData = [];
   totalProjectStatus = [];
   currentSprintDuration = [];
+  completeUserStories = [];
+  deletedUserStories = [];
 
   constructor(private _api:DataService,
               private __preLoad: PreloaderService) { }
@@ -93,6 +95,15 @@ export class ReasonCodeService {
       });
   }
 
+  getDeletedUserStories(id){
+    this._api.fetchData(`/sop/reasoncode/${id}/userstories/fetchDeleted.json`)
+      .subscribe(response=>{
+        this.deletedUserStories = response;
+        this.getUserStories(id);
+        console.log("Deleted user stories",response);
+      });
+  }
+
   getUserStories(id){
     console.log("Get all user story", id)
     const api = !environment.production ? `/sop/reasoncode/${id}/userstories.json` : '';
@@ -114,10 +125,19 @@ export class ReasonCodeService {
             this.userStories.splice(pos, 1);
             this.getTotalCharData(this.sopId);
             this.getChartData(this.sopId);
+            this.getUserStories(this.sopId);
           }
         });
         // this.getDeletedUserStories();
         console.log(`Rpw with id ${id} deleted successfully.`);
+      });
+  }
+
+  getCompletedUserStories(id){
+    this._api.fetchData(`/sop/reasoncode/${id}/userstories/fetchCompleted.json`)
+      .subscribe(response=>{
+        this.completeUserStories = response;
+        console.log("The completed user stories are" ,response);
       });
   }
 

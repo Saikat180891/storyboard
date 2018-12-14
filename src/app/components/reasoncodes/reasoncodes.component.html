@@ -39,13 +39,13 @@
         </div>
       </mat-tab>
       <mat-tab label="Completed U/S">
-        <div class="flex">
-          <!-- <app-delete-table></app-delete-table> -->
+        <div class="card-holder">
+            <app-userstory-card *ngFor="let userStory of _reasonCode.completeUserStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
         </div>
       </mat-tab>
       <mat-tab label="Deleted U/S">
-        <div class="flex">
-          <!-- <app-delete-table></app-delete-table> -->
+        <div class="card-holder">
+            <app-userstory-card *ngFor="let userStory of _reasonCode.deletedUserStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
         </div>
       </mat-tab>
     </mat-tab-group>
