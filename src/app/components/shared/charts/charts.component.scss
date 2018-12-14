@@ -65,6 +65,10 @@
     span{
       color: #fff;
       font-size: 30px;
+      display: block;
+    }
+    span:last-child{
+      font-size: 12px;
     }
   }
 }
@@ -101,13 +105,27 @@
 /deep/ .nvd3 .nv-axis path{
   stroke: #2A7DE1;
 }
-/deep/ .nvd3 .nv-discretebar .nv-groups rect, .nvd3 .nv-multibar .nv-groups rect, .nvd3 .nv-multibarHorizontal .nv-groups rect{
-  width: 30px;
-}
+// /deep/ .nvd3 .nv-discretebar .nv-groups rect, .nvd3 .nv-multibar .nv-groups rect, .nvd3 .nv-multibarHorizontal .nv-groups rect{
+//   width: 30px;
+// }
 /deep/ .nvd3.nv-pie path{
   fill-opacity: 1;
 }
 
 /deep/ g.nv-group{
   fill-opacity: 1 !important;
+}
+.message{
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  span{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #ffffff;
+  }
 }

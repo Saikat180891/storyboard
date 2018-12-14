@@ -230,7 +230,7 @@ export class ReasoncodesComponent implements OnInit {
     // console.log(body[0])
    fromEvent(this.totalPage.nativeElement, 'scroll')
       .subscribe(res => {
-        console.log(res);
+        // console.log(res);
         if(res["target"].scrollTop > 360){
           this.fixToTop = true;
         }
@@ -238,7 +238,7 @@ export class ReasoncodesComponent implements OnInit {
     setTimeout(()=>{
       fromEvent(this.userStoryContainer.nativeElement, 'scroll')
       .subscribe(res => {
-        console.log(res);
+        // console.log(res);
         if(res["target"].scrollTop === 0){
           this.fixToTop = false;
         }
@@ -296,7 +296,7 @@ export class ReasoncodesComponent implements OnInit {
       }
         , temp);
       this.sprintOptions.push(temp);
-      console.log(temp)
+      console.log(this.sprintOptions)
     });
   }
 

@@ -1,12 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { RouteConfigLoadStart } from '@angular/router';
-
+interface Option{
+  status: string;
+  color: string;
+}
 @Component({
   selector: 'colored-dropdown',
   templateUrl: './colored-dropdown.component.html',
   styleUrls: ['./colored-dropdown.component.scss']
 })
-export class ColoredDropdownComponent implements OnInit {
+export class ColoredDropdownComponent implements OnInit, AfterViewInit {
 
   isOpen: boolean = false;
   selected:string = '';
@@ -15,7 +18,7 @@ export class ColoredDropdownComponent implements OnInit {
 
   @Output() optionSelected = new EventEmitter<string>();
 
-  @Input('options') options:Array<string>;
+  @Input('options') options:Option[];
 
   @Input('placeholder') placeholder;
 
@@ -30,6 +33,20 @@ export class ColoredDropdownComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.changeColorofDefaultOption();
+  }
+
+  ngAfterViewInit(){
+    
+  }
+
+  changeColorofDefaultOption(){
+    this.options.forEach(element=>{
+      if(element.status === this.defaultOption){
+        this.selectedColor = element.color;
+        console.log(element)
+      }
+    });
   }
 
   onOpen(){

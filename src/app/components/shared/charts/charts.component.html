@@ -2,14 +2,20 @@
   <div class="header">
     <span>{{title}}</span> <span *ngIf="selectedSprint"> ({{selectedSprint}})</span>
   </div>
-  <div class="option">
+  <div class="option" *ngIf="data.length">
     <span>{{'4.3'}}</span>
+    <span>Benefits</span>
   </div>
-  <div class="chart">
+  <div class="chart" *ngIf="data.length; else message">
     <nvd3 [options]="options" [data]="data"></nvd3>
     <div class="title" *ngIf="meter">
       <span>12/20</span>
       <small>days left</small>
     </div>
   </div>
+  <ng-template #message>
+    <div class="message">
+      <span>No data to display, please configure a sprint</span>
+    </div>
+  </ng-template>
 </div>

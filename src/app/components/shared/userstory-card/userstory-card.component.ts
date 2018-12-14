@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {EditUserStoryService} from '../userstory-card-edit/edit-user-story.service';
 import {ReasonCodeService} from '../../reasoncodes/reason-code.service';
+import {ReasoncodesComponent} from '../../reasoncodes/reasoncodes.component';
 
 @Component({
   selector: 'app-userstory-card',
@@ -17,7 +18,7 @@ export class UserstoryCardComponent implements OnInit {
   rippleColor = 'rbga(0,0,0,0.2)';
   color = 'primary';
 
-  constructor(private __editUS: EditUserStoryService, private __rcService: ReasonCodeService) {  }
+  constructor(private __editUS: EditUserStoryService, private __rcService: ReasonCodeService, private rcComponent: ReasoncodesComponent) {  }
 
   ngOnInit() {
     this.userStory = JSON.parse(JSON.stringify(this.inputUserStory));
@@ -25,6 +26,7 @@ export class UserstoryCardComponent implements OnInit {
 
   onEdit(){
     this.editUserStory.emit(true);
+    this.rcComponent.createOptionsWithSprintName();
   }
 
   toggleRules(event, uid, uss_name){
