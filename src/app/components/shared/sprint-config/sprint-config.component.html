@@ -1,0 +1,65 @@
+<div class="modal">
+  <div class="heading">
+    <span>Config Sprints</span>
+    <span (click)="onClose()"><i class="fas fa-times"></i></span>
+  </div>
+  <div class="modal-body">
+    <div class="table">
+      <div class="thead">
+        <div class="row">
+          <div class="col c1">SP#</div>
+          <div class="col c2">Name</div>
+          <div class="col c3">Start Date</div>
+          <div class="col c4">Duration</div>
+          <div class="col c5">End Date</div>
+          <div class="col c6"></div>
+        </div>
+      </div>
+      <div class="tbody">
+        <div [id]="sprintConfig.id" class="row" *ngFor="let sprintConfig of sprintConfigData; let i = index"  [ngStyle]="{'position':'relative'}">
+          <div class="col c1">{{i+1}}</div>
+          <div class="col c2"><input type="text" [(ngModel)]="sprintConfig.sprint_name"></div>
+          <div class="col c3"><input type="text" [matDatepicker]="picker1" readonly [(ngModel)]="sprintConfig.start_date" [ngStyle]="{'padding-left':'25px'}"></div>
+          <div class="date-picker">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </div>
+          <div class="col c4"><input type="text" readonly [(ngModel)]="sprintConfig.duration"></div>
+          <div class="col c5"><input type="text" readonly [(ngModel)]="sprintConfig.end_date"></div>
+          <div class="col c6" (click)="deleteSprint(sprintConfig.id, sprintConfig.sprint_name)"><i class="far fa-trash-alt"></i></div>
+        </div>
+        <div class="row" *ngFor="let row of addNewRow; let i = index" [ngStyle]="{'position':'relative'}">
+          <div class="col c1"></div>
+          <div class="col c2"><input type="text" [(ngModel)]="row.sprint_name" placeholder="Sprint Name"></div>
+          <div class="col c3"><input type="text" [matDatepicker]="picker2" [(ngModel)]="row.start_date"  [ngStyle]="{'padding-left':'25px'}" placeholder="Start Date"></div>
+          <div class="date-picker">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </div>
+          <div class="col c4"><input type="text" [(ngModel)]="row.duration" placeholder="Duration"></div>
+          <div class="col c5"><input type="text" [(ngModel)]="row.end_date" placeholder="End Date"></div>
+          <div class="col c6" (click)="onDeleteRow(i)"><i class="far fa-trash-alt"></i></div>
+        </div>
+        <div class="row no-background">
+          <button (click)="onAddSprints()">Add Sprints</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-blue" (click)="onSaveAllChanges()">Save</button>
+    <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
+  </div>
+</div>
+<div class="overlay" *ngIf="displayWarningBox">
+  <div class="warning">
+    <p>User stories are currently assigned to this sprint. Deleting this sprint will remove the sprint from the user stories</p>
+    <p class="warning-message-2">Are you sure you want to delete <strong>{{sprintNameToDelete}}</strong>?</p>
+    <div>
+      <button class="btn btn-blue" (click)="onDelete()">Yes</button>
+      <button class="btn btn-flat-ash" (click)="onDoNotDelete()">No</button>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner color="#fff" type="ball-spin-clockwise"></ngx-spinner>

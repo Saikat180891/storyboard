@@ -1,7 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 // import { Observable, of } from 'rxjs';
+import {environment} from '../environments/environment';
+import { HttpHeaders } from '@angular/common/http';
 
+
+
+export const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+    'Authorization': 'my-auth-token'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +19,10 @@ import { HttpClient } from '@angular/common/http';
 
 export class DataService {
   lastNumber:number = 0;
-  production:boolean = false;
+  production:boolean = true;
   ID:number = 0;
   colorPicker:string[] =["#0033A1", "#2A7DE1", "#40C0C4", "#54585A", "#8677C4", "#94BEF0"]
-  apiUrl = this.production ? window.location.origin :'http://127.0.0.1:8000';
+  apiUrl = environment.production ? window.location.origin :'http://127.0.0.1:8000';
   cardContent = [
     {
       id: 0,

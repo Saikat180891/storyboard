@@ -11,21 +11,22 @@ import {DeleteTableService} from '../delete-table/delete-table.service';
 export class TableService {
   userStories = [];
   deletedUserStories = [];
-
+  sopId:number;
 
   constructor(private _api: DataService,
               private _rcService: ReasonCodeService,
               private _deleteTable: DeleteTableService) { }
 
   getUserStory(){
-    this._api.fetchData(`/sop/reasoncode/1/userstories.json`)
+    console.log("Get all user story", this.sopId)
+    this._api.fetchData(`/sop/reasoncode/${this.sopId}/userstories.json`)
       .subscribe(response=>{
         this.userStories = response.reverse();
       });
   }
 
   createUserStory(sprintID, payload){
-    this._api.postData(`/sop/reasoncode/1/userstories/${sprintID}.json`, payload)
+    this._api.postData(`/sop/reasoncode/${this.sopId}/userstories/${sprintID}.json`, payload)
       .subscribe(response=>{
         this.userStories.unshift(response);
         if(response){
@@ -55,6 +56,7 @@ export class TableService {
           if(element.id === id){
             let pos = this.userStories.indexOf(element);
             this.userStories.splice(pos, 1);
+            this._rcService.getTotalCharData(this._rcService.sopId);
           }
         });
         this.getDeletedUserStories();
@@ -63,7 +65,7 @@ export class TableService {
   }
 
   getDeletedUserStories(){
-    this._api.fetchData('/sop/reasoncode/1/userstories/fetchDeleted.json')
+    this._api.fetchData(`/sop/reasoncode/${this.sopId}/userstories/fetchDeleted.json`)
       .subscribe(response=>{
         this.deletedUserStories = response;
         console.log("Deleted user stories",response);
@@ -78,8 +80,8 @@ export class TableService {
             let pos = this.deletedUserStories.indexOf(element);
             this.deletedUserStories.splice(pos, 1);
             this.userStories.push(response);
+            this._rcService.getTotalCharData(this._rcService.sopId);
           }
-          // this.userStories.push(element);
         });
         console.log(`Restored US with id ${id}`, response);
       });

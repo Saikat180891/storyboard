@@ -1,0 +1,84 @@
+<div class="card-box" 
+[ngClass]="{'border-high' : userStory.priority === 'High', 'border-medium' : userStory.priority === 'Medium', 'border-low' : userStory.priority === 'Low'}">
+  <div class="box row r1">
+    <div class="col c1">
+      <span>U/S#</span>
+      <span>{{userStory.us_number}}</span>
+      <span>Sprint#</span>
+      <span>{{userStory.sprint_id}}</span>
+    </div>
+    <div class="col c12">
+      <span>User Story Name</span>
+      <span>{{userStory.us_name}}</span>
+      <span>Sprint Name</span>
+      <span>{{userStory.sprint_name?userStory.sprint_name:'Unassigned'}}</span>
+    </div>
+  </div>
+  <div class="box row r2">
+    <div class="col c2 reduce-padding">
+      <span>Priority</span>
+      <span class="priority h-center no-padding">
+        <span class="circle" 
+        [ngClass]="{'high' : userStory.priority === 'High', 'medium' : userStory.priority === 'Medium', 'low' : userStory.priority === 'Low'}">
+      </span>
+      <span class="priority-text" 
+      [ngClass]="{'text-high' : userStory.priority === 'High', 'text-medium' : userStory.priority === 'Medium', 'text-low' : userStory.priority === 'Low'}">
+      {{userStory.priority}}
+    </span>
+      </span>
+      <span>Dev Hrs</span>
+      <span class="">{{userStory.dev_hrs}}</span>
+    </div>
+    <div class="col c22">
+      <span class="h-center">Productivity</span>
+      <span class="h-center">{{(userStory.ftes / userStory.dev_hrs).toFixed(2)}}</span>
+      <span class="h-center">Benefits</span>
+      <span class="h-center">{{userStory.ftes}}</span>
+    </div>
+  </div>
+  <div class="box row r3">
+    <div class="col c3">
+      <span class="h-center reduce-margin">Rules Approved</span>
+      <span class="block">
+        <mat-slide-toggle class="rules-approved" [checked]="userStory.rules_approved" (change)="toggleRules($event, userStory.id, userStory.sprint_name)"></mat-slide-toggle>
+      </span>
+      <span class="h-center reduce-margin">Test Case Verified</span>
+      <span class="block">
+        <mat-slide-toggle [checked]="userStory.verified_test_cases" (change)="toggleTVC($event, userStory.id, userStory.sprint_name)"></mat-slide-toggle>
+      </span>
+    </div>
+  </div>
+  <div class="box row r4">
+    <div class="col c4">
+      <span>Status</span>
+      <span class="priority h-center">
+        <span *ngIf="userStory.status === 'Backlog'" class="circle" [ngStyle]="{ 'background-color' : '#2A7DE1' }"> </span>
+        <span *ngIf="userStory.status === 'Rules'" class="circle" [ngStyle]="{ 'background-color' : '#F47074' }"> </span>
+        <span *ngIf="userStory.status === 'Intl Testing'" class="circle" [ngStyle]="{ 'background-color' : '#0033A1' }"> </span>
+        <span *ngIf="userStory.status === 'Ext Testing'" class="circle" [ngStyle]="{ 'background-color' : '#FDD468' }"> </span>
+        <span *ngIf="userStory.status === 'Done'" class="circle" [ngStyle]="{ 'background-color' : '#40C0C4' }"> </span>
+        <span class="priority-text float-l">{{userStory.status}}</span>
+      </span>
+      <span>Description</span>
+      <span>{{userStory.notes}}</span>
+    </div>
+    <div class="col c42">
+      <div class="btn-box">
+        <button class="btn btn-flat-ash" matRipple (click)="onEdit()"><i class="fas fa-pencil-alt"></i></button>
+        <button class="btn btn-blue" matRipple [matRippleColor]="rippleColor">View SOP</button>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="options-btn" [matMenuTriggerFor]="options">
+    <i class="fas fa-ellipsis-h"></i>
+    <mat-menu #options="matMenu">
+      <button mat-menu-item (click)="onDelete(userStory.id)">Delete</button>
+    </mat-menu>
+  </div>
+  <div class="created-date">
+    <span>Created on</span><br>
+    <span>{{userStory.date}}</span>
+  </div>
+</div>

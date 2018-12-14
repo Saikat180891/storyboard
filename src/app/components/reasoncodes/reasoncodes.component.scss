@@ -1,14 +1,21 @@
+.universal{
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+}
 .container{
     width: 100%;
-    margin-bottom: 5.5rem;
+    // margin-bottom: 5.5rem;
     position: relative;
     top: 3.4375rem;
+    background-image: linear-gradient(#0033A1, #185CC5, #2A7DE1);
 }
 .header{
     display: flex;
     height: 60px;
     width: 100%;
-    background-color: #fff;
+    background-color: transparent;
     line-height: 60px;
     font-size: 14px;
     position: relative;
@@ -17,10 +24,10 @@
 .edit{
   margin-left: 30px;
   cursor: pointer;
-  color: #707070;
+  color: #ffffff;
 }
 .heading{
-  color: #000000;
+  color: #ffffff;
   font-size: 18px;
   font-weight: 500;
   position: absolute;
@@ -37,15 +44,15 @@
 
   }
   &__divider{
-    color: #707070;
+    color: #ffffff;
   }
   &__assignees{
-    color: #707070;
+    color: #ffffff;
     margin-left: 40px;
   }
   &__date{
     margin-left: 170px;
-    color: #707070;
+    color: #ffffff;
 
     &__icon{
       color: #F47074;
@@ -100,17 +107,17 @@
 }
 .header__btn{
   right: 30px;
-
-  button{
-    background-color: #ffffff;
-    color: #2A7DE1;
-  }
 }
 .flex{
   display: flex;
   justify-content: space-between;
 }
-
+.card-side-gutter{
+  padding: 0 25px 0 25px;
+}
+.gutter-top{
+  padding-top: 5px;
+}
 @media (min-width: 1368px){
   .flex{
     justify-content: space-around;
@@ -121,7 +128,7 @@
 }
 .charts{
   width: 100%;
-  height: 250px;
+  height: 300px;
   padding: 0 25px;
 }
 
@@ -131,7 +138,20 @@
   margin-left: 25px;
   margin-top: 25px;
 }
-
+.card-holder{
+  width: auto;
+  height: auto;
+  // background-color: red;
+}
+.card-holder-active{
+  height: calc(100% - 3.4rem);
+  // height: 500px;
+  overflow-y: auto;
+}
+.filter-selected{
+  width: 100%;
+  height: 35px;
+}
 .animate-scale{
   top: -100%;
   opacity: 0;
@@ -153,6 +173,7 @@
   height: 65vh;
   background-color: #fff;
   border-radius: 2px;
+  box-shadow: 0 0 20px rgba($color: #000000, $alpha: 0.3);
   overflow: hidden;
 
   .header{
@@ -337,7 +358,48 @@
     width: 150px;
   }
 }
+.visibility-hidden{ visibility: hidden; }
+.userstory-container{
+  position: relative;
+  top: 60px;
+}
+.userstory-container-active{
+  position: fixed;
+  top: 3.5rem;
+}
+.menu-btn-group{
+  position: absolute;
+  top: 7px;
+  right: 30px;
+  width: auto;
+  height: auto;
+  z-index: 300;
 
+  button{
+    border: none;
+    color: #2A7DE1;
+    box-shadow: 1px 1px 4px rgba($color: #000000, $alpha: 0.15);
+  }
+  button:nth-child(1){
+    position: absolute;
+    right: 250px;
+    width: 90px;
+  }
+
+  button:nth-child(2){
+    position: absolute;
+    right: 135px;
+    width: 90px;
+  }
+
+}
+::ng-deep {
+  .menu-btn-first{
+    .mat-menu-panel:first-child{
+      width: 300px;
+    }
+  }
+}
 ::ng-deep .mat-datepicker-content .mat-calendar {
   width: 250px;
   height: 300px;
@@ -346,4 +408,56 @@
 ::ng-deep .mat-calendar-body-selected{
   background-color: #2A7DE1;
 }
+::ng-deep mat-tab-group {
+  &.userstory-container-tabs {
+    .mat-tab-header, .mat-tab-nav-bar{
+      min-width: 100%;
+      width: 100vw;
+      box-shadow: 0 3px 6px rgba($color: #000000, $alpha: 0.15);
+    }
+  }
+} 
+.create-user-story{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.1s ease;
+  height: 553px;
+  width: 470px;
+  background-color: #ffffff;
+  z-index: 500;
+  box-shadow: -3px 3px 6px rgba($color: #000000, $alpha: 0.3);
+}
+.create-user-story-active{
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 0.1s ease;
+}
 
+.sprint-config-modal{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.filter{
+  position: absolute;
+  top: 30px;
+  right: 134px;
+  transform: scale(0);
+  opacity: 0;
+  transition: all 0.1s ease; 
+  visibility: hidden;
+  transform-origin: top right;
+}
+.filter-active{
+  transform: scale(1);
+  opacity: 1;
+  visibility: visible;
+}
+.filter-btn-active{
+  color: #ffffff !important;
+  background-color: #C1C1C1 !important;
+}

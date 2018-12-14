@@ -5,7 +5,7 @@ import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; 
 import { MsAdalAngular6Module, AuthenticationGuard } from 'microsoft-adal-angular6';
 import { NvD3Module } from 'ng2-nvd3';
-
+import { NgxSpinnerModule } from 'ngx-spinner';
 import 'd3';
 import 'nvd3';
 
@@ -31,6 +31,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatTableModule} from '@angular/material/table';
 import {MatRippleModule} from '@angular/material/core';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 import {DataService} from './data.service';
 import {AppcontrolService} from './controlservice/appcontrol.service';
@@ -77,6 +78,12 @@ import { ChartsComponent } from './components/shared/charts/charts.component';
 import { TableComponent } from './components/shared/table/table.component';
 import { CreateRowComponent } from './components/shared/table/create-row/create-row.component';
 import { DeleteTableComponent } from './components/shared/delete-table/delete-table.component';
+import { UserstoryCardComponent } from './components/shared/userstory-card/userstory-card.component';
+import { UserstoryCardEditComponent } from './components/shared/userstory-card-edit/userstory-card-edit.component';
+import { UserstoryCardCreateComponent } from './components/shared/userstory-card-create/userstory-card-create.component';
+import { ColoredDropdownComponent } from './components/shared/colored-dropdown/colored-dropdown.component';
+import { SprintConfigComponent } from './components/shared/sprint-config/sprint-config.component';
+import { UserstoryFilterComponent } from './components/shared/userstory-filter/userstory-filter.component';
 
 const routes = [
   {path: '', component: AuthComponent, pathMatch: 'full'},
@@ -131,7 +138,13 @@ const routes = [
     ChartsComponent,
     TableComponent,
     CreateRowComponent,
-    DeleteTableComponent
+    DeleteTableComponent,
+    UserstoryCardComponent,
+    UserstoryCardEditComponent,
+    UserstoryCardCreateComponent,
+    ColoredDropdownComponent,
+    SprintConfigComponent,
+    UserstoryFilterComponent
   ],
   imports: [
     BrowserModule,
@@ -150,6 +163,7 @@ const routes = [
     DragDropModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSlideToggleModule,
     MatListModule,
     FormsModule,
     MatRippleModule,
@@ -163,6 +177,7 @@ const routes = [
     MatProgressSpinnerModule,
     HttpClientModule,
     MatInputModule,
+    NgxSpinnerModule,
     MatTableModule,
     RouterModule.forRoot(routes),
     MsAdalAngular6Module.forRoot({

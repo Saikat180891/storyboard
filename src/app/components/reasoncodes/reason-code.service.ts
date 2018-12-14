@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {DataService}  from '../../data.service';
-
+import {environment} from '../../../environments/environment';
+import {PreloaderService} from '../shared/preloader/preloader.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +11,31 @@ export class ReasonCodeService {
   sprintConfig = [];
   currentSprintData = [];
   totalSprintData = [];
+  // currentSprintData = [];
   currentProject = {};
   userStories = [];
   movemodal:boolean = false;
+  openCreateSideBar:boolean = false;
+  openEditSideBar:boolean = false;
+  benefitsChartData = [];
 
-  constructor(private _api:DataService) { }
+  constructor(private _api:DataService,
+              private __preLoad: PreloaderService) { }
 
   createSprint(payload){
-    this._api.postData(`/sop/${this.sopId}/sprint.json`, payload)
+    payload.forEach(element => {
+      element.start_date = this.formatDate(element.start_date);
+      this._api.postData(`/sop/${this.sopId}/sprint.json`, element)
       .subscribe(response=>{
-        // console.log(response);
-        response['start_date'] = this.arrangeDateInCorrectFormat(response['start_date']);
-        this.sprintConfig.unshift(response);
+        if(response){
+          
+        }else{
+          return false;
+        }
       });
+    });
+    this.getSprint();
+    return true;
   }
 
   getSopByID(id){
@@ -37,22 +50,26 @@ export class ReasonCodeService {
     this._api.fetchData(`/sop/${this.sopId}/sprint.json`)
       .subscribe(response=>{
         // console.log("The get response is ",response);
-        response.forEach(element=>{
+        
+        response.forEach((element, index)=>{
           element['start_date'] = this.arrangeDateInCorrectFormat(element['start_date']);
+          element['sprintNumber'] = index + 1;
         });
-        this.sprintConfig = response;
+        // console.log(response);
+        this.sprintConfig = response.reverse();
       });
   }
 
   deleteSprint(id){
     this._api.delete('/sop/sprint', `${id}.json`)
       .subscribe(response=>{
-        this.sprintConfig.forEach(element=>{
-          if(element.id === id){
-            let pos = this.sprintConfig.indexOf(element);
-            this.sprintConfig.splice(pos, 1);
-          }
-        });
+        // this.sprintConfig.forEach(element=>{
+        //   if(element.id === id){
+        //     let pos = this.sprintConfig.indexOf(element);
+        //     this.sprintConfig.splice(pos, 1);
+        //   }
+        // });
+        this.getSprint();
         console.log(`Delete sprint with id = ${id}`)
       });
   }
@@ -61,23 +78,46 @@ export class ReasonCodeService {
     data['start_date'] = this.formatDate(data['start_date']);
     this._api.update(`/sop/sprint`, `${id}.json`, data)
       .subscribe(response=>{
-        this.sprintConfig.forEach(element=>{
-          if(element.id === response[id]){
-            // console.log("The edit response is 2", response);
-            let pos = this.sprintConfig.indexOf(element);
-            response['start_date'] = this.arrangeDateInCorrectFormat(response['start_date']);
-            this.sprintConfig[pos] = response;
-          }
-        });
+        this.getSprint();
+        // this.sprintConfig.forEach(element=>{
+        //   if(element.id === response[id]){
+        //     // console.log("The edit response is 2", response);
+        //     let pos = this.sprintConfig.indexOf(element);
+        //     response['start_date'] = this.arrangeDateInCorrectFormat(response['start_date']);
+        //     this.sprintConfig[pos] = response;
+        //   }
+        // });
         // console.log("The response is ",response);
       });
   }
 
-  getUserStory(){
-    this._api.fetchData(`/sop/reasoncode/1/userstories.json`)
+  getUserStories(id){
+    console.log("Get all user story", id)
+    const api = !environment.production ? `/sop/reasoncode/${id}/userstories.json` : '';
+    this._api.fetchData(api)
       .subscribe(response=>{
-        this.userStories = response;
+        this.userStories = response.reverse();
       });
+      console.log("the userstories are", this.userStories)
+  }
+
+  deleteUserStory(id){
+    this._api.delete(`/sop/reasoncode/userstories`, `${id}.json`)
+      .subscribe(response=>{
+        this.userStories.forEach(element=>{
+          if(element.id === id){
+            let pos = this.userStories.indexOf(element);
+            this.userStories.splice(pos, 1);
+            this.getTotalCharData(this.sopId);
+          }
+        });
+        // this.getDeletedUserStories();
+        console.log(`Rpw with id ${id} deleted successfully.`);
+      });
+  }
+  
+  getUserStory(){
+    return this.userStories;
   }
 
   getChartData(id){
@@ -85,6 +125,14 @@ export class ReasonCodeService {
       .subscribe(response=>{
         this.currentSprintData = response;
       });
+  }
+
+  getCurrentSprintData(){
+    this._api.fetchData(`/sop/${this.sopId}/currentSprint/graphdata.json`)
+      .subscribe(response=>{
+        this.currentSprintData = response;
+        console.log("Current Sprint Data", response);
+      })
   }
 
   getTotalCharData(id){
@@ -101,13 +149,20 @@ export class ReasonCodeService {
       })
   }
 
+  getBenefits(id){
+    this._api.fetchData(`/sop/${id}/ftes.json`)
+      .subscribe(response=>{
+        this.benefitsChartData = response;
+      })
+  }
+
   /**
    * Rearrange the date in the following format DD/MM/YYYY
    * @param date 
    */
   formatDate(date){
     let dateStr = new Date(date)
-    let strDate =  "" + dateStr.getDate() + "/" + (dateStr.getMonth()+1) + "/" + dateStr.getFullYear();
+    let strDate =  "" + dateStr.getFullYear() + "-" + (dateStr.getMonth()+1) + "-" + dateStr.getDate();
     return strDate;
   }
 
@@ -119,13 +174,15 @@ export class ReasonCodeService {
    * @param date 
    */
   arrangeDateInCorrectFormat(date){
-    let newDate = date.toString().split("/");
-    let dateFormat = new Date();
-    dateFormat.setFullYear(Number(newDate[2]));
-    dateFormat.setMonth(Number(newDate[1])-1);
-    dateFormat.setDate(Number(newDate[0]));
+    
+    // let newDate = date
+    // console.log(newDate)
+    // let dateFormat = new Date(date);
+    // dateFormat.setFullYear(Number(newDate[2]));
+    // dateFormat.setMonth(Number(newDate[1])-1);
+    // dateFormat.setDate(Number(newDate[0]));
     // console.log(dateFormat)
-    return dateFormat;
+    return new Date(date);
   }
 
   

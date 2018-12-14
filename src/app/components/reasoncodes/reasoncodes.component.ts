@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
@@ -6,7 +6,9 @@ import {ReasonCodeService} from './reason-code.service';
 import {ContainerService} from '../container/container.service';
 import {TableService} from '../shared/table/table.service';
 import {DeleteTableService} from '../shared/delete-table/delete-table.service';
-
+import {CreateUserstoryService} from '../shared/userstory-card-create/create-userstory.service';
+import {charts} from './chartoptions';
+import {fromEvent} from 'rxjs';
 
 export interface UserData {
   id: string;
@@ -69,14 +71,24 @@ const ELEMENT_DATA: Userstories[] = [
   styleUrls: ['./reasoncodes.component.scss', './move-user-story.scss','draggable.scss']
 })
 export class ReasoncodesComponent implements OnInit {
+  @ViewChild('totalPage') totalPage:ElementRef;
+  @ViewChild('userStoryContainer') userStoryContainer:ElementRef;
   panelOpenState = false;
   options = [1,2,3];
+  pieChartOptions = {};
+  barChartOptions = {};
   displayedColumns: string[] = ['Sprint', 'U/S', 'User Story Name', 'Priority', 'Rules Approved', 'Verified Test Cases', 'FTE', 'Dev Hrs', 'Notes', 'Status', 'btn'];
   dataSource = ELEMENT_DATA;
   openAddSprint = false;
   sopId:number;
   dateCounter:number = 0;
-  
+  userStories = [];
+  openEditSideBar:boolean = false;    //toggler to open or close the right side bar to edit
+  openCreateSideBar:boolean = false;    //toggler to open or close the right side bar to create
+  sprintOptions = [];
+  fixToTop:boolean = false;
+  filter:boolean = false;
+
   addSprintPayload:SprintConfig = {
     sprint_name: '',
     start_date: '',
@@ -148,29 +160,91 @@ export class ReasoncodesComponent implements OnInit {
     'Walk dog'
   ];
 
+  data = [
+    {
+        key: "Cumulative Return",
+        
+        values: [
+            {
+                "label" : "Sprint 1" ,
+                "value" : 30,
+                "color": "#0f0",
+            } ,
+            {
+                "label" : "B" ,
+                "value" : 0,
+                "color": "#00f",
+            } ,
+            {
+                "label" : "C" ,
+                "value" : 32.807804682612,
+                "color": "#f00",
+            } ,
+            {
+                "label" : "D" ,
+                "value" : 196.45946739256
+            } ,
+            {
+                "label" : "E" ,
+                "value" : 0.19434030906893
+            }
+        ]
+    }
+]
+
   constructor(private route: ActivatedRoute,
               private _reasonCode: ReasonCodeService,
               private _containerService: ContainerService,
               private _tableService: TableService,
-              private _deletedTable: DeleteTableService) {}
+              private _deletedTable: DeleteTableService,
+              private _createUserStory: CreateUserstoryService) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this._reasonCode.sopId = parseInt(params.id);
+      this._reasonCode.sopId = this._createUserStory.sopId = parseInt(params.id);
+      //call the getUserStory() API and store all the value in the userStories array
+      this._reasonCode.getUserStories(this._reasonCode.sopId);
+      //call the getUserStory() API and the current project details
+      this._reasonCode.getSopByID(this._reasonCode.sopId);
+      //call the getUserStory() API and displat the graph data
+      this._reasonCode.getTotalCharData(this._reasonCode.sopId);
+
+      this._reasonCode.getCurrentSprintData();
+
+      this._reasonCode.getBenefits(this._reasonCode.sopId);
+
       this._containerService.cardContents.forEach(element => {
         if(element.id == this._reasonCode.sopId){
           this.currentProject = element;
         }
       });
-      console.log("Current project is",this.currentProject);
    });
 
-   this._reasonCode.getSopByID(this._reasonCode.sopId);
    this._reasonCode.getSprint();
-   this._reasonCode.getTotalCharData(this._reasonCode.sopId);
    
-   
+   this.pieChartOptions = charts.pieChart;
+   this.barChartOptions = charts.barChart;
    console.log(this._reasonCode.sprintConfig);
+   
+    // let body = document.getElementsByTagName('html');
+    // console.log(body[0])
+   fromEvent(this.totalPage.nativeElement, 'scroll')
+      .subscribe(res => {
+        console.log(res);
+        if(res["target"].scrollTop > 360){
+          this.fixToTop = true;
+        }
+      });
+    setTimeout(()=>{
+      fromEvent(this.userStoryContainer.nativeElement, 'scroll')
+      .subscribe(res => {
+        console.log(res);
+        if(res["target"].scrollTop === 0){
+          this.fixToTop = false;
+        }
+      });
+    }, 500);
+
   }
 
   onSelectDeletedUS(){
@@ -201,7 +275,29 @@ export class ReasoncodesComponent implements OnInit {
   onOpenAddSprint(){
     this._reasonCode.getSprint();
     console.log(this._reasonCode.sprintConfig)
+    let sprints = this._reasonCode.sprintConfig;
     this.openAddSprint = !this.openAddSprint;
+    
+    
+  }
+
+  openFilter(){
+    this.filter = !this.filter;
+  }
+
+  createOptionsWithSprintName(){
+    this.sprintOptions = [];
+    let sprints = this._reasonCode.sprintConfig;
+    sprints.forEach(ele=>{
+      let temp = {};
+      temp = Object.assign({
+        status:ele['sprint_name'],
+        color:'transparent'
+      }
+        , temp);
+      this.sprintOptions.push(temp);
+      console.log(temp)
+    });
   }
 
   onCloseAddSprint(){
@@ -257,6 +353,11 @@ export class ReasoncodesComponent implements OnInit {
     this._reasonCode.movemodal = false;
   }
 
+  onCreate(){
+    this.openCreateSideBar = !this.openCreateSideBar;
+    this.createOptionsWithSprintName();
+  }
+
   onArrowUp(){
     // this.dateCounter += 1;
     this.addSprintPayload.duration = (this.dateCounter += 1) + 'W';
@@ -292,6 +393,21 @@ export class ReasoncodesComponent implements OnInit {
         end_date: true
       }
     }
+  }
+
+  userStoryData;
+
+  onOpenUserStorySidebar(event, userStory){
+    this.openEditSideBar = event;
+    this.userStoryData = userStory;
+  }
+
+  onCloseEditUserStories(event){
+    this.openEditSideBar = event;
+  }
+
+  onCloseCreateUserStories(event){
+    this.openCreateSideBar = event;
   }
 
   /**

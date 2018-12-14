@@ -30,7 +30,6 @@ export class AddStepsService{
   getScreens(userstory, section){
     this._apiService.fetchData(`/sop/reasoncode/userstories/${userstory}/sections/${section}.json`)
       .subscribe(response=>{
-        console.log("Get screens",response)
         this.screens = response;
       });
       return this.screens;

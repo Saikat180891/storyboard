@@ -1,44 +1,103 @@
 <app-header></app-header>
-<div class="container">
-  <div class="header">
+<div class="universal" #totalPage>
 
-    <div class="heading">
-      <span class="heading__name">{{_reasonCode.currentProject?_reasonCode.currentProject.clientName:''}}</span>
-      <span class="heading__divider"> | </span>
-      <span class="heading__id">{{_reasonCode.currentProject?_reasonCode.currentProject.title:''}}</span>
+  <ng-container *ngIf="!fixToTop">
+    <div class="container">
+      <div class="header">
+  
+        <div class="heading">
+          <span class="heading__name">{{_reasonCode.currentProject?_reasonCode.currentProject.clientName:''}}</span>
+          <span class="heading__divider"> | </span>
+          <span class="heading__id">{{_reasonCode.currentProject?_reasonCode.currentProject.title:''}}</span>
+        </div>
+  
+        <div class="middle header__btn">
+          <button class="btn btn-blue btn-lg btn-shadow btn-active clearfill" (click)="onOpenAddSprint()">Config Sprint</button>
+        </div>
+  
+      </div>
+      <div class="flex charts">
+        <app-charts [meter]="true" [options]="pieChartOptions" [data]="_reasonCode.totalSprintData" [title]="'Project Status'"></app-charts>
+        <app-charts [meter]="true" [options]="pieChartOptions" [data]="_reasonCode.currentSprintData" [title]="'Current Sprint'" [selectOptions]="_reasonCode.sprintConfig"></app-charts>
+        <app-charts [meter]="false" [options]="barChartOptions" [title]="'Benefits'" [data]="_reasonCode.benefitsChartData"></app-charts>
+      </div>
     </div>
+  </ng-container>
 
-    <div class="middle header__btn">
-      <button class="btn btn-flat-blue btn-lg clearfill" (click)="onOpenAddSprint()">ADD/EDIT SPRINT</button>
+
+
+
+  <div class="userstory-container" [ngClass]="{'userstory-container-active':fixToTop}">
+    <mat-tab-group class="userstory-container-tabs">
+      <mat-tab label="All U/S">
+        <!-- <div class="filter-selected">
+
+        </div> -->
+        <div class="card-holder" [ngClass]="{'card-holder-active':fixToTop}" *ngIf="userStories" #userStoryContainer>
+          
+          <app-userstory-card *ngFor="let userStory of _reasonCode.userStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
+        </div>
+      </mat-tab>
+      <mat-tab label="Deleted U/S" (click)="onSelectDeletedUS()">
+        <div class="flex">
+          <!-- <app-delete-table></app-delete-table> -->
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+    <div class="menu-btn-group">
+      <button class="sort-btn btn btn-flat-grey" [matMenuTriggerFor]="sortby">Sort By</button>
+      <button class="btn btn-flat-grey" (click)="openFilter()" [ngClass]="{'filter-btn-active':filter}">Filter</button>
+      <button class="btn btn-flat-grey" (click)="onCreate()">Create New U/S</button>
+      <mat-menu #sortby="matMenu">
+        <button mat-menu-item [matMenuTriggerFor]="usName">U/S Name</button>
+        <button mat-menu-item [matMenuTriggerFor]="priority">Priority</button>
+        <button mat-menu-item [matMenuTriggerFor]="productivity">Productivity</button>
+        <button mat-menu-item [matMenuTriggerFor]="reasonCode">Reason Code</button>
+      </mat-menu>
+
+      <mat-menu #usName="matMenu">
+        <button mat-menu-item>A to Z</button>
+        <button mat-menu-item>Z to A</button>
+      </mat-menu>
+      
+      <mat-menu #priority="matMenu">
+        <button mat-menu-item>High to Low</button>
+        <button mat-menu-item>Low to High</button>
+      </mat-menu>
+
+      <mat-menu #productivity="matMenu">
+        <button mat-menu-item>High to Low</button>
+        <button mat-menu-item>Low to High</button>
+      </mat-menu>
+
+      <mat-menu #reasonCode="matMenu">
+        <button mat-menu-item>High to Low</button>
+        <button mat-menu-item>Low to High</button>
+      </mat-menu>
+
+      <div class="filter" [ngClass]="{'filter-active': filter}">
+        <userstory-filter></userstory-filter>
+      </div>
+      
     </div>
   </div>
+
+  <div class="create-user-story" [ngClass]="{'create-user-story-active': openCreateSideBar}">
+      <app-userstory-card-create *ngIf="openCreateSideBar" [sprintOptions]="sprintOptions" (close)="onCloseCreateUserStories($event)"></app-userstory-card-create>
+  </div>
+  <div class="create-user-story" [ngClass]="{'create-user-story-active': openEditSideBar}">
+      <app-userstory-card-edit *ngIf="openEditSideBar" (close)="onCloseEditUserStories($event)" [editUSData]="userStoryData" [sprintOptions]="sprintOptions"></app-userstory-card-edit>
+  </div>
+
 </div>
+<!-- Create new sprint 'openAddSprint' -->
+<div class="overlay animate-scale" [ngClass]="{'animate-scale-active': openAddSprint}">
 
-<div class="flex charts">
-  <app-charts [options]="currentSprintOptions" [data]="_reasonCode.totalSprintData" [title]="'Project Status'"></app-charts>
-  <app-charts [options]="currentSprintOptions" [data]="_reasonCode.currentSprintData" [title]="'Current Sprint'" [selectOptions]="_reasonCode.sprintConfig"></app-charts>
-  <app-charts [title]="'FTE'"></app-charts>
-</div>
-
-<div class="flex table">
-  <mat-tab-group>
-    <mat-tab label="All U/S">
-      <div class="flex">
-        <app-table [sprint]="_reasonCode.sprintConfig"></app-table>
-      </div>
-    </mat-tab>
-    <mat-tab label="Deleted U/S" (click)="onSelectDeletedUS()">
-      <div class="flex">
-        <app-delete-table></app-delete-table>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
-</div>
-
-
-<!-- Create new sprint -->
-<div class="overlay animate-scale" [ngClass]="{'animate-scale-active':openAddSprint}">
-  <div class="modal">
+  <div class="sprint-config-modal">
+    <sprint-config *ngIf="openAddSprint" [sprintConfigData]="_reasonCode.sprintConfig" (closeSprints)="openAddSprint=$event"></sprint-config>
+  </div>
+  <!-- <div class="modal">
     <div class="header">
       <span>Add Sprints</span>
       <span (click)="onCloseAddSprint()"><i class="fas fa-times"></i></span>
@@ -58,7 +117,7 @@
         <tbody *ngIf="_reasonCode.sprintConfig">
 
             <tr [id]="sprint.id" *ngFor="let sprint of _reasonCode.sprintConfig">
-              <td>Sprint#</td>
+              <td>{{sprint.sprintNumber}}</td>
               <td>
                 <input class="text-box" type="text" [(ngModel)]="sprint.sprint_name" (keyup)="onEditSprint($event, sprint.id, sprint)">
               </td>
@@ -70,7 +129,7 @@
                 </div>
               </td>
               <td>
-                <input class="text-box" type="text" [(ngModel)]="sprint.duration" (keyup)="onEditSprint($event, sprint.id, sprint)">
+                <input class="text-box" type="text" [(ngModel)]="sprint.duration" (keyup)="onEditSprint($event, sprint.id, sprint)" readonly>
               </td>
               <td>
                 <input class="text-box" type="text" [(ngModel)]="sprint.end_date" (keyup)="onEditSprint($event, sprint.id, sprint)">
@@ -81,7 +140,7 @@
             </tr>
 
             <tr>
-              <td>Sprint#</td>
+              <td></td>
               <td><input class="text-box" type="text" [(ngModel)]="addSprintPayload.sprint_name" placeholder="Sprint Name" (keyup)="validateSprint(addSprintPayload)"></td>
               <td class="p-relative">
                 <input class="text-box date" [matDatepicker]="picker" type="text" placeholder="Choose a date" [(ngModel)]="addSprintPayload.start_date" readonly [disabled]="validateSprintConfig.start_date" (click)="validateSprint(addSprintPayload)">
@@ -118,7 +177,7 @@
         <button class="btn btn-flat-grey btn-primary" (click)="onCloseAddSprint()">CANCEL</button>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 
 
@@ -182,3 +241,5 @@
     </div>
   </div>
 </div>
+
+<app-preloader></app-preloader>

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
+import {DataService} from '../data.service';
+
+
 
 @Component({
   selector: 'app-auth',
@@ -12,7 +14,8 @@ export class AuthComponent {
 
   constructor(
     private router: Router,
-    private _msAdalSvc: MsAdalAngular6Service
+    private _msAdalSvc: MsAdalAngular6Service,
+    private _api:DataService
   ) { }
 
   ngOnInit() {

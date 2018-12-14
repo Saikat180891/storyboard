@@ -16,7 +16,7 @@ export class ChartsComponent implements OnInit {
   @Input('data') data;
   @Input('title') title;
   @Input('selectOptions') selectOptions;
-
+  @Input('meter') meter:boolean;
   selectedSprint;
 
 

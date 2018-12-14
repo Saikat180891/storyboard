@@ -1,19 +1,19 @@
 .container{
   width: 400px;
   height: 250px;
-  background-color: #ffffff;
-  border: 1px solid #D1D1D1;
-  border-radius: 2px;
+  background-color: transparent;
+  border: 1px solid #2A7DE1;
+  border-radius: 5px;
   position: relative;
 
   .header{
     padding-left: 20px;
-    color: #2A7DE1;
+    color: #ffffff;
     height: 40px;
     line-height: 40px;
     width: 100%;
     font-size: 18px;
-    border-bottom: 1px solid #D1D1D1;
+    // border-bottom: 1px solid #D1D1D1;
     position: absolute;
     top: 0;
     left: 0;
@@ -31,14 +31,13 @@
       display: flex;
       flex-direction: column;
       align-content: center;
-      top: 44%;
+      top: 42%;
       left: 26%;
       transform: translate(-50%, -25%);
-
+      color: #ffffff;
 
       span{
         font-size: 26px;
-        color: #54585A;
       }
       small{
         text-align: center;
@@ -49,19 +48,23 @@
     position: absolute;
     top: 0;
     right: 0;
+    padding: 10px 15px 20px 20px;
+    // button{
+    //   display: block;
+    //   height: 40px;
+    //   width: 40px;
+    //   line-height: 40px;
+    //   text-align: center;
+    //   border-left: 0px solid #D1D1D1;
+    //   cursor: pointer;
 
-    button{
-      display: block;
-      height: 40px;
-      width: 40px;
-      line-height: 40px;
-      text-align: center;
-      border-left: 0px solid #D1D1D1;
-      cursor: pointer;
-
-      i{
-        transform: rotate(90deg);
-      }
+    //   i{
+    //     transform: rotate(90deg);
+    //   }
+    // }
+    span{
+      color: #fff;
+      font-size: 30px;
     }
   }
 }
@@ -73,4 +76,38 @@
 ::ng-deep .mat-menu-content:not(:empty){
   max-height: 150px;
   overflow: auto;
+}
+
+/deep/ .nvd3.nv-pie path{
+  stroke: transparent;
+}
+
+/deep/ .nvd3 .nv-axis .zero line, .nvd3 .nv-axis line.zero{
+  stroke-opacity: 0;
+}
+
+/deep/ .nvd3 .nv-axis line{
+  stroke: #2A7DE1;
+}
+
+/deep/ .nvd3 text{
+  fill: #ffffff;
+}
+
+/deep/ .nvd3 .nv-discretebar .nv-groups text, .nvd3 .nv-multibarHorizontal .nv-groups text{
+  fill: #ffffff;
+}
+
+/deep/ .nvd3 .nv-axis path{
+  stroke: #2A7DE1;
+}
+/deep/ .nvd3 .nv-discretebar .nv-groups rect, .nvd3 .nv-multibar .nv-groups rect, .nvd3 .nv-multibarHorizontal .nv-groups rect{
+  width: 30px;
+}
+/deep/ .nvd3.nv-pie path{
+  fill-opacity: 1;
+}
+
+/deep/ g.nv-group{
+  fill-opacity: 1 !important;
 }

@@ -1,0 +1,105 @@
+<div class="side-container">
+  <div class="heading">
+    <span>Create User Story</span>
+    <span (click)="onClose()" class="close"><i class="fas fa-times"></i></span>
+  </div>
+  <div class="form">
+
+    <div class="form-group">
+      <div class="input-container sm">
+        <div class="title">U/S#</div>
+        <div class="editable">
+          <input class="text-left" type="number" placeholder="Ex: 1" [(ngModel)]="userStoryPayload.us_number">
+        </div>
+      </div>
+      <div class="input-container md">
+        <div class="title">User Story Name</div>
+        <div class="editable">
+          <input type="text" placeholder="Ex: User Story 1" [(ngModel)]="userStoryPayload.us_name">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-container sm">
+        <div class="title">Sprint#</div>
+        <div class="editable">
+          <input class="no-style" type="text" value="123" readonly>
+        </div>
+      </div>
+      <div class="input-container md">
+        <div class="title">Sprint Name</div>
+        <div class="editable">
+          <colored-dropdown (optionSelected)="userStoryPayload.sprint_name=$event.status" [options]="sprintOptions" [defaultOption]="'Select'"></colored-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="h-divider"></div>
+
+    <div class="form-group h-space-equally">
+      <div class="input-container sm extra">
+        <div class="title">Priority</div>
+        <div class="editable">
+          <colored-dropdown (optionSelected)="userStoryPayload.priority=$event.status" [options]="priorityOptions" [defaultOption]="'Select'"></colored-dropdown>
+        </div>
+      </div>
+      <div class="input-container sm">
+        <div class="title align-center">Productivity</div>
+        <div class="editable">
+          <!-- <input class="text-center no-style" type="number" placeholder="------" readonly [(ngModel)]="userStoryPayload.dev_hrs / userStoryPayload.ftes"> -->
+          <span class="text-center">{{userStoryPayload.dev_hrs / userStoryPayload.ftes?(userStoryPayload.dev_hrs / userStoryPayload.ftes).toFixed(1):'------'}}</span>
+        </div>
+      </div>
+      <div class="input-container sm">
+        <div class="title align-center">Dev Hrs</div>
+        <div class="editable">
+          <input type="number" placeholder="Ex: 23"  [(ngModel)]="userStoryPayload.dev_hrs">
+        </div>
+      </div>
+      <div class="input-container sm">
+        <div class="title align-center">Benefits</div>
+        <div class="editable">
+          <input type="number" placeholder="Ex: 3" [(ngModel)]="userStoryPayload.ftes">
+        </div>
+      </div>
+    </div>
+    <div class="h-divider"></div>
+
+    <div class="form-group">
+      <div class="input-container md">
+        <div class="title">Rules Approved</div>
+        <div class="editable align-center pad-right">
+          <mat-slide-toggle (change)="userStoryPayload.rules_approved=$event.checked"></mat-slide-toggle>
+        </div>
+      </div>
+      <div class="input-container md">
+        <div class="title">Test Cases Verified</div>
+        <div class="editable align-center">
+          <mat-slide-toggle (change)="userStoryPayload.verified_test_cases=$event.checked"></mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+    <div class="h-divider"></div>
+
+    <div class="form-group">
+      <div class="input-container lg">
+        <div class="title">Status</div>
+        <div class="editable">
+          <colored-dropdown (optionSelected)="userStoryPayload.status=$event.status" [options]="statusOptions" [defaultOption]="'Select'"></colored-dropdown>
+        </div>
+      </div>
+      <div class="input-container">
+        <div class="title">Description</div>
+        <div class="editable">
+          <input type="text" placeholder="Add description here" [(ngModel)]="userStoryPayload.notes">
+        </div>
+      </div>
+    </div>
+    <div class="h-divider"></div>
+
+    <div class="form-group btn-group">
+      <button class="btn btn-blue" (click)="onCreate()">Save Changes</button>
+      <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
+    </div>
+  </div>
+</div>
