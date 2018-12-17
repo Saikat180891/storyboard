@@ -51,6 +51,9 @@
           color: #C1C1C1;
           margin-bottom: 10px;
         }
+        .warning{
+          color: #F47074;
+        }
         .align-center{
           text-align: center;
         }
@@ -112,6 +115,10 @@
             // text-align: left;
           }
 
+          input[type="text"].warning, input[type="number"].warning{
+            border: 2px solid #F47074;
+          }
+
           input[type="number"]{
             text-align: center;
             padding-left: 0px;
@@ -164,6 +171,17 @@
 
       button:first-child{
         margin-right: 20px;
+      }
+
+      span{
+        // height: 30px;
+        // line-height: 30px;
+        border-radius: 5px;
+        background-color: rgba($color: #F47074, $alpha: 0.3);
+        padding: 10px 5px;
+        margin-left: 20px;
+        color: #F47074;
+        font-size: 14px;
       }
     }
 

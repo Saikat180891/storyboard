@@ -144,6 +144,17 @@
       button:first-child{
         margin-right: 20px;
       }
+
+      span{
+        // height: 30px;
+        // line-height: 30px;
+        border-radius: 5px;
+        background-color: rgba($color: #F47074, $alpha: 0.3);
+        padding: 10px 5px;
+        margin-left: 20px;
+        color: #F47074;
+        font-size: 14px;
+      }
     }
 
     .h-space-equally{

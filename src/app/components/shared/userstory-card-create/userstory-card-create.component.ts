@@ -92,15 +92,84 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
     this.edit = !this.edit;
   }
 
+  userStoryNumberValidator:boolean = false;
+  userStoryNameValidator:boolean = false;
+  userStoryPriorityValidator: boolean = false;
+  userStorySprintNameValidator: boolean = false;
+  userStoryStatusValidator: boolean = false;
+  userStoryDescValidator: boolean = false;
+  validationSuccessfull = [];
+
   onCreate(){
-    let id:number;
-    this.__rcService.sprintConfig.forEach(element=>{
-      if(element.sprint_name == this.userStoryPayload.sprint_name){
-        id = element.id;
-      }
+    console.log(this.userStoryPayload)
+    if(this.userStoryPayload.us_number == ''){
+      this.userStoryNumberValidator = true;
+      this.validationSuccessfull[0] = 0;
+    }else{
+      this.userStoryNumberValidator = false;
+      this.validationSuccessfull[0] = 1;
+    }
+    if(this.userStoryPayload.us_name === ''){
+      this.userStoryNameValidator = true;
+      this.validationSuccessfull[1] = 0;
+    }else{
+      this.userStoryNameValidator = false;
+      this.validationSuccessfull[1] = 1;
+    }
+    if(this.userStoryPayload.priority == ''){
+      this.userStoryPriorityValidator = true;
+      this.validationSuccessfull[2] = 0;
+    }else{
+      this.userStoryPriorityValidator = false;
+      this.validationSuccessfull[2] = 1;
+    }
+    if(this.userStoryPayload.sprint_name == ''){
+      this.userStorySprintNameValidator = true;
+      this.validationSuccessfull[3] = 0;
+    }else{
+      this.userStorySprintNameValidator = false;
+      this.validationSuccessfull[3] = 1;
+    }
+    if(this.userStoryPayload.status === ''){
+      this.userStoryStatusValidator = true;
+      this.validationSuccessfull[4] = 0;
+    }else{
+      this.userStoryStatusValidator = false;
+      this.validationSuccessfull[4] = 1;
+    }
+    if(this.userStoryPayload.notes == ''){
+      this.userStoryDescValidator = true;
+      this.validationSuccessfull[5] = 0;
+    }else{
+      this.userStoryDescValidator = false;
+      this.validationSuccessfull[5] = 1;
+    }
+    const value = this.validationSuccessfull.reduce((acc, val)=>{
+      return acc + val;
     });
-    this.__createUserStory.createUserStory(id, this.userStoryPayload);
-    this.close.emit(false);
+    console.log(value)
+    if(value === 6){
+      let id:number;
+      this.__rcService.sprintConfig.forEach(element=>{
+        if(element.sprint_name == this.userStoryPayload.sprint_name){
+          id = element.id;
+        }
+      });
+      this.__createUserStory.createUserStory(id, this.userStoryPayload);
+      this.close.emit(false);
+    }
+
+    // created: ""
+    // dev_hrs: 43
+    // ftes: 32
+    // notes: "ds"
+    // priority: "High"
+    // rules_approved: true
+    // sprint_name: "Sprint 2"
+    // status: "BackLog"
+    // us_name: "us 4"
+    // us_number: 2
+    // verified_test_cases: true
   }
 
   onRulesApproved(event){
