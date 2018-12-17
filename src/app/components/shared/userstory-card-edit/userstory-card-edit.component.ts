@@ -56,11 +56,13 @@ export class UserstoryCardEditComponent implements OnInit {
     priority: '',
     rules_approved: '',
     verified_test_cases: '',
-    ftes: '',
-    dev_hrs: '',
+    ftes: 0,
+    dev_hrs: 0,
     notes: '',
     status: ''
   }
+
+  productivity = '------';
 
   constructor(private __rcService: ReasonCodeService, private __editUS: EditUserStoryService) { }
 
@@ -81,5 +83,19 @@ export class UserstoryCardEditComponent implements OnInit {
     });
     this.__editUS.editUserStory(this.editUSData.id, sprintId, this.editUSData);
     this.onClose();
+  }
+
+  onDevHrsUpdate(value){
+    this.editUSData.dev_hrs = value;
+    // console.log(value)
+  }
+
+  onBenefitsUpdate(value){
+    this.editUSData.ftes = value;
+    if(this.editUSData.ftes != 0){
+      this.productivity = (this.editUSData.ftes / this.editUSData.dev_hrs).toFixed(1);
+    }else{
+      this.productivity = '------';
+    }
   }
 }

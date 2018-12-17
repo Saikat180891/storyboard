@@ -1,9 +1,9 @@
 <div class="container">
   <div class="header">
-    <span>{{title}} <span *ngIf="projectStatus.current_sprint">-</span> {{projectStatus.current_sprint}}</span> <span *ngIf="selectedSprint"> ({{selectedSprint}})</span>
+    <span>{{title}} <span *ngIf="projectStatus">-</span> {{projectStatus.current_sprint}}</span> <span *ngIf="selectedSprint"> ({{selectedSprint}})</span>
   </div>
   <div class="option" *ngIf="data.length && projectStatus">
-    <span>{{(projectStatus.benefits).toFixed(1)}}</span>
+    <span>{{projectStatus.benefits}}</span>
     <span>Benefits</span>
   </div>
   <div class="chart" *ngIf="data.length; else message">
