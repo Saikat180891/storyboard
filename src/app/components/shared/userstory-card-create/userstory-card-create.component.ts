@@ -107,4 +107,8 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
     console.log("The rules approved", event);
   }
 
+  onUpdateProductivity(){
+    this.productivity = (parseFloat(this.userStoryPayload.dev_hrs) / parseFloat(this.userStoryPayload.ftes)).toFixed(1);
+  }
+
 }

@@ -62,11 +62,12 @@ export class UserstoryCardEditComponent implements OnInit {
     status: ''
   }
 
-  productivity = '------';
+  productivity;
 
   constructor(private __rcService: ReasonCodeService, private __editUS: EditUserStoryService) { }
 
   ngOnInit() {
+    this.onUpdateProductivity();
   }
 
   onClose(){
@@ -85,17 +86,9 @@ export class UserstoryCardEditComponent implements OnInit {
     this.onClose();
   }
 
-  onDevHrsUpdate(value){
-    this.editUSData.dev_hrs = value;
-    // console.log(value)
+  onUpdateProductivity(){
+    this.productivity = (parseFloat(this.editUSData.dev_hrs) / parseFloat(this.editUSData.ftes)).toFixed(1);
   }
 
-  onBenefitsUpdate(value){
-    this.editUSData.ftes = value;
-    if(this.editUSData.ftes != 0){
-      this.productivity = (this.editUSData.ftes / this.editUSData.dev_hrs).toFixed(1);
-    }else{
-      this.productivity = '------';
-    }
-  }
+  
 }

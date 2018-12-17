@@ -46,20 +46,20 @@
         <div class="input-container sm">
           <div class="title">Productivity</div>
           <div class="editable">
-            <!-- <input class="text-center" type="number" placeholder="------" readonly [(ngModel)]="editUSData.dev_hrs / editUSData.ftes"> -->
-            <span class="text-center">{{productivity}}</span>
+            <input class="text-center" type="number" placeholder="------" readonly [(ngModel)]="productivity">
+            <!-- <span class="text-center">{{productivity}}</span> -->
           </div>
         </div>
         <div class="input-container sm">
           <div class="title">Dev Hrs</div>
           <div class="editable">
-            <input type="number" placeholder="Ex: 23" (keyup)="onDevHrsUpdate($event.target.value)">
+            <input type="number" placeholder="Ex: 23" [(ngModel)]="editUSData.dev_hrs" (keyup)="onUpdateProductivity()">
           </div>
         </div>
         <div class="input-container sm">
           <div class="title">Benefits</div>
           <div class="editable">
-            <input type="number" placeholder="Ex: 3" (keyup)="onBenefitsUpdate($event.target.value)">
+            <input type="number" placeholder="Ex: 3" [(ngModel)]="editUSData.ftes" (keyup)="onUpdateProductivity()">
           </div>
         </div>
       </div>

@@ -46,20 +46,20 @@
       <div class="input-container sm">
         <div class="title align-center">Productivity</div>
         <div class="editable">
-          <!-- <input class="text-center no-style" type="number" placeholder="------" readonly [(ngModel)]="userStoryPayload.dev_hrs / userStoryPayload.ftes"> -->
-          <span class="text-center">{{userStoryPayload.dev_hrs / userStoryPayload.ftes ? (userStoryPayload.dev_hrs / userStoryPayload.ftes).toFixed(1):'------'}}</span>
+          <input class="text-center no-style" type="number" placeholder="------" readonly [(ngModel)]="productivity">
+          <!-- <span class="text-center">{{userStoryPayload.dev_hrs / userStoryPayload.ftes != Infinity ? (userStoryPayload.dev_hrs / userStoryPayload.ftes).toFixed(1):'------'}}</span> -->
         </div>
       </div>
       <div class="input-container sm">
         <div class="title align-center">Dev Hrs</div>
         <div class="editable">
-          <input type="number" placeholder="Ex: 23"  [(ngModel)]="userStoryPayload.dev_hrs">
+          <input type="number" placeholder="Ex: 23"  [(ngModel)]="userStoryPayload.dev_hrs" (keyup)="onUpdateProductivity()">
         </div>
       </div>
       <div class="input-container sm">
         <div class="title align-center">Benefits</div>
         <div class="editable">
-          <input type="number" placeholder="Ex: 3" [(ngModel)]="userStoryPayload.ftes">
+          <input type="number" placeholder="Ex: 3" [(ngModel)]="userStoryPayload.ftes" (keyup)="onUpdateProductivity()">
         </div>
       </div>
     </div>
