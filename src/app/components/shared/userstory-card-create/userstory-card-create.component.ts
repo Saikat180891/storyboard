@@ -81,7 +81,7 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
   
 
   ngOnChanges(){
-    this.productivity = (parseFloat(this.userStoryPayload.dev_hrs) / parseFloat(this.userStoryPayload.ftes)).toFixed(2);
+    this.productivity = (parseFloat(this.userStoryPayload.ftes) / parseFloat(this.userStoryPayload.dev_hrs)).toFixed(2);
   }
 
   onClose(){

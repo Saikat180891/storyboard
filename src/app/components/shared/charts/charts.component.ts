@@ -18,6 +18,7 @@ export class ChartsComponent implements OnInit {
   @Input('selectOptions') selectOptions;
   @Input('meter') meter:boolean;
   @Input('projectStatus') projectStatus;
+  @Input('extras') extras:boolean;
   selectedSprint;
 
 

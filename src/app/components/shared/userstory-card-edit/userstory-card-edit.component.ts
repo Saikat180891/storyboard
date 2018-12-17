@@ -68,6 +68,7 @@ export class UserstoryCardEditComponent implements OnInit {
 
   ngOnInit() {
     this.onUpdateProductivity();
+    this.editUSData = JSON.parse(JSON.stringify(this.editUSData));
   }
 
   onClose(){
@@ -87,7 +88,7 @@ export class UserstoryCardEditComponent implements OnInit {
   }
 
   onUpdateProductivity(){
-    this.productivity = (parseFloat(this.editUSData.dev_hrs) / parseFloat(this.editUSData.ftes)).toFixed(1);
+    this.productivity = (parseFloat(this.editUSData.ftes) / parseFloat(this.editUSData.dev_hrs)).toFixed(1);
   }
 
   

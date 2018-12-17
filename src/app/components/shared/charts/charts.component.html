@@ -1,7 +1,7 @@
 <div class="container">
   <div class="header" *ngIf="projectStatus?true:false">
     <span>{{title}} 
-      <span>-</span> 
+      <span *ngIf="extras">-</span> 
       {{projectStatus.current_sprint?projectStatus.current_sprint:''}}
     </span> 
     <span *ngIf="selectedSprint"> ({{selectedSprint}})</span>
