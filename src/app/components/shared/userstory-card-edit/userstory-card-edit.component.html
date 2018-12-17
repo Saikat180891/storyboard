@@ -7,13 +7,13 @@
   
       <div class="form-group">
         <div class="input-container sm">
-          <div class="title">U/S#</div>
+          <div class="title" [ngClass]="{'warning':userStoryNumberValidator}">U/S#</div>
           <div class="editable">
             <input type="number" placeholder="Ex: 1" [(ngModel)]="editUSData.us_number">
           </div>
         </div>
         <div class="input-container md">
-          <div class="title">User Story Name</div>
+          <div class="title" [ngClass]="{'warning':userStoryNameValidator}">User Story Name</div>
           <div class="editable">
             <input type="text" placeholder="Ex: User Story 1" [(ngModel)]="editUSData.us_name">
           </div>
@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="input-container md">
-          <div class="title">Sprint Name</div>
+          <div class="title" [ngClass]="{'warning':userStorySprintNameValidator}">Sprint Name</div>
           <div class="editable">
               <colored-dropdown (optionSelected)="editUSData.sprint_name=$event.status" [options]="sprintOptions" [defaultOption]="editUSData.sprint_name?editUSData.sprint_name:'Unassigned'"></colored-dropdown>
           </div>
@@ -38,7 +38,7 @@
   
       <div class="form-group h-space-equally">
         <div class="input-container sm extra">
-          <div class="title">Priority</div>
+          <div class="title" [ngClass]="{'warning':userStoryPriorityValidator}">Priority</div>
           <div class="editable">
             <colored-dropdown (optionSelected)="editUSData.priority=$event.status" [options]="priorityOptions" [defaultOption]="editUSData.priority"></colored-dropdown>
           </div>
@@ -83,13 +83,13 @@
   
       <div class="form-group">
         <div class="input-container lg">
-          <div class="title">Status</div>
+          <div class="title" [ngClass]="{'warning':userStoryStatusValidator}">Status</div>
           <div class="editable">
             <colored-dropdown (optionSelected)="editUSData.status=$event.status" [options]="statusOptions" [defaultOption]="editUSData.status"></colored-dropdown>
           </div>
         </div>
         <div class="input-container">
-          <div class="title">Description</div>
+          <div class="title" [ngClass]="{'warning':userStoryDescValidator}">Description</div>
           <div class="editable">
             <input type="text" placeholder="Add description here" [(ngModel)]="editUSData.notes">
           </div>
