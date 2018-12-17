@@ -160,11 +160,15 @@ export class ReasonCodeService {
     return this.userStories;
   }
 
+  /**
+   * 
+   * @param id Current not in use
+   */
   getChartData(id){
-    this._api.fetchData(`/sop/sprint/${id}/graphdata.json`)
-      .subscribe(response=>{
-        this.currentSprintData = response;
-      });
+    // this._api.fetchData(`/sop/sprint/${id}/graphdata.json`)
+    //   .subscribe(response=>{
+    //     this.currentSprintData = response;
+    //   });
   }
 
   getCurrentSprintData(){

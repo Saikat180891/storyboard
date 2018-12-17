@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
@@ -70,7 +70,7 @@ const ELEMENT_DATA: Userstories[] = [
   templateUrl: './reasoncodes.component.html',
   styleUrls: ['./reasoncodes.component.scss', './move-user-story.scss','draggable.scss']
 })
-export class ReasoncodesComponent implements OnInit {
+export class ReasoncodesComponent implements OnInit, AfterViewInit {
   @ViewChild('totalPage') totalPage:ElementRef;
   @ViewChild('userStoryContainer') userStoryContainer:ElementRef;
   panelOpenState = false;
@@ -240,7 +240,7 @@ export class ReasoncodesComponent implements OnInit {
       .subscribe(res => {
         // console.log(res);
         if(res["target"].scrollTop > 360){
-          this.fixToTop = true;
+          // this.fixToTop = true;
         }
       });
     setTimeout(()=>{
@@ -248,11 +248,15 @@ export class ReasoncodesComponent implements OnInit {
       .subscribe(res => {
         // console.log(res);
         if(res["target"].scrollTop === 0){
-          this.fixToTop = false;
+          // this.fixToTop = false;
         }
       });
     }, 500);
 
+  }
+
+  ngAfterViewInit(){
+    
   }
 
   onSelectDeletedUS(){
@@ -294,6 +298,7 @@ export class ReasoncodesComponent implements OnInit {
   }
 
   createOptionsWithSprintName(){
+    this._reasonCode.getSprint();
     this.sprintOptions = [];
     let sprints = this._reasonCode.sprintConfig;
     sprints.forEach(ele=>{

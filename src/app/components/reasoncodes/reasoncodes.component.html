@@ -17,9 +17,9 @@
   
       </div>
       <div class="flex charts">
-        <app-charts [projectStatus]="_reasonCode.totalProjectStatus" [meter]="true" [options]="pieChartOptions" [data]="_reasonCode.totalSprintData" [title]="'Project Status'"></app-charts>
+        <app-charts [extras]="false" [projectStatus]="_reasonCode.totalProjectStatus" [meter]="true" [options]="pieChartOptions" [data]="_reasonCode.totalSprintData" [title]="'Project Status'"></app-charts>
         <app-charts [projectStatus]="_reasonCode.currentSprintDuration" [meter]="true" [options]="pieChartOptions" [data]="_reasonCode.currentSprintData" [title]="'Current Sprint'" [selectOptions]="_reasonCode.sprintConfig"></app-charts>
-        <app-charts [projectStatus]="_reasonCode.totalProjectStatus" [meter]="false" [options]="barChartOptions" [title]="'Benefits'" [data]="_reasonCode.benefitsChartData"></app-charts>
+        <app-charts [extras]="false" [projectStatus]="_reasonCode.totalProjectStatus" [meter]="false" [options]="barChartOptions" [title]="'Benefits'" [data]="_reasonCode.benefitsChartData"></app-charts>
       </div>
     </div>
   </ng-container>
