@@ -1,5 +1,5 @@
 <div class="card-box" 
-[ngClass]="{'border-high' : userStory.priority === 'High', 'border-medium' : userStory.priority === 'Medium', 'border-low' : userStory.priority === 'Low'}">
+[ngClass]="{'border-high' : userStory.priority === 'High', 'border-medium' : userStory.priority === 'Medium', 'border-low' : userStory.priority === 'Low', 'card-selected':__editUS.selected === userStory.id}">
   <div class="box row r1">
     <div class="col c1">
       <span>U/S#</span>
@@ -64,7 +64,7 @@
     </div>
     <div class="col c42">
       <div class="btn-box">
-        <button class="btn btn-flat-ash" matRipple (click)="onEdit()"><i class="fas fa-pencil-alt"></i></button>
+        <button class="btn btn-flat-ash" matRipple (click)="onEdit(userStory.id)"><i class="fas fa-pencil-alt"></i></button>
         <button class="btn btn-blue" matRipple [matRippleColor]="rippleColor">View SOP</button>
         
       </div>

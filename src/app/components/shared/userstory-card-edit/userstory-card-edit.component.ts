@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import {ReasonCodeService} from '../../reasoncodes/reason-code.service';
 import {EditUserStoryService} from './edit-user-story.service';
+
 @Component({
   selector: 'app-userstory-card-edit',
   templateUrl: './userstory-card-edit.component.html',
@@ -64,7 +65,9 @@ export class UserstoryCardEditComponent implements OnInit {
 
   productivity;
 
-  constructor(private __rcService: ReasonCodeService, private __editUS: EditUserStoryService) { }
+  constructor(
+    private __rcService: ReasonCodeService, 
+    private __editUS: EditUserStoryService) { }
 
   ngOnInit() {
     this.onUpdateProductivity();
@@ -73,6 +76,7 @@ export class UserstoryCardEditComponent implements OnInit {
 
   onClose(){
     this.close.emit(false);
+    this.__editUS.selected = -1;
   }
 
   userStoryNumberValidator:boolean = false;

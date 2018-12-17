@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {EditUserStoryService} from '../userstory-card-edit/edit-user-story.service';
 import {ReasonCodeService} from '../../reasoncodes/reason-code.service';
 import {ReasoncodesComponent} from '../../reasoncodes/reasoncodes.component';
-
+// import {EditUserStoryService} from '../userstory-card-edit/edit-user-story.service';
 @Component({
   selector: 'app-userstory-card',
   templateUrl: './userstory-card.component.html',
@@ -26,6 +26,7 @@ export class UserstoryCardComponent implements OnInit {
 
   onEdit(){
     this.editUserStory.emit(true);
+    this.__editUS.selected = this.inputUserStory.id;
     this.rcComponent.createOptionsWithSprintName();
   }
 

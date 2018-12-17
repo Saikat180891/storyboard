@@ -6,9 +6,11 @@ import {ReasonCodeService} from '../../reasoncodes/reason-code.service';
   providedIn: 'root'
 })
 export class EditUserStoryService {
-
+  selected:number = -1;
+  
   constructor(private _api: DataService,
               private _rcService: ReasonCodeService,) { }
+  
 
   editUserStory(usID, sprintID, payload){
     if(sprintID){
