@@ -154,12 +154,15 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
           id = element.id;
         }
       });
+      this.userStoryPayload.dev_hrs = parseFloat(this.userStoryPayload.dev_hrs).toFixed(1);
+      this.userStoryPayload.ftes = parseFloat(this.userStoryPayload.ftes).toFixed(1);
       if(this.userStoryPayload.ftes === '' || this.userStoryPayload.ftes === null){
         delete this.userStoryPayload.ftes;
       }
       if(this.userStoryPayload.dev_hrs === '' || this.userStoryPayload.dev_hrs === null){
         delete this.userStoryPayload.dev_hrs;
       }
+      
       console.log(this.userStoryPayload)
       this.__createUserStory.createUserStory(id, this.userStoryPayload);
       this.close.emit(false);

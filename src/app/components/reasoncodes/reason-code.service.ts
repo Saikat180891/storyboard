@@ -124,6 +124,8 @@ export class ReasonCodeService {
           if(element['dev_hrs'] == '' ){
             element['dev_hrs'] = '-----';
           }
+          element['ftes'] = parseFloat(element['ftes']).toFixed(1);
+          element['ftes'] = isFinite(element['ftes']) ? element['ftes'] : '-----';
           element['productivity'] = (parseFloat(element.ftes) / parseFloat(element.dev_hrs)).toFixed(1);
           element['productivity'] = isFinite(element['productivity']) ? element['productivity'] : '-----';
         });
