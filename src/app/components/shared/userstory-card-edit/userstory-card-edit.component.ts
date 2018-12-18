@@ -160,9 +160,9 @@ export class UserstoryCardEditComponent implements OnInit {
       if(this.editUSData.ftes === null || this.editUSData.ftes === ''){
         this.editUSData.ftes = 0.0;
       }
-      // if(this.editUSData.dev_hrs === null){
-      //   delete this.editUSData.dev_hrs;
-      // }
+      if(this.editUSData.dev_hrs === null || this.editUSData.dev_hrs === ''){
+        this.editUSData.dev_hrs = '';
+      }
       console.log("From the edit user story",this.editUSData)
       this.__editUS.editUserStory(this.editUSData.id, sprintId, this.editUSData);
       this.onClose();
