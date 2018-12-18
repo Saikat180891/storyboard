@@ -154,10 +154,10 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
           id = element.id;
         }
       });
-      if(this.userStoryPayload.ftes === '' ){
+      if(this.userStoryPayload.ftes === '' || this.userStoryPayload.ftes === null){
         delete this.userStoryPayload.ftes;
       }
-      if(this.userStoryPayload.dev_hrs === '' ){
+      if(this.userStoryPayload.dev_hrs === '' || this.userStoryPayload.dev_hrs === null){
         delete this.userStoryPayload.dev_hrs;
       }
       console.log(this.userStoryPayload)
