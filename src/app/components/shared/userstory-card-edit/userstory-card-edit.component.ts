@@ -157,7 +157,7 @@ export class UserstoryCardEditComponent implements OnInit {
           sprintId = element.id;
         }
       });
-      if(this.editUSData.ftes === null){
+      if(this.editUSData.ftes === null || this.editUSData.ftes === ''){
         this.editUSData.ftes = 0.0;
       }
       // if(this.editUSData.dev_hrs === null){
