@@ -159,10 +159,10 @@ export class UserstoryCardEditComponent implements OnInit {
       });
       this.editUSData.dev_hrs = parseFloat(this.editUSData.dev_hrs).toFixed(1);
       this.editUSData.ftes = parseFloat(this.editUSData.ftes).toFixed(1);
-      if(this.editUSData.ftes === null || this.editUSData.ftes === '' || this.editUSData.ftes === '-----'){
+      if(this.editUSData.ftes === null || this.editUSData.ftes === '' || this.editUSData.ftes === '-----' || isNaN(this.editUSData.ftes)){
         this.editUSData.ftes = 0.0;
       }
-      if(this.editUSData.dev_hrs === null || this.editUSData.dev_hrs === '' || this.editUSData.dev_hrs === '-----'){
+      if(this.editUSData.dev_hrs === null || this.editUSData.dev_hrs === '' || this.editUSData.dev_hrs === '-----' || isNaN(this.editUSData.dev_hrs)){
         this.editUSData.dev_hrs = '';
       }
       console.log("From the edit user story",this.editUSData)
