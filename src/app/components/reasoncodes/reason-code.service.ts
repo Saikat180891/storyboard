@@ -118,6 +118,9 @@ export class ReasonCodeService {
       .subscribe(response=>{
 
         response.forEach(element=>{
+          if(element['ftes'] == 0 ){
+            element['ftes'] = '';
+          }
           element['productivity'] = (parseFloat(element.ftes) / parseFloat(element.dev_hrs)).toFixed(1);
           element['productivity'] = isFinite(element['productivity']) ? element['productivity'] : '----';
         });
