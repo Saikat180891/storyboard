@@ -30,7 +30,7 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
   ];
   statusOptions = [
     {
-      status: 'BackLog',
+      status: 'Backlog',
       color: '#2A7DE1'
     },
     {
@@ -101,7 +101,6 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
   validationSuccessfull = [];
 
   onCreate(){
-    console.log(this.userStoryPayload)
     if(this.userStoryPayload.us_number == ''){
       this.userStoryNumberValidator = true;
       this.validationSuccessfull[0] = 0;
@@ -155,6 +154,13 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
           id = element.id;
         }
       });
+      if(this.userStoryPayload.ftes === '' ){
+        delete this.userStoryPayload.ftes;
+      }
+      if(this.userStoryPayload.dev_hrs === '' ){
+        delete this.userStoryPayload.dev_hrs;
+      }
+      console.log(this.userStoryPayload)
       this.__createUserStory.createUserStory(id, this.userStoryPayload);
       this.close.emit(false);
     }

@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import {DataService}  from '../../data.service';
 import {environment} from '../../../environments/environment';
 import {PreloaderService} from '../shared/preloader/preloader.service';
+// import { EventEmitter } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,8 @@ export class ReasonCodeService {
   currentSprintDuration = [];
   completeUserStories = [];
   deletedUserStories = [];
+
+  doneSelectStatus:EventEmitter<boolean> = new EventEmitter();
 
   constructor(private _api:DataService,
               private __preLoad: PreloaderService) { }
@@ -98,6 +101,10 @@ export class ReasonCodeService {
   getDeletedUserStories(id){
     this._api.fetchData(`/sop/reasoncode/${id}/userstories/fetchDeleted.json`)
       .subscribe(response=>{
+        response.forEach(element=>{
+          element['productivity'] = (parseFloat(element.ftes) / parseFloat(element.dev_hrs)).toFixed(1);
+          element['productivity'] = isFinite(element['productivity']) ? element['productivity'] : '----';
+        });
         this.deletedUserStories = response;
         this.getUserStories(id);
         console.log("Deleted user stories",response);
@@ -106,9 +113,15 @@ export class ReasonCodeService {
 
   getUserStories(id){
     console.log("Get all user story", id)
-    const api = !environment.production ? `/sop/reasoncode/${id}/userstories.json` : '';
+    const api =  `/sop/reasoncode/${id}/userstories.json`;
     this._api.fetchData(api)
       .subscribe(response=>{
+
+        response.forEach(element=>{
+          element['productivity'] = (parseFloat(element.ftes) / parseFloat(element.dev_hrs)).toFixed(1);
+          element['productivity'] = isFinite(element['productivity']) ? element['productivity'] : '----';
+        });
+        
         this.userStories = response.reverse();
         this.getTotalCharData(this.sopId);
         this.getChartData(this.sopId);
@@ -136,6 +149,10 @@ export class ReasonCodeService {
   getCompletedUserStories(id){
     this._api.fetchData(`/sop/reasoncode/${id}/userstories/fetchCompleted.json`)
       .subscribe(response=>{
+        response.forEach(element=>{
+          element['productivity'] = (parseFloat(element.ftes) / parseFloat(element.dev_hrs)).toFixed(1);
+          element['productivity'] = isFinite(element['productivity']) ? element['productivity'] : '----';
+        });
         this.completeUserStories = response;
         console.log("The completed user stories are" ,response);
       });

@@ -68,7 +68,7 @@ const ELEMENT_DATA: Userstories[] = [
 @Component({
   selector: 'app-reasoncodes',
   templateUrl: './reasoncodes.component.html',
-  styleUrls: ['./reasoncodes.component.scss', './move-user-story.scss','draggable.scss']
+  styleUrls: ['./reasoncodes.component.scss', './move-user-story.scss','draggable.scss', 'completed-warning.scss']
 })
 export class ReasoncodesComponent implements OnInit, AfterViewInit {
   @ViewChild('totalPage') totalPage:ElementRef;
@@ -88,6 +88,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
   sprintOptions = [];
   fixToTop:boolean = false;
   filter:boolean = false;
+  warning: boolean = false;
 
   addSprintPayload:SprintConfig = {
     sprint_name: '',
@@ -421,6 +422,20 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
 
   onCloseCreateUserStories(event){
     this.openCreateSideBar = event;
+  }
+
+  onDoneWarning($event){
+    this.warning = $event;
+  }
+
+  onSelectNo(){
+    this.warning = false;
+    this._reasonCode.doneSelectStatus.emit(false);
+  }
+
+  onSelectYes(){
+    this.warning = false;
+    this._reasonCode.doneSelectStatus.emit(true);
   }
 
   /**

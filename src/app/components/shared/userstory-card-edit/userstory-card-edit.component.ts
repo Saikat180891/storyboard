@@ -10,9 +10,14 @@ import {EditUserStoryService} from './edit-user-story.service';
 export class UserstoryCardEditComponent implements OnInit {
   @Output('close') close = new EventEmitter();
 
+  @Output('warning') warning = new EventEmitter();
+
   @Input('editUSData') editUSData;
 
   @Input('sprintOptions') sprintOptions;
+
+  status='';
+  editUSDatas;
 
   priorityOptions = [
     {
@@ -30,7 +35,7 @@ export class UserstoryCardEditComponent implements OnInit {
   ];
   statusOptions = [
     {
-      status: 'BackLog',
+      status: 'Backlog',
       color: '#2A7DE1'
     },
     {
@@ -62,7 +67,7 @@ export class UserstoryCardEditComponent implements OnInit {
     notes: '',
     status: ''
   }
-
+  
   productivity;
 
   constructor(
@@ -72,6 +77,15 @@ export class UserstoryCardEditComponent implements OnInit {
   ngOnInit() {
     this.onUpdateProductivity();
     this.editUSData = JSON.parse(JSON.stringify(this.editUSData));
+    this.editUSDatas = this.editUSData;
+    this.__rcService.doneSelectStatus.subscribe(response=>{
+      console.log("Subscribed Method", response)
+      if(response){
+        this.editUSData.status = 'Done';
+      }else{
+        this.editUSData.status = this.editUSDatas.status;
+      }
+    });
   }
 
   onClose(){
@@ -89,6 +103,7 @@ export class UserstoryCardEditComponent implements OnInit {
 
   onSaveAll(){
     console.log(this.editUSData);
+    // this.statusSelected();
     // console.log(this.userStoryPayload)
     if(this.editUSData.us_number == ''){
       this.userStoryNumberValidator = true;
@@ -142,6 +157,13 @@ export class UserstoryCardEditComponent implements OnInit {
           sprintId = element.id;
         }
       });
+      if(this.editUSData.ftes === null ){
+        delete this.editUSData.ftes;
+      }
+      if(this.editUSData.dev_hrs === null ){
+        delete this.editUSData.dev_hrs;
+      }
+      console.log("From the edit user story",this.editUSData)
       this.__editUS.editUserStory(this.editUSData.id, sprintId, this.editUSData);
       this.onClose();
     }
@@ -151,5 +173,10 @@ export class UserstoryCardEditComponent implements OnInit {
     this.productivity = (parseFloat(this.editUSData.ftes) / parseFloat(this.editUSData.dev_hrs)).toFixed(1);
   }
 
-  
+  onSelectStatus($event){
+    this.status = $event.status;
+    if($event.status === 'Done'){
+      this.warning.emit(true);
+    }
+  }
 }

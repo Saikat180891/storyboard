@@ -85,7 +85,7 @@
         <div class="input-container lg">
           <div class="title" [ngClass]="{'warning':userStoryStatusValidator}">Status</div>
           <div class="editable">
-            <colored-dropdown (optionSelected)="editUSData.status=$event.status" [options]="statusOptions" [defaultOption]="editUSData.status"></colored-dropdown>
+            <colored-dropdown (optionSelected)="onSelectStatus($event)" [options]="statusOptions" [defaultOption]="editUSData.status"></colored-dropdown>
           </div>
         </div>
         <div class="input-container">
