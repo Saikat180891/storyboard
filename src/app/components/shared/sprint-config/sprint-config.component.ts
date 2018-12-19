@@ -8,6 +8,12 @@ interface SprintConfig{
   sprint_name: string;
   start_date: string;
 }
+
+interface ReasonCode{
+  id?: number;
+  created: string;
+}
+
 @Component({
   selector: 'sprint-config',
   templateUrl: './sprint-config.component.html',
@@ -19,12 +25,18 @@ export class SprintConfigComponent implements OnInit {
 
   @Input('sprintConfigData') sprintConfigData;
 
+  @Input('reasonCodeConfigData') reasonCodeConfigData: ReasonCode[];
+
   addNewRow:SprintConfig[] = [];
+
+  addNewRowForReasonCode:ReasonCode[] = [];
 
   displayWarningBox:boolean = false;
 
   sprintToDeleteId:number;
   sprintNameToDelete:string = '';
+
+  cancel:boolean = false;
 
   constructor(private __rcService:ReasonCodeService, private spinner: NgxSpinnerService) { }
 
@@ -32,6 +44,7 @@ export class SprintConfigComponent implements OnInit {
   }
 
   onClose(){
+    this.cancel = true;
     this.addNewRow = [];
     this.closeSprints.emit(false);
   }
@@ -78,7 +91,21 @@ export class SprintConfigComponent implements OnInit {
 
   onDeleteRow(selected){
     this.addNewRow.splice(selected, 1);
-    console.log(selected)
+  }
+
+  onAddRC(){
+    let temObj = {
+      created: 'Reason Code X'
+    }
+    this.addNewRowForReasonCode.push(temObj);
+  }
+
+  onSaveAllChangesInRC(){
+    console.log(this.addNewRowForReasonCode);
+  }
+
+  onDeleteRC(selected){
+    this.addNewRowForReasonCode.splice(selected, 1);
   }
 
   createEndDate(startDate, index, operation){
@@ -104,6 +131,8 @@ export class SprintConfigComponent implements OnInit {
   onArrowUp(index){
     this.addNewRow[index].duration = (this.dateCounter += 1) + 'W';
     this.createEndDate(this.addNewRow[index].start_date, index, 'add');
+
+    console.log(this.addNewRow[index])
   }
 
   onArrowDown(index){
@@ -131,7 +160,18 @@ export class SprintConfigComponent implements OnInit {
     let y = newDate.getFullYear();
     this.sprintConfigData[index].end_date = dd + '/'+ mm + '/'+ y;
 
+    this.__rcService.editSprint(this.sprintConfigData[index].id, this.sprintConfigData[index]);
+
     console.log(date, newDate)
+  }
+
+  onUpdateSprint(index){
+    setTimeout(()=>{
+      // if(this.cancel){
+        this.__rcService.editSprint(this.sprintConfigData[index].id, this.sprintConfigData[index]);
+        // this.cancel = false;
+      // }
+    }, 500);
   }
 
   updateEndDate(startDate, endDate, index, operation){
@@ -163,7 +203,9 @@ export class SprintConfigComponent implements OnInit {
     
     this.sprintConfigData[index].duration = (this.weekCounter += 1) + 'W';
     this.updateEndDate(this.sprintConfigData[index].start_date, this.sprintConfigData[index].end_date, index, 'add');
-    // console.log(durationSplitted)
+    console.log(this.sprintConfigData[index]);
+
+    this.__rcService.editSprint(this.sprintConfigData[index].id, this.sprintConfigData[index]);
   }
 
   onArrowDownforAlreadyCreated(index){
@@ -177,6 +219,8 @@ export class SprintConfigComponent implements OnInit {
     }else{
       this.sprintConfigData[index].duration = (this.weekCounter -= 1) + 'W';
       this.updateEndDate(this.sprintConfigData[index].start_date, this.sprintConfigData[index].end_date, index, 'substract');
+
+      this.__rcService.editSprint(this.sprintConfigData[index].id, this.sprintConfigData[index]);
     }
   }
 
