@@ -33,11 +33,13 @@ export class HeaderComponent implements OnInit {
     // given_name: "Saikat"
     this.userName = this._msAdalSvc.userInfo.profile.name;
     this.userImage = this._msAdalSvc.userInfo.profile.aio;
+    localStorage.setItem("uniqueName", this._msAdalSvc.userInfo.profile.unique_name);
     console.log(this._msAdalSvc.userInfo)
     
   }
 
   logout() {
+    localStorage.clear();
     this._msAdalSvc.logout();
   }
 

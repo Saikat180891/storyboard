@@ -9,7 +9,7 @@ import { HttpHeaders } from '@angular/common/http';
 export const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json',
-    'Authorization': 'my-auth-token'
+    'Authorization': localStorage.getItem("uniqueName")
   })
 };
 
@@ -107,6 +107,7 @@ export class DataService {
    * Get the data from the server to load the cards
    */
   fetchData(param){
+    console.log(httpOptions)
     return this.http.get<any[]>(this.apiUrl + param);
   }
 

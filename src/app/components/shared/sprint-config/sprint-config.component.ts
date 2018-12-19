@@ -81,7 +81,7 @@ export class SprintConfigComponent implements OnInit {
     console.log(selected)
   }
 
-  createEndDate(startDate, numberOfDaysToAdd, operation){
+  createEndDate(startDate, index, operation){
     let someDate = startDate;
     switch(operation){
       case 'add':
@@ -93,22 +93,91 @@ export class SprintConfigComponent implements OnInit {
       default:
       break;
     }
-    
     let dd = someDate.getDate();
     let mm = someDate.getMonth() + 1;
     let y = someDate.getFullYear();
-    this.addNewRow.forEach(element=>{
-      element.end_date = mm + '/'+ dd + '/'+ y;
-    })
+    this.addNewRow[index].end_date = dd + '/'+ mm + '/'+ y;
+}
+
+  dateCounter:number = 0;
+
+  onArrowUp(index){
+    this.addNewRow[index].duration = (this.dateCounter += 1) + 'W';
+    this.createEndDate(this.addNewRow[index].start_date, index, 'add');
   }
 
-  // {
-  //   duration: "3W",
-  //   end_date: "1/9/2019",
-  //   id: 11,
-  //   sprintNumber: 3,
-  //   sprint_name: "sprint 6",
-  //   start_date: Wed Jan 09 2019 18:55:38 GMT+0530 (India Standard Time) {}
-  // }
+  onArrowDown(index){
+    if(this.dateCounter <= 0){
+      this.dateCounter = 0;
+    }else{
+      this.addNewRow[index].duration = (this.dateCounter -= 1) + 'W';
+      this.createEndDate(this.addNewRow[index].start_date, index, 'substract');
+    }
+  }
+
+  onDatePickerCloase($event, index){
+    // this.sprintConfigData[index].start_date = $event.value;
+    let date = $event.value;
+    
+    let durationSplitted = this.sprintConfigData[index].duration.split('');
+    let period = durationSplitted.pop();
+    durationSplitted = durationSplitted.join("");
+    let days = parseInt(durationSplitted) * 7;
+
+    let newDate = new Date(date.setDate(date.getDate() + days));
+
+    let dd = newDate.getDate();
+    let mm = newDate.getMonth() + 1;
+    let y = newDate.getFullYear();
+    this.sprintConfigData[index].end_date = dd + '/'+ mm + '/'+ y;
+
+    console.log(date, newDate)
+  }
+
+  updateEndDate(startDate, endDate, index, operation){
+    let someDate = new Date(endDate.split('/').reverse().join('-'));
+    console.log(someDate)
+    switch(operation){
+      case 'add':
+      someDate.setDate(someDate.getDate() + 7); 
+      break;
+      case 'substract':
+      someDate.setDate(someDate.getDate() - 7); 
+      break;
+      default:
+      break;
+    }
+    let dd = someDate.getDate();
+    let mm = someDate.getMonth() + 1;
+    let y = someDate.getFullYear();
+    this.sprintConfigData[index].end_date = dd + '/'+ mm + '/'+ y;
+  }
+
+  weekCounter:number = 0;
+
+  onArrowUpforAlreadyCreated(index){
+    let durationSplitted = this.sprintConfigData[index].duration.split('');
+    let period = durationSplitted.pop();
+    durationSplitted = durationSplitted.join("");
+    this.weekCounter = parseInt(durationSplitted);
+    
+    this.sprintConfigData[index].duration = (this.weekCounter += 1) + 'W';
+    this.updateEndDate(this.sprintConfigData[index].start_date, this.sprintConfigData[index].end_date, index, 'add');
+    // console.log(durationSplitted)
+  }
+
+  onArrowDownforAlreadyCreated(index){
+    let durationSplitted = this.sprintConfigData[index].duration.split('');
+    let period = durationSplitted.pop();
+    durationSplitted = durationSplitted.join("");
+    this.weekCounter = parseInt(durationSplitted);
+
+    if(this.weekCounter <= 0){
+      this.weekCounter = 0;
+    }else{
+      this.sprintConfigData[index].duration = (this.weekCounter -= 1) + 'W';
+      this.updateEndDate(this.sprintConfigData[index].start_date, this.sprintConfigData[index].end_date, index, 'substract');
+    }
+  }
 
 }

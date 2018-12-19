@@ -4,11 +4,11 @@
         <div class="modal-body">
           <div class="grid-list">
             <mat-grid-list cols="6" rowHeight="50px">
-              <mat-grid-tile>Serial#</mat-grid-tile>
-              <mat-grid-tile>Name</mat-grid-tile>
-              <mat-grid-tile>Start Date</mat-grid-tile>
-              <mat-grid-tile>Duration</mat-grid-tile>
-              <mat-grid-tile>End Date</mat-grid-tile>
+              <mat-grid-tile><span class="heading">Serial#</span></mat-grid-tile>
+              <mat-grid-tile><span class="heading">Name</span></mat-grid-tile>
+              <mat-grid-tile><span class="heading">Start Date</span></mat-grid-tile>
+              <mat-grid-tile><span class="heading">Duration</span></mat-grid-tile>
+              <mat-grid-tile><span class="heading">End Date</span></mat-grid-tile>
               <mat-grid-tile></mat-grid-tile>
             </mat-grid-list>
           </div>
@@ -21,10 +21,10 @@
                     </mat-grid-tile>
                     <mat-grid-tile>
                       <div class="p-relative">
-                        <input type="text" class="extra-padding" [(ngModel)]="sprintConfig.start_date" [matDatepicker]="picker1" readonly>
+                        <input matInput type="text" class="extra-padding" (dateChange)="onDatePickerCloase($event, i)" [(ngModel)]="sprintConfig.start_date" [matDatepicker]="picker" readonly>
                         <div class="date-picker">
-                          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                          <mat-datepicker #picker1></mat-datepicker>
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
                         </div>
                       </div>
                     </mat-grid-tile>
@@ -32,10 +32,10 @@
                       <div class="p-relative">
                         <input type="text" [(ngModel)]="sprintConfig.duration" readonly>
                         <div class="arrow">
-                          <button (click)="onArrowUp()">
+                          <button (click)="onArrowUpforAlreadyCreated(i)">
                             <i class="fas fa-caret-up"></i>
                           </button>
-                          <button (click)="onArrowDown()">
+                          <button (click)="onArrowDownforAlreadyCreated(i)">
                             <i class="fas fa-caret-down"></i>
                           </button>
                         </div>
@@ -72,8 +72,8 @@
                       <div class="p-relative">
                         <input type="text" [(ngModel)]="sprintConfig.duration" readonly placeholder="Weeks">
                         <div class="arrow">
-                          <button (click)="onArrowUp()"><i class="fas fa-caret-up"></i></button>
-                          <button (click)="onArrowDown()"><i class="fas fa-caret-down"></i></button>
+                          <button (click)="onArrowUp(i)"><i class="fas fa-caret-up"></i></button>
+                          <button (click)="onArrowDown(i)"><i class="fas fa-caret-down"></i></button>
                         </div>
                       </div>
                     </mat-grid-tile>
