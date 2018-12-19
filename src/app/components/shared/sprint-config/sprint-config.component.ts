@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ElementRef } from '@angular/core';
 import {ReasonCodeService} from '../../reasoncodes/reason-code.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {fromEvent} from 'rxjs';
 
 interface SprintConfig{
   duration: string;
@@ -21,6 +22,8 @@ interface ReasonCode{
 })
 export class SprintConfigComponent implements OnInit {
 
+  @ViewChild('sprintContainer') sprintContainer: ElementRef;
+
   @Output('closeSprints') closeSprints = new EventEmitter<boolean>();
 
   @Input('sprintConfigData') sprintConfigData;
@@ -38,14 +41,39 @@ export class SprintConfigComponent implements OnInit {
 
   cancel:boolean = false;
 
+  warning:boolean = false;
+
+  warningBoxForCancel:boolean = false;
+
+  //this variable is used to detect if there is any change in the 'sprintConfigData' array
+  changedDetected:boolean[] = [];
+
   constructor(private __rcService:ReasonCodeService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
+    fromEvent(this.sprintContainer.nativeElement, 'scroll')
+    .subscribe(res => {
+      console.log(res["target"].scrollHeight);
+      console.log(this.sprintContainer)
+    });
   }
 
   onClose(){
     this.cancel = true;
+    console.log(this.changedDetected, this.addNewRow)
+    if(this.changedDetected.length > 0 || this.addNewRow.length > 0){
+      this.warningBoxForCancel = true;
+    }else{
+      this.addNewRow = [];
+      this.changedDetected = [];
+      this.closeSprints.emit(false);
+    }
+  }
+
+  onSelectYes(){
     this.addNewRow = [];
+    this.changedDetected = [];
+    this.warningBoxForCancel = false;
     this.closeSprints.emit(false);
   }
 
@@ -61,17 +89,36 @@ export class SprintConfigComponent implements OnInit {
 
   onSaveAllChanges(){
     this.spinner.show();
-    let ack = this.__rcService.createSprint(this.addNewRow);
-    if(ack){
-      this.addNewRow = [];
-      console.log("Done")
-      this.onClose();
-      this.spinner.hide();
-    }else{
-      this.spinner.hide();
+    if(this.addNewRow.length > 0){
+      this.__rcService.createSprint(this.addNewRow);
     }
-      this.spinner.hide();
-    console.log(this.addNewRow)
+    // else if(this.changedDetected.length === 0 && this.addNewRow.length === 0){
+    //   this.onSelectYes();
+    //   console.log("Nothing to change");
+    // }
+    if(this.changedDetected){
+      this.changedDetected.forEach((element, index)=>{
+        if(element === true){
+          this.__rcService.editSprint(this.sprintConfigData[index].id, this.sprintConfigData[index]);
+        }
+      });
+    }
+    // else if(this.changedDetected.length === 0 && this.addNewRow.length === 0){
+    //   this.onSelectYes();
+    //   console.log("Nothing to change");
+    // }
+    // if(ack){
+    //   this.addNewRow = [];
+    //   console.log("Done")
+    //   this.onSelectYes();
+    //   this.spinner.hide();
+    // }else{
+    //   this.spinner.hide();
+    // }
+    this.spinner.hide();
+    this.onSelectYes();
+    // console.log(this.addNewRow);
+    
   }
 
   deleteSprint(id, sprintName){
@@ -91,6 +138,7 @@ export class SprintConfigComponent implements OnInit {
 
   onDeleteRow(selected){
     this.addNewRow.splice(selected, 1);
+    this.dateCounter = 0;
   }
 
   onAddRC(){
@@ -108,14 +156,18 @@ export class SprintConfigComponent implements OnInit {
     this.addNewRowForReasonCode.splice(selected, 1);
   }
 
-  createEndDate(startDate, index, operation){
+  onDateSelected($event){
+    console.log($event)
+  }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  createEndDate(startDate, index, operation, weeks){
     let someDate = startDate;
     switch(operation){
       case 'add':
-      someDate.setDate(someDate.getDate() + 7); 
+      someDate.setDate(someDate.getDate() + weeks * 7); 
       break;
       case 'substract':
-      someDate.setDate(someDate.getDate() - 7); 
+      someDate.setDate(someDate.getDate() + weeks * 7); 
       break;
       default:
       break;
@@ -124,65 +176,111 @@ export class SprintConfigComponent implements OnInit {
     let mm = someDate.getMonth() + 1;
     let y = someDate.getFullYear();
     this.addNewRow[index].end_date = dd + '/'+ mm + '/'+ y;
-}
+  }
 
   dateCounter:number = 0;
+  lastIndex:number = -1;
 
   onArrowUp(index){
-    this.addNewRow[index].duration = (this.dateCounter += 1) + 'W';
-    this.createEndDate(this.addNewRow[index].start_date, index, 'add');
+    if(this.lastIndex != index){
+      this.dateCounter = 0;
+      this.lastIndex = index;
+    }
 
-    console.log(this.addNewRow[index])
+    if(this.addNewRow[index].duration){
+      let durationSplitted = this.addNewRow[index].duration.split('');
+      let period = durationSplitted.pop();
+      let weeks = durationSplitted.join("");
+      this.dateCounter = parseInt(weeks);
+      this.addNewRow[index].duration = (this.dateCounter += 1) + 'W';
+    }else if(this.addNewRow[index].start_date){
+      this.addNewRow[index].duration = (this.dateCounter += 1) + 'W';
+    }
+
+    if(this.addNewRow[index].start_date){
+      let startDate = new Date(JSON.parse(JSON.stringify(this.addNewRow[index])).start_date);
+
+      this.createEndDate(startDate, index, 'add', this.dateCounter);
+  
+      console.log(this.lastIndex, this.dateCounter);
+
+      this.warning = false;
+    }else{
+      this.warning = true;
+    }
+
+    // console.log(this.addNewRow[index]);
   }
 
   onArrowDown(index){
-    if(this.dateCounter <= 0){
+    if(this.lastIndex != index){
       this.dateCounter = 0;
-    }else{
+      this.lastIndex = index;
+    }
+
+    if(this.addNewRow[index].duration){
+      let durationSplitted = this.addNewRow[index].duration.split('');
+      let period = durationSplitted.pop();
+      let weeks = durationSplitted.join("");
+      this.dateCounter = parseInt(weeks);
+      if(this.dateCounter <= 0){
+        this.dateCounter = 0;
+        // this.addNewRow[index].duration = this.dateCounter + 'W'
+      }else{
       this.addNewRow[index].duration = (this.dateCounter -= 1) + 'W';
-      this.createEndDate(this.addNewRow[index].start_date, index, 'substract');
+      }
+    }else if(this.addNewRow[index].start_date){
+      this.addNewRow[index].duration = (this.dateCounter -= 1) + 'W';
+    }
+
+    if(this.addNewRow[index].start_date){
+      let startDate = new Date(JSON.parse(JSON.stringify(this.addNewRow[index])).start_date);
+
+      this.createEndDate(startDate, index, 'substract', this.dateCounter);
+  
+      console.log(this.lastIndex, this.dateCounter);
+
+      this.warning = false;
+    }else{
+      this.warning = true;
     }
   }
+  /**
+   * Change the end date if there is a change in the start date
+   * @param $event 
+   * @param index 
+   */
+  onDatePickerClose($event, index){
+    this.sprintConfigData[index].start_date = $event.value;
+    let date = new Date(JSON.parse(JSON.stringify($event.value)));
 
-  onDatePickerCloase($event, index){
-    // this.sprintConfigData[index].start_date = $event.value;
-    let date = $event.value;
-    
-    let durationSplitted = this.sprintConfigData[index].duration.split('');
-    let period = durationSplitted.pop();
-    durationSplitted = durationSplitted.join("");
-    let days = parseInt(durationSplitted) * 7;
-
+    let weeks = this.sprintConfigData[index].duration.split('');
+    let period = weeks.pop();
+    weeks = weeks.join("");
+    let days = parseInt(weeks) * 7;
     let newDate = new Date(date.setDate(date.getDate() + days));
 
     let dd = newDate.getDate();
     let mm = newDate.getMonth() + 1;
     let y = newDate.getFullYear();
     this.sprintConfigData[index].end_date = dd + '/'+ mm + '/'+ y;
-
-    this.__rcService.editSprint(this.sprintConfigData[index].id, this.sprintConfigData[index]);
-
-    console.log(date, newDate)
+    console.log(date, this.sprintConfigData[index].end_date);
+    this.changedDetected[index] = true;
   }
 
   onUpdateSprint(index){
-    setTimeout(()=>{
-      // if(this.cancel){
-        this.__rcService.editSprint(this.sprintConfigData[index].id, this.sprintConfigData[index]);
-        // this.cancel = false;
-      // }
-    }, 500);
+    this.changedDetected[index] = true;
   }
-
-  updateEndDate(startDate, endDate, index, operation){
-    let someDate = new Date(endDate.split('/').reverse().join('-'));
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  updateEndDate(startDate, index, operation, weeks){
+    let someDate = startDate;
     console.log(someDate)
     switch(operation){
       case 'add':
-      someDate.setDate(someDate.getDate() + 7); 
+      someDate.setDate(someDate.getDate() + weeks * 7); 
       break;
       case 'substract':
-      someDate.setDate(someDate.getDate() - 7); 
+      someDate.setDate(someDate.getDate() + weeks * 7); 
       break;
       default:
       break;
@@ -202,10 +300,10 @@ export class SprintConfigComponent implements OnInit {
     this.weekCounter = parseInt(durationSplitted);
     
     this.sprintConfigData[index].duration = (this.weekCounter += 1) + 'W';
-    this.updateEndDate(this.sprintConfigData[index].start_date, this.sprintConfigData[index].end_date, index, 'add');
+    let startDate = new Date(JSON.parse(JSON.stringify(this.sprintConfigData[index])).start_date);
+    this.updateEndDate(startDate, index, 'add', this.weekCounter);
     console.log(this.sprintConfigData[index]);
-
-    this.__rcService.editSprint(this.sprintConfigData[index].id, this.sprintConfigData[index]);
+    this.changedDetected[index] = true;
   }
 
   onArrowDownforAlreadyCreated(index){
@@ -214,14 +312,20 @@ export class SprintConfigComponent implements OnInit {
     durationSplitted = durationSplitted.join("");
     this.weekCounter = parseInt(durationSplitted);
 
+    // let startDate = this.sprintConfigData[index].start_date;
+    // let endDate = new Date(this.sprintConfigData[index].end_date.split("/").reverse().join("-"));
+
     if(this.weekCounter <= 0){
       this.weekCounter = 0;
     }else{
       this.sprintConfigData[index].duration = (this.weekCounter -= 1) + 'W';
-      this.updateEndDate(this.sprintConfigData[index].start_date, this.sprintConfigData[index].end_date, index, 'substract');
+      let startDate = new Date(JSON.parse(JSON.stringify(this.sprintConfigData[index])).start_date);
+      this.updateEndDate(startDate, index, 'substract', this.weekCounter);
 
-      this.__rcService.editSprint(this.sprintConfigData[index].id, this.sprintConfigData[index]);
     }
+    console.log(this.sprintConfigData[index]);
+    this.changedDetected[index] = true;
+    console.log(this.changedDetected)
   }
 
 }

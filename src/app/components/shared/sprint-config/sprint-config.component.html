@@ -12,7 +12,7 @@
               <mat-grid-tile></mat-grid-tile>
             </mat-grid-list>
           </div>
-          <div class="content-body">
+          <div class="content-body" #sprintContainer>
               <div class="grid-list" *ngFor="let sprintConfig of sprintConfigData; let i=index">
                   <mat-grid-list cols="6" rowHeight="70px" gutterSize="10px">
                     <mat-grid-tile>{{i+1}}</mat-grid-tile>
@@ -21,7 +21,7 @@
                     </mat-grid-tile>
                     <mat-grid-tile>
                       <div class="p-relative">
-                        <input matInput type="text" class="extra-padding" (dateChange)="onDatePickerCloase($event, i)" [(ngModel)]="sprintConfig.start_date" [matDatepicker]="picker" readonly>
+                        <input matInput type="text" class="extra-padding" (dateChange)="onDatePickerClose($event, i)" [value]="sprintConfig.start_date" [matDatepicker]="picker" readonly>
                         <div class="date-picker">
                           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                           <mat-datepicker #picker></mat-datepicker>
@@ -61,7 +61,7 @@
                     </mat-grid-tile>
                     <mat-grid-tile>
                       <div class="p-relative">
-                        <input type="text" class="extra-padding" [(ngModel)]="sprintConfig.start_date" [matDatepicker]="picker1" readonly placeholder="Start date">
+                        <input type="text" class="extra-padding" (dateInput)="sprintConfig.start_date=$event.value" [matDatepicker]="picker1" readonly placeholder="Start date">
                         <div class="date-picker">
                           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                           <mat-datepicker #picker1></mat-datepicker>
@@ -167,6 +167,7 @@
   </div> -->
   
 </div>
+
 <div class="overlay" *ngIf="displayWarningBox">
   <div class="warning">
     <p>User stories are currently assigned to this sprint. Deleting this sprint will remove the sprint from the user stories</p>
@@ -174,6 +175,17 @@
     <div>
       <button class="btn btn-blue" (click)="onDelete()">Yes</button>
       <button class="btn btn-flat-ash" (click)="onDoNotDelete()">No</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" *ngIf="warningBoxForCancel">
+  <div class="warning">
+    <!-- <p>User stories are currently assigned to this sprint. Deleting this sprint will remove the sprint from the user stories</p> -->
+    <p class="warning-message-2">Some of the fields have been changed or newly created. Cancelling the current status will discard all changes, do you want to proceed?</p>
+    <div>
+      <button class="btn btn-blue" (click)="onSelectYes()">Yes</button>
+      <button class="btn btn-flat-ash" (click)="warningBoxForCancel=false">No</button>
     </div>
   </div>
 </div>

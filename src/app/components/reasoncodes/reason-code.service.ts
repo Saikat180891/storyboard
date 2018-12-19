@@ -32,17 +32,12 @@ export class ReasonCodeService {
   createSprint(payload){
     payload.forEach(element => {
       element.start_date = this.formatDate(element.start_date);
-      this._api.postData(`/sop/${this.sopId}/sprint.json`, element)
-      .subscribe(response=>{
-        if(response){
-          
-        }else{
-          return false;
-        }
-      });
+      if(element.duration){
+        this._api.postData(`/sop/${this.sopId}/sprint.json`, element).subscribe(response=>{});
+      }
     });
     this.getSprint();
-    return true;
+    // return true;
   }
 
   getSopByID(id){
@@ -223,7 +218,11 @@ export class ReasonCodeService {
     this._api.fetchData(`/sop/${id}/ftes.json`)
       .subscribe(response=>{
         this.benefitsChartData = response;
-      })
+      });
+  }
+
+  createReasonCode(id){
+    this._api.fetchData(`/sop/${id}/`)
   }
 
   /**
