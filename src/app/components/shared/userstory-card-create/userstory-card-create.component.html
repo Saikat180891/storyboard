@@ -97,6 +97,23 @@
     </div>
     <div class="h-divider"></div>
 
+    <div class="form-group">
+      <div class="input-container lg">
+        <div class="title" [ngClass]="{'warning':userStoryStatusValidator}">ETD</div>
+        <div class="editable">
+          <input type="text" placeholder="Start Date" [(ngModel)]="userStoryPayload.notes">
+        </div>
+        
+      </div>
+      <div class="input-container">
+        <div class="title" [ngClass]="{'warning':userStoryDescValidator}">Revised ETD</div>
+        <div class="editable">
+          <input type="text" placeholder="None" [(ngModel)]="userStoryPayload.notes">
+        </div>
+      </div>
+    </div>
+    <div class="h-divider"></div>
+
     <div class="form-group btn-group">
       <button class="btn btn-blue" (click)="onCreate()">Save Changes</button>
       <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
