@@ -13,6 +13,8 @@ export class UserstoryCardComponent implements OnInit {
 
   @Input('userStory') inputUserStory;
 
+  @Input('restore') restore:boolean;
+
   userStory;
 
   rippleColor = 'rbga(0,0,0,0.2)';
@@ -38,6 +40,7 @@ export class UserstoryCardComponent implements OnInit {
         sprintId = element.id;
       }
     });
+    this.userStory.ftes === "-----" ? delete this.userStory.ftes : '';
     this.__editUS.editUserStory(uid, sprintId, this.userStory);
   }
 
@@ -49,6 +52,7 @@ export class UserstoryCardComponent implements OnInit {
         sprintId = element.id;
       }
     });
+    this.userStory.ftes === "-----" ? delete this.userStory.ftes : '';
     this.__editUS.editUserStory(uid, sprintId, this.userStory);
   }
 

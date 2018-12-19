@@ -147,6 +147,7 @@ export class ReasonCodeService {
             this.getTotalCharData(this.sopId);
             this.getChartData(this.sopId);
             this.getUserStories(this.sopId);
+            this.getDeletedUserStories(this.sopId);
           }
         });
         // this.getDeletedUserStories();

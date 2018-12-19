@@ -57,21 +57,28 @@
         <span *ngIf="userStory.status === 'Intl Testing'" class="circle" [ngStyle]="{ 'background-color' : '#0033A1' }"> </span>
         <span *ngIf="userStory.status === 'Ext Testing'" class="circle" [ngStyle]="{ 'background-color' : '#FDD468' }"> </span>
         <span *ngIf="userStory.status === 'Done'" class="circle" [ngStyle]="{ 'background-color' : '#40C0C4' }"> </span>
+        <span *ngIf="userStory.status === 'Development'" class="circle" [ngStyle]="{ 'background-color' : '#69D100' }"> </span>
         <span class="priority-text float-l">{{userStory.status}}</span>
       </span>
       <span>Description</span>
       <span>{{userStory.notes}}</span>
     </div>
     <div class="col c42">
+
       <div class="btn-box">
-        <button class="btn btn-flat-ash" matRipple (click)="onEdit(userStory.id)"><i class="fas fa-pencil-alt"></i></button>
-        <button class="btn btn-blue" matRipple [matRippleColor]="rippleColor">View SOP</button>
-        
+        <button class="btn btn-flat-ash" matRipple (click)="onEdit(userStory.id)" *ngIf="!restore">
+          <i class="fas fa-pencil-alt"></i>
+        </button>
+        <button class="btn btn-blue" matRipple [matRippleColor]="rippleColor" *ngIf="!restore; else restoreContent">View SOP</button>
+        <ng-template #restoreContent>
+            <button class="btn btn-blue" matRipple [matRippleColor]="rippleColor" >Restore</button>
+        </ng-template>
       </div>
+
     </div>
   </div>
 
-  <div class="options-btn" [matMenuTriggerFor]="options">
+  <div class="options-btn" [matMenuTriggerFor]="options" *ngIf="!restore">
     <i class="fas fa-ellipsis-h"></i>
     <mat-menu #options="matMenu">
       <button mat-menu-item (click)="onDelete(userStory.id)">Delete</button>

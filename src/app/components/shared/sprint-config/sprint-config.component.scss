@@ -1,150 +1,190 @@
 .modal{
-  width: 600px;
-  height: 400px;
+  width: 650px;
+  height: 450px;
   background-color: #ffffff;
   border-radius: 5px;
   box-shadow: rgba($color: #000000, $alpha: 0.3);
+
   
 
-  .heading{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 50px;
-    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.3);
+//   .heading{
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 50px;
+//     border-bottom: 1px solid rgba($color: #000000, $alpha: 0.3);
 
-    span{
-      height: 50px;
-      line-height: 50px;
-      font-size: 18px;
-    }
-    span:first-child{
-      padding-left: 20px;
-      color: #2A7DE1;
-    }
-    span:last-child{
-      float: right;
-      margin-right: 20px;
-      color: rgba($color: #000000, $alpha: 0.3);
-      cursor: pointer;
-    }
-  }
-  .modal-body{
-    position: absolute;
-    top: 50px;
-    left: 0;
-    width: 100%;
-    height: 280px;
-    overflow: hidden;
-    // background-color: red;
+//     span{
+//       height: 50px;
+//       line-height: 50px;
+//       font-size: 18px;
+//     }
+//     span:first-child{
+//       padding-left: 20px;
+//       color: #2A7DE1;
+//     }
+//     span:last-child{
+//       float: right;
+//       margin-right: 20px;
+//       color: rgba($color: #000000, $alpha: 0.3);
+//       cursor: pointer;
+//     }
+//   }
+//   .modal-body{
+//     position: absolute;
+//     top: 50px;
+//     left: 0;
+//     width: 100%;
+//     height: 280px;
+//     overflow: hidden;
+//     // background-color: red;
 
-    .table{
-      width: 100%;
-      height: 100%;
-      // background: #2A7DE1;
+//     .table{
+//       width: 100%;
+//       height: 100%;
+//       // background: #2A7DE1;
 
-      .thead{
-        height: 40px;
-        line-height: 40px;
-        width: 100%;
-        font-size: 14px;
-        color: #999999;
-      }
-      .tbody{
-        height: 250px;
-        overflow: auto;
+//       .thead{
+//         height: 40px;
+//         line-height: 40px;
+//         width: 100%;
+//         font-size: 14px;
+//         color: #999999;
+//       }
+//       .tbody{
+//         height: 250px;
+//         overflow: auto;
 
-        .row{
-          height: 60px;
-          line-height: 60px;
+//         .row{
+//           height: 60px;
+//           line-height: 60px;
 
-          button{
-            height: 30px;
-            width: 100px;
-            margin: 10px;
-            border: none;
-            background-color: transparent;
-            color: #2A7DE1;
-            font-size: 14px;
-            cursor: pointer;
-            font-weight: 500;
-          }
-        }
-        .no-background{
-          background-color: #ffffff;
-        }
+//           
+//         }
+//         .no-background{
+//           background-color: #ffffff;
+//         }
         
-      }
-    }
-  }
-  .modal-footer{
-    display: flex;
-    height: 50px;
-    width: 220px;
-    justify-content: space-between;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+//       }
+//     }
+//   }
+//   .modal-footer{
+//     display: flex;
+//     height: 50px;
+//     width: 220px;
+//     justify-content: space-between;
+//     position: absolute;
+//     bottom: 0;
+//     left: 50%;
+//     transform: translateX(-50%);
 
-    button{
-      width: 100px;
-      height: 30px;
-      border-radius: 2px;
-    }
-  }
+//     button{
+//       width: 100px;
+//       height: 30px;
+//       border-radius: 2px;
+//     }
+//   }
+// }
+// .row{
+//   display: flex;
+
+//   .col{
+//     min-width: 50px;
+//     max-width: 150px;
+//     text-align: center;
+//   }
+//   .c1{
+//     width: 50px;
+//     text-align: center;
+//     font-size: 14px;
+//   }
+//   .c2{
+//     width: 150px;
+//     text-align: left;
+//   }
+//   .c3{
+//     width: 150px;
+//     text-align: left;
+//   }
+//   .c4{
+//     width: 150px;
+//     text-align: left;
+//     position: relative;
+//   }
+//   .c5{
+//     width: 150px;
+//     text-align: left;
+//   }
+//   .c6{
+//     width: 40px;
+//     text-align: center;
+//     color: #2A7DE1;
+
+//     i{
+//       cursor: pointer;
+//     }
+//   }
+// }
+// input[type="text"]{
+//   height: 30px;
+//   max-width: 115px;
+//   border: 1px solid #D1D1D1;
+//   padding-left: 5px;
+//   border-radius: 3px;
+// }
+// .row:nth-child(even){
+//   background-color: #F5F5F5;
+}
+.grid-list:nth-child(even){
+  background-color: #eeeeee;
+}
+.modal-body{
+  height: 320px;
+  margin-bottom: 30px;
+}
+.delete{
+  color: #2A7DE1;
+  cursor: pointer;
+}
+.content-body{
+  max-height: 250px;
+  height: 250px;
+  overflow: auto;
 }
 .row{
-  display: flex;
-
-  .col{
-    min-width: 50px;
-    max-width: 150px;
-    text-align: center;
-  }
-  .c1{
-    width: 50px;
-    text-align: center;
-    font-size: 14px;
-  }
-  .c2{
-    width: 150px;
-    text-align: left;
-  }
-  .c3{
-    width: 150px;
-    text-align: left;
-  }
-  .c4{
-    width: 150px;
-    text-align: left;
-  }
-  .c5{
-    width: 150px;
-    text-align: left;
-  }
-  .c6{
-    width: 40px;
-    text-align: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  button{
+    height: 30px;
+    // width: 100px;
+    margin: 10px;
+    border: 1px solid #2A7DE1;
+    background-color: transparent;
     color: #2A7DE1;
-
-    i{
-      cursor: pointer;
-    }
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 15px;
+    position: absolute;
+    left: 20px;
   }
 }
-input[type="text"]{
-  height: 30px;
-  max-width: 115px;
-  border: 1px solid #D1D1D1;
-  padding-left: 5px;
-  border-radius: 3px;
+.modal-footer{
+  width: 100%;
+  // height: 50px;
+  text-align: center;
+  // background-color: red;
+  // line-height: 50px;
+  
+  button{
+    width: 90px;
+  }
+  button:first-child{
+    margin-right: 20px;
+  }
 }
-.row:nth-child(even){
-  background-color: #F5F5F5;
-}
-
 .warning{
   width: 400px;
   height: 220px;
@@ -191,6 +231,60 @@ input[type="text"]{
 }
 .date-picker{
   position: absolute;
+  top: -5px;
+  left: -5px;
+}
+
+.arrow{
+  position: absolute;
+  height: 30px;
+  width: 35px;
+  border: 1px solid #D1D1D1;
+  border-radius: 2px;
   top: 0;
-  left: 170px;
+  right: 0;
+
+  button{
+    display: block;
+    outline: none;
+    border: none !important;
+    // background-color: blue !important;
+    color: #2A7DE1 !important;
+    cursor: pointer !important;
+    position: absolute;
+    width: 100% !important;
+    height: 50% !important;
+    right: 0 !important;
+    text-align: center !important;
+    transition: all 0.1s ease !important;
+    background-color: transparent !important;
+  }
+
+  button:first-child{
+    top: 0 !important;
+  }
+  button:last-child{
+    bottom: 0 !important;
+  }
+
+  button:hover{
+    background: #cccccc !important;
+  }
+}
+.p-relative{
+  position: relative;
+}
+
+input[type="text"], input[type="number"]{
+  width: 100%;
+  height: 30px;
+  border-radius: 3px;
+  border: 1px solid #999999;
+  padding-left: 5px;
+}
+input[type="text"].extra-padding{
+  padding-left: 25px;
+}
+.add-btn{
+  padding-left: 20px;
 }

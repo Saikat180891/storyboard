@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
 import { RouteConfigLoadStart } from '@angular/router';
 interface Option{
   status: string;
@@ -9,7 +9,7 @@ interface Option{
   templateUrl: './colored-dropdown.component.html',
   styleUrls: ['./colored-dropdown.component.scss']
 })
-export class ColoredDropdownComponent implements OnInit, AfterViewInit {
+export class ColoredDropdownComponent implements OnInit, AfterViewInit, OnChanges {
 
   isOpen: boolean = false;
   selected:string = '';
@@ -22,7 +22,7 @@ export class ColoredDropdownComponent implements OnInit, AfterViewInit {
 
   @Input('placeholder') placeholder;
 
-  @Input('value') value;
+  @Input('value') value:Option;
 
   @Input('objectOptions') objectOptions;
 
@@ -38,6 +38,11 @@ export class ColoredDropdownComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(){
     
+  }
+
+  ngOnChanges(changes: SimpleChanges){
+    // this.value.status = changes.defaultOption.currentValue;
+    console.log(changes);
   }
 
   changeColorofDefaultOption(){

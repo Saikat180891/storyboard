@@ -156,10 +156,10 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
       });
       this.userStoryPayload.dev_hrs = parseFloat(this.userStoryPayload.dev_hrs).toFixed(1);
       this.userStoryPayload.ftes = parseFloat(this.userStoryPayload.ftes).toFixed(1);
-      if(this.userStoryPayload.ftes === '' || this.userStoryPayload.ftes === null){
+      if(this.userStoryPayload.ftes === '' || this.userStoryPayload.ftes === null || isNaN(parseFloat(this.userStoryPayload.ftes))){
         delete this.userStoryPayload.ftes;
       }
-      if(this.userStoryPayload.dev_hrs === '' || this.userStoryPayload.dev_hrs === null){
+      if(this.userStoryPayload.dev_hrs === '' || this.userStoryPayload.dev_hrs === null || isNaN(parseFloat(this.userStoryPayload.dev_hrs))){
         delete this.userStoryPayload.dev_hrs;
       }
       

@@ -43,6 +43,10 @@ export class UserstoryCardEditComponent implements OnInit {
       color: '#F47074'
     },
     {
+      status: 'Development',
+      color: '#69D100'
+    },
+    {
       status: 'Intl Testing',
       color: '#0033A1'
     },
@@ -179,6 +183,8 @@ export class UserstoryCardEditComponent implements OnInit {
     this.status = $event.status;
     if($event.status === 'Done'){
       this.warning.emit(true);
+    }else{
+      this.editUSData.status = $event.status;
     }
   }
 }

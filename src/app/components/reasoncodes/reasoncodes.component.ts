@@ -372,6 +372,8 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
     this.createOptionsWithSprintName();
   }
 
+
+
   onArrowUp(){
     // this.dateCounter += 1;
     this.addSprintPayload.duration = (this.dateCounter += 1) + 'W';
@@ -436,6 +438,10 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
   onSelectYes(){
     this.warning = false;
     this._reasonCode.doneSelectStatus.emit(true);
+  }
+
+  onTabChange($event){
+    console.log($event)
   }
 
   /**
