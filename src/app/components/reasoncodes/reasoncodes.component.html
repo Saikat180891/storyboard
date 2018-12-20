@@ -39,6 +39,12 @@
         </div>
       </mat-tab>
       <mat-tab label="Completed U/S">
+        <div class ='info'>
+        <img src= "../../../assets/pics/info_logo.svg" height="23px" width="23px" style="display: inline">
+        <div class ='info_text'>
+            To re-open a user story, change its status from "Done" to another state and assign to an open/future sprint.
+          </div>
+        </div>
         <div class="card-holder">
             <app-userstory-card [restore]="false" *ngFor="let userStory of _reasonCode.completeUserStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
         </div>

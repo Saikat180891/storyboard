@@ -8,8 +8,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 export const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-    'Authorization': localStorage.getItem("uniqueName")
+        'Authorization': localStorage.getItem("uniqueName")
   })
 };
 
@@ -108,7 +107,7 @@ export class DataService {
    */
   fetchData(param){
     console.log(httpOptions)
-    return this.http.get<any[]>(this.apiUrl + param);
+    return this.http.get<any[]>(this.apiUrl + param,httpOptions);
   }
 
   fetchDataWithLimits(startLimit, endLimit){
@@ -116,7 +115,7 @@ export class DataService {
   }
 
   postData(param, body){
-    return this.http.post(this.apiUrl + param, body);
+    return this.http.post(this.apiUrl + param, body, httpOptions);
   }
 
   delete(param, id){
