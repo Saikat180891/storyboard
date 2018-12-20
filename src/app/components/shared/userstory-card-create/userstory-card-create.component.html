@@ -24,7 +24,7 @@
       <div class="input-container md">
         <div class="title">Reason Code</div>
         <div class="editable">
-          <normal-dropdown (optionSelected)="onSprintSelect($event)" [options]="reasonCodeOptions" [defaultOption]="'Select'"></normal-dropdown>
+          <normal-dropdown (optionSelected)="userStoryPayload.rc_name=$event.status" [options]="reasonCodeOptions" [defaultOption]="'Select'"></normal-dropdown>
         </div>
       </div>
       <div class="input-container md">

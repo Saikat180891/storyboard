@@ -17,6 +17,7 @@ interface UserStory{
   sprint_name: string;
   planned_delivery: any;
   revised_delivery: any;
+  rc_name: string;
 }
 
 
@@ -87,7 +88,8 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
     created: '',
     sprint_name: '',
     planned_delivery: '',
-    revised_delivery: ''
+    revised_delivery: '',
+    rc_name: ''
   }
   productivity;
 
@@ -182,9 +184,17 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
       if(this.userStoryPayload.dev_hrs === '' || this.userStoryPayload.dev_hrs === null || isNaN(parseFloat(this.userStoryPayload.dev_hrs))){
         delete this.userStoryPayload.dev_hrs;
       }
-      
+      this.userStoryPayload.planned_delivery = '2018-01-01';
+      this.userStoryPayload.revised_delivery = '2018-01-01';
       console.log(this.userStoryPayload)
-      this.__createUserStory.createUserStory(id, this.userStoryPayload);
+      let rc_id = -1;
+      this.__rcService.reasonCodeData.forEach(element=>{
+        if(element.name === this.userStoryPayload.rc_name){
+          rc_id = element.id;
+        }
+      });
+      
+      this.__createUserStory.createUserStory(id, rc_id, this.userStoryPayload);
       this.close.emit(false);
     }
 

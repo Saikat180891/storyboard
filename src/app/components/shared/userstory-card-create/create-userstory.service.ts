@@ -11,13 +11,13 @@ export class CreateUserstoryService {
 
   constructor(private __api: DataService, private __rcService: ReasonCodeService) { }
 
-  createUserStory(sprintID, payload){
+  createUserStory(sprintID, reasonCodeId, payload){
     if(sprintID){
 
     }else{
       sprintID = -1;
     }
-    const api = `/sop/reasoncode/${this.sopId}/userstories/${sprintID}.json`;
+    const api = `/sop/reasoncode/${this.sopId}/userstories/${sprintID}/${reasonCodeId}.json`;
     console.log(api, payload)
     this.__api.postData(api, payload)
       .subscribe(response=>{

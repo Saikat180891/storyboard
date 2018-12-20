@@ -12,7 +12,7 @@ export class EditUserStoryService {
               private _rcService: ReasonCodeService,) { }
   
 
-  editUserStory(usID, sprintID, payload){
+  editUserStory(usID, sprintID, reasonCodeId, payload){
     if(sprintID){
 
     }else{
@@ -20,7 +20,7 @@ export class EditUserStoryService {
     }
     const api = `/sop/reasoncode/userstories/${usID}/update/${sprintID}.json`;
     console.log(api);
-    this._api.update(`/sop/reasoncode/userstories/${usID}/update`, `${sprintID}.json`, payload)
+    this._api.update(`/sop/reasoncode/userstories/${usID}/update`, `${sprintID}/${reasonCodeId}.json`, payload)
       .subscribe(
         response=>{
         this._rcService.userStories.forEach(element=>{

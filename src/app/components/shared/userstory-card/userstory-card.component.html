@@ -72,10 +72,10 @@
         <span *ngIf="userStory.status === 'Ext Testing'" class="circle" [ngStyle]="{ 'background-color' : '#FDD468' }"> </span>
         <span *ngIf="userStory.status === 'Done'" class="circle" [ngStyle]="{ 'background-color' : '#40C0C4' }"> </span>
         <span *ngIf="userStory.status === 'Development'" class="circle" [ngStyle]="{ 'background-color' : '#69D100' }"> </span> -->
-        <span class="priority-text float-l">{{userStory.status}}</span>
+        <span class="priority-text float-l">{{userStory.planned_delivery?userStory.planned_delivery:'-----'}}</span>
       </span>
       <span>Revised Delivery</span>
-      <span>{{userStory.notes}}</span>
+      <span>{{userStory.revised_delivery?userStory.revised_delivery:'-----'}}</span>
     </div>
     <div class="col c42">
 

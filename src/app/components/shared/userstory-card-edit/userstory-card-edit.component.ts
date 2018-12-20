@@ -32,6 +32,8 @@ export class UserstoryCardEditComponent implements OnInit {
 
   @Input('sprintOptions') sprintOptions;
 
+  @Input('reasonCodeOptions') reasonCodeOptions;
+
   status='';
   editUSDatas;
 
@@ -185,8 +187,14 @@ export class UserstoryCardEditComponent implements OnInit {
       if(this.editUSData.dev_hrs === null || this.editUSData.dev_hrs === '' || this.editUSData.dev_hrs === '-----' || isNaN(this.editUSData.dev_hrs)){
         this.editUSData.dev_hrs = '';
       }
-      console.log("From the edit user story",this.editUSData)
-      this.__editUS.editUserStory(this.editUSData.id, sprintId, this.editUSData);
+      console.log("From the edit user story",this.editUSData);
+      let rc_id = -1;
+      this.__rcService.reasonCodeData.forEach(element=>{
+        if(element.name === this.editUSData.rc_name){
+          rc_id = element.id;
+        }
+      })
+      this.__editUS.editUserStory(this.editUSData.id, sprintId, rc_id, this.editUSData);
       this.onClose();
     }
   }

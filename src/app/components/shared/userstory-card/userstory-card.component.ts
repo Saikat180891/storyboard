@@ -41,7 +41,13 @@ export class UserstoryCardComponent implements OnInit {
       }
     });
     this.userStory.ftes === "-----" ? delete this.userStory.ftes : '';
-    this.__editUS.editUserStory(uid, sprintId, this.userStory);
+    let rc_id = -1;
+    this.__rcService.reasonCodeData.forEach(element=>{
+      if(element.name === this.userStory.rc_name){
+        rc_id = element.id;
+      }
+    });
+    this.__editUS.editUserStory(uid, sprintId, rc_id, this.userStory);
   }
 
   toggleTVC(event, uid, uss_name){
@@ -53,7 +59,13 @@ export class UserstoryCardComponent implements OnInit {
       }
     });
     this.userStory.ftes === "-----" ? delete this.userStory.ftes : '';
-    this.__editUS.editUserStory(uid, sprintId, this.userStory);
+    let rc_id = -1;
+    this.__rcService.reasonCodeData.forEach(element=>{
+      if(element.name === this.userStory.rc_name){
+        rc_id = element.id;
+      }
+    });
+    this.__editUS.editUserStory(uid, sprintId, rc_id, this.userStory);
   }
 
   onDelete(id){

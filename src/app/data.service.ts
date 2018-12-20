@@ -107,7 +107,7 @@ export class DataService {
    */
   fetchData(param){
     console.log(httpOptions)
-    return this.http.get<any[]>(this.apiUrl + param,httpOptions);
+    return this.http.get<any[]>(this.apiUrl + param, httpOptions);
   }
 
   fetchDataWithLimits(startLimit, endLimit){
