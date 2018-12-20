@@ -121,6 +121,7 @@ export class UserstoryCardEditComponent implements OnInit {
   userStorySprintNameValidator: boolean = false;
   userStoryStatusValidator: boolean = false;
   userStoryDescValidator: boolean = false;
+  userStoryReasonCodeValidator: boolean = false;
   validationSuccessfull = [];
 
   onSaveAll(){
@@ -169,10 +170,17 @@ export class UserstoryCardEditComponent implements OnInit {
       this.userStoryDescValidator = false;
       this.validationSuccessfull[5] = 1;
     }
+    if(this.editUSData.rc_name === ''){
+      this.userStoryReasonCodeValidator = true;
+      this.validationSuccessfull[6] = 0;
+    }else{
+      this.userStoryReasonCodeValidator = false;
+      this.validationSuccessfull[6] = 1;
+    }
     const value = this.validationSuccessfull.reduce((acc, val)=>{
       return acc + val;
     });
-    if(value === 6){
+    if(value === 7){
       let sprintId = 0;
       this.__rcService.sprintConfig.forEach(element=>{
         if(element.sprint_name === this.editUSData.sprint_name){
@@ -231,4 +239,5 @@ export class UserstoryCardEditComponent implements OnInit {
   onDatePickerCloseRD($event){
     this.editUSData.revised_delivery = $event.value;
   }
+
 }

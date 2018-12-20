@@ -120,6 +120,7 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
   userStorySprintNameValidator: boolean = false;
   userStoryStatusValidator: boolean = false;
   userStoryDescValidator: boolean = false;
+  userStroryReasonCodeValidator:boolean = false;
   validationSuccessfull = [];
 
   onCreate(){
@@ -165,11 +166,18 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
       this.userStoryDescValidator = false;
       this.validationSuccessfull[5] = 1;
     }
+    if(this.userStoryPayload.rc_name == ''){
+      this.userStroryReasonCodeValidator = true;
+      this.validationSuccessfull[6] = 0;
+    }else{
+      this.userStroryReasonCodeValidator = false;
+      this.validationSuccessfull[6] = 1;
+    }
     const value = this.validationSuccessfull.reduce((acc, val)=>{
       return acc + val;
     });
     console.log(value)
-    if(value === 6){
+    if(value === 7){
       let id:number;
       this.__rcService.sprintConfig.forEach(element=>{
         if(element.sprint_name == this.userStoryPayload.sprint_name){

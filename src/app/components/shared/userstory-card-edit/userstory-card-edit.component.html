@@ -24,13 +24,13 @@
         <div class="input-container sm">
           <div class="title">Reason Code</div>
           <div class="editable">
-            <normal-dropdown (optionSelected)="editUSData.sprint_name=$event.status" [options]="reasonCodeOptions" [defaultOption]="editUSData.sprint_name?editUSData.sprint_name:'Unassigned'"></normal-dropdown>
+            <normal-dropdown (optionSelected)="editUSData.rc_name=$event.status" [options]="reasonCodeOptions" [defaultOption]="editUSData.rc_name?editUSData.rc_name:'Unassigned'"></normal-dropdown>
           </div>
         </div>
         <div class="input-container md">
           <div class="title" [ngClass]="{'warning':userStorySprintNameValidator}">Sprint Name</div>
           <div class="editable">
-            <colored-dropdown (optionSelected)="editUSData.sprint_name=$event.status" [options]="sprintOptions" [defaultOption]="editUSData.sprint_name?editUSData.sprint_name:'Unassigned'"></colored-dropdown>
+            <colored-dropdown (optionSelected)="onSprintSelect($event)" [options]="sprintOptions" [defaultOption]="editUSData.sprint_name?editUSData.sprint_name:'Unassigned'"></colored-dropdown>
           </div>
         </div>
       </div>
@@ -111,7 +111,7 @@
         <div class="input-container md">
           <div class="title">Revised Delivery</div>
           <div class="editable relative">
-            <input type="text" placeholder="None" (dateChange)="onDatePickerCloseRD($event)" [value]="editUSData.planned_delivery" [matDatepicker]="petd" [ngStyle]="{'padding-left': '30px'}">
+            <input type="text" placeholder="None" (dateChange)="onDatePickerCloseRD($event)" [value]="editUSData.revised_delivery" [matDatepicker]="petd" [ngStyle]="{'padding-left': '30px'}">
             <div class="etd-date-picker">
               <mat-datepicker-toggle matSuffix [for]="petd"></mat-datepicker-toggle>
               <mat-datepicker #petd></mat-datepicker>

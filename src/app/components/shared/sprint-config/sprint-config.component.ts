@@ -182,6 +182,7 @@ export class SprintConfigComponent implements OnInit {
     }
     this.addNewRowForReasonCode = [];
     this.reasonCodeEditChangeDetector = [];
+    this.closeSprints.emit(false);
     console.log(this.addNewRowForReasonCode);
   }
 

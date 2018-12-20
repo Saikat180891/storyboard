@@ -13,6 +13,8 @@ export class EditUserStoryService {
   
 
   editUserStory(usID, sprintID, reasonCodeId, payload){
+    payload['planned_delivery'] = this._rcService.formatDate(payload['planned_delivery']);
+    payload['revised_delivery'] == '' ? null : this._rcService.formatDate(payload['revised_delivery']);
     if(sprintID){
 
     }else{

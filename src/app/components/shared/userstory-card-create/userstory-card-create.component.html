@@ -22,7 +22,7 @@
 
     <div class="form-group">
       <div class="input-container md">
-        <div class="title">Reason Code</div>
+        <div class="title" [ngClass]="{'warning':userStroryReasonCodeValidator}">Reason Code</div>
         <div class="editable">
           <normal-dropdown (optionSelected)="userStoryPayload.rc_name=$event.status" [options]="reasonCodeOptions" [defaultOption]="'Select'"></normal-dropdown>
         </div>
@@ -140,7 +140,7 @@
       <button class="btn btn-blue" (click)="onCreate()">Save Changes</button>
       <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
 
-      <span class="message" *ngIf="userStoryNumberValidator || userStoryNameValidator || userStoryPriorityValidator || userStorySprintNameValidator || userStoryStatusValidator || userStoryDescValidator">Please enter the mandatory fields</span>
+      <span class="message" *ngIf="userStoryNumberValidator || userStoryNameValidator || userStoryPriorityValidator || userStorySprintNameValidator || userStoryStatusValidator || userStoryDescValidator || userStroryReasonCodeValidator">Please enter the mandatory fields</span>
     </div>
   </div>
 </div>
