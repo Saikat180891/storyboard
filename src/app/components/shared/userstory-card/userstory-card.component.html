@@ -49,7 +49,7 @@
     </div>
   </div>
   <div class="box row r4">
-    <div class="col c4">
+    <div class="col c4" [ngStyle]="{'border-right': '1px solid rgba(0, 0, 0, 0.1)'}">
       <span>Status</span>
       <span class="priority h-center">
         <span *ngIf="userStory.status === 'Backlog'" class="circle" [ngStyle]="{ 'background-color' : '#2A7DE1' }"> </span>
@@ -61,6 +61,20 @@
         <span class="priority-text float-l">{{userStory.status}}</span>
       </span>
       <span>Description</span>
+      <span>{{userStory.notes}}</span>
+    </div>
+    <div class="col c4">
+      <span>Planned Delivery</span>
+      <span class="priority h-center">
+        <!-- <span *ngIf="userStory.status === 'Backlog'" class="circle" [ngStyle]="{ 'background-color' : '#2A7DE1' }"> </span>
+        <span *ngIf="userStory.status === 'Rules'" class="circle" [ngStyle]="{ 'background-color' : '#F47074' }"> </span>
+        <span *ngIf="userStory.status === 'Intl Testing'" class="circle" [ngStyle]="{ 'background-color' : '#0033A1' }"> </span>
+        <span *ngIf="userStory.status === 'Ext Testing'" class="circle" [ngStyle]="{ 'background-color' : '#FDD468' }"> </span>
+        <span *ngIf="userStory.status === 'Done'" class="circle" [ngStyle]="{ 'background-color' : '#40C0C4' }"> </span>
+        <span *ngIf="userStory.status === 'Development'" class="circle" [ngStyle]="{ 'background-color' : '#69D100' }"> </span> -->
+        <span class="priority-text float-l">{{userStory.status}}</span>
+      </span>
+      <span>Revised Delivery</span>
       <span>{{userStory.notes}}</span>
     </div>
     <div class="col c42">

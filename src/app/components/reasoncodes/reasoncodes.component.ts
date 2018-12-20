@@ -87,6 +87,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
   openEditSideBar:boolean = false;    //toggler to open or close the right side bar to edit
   openCreateSideBar:boolean = false;    //toggler to open or close the right side bar to create
   sprintOptions = [];
+  reasonCodeOptions = [];
   fixToTop:boolean = false;
   filter:boolean = false;
   warning: boolean = false;
@@ -108,41 +109,6 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
 
   currentProject;
 
-  currentSprintOptions = {
-    chart: {
-        type: 'pieChart',
-        height: 200,
-        width: 400,
-        margin: {
-          top: 10,
-          right: 10,
-          bottom: 10,
-          left: 10
-        },
-        x: function(d){return d.key;},
-        y: function(d){return d.y;},
-        showLabels: false,
-        duration: 500,
-        donutRatio: 0.6,
-        donut:true,
-        legendPosition: 'right',
-        // title: 'Hello',
-        labelThreshold: 0.07,
-        labelSunbeamLayout: true,
-        legend: {
-          margin: {
-            top: 20,
-            right: 10,
-            bottom: 0,
-            left: 20
-          },
-          width: 50,
-          height: 200,
-          rightAlign: true
-        }
-      }
-    };
-
   receivedSprintConfig:ReceivedSprintConfig;
 
   addSprint = [this.addSprintPayload];
@@ -161,38 +127,6 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
     'Check e-mail',
     'Walk dog'
   ];
-
-  data = [
-    {
-        key: "Cumulative Return",
-        
-        values: [
-            {
-                "label" : "Sprint 1" ,
-                "value" : 30,
-                "color": "#0f0",
-            } ,
-            {
-                "label" : "B" ,
-                "value" : 0,
-                "color": "#00f",
-            } ,
-            {
-                "label" : "C" ,
-                "value" : 32.807804682612,
-                "color": "#f00",
-            } ,
-            {
-                "label" : "D" ,
-                "value" : 196.45946739256
-            } ,
-            {
-                "label" : "E" ,
-                "value" : 0.19434030906893
-            }
-        ]
-    }
-]
 
   constructor(private route: ActivatedRoute,
               private _reasonCode: ReasonCodeService,
@@ -315,8 +249,28 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
       }
         , temp);
       this.sprintOptions.push(temp);
-      console.log(this.sprintOptions)
+      console.log(this.sprintOptions);
     });
+
+    this.createOptionsWithReasonCodeName();
+  }
+
+
+  createOptionsWithReasonCodeName(){
+    this._reasonCode.getReasonCode(this._reasonCode.sopId);
+    this.reasonCodeOptions = [];
+
+    let rcCodes = this._reasonCode.reasonCodeData;
+    rcCodes.forEach(element=>{
+      let temp = {};
+      temp = Object.assign({
+        status:element['name'],
+        color:'transparent'
+      }
+        , temp);
+      this.reasonCodeOptions.push(temp);
+      console.log(this.reasonCodeOptions);
+    })
   }
 
   onCloseAddSprint(){
@@ -448,6 +402,8 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
   onTabChange($event){
     console.log($event)
   }
+
+
 
   /**
    * Rearrange the date in the following format DD/MM/YYYY

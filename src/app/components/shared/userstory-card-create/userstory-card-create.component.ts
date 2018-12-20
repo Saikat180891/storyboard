@@ -30,6 +30,8 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
 
   @Input('sprintOptions') sprintOptions;
 
+  @Input('reasonCodeOptions') reasonCodeOptions;
+
   priorityOptions = [
     {
       status: 'High',
