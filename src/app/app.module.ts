@@ -85,6 +85,7 @@ import { UserstoryCardCreateComponent } from './components/shared/userstory-card
 import { ColoredDropdownComponent } from './components/shared/colored-dropdown/colored-dropdown.component';
 import { SprintConfigComponent } from './components/shared/sprint-config/sprint-config.component';
 import { UserstoryFilterComponent } from './components/shared/userstory-filter/userstory-filter.component';
+import { NormalDropdownComponent } from './components/shared/normal-dropdown/normal-dropdown.component';
 
 const routes = [
   {path: '', component: AuthComponent, pathMatch: 'full'},
@@ -145,7 +146,8 @@ const routes = [
     UserstoryCardCreateComponent,
     ColoredDropdownComponent,
     SprintConfigComponent,
-    UserstoryFilterComponent
+    UserstoryFilterComponent,
+    NormalDropdownComponent
   ],
   imports: [
     BrowserModule,

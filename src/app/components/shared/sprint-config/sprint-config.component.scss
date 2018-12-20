@@ -242,6 +242,8 @@
   padding-left: 5px;
 }
 
+
+
 .arrow{
   position: absolute;
   height: 30px;
@@ -294,4 +296,7 @@ input[type="text"].extra-padding{
 }
 .add-btn{
   padding-left: 20px;
+}
+input[type="text"].warning, input[type="number"].warning{
+  border: 1px solid #F47074 !important;
 }
