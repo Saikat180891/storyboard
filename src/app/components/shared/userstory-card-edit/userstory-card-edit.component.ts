@@ -240,4 +240,8 @@ export class UserstoryCardEditComponent implements OnInit {
     this.editUSData.revised_delivery = $event.value;
   }
 
+  activateRevisedDelivery: boolean = false;
+  onRDChecked(value){
+    this.activateRevisedDelivery = value;
+  }
 }

@@ -57,8 +57,8 @@
     </mat-tab-group>
 
     <div class="menu-btn-group">
-      <button class="sort-btn btn btn-flat-grey" [matMenuTriggerFor]="sortby">Sort By</button>
-      <button class="btn btn-flat-grey" (click)="openFilter()" [ngClass]="{'filter-btn-active':filter}">Filter</button>
+      <button class="sort-btn btn btn-flat-grey" [matMenuTriggerFor]="sortby" [ngStyle]="{'visibility':'hidden'}">Sort By</button>
+      <button class="btn btn-flat-grey" (click)="openFilter()" [ngClass]="{'filter-btn-active':filter}" [ngStyle]="{'visibility':'hidden'}">Filter</button>
       <button class="btn btn-flat-grey" (click)="onCreate()">Create New U/S</button>
       <mat-menu #sortby="matMenu">
         <button mat-menu-item [matMenuTriggerFor]="usName">U/S Name</button>

@@ -94,6 +94,7 @@ export class SprintConfigComponent implements OnInit {
     this.spinner.show();
     if(this.addNewRow.length > 0){
       this.__rcService.createSprint(this.addNewRow);
+      this.__rcService.getBenefits(this.__rcService.sopId);
     }
     // else if(this.changedDetected.length === 0 && this.addNewRow.length === 0){
     //   this.onSelectYes();
@@ -103,6 +104,7 @@ export class SprintConfigComponent implements OnInit {
       this.changedDetected.forEach((element, index)=>{
         if(element === true){
           this.__rcService.editSprint(this.sprintConfigData[index].id, this.sprintConfigData[index]);
+          this.__rcService.getBenefits(this.__rcService.sopId);
         }
       });
     }

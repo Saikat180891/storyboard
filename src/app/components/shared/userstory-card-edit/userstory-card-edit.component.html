@@ -6,7 +6,7 @@
     <div class="form">
   
       <div class="form-group">
-        <div class="input-container sm">
+        <div class="input-container md">
           <div class="title" [ngClass]="{'warning':userStoryNumberValidator}">U/S#</div>
           <div class="editable">
             <input type="number" placeholder="Ex: 1" [(ngModel)]="editUSData.us_number">
@@ -21,7 +21,7 @@
       </div>
   
       <div class="form-group">
-        <div class="input-container sm">
+        <div class="input-container md">
           <div class="title">Reason Code</div>
           <div class="editable">
             <normal-dropdown (optionSelected)="editUSData.rc_name=$event.status" [options]="reasonCodeOptions" [defaultOption]="editUSData.rc_name?editUSData.rc_name:'Unassigned'"></normal-dropdown>
@@ -37,7 +37,7 @@
       <div class="h-divider"></div>
   
       <div class="form-group h-space-equally">
-        <div class="input-container sm extra">
+        <div class="input-container extra">
           <div class="title" [ngClass]="{'warning':userStoryPriorityValidator}">Priority</div>
           <div class="editable">
             <colored-dropdown (optionSelected)="editUSData.priority=$event.status" [options]="priorityOptions" [defaultOption]="editUSData.priority"></colored-dropdown>
@@ -82,7 +82,7 @@
       <div class="h-divider"></div>
   
       <div class="form-group">
-        <div class="input-container lg">
+        <div class="input-container lg extra" [ngStyle]="{'width':'220px'}">
           <div class="title" [ngClass]="{'warning':userStoryStatusValidator}">Status</div>
           <div class="editable">
             <colored-dropdown (optionSelected)="onSelectStatus($event)" [options]="statusOptions" [defaultOption]="editUSData.status"></colored-dropdown>
@@ -108,15 +108,18 @@
             </div>
           </div>
         </div>
-        <div class="input-container md">
-          <div class="title">Revised Delivery</div>
-          <div class="editable relative">
+        <div class="input-container md" [ngStyle]="{'width':'130px'}">
+          <div class="title"><mat-checkbox (change)="onRDChecked($event.checked)"></mat-checkbox> Revised Delivery</div>
+          <div class="editable relative"  *ngIf="activateRevisedDelivery; else activateRD">
             <input type="text" placeholder="None" (dateChange)="onDatePickerCloseRD($event)" [value]="editUSData.revised_delivery" [matDatepicker]="petd" [ngStyle]="{'padding-left': '30px'}">
             <div class="etd-date-picker">
               <mat-datepicker-toggle matSuffix [for]="petd"></mat-datepicker-toggle>
               <mat-datepicker #petd></mat-datepicker>
             </div>
           </div>
+          <ng-template #activateRD>
+
+          </ng-template>
         </div>
       </div>
     

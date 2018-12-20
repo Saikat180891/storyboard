@@ -12,7 +12,7 @@ interface Option{
 export class ColoredDropdownComponent implements OnInit, AfterViewInit, OnChanges {
 
   isOpen: boolean = false;
-  selected:string = '';
+  selected:any = '';
   selectedColor:string;
   applyPadding:boolean = false;
 
@@ -48,8 +48,11 @@ export class ColoredDropdownComponent implements OnInit, AfterViewInit, OnChange
   changeColorofDefaultOption(){
     this.options.forEach(element=>{
       if(element.status === this.defaultOption){
-        this.selectedColor = element.color;
-        console.log(element)
+        // this.selectedColor = element.color;
+        // console.log(element)
+        let pos = this.options.indexOf(element);
+        this.selected = this.value = this.options[pos];
+
       }
     });
   }

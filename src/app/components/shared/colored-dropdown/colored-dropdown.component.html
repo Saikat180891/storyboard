@@ -1,21 +1,16 @@
 <div class="select">
   <div>
     <input 
-    [ngClass]="{
-      'input-active':selected.color==='transparent'?'':selected.color, 
-      'input-active':defaultOption==='Select' || defaultOption==='Unassigned' ? false : true
-    }" 
+    [ngClass]="{'input-active':defaultOption==='Select' || defaultOption==='Unassigned' ? false : true}" 
     [ngStyle]="{
-      'color': selected.color==='transparent'?'#000':selected.color,
-      'color':defaultOption==='Select' || defaultOption==='Unassigned' ? '#000' : selectedColor
+      'color':defaultOption==='Select' || defaultOption==='Unassigned' ? '#000' : '',
+      'color':selected?selected.color:''
     }" 
     type="text" [placeholder]="'placeholder'" readonly [value]="value?value.status:defaultOption">
   </div>
   <div class="ball" 
   [ngStyle]="{
-    'background-color': selected?selected.color:'',
-    'background-color': selectedColor
-  }"></div>
+    'background-color': selected?selected.color:''}"></div>
   <span class="down-caret" (click)="onOpen()"><i class="fas fa-angle-down"></i></span>
   <div *ngIf="isOpen && options" class="select-dropdown">
     

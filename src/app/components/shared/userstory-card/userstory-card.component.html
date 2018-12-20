@@ -16,7 +16,7 @@
   </div>
   <div class="box row r2">
     <div class="col c2 reduce-padding">
-      <span>Priority</span>
+      <span class="h-center">Priority</span>
       <span class="priority h-center no-padding">
         <span class="circle" 
         [ngClass]="{'high' : userStory.priority === 'High', 'medium' : userStory.priority === 'Medium', 'low' : userStory.priority === 'Low'}">
@@ -26,8 +26,8 @@
       {{userStory.priority}}
       </span>
       </span>
-      <span>Dev Hrs</span>
-      <span class="">{{userStory.dev_hrs}}</span>
+      <span class="h-center">Dev Hrs</span>
+      <span class="h-center">{{userStory.dev_hrs}}</span>
     </div>
     <div class="col c22">
       <span class="h-center">Productivity</span>
@@ -83,7 +83,7 @@
         <button class="btn btn-flat-ash" matRipple (click)="onEdit(userStory.id)" *ngIf="!restore">
           <i class="fas fa-pencil-alt"></i>
         </button>
-        <button class="btn btn-blue" matRipple [matRippleColor]="rippleColor" *ngIf="!restore; else restoreContent">View SOP</button>
+        <button class="btn btn-blue" matRipple [matRippleColor]="rippleColor" *ngIf="!restore; else restoreContent" [ngStyle]="{'visibility':'hidden'}">View SOP</button>
         <ng-template #restoreContent>
             <button class="btn btn-blue" matRipple [matRippleColor]="rippleColor" >Restore</button>
         </ng-template>

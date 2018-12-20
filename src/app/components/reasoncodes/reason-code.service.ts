@@ -123,6 +123,9 @@ export class ReasonCodeService {
           element['ftes'] = isFinite(element['ftes']) ? element['ftes'] : '-----';
           element['productivity'] = (parseFloat(element.ftes) / parseFloat(element.dev_hrs)).toFixed(1);
           element['productivity'] = isFinite(element['productivity']) ? element['productivity'] : '-----';
+          element['planned_delivery'] = this.reArrangeDate(element['planned_delivery']);
+          element['revised_delivery'] = element['revised_delivery'] != null ? this.reArrangeDate(element['revised_delivery']) : '-----';
+
         });
         
         this.userStories = response.reverse();
@@ -292,6 +295,15 @@ export class ReasonCodeService {
     // dateFormat.setDate(Number(newDate[0]));
     // console.log(dateFormat)
     return new Date(date);
+  }
+
+  reArrangeDate(date){
+    
+    let newDate = new Date(date);
+
+    let strDate = newDate.getDate() + "/" + (newDate.getMonth() + 1)+ "/" + newDate.getFullYear();
+    
+    return strDate;
   }
 
   

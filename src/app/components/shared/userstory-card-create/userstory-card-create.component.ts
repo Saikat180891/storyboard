@@ -7,16 +7,16 @@ interface UserStory{
   us_number: string;
   us_name: string;
   priority: string;
-  rules_approved: boolean;
-  verified_test_cases: boolean;
-  ftes: any;
-  dev_hrs: any;
+  rules_approved?: boolean;
+  verified_test_cases?: boolean;
+  ftes?: any;
+  dev_hrs?: any;
   notes: string;
   status: string;
-  created: string
+  created?: string
   sprint_name: string;
-  planned_delivery: any;
-  revised_delivery: any;
+  planned_delivery?: any;
+  revised_delivery?: any;
   rc_name: string;
 }
 
@@ -87,8 +87,8 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
     status: '',
     created: '',
     sprint_name: '',
-    planned_delivery: '',
-    revised_delivery: '',
+    // planned_delivery: '',
+    // revised_delivery: '',
     rc_name: ''
   }
   productivity;
@@ -240,11 +240,16 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
 
 
   onDatePickerClosePD($event){
-    this.userStoryPayload.planned_delivery = $event.value;
+    this.userStoryPayload.planned_delivery = this.__rcService.formatDate($event.value);
   }
 
   onDatePickerCloseRD($event){
-    this.userStoryPayload.revised_delivery = $event.value;
+    this.userStoryPayload.revised_delivery = this.__rcService.formatDate($event.value);
+  }
+
+  activateRevisedDelivery: boolean = false;
+  onRDChecked(value){
+    this.activateRevisedDelivery = value;
   }
 
 }
