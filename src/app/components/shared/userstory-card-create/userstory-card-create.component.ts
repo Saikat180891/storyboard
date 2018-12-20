@@ -192,8 +192,8 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
       if(this.userStoryPayload.dev_hrs === '' || this.userStoryPayload.dev_hrs === null || isNaN(parseFloat(this.userStoryPayload.dev_hrs))){
         delete this.userStoryPayload.dev_hrs;
       }
-      this.userStoryPayload.planned_delivery = '2018-01-01';
-      this.userStoryPayload.revised_delivery = '2018-01-01';
+      // this.userStoryPayload.planned_delivery = '2018-01-01';
+      // this.userStoryPayload.revised_delivery = '2018-01-01';
       console.log(this.userStoryPayload)
       let rc_id = -1;
       this.__rcService.reasonCodeData.forEach(element=>{
