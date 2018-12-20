@@ -9,6 +9,7 @@ import {DeleteTableService} from '../shared/delete-table/delete-table.service';
 import {CreateUserstoryService} from '../shared/userstory-card-create/create-userstory.service';
 import {charts} from './chartoptions';
 import {fromEvent} from 'rxjs';
+import {hideAccordian} from '../../animation';
 
 export interface UserData {
   id: string;
@@ -222,6 +223,9 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
 
       this._reasonCode.getDeletedUserStories(this._reasonCode.sopId);
 
+      this._reasonCode.getReasonCode(this._reasonCode.sopId);
+
+
       this._containerService.cardContents.forEach(element => {
         if(element.id == this._reasonCode.sopId){
           this.currentProject = element;
@@ -287,6 +291,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
 
   onOpenAddSprint(){
     this._reasonCode.getSprint();
+    this._reasonCode.getReasonCode(this._reasonCode.sopId);
     console.log(this._reasonCode.sprintConfig)
     let sprints = this._reasonCode.sprintConfig;
     this.openAddSprint = !this.openAddSprint;

@@ -221,8 +221,48 @@ export class ReasonCodeService {
       });
   }
 
-  createReasonCode(id){
-    this._api.fetchData(`/sop/${id}/`)
+  reasonCodeData = [];
+
+  createReasonCode(id, body){
+    body.forEach(element=>{
+      this._api.postData(`/sop/${id}/reasoncode.json`, element)
+        .subscribe(response=>{
+          this.reasonCodeData.push(response);
+        });
+    });
+  }
+
+  getReasonCode(id){
+    this._api.fetchData(`/sop/${id}/reasoncode.json`)
+      .subscribe(response=>{
+        this.reasonCodeData = response;
+      });
+  }
+
+  deleteReasonCode(id){
+    this._api.delete(`/sop/reasoncode`, `${id}.json`)
+      .subscribe(response=>{
+        // this.getReasonCode(this.sopId);
+        this.reasonCodeData.forEach(element=>{
+          if(element.id == id){
+            this.reasonCodeData.splice(element, 1);
+          }
+        });
+      });
+  }
+
+  editReasonCode(id,body){
+    if(body.name != ''){
+      this._api.update(`/sop/reasoncode`, `${id}.json`, body)
+      .subscribe(response=>{
+        this.reasonCodeData.forEach(element=>{
+          if(element.id == id){
+            let pos = this.reasonCodeData.indexOf(element);
+            this.reasonCodeData[pos] = response;
+          }
+        });
+      });
+    }
   }
 
   /**

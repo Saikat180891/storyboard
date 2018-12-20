@@ -2,6 +2,22 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import {ReasonCodeService} from '../../reasoncodes/reason-code.service';
 import {EditUserStoryService} from './edit-user-story.service';
 
+interface UserStory{
+  us_number: string;
+  us_name: string;
+  priority: string;
+  rules_approved: boolean;
+  verified_test_cases: boolean;
+  ftes: any;
+  dev_hrs: any;
+  notes: string;
+  status: string;
+  created: string
+  sprint_name: string;
+  planned_delivery: any;
+  revised_delivery: any;
+}
+
 @Component({
   selector: 'app-userstory-card-edit',
   templateUrl: './userstory-card-edit.component.html',
@@ -60,17 +76,17 @@ export class UserstoryCardEditComponent implements OnInit {
     }
   ];
 
-  userStoryPayload = {
-    us_number: '',
-    us_name: '',
-    priority: '',
-    rules_approved: '',
-    verified_test_cases: '',
-    ftes: 0,
-    dev_hrs: 0,
-    notes: '',
-    status: ''
-  }
+  // userStoryPayload: UserStory = {
+  //   us_number: '',
+  //   us_name: '',
+  //   priority: '',
+  //   rules_approved: '',
+  //   verified_test_cases: '',
+  //   ftes: 0,
+  //   dev_hrs: 0,
+  //   notes: '',
+  //   status: ''
+  // }
   
   productivity;
 
@@ -186,5 +202,25 @@ export class UserstoryCardEditComponent implements OnInit {
     }else{
       this.editUSData.status = $event.status;
     }
+  }
+
+  onSprintSelect($event){
+    this.editUSData.sprint_name=$event.status;
+    console.log(this.__rcService.sprintConfig)
+    this.__rcService.sprintConfig.forEach(element=>{
+      if(element.sprint_name === this.editUSData.sprint_name){
+        let date = new Date(JSON.parse(JSON.stringify(element.end_date.split("/").reverse().join("-"))));
+        this.editUSData.planned_delivery = date;
+      }
+    });
+  }
+
+
+  onDatePickerClosePD($event){
+    this.editUSData.planned_delivery = $event.value;
+  }
+
+  onDatePickerCloseRD($event){
+    this.editUSData.revised_delivery = $event.value;
   }
 }

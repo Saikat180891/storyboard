@@ -24,13 +24,13 @@
       <div class="input-container sm">
         <div class="title">Reason Code</div>
         <div class="editable">
-          <input type="text" placeholder="Ex: RC 1">
+          <normal-dropdown (optionSelected)="onSprintSelect($event)" [options]="sprintOptions" [defaultOption]="'Select'"></normal-dropdown>
         </div>
       </div>
       <div class="input-container md">
         <div class="title" [ngClass]="{'warning':userStorySprintNameValidator}">Sprint Name</div>
         <div class="editable">
-          <colored-dropdown (optionSelected)="userStoryPayload.sprint_name=$event.status" [options]="sprintOptions" [defaultOption]="'Select'"></colored-dropdown>
+          <colored-dropdown (optionSelected)="onSprintSelect($event)" [options]="sprintOptions" [defaultOption]="'Select'"></colored-dropdown>
         </div>
       </div>
     </div>
@@ -96,6 +96,28 @@
       </div>
     </div>
     <div class="h-divider"></div>
+    <div class="form-group">
+      <div class="input-container md">
+        <div class="title">Planned Delivery</div>
+        <div class="editable relative">
+          <input matInput type="text" placeholder="Start Date" [matDatepicker]="etd" (dateChange)="onDatePickerClosePD($event)" [value]="userStoryPayload.planned_delivery" [ngStyle]="{'padding-left': '30px'}">
+          <div class="etd-date-picker">
+            <mat-datepicker-toggle matSuffix [for]="etd"></mat-datepicker-toggle>
+            <mat-datepicker #etd></mat-datepicker>
+          </div>
+        </div>
+      </div>
+      <div class="input-container md">
+        <div class="title">Revised Delivery</div>
+        <div class="editable relative">
+          <input type="text" placeholder="None" (dateChange)="onDatePickerCloseRD($event)" [value]="userStoryPayload.revised_delivery" [matDatepicker]="petd" [ngStyle]="{'padding-left': '30px'}">
+          <div class="etd-date-picker">
+            <mat-datepicker-toggle matSuffix [for]="petd"></mat-datepicker-toggle>
+            <mat-datepicker #petd></mat-datepicker>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="form-group btn-group">
       <button class="btn btn-blue" (click)="onCreate()">Save Changes</button>

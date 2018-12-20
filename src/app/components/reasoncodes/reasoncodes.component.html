@@ -12,7 +12,7 @@
         </div>
   
         <div class="middle header__btn">
-          <button class="btn btn-blue btn-lg btn-shadow btn-active clearfill" (click)="onOpenAddSprint()">Config Sprint</button>
+          <button class="btn btn-blue btn-lg btn-shadow btn-active clearfill" (click)="onOpenAddSprint()">Config Project</button>
         </div>
   
       </div>
@@ -100,7 +100,7 @@
 <div class="overlay animate-scale" [ngClass]="{'animate-scale-active': openAddSprint}">
 
   <div class="sprint-config-modal">
-    <sprint-config *ngIf="openAddSprint" [sprintConfigData]="_reasonCode.sprintConfig" (closeSprints)="openAddSprint=$event"></sprint-config>
+    <sprint-config *ngIf="openAddSprint" [reasonCodeConfigData]="_reasonCode.reasonCodeData" [sprintConfigData]="_reasonCode.sprintConfig" (closeSprints)="openAddSprint=$event"></sprint-config>
   </div>
   <!-- <div class="modal">
     <div class="header">

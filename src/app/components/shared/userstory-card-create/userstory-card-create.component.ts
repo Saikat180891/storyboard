@@ -3,6 +3,22 @@ import {ReasonCodeService} from '../../reasoncodes/reason-code.service';
 import {CreateUserstoryService} from './create-userstory.service';
 import { fromEvent } from 'rxjs';
 
+interface UserStory{
+  us_number: string;
+  us_name: string;
+  priority: string;
+  rules_approved: boolean;
+  verified_test_cases: boolean;
+  ftes: any;
+  dev_hrs: any;
+  notes: string;
+  status: string;
+  created: string
+  sprint_name: string;
+  planned_delivery: any;
+  revised_delivery: any;
+}
+
 
 @Component({
   selector: 'app-userstory-card-create',
@@ -56,7 +72,7 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
   ];
   edit:boolean = true;
 
-  userStoryPayload = {
+  userStoryPayload: UserStory = {
     us_number: '',
     us_name: '',
     priority: '',
@@ -67,7 +83,9 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
     notes: '',
     status: '',
     created: '',
-    sprint_name: ''
+    sprint_name: '',
+    planned_delivery: '',
+    revised_delivery: ''
   }
   productivity;
 
@@ -187,6 +205,26 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
 
   onUpdateProductivity(){
     this.productivity = (parseFloat(this.userStoryPayload.dev_hrs) / parseFloat(this.userStoryPayload.ftes)).toFixed(1);
+  }
+
+  onSprintSelect($event){
+    this.userStoryPayload.sprint_name=$event.status;
+    console.log(this.__rcService.sprintConfig)
+    this.__rcService.sprintConfig.forEach(element=>{
+      if(element.sprint_name === this.userStoryPayload.sprint_name){
+        let date = new Date(JSON.parse(JSON.stringify(element.end_date.split("/").reverse().join("-"))));
+        this.userStoryPayload.planned_delivery = date;
+      }
+    });
+  }
+
+
+  onDatePickerClosePD($event){
+    this.userStoryPayload.planned_delivery = $event.value;
+  }
+
+  onDatePickerCloseRD($event){
+    this.userStoryPayload.revised_delivery = $event.value;
   }
 
 }

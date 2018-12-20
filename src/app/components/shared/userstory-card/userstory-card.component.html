@@ -4,8 +4,8 @@
     <div class="col c1">
       <span>U/S#</span>
       <span>{{userStory.us_number}}</span>
-      <span>Sprint#</span>
-      <span>{{userStory.sprint_id}}</span>
+      <span>Reason Code</span>
+      <span>{{userStory.rc_name?userStory.rc_name:'Unassigned'}}</span>
     </div>
     <div class="col c12">
       <span>User Story Name</span>
@@ -24,7 +24,7 @@
       <span class="priority-text" 
       [ngClass]="{'text-high' : userStory.priority === 'High', 'text-medium' : userStory.priority === 'Medium', 'text-low' : userStory.priority === 'Low'}">
       {{userStory.priority}}
-    </span>
+      </span>
       </span>
       <span>Dev Hrs</span>
       <span class="">{{userStory.dev_hrs}}</span>

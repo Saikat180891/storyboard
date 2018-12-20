@@ -12,7 +12,7 @@ interface SprintConfig{
 
 interface ReasonCode{
   id?: number;
-  created: string;
+  name: string;
 }
 
 @Component({
@@ -28,7 +28,7 @@ export class SprintConfigComponent implements OnInit {
 
   @Input('sprintConfigData') sprintConfigData;
 
-  @Input('reasonCodeConfigData') reasonCodeConfigData: ReasonCode[];
+  @Input('reasonCodeConfigData') reasonCodeConfigData;
 
   addNewRow:SprintConfig[] = [];
 
@@ -45,12 +45,15 @@ export class SprintConfigComponent implements OnInit {
 
   warningBoxForCancel:boolean = false;
 
+  reasonCodeEditChangeDetector = [];
+
   //this variable is used to detect if there is any change in the 'sprintConfigData' array
   changedDetected:boolean[] = [];
 
   constructor(private __rcService:ReasonCodeService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
+    // this.__rcService.reasonCodeData
     fromEvent(this.sprintContainer.nativeElement, 'scroll')
     .subscribe(res => {
       console.log(res["target"].scrollHeight);
@@ -143,17 +146,55 @@ export class SprintConfigComponent implements OnInit {
 
   onAddRC(){
     let temObj = {
-      created: 'Reason Code X'
+      name: 'Reason Code X'
     }
     this.addNewRowForReasonCode.push(temObj);
   }
 
   onSaveAllChangesInRC(){
+    if(this.reasonCodeEditChangeDetector.length > 0){
+      this.reasonCodeEditChangeDetector.forEach((element, index)=>{
+        if(element){
+          this.__rcService.editReasonCode(this.reasonCodeConfigData[index].id, this.reasonCodeConfigData[index]);
+        }
+      });
+    }else if(this.addNewRowForReasonCode.length > 0){
+      this.addNewRowForReasonCode.forEach((element, index)=>{
+        if(element.name === ''){
+          let pos = this.addNewRowForReasonCode.indexOf(element);
+          this.addNewRowForReasonCode.splice(pos, 1);
+        }
+      });
+      this.__rcService.createReasonCode(this.__rcService.sopId, this.addNewRowForReasonCode);
+    }else if(this.reasonCodeEditChangeDetector.length > 0 || this.addNewRowForReasonCode.length > 0){
+      this.addNewRowForReasonCode.forEach((element, index)=>{
+        if(element.name === ''){
+          let pos = this.addNewRowForReasonCode.indexOf(element);
+          this.addNewRowForReasonCode.splice(pos, 1);
+        }
+        this.__rcService.createReasonCode(this.__rcService.sopId, this.addNewRowForReasonCode);
+      });
+      this.reasonCodeEditChangeDetector.forEach((element, index)=>{
+        if(element){
+          this.__rcService.editReasonCode(this.reasonCodeConfigData[index].id, this.reasonCodeConfigData[index]);
+        }
+      });
+    }
+    this.addNewRowForReasonCode = [];
+    this.reasonCodeEditChangeDetector = [];
     console.log(this.addNewRowForReasonCode);
   }
 
   onDeleteRC(selected){
     this.addNewRowForReasonCode.splice(selected, 1);
+  }
+
+  onReasonCodeEdit(index){
+    this.reasonCodeEditChangeDetector[index] = true;
+  }
+
+  onDeleteCreatedRC(id){
+    this.__rcService.deleteReasonCode(id);
   }
 
   onDateSelected($event){
