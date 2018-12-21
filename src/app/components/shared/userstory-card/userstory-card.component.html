@@ -80,7 +80,7 @@
         </button>
         <button class="btn btn-blue" matRipple [matRippleColor]="rippleColor" *ngIf="!restore; else restoreContent" [ngStyle]="{'visibility':'hidden'}">View SOP</button>
         <ng-template #restoreContent>
-            <button class="btn btn-blue" matRipple [matRippleColor]="rippleColor" >Restore</button>
+            <button class="btn btn-blue" matRipple [matRippleColor]="rippleColor" [ngStyle]="{'visibility':'hidden'}">Restore</button>
         </ng-template>
       </div>
 

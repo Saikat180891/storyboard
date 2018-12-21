@@ -123,7 +123,7 @@ export class DataService {
   }
 
   update(param, id, body){
-    return this.http.put(this.apiUrl + param + '/' + id, body);
+    return this.http.put(this.apiUrl + param + '/' + id, body, httpOptions);
   }
 
 }
