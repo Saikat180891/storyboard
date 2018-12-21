@@ -119,7 +119,7 @@ export class DataService {
   }
 
   delete(param, id){
-    return this.http.delete(this.apiUrl + param + '/' + id);
+    return this.http.delete(this.apiUrl + param + '/' + id, httpOptions);
   }
 
   update(param, id, body){
