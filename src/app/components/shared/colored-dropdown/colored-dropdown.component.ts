@@ -52,7 +52,7 @@ export class ColoredDropdownComponent implements OnInit, AfterViewInit, OnChange
         // console.log(element)
         let pos = this.options.indexOf(element);
         this.selected = this.value = this.options[pos];
-
+        this.applyPadding = true;
       }
     });
   }

@@ -1,7 +1,7 @@
 <div class="select">
   <div>
     <input 
-    [ngClass]="{'input-active':defaultOption==='Select' || defaultOption==='Unassigned' ? false : true}" 
+    [ngClass]="{'input-active':defaultOption==='Select' || defaultOption==='Unassigned' ? false : true, 'input-active': applyPadding}" 
     [ngStyle]="{
       'color':defaultOption==='Select' || defaultOption==='Unassigned' ? '#000' : '',
       'color':selected?selected.color:''

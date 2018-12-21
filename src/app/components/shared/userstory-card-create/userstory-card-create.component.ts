@@ -240,11 +240,13 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
 
 
   onDatePickerClosePD($event){
-    this.userStoryPayload.planned_delivery = this.__rcService.formatDate($event.value);
+    this.userStoryPayload.planned_delivery = $event.value;
+    // this.userStoryPayload.planned_delivery = JSON.parse(JSON.stringify(this.userStoryPayload.planned_delivery));
   }
 
   onDatePickerCloseRD($event){
-    this.userStoryPayload.revised_delivery = this.__rcService.formatDate($event.value);
+    // this.userStoryPayload.revised_delivery = this.__rcService.formatDate($event.value);
+    this.userStoryPayload.revised_delivery = $event.value;
   }
 
   activateRevisedDelivery: boolean = false;

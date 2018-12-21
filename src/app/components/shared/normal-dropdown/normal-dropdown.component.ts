@@ -65,7 +65,7 @@ export class NormalDropdownComponent implements OnInit, AfterViewInit, OnChanges
     // let pos = this.options.indexOf(this.selected);
     // this.selectedColor = this.options[pos];
     this.applyPadding = true;
-    console.log(this.applyPadding)
+    // console.log(this.applyPadding)
     this.optionSelected.emit(option);
     this.isOpen = false;
   }

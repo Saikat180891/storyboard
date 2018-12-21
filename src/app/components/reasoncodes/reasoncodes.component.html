@@ -33,10 +33,14 @@
         <!-- <div class="filter-selected">
 
         </div> -->
-        <div class="card-holder" [ngClass]="{'card-holder-active':fixToTop}" *ngIf="userStories" #userStoryContainer>
+        <div class="card-holder" [ngClass]="{'card-holder-active':fixToTop}" *ngIf="userStories; else openPlaceholder" #userStoryContainer>
           
           <app-userstory-card [restore]="false" *ngFor="let userStory of _reasonCode.userStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
         </div>
+
+        <ng-template #openPlaceholder>
+          
+        </ng-template>
       </mat-tab>
       <mat-tab label="Completed U/S">
         <div class ='info'>

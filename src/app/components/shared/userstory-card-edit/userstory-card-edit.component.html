@@ -30,7 +30,7 @@
         <div class="input-container md">
           <div class="title" [ngClass]="{'warning':userStorySprintNameValidator}">Sprint Name</div>
           <div class="editable">
-            <colored-dropdown (optionSelected)="onSprintSelect($event)" [options]="sprintOptions" [defaultOption]="editUSData.sprint_name?editUSData.sprint_name:'Unassigned'"></colored-dropdown>
+            <normal-dropdown (optionSelected)="onSprintSelect($event)" [options]="sprintOptions" [defaultOption]="editUSData.sprint_name?editUSData.sprint_name:'Unassigned'"></normal-dropdown>
           </div>
         </div>
       </div>
@@ -98,10 +98,10 @@
       <div class="h-divider"></div>
 
       <div class="form-group">
-        <div class="input-container md">
+        <div class="input-container md" [ngStyle]="{'margin-top':'17px'}">
           <div class="title">Planned Delivery</div>
           <div class="editable relative">
-            <input type="text" placeholder="Start Date" [matDatepicker]="etd" (dateChange)="onDatePickerClosePD($event)" [value]="editUSData.planned_delivery" [ngStyle]="{'padding-left': '30px'}">
+            <input type="text" placeholder="Start Date" [matDatepicker]="etd" (dateChange)="onDatePickerClosePD($event)" [value]="editUSData.planned_delivery" [ngStyle]="{'padding-left': '30px'}" readonly>
             <div class="etd-date-picker">
               <mat-datepicker-toggle matSuffix [for]="etd"></mat-datepicker-toggle>
               <mat-datepicker #etd></mat-datepicker>
@@ -109,9 +109,9 @@
           </div>
         </div>
         <div class="input-container md" [ngStyle]="{'width':'130px'}">
-          <div class="title"><mat-checkbox (change)="onRDChecked($event.checked)"></mat-checkbox> Revised Delivery</div>
+          <div class="title"><mat-checkbox (change)="onRDChecked($event.checked)"> Revised Delivery</mat-checkbox></div>
           <div class="editable relative"  *ngIf="activateRevisedDelivery; else activateRD">
-            <input type="text" placeholder="None" (dateChange)="onDatePickerCloseRD($event)" [value]="editUSData.revised_delivery" [matDatepicker]="petd" [ngStyle]="{'padding-left': '30px'}">
+            <input type="text" placeholder="None" (dateChange)="onDatePickerCloseRD($event)" [value]="editUSData.revised_delivery" [matDatepicker]="petd" [ngStyle]="{'padding-left': '30px'}" readonly>
             <div class="etd-date-picker">
               <mat-datepicker-toggle matSuffix [for]="petd"></mat-datepicker-toggle>
               <mat-datepicker #petd></mat-datepicker>

@@ -66,12 +66,7 @@
     <div class="col c4">
       <span>Planned Delivery</span>
       <span class="priority h-center">
-        <!-- <span *ngIf="userStory.status === 'Backlog'" class="circle" [ngStyle]="{ 'background-color' : '#2A7DE1' }"> </span>
-        <span *ngIf="userStory.status === 'Rules'" class="circle" [ngStyle]="{ 'background-color' : '#F47074' }"> </span>
-        <span *ngIf="userStory.status === 'Intl Testing'" class="circle" [ngStyle]="{ 'background-color' : '#0033A1' }"> </span>
-        <span *ngIf="userStory.status === 'Ext Testing'" class="circle" [ngStyle]="{ 'background-color' : '#FDD468' }"> </span>
-        <span *ngIf="userStory.status === 'Done'" class="circle" [ngStyle]="{ 'background-color' : '#40C0C4' }"> </span>
-        <span *ngIf="userStory.status === 'Development'" class="circle" [ngStyle]="{ 'background-color' : '#69D100' }"> </span> -->
+ 
         <span class="priority-text float-l">{{userStory.planned_delivery?userStory.planned_delivery:'-----'}}</span>
       </span>
       <span>Revised Delivery</span>
