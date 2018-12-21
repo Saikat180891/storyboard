@@ -36,6 +36,7 @@ export class UserstoryCardEditComponent implements OnInit {
 
   status='';
   editUSDatas;
+  checked:boolean = false;
 
   priorityOptions = [
     {
@@ -99,7 +100,14 @@ export class UserstoryCardEditComponent implements OnInit {
   ngOnInit() {
     this.onUpdateProductivity();
     this.editUSData = JSON.parse(JSON.stringify(this.editUSData));
+    this.editUSData.planned_delivery = this.formatDateToDisplay(this.editUSData.planned_delivery);
+    if(this.editUSData.revised_delivery != '-----'){
+      this.activateRevisedDelivery = true;
+      this.checked = true;
+    }
+    this.editUSData.revised_delivery = this.formatDateToDisplay(this.editUSData.revised_delivery);
     this.editUSDatas = this.editUSData;
+    console.log("Edit user stories", this.editUSData)
     this.__rcService.doneSelectStatus.subscribe(response=>{
       console.log("Subscribed Method", response)
       if(response){
@@ -115,6 +123,16 @@ export class UserstoryCardEditComponent implements OnInit {
     this.__editUS.selected = -1;
   }
 
+  formatDateToDisplay(date){
+    let newDate = date.split("/").reverse().join("-");
+    return new Date(newDate);
+  }
+
+  formatDateToSend(date){
+    let newDate = new Date(date);
+    return newDate.getFullYear() + "-" + (newDate.getMonth() + 1) + "-" + newDate.getDate();
+  }
+
   userStoryNumberValidator:boolean = false;
   userStoryNameValidator:boolean = false;
   userStoryPriorityValidator: boolean = false;
@@ -126,8 +144,14 @@ export class UserstoryCardEditComponent implements OnInit {
 
   onSaveAll(){
     console.log(this.editUSData);
+
+    this.editUSData.planned_delivery = this.formatDateToSend(this.editUSData.planned_delivery);
+    this.editUSData.revised_delivery = this.formatDateToSend(this.editUSData.revised_delivery);
+
+    console.log(this.editUSData);
     // this.statusSelected();
     // console.log(this.userStoryPayload)
+    
     if(this.editUSData.us_number == ''){
       this.userStoryNumberValidator = true;
       this.validationSuccessfull[0] = 0;
@@ -205,6 +229,7 @@ export class UserstoryCardEditComponent implements OnInit {
       this.__editUS.editUserStory(this.editUSData.id, sprintId, rc_id, this.editUSData);
       this.onClose();
     }
+    
   }
 
   onUpdateProductivity(){

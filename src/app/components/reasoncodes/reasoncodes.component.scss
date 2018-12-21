@@ -473,3 +473,16 @@
   color: #ffffff !important;
   background-color: #C1C1C1 !important;
 }
+.user-story-placeholder{
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+
+  p{
+    color: #2A7DE1;
+    font-size: 22px;
+  }
+}

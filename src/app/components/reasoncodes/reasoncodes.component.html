@@ -12,7 +12,7 @@
         </div>
   
         <div class="middle header__btn">
-          <button class="btn btn-blue btn-lg btn-shadow btn-active clearfill" (click)="onOpenAddSprint()">Config Project</button>
+          <button class="btn btn-blue btn-lg btn-shadow btn-active clearfill" (click)="onOpenAddSprint()"><i class="fas fa-cog"></i> Config Project</button>
         </div>
   
       </div>
@@ -33,14 +33,17 @@
         <!-- <div class="filter-selected">
 
         </div> -->
-        <div class="card-holder" [ngClass]="{'card-holder-active':fixToTop}" *ngIf="userStories; else openPlaceholder" #userStoryContainer>
+        <div class="card-holder" [ngClass]="{'card-holder-active':fixToTop}" *ngIf="_reasonCode.userStories" #userStoryContainer>
           
           <app-userstory-card [restore]="false" *ngFor="let userStory of _reasonCode.userStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
         </div>
 
-        <ng-template #openPlaceholder>
-          
-        </ng-template>
+        <!-- <ng-template #openPlaceholder> -->
+          <div class="card-holder user-story-placeholder" *ngIf="_reasonCode.userStories.length == 0">
+            <img width="40px" height="40px" src="../../../assets/pics/open_user_story.svg" alt="placeholder">
+            <p>Hi there, Start by creating User Story & Sprints</p>
+          </div>
+        <!-- </ng-template> -->
       </mat-tab>
       <mat-tab label="Completed U/S">
         <div class ='info'>
@@ -63,7 +66,9 @@
     <div class="menu-btn-group">
       <button class="sort-btn btn btn-flat-grey" [matMenuTriggerFor]="sortby" [ngStyle]="{'visibility':'hidden'}">Sort By</button>
       <button class="btn btn-flat-grey" (click)="openFilter()" [ngClass]="{'filter-btn-active':filter}" [ngStyle]="{'visibility':'hidden'}">Filter</button>
-      <button class="btn btn-flat-grey" (click)="onCreate()">Create New U/S</button>
+      <button class="btn btn-flat-grey" (click)="onCreate()">
+        <img width="10px" height="10px" src="../../../assets/pics/plus.svg" alt="create user story"> Create New U/S
+      </button>
       <mat-menu #sortby="matMenu">
         <button mat-menu-item [matMenuTriggerFor]="usName">U/S Name</button>
         <button mat-menu-item [matMenuTriggerFor]="priority">Priority</button>

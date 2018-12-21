@@ -124,6 +124,8 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
   validationSuccessfull = [];
 
   onCreate(){
+    console.log(this.userStoryPayload)
+    
     if(this.userStoryPayload.us_number == ''){
       this.userStoryNumberValidator = true;
       this.validationSuccessfull[0] = 0;
@@ -194,14 +196,18 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
       }
       // this.userStoryPayload.planned_delivery = '2018-01-01';
       // this.userStoryPayload.revised_delivery = '2018-01-01';
-      console.log(this.userStoryPayload)
+      // console.log(this.userStoryPayload)
       let rc_id = -1;
       this.__rcService.reasonCodeData.forEach(element=>{
         if(element.name === this.userStoryPayload.rc_name){
           rc_id = element.id;
         }
       });
-      
+      console.log("Before null",this.userStoryPayload)
+      if(isNaN(this.userStoryPayload.revised_delivery)){
+        this.userStoryPayload.revised_delivery = null;
+      }
+      console.log("after null",this.userStoryPayload)
       this.__createUserStory.createUserStory(id, rc_id, this.userStoryPayload);
       this.close.emit(false);
     }

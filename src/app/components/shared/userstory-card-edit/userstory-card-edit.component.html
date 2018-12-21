@@ -109,7 +109,7 @@
           </div>
         </div>
         <div class="input-container md" [ngStyle]="{'width':'130px'}">
-          <div class="title"><mat-checkbox (change)="onRDChecked($event.checked)"> Revised Delivery</mat-checkbox></div>
+          <div class="title"><mat-checkbox (change)="onRDChecked($event.checked)" [checked]="checked"> Revised Delivery</mat-checkbox></div>
           <div class="editable relative"  *ngIf="activateRevisedDelivery; else activateRD">
             <input type="text" placeholder="None" (dateChange)="onDatePickerCloseRD($event)" [value]="editUSData.revised_delivery" [matDatepicker]="petd" [ngStyle]="{'padding-left': '30px'}" readonly>
             <div class="etd-date-picker">
