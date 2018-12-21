@@ -225,7 +225,10 @@ export class UserstoryCardEditComponent implements OnInit {
         if(element.name === this.editUSData.rc_name){
           rc_id = element.id;
         }
-      })
+      });
+      // if(isNaN(this.editUSData.revised_delivery) || this.editUSData.revised_delivery === '-----' ){
+      //   this.editUSData.revised_delivery = null;
+      // }
       this.__editUS.editUserStory(this.editUSData.id, sprintId, rc_id, this.editUSData);
       this.onClose();
     }
