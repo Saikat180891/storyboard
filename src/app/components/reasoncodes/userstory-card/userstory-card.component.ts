@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {EditUserStoryService} from '../userstory-card-edit/edit-user-story.service';
-import {ReasonCodeService} from '../../reasoncodes/reason-code.service';
-import {ReasoncodesComponent} from '../../reasoncodes/reasoncodes.component';
+import {ReasonCodeService} from '../reason-code.service';
+import {ReasoncodesComponent} from '../reasoncodes.component';
 // import {EditUserStoryService} from '../userstory-card-edit/edit-user-story.service';
 @Component({
   selector: 'app-userstory-card',
@@ -14,6 +14,8 @@ export class UserstoryCardComponent implements OnInit {
   @Input('userStory') inputUserStory;
 
   @Input('restore') restore:boolean;
+
+  @Output('deleteUserStory') deleteUserStory = new EventEmitter();
 
   userStory;
 
@@ -69,7 +71,14 @@ export class UserstoryCardComponent implements OnInit {
   }
 
   onDelete(id){
-    this.__rcService.deleteUserStory(id);
+    this.deleteUserStory.emit({id:id, status:true});
+    // this.__rcService.deleteUserStory(id);
     // this.__rcService.getDeletedUserStories(this.__rcService.sopId);
   }
+
+  restoreUserStories(id){
+    this.__rcService.restoreUserStories(id);
+  }
+
+  
 }

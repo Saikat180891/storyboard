@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import {ReasonCodeService} from '../../reasoncodes/reason-code.service';
+import {ReasonCodeService} from '../reason-code.service';
 import {EditUserStoryService} from './edit-user-story.service';
 
 interface UserStory{
@@ -146,7 +146,7 @@ export class UserstoryCardEditComponent implements OnInit {
     console.log(this.editUSData);
 
     this.editUSData.planned_delivery = this.formatDateToSend(this.editUSData.planned_delivery);
-    this.editUSData.revised_delivery = this.formatDateToSend(this.editUSData.revised_delivery);
+    // this.editUSData.revised_delivery = this.formatDateToSend(this.editUSData.revised_delivery);
 
     console.log(this.editUSData);
     // this.statusSelected();

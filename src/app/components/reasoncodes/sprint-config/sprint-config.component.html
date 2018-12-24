@@ -1,7 +1,7 @@
 <div class="modal">
     <mat-tab-group>
       <mat-tab label="Sprints">
-        <div class="modal-body">
+        <div class="modal-body" #sprintContainer>
           <div class="grid-list">
             <mat-grid-list cols="6" rowHeight="50px">
               <mat-grid-tile><span class="heading">Serial#</span></mat-grid-tile>
@@ -12,7 +12,7 @@
               <mat-grid-tile></mat-grid-tile>
             </mat-grid-list>
           </div>
-          <div class="content-body" #sprintContainer>
+          <div class="content-body">
               <div class="grid-list" *ngFor="let sprintConfig of sprintConfigData; let i=index">
                   <mat-grid-list cols="6" rowHeight="70px" gutterSize="10px">
                     <mat-grid-tile>{{i+1}}</mat-grid-tile>
@@ -92,7 +92,7 @@
                   <mat-grid-list cols="1" rowHeight="50px">
                     <mat-grid-tile>
                       <div class="row">
-                        <button (click)="onAddSprints()">Add Sprints</button>
+                        <button (click)="onAddSprints(sprintContainer)">Add Sprints</button>
                       </div>
                     </mat-grid-tile>
                   </mat-grid-list>
@@ -100,13 +100,13 @@
           </div>
           
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer footer-position">
           <button class="btn btn-blue" (click)="onSaveAllChanges()">Save</button>
           <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
         </div>
       </mat-tab>
       <mat-tab label="Reason Code">
-        <div class="modal-body">
+        <div class="modal-body" #rcContainer>
             <div class="grid-list">
               <mat-grid-list cols="12" rowHeight="50px">
                 <mat-grid-tile><span class="heading">RC#</span></mat-grid-tile>
@@ -155,7 +155,7 @@
             </div>
             
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer footer-position">
           <button class="btn btn-blue" (click)="onSaveAllChangesInRC()">Save</button>
           <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
         </div>

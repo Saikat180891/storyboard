@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewEncapsulation, Input  } from '@angular/core';
-import { Options } from 'selenium-webdriver/chrome';
-import {ReasonCodeService} from '../../reasoncodes/reason-code.service';
-
+import {ReasonCodeService} from '../reason-code.service';
 
 declare let d3: any;
+
 @Component({
   selector: 'app-charts',
   templateUrl: './charts.component.html',

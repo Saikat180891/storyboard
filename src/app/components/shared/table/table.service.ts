@@ -30,7 +30,7 @@ export class TableService {
       .subscribe(response=>{
         this.userStories.unshift(response);
         if(response){
-          this._rcService.getTotalCharData(this._rcService.sopId);
+          this._rcService.getProjectStatusChartData(this._rcService.sopId);
           this._rcService.getChartData(sprintID);
         }
       });
@@ -56,7 +56,7 @@ export class TableService {
           if(element.id === id){
             let pos = this.userStories.indexOf(element);
             this.userStories.splice(pos, 1);
-            this._rcService.getTotalCharData(this._rcService.sopId);
+            this._rcService.getProjectStatusChartData(this._rcService.sopId);
           }
         });
         this.getDeletedUserStories();
@@ -80,7 +80,7 @@ export class TableService {
             let pos = this.deletedUserStories.indexOf(element);
             this.deletedUserStories.splice(pos, 1);
             this.userStories.push(response);
-            this._rcService.getTotalCharData(this._rcService.sopId);
+            this._rcService.getProjectStatusChartData(this._rcService.sopId);
           }
         });
         console.log(`Restored US with id ${id}`, response);

@@ -47,7 +47,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContainerComponent } from './components/container/container.component';
 import { CardComponent } from './components/card/card.component';
 import { ReasoncodesComponent } from './components/reasoncodes/reasoncodes.component';
-import { FlowchartComponent } from './components/flowchart/flowchart.component';
+// import { FlowchartComponent } from './components/flowchart/flowchart.component';
 import { FilterComponent } from './filter/filter.component';
 import { BackdropComponent } from './components/backdrop/backdrop.component';
 import { CfilterComponent } from './components/shared/cfilter/cfilter.component';
@@ -75,15 +75,12 @@ import { AddReasonCardComponent } from './components/shared/reason-code-accordia
 import { StepsComponent } from './components/shared/add-steps-holder/steps/steps.component';
 import { StepContainerComponent } from './components/shared/add-steps-holder/step-container/step-container.component';
 import { SelectComponent } from './components/shared/select/select.component';
-import { ChartsComponent } from './components/shared/charts/charts.component';
-import { TableComponent } from './components/shared/table/table.component';
-import { CreateRowComponent } from './components/shared/table/create-row/create-row.component';
-import { DeleteTableComponent } from './components/shared/delete-table/delete-table.component';
-import { UserstoryCardComponent } from './components/shared/userstory-card/userstory-card.component';
-import { UserstoryCardEditComponent } from './components/shared/userstory-card-edit/userstory-card-edit.component';
-import { UserstoryCardCreateComponent } from './components/shared/userstory-card-create/userstory-card-create.component';
+import { ChartsComponent } from './components/reasoncodes/charts/charts.component';
+import { UserstoryCardComponent } from './components/reasoncodes/userstory-card/userstory-card.component';
+import { UserstoryCardEditComponent } from './components/reasoncodes/userstory-card-edit/userstory-card-edit.component';
+import { UserstoryCardCreateComponent } from './components/reasoncodes/userstory-card-create/userstory-card-create.component';
 import { ColoredDropdownComponent } from './components/shared/colored-dropdown/colored-dropdown.component';
-import { SprintConfigComponent } from './components/shared/sprint-config/sprint-config.component';
+import { SprintConfigComponent } from './components/reasoncodes/sprint-config/sprint-config.component';
 import { UserstoryFilterComponent } from './components/shared/userstory-filter/userstory-filter.component';
 import { NormalDropdownComponent } from './components/shared/normal-dropdown/normal-dropdown.component';
 
@@ -93,11 +90,9 @@ const routes = [
   {path: 'projects', component: ContainerComponent, canActivate: [AuthenticationGuard]},
 
   // {path: 'projects/reason-codes', component: ReasoncodesComponent},
-  // {path: 'page3', component: FlowchartComponent},
   // {path: 'projects/add-steps', component: AddStepsComponent}
 
   {path: 'projects/reason-codes/:id', component: ReasoncodesComponent, canActivate: [AuthenticationGuard]},
-  {path: 'page3', component: FlowchartComponent, canActivate: [AuthenticationGuard]},
   {path: 'projects/add-steps/:id', component: AddStepsComponent, canActivate: [AuthenticationGuard]},
   {path: '**', component: AuthComponent}
 ];
@@ -109,18 +104,17 @@ const routes = [
     ContainerComponent,
     CardComponent,
     ReasoncodesComponent,
-    FlowchartComponent,
     FilterComponent,
     BackdropComponent,
     CfilterComponent,
-    CapitalizeDirective,
+    // CapitalizeDirective,
     AddStepsComponent,
     AddScreenComponent,
     ScreenHolderComponent,
     AddStepsHolderComponent,
-    ReadBoxComponent,
-    TypeBoxComponent,
-    ClickBoxComponent,
+    // ReadBoxComponent,
+    // TypeBoxComponent,
+    // ClickBoxComponent,
     SidebarComponent,
     NavHeaderComponent,
     BreadcrumbComponent,
@@ -138,9 +132,9 @@ const routes = [
     StepContainerComponent,
     SelectComponent,
     ChartsComponent,
-    TableComponent,
-    CreateRowComponent,
-    DeleteTableComponent,
+    // TableComponent,
+    // CreateRowComponent,
+    // DeleteTableComponent,
     UserstoryCardComponent,
     UserstoryCardEditComponent,
     UserstoryCardCreateComponent,

@@ -1,7 +1,7 @@
 <!-- Card design starts here -->
 <!-- code for blank card starts here -->
-<div class="container" id="0"  *ngIf="localData.id===0" matRipple [matRippleColor]="rippleColor">
-  <a class="new-sop" (click)="onCreateSOP()">
+<div (click)="onCreateSOP()" class="container" id="0"  *ngIf="localData.id===0" matRipple [matRippleColor]="rippleColor">
+  <a class="new-sop">
     <span>
       <i class="far fa-plus-square"></i>
     </span>

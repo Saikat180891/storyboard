@@ -8,7 +8,7 @@ import {ContainerService} from './container.service';
 @Component({
   selector: 'app-container',
   templateUrl: './container.component.html',
-  styleUrls: ['./container.component.scss'],
+  styleUrls: ['./container.component.scss', '../reasoncodes/completed-warning.scss'],
 //   animations:[
 //     trigger('rotatedState', [
 //       state('default', style({ transform: 'rotate(0)' })),
@@ -31,6 +31,9 @@ export class ContainerComponent implements OnInit {
 
   cardDatas;
 
+  warningToDeleteSop:boolean = false;
+
+  sopIdToDelete:number;
 
   ngOnInit() {
     /**
@@ -44,5 +47,27 @@ export class ContainerComponent implements OnInit {
       console.log("card datas",this.cardDatas)
      }, 1000);
       
+  }
+
+
+  onDeleteSop($event){
+    this.warningToDeleteSop = $event.status;
+    this.sopIdToDelete = $event.id;
+  }
+
+  onSelectDoNotDeleteSop(){
+    this.warningToDeleteSop = false;
+  }
+
+  onSelectDeleteSop(){
+    this._dataService.delete('/sop',this.sopIdToDelete + '.json')
+      .subscribe(response => {
+        this._ContainerService.cardContents.forEach((element, index)=>{
+          if(element.id == this.sopIdToDelete){
+            this._ContainerService.cardContents.splice(index, 1);
+            this.warningToDeleteSop = false;
+          }
+        })
+      });
   }
 }

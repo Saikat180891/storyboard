@@ -6,7 +6,7 @@
   // margin-left: 2vw;
   // margin-top: 18px;
   // margin-bottom: 18px;
-  margin: 15px 20px;
+  margin: 15px 30px;
   border-radius: 5px;
   box-shadow: 1px 1px 4px rgba($color: #000000, $alpha: 0.1);
   position: relative;
@@ -130,6 +130,9 @@
       button{
         width: 130px;
       }
+      button.hide{
+        visibility: hidden;
+      }
   
       button:first-child{
         width: 30px;
@@ -162,7 +165,10 @@
   // max-width: 100px;
 
   span.priority-text{
-    // max-width: 150px !important;
+    // position: absolute;
+    // top: 0;
+    // left: 60%;
+    // transform: translateX(-50%);
   }
 
   span{
@@ -180,6 +186,10 @@
     width: 15px;
     height: 15px;
     border-radius: 50%;
+    // position: absolute;
+    // top: 0;
+    // left: 25%;
+    // transform: translateX(-50%);
   }
 
   .high{
@@ -229,7 +239,7 @@
 }
 ::ng-deep {
   .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar{
-    background-color: rgba($color: #6CC24A, $alpha: 0.6) ;
+    background-color: rgba($color: #6CC24A, $alpha: 0.6);
   }
   .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb{
     background-color: #6CC24A;

@@ -152,7 +152,7 @@ export class TableComponent implements OnInit {
     delete this.currentUserStoryToEdit["sprint_id"];
     console.log(usID, sprintID, this.currentUserStoryToEdit);
     this._tableService.editUserStory(usID, sprintID, this.userStory);
-    this._rcService.getTotalCharData(this._rcService.sopId);
+    // this._rcService.getTotalCharData(this._rcService.sopId);
     this.onClose();
   }
 

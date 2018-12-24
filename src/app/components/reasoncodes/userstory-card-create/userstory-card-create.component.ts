@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, OnChanges, Input } from '@angular/core';
-import {ReasonCodeService} from '../../reasoncodes/reason-code.service';
+import {ReasonCodeService} from '../reason-code.service';
 import {CreateUserstoryService} from './create-userstory.service';
 import { fromEvent } from 'rxjs';
 
@@ -73,6 +73,16 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
       color: '#40C0C4'
     }
   ];
+  
+  activateRevisedDelivery: boolean = false;
+  userStoryNumberValidator:boolean = false;
+  userStoryNameValidator:boolean = false;
+  userStoryPriorityValidator: boolean = false;
+  userStorySprintNameValidator: boolean = false;
+  userStoryStatusValidator: boolean = false;
+  userStoryDescValidator: boolean = false;
+  userStroryReasonCodeValidator:boolean = false;
+  validationSuccessfull = [];
   edit:boolean = true;
 
   userStoryPayload: UserStory = {
@@ -113,15 +123,7 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
   onEdit(){
     this.edit = !this.edit;
   }
-
-  userStoryNumberValidator:boolean = false;
-  userStoryNameValidator:boolean = false;
-  userStoryPriorityValidator: boolean = false;
-  userStorySprintNameValidator: boolean = false;
-  userStoryStatusValidator: boolean = false;
-  userStoryDescValidator: boolean = false;
-  userStroryReasonCodeValidator:boolean = false;
-  validationSuccessfull = [];
+  
 
   onCreate(){
     console.log(this.userStoryPayload)
@@ -194,9 +196,7 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
       if(this.userStoryPayload.dev_hrs === '' || this.userStoryPayload.dev_hrs === null || isNaN(parseFloat(this.userStoryPayload.dev_hrs))){
         delete this.userStoryPayload.dev_hrs;
       }
-      // this.userStoryPayload.planned_delivery = '2018-01-01';
-      // this.userStoryPayload.revised_delivery = '2018-01-01';
-      // console.log(this.userStoryPayload)
+
       let rc_id = -1;
       this.__rcService.reasonCodeData.forEach(element=>{
         if(element.name === this.userStoryPayload.rc_name){
@@ -211,22 +211,6 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
       this.__createUserStory.createUserStory(id, rc_id, this.userStoryPayload);
       this.close.emit(false);
     }
-
-    // created: ""
-    // dev_hrs: 43
-    // ftes: 32
-    // notes: "ds"
-    // priority: "High"
-    // rules_approved: true
-    // sprint_name: "Sprint 2"
-    // status: "BackLog"
-    // us_name: "us 4"
-    // us_number: 2
-    // verified_test_cases: true
-  }
-
-  onRulesApproved(event){
-    console.log("The rules approved", event);
   }
 
   onUpdateProductivity(){
@@ -255,7 +239,6 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
     this.userStoryPayload.revised_delivery = $event.value;
   }
 
-  activateRevisedDelivery: boolean = false;
   onRDChecked(value){
     this.activateRevisedDelivery = value;
   }

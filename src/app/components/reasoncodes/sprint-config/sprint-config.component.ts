@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ElementRef } from '@angular/core';
-import {ReasonCodeService} from '../../reasoncodes/reason-code.service';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
+import {ReasonCodeService} from '../reason-code.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {fromEvent} from 'rxjs';
 
@@ -20,9 +20,10 @@ interface ReasonCode{
   templateUrl: './sprint-config.component.html',
   styleUrls: ['./sprint-config.component.scss']
 })
-export class SprintConfigComponent implements OnInit {
+export class SprintConfigComponent implements OnInit, AfterViewChecked {
 
   @ViewChild('sprintContainer') sprintContainer: ElementRef;
+  @ViewChild('rcContainer') rcContainer: ElementRef;
 
   @Output('closeSprints') closeSprints = new EventEmitter<boolean>();
 
@@ -37,6 +38,7 @@ export class SprintConfigComponent implements OnInit {
   displayWarningBox:boolean = false;
 
   sprintToDeleteId:number;
+  
   sprintNameToDelete:string = '';
 
   cancel:boolean = false;
@@ -53,13 +55,28 @@ export class SprintConfigComponent implements OnInit {
   constructor(private __rcService:ReasonCodeService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
-    // this.__rcService.reasonCodeData
-    fromEvent(this.sprintContainer.nativeElement, 'scroll')
-    .subscribe(res => {
-      console.log(res["target"].scrollHeight);
-      console.log(this.sprintContainer)
-    });
+    // fromEvent(this.sprintContainer.nativeElement, 'scroll')
+    // .subscribe(res => {
+    //   console.log(Number(res["target"].scrollTop.toFixed(0)));
+    //   this.scrollTop = Number(res["target"].scrollTop.toFixed(0));
+    // });
+    
   }
+
+  ngAfterViewChecked() {        
+    // this.scrollToBottom();   
+         
+    this.sprintContainer.nativeElement.scrollTo({
+      top: this.sprintContainer.nativeElement.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
+    });
+    this.rcContainer.nativeElement.scrollTo({
+      top: this.rcContainer.nativeElement.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
+    });
+  } 
 
   onClose(){
     this.cancel = true;
@@ -80,7 +97,7 @@ export class SprintConfigComponent implements OnInit {
     this.closeSprints.emit(false);
   }
 
-  onAddSprints(){
+  onAddSprints(element){
     let temObj = {
       duration: '',
       end_date: '',
@@ -95,6 +112,9 @@ export class SprintConfigComponent implements OnInit {
     if(this.addNewRow.length > 0){
       this.__rcService.createSprint(this.addNewRow);
       this.__rcService.getBenefits(this.__rcService.sopId);
+      this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+      this.__rcService.getProjectStatus(this.__rcService.sopId);
+      this.__rcService.getCurrentSprintData(this.__rcService.sopId);
     }
     // else if(this.changedDetected.length === 0 && this.addNewRow.length === 0){
     //   this.onSelectYes();
@@ -105,6 +125,9 @@ export class SprintConfigComponent implements OnInit {
         if(element === true){
           this.__rcService.editSprint(this.sprintConfigData[index].id, this.sprintConfigData[index]);
           this.__rcService.getBenefits(this.__rcService.sopId);
+          this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+          this.__rcService.getProjectStatus(this.__rcService.sopId);
+          this.__rcService.getCurrentSprintData(this.__rcService.sopId);
         }
       });
     }
@@ -158,6 +181,7 @@ export class SprintConfigComponent implements OnInit {
       this.reasonCodeEditChangeDetector.forEach((element, index)=>{
         if(element){
           this.__rcService.editReasonCode(this.reasonCodeConfigData[index].id, this.reasonCodeConfigData[index]);
+          this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
         }
       });
     }else if(this.addNewRowForReasonCode.length > 0){
@@ -168,6 +192,8 @@ export class SprintConfigComponent implements OnInit {
         }
       });
       this.__rcService.createReasonCode(this.__rcService.sopId, this.addNewRowForReasonCode);
+      this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+
     }else if(this.reasonCodeEditChangeDetector.length > 0 || this.addNewRowForReasonCode.length > 0){
       this.addNewRowForReasonCode.forEach((element, index)=>{
         if(element.name === ''){
@@ -175,10 +201,12 @@ export class SprintConfigComponent implements OnInit {
           this.addNewRowForReasonCode.splice(pos, 1);
         }
         this.__rcService.createReasonCode(this.__rcService.sopId, this.addNewRowForReasonCode);
+        this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
       });
       this.reasonCodeEditChangeDetector.forEach((element, index)=>{
         if(element){
           this.__rcService.editReasonCode(this.reasonCodeConfigData[index].id, this.reasonCodeConfigData[index]);
+          this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
         }
       });
     }
@@ -198,6 +226,7 @@ export class SprintConfigComponent implements OnInit {
 
   onDeleteCreatedRC(id){
     this.__rcService.deleteReasonCode(id);
+    this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
   }
 
   onDateSelected($event){

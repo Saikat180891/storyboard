@@ -23,12 +23,18 @@ export class ReasonCodeService {
   currentSprintDuration = [];
   completeUserStories = [];
   deletedUserStories = [];
+  reasonCodeData = [];
 
   doneSelectStatus:EventEmitter<boolean> = new EventEmitter();
 
   constructor(private _api:DataService,
               private __preLoad: PreloaderService) { }
 
+
+  /**
+   * This api is used to create a new sprint, it is called in the sprint config component
+   * @param payload 
+   */
   createSprint(payload){
     payload.forEach(element => {
       element.start_date = this.formatDate(element.start_date);
@@ -36,11 +42,14 @@ export class ReasonCodeService {
         this._api.postData(`/sop/${this.sopId}/sprint.json`, element).subscribe(response=>{});
       }
     });
-    this.getSprint();
-    // return true;
+    this.getSprint(this.sopId);
   }
 
-  getSopByID(id){
+  /**
+   * This API call is used to get SOP by ID
+   * @param id 
+   */
+  getSopByID(id:number){
     this._api.fetchData(`/sop/${id}.json`)
       .subscribe(response=>{
         this.currentProject = response;
@@ -48,31 +57,35 @@ export class ReasonCodeService {
       });
   }
 
-  getSprint(){
-    this._api.fetchData(`/sop/${this.sopId}/sprint.json`)
+  /**
+   * This api is used to get details of all the sprints
+   */
+  getSprint(id){
+    this._api.fetchData(`/sop/${id}/sprint.json`)
       .subscribe(response=>{
-        // console.log("The get response is ",response);
-        
         response.forEach((element, index)=>{
           element['start_date'] = this.arrangeDateInCorrectFormat(element['start_date']);
           element['sprintNumber'] = index + 1;
         });
-        // console.log(response);
         this.sprintConfig = response.reverse();
       });
   }
 
+  /**
+   * this api is used to delete a sprint by it id
+   * @param id - id of the sprint
+   */
   deleteSprint(id){
     this._api.delete('/sop/sprint', `${id}.json`)
       .subscribe(response=>{
-        // this.sprintConfig.forEach(element=>{
-        //   if(element.id === id){
-        //     let pos = this.sprintConfig.indexOf(element);
-        //     this.sprintConfig.splice(pos, 1);
-        //   }
-        // });
-        this.getSprint();
-        console.log(`Delete sprint with id = ${id}`)
+        this.sprintConfig.forEach(element=>{
+          if(element.id === id){
+            let pos = this.sprintConfig.indexOf(element);
+            this.sprintConfig.splice(pos, 1);
+            console.log(`Delete sprint with id = ${id}`);
+            this.getProjectStatus(this.sopId);
+          }
+        });
       });
   }
 
@@ -80,7 +93,7 @@ export class ReasonCodeService {
     data['start_date'] = this.formatDate(data['start_date']);
     this._api.update(`/sop/sprint`, `${id}.json`, data)
       .subscribe(response=>{
-        this.getSprint();
+        this.getSprint(this.sopId);
         // this.sprintConfig.forEach(element=>{
         //   if(element.id === response[id]){
         //     // console.log("The edit response is 2", response);
@@ -101,7 +114,7 @@ export class ReasonCodeService {
           element['productivity'] = isFinite(element['productivity']) ? element['productivity'] : '----';
         });
         this.deletedUserStories = response;
-        this.getUserStories(id);
+        // this.getUserStories(id);
         console.log("Deleted user stories",response);
       });
   }
@@ -129,7 +142,7 @@ export class ReasonCodeService {
         });
         
         this.userStories = response.reverse();
-        this.getTotalCharData(this.sopId);
+        this.getProjectStatusChartData(this.sopId);
         this.getChartData(this.sopId);
       });
       console.log("the userstories are", this.userStories)
@@ -142,10 +155,14 @@ export class ReasonCodeService {
           if(element.id === id){
             let pos = this.userStories.indexOf(element);
             this.userStories.splice(pos, 1);
-            this.getTotalCharData(this.sopId);
-            this.getChartData(this.sopId);
-            this.getUserStories(this.sopId);
-            this.getDeletedUserStories(this.sopId);
+            this.getProjectStatusChartData(this.sopId);
+            this.getProjectStatus(this.sopId);
+            this.getSprintStatus(this.sopId);
+            // this.getChartData(this.sopId);
+            // this.getUserStories(this.sopId);
+            this.getBenefits(this.sopId);
+            this.getCurrentSprintData(this.sopId);
+            // this.getDeletedUserStories(this.sopId);
           }
         });
         // this.getDeletedUserStories();
@@ -184,6 +201,14 @@ export class ReasonCodeService {
     return this.userStories;
   }
 
+  restoreUserStories(id){
+    this._api.fetchData(`/sop/reasoncode/userstories/${id}/unarchive/`)
+      .subscribe(response=>{
+        this.getDeletedUserStories(this.sopId);
+        console.log(`Restored US with id ${id}`, response);
+      });
+  }
+
   /**
    * 
    * @param id Current not in use
@@ -195,28 +220,29 @@ export class ReasonCodeService {
     //   });
   }
 
-  getCurrentSprintData(){
-    this._api.fetchData(`/sop/${this.sopId}/currentSprint/graphdata.json`)
+  getCurrentSprintData(id){
+    this._api.fetchData(`/sop/${id}/currentSprint/graphdata.json`)
       .subscribe(response=>{
         this.currentSprintData = response;
         console.log("Current Sprint Data", response);
       })
   }
 
-  getTotalCharData(id){
+  /**
+   * to fetch data for the project status chart
+   * @param id -->sop id
+   */
+  getProjectStatusChartData(id){
     this._api.fetchData(`/sop/${id}/graphdata.json`)
       .subscribe(response=>{
-        // response.forEach(element=>{
-          // if(element.y == 0){
-          //   this.totalSprintData = [];
-          // }else{
-            this.totalSprintData = response;
-          // }
-        // })
-        
-      })
+        this.totalSprintData = response;
+      });
   }
 
+  /**
+   * to fetch the benefits for the ftes chart
+   * @param id 
+   */
   getBenefits(id){
     this._api.fetchData(`/sop/${id}/ftes.json`)
       .subscribe(response=>{
@@ -224,7 +250,7 @@ export class ReasonCodeService {
       });
   }
 
-  reasonCodeData = [];
+  
 
   createReasonCode(id, body){
     body.forEach(element=>{
@@ -266,6 +292,20 @@ export class ReasonCodeService {
         });
       });
     }
+  }
+
+  refresh(sopID?:number){
+    this.getUserStories(sopID);
+    this.getProjectStatus(sopID);
+    this.getSopByID(sopID);
+    this.getProjectStatusChartData(sopID);
+    this.getCurrentSprintData(sopID);
+    this.getBenefits(sopID);
+    this.getSprintStatus(sopID);
+    // this.getCompletedUserStories(sopID);
+    // this.getDeletedUserStories(sopID);
+    this.getReasonCode(sopID);
+    this.getSprint(sopID);
   }
 
   /**

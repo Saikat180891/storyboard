@@ -14,7 +14,7 @@ export class EditUserStoryService {
 
   editUserStory(usID, sprintID, reasonCodeId, payload){
     payload['planned_delivery'] = this.formatDateToSendData(payload['planned_delivery']);
-    payload['revised_delivery'] == '-----' || isNaN(payload['revised_delivery']) ? delete payload['revised_delivery'] : payload['revised_delivery'] = this.formatDateToSendData(payload['revised_delivery']);
+    payload['revised_delivery'] == '-----' || isNaN(payload['revised_delivery']) ? payload['revised_delivery'] = null : payload['revised_delivery'] = this.formatDateToSendData(payload['revised_delivery']);
     payload['dev_hrs'] == '-----' ? delete payload['dev_hrs'] : payload['dev_hrs'];
     if(sprintID){
 
@@ -32,10 +32,13 @@ export class EditUserStoryService {
             this._rcService.userStories[pos] = response;
           }
         });
-        this._rcService.getTotalCharData(this._rcService.sopId);
+        this._rcService.getProjectStatusChartData(this._rcService.sopId);
         this._rcService.getChartData(this._rcService.sopId);
         this._rcService.getUserStories(this._rcService.sopId);
         this._rcService.getCompletedUserStories(this._rcService.sopId);
+        this._rcService.getBenefits(this._rcService.sopId);
+        this._rcService.getProjectStatus(this._rcService.sopId);
+        this._rcService.getSprintStatus(this._rcService.sopId);
         console.log("Edit us", response);
       }, 
       error=>{console.error(error)}
@@ -43,8 +46,7 @@ export class EditUserStoryService {
   }
 
   formatDateToSendData(date){
-    let myDate = date.split("/").reverse().join("-");
-
-    return myDate;
+    let newDate = new Date(date);
+    return newDate.getFullYear() + "-" + (newDate.getMonth() + 1) + "-" + newDate.getDate();
   }
 }
