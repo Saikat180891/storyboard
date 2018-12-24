@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewEncapsulation, Input  } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, ViewChild, ElementRef, AfterViewChecked  } from '@angular/core';
 import {ReasonCodeService} from '../reason-code.service';
+import {fromEvent} from 'rxjs';
 
 declare let d3: any;
 
@@ -10,7 +11,7 @@ declare let d3: any;
   // encapsulation: ViewEncapsulation.None
 
 })
-export class ChartsComponent implements OnInit {
+export class ChartsComponent implements OnInit, AfterViewChecked {
   @Input('options') options;
   @Input('data') data;
   @Input('title') title;
@@ -20,6 +21,7 @@ export class ChartsComponent implements OnInit {
   @Input('extras') extras:boolean;
   selectedSprint;
 
+  @ViewChild('dimensionController') dimensionController: ElementRef;
 
   // options;
   // data;
@@ -31,8 +33,20 @@ export class ChartsComponent implements OnInit {
     this._rcService.getChartData(id);
   }
 
+  ngAfterViewChecked(){
+    
+  }
+  
   ngOnInit() {
-    console.log("XYZ",this.projectStatus)
+    // console.log("XYZ",this.dimensionController.nativeElement.parentNode.parentNode.clientWidth)
+    // fromEvent(window, 'resize')
+    // .subscribe(res => {
+    // this.options.chart.width = this.dimensionController.nativeElement.parentNode.parentNode.clientWidth;
+    // console.log(this.options)
+    // });
+    // console.log(this.options)
+    this.options.chart.width = this.dimensionController.nativeElement.parentNode.parentNode.clientWidth;
+    //.nativeElement.parentNode.parentNode.clientWidth
   //   this.options = {
   //     chart: {
   //         type: 'pieChart',
