@@ -39,7 +39,7 @@
         <!-- <div class="filter-selected">
 
         </div> -->
-        <div class="card-holder" [ngClass]="{'card-holder-active':fixToTop}" *ngIf="_reasonCode.userStories" #userStoryContainer>
+        <div class="card-holder" [ngClass]="{'card-holder-active':fixToTop, 'userstory-slide-left':openCreateSideBar}" *ngIf="_reasonCode.userStories" #userStoryContainer>
           
           <app-userstory-card (deleteUserStory)="onDeleteUserStory($event)" [restore]="false" *ngFor="let userStory of _reasonCode.userStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
         </div>

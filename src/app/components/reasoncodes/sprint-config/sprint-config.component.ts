@@ -296,7 +296,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
       let period = durationSplitted.pop();
       let weeks = durationSplitted.join("");
       this.dateCounter = parseInt(weeks);
-      if(this.dateCounter <= 0){
+      if(this.dateCounter < 1){
         this.dateCounter = 0;
         // this.addNewRow[index].duration = this.dateCounter + 'W'
       }else{
@@ -388,7 +388,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
     // let startDate = this.sprintConfigData[index].start_date;
     // let endDate = new Date(this.sprintConfigData[index].end_date.split("/").reverse().join("-"));
 
-    if(this.weekCounter <= 0){
+    if(this.weekCounter < 1){
       this.weekCounter = 0;
     }else{
       this.sprintConfigData[index].duration = (this.weekCounter -= 1) + 'W';

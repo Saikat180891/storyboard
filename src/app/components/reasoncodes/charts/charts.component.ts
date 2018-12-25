@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input, ViewChild, ElementRef, AfterViewChecked  } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, ViewChild, ElementRef, AfterViewChecked, OnChanges  } from '@angular/core';
 import {ReasonCodeService} from '../reason-code.service';
 import {fromEvent} from 'rxjs';
 
@@ -11,7 +11,7 @@ declare let d3: any;
   // encapsulation: ViewEncapsulation.None
 
 })
-export class ChartsComponent implements OnInit, AfterViewChecked {
+export class ChartsComponent implements OnInit, AfterViewChecked, OnChanges {
   @Input('options') options;
   @Input('data') data;
   @Input('title') title;
@@ -36,14 +36,18 @@ export class ChartsComponent implements OnInit, AfterViewChecked {
   ngAfterViewChecked(){
     
   }
+
+  ngOnChanges(){
+    
+  }
   
   ngOnInit() {
     // console.log("XYZ",this.dimensionController.nativeElement.parentNode.parentNode.clientWidth)
-    // fromEvent(window, 'resize')
-    // .subscribe(res => {
-    // this.options.chart.width = this.dimensionController.nativeElement.parentNode.parentNode.clientWidth;
-    // console.log(this.options)
-    // });
+    fromEvent(window, 'resize')
+    .subscribe(res => {
+    this.options.chart.width = this.dimensionController.nativeElement.parentNode.parentNode.clientWidth;
+    console.log(this.options)
+    });
     // console.log(this.options)
     this.options.chart.width = this.dimensionController.nativeElement.parentNode.parentNode.clientWidth;
     //.nativeElement.parentNode.parentNode.clientWidth

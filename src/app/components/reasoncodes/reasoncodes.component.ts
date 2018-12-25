@@ -136,12 +136,12 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
    
    this.pieChartOptions = charts.pieChart;
    this.barChartOptions = charts.barChart;
-   console.log(this._reasonCode.sprintConfig);
-   
-   fromEvent(this.totalPage.nativeElement, 'scroll')
+
+   fromEvent(window, 'scroll')
       .subscribe(res => {
-        // console.log(res);
-        if(res["target"].scrollTop > 360){
+        let position = res.target['scrollingElement'].scrollTop;
+        console.log(position);
+        if(position > 360){
           // this.fixToTop = true;
         }
       });
