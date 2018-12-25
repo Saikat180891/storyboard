@@ -49,6 +49,11 @@ export class UserstoryCardComponent implements OnInit {
         rc_id = element.id;
       }
     });
+    this.userStory.planned_delivery = this.__editUS.formatDateToSendDataFromDisplayDate(this.userStory.planned_delivery);
+
+    this.userStory.revised_delivery == '-----' ? this.userStory.revised_delivery = null : 
+    this.userStory.revised_delivery =  this.__editUS.formatDateToSendDataFromDisplayDate(this.userStory.revised_delivery);
+
     this.__editUS.editUserStory(uid, sprintId, rc_id, this.userStory);
   }
 
@@ -67,6 +72,11 @@ export class UserstoryCardComponent implements OnInit {
         rc_id = element.id;
       }
     });
+    this.userStory.planned_delivery = this.__editUS.formatDateToSendDataFromDisplayDate(this.userStory.planned_delivery);
+
+    this.userStory.revised_delivery == '-----' ? this.userStory.revised_delivery = null : 
+    this.userStory.revised_delivery =  this.__editUS.formatDateToSendDataFromDisplayDate(this.userStory.revised_delivery);
+
     this.__editUS.editUserStory(uid, sprintId, rc_id, this.userStory);
   }
 

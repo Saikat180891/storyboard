@@ -145,8 +145,9 @@ export class UserstoryCardEditComponent implements OnInit {
   onSaveAll(){
     console.log(this.editUSData);
 
-    this.editUSData.planned_delivery = this.formatDateToSend(this.editUSData.planned_delivery);
-    // this.editUSData.revised_delivery = this.formatDateToSend(this.editUSData.revised_delivery);
+    this.editUSData.planned_delivery = this.__editUS.formatDateToSendData(this.editUSData.planned_delivery);
+    console.log(this.editUSData);
+    isNaN(this.editUSData.revised_delivery) ? this.editUSData.revised_delivery = null : this.editUSData.revised_delivery = this.__editUS.formatDateToSendData(this.editUSData.revised_delivery);
 
     console.log(this.editUSData);
     // this.statusSelected();

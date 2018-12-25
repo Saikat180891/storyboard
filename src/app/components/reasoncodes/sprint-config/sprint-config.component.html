@@ -55,7 +55,7 @@
       
                 <div class="grid-list" *ngFor="let sprintConfig of addNewRow; let i=index">
                   <mat-grid-list cols="6" rowHeight="70px" gutterSize="10px">
-                    <mat-grid-tile>{{i+1}}</mat-grid-tile>
+                    <mat-grid-tile>{{sprintConfigData.length + i + 1}}</mat-grid-tile>
                     <mat-grid-tile>
                       <input type="text" [(ngModel)]="sprintConfig.sprint_name">
                     </mat-grid-tile>
@@ -131,7 +131,7 @@
 
               <div class="grid-list" *ngFor="let addNewRow of addNewRowForReasonCode; let i=index">
                 <mat-grid-list cols="12" rowHeight="70px" gutterSize="10px">
-                  <mat-grid-tile>{{i+1}}</mat-grid-tile>
+                  <mat-grid-tile>{{reasonCodeConfigData.length+i+1}}</mat-grid-tile>
                   <mat-grid-tile [colspan]="4">
                     <input type="text" [(ngModel)]="addNewRow.name">
                   </mat-grid-tile>
