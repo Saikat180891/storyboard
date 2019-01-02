@@ -152,18 +152,17 @@ export class ReasonCodeService {
     this._api.delete(`/sop/reasoncode/userstories`, `${id}.json`)
       .subscribe(response=>{
         this.userStories.forEach(element=>{
-          if(element.id === id){
             let pos = this.userStories.indexOf(element);
             this.userStories.splice(pos, 1);
             this.getProjectStatusChartData(this.sopId);
             this.getProjectStatus(this.sopId);
             this.getSprintStatus(this.sopId);
             // this.getChartData(this.sopId);
-            // this.getUserStories(this.sopId);
+            this.getUserStories(this.sopId);
             this.getBenefits(this.sopId);
             this.getCurrentSprintData(this.sopId);
             // this.getDeletedUserStories(this.sopId);
-          }
+            this.getCompletedUserStories(this.sopId);
         });
         // this.getDeletedUserStories();
         console.log(`Rpw with id ${id} deleted successfully.`);
@@ -205,6 +204,13 @@ export class ReasonCodeService {
     this._api.fetchData(`/sop/reasoncode/userstories/${id}/unarchive/`)
       .subscribe(response=>{
         this.getDeletedUserStories(this.sopId);
+        this.getProjectStatusChartData(this.sopId);
+        this.getProjectStatus(this.sopId);
+        this.getSprintStatus(this.sopId);
+        // this.getChartData(this.sopId);
+        // this.getUserStories(this.sopId);
+        this.getBenefits(this.sopId);
+        this.getCurrentSprintData(this.sopId);
         console.log(`Restored US with id ${id}`, response);
       });
   }

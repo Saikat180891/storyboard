@@ -24,6 +24,13 @@ export class CreateUserstoryService {
     this.__api.postData(api, payload)
       .subscribe(response=>{
         this.__rcService.getUserStories(this.sopId);
+        this.__rcService.getProjectStatusChartData(this.sopId);
+        this.__rcService.getProjectStatus(this.sopId);
+        this.__rcService.getSprintStatus(this.sopId);
+        // this.getChartData(this.sopId);
+        // this.getUserStories(this.sopId);
+        this.__rcService.getBenefits(this.sopId);
+        this.__rcService.getCurrentSprintData(this.sopId);
       });
   }
 }

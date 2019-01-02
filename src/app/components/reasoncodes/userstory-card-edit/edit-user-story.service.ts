@@ -39,6 +39,7 @@ export class EditUserStoryService {
         this._rcService.getBenefits(this._rcService.sopId);
         this._rcService.getProjectStatus(this._rcService.sopId);
         this._rcService.getSprintStatus(this._rcService.sopId);
+        this._rcService.getCurrentSprintData(this._rcService.sopId);
         console.log("Edit us", response);
       }, 
       error=>{console.error(error)}

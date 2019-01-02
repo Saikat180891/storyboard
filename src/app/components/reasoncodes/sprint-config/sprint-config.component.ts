@@ -88,6 +88,12 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
       this.changedDetected = [];
       this.closeSprints.emit(false);
     }
+    this.__rcService.getBenefits(this.__rcService.sopId);          
+    this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+    this.__rcService.getProjectStatus(this.__rcService.sopId);
+    this.__rcService.getCurrentSprintData(this.__rcService.sopId);
+    this.__rcService.getSprintStatus(this.__rcService.sopId);
+    this.__rcService.getUserStories(this.__rcService.sopId)
   }
 
   onSelectYes(){
@@ -124,12 +130,14 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
       this.changedDetected.forEach((element, index)=>{
         if(element === true){
           this.__rcService.editSprint(this.sprintConfigData[index].id, this.sprintConfigData[index]);
-          this.__rcService.getBenefits(this.__rcService.sopId);
-          this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
-          this.__rcService.getProjectStatus(this.__rcService.sopId);
-          this.__rcService.getCurrentSprintData(this.__rcService.sopId);
         }
       });
+      this.__rcService.getBenefits(this.__rcService.sopId);          
+      this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+      this.__rcService.getProjectStatus(this.__rcService.sopId);
+      this.__rcService.getCurrentSprintData(this.__rcService.sopId);
+      this.__rcService.getSprintStatus(this.__rcService.sopId);
+      this.__rcService.getUserStories(this.__rcService.sopId)
     }
     // else if(this.changedDetected.length === 0 && this.addNewRow.length === 0){
     //   this.onSelectYes();
@@ -157,6 +165,11 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
 
   onDoNotDelete(){
     this.displayWarningBox = false;
+    this.__rcService.getBenefits(this.__rcService.sopId);          
+    this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+    this.__rcService.getProjectStatus(this.__rcService.sopId);
+    this.__rcService.getCurrentSprintData(this.__rcService.sopId);
+    this.__rcService.getSprintStatus(this.__rcService.sopId);
   }
 
   onDelete(){

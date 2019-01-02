@@ -49,9 +49,16 @@ export class ContainerService{
           console.log("Response received GET", data)
 
           data.forEach((element)=>{
+            this._dataService.fetchData('/sop/'+element["id"]+"/reasoncode.json").subscribe(data2 => {
+                element["rCodes"] = data2.length;
+                console.log("Length", data2.length)
+            });
+          });          
+            data.forEach((element)=>{
+          console.log("Print", element["rCodes"])
             this.cardContents.push({
               themeColor: this._UIControlService.colorPicker[this.getUniqueNumber()],
-              reasonCodes: this._UIControlService.firstZero(Number(element.rCodes)),
+              reasonCodes: this._UIControlService.firstZero(Number(element["rCodes"])),
               ...element,
               logo: element["image_url"]
             });
