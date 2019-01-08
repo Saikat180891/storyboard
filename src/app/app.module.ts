@@ -33,6 +33,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatRippleModule} from '@angular/material/core';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {DateAdapter} from '@angular/material';
+import {MatChipsModule} from '@angular/material/chips';
+
 
 import {DataService} from './data.service';
 import {AppcontrolService} from './controlservice/appcontrol.service';
@@ -81,8 +83,9 @@ import { UserstoryCardEditComponent } from './components/reasoncodes/userstory-c
 import { UserstoryCardCreateComponent } from './components/reasoncodes/userstory-card-create/userstory-card-create.component';
 import { ColoredDropdownComponent } from './components/shared/colored-dropdown/colored-dropdown.component';
 import { SprintConfigComponent } from './components/reasoncodes/sprint-config/sprint-config.component';
-import { UserstoryFilterComponent } from './components/shared/userstory-filter/userstory-filter.component';
+import { UserstoryFilterComponent } from './components/reasoncodes/userstory-filter/userstory-filter.component';
 import { NormalDropdownComponent } from './components/shared/normal-dropdown/normal-dropdown.component';
+import { CustomSnackbarComponent } from './components/shared/custom-snackbar/custom-snackbar.component';
 
 const routes = [
   {path: '', component: AuthComponent, pathMatch: 'full'},
@@ -141,7 +144,8 @@ const routes = [
     ColoredDropdownComponent,
     SprintConfigComponent,
     UserstoryFilterComponent,
-    NormalDropdownComponent
+    NormalDropdownComponent,
+    CustomSnackbarComponent
   ],
   imports: [
     BrowserModule,
@@ -164,6 +168,7 @@ const routes = [
     MatListModule,
     FormsModule,
     MatRippleModule,
+    MatChipsModule,
     ReactiveFormsModule,
     MatTooltipModule,
     MatIconModule,
@@ -200,6 +205,10 @@ const routes = [
   ],
   bootstrap: [AppComponent]
 })
+
+/**
+ * To set date as DD/MM/YYYY
+ */
 export class AppModule {
   constructor(private dateAdapter:DateAdapter<Date>) {
 		dateAdapter.setLocale('en-in'); // DD/MM/YYYY

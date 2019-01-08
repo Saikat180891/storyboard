@@ -24,8 +24,14 @@ export class ReasonCodeService {
   completeUserStories = [];
   deletedUserStories = [];
   reasonCodeData = [];
+  filteredValues = [];
+  filterItems = {};
+  filtersAppliedFlag:boolean = false;
 
   doneSelectStatus:EventEmitter<boolean> = new EventEmitter();
+
+  sortBy = '';
+  filterPath = '';
 
   constructor(private _api:DataService,
               private __preLoad: PreloaderService) { }
@@ -345,6 +351,114 @@ export class ReasonCodeService {
     
     return strDate;
   }
+
+  filterUserStories(endpointUrl:string, queryParameter:string){
+    this._api.fetchData(endpointUrl + queryParameter)
+      .subscribe(response=>{
+        console.log(response);
+        response.forEach(element=>{
+          if(element['ftes'] == 0 ){
+            element['ftes'] = '-----';
+          }
+          if(element['dev_hrs'] == '' ){
+            element['dev_hrs'] = '-----';
+          }
+          element['ftes'] = parseFloat(element['ftes']).toFixed(1);
+          element['ftes'] = isFinite(element['ftes']) ? element['ftes'] : '-----';
+          element['productivity'] = (parseFloat(element.ftes) / parseFloat(element.dev_hrs)).toFixed(1);
+          element['productivity'] = isFinite(element['productivity']) ? element['productivity'] : '-----';
+          element['planned_delivery'] = this.reArrangeDate(element['planned_delivery']);
+          element['revised_delivery'] = element['revised_delivery'] != null ? this.reArrangeDate(element['revised_delivery']) : '-----';
+
+        });
+        
+        this.userStories = response;
+        // this.getProjectStatusChartData(this.sopId);
+        // this.getChartData(this.sopId);
+      });
+  }
+
+  rulesApproved:string;
+  testCasesVerified:string;
+
+  convertToStringPath(object){
+
+    for(let x in object){
+      if(object[x] === false){
+        delete object[x]
+      }
+    }
+
+    let keys = Object.keys(object), splitedElements = [], temp = [], newArrayX = [], keysExtracted;
+    for(let element of keys){
+      let formatedText = element.split("$");
+      temp.push(formatedText[0]);
+      splitedElements.push(formatedText);
+    }
+    // console.log(temp, splitedElements)
+
+    let filterValues = function(){
+      let ele = [];
+      for(let x of splitedElements){
+        ele.push(x[1]);
+      }
+      return ele;
+    }
+    this.filteredValues = filterValues();
+    // console.log(this.filteredValues)
+
+    function removeDups(names) {
+      let unique = {};
+      names.forEach(function(i) {
+        if(!unique[i]) {
+          unique[i] = true;
+        }
+      });
+      return Object.keys(unique);
+    }
+    keysExtracted = removeDups(temp);
+    // console.log(keysExtracted)
+
+    keysExtracted.forEach(element=>{
+      let newArray = [];
+      newArray.push(element);
+      newArray.push("=");
+      for(let ele of splitedElements){
+        if(ele[0] === element){
+          newArray.push(ele[1]);
+          if(ele.indexOf(element) != -1){
+            newArray.push(",");
+          }
+        }
+      }
+      newArrayX.push(newArray);
+    });
+    let path = [];
+    for(let ele of newArrayX){
+      ele.pop();
+      path.push(ele.join(""));
+    }
+    let url = path.join("&");
+    if(this.rulesApproved === 'True'){
+      url = url + "&" + "rules_approved=True";
+      this.filteredValues.push("Rules Approved = True");
+    }
+    if(this.rulesApproved === 'False'){
+      url = url + "&" + "rules_approved=False";
+      this.filteredValues.push("Rules Approved = False");
+    }
+    if(this.testCasesVerified === 'True'){
+      url = url + "&" + "verified_test_cases=True";
+      this.filteredValues.push("Verified Test Cases = True");
+    }
+    if(this.testCasesVerified === 'False'){
+      url = url + "&" + "verified_test_cases=False";
+      this.filteredValues.push("Verified Test Cases = False");
+    }
+    // console.log(url);
+    return url;
+  }
+
 
   
 

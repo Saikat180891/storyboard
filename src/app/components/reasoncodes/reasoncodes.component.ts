@@ -78,8 +78,10 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
   reasonCodeOptions = [];
   fixToTop:boolean = false;
   filter:boolean = false;
+  sortBy:boolean = false;
   warning: boolean = false;
   warningToDeleteUserStory:boolean = false;
+  clearAllFilter:boolean = true;
 
   addSprintPayload:SprintConfig = {
     sprint_name: '',
@@ -101,6 +103,12 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
   receivedSprintConfig:ReceivedSprintConfig;
 
   addSprint = [this.addSprintPayload];
+
+  fruits = [
+    {name: 'Lemon'},
+    {name: 'Lime'},
+    {name: 'Apple'},
+  ];
 
   todo = [
     'Get to work',
@@ -196,6 +204,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
   }
 
   openFilter(){
+    this.clearAllFilter = true;
     this.filter = !this.filter;
   }
 
@@ -316,6 +325,64 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
   onSelectDeleteUserStory(){
     this._reasonCode.deleteUserStory(this.idOfUserStoryToDelete);
     this.warningToDeleteUserStory = false;
+  }
+
+  onSortBy(args:string){
+    this._reasonCode.sortBy = args;
+    let path = '';
+    if(this._reasonCode.filterPath != ''){
+      path = "?" + this._reasonCode.filterPath + "&" + this._reasonCode.sortBy;
+    }else{
+      path = "?" + this._reasonCode.sortBy;
+    }
+    this._reasonCode.filterUserStories(`/sop/reasoncode/${this._reasonCode.sopId}/userstories/filter.json`, path);
+
+    console.log(path)
+  }
+
+  onClearAllFilters(){
+    this._reasonCode.filterItems = {};
+    this._reasonCode.rulesApproved = '';
+    this._reasonCode.testCasesVerified = '';
+    this._reasonCode.filteredValues = [];
+    this._reasonCode.filterPath = '';
+    // this._reasonCode.getUserStories(this._reasonCode.sopId);
+    this._reasonCode.filterUserStories(`/sop/reasoncode/${this._reasonCode.sopId}/userstories/filter.json`, "?" + this._reasonCode.sortBy);
+    this.clearAllFilter = false;
+    this._reasonCode.filtersAppliedFlag = false;
+
+  }
+
+  makePath(){
+    let filter = this._reasonCode.convertToStringPath(this._reasonCode.filterItems);
+    this._reasonCode.filterPath = filter;
+    let path = '';
+    if(this._reasonCode.sortBy != ''){
+      path = "?" + this._reasonCode.filterPath + "&" + this._reasonCode.sortBy;
+    }else{
+      path = "?" + this._reasonCode.filterPath;
+    }
+    return path;
+  }
+
+  onRemoveFilter(value:string, index:number){
+    for(let key in this._reasonCode.filterItems){
+      if(key.indexOf(value) != -1){
+        delete this._reasonCode.filterItems[key];
+        this._reasonCode.filteredValues.splice(index, 1);
+        this._reasonCode.filterUserStories(`/sop/reasoncode/${this._reasonCode.sopId}/userstories/filter.json`, this.makePath());
+      }
+    }
+    if(value === "Verified Test Cases = True" || value === "Verified Test Cases = False"){
+      this._reasonCode.testCasesVerified = '';
+      this._reasonCode.filterUserStories(`/sop/reasoncode/${this._reasonCode.sopId}/userstories/filter.json`, this.makePath());
+    }
+
+    if(value === "Rules Approved = True" || value === "Rules Approved = False"){
+      this._reasonCode.rulesApproved = '';  
+      this._reasonCode.filterUserStories(`/sop/reasoncode/${this._reasonCode.sopId}/userstories/filter.json`, this.makePath());
+    }
+    console.log(this._reasonCode.filterItems, value);
   }
 
 
