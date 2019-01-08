@@ -52,9 +52,7 @@ export class ContainerService{
             this._dataService.fetchData('/sop/'+element["id"]+"/reasoncode.json").subscribe(data2 => {
                 element["rCodes"] = data2.length;
                 console.log("Length", data2.length)
-            });
-          });          
-            data.forEach((element)=>{
+            }),
           console.log("Print", element["rCodes"])
             this.cardContents.push({
               themeColor: this._UIControlService.colorPicker[this.getUniqueNumber()],

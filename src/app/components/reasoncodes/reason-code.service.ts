@@ -352,6 +352,17 @@ export class ReasonCodeService {
     return strDate;
   }
 
-  
+  importStories(file){
+    console.log("File", file);
+    this._api.postData(`/sop/${this.sopId}/import.json`, file).subscribe(response=>{});
+  }
+  downloadFile(){
+    window.location.href = this._api+`/sop/${this.sopId}/export.json`;
+    }
 
+  getFile(data) {
+    const blob = new Blob([data], { type: 'text/csv' });
+    const url= window.URL.createObjectURL(blob);
+    window.open(url);
+  }
 }

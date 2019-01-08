@@ -144,6 +144,7 @@
   // margin-bottom: 30px;
   overflow: auto;
   // background: red;
+  padding: 20px;
 }
 .delete{
   color: #2A7DE1;
@@ -248,6 +249,15 @@
   padding-left: 5px;
 }
 
+.highlight{
+  font-size: 14px;
+  color: black;
+  width: 100%;
+  text-align: left;
+  padding-left: 5px;
+  font-weight: bold;
+}
+
 
 
 .arrow{
@@ -305,4 +315,7 @@ input[type="text"].extra-padding{
 }
 input[type="text"].warning, input[type="number"].warning{
   border: 1px solid #F47074 !important;
+}
+.validation-message{
+  color: rgb(245, 117, 117);
 }

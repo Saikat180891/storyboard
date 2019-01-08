@@ -2,6 +2,8 @@ import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ElementRef, 
 import {ReasonCodeService} from '../reason-code.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {fromEvent} from 'rxjs';
+import {FormBuilder, Validators} from '@angular/forms';
+import { ElementSchemaRegistry } from '@angular/compiler';
 
 interface SprintConfig{
   duration: string;
@@ -49,10 +51,22 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
 
   reasonCodeEditChangeDetector = [];
 
+  validateCheckBox: boolean = false;
+
+  validateFileExtension: boolean = false;
+
+  file_name:string = "";
+
+  uploadForm = this.formBuilder.group({
+    upload_file: ['', Validators.required],
+    confirm_template_checkbox : false
+  });
+
+  excelFile = new FormData();
   //this variable is used to detect if there is any change in the 'sprintConfigData' array
   changedDetected:boolean[] = [];
 
-  constructor(private __rcService:ReasonCodeService, private spinner: NgxSpinnerService) { }
+  constructor(private __rcService:ReasonCodeService, private spinner: NgxSpinnerService,private formBuilder:FormBuilder) { }
 
   ngOnInit() {
     // fromEvent(this.sprintContainer.nativeElement, 'scroll')
@@ -414,4 +428,61 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
     console.log(this.changedDetected)
   }
 
+  onFileSelected(fileSelected){
+    console.log("File Selected", fileSelected)
+    
+    if(fileSelected.target.files && fileSelected.target.files[0]){
+      this.uploadForm.value.upload_file = fileSelected.target.files[0];
+      this.excelFile.append("File", fileSelected.target.files[0]);
+      console.log(this.file_name);
+      this.file_name = fileSelected.target.files[0].name;
+    }
+  }
+
+  validateFile(file){
+    var file_extension="";
+    if(file)
+    {file_extension = file.name.split(".").pop();}
+    console.log("File Extension", file_extension);
+    if(file_extension == "xlsx"){
+      this.validateFileExtension = false;
+      return true;
+  }
+    else{
+      this.validateFileExtension = true;
+      return false;
+    }
+  }
+
+  validateUploadForm(){
+    if(this.uploadForm.value["confirm_template_checkbox"]){
+      this.validateCheckBox = false;
+      return this.validateFile(this.uploadForm.value["upload_file"])
+    }
+    else{
+      this.validateCheckBox = true;
+    }
+    console.log(this.validateCheckBox)
+    return false;
+  }
+
+
+
+  onUpload(){
+    let validation = this.validateUploadForm();
+    if(validation){
+       this.__rcService.importStories(this.excelFile);
+    } 
+  }
+
+  oncheckBoxChange(value){
+    console.log("Value",value);
+    this.uploadForm.value["confirm_template_checkbox"] = value;
+  }
+
+  exportToExcel(){
+    console.log("Downloading File");
+    window.location.href = 'http://127.0.0.1:8000/sop/6/export.json';
+    // this.__rcService.downloadFile();
+  }
 }

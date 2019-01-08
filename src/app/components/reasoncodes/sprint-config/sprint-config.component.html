@@ -160,6 +160,50 @@
           <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
         </div>
       </mat-tab>
+<!------------------------------------------------------------Import Stories Tab ------------------------------------------------------------------------------------------>
+
+      <mat-tab label = "Import Stories">
+          <div class="modal-body" #rcContainer>
+            <div class = "grid-list">
+              <mat-grid-list cols="12" rowHeight="50px">
+              <mat-grid-tile [colspan] ="12">
+                <span class = "heading">Please download Excel template and populate the following Excel file to import sprints, epics and stories for this project.</span>
+              </mat-grid-tile>
+              </mat-grid-list>
+            </div>
+            <span class ="highlight" >Download File</span>
+            <br>
+            <span class ="heading" style = "padding-top: 2px;">
+              <img src= "../../../assets/pics/download_icon.svg" height="23px" width="23px" style="display: inline;">
+              <span style="color: #2A7DE1; padding-left: 2px; cursor: pointer;" (click)="exportToExcel()">Existing project as Excel template</span>
+            </span>
+            <!-- <a style="color: #2A7DE1; padding-left: 2px; cursor: pointer;" href=`http://127.0.0.1:8000/sop/{{ id }}/export.json` target="_blank">Existing project as Excel template
+            </a> -->
+          <br><br>
+          <span class = "highlight" > Upload File</span>
+          <div class="dialog-group padding-all upload height-auto">
+              <div class="relative pointer">
+                <button mat-stroked-button>
+                  <span *ngIf="!file_name">Upload Excel File</span>
+                  <span *ngIf="!file_name"><small>(Max Size 200MB)</small></span>
+                  <span *ngIf="file_name">{{file_name}}</span>
+                  <span><i class="fas fa-upload"></i>CHOOSE FILE</span>
+                </button>
+                <input type="file" (change)="onFileSelected($event)"/>
+              </div>
+            </div>
+            <small [ngClass]="{'validation-message':validateFileExtension===true}" *ngIf="validateFileExtension">
+            <em>*Supported File Extension is .xlsx</em><br>
+          </small>
+          <mat-checkbox color=primary (change)="oncheckBoxChange($event.checked)"><span style = "padding :2px;">Yes, I used Soroco Excel Template</span></mat-checkbox><br>
+          <small [ngClass]="{'validation-message':validateCheckBox===true}" *ngIf="validateCheckBox">
+              <em>* Please Accept by checking the checkbox.</em></small><br>
+            <div class="modal-footer footer-position">
+                <button class="btn btn-blue" (click)="onUpload()">Upload</button>
+                <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
+              </div>
+          </div>
+      </mat-tab>
     </mat-tab-group>
   <!-- <div class="heading">
     <span>Config Sprints</span>
