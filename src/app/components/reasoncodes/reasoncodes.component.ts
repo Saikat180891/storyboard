@@ -335,7 +335,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
     }else{
       path = "?" + this._reasonCode.sortBy;
     }
-    this._reasonCode.filterUserStories(`/sop/reasoncode/${this._reasonCode.sopId}/userstories/filter.json`, path);
+    this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, path);
 
     console.log(path)
   }
@@ -347,7 +347,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
     this._reasonCode.filteredValues = [];
     this._reasonCode.filterPath = '';
     // this._reasonCode.getUserStories(this._reasonCode.sopId);
-    this._reasonCode.filterUserStories(`/sop/reasoncode/${this._reasonCode.sopId}/userstories/filter.json`, "?" + this._reasonCode.sortBy);
+    this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, "?" + this._reasonCode.sortBy);
     this.clearAllFilter = false;
     this._reasonCode.filtersAppliedFlag = false;
 
@@ -370,17 +370,17 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
       if(key.indexOf(value) != -1){
         delete this._reasonCode.filterItems[key];
         this._reasonCode.filteredValues.splice(index, 1);
-        this._reasonCode.filterUserStories(`/sop/reasoncode/${this._reasonCode.sopId}/userstories/filter.json`, this.makePath());
+        this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, this.makePath());
       }
     }
     if(value === "Verified Test Cases = True" || value === "Verified Test Cases = False"){
       this._reasonCode.testCasesVerified = '';
-      this._reasonCode.filterUserStories(`/sop/reasoncode/${this._reasonCode.sopId}/userstories/filter.json`, this.makePath());
+      this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, this.makePath());
     }
 
     if(value === "Rules Approved = True" || value === "Rules Approved = False"){
       this._reasonCode.rulesApproved = '';  
-      this._reasonCode.filterUserStories(`/sop/reasoncode/${this._reasonCode.sopId}/userstories/filter.json`, this.makePath());
+      this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, this.makePath());
     }
     console.log(this._reasonCode.filterItems, value);
   }

@@ -56,7 +56,7 @@ export class UserstoryFilterComponent implements OnInit, AfterContentChecked {
       path = "?" + this.__rcService.filterPath;
     }
 
-    this.__rcService.filterUserStories(`/sop/reasoncode/${this.__rcService.sopId}/userstories/filter.json`, path);
+    this.__rcService.filterUserStories(`/sop/epics/${this.__rcService.sopId}/userstories/filter.json`, path);
     this.__rcService.filtersAppliedFlag = true;
     this.closeFilter.emit(false);
     // console.log(path);
