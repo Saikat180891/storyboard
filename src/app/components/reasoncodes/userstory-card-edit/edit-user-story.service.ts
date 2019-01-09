@@ -23,7 +23,7 @@ export class EditUserStoryService {
     }
     const api = `/sop/reasoncode/userstories/${usID}/update/${sprintID}.json`;
     console.log(api);
-    this._api.update(`/sop/reasoncode/userstories/${usID}/update`, `${sprintID}/${reasonCodeId}.json`, payload)
+    this._api.update(`/sop/epics/userstories/${usID}/update`, `${sprintID}/${reasonCodeId}.json`, payload)
       .subscribe(
         response=>{
         this._rcService.userStories.forEach(element=>{
@@ -39,6 +39,7 @@ export class EditUserStoryService {
         this._rcService.getBenefits(this._rcService.sopId);
         this._rcService.getProjectStatus(this._rcService.sopId);
         this._rcService.getSprintStatus(this._rcService.sopId);
+        this._rcService.getCurrentSprintData(this._rcService.sopId);
         console.log("Edit us", response);
       }, 
       error=>{console.error(error)}

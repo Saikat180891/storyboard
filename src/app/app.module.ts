@@ -145,8 +145,9 @@ const routes = [
     SprintConfigComponent,
     UserstoryFilterComponent,
     NormalDropdownComponent,
-    CustomSnackbarComponent
+    CustomSnackbarComponent,
   ],
+
   imports: [
     BrowserModule,
     NvD3Module,

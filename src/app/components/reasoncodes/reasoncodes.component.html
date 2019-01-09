@@ -77,7 +77,11 @@
           </div>
         </div>
         <div class="card-holder">
+<<<<<<< HEAD
+            <app-userstory-card (deleteUserStory)="onDeleteUserStory($event)" [restore]="false" *ngFor="let userStory of _reasonCode.completeUserStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
+=======
             <app-userstory-card [restore]="false" [disableDeleteBtn]="false" *ngFor="let userStory of _reasonCode.completeUserStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
+>>>>>>> b749838c5022602665f0cae3a9f479166617fafc
         </div>
       </mat-tab>
       <mat-tab label="Deleted U/S">

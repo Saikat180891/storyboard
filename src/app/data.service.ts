@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 // import { Observable, of } from 'rxjs';
 import {environment} from '../environments/environment';
-import { HttpHeaders } from '@angular/common/http';
-
+import { HttpHeaders} from '@angular/common/http';
+import { ResponseContentType } from '@angular/http'
 
 
 export const httpOptions = {
@@ -40,6 +40,7 @@ export class DataService {
     ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Praveen'],
                         
   ]
+  httpClient: any;
   
 
   private getUniqueNumber(){
@@ -115,6 +116,13 @@ export class DataService {
   }
 
   postData(param, body){
+    return this.http.post(this.apiUrl + param, body, httpOptions);
+  }
+
+  fetchFile(param){
+    return this.http.get(this.apiUrl + param, {responseType: 'blob', headers: new HttpHeaders().append('Content-Type', 'application/json')});
+  }
+  postDataWithProgress (param, body){
     return this.http.post(this.apiUrl + param, body, httpOptions);
   }
 
