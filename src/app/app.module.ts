@@ -95,7 +95,7 @@ const routes = [
   // {path: 'projects/reason-codes', component: ReasoncodesComponent},
   // {path: 'projects/add-steps', component: AddStepsComponent}
 
-  {path: 'projects/reason-codes/:id', component: ReasoncodesComponent, canActivate: [AuthenticationGuard]},
+  {path: 'projects/epics/:id', component: ReasoncodesComponent, canActivate: [AuthenticationGuard]},
   {path: 'projects/add-steps/:id', component: AddStepsComponent, canActivate: [AuthenticationGuard]},
   {path: '**', component: AuthComponent}
 ];
