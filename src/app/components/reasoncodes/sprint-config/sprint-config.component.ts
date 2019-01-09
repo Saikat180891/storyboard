@@ -198,7 +198,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
 
   onAddRC(){
     let temObj = {
-      name: 'Reason Code X'
+      name: 'Epics X'
     }
     this.addNewRowForReasonCode.push(temObj);
   }
@@ -472,7 +472,8 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
     let validation = this.validateUploadForm();
     if(validation){
        this.__rcService.importStories(this.excelFile);
-    } 
+      this.onClose();
+      }
   }
 
   oncheckBoxChange(value){
@@ -482,7 +483,6 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
 
   exportToExcel(){
     console.log("Downloading File");
-    window.location.href = 'http://127.0.0.1:8000/sop/6/export.json';
-    // this.__rcService.downloadFile();
+    this.__rcService.downloadFile();
   }
 }

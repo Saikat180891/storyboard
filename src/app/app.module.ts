@@ -83,8 +83,6 @@ import { ColoredDropdownComponent } from './components/shared/colored-dropdown/c
 import { SprintConfigComponent } from './components/reasoncodes/sprint-config/sprint-config.component';
 import { UserstoryFilterComponent } from './components/shared/userstory-filter/userstory-filter.component';
 import { NormalDropdownComponent } from './components/shared/normal-dropdown/normal-dropdown.component';
-import { SnackBarComponent } from './components/shared/snack-bar/snack-bar.component';
-
 const routes = [
   {path: '', component: AuthComponent, pathMatch: 'full'},
   {path: 'login', component: AuthComponent },
@@ -143,8 +141,8 @@ const routes = [
     SprintConfigComponent,
     UserstoryFilterComponent,
     NormalDropdownComponent,
-    SnackBarComponent
-  ],
+    ],
+    
   imports: [
     BrowserModule,
     NvD3Module,

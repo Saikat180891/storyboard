@@ -22,7 +22,7 @@
 
     <div class="form-group">
       <div class="input-container md">
-        <div class="title" [ngClass]="{'warning':userStroryReasonCodeValidator}">Reason Code</div>
+        <div class="title" [ngClass]="{'warning':userStroryReasonCodeValidator}">Epics</div>
         <div class="editable">
           <normal-dropdown (optionSelected)="userStoryPayload.rc_name=$event.status" [options]="reasonCodeOptions" [defaultOption]="'Select'"></normal-dropdown>
         </div>

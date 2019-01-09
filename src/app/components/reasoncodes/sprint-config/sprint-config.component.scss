@@ -137,7 +137,10 @@
 //   background-color: #F5F5F5;
 }
 .grid-list:nth-child(even){
-  background-color: #eeeeee;
+  //background-color: #eeeeee;
+}
+.grid-list-current-sprint{
+  background-color: #DDE5ED;
 }
 .modal-body{
   height: 300px;

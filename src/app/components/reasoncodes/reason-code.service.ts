@@ -107,7 +107,7 @@ export class ReasonCodeService {
   }
 
   getDeletedUserStories(id){
-    this._api.fetchData(`/sop/reasoncode/${id}/userstories/fetchDeleted.json`)
+    this._api.fetchData(`/sop/epics/${id}/userstories/fetchDeleted.json`)
       .subscribe(response=>{
         response.forEach(element=>{
           element['productivity'] = (parseFloat(element.ftes) / parseFloat(element.dev_hrs)).toFixed(1);
@@ -121,7 +121,7 @@ export class ReasonCodeService {
 
   getUserStories(id){
     console.log("Get all user story", id)
-    const api =  `/sop/reasoncode/${id}/userstories.json`;
+    const api =  `/sop/epics/${id}/userstories.json`;
     this._api.fetchData(api)
       .subscribe(response=>{
 
@@ -149,7 +149,7 @@ export class ReasonCodeService {
   }
 
   deleteUserStory(id){
-    this._api.delete(`/sop/reasoncode/userstories`, `${id}.json`)
+    this._api.delete(`/sop/epics/userstories`, `${id}.json`)
       .subscribe(response=>{
         this.userStories.forEach(element=>{
             let pos = this.userStories.indexOf(element);
@@ -170,7 +170,7 @@ export class ReasonCodeService {
   }
 
   getCompletedUserStories(id){
-    this._api.fetchData(`/sop/reasoncode/${id}/userstories/fetchCompleted.json`)
+    this._api.fetchData(`/sop/epics/${id}/userstories/fetchCompleted.json`)
       .subscribe(response=>{
         response.forEach(element=>{
           element['productivity'] = (parseFloat(element.ftes) / parseFloat(element.dev_hrs)).toFixed(1);
@@ -201,7 +201,7 @@ export class ReasonCodeService {
   }
 
   restoreUserStories(id){
-    this._api.fetchData(`/sop/reasoncode/userstories/${id}/unarchive/`)
+    this._api.fetchData(`/sop/epics/userstories/${id}/unarchive/`)
       .subscribe(response=>{
         this.getDeletedUserStories(this.sopId);
         this.getProjectStatusChartData(this.sopId);
@@ -260,7 +260,7 @@ export class ReasonCodeService {
 
   createReasonCode(id, body){
     body.forEach(element=>{
-      this._api.postData(`/sop/${id}/reasoncode.json`, element)
+      this._api.postData(`/sop/${id}/epics.json`, element)
         .subscribe(response=>{
           this.reasonCodeData.push(response);
         });
@@ -268,14 +268,14 @@ export class ReasonCodeService {
   }
 
   getReasonCode(id){
-    this._api.fetchData(`/sop/${id}/reasoncode.json`)
+    this._api.fetchData(`/sop/${id}/epics.json`)
       .subscribe(response=>{
         this.reasonCodeData = response;
       });
   }
 
   deleteReasonCode(id){
-    this._api.delete(`/sop/reasoncode`, `${id}.json`)
+    this._api.delete(`/sop/epics`, `${id}.json`)
       .subscribe(response=>{
         // this.getReasonCode(this.sopId);
         this.reasonCodeData.forEach(element=>{
@@ -288,7 +288,7 @@ export class ReasonCodeService {
 
   editReasonCode(id,body){
     if(body.name != ''){
-      this._api.update(`/sop/reasoncode`, `${id}.json`, body)
+      this._api.update(`/sop/epics`, `${id}.json`, body)
       .subscribe(response=>{
         this.reasonCodeData.forEach(element=>{
           if(element.id == id){
@@ -357,7 +357,7 @@ export class ReasonCodeService {
     this._api.postData(`/sop/${this.sopId}/import.json`, file).subscribe(response=>{});
   }
   downloadFile(){
-    window.location.href = this._api+`/sop/${this.sopId}/export.json`;
+    window.location.href = this._api.apiUrl+`/sop/${this.sopId}/export.json`;
     }
 
   getFile(data) {
