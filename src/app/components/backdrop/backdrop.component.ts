@@ -28,8 +28,8 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   userDatas;
   assigneeName:string = '';
 
-  createSOP = "Create New SOP";
-  editSOP = "Edit SOP";
+  createSOP = "Create New Project";
+  editSOP = "Edit Project";
 
   arr = ["Saikat paul", "sujit", "Aadesh", "kanishka", "Manjit", "rakesh", "ayush", "arpit", "arijit", "venkat", "Bhavana", "manbir", "shankar"];
 

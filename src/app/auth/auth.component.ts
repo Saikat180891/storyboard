@@ -39,8 +39,8 @@ export class AuthComponent {
      */
 
     this._msAdalSvc.acquireToken('https://graph.microsoft.com').subscribe(
-      (token: string) => {
-        // console.log(token);
+      (token) => {
+        console.log("Token",token);
         this.goToDashboard(); // navigate to the dashboard
       },
       error => {

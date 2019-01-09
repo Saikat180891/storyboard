@@ -27,8 +27,8 @@ export class CardComponent implements OnInit, OnChanges{
   @Output('deleteSop')  deleteSop = new EventEmitter();
   rippleColor = 'rbga(0,0,0,0.2)';
   localData;
-  createSOP = "Create New SOP";
-  editSOP = "Edit SOP";
+  createSOP = "Create New Project";
+  editSOP = "Edit Project";
   currentStatus;
   myIndex;
   cardID;
