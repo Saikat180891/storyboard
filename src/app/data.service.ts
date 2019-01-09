@@ -107,7 +107,7 @@ export class DataService {
    * Get the data from the server to load the cards
    */
   fetchData(param){
-    console.log(httpOptions)
+    // console.log(httpOptions)
     return this.http.get<any[]>(this.apiUrl + param, httpOptions);
   }
 

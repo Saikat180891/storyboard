@@ -1,0 +1,61 @@
+.filter-container{
+  width: 450px;
+  // height: 270px;
+  padding: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 0 20px rgba($color: #000000, $alpha: 0.3);
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+
+  .filter-body{
+    display: flex;
+    flex-direction: column;
+
+    .form-group{
+      display: flex;
+      flex-direction: column;
+      margin: 7px 0;
+
+      .heading{
+        height: 30px;
+        line-height: 30px;
+        color: #999999;
+      }
+
+      .checkbox{
+        display: flex;
+        // justify-content: space-evenly;
+        flex-wrap: wrap;
+
+        mat-checkbox{
+          margin-right: 10px;
+        }
+
+        .mat-radio-button {
+          padding-right: 10px;
+        }
+      }
+    }
+  }
+
+  .filter-footer{
+    padding: 10px 0;
+    border-top: 1px solid rgba($color: #000000, $alpha: 0.2);
+
+    .btn-holder{
+      padding-top: 10px;
+      display: flex;
+      justify-content: center;
+
+      button{
+        width: 90px;
+      }
+
+      button:first-child{
+        margin-right: 20px;
+      }
+    }
+  }
+}
+

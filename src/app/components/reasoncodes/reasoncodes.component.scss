@@ -170,7 +170,23 @@
 }
 .filter-selected{
   width: 100%;
-  height: 35px;
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px 30px 0 30px;
+}
+.reset-filter{
+  background: transparent;
+  margin-left: 20px;
+  border-radius: 15px;
+  padding: 0 15px;
+  border: none;
+  transition: all 0.1s;
+}
+.reset-filter:hover {
+  background: #C1C1C1;
+}
+.reset-filter:active {
+  background: #bebbbb;
 }
 .animate-scale{
   top: -100%;
@@ -390,27 +406,28 @@
 .menu-btn-group{
   position: absolute;
   top: 7px;
-  right: 30px;
-  width: auto;
-  height: auto;
+  right: 0;
+  // width: auto;
+  // height: auto;
   z-index: 300;
+  display: flex;
 
   button{
     border: none;
     color: #2A7DE1;
     box-shadow: 1px 1px 4px rgba($color: #000000, $alpha: 0.15);
+    margin-right: 30px;
   }
-  button:nth-child(1){
-    position: absolute;
-    right: 250px;
-    width: 90px;
+  button:nth-child(1), button:nth-child(2){
+    background: transparent;
+    box-shadow: 0 0 0 rgba($color: #000000, $alpha: 0.15);
   }
 
-  button:nth-child(2){
-    position: absolute;
-    right: 135px;
-    width: 90px;
-  }
+  // button:nth-child(2){
+  //   position: absolute;
+  //   right: 135px;
+  //   width: 90px;
+  // }
 
 }
 ::ng-deep {
@@ -463,6 +480,11 @@
     // transform: scale(0.78,0.78);
   }
 }
+
+.badge-close{
+  margin-left: 1rem;
+  cursor: pointer;
+}
 .sprint-config-modal{
   position: absolute;
   top: 50%;
@@ -472,7 +494,7 @@
 .filter{
   position: absolute;
   top: 30px;
-  right: 134px;
+  right: 210px;
   transform: scale(0);
   opacity: 0;
   transition: all 0.1s ease; 
@@ -499,5 +521,11 @@
   p{
     color: #2A7DE1;
     font-size: 22px;
+  }
+}
+
+.material-menu {
+  ::ng-deep .mat-menu-content:not(:empty){
+    max-height: 355px;
   }
 }

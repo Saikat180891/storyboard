@@ -86,7 +86,7 @@
     </div>
   </div>
 
-  <div class="options-btn" [matMenuTriggerFor]="options" *ngIf="!restore">
+  <div class="options-btn" [matMenuTriggerFor]="options" *ngIf="!restore && disableDeleteBtn">
     <i class="fas fa-ellipsis-h"></i>
     <mat-menu #options="matMenu">
       <button mat-menu-item (click)="onDelete(userStory.id)">Delete</button>

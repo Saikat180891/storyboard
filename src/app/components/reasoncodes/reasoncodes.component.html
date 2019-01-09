@@ -36,12 +36,20 @@
   <div class="userstory-container" [ngClass]="{'userstory-container-active':fixToTop}">
     <mat-tab-group class="userstory-container-tabs" (selectedTabChange)="onTabChange($event)">
       <mat-tab label="Open U/S">
-        <!-- <div class="filter-selected">
 
-        </div> -->
+        <div class="filter-selected" *ngIf="_reasonCode.filteredValues.length > 0">
+          <mat-chip-list>
+              <mat-chip *ngFor="let filteredValue of _reasonCode.filteredValues; let i = index">
+                {{filteredValue}}
+                <i class="fas fa-times-circle badge-close" (click)="onRemoveFilter(filteredValue, i)"></i>
+              </mat-chip>
+          </mat-chip-list>
+          <button class="btn reset-filter" (click)="onClearAllFilters()">Clear all filters</button>
+        </div>
+
         <div class="card-holder" [ngClass]="{'card-holder-active':fixToTop, 'userstory-slide-left':openCreateSideBar}" *ngIf="_reasonCode.userStories" #userStoryContainer>
           
-          <app-userstory-card (deleteUserStory)="onDeleteUserStory($event)" [restore]="false" *ngFor="let userStory of _reasonCode.userStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
+          <app-userstory-card (deleteUserStory)="onDeleteUserStory($event)" [restore]="false" [disableDeleteBtn]="true" *ngFor="let userStory of _reasonCode.userStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
         </div>
 
         <!-- <ng-template #openPlaceholder> -->
@@ -52,6 +60,16 @@
         <!-- </ng-template> -->
       </mat-tab>
       <mat-tab label="Completed U/S">
+        <div class="filter-selected" *ngIf="_reasonCode.filteredValues.length > 0">
+          <mat-chip-list>
+              <mat-chip *ngFor="let filteredValue of _reasonCode.filteredValues; let i = index">
+                {{filteredValue}}
+                <i class="fas fa-times-circle badge-close" (click)="onRemoveFilter(filteredValue, i)"></i>
+              </mat-chip>
+          </mat-chip-list>
+          <button class="btn reset-filter" (click)="onClearAllFilters()">Clear all filters</button>
+        </div>
+
         <div class ='info'>
         <img src= "../../../assets/pics/info_logo.svg" height="23px" width="23px" style="display: inline">
         <div class ='info_text'>
@@ -59,10 +77,24 @@
           </div>
         </div>
         <div class="card-holder">
+<<<<<<< HEAD
             <app-userstory-card (deleteUserStory)="onDeleteUserStory($event)" [restore]="false" *ngFor="let userStory of _reasonCode.completeUserStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
+=======
+            <app-userstory-card [restore]="false" [disableDeleteBtn]="false" *ngFor="let userStory of _reasonCode.completeUserStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
+>>>>>>> b749838c5022602665f0cae3a9f479166617fafc
         </div>
       </mat-tab>
       <mat-tab label="Deleted U/S">
+        <div class="filter-selected" *ngIf="_reasonCode.filteredValues.length > 0">
+          <mat-chip-list>
+              <mat-chip *ngFor="let filteredValue of _reasonCode.filteredValues; let i = index">
+                {{filteredValue}}
+                <i class="fas fa-times-circle badge-close" (click)="onRemoveFilter(filteredValue, i)"></i>
+              </mat-chip>
+          </mat-chip-list>
+          <button class="btn reset-filter" (click)="onClearAllFilters()">Clear all filters</button>
+        </div>
+
         <div class="card-holder">
             <app-userstory-card [restore]="true" *ngFor="let userStory of _reasonCode.deletedUserStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
         </div>
@@ -70,40 +102,60 @@
     </mat-tab-group>
 
     <div class="menu-btn-group">
-      <button class="sort-btn btn btn-flat-grey" [matMenuTriggerFor]="sortby" [ngStyle]="{'visibility':'hidden'}">Sort By</button>
-      <button class="btn btn-flat-grey" (click)="openFilter()" [ngClass]="{'filter-btn-active':filter}" [ngStyle]="{'visibility':'hidden'}">Filter</button>
+      <button class="sort-btn btn btn-flat-grey" [ngClass]="{'filter-btn-active':false}" [matMenuTriggerFor]="sortby" (click)="sortBy = !sortBy"><i class="fas fa-sort-amount-down"></i> Sort By</button>
+      <button class="btn btn-flat-grey" (click)="openFilter()" [ngClass]="{'filter-btn-active':filter}"><i class="fas fa-filter"></i> Filter</button>
       <button class="btn btn-flat-grey" (click)="onCreate()" [ngStyle]="{'width':'150px'}">
         <img width="10px" height="10px" src="../../../assets/pics/plus.svg" alt="create user story"> Create New U/S
       </button>
-      <mat-menu #sortby="matMenu">
-        <button mat-menu-item [matMenuTriggerFor]="usName">U/S Name</button>
-        <button mat-menu-item [matMenuTriggerFor]="priority">Priority</button>
-        <button mat-menu-item [matMenuTriggerFor]="productivity">Productivity</button>
-        <button mat-menu-item [matMenuTriggerFor]="reasonCode">Reason Code</button>
-      </mat-menu>
+      <div class="material-menu">
+        <mat-menu #sortby="matMenu">
+          <button mat-menu-item [matMenuTriggerFor]="usName">U/S Name</button>
+          <button mat-menu-item [matMenuTriggerFor]="sprintName">Sprint Name</button>
+          <button mat-menu-item [matMenuTriggerFor]="priority">Priority</button>
+          <button mat-menu-item [matMenuTriggerFor]="reasonCode">Reason Code</button>
+          <button mat-menu-item [matMenuTriggerFor]="productivity">Productivity</button>
+          <button mat-menu-item [matMenuTriggerFor]="plannedDelivery">Planned delivery</button>
+          <button mat-menu-item [matMenuTriggerFor]="revisedDelivery">Revised delivery</button>
+        </mat-menu>
+      </div>
 
       <mat-menu #usName="matMenu">
-        <button mat-menu-item>A to Z</button>
-        <button mat-menu-item>Z to A</button>
+        <button mat-menu-item (click)="onSortBy('sort=us_name,A_to_Z')">A to Z</button>
+        <button mat-menu-item (click)="onSortBy('sort=us_name,Z_to_A')">Z to A</button>
+      </mat-menu>
+
+      <mat-menu #sprintName="matMenu">
+        <button mat-menu-item (click)="onSortBy('sort=sprintName,A_to_Z')">A to Z</button>
+        <button mat-menu-item (click)="onSortBy('sort=sprintName,Z_to_A')">Z to A</button>
       </mat-menu>
       
       <mat-menu #priority="matMenu">
-        <button mat-menu-item>High to Low</button>
-        <button mat-menu-item>Low to High</button>
+        <button mat-menu-item (click)="onSortBy('sort=priority,High_to_Low')">High to Low</button>
+        <button mat-menu-item (click)="onSortBy('sort=priority,Low_to_High')">Low to High</button>
       </mat-menu>
 
       <mat-menu #productivity="matMenu">
-        <button mat-menu-item>High to Low</button>
-        <button mat-menu-item>Low to High</button>
+        <button mat-menu-item (click)="onSortBy('sort=productivity,High_to_Low')">High to Low</button>
+        <button mat-menu-item (click)="onSortBy('sort=productivity,Low_to_High')">Low to High</button>
       </mat-menu>
 
       <mat-menu #reasonCode="matMenu">
-        <button mat-menu-item>High to Low</button>
-        <button mat-menu-item>Low to High</button>
+        <button mat-menu-item (click)="onSortBy('sort=reasonCode,A_to_Z')">A to Z</button>
+        <button mat-menu-item (click)="onSortBy('sort=reasonCode,Z_to_A')">Z to A</button>
+      </mat-menu>
+
+      <mat-menu #plannedDelivery="matMenu">
+        <button mat-menu-item (click)="onSortBy('sort=planned_delivery,Earliest_to_Latest')">Earliest to Latest</button>
+        <button mat-menu-item (click)="onSortBy('sort=planned_delivery,Latest_to_Earliest')">Latest to Earliest</button>
+      </mat-menu>
+
+      <mat-menu #revisedDelivery="matMenu">
+        <button mat-menu-item (click)="onSortBy('sort=revised_delivery,Earliest_to_Latest')">Earliest to Latest</button>
+        <button mat-menu-item (click)="onSortBy('sort=revised_delivery,Latest_to_Earliest')">Latest to Earliest</button>
       </mat-menu>
 
       <div class="filter" [ngClass]="{'filter-active': filter}">
-        <userstory-filter></userstory-filter>
+        <userstory-filter (closeFilter)="filter=$event" *ngIf="clearAllFilter"></userstory-filter>
       </div>
       
     </div>
@@ -209,3 +261,5 @@
     </div>
   </div>
 </div>
+
+<!-- <snackbar [messageTitle]="'Success'" [messageBody]="'Hello world'" [timeDelay]="5000"></snackbar> -->

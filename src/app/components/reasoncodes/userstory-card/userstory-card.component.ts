@@ -15,6 +15,8 @@ export class UserstoryCardComponent implements OnInit {
 
   @Input('restore') restore:boolean;
 
+  @Input('disableDeleteBtn') disableDeleteBtn:boolean;
+
   @Output('deleteUserStory') deleteUserStory = new EventEmitter();
 
   userStory;

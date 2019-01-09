@@ -110,6 +110,10 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
     this.__rcService.getUserStories(this.__rcService.sopId)
   }
 
+  closeAll(){
+    this.closeSprints.emit(false);
+  }
+
   onSelectYes(){
     this.addNewRow = [];
     this.changedDetected = [];
