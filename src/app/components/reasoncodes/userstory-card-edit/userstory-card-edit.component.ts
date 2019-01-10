@@ -143,11 +143,12 @@ export class UserstoryCardEditComponent implements OnInit {
   validationSuccessfull = [];
 
   onSaveAll(){
-    console.log(this.editUSData);
+    // console.log(this.editUSData);
 
     this.editUSData.planned_delivery = this.__editUS.formatDateToSendData(this.editUSData.planned_delivery);
-    console.log(this.editUSData);
-    isNaN(this.editUSData.revised_delivery) ? this.editUSData.revised_delivery = null : this.editUSData.revised_delivery = this.__editUS.formatDateToSendData(this.editUSData.revised_delivery);
+    // console.log(this.editUSData);
+    isNaN(this.editUSData.revised_delivery) || this.editUSData.revised_delivery == null ? this.editUSData.revised_delivery = null : this.editUSData.revised_delivery = this.__editUS.formatDateToSendData(this.editUSData.revised_delivery);
+
 
     console.log(this.editUSData);
     // this.statusSelected();
@@ -272,5 +273,8 @@ export class UserstoryCardEditComponent implements OnInit {
   activateRevisedDelivery: boolean = false;
   onRDChecked(value){
     this.activateRevisedDelivery = value;
+    if(value == false){
+      this.editUSData.revised_delivery = null;
+    }
   }
 }

@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit {
     this.userName = this._msAdalSvc.userInfo.profile.name;
     this.userImage = this._msAdalSvc.userInfo.profile.aio;
     localStorage.setItem("uniqueName", this._msAdalSvc.userInfo.profile.unique_name);
-    console.log(this._msAdalSvc.userInfo)
+    console.log(this._msAdalSvc)
     
   }
 
