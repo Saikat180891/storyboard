@@ -298,10 +298,15 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
     let someDate = startDate;
     switch(operation){
       case 'add':
-      someDate.setDate(someDate.getDate() + weeks * 7); 
+      someDate.setDate(someDate.getDate() + (weeks * 7) - 1); 
       break;
       case 'substract':
-      someDate.setDate(someDate.getDate() + weeks * 7); 
+      if(weeks === 0){
+        someDate.setDate(someDate.getDate() + weeks * 7);
+        }
+      else{
+      someDate.setDate(someDate.getDate() + (weeks * 7) - 1);
+      }
       break;
       default:
       break;
@@ -411,10 +416,15 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
     console.log(someDate)
     switch(operation){
       case 'add':
-      someDate.setDate(someDate.getDate() + weeks * 7); 
+      someDate.setDate(someDate.getDate() + (weeks * 7) - 1); 
       break;
       case 'substract':
-      someDate.setDate(someDate.getDate() + weeks * 7); 
+      if(weeks === 0){
+        someDate.setDate(someDate.getDate() + weeks * 7);
+        }
+      else{
+      someDate.setDate(someDate.getDate() + (weeks * 7) - 1);
+      }
       break;
       default:
       break;

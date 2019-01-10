@@ -260,3 +260,8 @@
 .border-low{
   border-left: 5px solid #EFC965;
 }
+.wrap-content{
+  text-overflow: ellipsis;
+  max-width: 100px;
+  overflow: hidden;
+}

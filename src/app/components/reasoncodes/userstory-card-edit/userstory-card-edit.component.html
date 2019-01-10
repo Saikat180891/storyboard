@@ -15,7 +15,7 @@
         <div class="input-container md">
           <div class="title" [ngClass]="{'warning':userStoryNameValidator}">User Story Name</div>
           <div class="editable">
-            <input type="text" placeholder="Ex: User Story 1" [(ngModel)]="editUSData.us_name">
+            <input type="text" placeholder="Ex: User Story 1" [(ngModel)]="editUSData.us_name" [ngStyle]="{'width':'250px'}">
           </div>
         </div>
       </div>
@@ -91,7 +91,7 @@
         <div class="input-container">
           <div class="title" [ngClass]="{'warning':userStoryDescValidator}">Description</div>
           <div class="editable">
-            <input type="text" placeholder="Add description here" [(ngModel)]="editUSData.notes">
+            <input type="text" placeholder="Add description here" maxlength="100" [(ngModel)]="editUSData.notes">
           </div>
         </div>
       </div>

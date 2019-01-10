@@ -9,15 +9,21 @@
     width: 100%;
     line-height: 50px;
     padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
 
     span{
       font-size: 18px;
     }
     span:first-child{
       color: #2A7DE1;
+      text-overflow: ellipsis;
+      max-width: 250px;
+      overflow: hidden;
+      display: block;
     }
     span:last-child{
-      float: right;
+      // float: right;
       color: #C1C1C1;
       cursor: pointer;
     }
@@ -182,4 +188,10 @@
 
     
   }
+}
+
+.wrap-content{
+  text-overflow: ellipsis;
+  max-width: 100px;
+  overflow: hidden;
 }

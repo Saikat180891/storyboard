@@ -148,17 +148,19 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
    fromEvent(window, 'scroll')
       .subscribe(res => {
         let position = res.target['scrollingElement'].scrollTop;
-        // console.log(position);
         if(position > 360){
-          // this.fixToTop = true;
+          this.fixToTop = true;
+          // console.log(this.fixToTop);
         }
       });
+    
     setTimeout(()=>{
       fromEvent(this.userStoryContainer.nativeElement, 'scroll')
       .subscribe(res => {
         // console.log(res);
-        if(res["target"].scrollTop === 0){
-          // this.fixToTop = false;
+        if(res["target"].scrollTop <= 0){
+          this.fixToTop = false;
+          // console.log(this.fixToTop);
         }
       });
     }, 500);
@@ -169,7 +171,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
   }
 
   onSelectDeletedUS(){
-    console.log("deleted us")
+    // console.log("deleted us")
     // this._deletedTable.getDeletedUserStories();
   }
 

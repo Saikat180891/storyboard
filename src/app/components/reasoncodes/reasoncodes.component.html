@@ -1,8 +1,8 @@
 <app-header></app-header>
 <div class="universal" #totalPage>
 
-  <ng-container *ngIf="!fixToTop">
-    <div class="container">
+  <ng-container>
+    <div class="container" [ngClass]="{'container-hide': fixToTop}">
       <div class="header">
   
         <div class="heading">
