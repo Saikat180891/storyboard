@@ -148,7 +148,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
    fromEvent(window, 'scroll')
       .subscribe(res => {
         let position = res.target['scrollingElement'].scrollTop;
-        console.log(position);
+        // console.log(position);
         if(position > 360){
           // this.fixToTop = true;
         }

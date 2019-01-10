@@ -1,9 +1,9 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ElementRef, AfterViewChecked, HostListener } from '@angular/core';
 import {ReasonCodeService} from '../reason-code.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {fromEvent} from 'rxjs';
 import {FormBuilder, Validators} from '@angular/forms';
-import { ElementSchemaRegistry } from '@angular/compiler';
+import {SharedServicesService} from '../../../shared-services/shared-services.service';
 
 interface SprintConfig{
   duration: string;
@@ -29,16 +29,35 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
 
   @Output('closeSprints') closeSprints = new EventEmitter<boolean>();
 
+  /**
+   * sprintConfigData contains an array of objects which is aquired from the backend to 
+   * display the number of sprints
+   */
   @Input('sprintConfigData') sprintConfigData;
 
+  /**
+   * reasonCodeConfigData contains an array of objects which is aquired from the backend to 
+   * display the number of reason-codes / epics
+   */
   @Input('reasonCodeConfigData') reasonCodeConfigData;
 
+  /**
+   * this is a dynamic variable where array elements are created by user interaction
+   * when the user clicks on the ssave all button all the elements in the array list
+   * is sent to the backend one by one
+   */
   addNewRow:SprintConfig[] = [];
 
+  /**
+   * same as addNewRow, but this is used for creating epics
+   */
   addNewRowForReasonCode:ReasonCode[] = [];
 
+  /**
+   * a flag to display show the warning depending on the user behaviour
+   */
   displayWarningBox:boolean = false;
-
+  
   sprintToDeleteId:number;
   
   sprintNameToDelete:string = '';
@@ -66,7 +85,19 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
   //this variable is used to detect if there is any change in the 'sprintConfigData' array
   changedDetected:boolean[] = [];
 
-  constructor(private __rcService:ReasonCodeService, private spinner: NgxSpinnerService,private formBuilder:FormBuilder) { }
+  constructor(
+    private __rcService:ReasonCodeService, 
+    private spinner: NgxSpinnerService, 
+    private formBuilder:FormBuilder, 
+    private __sharedService: SharedServicesService
+    ) { }
+
+  @HostListener('document:keyup.escape', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    if (event.keyCode === this.__sharedService.KEY_CODE.ESCAPE) {
+      this.closeSprints.emit(false)
+    } 
+  }
 
   ngOnInit() {
     // fromEvent(this.sprintContainer.nativeElement, 'scroll')
@@ -94,7 +125,6 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
 
   onClose(){
     this.cancel = true;
-    console.log(this.changedDetected, this.addNewRow)
     if(this.changedDetected.length > 0 || this.addNewRow.length > 0){
       this.warningBoxForCancel = true;
     }else{

@@ -32,23 +32,24 @@ export class AuthComponent {
     }
 
     this._msAdalSvc.login();
+    
   }
 
-  // acquireAzureToken() {
-  //   /**
-  //    * The below functionality to be used for generating the resource level tokens for the API
-  //    * our application will consume.
-  //    */
+  acquireAzureToken() {
+    /**
+     * The below functionality to be used for generating the resource level tokens for the API
+     * our application will consume.
+     */
 
-  //   this._msAdalSvc.acquireToken('https://graph.microsoft.com').subscribe(
-  //     (token) => {
-  //       console.log("Token",token);
-  //       this.goToDashboard(); // navigate to the dashboard
-  //     },
-  //     error => {
-  //       console.log(error);
-  //     });
-  // }
+    this._msAdalSvc.acquireToken('https://graph.microsoft.com').subscribe(
+      (token) => {
+        console.log("Token",token);
+        this.goToDashboard(); // navigate to the dashboard
+      },
+      error => {
+        console.log(error);
+      });
+  }
 
   goToDashboard() {
     this.router.navigate(['projects']);
