@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, HostListener } from '@angular/core';
 import {ReasonCodeService} from '../reason-code.service';
 import {EditUserStoryService} from './edit-user-story.service';
+import {SharedServicesService} from '../../../shared-services/shared-services.service';
 
 interface UserStory{
   us_number: string;
@@ -95,7 +96,8 @@ export class UserstoryCardEditComponent implements OnInit {
 
   constructor(
     private __rcService: ReasonCodeService, 
-    private __editUS: EditUserStoryService) { }
+    private __editUS: EditUserStoryService,
+    private __sharedService: SharedServicesService) { }
 
   ngOnInit() {
     this.onUpdateProductivity();
@@ -107,15 +109,22 @@ export class UserstoryCardEditComponent implements OnInit {
     }
     this.editUSData.revised_delivery = this.formatDateToDisplay(this.editUSData.revised_delivery);
     this.editUSDatas = this.editUSData;
-    console.log("Edit user stories", this.editUSData)
+    // console.log("Edit user stories", this.editUSData)
     this.__rcService.doneSelectStatus.subscribe(response=>{
-      console.log("Subscribed Method", response)
+      // console.log("Subscribed Method", response)
       if(response){
         this.editUSData.status = 'Done';
       }else{
         this.editUSData.status = this.editUSDatas.status;
       }
     });
+  }
+
+  @HostListener('document:keyup.escape', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    if (event.keyCode === this.__sharedService.KEY_CODE.ESCAPE) {
+      this.onClose();
+    } 
   }
 
   onClose(){

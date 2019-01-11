@@ -14,7 +14,9 @@
             </div>
           </div>
         </div>
-        <div *ngIf="filesList=='All Files'">{{filesList}}</div>
+        <div *ngIf="filesList=='All Files'">
+          <multi-chart></multi-chart>
+        </div>
       </mat-tab>
     </mat-tab-group>
     

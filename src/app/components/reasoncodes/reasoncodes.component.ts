@@ -6,6 +6,7 @@ import {ContainerService} from '../container/container.service';
 import {CreateUserstoryService} from './userstory-card-create/create-userstory.service';
 import {charts} from './chartoptions';
 import {fromEvent} from 'rxjs';
+import {SnackbarService} from '../shared/custom-snackbar/snackbar.service';
 
 export interface UserData {
   id: string;
@@ -128,7 +129,8 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
   constructor(private route: ActivatedRoute,
               private _reasonCode: ReasonCodeService,
               private _containerService: ContainerService,
-              private _createUserStory: CreateUserstoryService) {}
+              private _createUserStory: CreateUserstoryService,
+              private _snackbar: SnackbarService) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -182,6 +184,10 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
   onAddSprint(){
     // this.addSprint.push(this.addSprintPayload);
     console.log(this.addSprintPayload)
+  }
+
+  showNotification(){
+    this._snackbar.show('Success', "Hello", 2000);
   }
 
   drop(event: CdkDragDrop<string[]>) {

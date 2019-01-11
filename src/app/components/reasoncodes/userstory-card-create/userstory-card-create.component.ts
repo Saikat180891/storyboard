@@ -1,7 +1,8 @@
-import { Component, OnInit, Output, EventEmitter, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnChanges, Input, HostListener } from '@angular/core';
 import {ReasonCodeService} from '../reason-code.service';
 import {CreateUserstoryService} from './create-userstory.service';
 import { fromEvent } from 'rxjs';
+import {SharedServicesService} from '../../../shared-services/shared-services.service';
 
 interface UserStory{
   us_number: string;
@@ -104,10 +105,18 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
   productivity;
 
   constructor(private __rcService: ReasonCodeService,
-              private __createUserStory: CreateUserstoryService) { }
+              private __createUserStory: CreateUserstoryService,
+              private __sharedService: SharedServicesService) { }
 
   ngOnInit() {
 
+  }
+
+  @HostListener('document:keyup.escape', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    if (event.keyCode === this.__sharedService.KEY_CODE.ESCAPE) {
+      this.onClose();
+    } 
   }
 
   
