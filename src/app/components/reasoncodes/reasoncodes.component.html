@@ -13,6 +13,7 @@
   
         <div class="middle header__btn">
           <button [ngStyle]="{'width' : '150px'}" class="btn btn-blue btn-lg btn-shadow btn-active clearfill" (click)="onOpenAddSprint()"><i class="fas fa-cog"></i> Config Project</button>
+          <!-- <button (click)="showNotification()">click</button> -->
         </div>
   
       </div>
@@ -109,7 +110,7 @@
           <button mat-menu-item [matMenuTriggerFor]="usName">U/S Name</button>
           <button mat-menu-item [matMenuTriggerFor]="sprintName">Sprint Name</button>
           <button mat-menu-item [matMenuTriggerFor]="priority">Priority</button>
-          <button mat-menu-item [matMenuTriggerFor]="reasonCode">Reason Code</button>
+          <button mat-menu-item [matMenuTriggerFor]="reasonCode">Epics</button>
           <button mat-menu-item [matMenuTriggerFor]="productivity">Productivity</button>
           <button mat-menu-item [matMenuTriggerFor]="plannedDelivery">Planned delivery</button>
           <button mat-menu-item [matMenuTriggerFor]="revisedDelivery">Revised delivery</button>
@@ -158,11 +159,15 @@
     </div>
   </div>
 
-  <div class="create-user-story" [ngClass]="{'create-user-story-active': openCreateSideBar}">
-      <app-userstory-card-create *ngIf="openCreateSideBar" [reasonCodeOptions]="reasonCodeOptions" [sprintOptions]="sprintOptions" (close)="onCloseCreateUserStories($event)"></app-userstory-card-create>
+  <div class="transparent-overlay" [ngClass]="{'transparent-overlay-active':openCreateSideBar}">
+    <div class="create-user-story" [ngClass]="{'create-user-story-active': openCreateSideBar}">
+        <app-userstory-card-create *ngIf="openCreateSideBar" [reasonCodeOptions]="reasonCodeOptions" [sprintOptions]="sprintOptions" (close)="onCloseCreateUserStories($event)"></app-userstory-card-create>
+    </div>
   </div>
-  <div class="create-user-story" [ngClass]="{'create-user-story-active': openEditSideBar}">
-      <app-userstory-card-edit [reasonCodeOptions]="reasonCodeOptions" (warning)="onDoneWarning($event)" *ngIf="openEditSideBar" (close)="onCloseEditUserStories($event)" [editUSData]="userStoryData" [sprintOptions]="sprintOptions"></app-userstory-card-edit>
+  <div class="transparent-overlay" [ngClass]="{'transparent-overlay-active':openEditSideBar}">
+    <div class="create-user-story" [ngClass]="{'create-user-story-active': openEditSideBar}">
+        <app-userstory-card-edit [reasonCodeOptions]="reasonCodeOptions" (warning)="onDoneWarning($event)" *ngIf="openEditSideBar" (close)="onCloseEditUserStories($event)" [editUSData]="userStoryData" [sprintOptions]="sprintOptions"></app-userstory-card-edit>
+    </div>
   </div>
 
 </div>
@@ -259,4 +264,4 @@
   </div>
 </div>
 
-<!-- <snackbar [messageTitle]="'Success'" [messageBody]="'Hello world'" [timeDelay]="5000"></snackbar> -->
+<snackbar></snackbar>

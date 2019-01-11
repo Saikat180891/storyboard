@@ -86,6 +86,7 @@ import { SprintConfigComponent } from './components/reasoncodes/sprint-config/sp
 import { UserstoryFilterComponent } from './components/reasoncodes/userstory-filter/userstory-filter.component';
 import { NormalDropdownComponent } from './components/shared/normal-dropdown/normal-dropdown.component';
 import { CustomSnackbarComponent } from './components/shared/custom-snackbar/custom-snackbar.component';
+import { MultiChartComponent } from './components/reasoncodes/multi-chart/multi-chart.component';
 
 const routes = [
   {path: '', component: AuthComponent, pathMatch: 'full'},
@@ -146,6 +147,7 @@ const routes = [
     UserstoryFilterComponent,
     NormalDropdownComponent,
     CustomSnackbarComponent,
+    MultiChartComponent,
   ],
 
   imports: [

@@ -461,7 +461,7 @@
   }
 } 
 .create-user-story{
-  position: fixed;
+  position: absolute;
   bottom: 0;
   right: 0;
   transform: translateX(100%);
@@ -472,11 +472,27 @@
   background-color: #ffffff;
   z-index: 500;
   box-shadow: -3px 3px 6px rgba($color: #000000, $alpha: 0.3);
+  transition-delay: 0.1s;
+  transition: all 0.5s ease;
+}
+.transparent-overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 10000;
+  transition: all 0.2s ease;
+}
+.transparent-overlay-active{
+  opacity: 1;
+  visibility: visible;
 }
 .create-user-story-active{
   opacity: 1;
   transform: translateX(0);
-  transition: all 0.1s ease;
 }
 .userstory-slide-left{
   // transform: scale(0.75,0.75);
