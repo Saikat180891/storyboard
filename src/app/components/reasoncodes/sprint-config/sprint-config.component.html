@@ -115,7 +115,7 @@
           </mat-grid-list>
         </div>
         <div class="content-body">
-          <div class="grid-list" *ngFor="let sprintConfig of sprintConfigData; let i=index">
+          <div class="grid-list" [ngClass]="{'grid-list-current-sprint':sprintConfig.current_sprint_flag}" *ngFor="let sprintConfig of sprintConfigData; let i=index">
             <mat-grid-list cols="21" rowHeight="70px" gutterSize="10px">
               <mat-grid-tile [colspan]="1"></mat-grid-tile>
               <mat-grid-tile [colspan]="4">
