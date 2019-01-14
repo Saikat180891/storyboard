@@ -59,7 +59,7 @@
             <mat-grid-list cols="12" rowHeight="70px" gutterSize="10px">
               <mat-grid-tile>{{i+1}}</mat-grid-tile>
               <mat-grid-tile [colspan]="4">
-                <input type="text" [(ngModel)]="rcdata.name" (keyup)="onReasonCodeEdit(i)">
+                <input maxlength="30" type="text" [(ngModel)]="rcdata.name" (keyup)="onReasonCodeEdit(i)">
               </mat-grid-tile>
               <mat-grid-tile>
                 <div class="delete" (click)="onDeleteCreatedRC(rcdata.id)">
@@ -160,7 +160,7 @@
             <mat-grid-list cols="21" rowHeight="70px" gutterSize="10px">
               <mat-grid-tile [colspan]="1"></mat-grid-tile>
               <mat-grid-tile [colspan]="4">
-                <input type="text" [(ngModel)]="sprintConfig.sprint_name">
+                <input maxlength="30" type="text" [(ngModel)]="sprintConfig.sprint_name">
               </mat-grid-tile>
               <mat-grid-tile [colspan]="4">
                 <div class="p-relative">
