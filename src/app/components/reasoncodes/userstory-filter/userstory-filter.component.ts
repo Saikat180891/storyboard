@@ -23,6 +23,7 @@ export class UserstoryFilterComponent implements OnInit, AfterContentChecked {
   others2 = ['True', 'False'];
   rulesApproved:string;
   testCasesVerified:string;
+  epics:any;
 
 
   constructor(private __rcService: ReasonCodeService) { }
@@ -32,6 +33,7 @@ export class UserstoryFilterComponent implements OnInit, AfterContentChecked {
 
   ngAfterContentChecked(){
     this.sprints = this.__rcService.sprintConfig;
+    this.epics = this.__rcService.reasonCodeData;
   }
 
   onCloseFilter(){
@@ -59,7 +61,7 @@ export class UserstoryFilterComponent implements OnInit, AfterContentChecked {
     this.__rcService.filterUserStories(`/sop/epics/${this.__rcService.sopId}/userstories/filter.json`, path);
     this.__rcService.filtersAppliedFlag = true;
     this.closeFilter.emit(false);
-    // console.log(path);
+    console.log(path);
   }
   
 }

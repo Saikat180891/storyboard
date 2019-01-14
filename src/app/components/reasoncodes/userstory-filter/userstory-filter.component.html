@@ -13,8 +13,16 @@
         Sprint Name 
         <!-- | <mat-slide-toggle>Hide closed sprints</mat-slide-toggle> -->
       </div>
-      <div class="checkbox" *ngIf="sprints">
+      <div class="checkbox scrollable-checkboxes" *ngIf="sprints">
         <mat-checkbox *ngFor="let sprint of sprints; let i = index" [(ngModel)]="__rcService.filterItems['sprintName$'+sprint.sprint_name]">{{sprint.sprint_name}}</mat-checkbox>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="heading">
+        Epics
+      </div>
+      <div class="checkbox scrollable-checkboxes" *ngIf="epics">
+        <mat-checkbox *ngFor="let epic of epics; let i = index" [(ngModel)]="__rcService.filterItems['rcName$'+epic.name]">{{epic.name}}</mat-checkbox>
       </div>
     </div>
     <div class="form-group">

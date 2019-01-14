@@ -36,6 +36,12 @@
           padding-right: 10px;
         }
       }
+      .scrollable-checkboxes{
+        flex-direction: column;
+        flex-wrap: nowrap;
+        max-height: 100px;
+        overflow: auto;
+      }
     }
   }
 
