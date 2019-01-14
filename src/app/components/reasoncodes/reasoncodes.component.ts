@@ -159,7 +159,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
     setTimeout(()=>{
       fromEvent(this.userStoryContainer.nativeElement, 'scroll')
       .subscribe(res => {
-        // console.log(res);
+        console.log(res["target"].scrollTop);
         if(res["target"].scrollTop <= 0){
           this.fixToTop = false;
           // console.log(this.fixToTop);
@@ -188,6 +188,10 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
 
   showNotification(){
     this._snackbar.show('Success', "Hello", 2000);
+  }
+
+  clearAllSort(){
+    this._reasonCode.getUserStories(this._reasonCode.sopId);
   }
 
   drop(event: CdkDragDrop<string[]>) {

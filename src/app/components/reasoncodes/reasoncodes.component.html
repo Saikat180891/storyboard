@@ -107,6 +107,7 @@
       </button>
       <div class="material-menu">
         <mat-menu #sortby="matMenu">
+          <button mat-menu-item (click)="clearAllSort()">Clear sort</button>
           <button mat-menu-item [matMenuTriggerFor]="usName">U/S Name</button>
           <button mat-menu-item [matMenuTriggerFor]="sprintName">Sprint Name</button>
           <button mat-menu-item [matMenuTriggerFor]="priority">Priority</button>
