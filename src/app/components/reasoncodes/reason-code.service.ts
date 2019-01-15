@@ -2,7 +2,8 @@ import { Injectable, EventEmitter } from '@angular/core';
 import {DataService}  from '../../data.service';
 import {environment} from '../../../environments/environment';
 import {PreloaderService} from '../shared/preloader/preloader.service';
-// import { EventEmitter } from 'protractor';
+// import { EventEmitter } from 'protractor'
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,7 @@ export class ReasonCodeService {
   filterPath = '';
 
   constructor(private _api:DataService,
-              private __preLoad: PreloaderService) { }
+              private __preLoad: PreloaderService, private snackbar:MatSnackBar) { }
 
 
   /**
@@ -360,7 +361,25 @@ export class ReasonCodeService {
 
   importStories(file){
     console.log("File", file);
-    this._api.postData(`/sop/${this.sopId}/import.json`, file).subscribe(response=>{});
+    this._api.postData(`/sop/${this.sopId}/import.json`, file).subscribe(response=>{
+
+      console.log("Response",response["status"])
+      console.log("Response",response["message"])
+
+
+      if(response["status"] == "Success")
+      { 
+        this.snackbar.open("Your sprints, epics and stories are now available on the dashboard", "Success", {duration : 2000, panelClass: "style-success"});
+      }
+      else if(response["status"]=="Failure")
+      {
+        this.snackbar.open(response["message"], "Fail", {duration: 4000, panelClass: "style-error"});
+      }
+      else{
+        this.snackbar.open("Please check the template and try again." , "Fail", {duration : 3000, panelClass: "style-error"});
+      }
+
+    });
   }
   downloadFile(){
     window.location.href = this._api.apiUrl+`/sop/${this.sopId}/export.json`;

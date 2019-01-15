@@ -231,7 +231,7 @@ export class UserstoryCardEditComponent implements OnInit {
         this.editUSData.dev_hrs = '';
       }
       console.log("From the edit user story",this.editUSData);
-      let rc_id = -1;
+      let rc_id = 0;
       this.__rcService.reasonCodeData.forEach(element=>{
         if(element.name === this.editUSData.rc_name){
           rc_id = element.id;

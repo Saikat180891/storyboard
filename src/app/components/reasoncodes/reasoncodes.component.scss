@@ -560,3 +560,18 @@
     max-height: 355px;
   }
 }
+
+.style-success {
+  color: blue;
+  background-color: blue;
+}
+.style-success .mat-simple-snackbar-action  {
+  color: blue;
+}
+.style-error {
+  color: red;
+  background-color: red;
+}
+.style-error .mat-simple-snackbar-action {
+  color: red;
+}
