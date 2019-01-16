@@ -60,7 +60,7 @@ export interface ReceivedSprintConfig{
 @Component({
   selector: 'app-reasoncodes',
   templateUrl: './reasoncodes.component.html',
-  styleUrls: ['./reasoncodes.component.scss', './move-user-story.scss','./draggable.scss', './completed-warning.scss']
+  styleUrls: ['./reasoncodes.component.scss', './move-user-story.scss','./draggable.scss', './completed-warning.scss', './export.scss']
 })
 export class ReasoncodesComponent implements OnInit, AfterViewInit {
   @ViewChild('totalPage') totalPage:ElementRef;
@@ -83,6 +83,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
   warning: boolean = false;
   warningToDeleteUserStory:boolean = false;
   clearAllFilter:boolean = true;
+  openExport:boolean = false;
 
   addSprintPayload:SprintConfig = {
     sprint_name: '',
@@ -301,6 +302,10 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
 
   onDoneWarning($event){
     this.warning = $event;
+  }
+
+  onOpenExport(){
+    this.openExport = !this.openExport;
   }
 
   onSelectNo(){

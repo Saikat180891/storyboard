@@ -373,10 +373,10 @@ export class ReasonCodeService {
       }
       else if(response["status"]=="Failure")
       {
-        this.snackbar.open(response["message"], "Fail", {duration: 4000, panelClass: "style-error"});
+        this.snackbar.open(response["message"], "Fail");
       }
       else{
-        this.snackbar.open("Please check the template and try again." , "Fail", {duration : 3000, panelClass: "style-error"});
+        this.snackbar.open("Please check the template and try again." , "Fail");
       }
 
     });
