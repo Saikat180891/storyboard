@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import {trigger,transition,style,animate,state} from '@angular/animations';
 
-import {AppcontrolService} from '../../controlservice/appcontrol.service';
-import {DataService} from '../../data.service';
+import {AppcontrolService} from '../../../services/controlservice/appcontrol.service';
+import {DataService} from '../../../data.service';
 import {CardService} from './card.service';
 import {ContainerService} from '../container/container.service';
-import {PreloaderService} from '../shared/preloader/preloader.service';
+import {PreloaderService} from '../../shared/preloader/preloader.service';
 
 @Component({
   selector: 'app-card',

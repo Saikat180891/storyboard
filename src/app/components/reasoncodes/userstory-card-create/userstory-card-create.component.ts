@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, OnChanges, Input, HostListener
 import {ReasonCodeService} from '../reason-code.service';
 import {CreateUserstoryService} from './create-userstory.service';
 import { fromEvent } from 'rxjs';
-import {SharedServicesService} from '../../../shared-services/shared-services.service';
+import {SharedServicesService} from '../../../services/shared-services/shared-services.service';
 
 interface UserStory{
   us_number: string;

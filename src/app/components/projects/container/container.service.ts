@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import {DataService} from '.././../data.service';
-import {AppcontrolService} from '../../controlservice/appcontrol.service';
-import {CommondbService} from '../../commondb.service';
+import {DataService} from '.././../../data.service';
+import {AppcontrolService} from '../../../services/controlservice/appcontrol.service';
+import {CommondbService} from '../../../commondb.service';
 
 @Injectable({
     providedIn: 'root'

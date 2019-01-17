@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ActivatedRoute } from '@angular/router';
 import {ReasonCodeService} from './reason-code.service';
-import {ContainerService} from '../container/container.service';
+import {ContainerService} from '../projects/container/container.service';
 import {CreateUserstoryService} from './userstory-card-create/create-userstory.service';
 import {charts} from './chartoptions';
 import {fromEvent} from 'rxjs';

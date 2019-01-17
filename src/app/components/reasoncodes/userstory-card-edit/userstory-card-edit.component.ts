@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input, HostListener } from '@angular/core';
 import {ReasonCodeService} from '../reason-code.service';
 import {EditUserStoryService} from './edit-user-story.service';
-import {SharedServicesService} from '../../../shared-services/shared-services.service';
+import {SharedServicesService} from '../../../services/shared-services/shared-services.service';
 
 interface UserStory{
   us_number: string;

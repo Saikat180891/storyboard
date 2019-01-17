@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, OnChanges, AfterViewInit, AfterContentInit, HostListener } from '@angular/core';
 import {FormBuilder, FormGroup, FormControlName, FormControl, Validators} from '@angular/forms';
-import {slideDown, hideInOut} from '../../animation';
+import {slideDown, hideInOut} from '../../../animation';
 
-import {AppcontrolService} from '../../controlservice/appcontrol.service';
-import {DataService} from '../../data.service';
+import {AppcontrolService} from '../../../services/controlservice/appcontrol.service';
+import {DataService} from '../../../data.service';
 import {ContainerService} from '../container/container.service';
-import {PreloaderService} from '../shared/preloader/preloader.service';
+import {PreloaderService} from '../../shared/preloader/preloader.service';
 
 
 export enum KEY_CODE {
@@ -141,7 +141,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * @param event 
    */
   onKeyPress(event){
-    console.log(this.assigneeName)
+    console.log(event.target.value);
     this.options = this.arr.filter(calc(this.assigneeName))
     function calc(elementToSearch){
       return function(element){
@@ -158,7 +158,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     if(this.assigneeName == ""){
       this.options = [];
     }
-    console.log(this.options)
+    // console.log(this.options)
   }
 
   /**

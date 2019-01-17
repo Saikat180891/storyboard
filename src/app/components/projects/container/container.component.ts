@@ -1,14 +1,13 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { DataService } from '../../data.service';
+import { DataService } from '../../../data.service';
 import { trigger, transition, style, animate, state } from '@angular/animations';
-import { AppcontrolService } from '../../controlservice/appcontrol.service';
+import { AppcontrolService } from '../../../services/controlservice/appcontrol.service';
 import {ContainerService} from './container.service';
-
 
 @Component({
   selector: 'app-container',
   templateUrl: './container.component.html',
-  styleUrls: ['./container.component.scss', '../reasoncodes/completed-warning.scss'],
+  styleUrls: ['./container.component.scss', '../../reasoncodes/completed-warning.scss'],
 //   animations:[
 //     trigger('rotatedState', [
 //       state('default', style({ transform: 'rotate(0)' })),

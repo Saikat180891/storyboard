@@ -3,7 +3,7 @@ import {ReasonCodeService} from '../reason-code.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {fromEvent} from 'rxjs';
 import {FormBuilder, Validators} from '@angular/forms';
-import {SharedServicesService} from '../../../shared-services/shared-services.service';
+import {SharedServicesService} from '../../../services/shared-services/shared-services.service';
 
 interface SprintConfig{
   duration: string;

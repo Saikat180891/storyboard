@@ -100,7 +100,7 @@
       <div class="dialog-group padding-all height-auto padding-top-0" id="add-assign">
           <div class="input-box padding-top-0 relative">
             <label for="ASN-box">Assign To</label>
-            <input type="text" id="ASN-box" placeholder="Type name or email address" (keyup)="onKeyPress()">
+            <input type="text" id="ASN-box" placeholder="Type name or email address" (keyup)="onKeyPress($event)">
             <div class="autocomplete" *ngIf="options; else load">
               <ng-container *ngFor="let option of options; let i=index">
                 <span class="autocomplete-item" *ngIf="i<3" (click)="onSelect(option)">{{option}}</span>
