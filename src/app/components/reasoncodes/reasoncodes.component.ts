@@ -152,7 +152,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
       .subscribe(res => {
         let position = res.target['scrollingElement'].scrollTop;
         if(position > 360){
-          this.fixToTop = true;
+          // this.fixToTop = true;
           // console.log(this.fixToTop);
         }
       });
@@ -162,7 +162,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
       .subscribe(res => {
         console.log(res["target"].scrollTop);
         if(res["target"].scrollTop <= 0){
-          this.fixToTop = false;
+          // this.fixToTop = false;
           // console.log(this.fixToTop);
         }
       });

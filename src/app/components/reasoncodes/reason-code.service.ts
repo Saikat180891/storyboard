@@ -119,6 +119,8 @@ export class ReasonCodeService {
         response.forEach(element=>{
           element['productivity'] = (parseFloat(element.ftes) / parseFloat(element.dev_hrs)).toFixed(1);
           element['productivity'] = isFinite(element['productivity']) ? element['productivity'] : '----';
+          element['planned_delivery'] = this.reArrangeDate(element['planned_delivery']);
+          element['revised_delivery'] = element['revised_delivery'] != null ? this.reArrangeDate(element['revised_delivery']) : '-----';
         });
         this.deletedUserStories = response;
         // this.getUserStories(id);
@@ -182,6 +184,8 @@ export class ReasonCodeService {
         response.forEach(element=>{
           element['productivity'] = (parseFloat(element.ftes) / parseFloat(element.dev_hrs)).toFixed(1);
           element['productivity'] = isFinite(element['productivity']) ? element['productivity'] : '----';
+          element['planned_delivery'] = this.reArrangeDate(element['planned_delivery']);
+          element['revised_delivery'] = element['revised_delivery'] != null ? this.reArrangeDate(element['revised_delivery']) : '-----';
         });
         this.completeUserStories = response;
         console.log("The completed user stories are" ,response);

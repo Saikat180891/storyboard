@@ -6,6 +6,8 @@ import {AppcontrolService} from '../../controlservice/appcontrol.service';
 import {DataService} from '../../data.service';
 import {ContainerService} from '../container/container.service';
 import {PreloaderService} from '../shared/preloader/preloader.service';
+import { timeout } from 'q';
+import { SELECT_PANEL_INDENT_PADDING_X , MatSnackBar, MatSnackBarConfig} from '@angular/material';
 
 
 export enum KEY_CODE {
@@ -81,7 +83,9 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
               private _dataService:DataService,
               private _ContainerService:ContainerService,
               private formBuilder: FormBuilder,
-              private _preloaderService: PreloaderService) {
+              private _preloaderService: PreloaderService,
+              private snackBar: MatSnackBar
+              ) {
 
               this._UIControllerService.data.subscribe(
                   (data:any)=>{
@@ -316,8 +320,8 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
 
       this._dataService.postData('/sop.json',  formData)
       .subscribe(
+        //if response successfull
         (response)=> {
-          console.log("Response ",response);
           if(response){
             this._ContainerService.cardContents.push(
               {
@@ -327,15 +331,24 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
                 logo: response["image_url"]
               }
             );
-            console.log("this is the service contents", this._ContainerService.cardContents)
+            console.log(this._ContainerService.cardContents)
           }
-          this._preloaderService.openPreloader = false;
           this.onOverlayClose();
-          setTimeout(()=>{
-            this._preloaderService.openPreloader = false;
-          });
+          this._preloaderService.openPreloader = false;
+          this.snackBar.open("Project has been created", "Success", {duration: 2000});
         },
-        (err)=> console.log(err)
+        //if response not successfull
+        (err)=> {
+          console.error("ERROR",err);
+          if(err.status == 0 || err.status >= 400){
+            setTimeout(()=>{
+              this._preloaderService.openPreloader = false;
+            }, 2000);
+
+            console.log("ERROR :", err.statusText);
+            this.snackBar.open(err.statusText, "Failed", {duration: 2000});
+          }
+        }
       );
     }
   }

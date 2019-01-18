@@ -183,7 +183,7 @@
 <div class="overlay animate-scale" [ngClass]="{'animate-scale-active': openAddSprint}">
 
   <div class="sprint-config-modal">
-    <sprint-config *ngIf="openAddSprint" [reasonCodeConfigData]="_reasonCode.reasonCodeData" [sprintConfigData]="_reasonCode.sprintConfig" (closeSprints)="openAddSprint=$event"></sprint-config>
+    <sprint-config *ngIf="openAddSprint" [reasonCodeConfigData]="_reasonCode.reasonCodeData" [sprintConfigData]="_reasonCode.sprintConfig" (closeSprints)="openAddSprint=$event;onClearAllFilters()"></sprint-config>
   </div>
   
 </div>
