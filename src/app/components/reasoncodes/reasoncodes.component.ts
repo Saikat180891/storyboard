@@ -84,6 +84,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
   warningToDeleteUserStory:boolean = false;
   clearAllFilter:boolean = true;
   openExport:boolean = false;
+  showBenefitsChart:boolean = false;
 
   addSprintPayload:SprintConfig = {
     sprint_name: '',
@@ -180,6 +181,14 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
 
   getChart(){
     this._reasonCode.getChartData(35);
+  }
+
+  onCloseBenefits(){
+    this.showBenefitsChart = false;
+  }
+
+  onShowBenefits(){
+    this.showBenefitsChart = true;
   }
 
   onAddSprint(){

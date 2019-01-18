@@ -576,3 +576,32 @@
 .style-error .mat-simple-snackbar-action {
   color: red;
 }
+
+.benefits-frame{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #F47074;
+  min-width: 300px;
+  min-height: 300px;
+}
+.frame-close{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #cccccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  color: #707070;
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  cursor: pointer;
+
+  i{
+    cursor: pointer;
+  }
+}
