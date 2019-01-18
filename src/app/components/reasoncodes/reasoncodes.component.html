@@ -56,7 +56,7 @@
         <!-- <ng-template #openPlaceholder> -->
           <div class="card-holder user-story-placeholder" *ngIf="_reasonCode.userStories.length == 0">
             <img width="40px" height="40px" src="../../../assets/pics/open_user_story.svg" alt="placeholder">
-            <p>Hi there, Start by creating User Story & Sprints</p>
+            <p>Get started by creating user stories & sprints</p>
           </div>
         <!-- </ng-template> -->
       </mat-tab>
@@ -183,7 +183,7 @@
 <div class="overlay animate-scale" [ngClass]="{'animate-scale-active': openAddSprint}">
 
   <div class="sprint-config-modal">
-    <sprint-config *ngIf="openAddSprint" [reasonCodeConfigData]="_reasonCode.reasonCodeData" [sprintConfigData]="_reasonCode.sprintConfig" (closeSprints)="openAddSprint=$event"></sprint-config>
+    <sprint-config *ngIf="openAddSprint" [reasonCodeConfigData]="_reasonCode.reasonCodeData" [sprintConfigData]="_reasonCode.sprintConfig" (closeSprints)="openAddSprint=$event;onClearAllFilters()"></sprint-config>
   </div>
   
 </div>

@@ -34,6 +34,7 @@ import {MatRippleModule} from '@angular/material/core';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {DateAdapter} from '@angular/material';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 import {DataService} from './data.service';
@@ -183,7 +184,8 @@ const routes = [
     HttpClientModule,
     MatInputModule,
     NgxSpinnerModule,
-    MatTableModule,
+    MatTableModule,    
+    MatSnackBarModule,
     RouterModule.forRoot(routes),
     MsAdalAngular6Module.forRoot({
       tenant: '217024cc-23bf-42d2-a7cf-d270166db3e2',
@@ -198,6 +200,7 @@ const routes = [
   providers: [
     DataService, 
     MatDatepickerModule,
+    MatSnackBarModule,
     AppcontrolService, 
     ContainerService, 
     AuthenticationGuard, 

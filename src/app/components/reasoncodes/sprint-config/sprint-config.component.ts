@@ -132,12 +132,13 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
       this.changedDetected = [];
       this.closeSprints.emit(false);
     }
+    //#TODO: please put a check to see if the save button is clicked or not, if yes only then execute the below lines
     this.__rcService.getBenefits(this.__rcService.sopId);          
     this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
     this.__rcService.getProjectStatus(this.__rcService.sopId);
     this.__rcService.getCurrentSprintData(this.__rcService.sopId);
     this.__rcService.getSprintStatus(this.__rcService.sopId);
-    this.__rcService.getUserStories(this.__rcService.sopId)
+    this.__rcService.getUserStories(this.__rcService.sopId);
   }
 
   closeAll(){
@@ -162,6 +163,11 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
   }
 
   onSaveAllChanges(){
+    this.saveSprint();
+    this.saveEpics();
+  }
+
+  async saveSprint(){
     this.spinner.show();
     if(this.addNewRow.length > 0){
       this.__rcService.createSprint(this.addNewRow);
@@ -237,7 +243,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
     this.addNewRowForReasonCode.push(temObj);
   }
 
-  onSaveAllChangesInRC(){
+  async saveEpics(){
     if(this.reasonCodeEditChangeDetector.length > 0){
       this.reasonCodeEditChangeDetector.forEach((element, index)=>{
         if(element){
@@ -366,10 +372,10 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
         this.dateCounter = 0;
         // this.addNewRow[index].duration = this.dateCounter + 'W'
       }else{
-      this.addNewRow[index].duration = (this.dateCounter -= 1) + 'W';
+        this.addNewRow[index].duration = (this.dateCounter -= 1) + 'W';
       }
     }else if(this.addNewRow[index].start_date){
-      this.addNewRow[index].duration = (this.dateCounter -= 1) + 'W';
+      this.addNewRow[index].duration = (this.dateCounter == 0? this.dateCounter = 0 : this.dateCounter -= 1) + 'W';
     }
 
     if(this.addNewRow[index].start_date){
@@ -377,7 +383,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
 
       this.createEndDate(startDate, index, 'substract', this.dateCounter);
   
-      console.log(this.lastIndex, this.dateCounter);
+      // console.log(this.lastIndex, this.dateCounter);
 
       this.warning = false;
     }else{

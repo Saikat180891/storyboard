@@ -1,0 +1,19 @@
+.export{
+    position: fixed;
+    top: 7rem;
+    // background-color: #ffffff;
+    z-index: 10000;
+    right: 30px;
+    opacity: 0;
+    transform-origin: right top;
+    // transform: scale(0);
+    transition: all 0.3s ease;
+}
+.export-active{
+    opacity: 1;
+    // transform: scale(1);
+}
+.btn-export-active{
+    color: rgb(42, 125, 225);
+    background: #ffffff;
+}

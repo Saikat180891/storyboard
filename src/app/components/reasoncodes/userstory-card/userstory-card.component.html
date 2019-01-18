@@ -9,7 +9,7 @@
     </div>
     <div class="col c12">
       <span>User Story Name</span>
-      <span class="wrap-content" matTooltip="{{userStory.us_name}}" matTooltipPosition="right" *ngIf="userStory.notes.length > 20; else smallUsName">{{userStory.us_name}}</span>
+      <span class="wrap-content" matTooltip="{{userStory.us_name}}" matTooltipPosition="right" *ngIf="userStory.us_name.length > 20; else smallUsName">{{userStory.us_name}}</span>
       <ng-template #smallUsName>
         <span class="wrap-content">{{userStory.us_name}}</span>
       </ng-template>
@@ -20,7 +20,7 @@
   <div class="box row r2">
     <div class="col c2 reduce-padding">
       <span class="h-center">Priority</span>
-      <span class="priority" [ngStyle]="{'margin':'0 auto'}">
+      <span class="priority" [ngStyle]="{'margin':'7px auto'}">
         <span class="circle" 
         [ngClass]="{'high' : userStory.priority === 'High', 'medium' : userStory.priority === 'Medium', 'low' : userStory.priority === 'Low'}"></span>
         <span class="priority-text" 

@@ -20,6 +20,11 @@ export class EditUserStoryService {
 
     }else{
       sprintID = 0;
+    }    
+    if(reasonCodeId){
+
+    }else{
+      reasonCodeId = 0;
     }
     const api = `/sop/reasoncode/userstories/${usID}/update/${sprintID}.json`;
     console.log(api);

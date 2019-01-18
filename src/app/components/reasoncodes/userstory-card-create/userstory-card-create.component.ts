@@ -206,7 +206,7 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
         delete this.userStoryPayload.dev_hrs;
       }
 
-      let rc_id = -1;
+      let rc_id = 0;
       this.__rcService.reasonCodeData.forEach(element=>{
         if(element.name === this.userStoryPayload.rc_name){
           rc_id = element.id;
