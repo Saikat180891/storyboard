@@ -13,7 +13,7 @@
   
         <div class="middle header__btn">
           <button [ngStyle]="{'width' : '150px'}" class="btn btn-blue btn-lg btn-shadow btn-active clearfill" (click)="onOpenAddSprint()"><i class="fas fa-cog"></i> Config Project</button>
-          <!-- <button (click)="showNotification()">click</button> -->
+          <button [ngStyle]="{'width' : '100px', 'margin-left': '20px'}" [ngClass]="{'btn-export-active':openExport}" class="btn btn-blue btn-lg btn-shadow btn-active clearfill" (click)="onOpenExport()"><i class="fas fa-file-export"></i> Export</button>
         </div>
   
       </div>
@@ -272,4 +272,9 @@
   </div>
 </div>
 
-<snackbar></snackbar>
+<!-- <snackbar></snackbar> -->
+
+
+<div class="export" [ngClass]="{'export-active':openExport}">
+  <export-dialog-box></export-dialog-box>
+</div>

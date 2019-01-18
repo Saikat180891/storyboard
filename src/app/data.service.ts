@@ -116,7 +116,7 @@ export class DataService {
   }
 
   postData(param, body){
-    return this.http.post(this.apiUrl + param, body, httpOptions);
+    return this.http.post<any[]>(this.apiUrl + param, body, httpOptions);
   }
 
   fetchFile(param){

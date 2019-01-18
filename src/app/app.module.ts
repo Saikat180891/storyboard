@@ -36,7 +36,6 @@ import {DateAdapter} from '@angular/material';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 
-
 import {DataService} from './data.service';
 import {AppcontrolService} from './controlservice/appcontrol.service';
 import {ContainerService} from '../app/components/container/container.service';
@@ -88,6 +87,7 @@ import { UserstoryFilterComponent } from './components/reasoncodes/userstory-fil
 import { NormalDropdownComponent } from './components/shared/normal-dropdown/normal-dropdown.component';
 import { CustomSnackbarComponent } from './components/shared/custom-snackbar/custom-snackbar.component';
 import { MultiChartComponent } from './components/reasoncodes/multi-chart/multi-chart.component';
+import { ExportDialogBoxComponent } from './components/reasoncodes/export-dialog-box/export-dialog-box.component';
 
 const routes = [
   {path: '', component: AuthComponent, pathMatch: 'full'},
@@ -149,6 +149,7 @@ const routes = [
     NormalDropdownComponent,
     CustomSnackbarComponent,
     MultiChartComponent,
+    ExportDialogBoxComponent,
   ],
 
   imports: [
@@ -184,7 +185,7 @@ const routes = [
     HttpClientModule,
     MatInputModule,
     NgxSpinnerModule,
-    MatTableModule,    
+    MatTableModule,
     MatSnackBarModule,
     RouterModule.forRoot(routes),
     MsAdalAngular6Module.forRoot({
