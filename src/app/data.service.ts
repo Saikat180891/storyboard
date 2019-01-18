@@ -4,11 +4,11 @@ import { HttpClient, HttpRequest } from '@angular/common/http';
 import {environment} from '../environments/environment';
 import { HttpHeaders} from '@angular/common/http';
 import { ResponseContentType } from '@angular/http'
-
+import { CookieService } from 'ngx-cookie-service';
 
 export const httpOptions = {
   headers: new HttpHeaders({
-        'X-CSRFToken': document.cookie.split('=')[1],
+        'X-CSRFToken': localStorage.getItem("csrftoken"),
   })
 };
 

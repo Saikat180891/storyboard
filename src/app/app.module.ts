@@ -86,7 +86,6 @@ import { ColoredDropdownComponent } from './components/shared/colored-dropdown/c
 import { SprintConfigComponent } from './components/reasoncodes/sprint-config/sprint-config.component';
 import { UserstoryFilterComponent } from './components/reasoncodes/userstory-filter/userstory-filter.component';
 import { NormalDropdownComponent } from './components/shared/normal-dropdown/normal-dropdown.component';
-import { CustomSnackbarComponent } from './components/shared/custom-snackbar/custom-snackbar.component';
 import { MultiChartComponent } from './components/reasoncodes/multi-chart/multi-chart.component';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -148,7 +147,6 @@ const routes = [
     SprintConfigComponent,
     UserstoryFilterComponent,
     NormalDropdownComponent,
-    CustomSnackbarComponent,
     MultiChartComponent,
   ],
 

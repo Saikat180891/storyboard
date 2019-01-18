@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ElementRef, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, ElementRef, OnInit, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +6,7 @@ import { Component, Output, EventEmitter, ElementRef, OnInit } from '@angular/co
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
 
   constructor(){
 

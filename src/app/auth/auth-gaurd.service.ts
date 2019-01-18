@@ -37,6 +37,9 @@ export class AuthGaurdService implements CanActivate {
         this.router.navigate(['/projects']);
         const value = this.cookieService.getAll();
         localStorage.setItem("csrftoken", value["csrftoken"]);
+        if(res["name"]){
+          localStorage.setItem("userName", res["name"]);
+        }
         return true;
       }else{
         this.router.navigate(['/']);

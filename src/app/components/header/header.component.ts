@@ -32,14 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    // this._userInfo.getUserName();
-    // this._msAdalSvc.LoggedInUserName()
-    // family_name: "Paul"
-    // given_name: "Saikat"
-    // this.userName = this._msAdalSvc.userInfo.profile.name;
-    // this.userImage = this._msAdalSvc.userInfo.profile.aio;
-    // localStorage.setItem("uniqueName", this._msAdalSvc.userInfo.profile.unique_name);
-    // console.log(this._msAdalSvc)
+    this.userName = localStorage.getItem("userName");
     console.log(this.cookieService.getAll())
     
   }
