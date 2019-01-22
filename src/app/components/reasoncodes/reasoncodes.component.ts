@@ -2,12 +2,12 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ActivatedRoute } from '@angular/router';
 import {ReasonCodeService} from './reason-code.service';
-import {ContainerService} from '../container/container.service';
+import {ContainerService} from '../projects/container/container.service';
 import {CreateUserstoryService} from './userstory-card-create/create-userstory.service';
 import {charts} from './chartoptions';
 import {fromEvent} from 'rxjs';
-import {SnackbarService} from '../shared/custom-snackbar/snackbar.service';
-
+import {environment} from '../../../environments/environment';
+import {PreloaderService} from '../shared/preloader/preloader.service';
 export interface UserData {
   id: string;
   name: string;
@@ -107,32 +107,32 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
 
   addSprint = [this.addSprintPayload];
 
-  fruits = [
-    {name: 'Lemon'},
-    {name: 'Lime'},
-    {name: 'Apple'},
-  ];
+  // fruits = [
+  //   {name: 'Lemon'},
+  //   {name: 'Lime'},
+  //   {name: 'Apple'},
+  // ];
 
-  todo = [
-    'Get to work',
-    'Pick up groceries',
-    'Go home',
-    'Fall asleep'
-  ];
+  // todo = [
+  //   'Get to work',
+  //   'Pick up groceries',
+  //   'Go home',
+  //   'Fall asleep'
+  // ];
 
-  done = [
-    'Get up',
-    'Brush teeth',
-    'Take a shower',
-    'Check e-mail',
-    'Walk dog'
-  ];
+  // done = [
+  //   'Get up',
+  //   'Brush teeth',
+  //   'Take a shower',
+  //   'Check e-mail',
+  //   'Walk dog'
+  // ];
 
   constructor(private route: ActivatedRoute,
               private _reasonCode: ReasonCodeService,
               private _containerService: ContainerService,
               private _createUserStory: CreateUserstoryService,
-              private _snackbar: SnackbarService) {}
+              private __preloaderService: PreloaderService) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -168,7 +168,6 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
         }
       });
     }, 500);
-
   }
 
   ngAfterViewInit(){
@@ -187,7 +186,13 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
     this.showBenefitsChart = false;
   }
 
+  benefitChartImage:string;
   onShowBenefits(){
+    if(environment.production){
+      this.benefitChartImage = `http://storyboard.service.soroco/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png`;
+    }else{
+      this.benefitChartImage = `http://localhost:8000/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png`;
+    }
     this.showBenefitsChart = true;
   }
 
@@ -197,7 +202,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
   }
 
   showNotification(){
-    this._snackbar.show('Success', "Hello", 2000);
+    
   }
 
   clearAllSort(){

@@ -62,7 +62,7 @@
                 <input maxlength="30" type="text" [(ngModel)]="rcdata.name" (keyup)="onReasonCodeEdit(i)">
               </mat-grid-tile>
               <mat-grid-tile>
-                <div class="delete" (click)="onDeleteCreatedRC(rcdata.id)">
+                <div class="delete" (click)="onDeleteCreatedRC(rcdata.id, i)">
                   <i class="far fa-trash-alt"></i>
                 </div>
               </mat-grid-tile>

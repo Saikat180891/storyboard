@@ -1,26 +1,24 @@
 <nav class="navbar">
   <div class="brand" routerLink="/projects">Storyboard</div>
 
-  
-
   <div class="profile">
 
-    <span class="profile__name">{{userName}}</span>
+    <div class="profile__name">{{userName}}</div>
 
-    <span class="profile__pic">
-      <img src="../../../assets/pics/default.jpg" [alt]="userName">
-    </span>
+    <div class="profile__pic">
+      <img src="../../../assets/pics/default.jpg" [alt]="">
+    </div>
 
-    <span class="arrow-menu">
+    <div class="arrow-menu">
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <i class="fas fa-angle-down"></i>  
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item  (click)="logout()">
-          <span>Logout</span>
-        </button>
+        <a mat-menu-item  href="{{__api.apiUrl}}/logoutUser" (click)="onLogout()">
+          Logout
+        </a>
       </mat-menu>
-    </span>
+    </div>
 
   </div>
 </nav>

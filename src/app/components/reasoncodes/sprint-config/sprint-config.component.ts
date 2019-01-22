@@ -2,8 +2,9 @@ import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ElementRef, 
 import {ReasonCodeService} from '../reason-code.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {fromEvent} from 'rxjs';
+import {PreloaderService} from '../../shared/preloader/preloader.service';
 import {FormBuilder, Validators} from '@angular/forms';
-import {SharedServicesService} from '../../../shared-services/shared-services.service';
+import {SharedServicesService} from '../../../services/shared-services/shared-services.service';
 
 interface SprintConfig{
   duration: string;
@@ -89,7 +90,8 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
     private __rcService:ReasonCodeService, 
     private spinner: NgxSpinnerService, 
     private formBuilder:FormBuilder, 
-    private __sharedService: SharedServicesService
+    private __sharedService: SharedServicesService,
+    private _preloadService: PreloaderService
     ) { }
 
   @HostListener('document:keyup.escape', ['$event'])
@@ -111,16 +113,16 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
   ngAfterViewChecked() {        
     // this.scrollToBottom();   
          
-    this.sprintContainer.nativeElement.scrollTo({
-      top: this.sprintContainer.nativeElement.scrollHeight,
-      left: 0,
-      behavior: 'smooth'
-    });
-    this.rcContainer.nativeElement.scrollTo({
-      top: this.rcContainer.nativeElement.scrollHeight,
-      left: 0,
-      behavior: 'smooth'
-    });
+    // this.sprintContainer.nativeElement.scrollTo({
+    //   top: this.sprintContainer.nativeElement.scrollHeight,
+    //   left: 0,
+    //   behavior: 'smooth'
+    // });
+    // this.rcContainer.nativeElement.scrollTo({
+    //   top: this.rcContainer.nativeElement.scrollHeight,
+    //   left: 0,
+    //   behavior: 'smooth'
+    // });
   } 
 
   onClose(){
@@ -175,6 +177,8 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
       this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
       this.__rcService.getProjectStatus(this.__rcService.sopId);
       this.__rcService.getCurrentSprintData(this.__rcService.sopId);
+      this.__rcService.getSprintStatus(this.__rcService.sopId);
+      this.__rcService.getUserStories(this.__rcService.sopId)
     }
     // else if(this.changedDetected.length === 0 && this.addNewRow.length === 0){
     //   this.onSelectYes();
@@ -291,7 +295,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
     this.reasonCodeEditChangeDetector[index] = true;
   }
 
-  onDeleteCreatedRC(id){
+  onDeleteCreatedRC(id, index){
     this.__rcService.deleteReasonCode(id);
     this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
   }
@@ -533,6 +537,8 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
 
   exportToExcel(){
     console.log("Downloading File");
+    // this.__preload.openPreloader = true;
     this.__rcService.downloadFile();
+    // this.__preload.openPreloader = false;
   }
 }

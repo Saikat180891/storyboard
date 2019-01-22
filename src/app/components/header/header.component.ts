@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import {HeaderService} from './header.service';
-import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
+import {DataService} from '../../data.service';
+import { CookieService } from 'ngx-cookie-service';
+
+// import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
 
 @Component({
   selector: 'app-header',
@@ -16,31 +19,32 @@ import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
 ])
   ]
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   userName: string = '';
   userImage;
 
   constructor(
-    private _msAdalSvc: MsAdalAngular6Service,
-    private _userInfo: HeaderService
+    // private _msAdalSvc: MsAdalAngular6Service,
+    private _userInfo: HeaderService,
+    private __api: DataService,
+    private cookieService: CookieService
   ) { }
 
   ngOnInit() {
-    // this._userInfo.getUserName();
-    // this._msAdalSvc.LoggedInUserName()
-    // family_name: "Paul"
-    // given_name: "Saikat"
-    this.userName = this._msAdalSvc.userInfo.profile.name;
-    this.userImage = this._msAdalSvc.userInfo.profile.aio;
-    localStorage.setItem("uniqueName", this._msAdalSvc.userInfo.profile.unique_name);
-    console.log(this._msAdalSvc)
+    this.userName = localStorage.getItem("userName");
+    console.log(this.cookieService.getAll())
     
   }
 
-  logout() {
-    localStorage.clear();
-    this._msAdalSvc.logout();
+  ngOnDestroy(){
+    // this.cookieService.deleteAll();
+  }
+
+  onLogout() {
+    // this.__api.fetchData('/logoutUser').subscribe(res=>{localStorage.clear()});
+    // this.__api.apiUrl + 
+    this.cookieService.deleteAll();
   }
 
 }

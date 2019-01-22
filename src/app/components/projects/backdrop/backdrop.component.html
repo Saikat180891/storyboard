@@ -1,0 +1,150 @@
+
+<div class="overlay" *ngIf="_UIControllerService.getOverlay()" (click)="onOverlayClose()" @slideDown>
+
+<!-- This is for editing new SOP -->
+    <div 
+    class="dialog" 
+    (keydown.esc)="onEscape($event)" 
+    (click)="preventPropagation($event)" 
+    [formGroup]="sopForm"
+    >
+
+      <div class="dialog-group border padding-all color-main-blue">
+        <div class="dialog-element">
+          <span *ngIf="_UIControllerService.getOverlayHeader()==createSOP">{{createSOP}}</span>
+          <span *ngIf="_UIControllerService.getOverlayHeader()==editSOP">{{editSOP}}</span>
+          <span class="close" (click)="onClose()"><i class="fas fa-times"></i></span>
+        </div>
+      </div>
+<!-- ---------------------------------------------------------client name--------------------------------------------------------------------------------------------------- -->
+      <div class="dialog-group padding-all margin-top-10 margin-bottom-10">
+          <div class="input-box">
+              <input 
+              id="clientName"
+              type="text" 
+              [ngClass]="{'ASN-box':true, 'validators':validateClientName===true}" 
+              placeholder="Client Name" 
+              required 
+              formControlName="clientName" 
+              >
+
+          </div>
+          <small [ngClass]="{'validation-message':validateClientName}" *ngIf="validateClientName">
+            <em>{{validateClientNameMessage}}</em>
+          </small>
+          
+      </div>
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+      <div class="dialog-group padding-all margin-bottom-10">
+          <div class="input-box">
+              <input 
+              type="text" 
+              [ngClass]="{'ASN-box':true, 'validators':validateAutomationSystemName===true}" 
+              placeholder="Automation System Name" 
+              required 
+              formControlName = "title"
+              >
+
+          </div>
+          <small [ngClass]="{'validation-message':validateAutomationSystemName===true}" *ngIf="validateAutomationSystemName">
+            <em>{{validateAutomationSystemNameMessage}}</em>
+          </small>
+      </div>
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+      <div class="dialog-group padding-all margin-bottom-10">
+          <div class="input-box">
+              <input 
+              type="text" 
+              id="charge-code" 
+              placeholder="Charge Code" 
+              required 
+              formControlName = "chargeCode"
+              [ngClass]="{'validators':validateChargeCode===true}">
+
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+              <input
+                id="date" 
+                placeholder="Due Date" 
+                matInput 
+                [matDatepicker]="picker" 
+                required 
+                readonly  
+                formControlName = "due_date"
+                [ngClass]="{'datepicker':true, 'validators':validateChargeCode===true}"
+                [ngStyle]="{'border':validateChargeCode?border:false}"
+              >
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              
+          </div>
+          <small 
+            [ngClass]="{'validation-message':validateChargeCode===true||validateSelectedDate===true}" 
+            *ngIf="validateChargeCode||validateSelectedDate">
+              <em>{{validateChargeCodeMessage}}</em>
+          </small>
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+      </div>
+
+      <div class="dialog-group padding-all upload height-auto">
+        <div class="relative pointer">
+          <button mat-stroked-button>
+            <img class="preview-logo" *ngIf="filePreview" [src]="filePreview" [alt]="filePreview">
+            <span class="client-logo" *ngIf="!filePreview">Upload Client Logo</span>
+            <span *ngIf="!filePreview"><small>(Max Size 200px-200px)</small></span>
+            <span *ngIf="!filePreview"><i class="fas fa-download"></i>CHOOSE FILE</span>
+          </button>
+          <input type="file" (change)="onFileSelected($event)"/>
+        </div>
+      </div>
+<!-- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+      <div class="dialog-group padding-all height-auto padding-top-0" id="add-assign">
+          <div class="input-box padding-top-0 relative">
+            <label for="ASN-box">Assign To</label>
+            <input type="text" id="ASN-box" placeholder="Type name or email address" (keyup)="onKeyPress($event)">
+            <div class="autocomplete" *ngIf="options; else load">
+              <ng-container *ngFor="let option of options; let i=index">
+                <span class="autocomplete-item" *ngIf="i<3" (click)="onSelect(option)">{{option}}</span>
+              </ng-container>
+            </div>
+              <button (click)="addAssignee(true)">ADD</button>
+          </div>
+      </div>
+
+      <div class="dialog-group padding-all height-auto height-max margin-bottom-10">
+          <ul *ngIf="userDatas">
+            <li *ngFor="let userData of createAssignees" @hideInOut>
+              <img [src]="userData[0]" [alt]="userData[0]"/>
+              <span>{{userData[1]}}</span>
+              <span class="list-close" (click)="onRemove(userData)">
+                <i class="fas fa-times"></i>
+              </span>
+            </li>
+          </ul>
+      </div>
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+      <div class="dialog-group padding-all fixed-bottom height-auto margin-bottom-10">
+        <div class="button-box">
+            <button 
+            *ngIf="_UIControllerService.getOverlayHeader()==createSOP" 
+            mat-raised-button 
+            color="primary" 
+            (click)="onCreateNew()" 
+            [disabled]="false">CREATE NEW</button>
+
+            <button 
+            *ngIf="_UIControllerService.getOverlayHeader()==editSOP" 
+            mat-raised-button 
+            color="primary" 
+            (click)="onSave()" 
+            [disabled]="false">SAVE</button>
+
+            <button mat-raised-button (click)="onClose()">CANCEL</button>
+        </div>
+      </div>
+
+    </div>
+<!-- ------------------------------------------------------------------------------------- -->
+<app-preloader></app-preloader>
+<!-- ------------------------------------------------------------------------------------- -->
+  </div>
+    

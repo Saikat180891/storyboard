@@ -4,35 +4,41 @@
       <li *ngFor="let link of sidebarLinks; let i=index" (click)="onSelect(i)" [ngClass]="{'is-active':linkSelected==i}">{{link}}</li>
     </ul>
   </div>
-  <div class="main-body" [ngSwitch]="linkSelected">
-    <div *ngSwitchCase="0">
 
-    </div>
-    <div *ngSwitchCase="1">
+  <div class="main-body" [ngSwitch]="linkSelected">
+    <div>
       <div class="form-group">
-        <mat-radio-group>
-          <mat-radio-button value="1">Entire Project</mat-radio-button>
-          <mat-radio-button value="2">Timed Project</mat-radio-button>
+        <mat-radio-group [(ngModel)]="projectTypeSelected">
+          <mat-radio-button value="1" (click)="onEntireProject()">Entire Project</mat-radio-button>
+          <mat-radio-button value="2" (click)="onTimedProject()">Timed Project</mat-radio-button>
         </mat-radio-group>
       </div>
       <div class="form-group form-group-expand">
-        <div class="start-date">
-          <label for="">Start Date</label>
-          <input type="text" [matDatepicker]="std">
-          <div class="datepicker">
+        <div class="start-date" *ngIf="show_dates">
+          <label for="">Start Date</label>                 
+          <input matInput  [matDatepicker]="std" placeholder="Start Date" [(ngModel)]="startDate">
+          <mat-datepicker-toggle matSuffix [for]="std"></mat-datepicker-toggle>
+          <mat-datepicker #std></mat-datepicker>
+          <!-- <div class="datepicker">
             <mat-datepicker-toggle matSuffix [for]="std"></mat-datepicker-toggle>
             <mat-datepicker #std></mat-datepicker>
-          </div>
+          </div> -->
         </div>
-        <div class="end-date">
-          <label for="">End Date</label>
-          <input type="text" [matDatepicker]="etd">
-          <div class="datepicker">
+        <div class="end-date" *ngIf="show_dates">
+            <label for="">End Date</label> 
+            <input matInput  [matDatepicker]="etd" placeholder="End Date" [(ngModel)]="endDate">
             <mat-datepicker-toggle matSuffix [for]="etd"></mat-datepicker-toggle>
             <mat-datepicker #etd></mat-datepicker>
-          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="footer-position">
+          <button class="btn btn-blue" (click)="onExportAuditTrail()">Export</button>
+          <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
         </div>
       </div>
     </div>
+
   </div>
+
 </div>

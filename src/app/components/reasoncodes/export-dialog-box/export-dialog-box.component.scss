@@ -46,6 +46,7 @@ div.export-box{
             display: flex;
             padding: 10px 0;
             margin-bottom: 10px;
+            position: relative;
 
             .mat-radio-button ~ .mat-radio-button {
                 margin-left: 15px;
@@ -77,7 +78,15 @@ div.export-box{
             justify-content: space-between;
         }
     }
-}
-
     
-
+    .footer-position{
+        position: absolute;
+        bottom: -70px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50%;
+        display: flex;
+        justify-content: space-between;
+    }
+    
+}

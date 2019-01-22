@@ -1,6 +1,4 @@
-import { Component, Output, EventEmitter, ElementRef, OnInit } from '@angular/core';
-import {AppcontrolService} from './controlservice/appcontrol.service';
-
+import { Component, Output, EventEmitter, ElementRef, OnInit, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +7,8 @@ import {AppcontrolService} from './controlservice/appcontrol.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private _constrolService:AppcontrolService,
-              private el:ElementRef){
+
+  constructor(){
 
   }
   ngOnInit(){

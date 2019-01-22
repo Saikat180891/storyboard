@@ -4,11 +4,11 @@ import { HttpClient, HttpRequest } from '@angular/common/http';
 import {environment} from '../environments/environment';
 import { HttpHeaders} from '@angular/common/http';
 import { ResponseContentType } from '@angular/http'
-
+import { CookieService } from 'ngx-cookie-service';
 
 export const httpOptions = {
   headers: new HttpHeaders({
-        'Authorization': localStorage.getItem("uniqueName")
+        'X-CSRFToken': localStorage.getItem("csrftoken"),
   })
 };
 
@@ -21,7 +21,7 @@ export class DataService {
   production:boolean = true;
   ID:number = 0;
   colorPicker:string[] =["#0033A1", "#2A7DE1", "#40C0C4", "#54585A", "#8677C4", "#94BEF0"]
-  apiUrl = environment.production ? window.location.origin :'http://127.0.0.1:8000';
+  apiUrl = environment.production ? window.location.origin :'http://localhost:8000';
   cardContent = [
     {
       id: 0,
@@ -107,8 +107,8 @@ export class DataService {
    * Get the data from the server to load the cards
    */
   fetchData(param){
-    // console.log(httpOptions)
-    return this.http.get<any[]>(this.apiUrl + param, httpOptions);
+    // console.log(this.apiUrl + param)
+    return this.http.get<any[]>(this.apiUrl + param, {withCredentials: true});
   }
 
   fetchDataWithLimits(startLimit, endLimit){
@@ -116,22 +116,26 @@ export class DataService {
   }
 
   postData(param, body){
-    return this.http.post<any[]>(this.apiUrl + param, body, httpOptions);
+    return this.http.post<any>(this.apiUrl + param, body, {withCredentials: true, headers: httpOptions.headers});
   }
 
   fetchFile(param){
     return this.http.get(this.apiUrl + param, {responseType: 'blob', headers: new HttpHeaders().append('Content-Type', 'application/json')});
   }
   postDataWithProgress (param, body){
-    return this.http.post(this.apiUrl + param, body, httpOptions);
+    return this.http.post(this.apiUrl + param, body);
   }
 
   delete(param, id){
-    return this.http.delete(this.apiUrl + param + '/' + id, httpOptions);
+    return this.http.delete(this.apiUrl + param + '/' + id,  {withCredentials: true, headers: httpOptions.headers});
   }
 
   update(param, id, body){
-    return this.http.put(this.apiUrl + param + '/' + id, body, httpOptions);
+    return this.http.put(this.apiUrl + param + '/' + id, body,  {withCredentials: true, headers: httpOptions.headers});
+  }
+
+  getAToken(endpoint, authcode){
+    return this.http.get(this.apiUrl + endpoint, authcode);
   }
 
 }

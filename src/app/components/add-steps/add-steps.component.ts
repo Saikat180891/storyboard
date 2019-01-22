@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {AppcontrolService} from '../../controlservice/appcontrol.service';
-import {CardService} from '../card/card.service';
-import {ContainerService} from '../container/container.service';
+// import {AppcontrolService} from '../../services/controlservice/appcontrol.service';
+// import {CardService} from '../projects/card/card.service';
+import {ContainerService} from '../projects/container/container.service';
 import { ActivatedRoute } from '@angular/router';
 import {AddStepsService} from './add-steps.service';
 import {ScreenHolderService} from '../shared/screen-holder/screen-holder.service';
 import {DataService} from '../../data.service';
-import { element } from '@angular/core/src/render3';
+// import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-add-steps',
