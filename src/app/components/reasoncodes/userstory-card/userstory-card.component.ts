@@ -45,7 +45,7 @@ export class UserstoryCardComponent implements OnInit {
       }
     });
     this.userStory.ftes === "-----" ? delete this.userStory.ftes : '';
-    let rc_id = -1;
+    let rc_id = 0;
     this.__rcService.reasonCodeData.forEach(element=>{
       if(element.name === this.userStory.rc_name){
         rc_id = element.id;
@@ -68,7 +68,7 @@ export class UserstoryCardComponent implements OnInit {
       }
     });
     this.userStory.ftes === "-----" ? delete this.userStory.ftes : '';
-    let rc_id = -1;
+    let rc_id = 0;
     this.__rcService.reasonCodeData.forEach(element=>{
       if(element.name === this.userStory.rc_name){
         rc_id = element.id;

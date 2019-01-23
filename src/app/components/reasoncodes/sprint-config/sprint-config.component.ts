@@ -524,10 +524,35 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
 
   onUpload(){
     let validation = this.validateUploadForm();
+    let message:string = '';
+    let status: string = '';
     if(validation){
-       this.__rcService.importStories(this.excelFile);
-      this.onClose();
-      }
+      this.spinner.show();
+      this.__rcService.importStories(this.excelFile).subscribe(res=>{
+        console.log(res);
+        status = res["status"];
+        message = res["message"];
+      },
+      err=>{
+        console.error(err);
+        status = err["status"];
+        message = err["message"];
+        this.__rcService.snackbar.open("Please check the template and try again." , "Fail", {"duration": 5000});
+      },
+      ()=>{
+        this.spinner.hide();
+        console.log("COMPLETED", status);
+        this.onClose();
+        if(status == 'Success'){
+          this.__rcService.snackbar.open("Your sprints, epics and stories are now available on the dashboard", status, {duration : 5000});
+        }else if(status == 'Failure'){
+          this.__rcService.snackbar.open(message, status, {"duration": 5000});
+        }else{
+          this.__rcService.snackbar.open("Please check the template and try again." , "Fail", {"duration": 5000});
+        }
+        this.__rcService.refresh(this.__rcService.sopId);
+      })
+    }
   }
 
   oncheckBoxChange(value){

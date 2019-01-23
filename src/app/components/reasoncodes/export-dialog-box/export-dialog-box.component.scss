@@ -41,6 +41,7 @@ div.export-box{
         padding: 20px;
         display: flex;
         flex-direction: column;
+        position: relative;
 
         .form-group{
             display: flex;
@@ -81,10 +82,10 @@ div.export-box{
     
     .footer-position{
         position: absolute;
-        bottom: -70px;
+        bottom: 30px;
         left: 50%;
         transform: translateX(-50%);
-        width: 50%;
+        width: 150px;
         display: flex;
         justify-content: space-between;
     }

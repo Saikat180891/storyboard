@@ -4,14 +4,10 @@
     // background-color: #ffffff;
     z-index: 1000;
     right: 30px;
-    opacity: 0;
-    transform-origin: right top;
-    // transform: scale(0);
-    transition: all 0.3s ease;
+    display: none;
 }
 .export-active{
-    opacity: 1;
-    // transform: scale(1);
+    display: block;
 }
 .btn-export-active{
     color: rgb(42, 125, 225);

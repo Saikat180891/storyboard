@@ -37,7 +37,7 @@ export class ReasonCodeService {
 
   constructor(private _api:DataService,
               private __preLoad: PreloaderService, 
-              private snackbar:MatSnackBar) { }
+              public snackbar:MatSnackBar) { }
 
 
   /**
@@ -397,32 +397,31 @@ export class ReasonCodeService {
 
   importStories(file){
     console.log("File", file);
-    this.__preLoad.openPreloader = true;
-    this._api.postData(`/sop/${this.sopId}/import.json`, file).subscribe(response=>{
-      setTimeout(()=>{
-        this.__preLoad.openPreloader = false;
-      }, 5000);
+    return this._api.postData(`/sop/${this.sopId}/import.json`, file)
+    
+    // .subscribe(response=>{
 
-      console.log("Response",response["status"])
-      console.log("Response",response["message"])
+    //   console.log("Response",response["status"])
+    //   console.log("Response",response["message"])
 
-      if(response["status"] == "Success")
-      { 
-        this.snackbar.open("Your sprints, epics and stories are now available on the dashboard", "Success", {duration : 2000, panelClass: "style-success"});
-      }
-      else if(response["status"]=="Failure")
-      {
-        this.snackbar.open(response["message"], "Fail", {"duration": 3500});
-      }
-      else{
-        this.snackbar.open("Please check the template and try again." , "Fail", {"duration": 3500});
-      }
-    });
+    //   if(response["status"] == "Success")
+    //   { 
+    //     this.snackbar.open("Your sprints, epics and stories are now available on the dashboard", "Success", {duration : 2000, panelClass: "style-success"});
+    //   }
+    //   else if(response["status"]=="Failure")
+    //   {
+    //     this.snackbar.open(response["message"], "Fail", {"duration": 3500});
+    //   }
+    //   else{
+    //     this.snackbar.open("Please check the template and try again." , "Fail", {"duration": 3500});
+    //   }
+    // });
   }
+
   downloadFile(){
     window.location.href = this._api.apiUrl+`/sop/${this.sopId}/export.json`;
-    }
-
+  }
+ 
   filterUserStories(endpointUrl:string, queryParameter:string){
     this._api.fetchData(endpointUrl + queryParameter)
       .subscribe(response=>{
@@ -543,7 +542,7 @@ export class ReasonCodeService {
     }else{
       api = `/audit_trails/${projectId}/`;
     }
-    this._api.fetchData(api).subscribe(res=>{});
+    window.location.href = this._api.apiUrl+api;
   }
 
   getBenefiftChart(projectId:number){

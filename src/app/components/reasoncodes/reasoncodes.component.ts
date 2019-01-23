@@ -8,6 +8,9 @@ import {charts} from './chartoptions';
 import {fromEvent} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {PreloaderService} from '../shared/preloader/preloader.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+
+
 export interface UserData {
   id: string;
   name: string;
@@ -132,7 +135,8 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
               private _reasonCode: ReasonCodeService,
               private _containerService: ContainerService,
               private _createUserStory: CreateUserstoryService,
-              private __preloaderService: PreloaderService) {}
+              private __preloaderService: PreloaderService,
+              public spinner: NgxSpinnerService) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -189,9 +193,9 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
   benefitChartImage:string;
   onShowBenefits(){
     if(environment.production){
-      this.benefitChartImage = `http://storyboard.service.soroco/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png`;
+      this.benefitChartImage = `http://storyboard.service.soroco/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png?q=${new Date().getTime()}`;
     }else{
-      this.benefitChartImage = `http://localhost:8000/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png`;
+      this.benefitChartImage = `http://localhost:8000/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png?q=${new Date().getTime()}`;
     }
     this.showBenefitsChart = true;
   }
@@ -360,6 +364,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
 
   onSortBy(args:string){
     this._reasonCode.sortBy = args;
+    this.sortBy = true;
     let path = '';
     if(this._reasonCode.filterPath != ''){
       path = "?" + this._reasonCode.filterPath + "&" + this._reasonCode.sortBy;

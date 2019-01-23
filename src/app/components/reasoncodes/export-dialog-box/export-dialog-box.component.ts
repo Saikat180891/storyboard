@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ReasonCodeService } from '../reason-code.service';
 
@@ -8,7 +8,7 @@ import { ReasonCodeService } from '../reason-code.service';
   styleUrls: ['./export-dialog-box.component.scss']
 })
 export class ExportDialogBoxComponent implements OnInit {
-
+  @Output('close') close = new EventEmitter<boolean>();
   sidebarLinks = ['Audit Trail'];
   linkSelected:number = 0;
   show_dates: boolean= false;
@@ -35,11 +35,11 @@ export class ExportDialogBoxComponent implements OnInit {
 
   onExportAuditTrail(){
     console.log(this.projectTypeSelected)
-    this.startDate = this.reArrangeDate(this.startDate);
-    this.endDate = this.reArrangeDate(this.endDate);
-    if(this.projectTypeSelected == 2 && this.startDate && this.endDate)
+    let startDate = this.reArrangeDate(this.startDate);
+    let endDate = this.reArrangeDate(this.endDate);
+    if(this.projectTypeSelected == 2 && startDate && endDate)
     {
-      this.__rcService.downLoadAuditTrailFile(this.__rcService.sopId, this.startDate, this.endDate);
+      this.__rcService.downLoadAuditTrailFile(this.__rcService.sopId, startDate, endDate);
     }
     else{
       this.__rcService.downLoadAuditTrailFile(this.__rcService.sopId);
@@ -53,5 +53,9 @@ export class ExportDialogBoxComponent implements OnInit {
     let strDate = newDate.getFullYear() + "-" + (newDate.getMonth() + 1)+ "-" + newDate.getDate();
     
     return strDate;
+  }
+
+  onClose(){
+    this.close.emit(false);
   }
 }
