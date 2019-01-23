@@ -1,6 +1,6 @@
 <!-- Card design starts here -->
 <!-- code for blank card starts here -->
-<div (click)="onCreateSOP()" class="container" id="0"  *ngIf="localData.id===0" matRipple [matRippleColor]="rippleColor">
+<div (click)="onCreateSOP()" class="container" id="0"  *ngIf="localData.id===0" matRipple [matRippleColor]="rippleColor" appPermissions>
   <a class="new-sop">
     <span>
       <i class="far fa-plus-square"></i>
@@ -45,11 +45,11 @@
         <p>Assignee's</p>
         <!-- display only 3 profiles from the profile image holder array => localData.image -->
 
-        <div class="aname" *ngIf="localData.assigneeList">
-          <ng-container *ngFor="let imageURL of localData.assigneeList; let i=index;">
-            <img class="image-profile-pic" [src]="imageURL.image" [alt]="imageURL.assignTo" *ngIf="i<3">
+        <div class="aname" *ngIf="localData.assignee">
+          <ng-container *ngFor="let imageURL of localData.assignee; let i=index;">
+            <img class="image-profile-pic" src="../../../../assets/pics/default.jpg" alt="" *ngIf="i<3" matTooltip="{{imageURL.user}}" matTooltipPosition="above">
           </ng-container>
-          <span *ngIf="localData.assigneeList.length>3; else lessThan">+{{localData.assigneeList.length-3}}</span>
+          <span *ngIf="localData.assignee.length>3; else lessThan">+{{localData.assignee.length-3}}</span>
           <ng-template #lessThan>
             <span></span>
           </ng-template>

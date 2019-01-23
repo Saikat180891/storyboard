@@ -88,7 +88,8 @@ import { UserstoryFilterComponent } from './components/reasoncodes/userstory-fil
 import { NormalDropdownComponent } from './components/shared/normal-dropdown/normal-dropdown.component';
 import { MultiChartComponent } from './components/reasoncodes/multi-chart/multi-chart.component';
 import { CookieService } from 'ngx-cookie-service';
-
+import { PermissionsDirective } from './directives/permissions.directive';
+import {AuthorizationService} from './services/authorization/authorization.service';
 const routes = [
   {path: '', component: AuthComponent, pathMatch: 'full'},
   // {path: 'login', component: AuthComponent },
@@ -148,6 +149,7 @@ const routes = [
     UserstoryFilterComponent,
     NormalDropdownComponent,
     MultiChartComponent,
+    PermissionsDirective,
   ],
 
   imports: [
@@ -183,7 +185,7 @@ const routes = [
     HttpClientModule,
     MatInputModule,
     HttpClientXsrfModule.withOptions({
-      cookieName: 'csrftoken',
+      cookieName: localStorage.getItem('csrftoken'),
       headerName: 'X-CSRFToken'
     }),
     NgxSpinnerModule,
@@ -209,7 +211,8 @@ const routes = [
     // TableService, 
     // DeleteTableService,
     CookieService,
-    AuthGaurdService
+    AuthGaurdService,
+    AuthorizationService
   ],
   bootstrap: [AppComponent]
 })

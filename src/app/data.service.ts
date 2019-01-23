@@ -127,15 +127,22 @@ export class DataService {
   }
 
   delete(param, id){
-    return this.http.delete(this.apiUrl + param + '/' + id);
+    return this.http.delete(this.apiUrl + param + '/' + id, {withCredentials: true, headers: httpOptions.headers});
   }
 
   update(param, id, body){
-    return this.http.put(this.apiUrl + param + '/' + id, body);
+    return this.http.put(this.apiUrl + param + '/' + id, body, {withCredentials: true, headers: httpOptions.headers});
   }
 
   getAToken(endpoint, authcode){
     return this.http.get(this.apiUrl + endpoint, authcode);
+  }
+
+  getPermission(num:number, id?:number|string){
+    if(id === undefined){
+      id = '';
+    }
+    return this.fetchData(`/user/group/permissions.json?proj_id=${id}&page_no=${num}`);
   }
 
 }

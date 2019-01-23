@@ -13,6 +13,7 @@ export class EditUserStoryService {
   
 
   editUserStory(usID, sprintID, reasonCodeId, payload){
+    console.log(payload)
     // payload['planned_delivery'] = this.formatDateToSendData(payload['planned_delivery']);
     // payload['revised_delivery'] == '-----' || isNaN(payload['revised_delivery']) ? payload['revised_delivery'] = null : payload['revised_delivery'] = this.formatDateToSendData(payload['revised_delivery']);
     payload['dev_hrs'] == '-----' ? delete payload['dev_hrs'] : payload['dev_hrs'];

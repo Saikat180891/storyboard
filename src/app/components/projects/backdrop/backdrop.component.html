@@ -65,17 +65,19 @@
               <input
                 id="date" 
                 placeholder="Due Date" 
+                type="text"
                 matInput 
                 [matDatepicker]="picker" 
                 required 
                 readonly  
                 formControlName = "due_date"
-                [ngClass]="{'datepicker':true, 'validators':validateChargeCode===true}"
+                [ngClass]="{'validators':validateChargeCode===true}"
                 [ngStyle]="{'border':validateChargeCode?border:false}"
               >
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-              
+              <div class="datepicker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </div>
           </div>
           <small 
             [ngClass]="{'validation-message':validateChargeCode===true||validateSelectedDate===true}" 
@@ -100,22 +102,22 @@
       <div class="dialog-group padding-all height-auto padding-top-0" id="add-assign">
           <div class="input-box padding-top-0 relative">
             <label for="ASN-box">Assign To</label>
-            <input type="text" id="ASN-box" placeholder="Type name or email address" (keyup)="onKeyPress($event)">
+            <input type="text" placeholder="Type name or email address" (keyup)="onKeyPress($event)">
             <div class="autocomplete" *ngIf="options; else load">
               <ng-container *ngFor="let option of options; let i=index">
-                <span class="autocomplete-item" *ngIf="i<3" (click)="onSelect(option)">{{option}}</span>
+                <span class="autocomplete-item" (click)="onSelect(option)">{{option.email}}</span>
               </ng-container>
             </div>
-              <button (click)="addAssignee(true)">ADD</button>
+              <!-- <button (click)="addAssignee()">ADD</button> -->
           </div>
       </div>
 
       <div class="dialog-group padding-all height-auto height-max margin-bottom-10">
           <ul *ngIf="userDatas">
-            <li *ngFor="let userData of createAssignees" @hideInOut>
-              <img [src]="userData[0]" [alt]="userData[0]"/>
-              <span>{{userData[1]}}</span>
-              <span class="list-close" (click)="onRemove(userData)">
+            <li *ngFor="let userData of createdAssignees" @hideInOut>
+              <img [src]="" [alt]=""/>
+              <span>{{userData.email}}</span>
+              <span class="list-close" (click)="onRemove(userData.id)">
                 <i class="fas fa-times"></i>
               </span>
             </li>

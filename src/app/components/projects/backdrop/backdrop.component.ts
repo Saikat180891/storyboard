@@ -6,6 +6,7 @@ import {AppcontrolService} from '../../../services/controlservice/appcontrol.ser
 import {DataService} from '../../../data.service';
 import {ContainerService} from '../container/container.service';
 import {PreloaderService} from '../../shared/preloader/preloader.service';
+import {CardService} from '../card/card.service';
 
 
 export enum KEY_CODE {
@@ -62,7 +63,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    */
   editSelectedDate;
 
-  options;
+  options = [];
 
   ID;
 
@@ -81,6 +82,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
               private _dataService:DataService,
               private _ContainerService:ContainerService,
               private formBuilder: FormBuilder,
+              private _cardService: CardService,
               private _preloaderService: PreloaderService) {
 
               this._UIControllerService.data.subscribe(
@@ -141,32 +143,30 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * @param event 
    */
   onKeyPress(event){
+    if(this._ContainerService.permissions[0]["permissions"]["Can add assignee"] || this._ContainerService.permissions[0]["permissions"]["Can change assignee"]){
     console.log(event.target.value);
-    this.options = this.arr.filter(calc(this.assigneeName))
-    function calc(elementToSearch){
-      return function(element){
-        let characters = element.replace(/ /g, "").toLowerCase().split("");
-        let charactersToSearch = elementToSearch.toLowerCase().split("");
-        for(let i = 0; i < charactersToSearch.length; i++){
-          if(charactersToSearch[i] != characters[i]){
-            return;
-          }
-        }
-        return element;
-      }
+    this._dataService.fetchData(`/users.json?startsWith=${event.target.value}`)
+      .subscribe(res=>{
+        this.options = res;
+        console.log(res);
+      },
+      err=>{
+        console.log(err);
+      });
     }
-    if(this.assigneeName == ""){
-      this.options = [];
-    }
-    // console.log(this.options)
   }
 
+  createdAssignees = [];
   /**
    * Select a name on click and display it in the assignee to input box
    * @param option 
    */
-  onSelect(option){
-    this.assigneeName = option;
+  onSelect(option:any){
+    // this._dataService.postData(`/sop/${this._cardService.sopId}/assignee.json`, {user: option.email, role: 'Manager'})
+    //   .subscribe(res=>{
+    this.createdAssignees.unshift(option);
+      // });
+    console.log(this.createdAssignees);
     this.options = [];
   }
 
@@ -237,9 +237,17 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * To remove an assignee from the 'Assign To' list
    * @param assigneeListItem
    */
-  onRemove(assigneeListItem){
-    console.log(assigneeListItem)
-    this._dataService.removeBackdropData(this.ID, assigneeListItem);
+  onRemove(id){
+    if(this._ContainerService.permissions[0]["permissions"]["Can delete assignee"]){
+      this._dataService.delete(`/sop/assignee`, `${this._cardService.sopId}.json`)
+        .subscribe(res=>{
+          this.createdAssignees.forEach(element=>{
+            if(element.id == id){
+              this.createdAssignees.splice(this.createdAssignees.indexOf(element), 1);
+            }
+          });
+      });
+    }
   }
 
   /**
@@ -248,19 +256,21 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    */
   addAssignee(status){
     //if status==true then add name in the create new dialog box
-    if(status){
-      if(this.imagePath==""){
-        this.imagePath = 'http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg';
-      }
-      this.createAssignees.unshift([this.imagePath,this.assigneeName]);
-      this.assigneeName = '';
-      this.imagePath = '';
-      //console.log(this.imagePath,this.assigneeName);
-    }else{
-      let acknowledge = this._dataService.addBackdropData(this.imagePath,this.assigneeName);
-      this.assigneeName = '';
-      this.imagePath = '';
-    }
+    // if(status){
+    //   if(this.imagePath==""){
+    //     this.imagePath = 'http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg';
+    //   }
+    //   this.createAssignees.unshift([this.imagePath,this.assigneeName]);
+    //   this.assigneeName = '';
+    //   this.imagePath = '';
+    //   //console.log(this.imagePath,this.assigneeName);
+    // }else{
+    //   let acknowledge = this._dataService.addBackdropData(this.imagePath,this.assigneeName);
+    //   this.assigneeName = '';
+    //   this.imagePath = '';
+    // }
+    // let payload
+    // this.createdAssignees
   }
 
   /**
@@ -307,18 +317,17 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   onCreateNew(){
     this.sopForm.value.due_date = this.formatDate(this.sopForm.value.due_date);
     let validationCheck = this.validateForm(this.sopForm.value);
-
     if(validationCheck == 0){
       this._preloaderService.openPreloader = true;
-      console.log("the created sop form is ", this.sopForm.value);
-
+      // console.log("the created sop form is ", this.sopForm.value);
       let formData = this.JSONtoFormData(this.sopForm.value);
-
+      let sopId:number;
       this._dataService.postData('/sop.json',  formData)
       .subscribe(
         (response)=> {
-          console.log("Response ",response);
+          // console.log("Response ",response);
           if(response){
+            sopId = response["id"];
             this._ContainerService.cardContents.push(
               {
                 themeColor: this._ContainerService.colorPicker[this._ContainerService.getUniqueNumber()],
@@ -327,13 +336,21 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
                 logo: response["image_url"]
               }
             );
-            console.log("this is the service contents", this._ContainerService.cardContents)
+            // console.log("this is the service contents", this._ContainerService.cardContents)
           }
-          this._preloaderService.openPreloader = false;
-          this.onOverlayClose();
-          setTimeout(()=>{
+          if(this.createdAssignees.length > 0){
+            this.createdAssignees.forEach((ele, index, array)=>{
+              this._dataService.postData(`/sop/${sopId}/assignee.json`, {user: ele.email, role: 'Manager'})
+                .subscribe(res=>{});
+              if(index == array.length - 1){
+                this._preloaderService.openPreloader = false;
+                this.onOverlayClose();
+              }
+            });
+          }else{
             this._preloaderService.openPreloader = false;
-          });
+            this.onOverlayClose();
+          }
         },
         (err)=> console.log(err)
       );

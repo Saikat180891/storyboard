@@ -1,34 +1,29 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterContentChecked, AfterViewChecked } from '@angular/core';
 import { DataService } from '../../../data.service';
-import { trigger, transition, style, animate, state } from '@angular/animations';
 import { AppcontrolService } from '../../../services/controlservice/appcontrol.service';
 import {ContainerService} from './container.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import {AuthorizationService} from '../../../services/authorization/authorization.service';
 
 @Component({
   selector: 'app-container',
   templateUrl: './container.component.html',
   styleUrls: ['./container.component.scss', '../../reasoncodes/completed-warning.scss'],
-//   animations:[
-//     trigger('rotatedState', [
-//       state('default', style({ transform: 'rotate(0)' })),
-//       state('rotated', style({ transform: 'rotate(-180deg)' })),
-//       transition('rotated => default', animate('400ms ease-out')),
-//       transition('default => rotated', animate('400ms ease-in'))
-// ])
-//   ]
 })
 
-export class ContainerComponent implements OnInit {
+export class ContainerComponent implements OnInit, AfterViewChecked {
   filesLists: string[] = ['Recent Files', 'All Files'];
   selected;
   cards = [1,2,3,4,5,6,7,8,9,10];
+  userPermissions = [];
+  activateSpinner:boolean = true;
   
   constructor(
     private _dataService: DataService, 
-    private _UIControllerService: AppcontrolService,
-    private _ContainerService: ContainerService) {  }
-
-  cardDatas;
+    private __uic: AppcontrolService,
+    private _ContainerService: ContainerService,
+    private __spinner: NgxSpinnerService,
+    private __authorization: AuthorizationService) {  }
 
   warningToDeleteSop:boolean = false;
 
@@ -38,14 +33,69 @@ export class ContainerComponent implements OnInit {
     /**
      * Fetch data to load the cards
      */
-      // this.getdataFromDB();
-     setTimeout(()=>{
-      this._ContainerService.getdataFromDB();
-      this.cardDatas = this._ContainerService.cardContents;
+    this.getListOfAllProjects();
+  }
+  
+  ngAfterViewChecked(){
+  }
+  /**
+   * fetch all projects and permission and combine both of them
+   */
+  getListOfAllProjects(){
+    this.__spinner.show();
+    let projectlist:any = [];
+    let permissions = [];
+    // make an api call to fetch the project list
+    this._ContainerService.getListOfAllProjects().subscribe(res=>{
+      // rearrange the project list as required for the frontend
+      res.forEach((element)=>{
+        projectlist.push({
+          themeColor: this.__uic.colorPicker[this._ContainerService.getUniqueNumber()],
+          reasonCodes: this.__uic.firstZero(Number(element["number_epics"])),
+          ...element,
+          logo: element["image_url"]
+        });
+      });
+      // console.log(this._ContainerService.cardContents);
+    },
+    (err)=>{
+      this.__spinner.hide();
+      console.log("ERROR IN FETCHING PROJECT LIST", err);
+    },
+    ()=>{
+      // once the above call the completed make another call to get the permissions dictionary
+      this._dataService.getPermission(1).subscribe(res=>{
+        //rearrange as required for the frontend
+        res.forEach(ele=>{
+          permissions.push({
+              projectId : ele["proj_id"],
+              role : ele["name"],
+              permissions: ele["permissions"]
+            });
+        });
+        // console.log(this._ContainerService.permissions);
+      },
+      (err)=>{
+        this.__spinner.hide();
+        console.log("ERROR IN FETCHING PERMISSIONS LIST", err);
+      },
+      ()=>{
+        // combine the list of projects and the list of permission with respect to their respective ids
+        projectlist.forEach((project, projectIndex)=>{
+          permissions.forEach((projectPermission, permissionIndex)=>{
+            if(project.id == projectPermission.projectId){
+              project["currentUserPermission"] = projectPermission["permissions"];
+              project["permissionsGranted"] = this.__authorization.createPermissionAsPerUserRole(projectPermission["role"]);
+            }
+          });
+        });
+        projectlist.unshift({id:0});
+        this._ContainerService.cardContents = projectlist;
 
-      console.log("card datas",this.cardDatas)
-     }, 1000);
-      
+        this.__spinner.hide();
+        console.log("COMPLETED", projectlist);
+      });
+    });
   }
 
 
@@ -57,7 +107,9 @@ export class ContainerComponent implements OnInit {
   onSelectDoNotDeleteSop(){
     this.warningToDeleteSop = false;
   }
-
+  /**
+   * Delete project
+   */
   onSelectDeleteSop(){
     this._dataService.delete('/sop',this.sopIdToDelete + '.json')
       .subscribe(response => {
@@ -67,6 +119,7 @@ export class ContainerComponent implements OnInit {
             this.warningToDeleteSop = false;
           }
         })
-      });
+    });
   }
+  
 }

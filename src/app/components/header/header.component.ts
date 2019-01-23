@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    this.cookieService.deleteAll();
+    // this.cookieService.deleteAll();
   }
 
   onLogout() {

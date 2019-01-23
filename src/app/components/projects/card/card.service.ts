@@ -6,6 +6,8 @@ import { Injectable, EventEmitter } from '@angular/core';
 
 export class CardService{
   cardContent;
+
+  sopId:number;
   
   constructor(){ }
 
