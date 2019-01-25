@@ -135,12 +135,13 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
       this.closeSprints.emit(false);
     }
     //#TODO: please put a check to see if the save button is clicked or not, if yes only then execute the below lines
-    this.__rcService.getBenefits(this.__rcService.sopId);          
-    this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
-    this.__rcService.getProjectStatus(this.__rcService.sopId);
-    this.__rcService.getCurrentSprintData(this.__rcService.sopId);
-    this.__rcService.getSprintStatus(this.__rcService.sopId);
-    this.__rcService.getUserStories(this.__rcService.sopId);
+    // this.__rcService.getBenefits(this.__rcService.sopId);          
+    // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+    // this.__rcService.getProjectStatus(this.__rcService.sopId);
+    // this.__rcService.getCurrentSprintData(this.__rcService.sopId);
+    // this.__rcService.getSprintStatus(this.__rcService.sopId);
+    // this.__rcService.getUserStories(this.__rcService.sopId);
+    this.__rcService.refresh(this.__rcService.sopId);
   }
 
   closeAll(){
@@ -172,13 +173,14 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
   async saveSprint(){
     this.spinner.show();
     if(this.addNewRow.length > 0){
-      this.__rcService.createSprint(this.addNewRow);
-      this.__rcService.getBenefits(this.__rcService.sopId);
-      this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
-      this.__rcService.getProjectStatus(this.__rcService.sopId);
-      this.__rcService.getCurrentSprintData(this.__rcService.sopId);
-      this.__rcService.getSprintStatus(this.__rcService.sopId);
-      this.__rcService.getUserStories(this.__rcService.sopId)
+      this.__rcService.refresh(this.__rcService.sopId)
+      // this.__rcService.createSprint(this.addNewRow);
+      // this.__rcService.getBenefits(this.__rcService.sopId);
+      // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+      // this.__rcService.getProjectStatus(this.__rcService.sopId);
+      // this.__rcService.getCurrentSprintData(this.__rcService.sopId);
+      // this.__rcService.getSprintStatus(this.__rcService.sopId);
+      // this.__rcService.getUserStories(this.__rcService.sopId)
     }
     // else if(this.changedDetected.length === 0 && this.addNewRow.length === 0){
     //   this.onSelectYes();
@@ -190,12 +192,13 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
           this.__rcService.editSprint(this.sprintConfigData[index].id, this.sprintConfigData[index]);
         }
       });
-      this.__rcService.getBenefits(this.__rcService.sopId);          
-      this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
-      this.__rcService.getProjectStatus(this.__rcService.sopId);
-      this.__rcService.getCurrentSprintData(this.__rcService.sopId);
-      this.__rcService.getSprintStatus(this.__rcService.sopId);
-      this.__rcService.getUserStories(this.__rcService.sopId)
+      this.__rcService.refresh(this.__rcService.sopId)
+      // this.__rcService.getBenefits(this.__rcService.sopId);          
+      // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+      // this.__rcService.getProjectStatus(this.__rcService.sopId);
+      // this.__rcService.getCurrentSprintData(this.__rcService.sopId);
+      // this.__rcService.getSprintStatus(this.__rcService.sopId);
+      // this.__rcService.getUserStories(this.__rcService.sopId)
     }
     // else if(this.changedDetected.length === 0 && this.addNewRow.length === 0){
     //   this.onSelectYes();
@@ -223,11 +226,12 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
 
   onDoNotDelete(){
     this.displayWarningBox = false;
-    this.__rcService.getBenefits(this.__rcService.sopId);          
-    this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
-    this.__rcService.getProjectStatus(this.__rcService.sopId);
-    this.__rcService.getCurrentSprintData(this.__rcService.sopId);
-    this.__rcService.getSprintStatus(this.__rcService.sopId);
+    this.__rcService.refresh(this.__rcService.sopId);
+    // this.__rcService.getBenefits(this.__rcService.sopId);          
+    // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+    // this.__rcService.getProjectStatus(this.__rcService.sopId);
+    // this.__rcService.getCurrentSprintData(this.__rcService.sopId);
+    // this.__rcService.getSprintStatus(this.__rcService.sopId);
   }
 
   onDelete(){
@@ -252,7 +256,8 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
       this.reasonCodeEditChangeDetector.forEach((element, index)=>{
         if(element){
           this.__rcService.editReasonCode(this.reasonCodeConfigData[index].id, this.reasonCodeConfigData[index]);
-          this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+          // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+          this.__rcService.refresh(this.__rcService.sopId);
         }
       });
     }else if(this.addNewRowForReasonCode.length > 0){
@@ -263,8 +268,8 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
         }
       });
       this.__rcService.createReasonCode(this.__rcService.sopId, this.addNewRowForReasonCode);
-      this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
-
+      // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+      this.__rcService.refresh(this.__rcService.sopId);
     }else if(this.reasonCodeEditChangeDetector.length > 0 || this.addNewRowForReasonCode.length > 0){
       this.addNewRowForReasonCode.forEach((element, index)=>{
         if(element.name === ''){
@@ -272,12 +277,15 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
           this.addNewRowForReasonCode.splice(pos, 1);
         }
         this.__rcService.createReasonCode(this.__rcService.sopId, this.addNewRowForReasonCode);
-        this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+        // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+        this.__rcService.refresh(this.__rcService.sopId);
       });
       this.reasonCodeEditChangeDetector.forEach((element, index)=>{
         if(element){
           this.__rcService.editReasonCode(this.reasonCodeConfigData[index].id, this.reasonCodeConfigData[index]);
-          this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+          // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+          this.__rcService.refresh(this.__rcService.sopId);
+
         }
       });
     }

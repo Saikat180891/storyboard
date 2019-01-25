@@ -1,8 +1,8 @@
 .export{
-    position: fixed;
+    position: absolute;
     top: 7rem;
     // background-color: #ffffff;
-    z-index: 1000;
+    z-index: 100;
     right: 30px;
     display: none;
 }

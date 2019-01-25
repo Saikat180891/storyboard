@@ -19,6 +19,8 @@ export class UserstoryCardComponent implements OnInit {
 
   @Output('deleteUserStory') deleteUserStory = new EventEmitter();
 
+  @Input('disableEdit') disableEdit:boolean = false;
+
   userStory;
 
   rippleColor = 'rbga(0,0,0,0.2)';

@@ -382,8 +382,8 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
     this._reasonCode.testCasesVerified = '';
     this._reasonCode.filteredValues = [];
     this._reasonCode.filterPath = '';
-    // this._reasonCode.getUserStories(this._reasonCode.sopId);
-    this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, "?" + this._reasonCode.sortBy);
+    this._reasonCode.getUserStories(this._reasonCode.sopId);
+    // this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, "?" + this._reasonCode.sortBy);
     this.clearAllFilter = false;
     this._reasonCode.filtersAppliedFlag = false;
 

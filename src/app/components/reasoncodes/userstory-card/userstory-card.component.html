@@ -42,11 +42,11 @@
     <div class="col c3">
       <span class="h-center reduce-margin">Rules Approved</span>
       <span class="block">
-        <mat-slide-toggle class="rules-approved" [checked]="userStory.rules_approved" (change)="toggleRules($event, userStory.id, userStory.sprint_name)"></mat-slide-toggle>
+        <mat-slide-toggle [disabled]="disableEdit" class="rules-approved" [checked]="userStory.rules_approved" (change)="toggleRules($event, userStory.id, userStory.sprint_name)"></mat-slide-toggle>
       </span>
       <span class="h-center reduce-margin">Test Case Verified</span>
       <span class="block">
-        <mat-slide-toggle [checked]="userStory.verified_test_cases" (change)="toggleTVC($event, userStory.id, userStory.sprint_name)"></mat-slide-toggle>
+        <mat-slide-toggle [disabled]="disableEdit" [checked]="userStory.verified_test_cases" (change)="toggleTVC($event, userStory.id, userStory.sprint_name)"></mat-slide-toggle>
       </span>
     </div>
   </div>

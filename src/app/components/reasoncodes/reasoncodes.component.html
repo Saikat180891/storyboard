@@ -1,4 +1,5 @@
 <app-header></app-header>
+
 <div class="universal" #totalPage>
 
   <ng-container>
@@ -95,7 +96,7 @@
         </div>
 
         <div class="card-holder">
-            <app-userstory-card [restore]="true" *ngFor="let userStory of _reasonCode.deletedUserStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
+            <app-userstory-card [restore]="true" [disableEdit]="true" *ngFor="let userStory of _reasonCode.deletedUserStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
         </div>
       </mat-tab>
     </mat-tab-group>
@@ -288,12 +289,12 @@
     </div>
   </div>
 </div>
-
-
 <ngx-spinner
   bdColor="rgba(51,51,51,0.9)"
   size="medium"
   color="#fff"
-  type="ball-spin-clockwise">
- <p style="font-size: 20px; color: white">Loading...Please wait</p>
+  type="ball-spin-clockwise"
+  class="myspinner"
+  >
+ <!-- <p style="font-size: 20px; color: white; position: fixed">Loading...Please wait</p> -->
 </ngx-spinner>

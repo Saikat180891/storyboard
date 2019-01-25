@@ -44,6 +44,7 @@ export class ExportDialogBoxComponent implements OnInit {
     else{
       this.__rcService.downLoadAuditTrailFile(this.__rcService.sopId);
     }
+    this.onClose()
   }
 
   reArrangeDate(date){

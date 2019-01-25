@@ -26,6 +26,7 @@
               placeholder="Client Name" 
               required 
               formControlName="clientName" 
+              maxlength="50"
               >
 
           </div>
@@ -43,6 +44,7 @@
               placeholder="Automation System Name" 
               required 
               formControlName = "title"
+              maxlength="50"
               >
 
           </div>
@@ -59,7 +61,7 @@
               placeholder="Charge Code" 
               required 
               formControlName = "chargeCode"
-              [ngClass]="{'validators':validateChargeCode===true}">
+              [ngClass]="{'validators':validateChargeCode===true}" maxlength="50">
 
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
               <input

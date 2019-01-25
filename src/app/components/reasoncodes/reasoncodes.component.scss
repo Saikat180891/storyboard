@@ -605,3 +605,7 @@
     cursor: pointer;
   }
 }
+
+.myspinner /deep/ .black-overlay{
+  position: fixed;
+}

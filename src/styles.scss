@@ -19,7 +19,9 @@ body {
 mat-ink-bar.mat-ink-bar{
     height: 5px;
 }
-
+::ng-deep .black-overlay{
+    position: fixed !important;
+}
 
 /*
 backdrop css

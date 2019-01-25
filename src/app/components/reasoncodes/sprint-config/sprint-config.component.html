@@ -34,7 +34,7 @@
         <small [ngClass]="{'validation-message':validateFileExtension===true}" *ngIf="validateFileExtension">
           <em>*Supported File Extension is .xlsx</em><br>
         </small>
-        <mat-checkbox color=primary (change)="oncheckBoxChange($event.checked)"><span style="padding :2px;">Yes, I used
+        <mat-checkbox color=primary (change)="oncheckBoxChange($event.checked)" [ngClass]="{'validation-message':validateCheckBox===true}"><span style="padding :2px;">Yes, I used
             Soroco Excel Template</span></mat-checkbox><br>
         <small [ngClass]="{'validation-message':validateCheckBox===true}" *ngIf="validateCheckBox">
           <em>* Please Accept by checking the checkbox.</em></small><br>
