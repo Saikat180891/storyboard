@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainScreenHolderComponent } from './main-screen-holder.component';
+import { CreatesopComponent } from './createsop.component';
 
-describe('MainScreenHolderComponent', () => {
-  let component: MainScreenHolderComponent;
-  let fixture: ComponentFixture<MainScreenHolderComponent>;
+describe('CreatesopComponent', () => {
+  let component: CreatesopComponent;
+  let fixture: ComponentFixture<CreatesopComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MainScreenHolderComponent ]
+      declarations: [ CreatesopComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MainScreenHolderComponent);
+    fixture = TestBed.createComponent(CreatesopComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

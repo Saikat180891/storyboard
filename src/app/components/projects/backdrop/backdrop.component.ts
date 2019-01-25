@@ -7,7 +7,8 @@ import {DataService} from '../../../data.service';
 import {ContainerService} from '../container/container.service';
 import {PreloaderService} from '../../shared/preloader/preloader.service';
 import {CardService} from '../card/card.service';
-
+import {ContainerComponent} from '../container/container.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -25,6 +26,7 @@ export enum KEY_CODE {
 
 export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() cardID;
+  @Input('permissions') permissions:any;
   imagePath:string = '';
   userDatas;
   assigneeName:string = '';
@@ -67,6 +69,11 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
 
   ID;
 
+  permissionGranted:any;
+  newlyCreatedAssignees:any = [];
+  createdAssignees:any = [];
+
+
   sopForm = this.formBuilder.group({
             id: [''],
             clientName: ['', Validators.required],
@@ -83,7 +90,9 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
               private _ContainerService:ContainerService,
               private formBuilder: FormBuilder,
               private _cardService: CardService,
-              private _preloaderService: PreloaderService) {
+              private _preloaderService: PreloaderService,
+              private spinner: NgxSpinnerService,
+              private __containerComponent: ContainerComponent) {
 
               this._UIControllerService.data.subscribe(
                   (data:any)=>{
@@ -98,6 +107,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
                       logo: data.logo
                     });
                     this.filePreview = this.sopForm.value.logo;
+                    this.createdAssignees = data.assignee;
                   }
                 );
   }
@@ -126,13 +136,15 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnInit() {
+    // this.permissionGranted = this._ContainerService.cardContents[]
     setTimeout(()=>{
       this.userDatas = this._dataService.getBackdropData();
     })
   }
-
-
+  
+  
   ngOnChanges(){
+    console.log('current permissions granted', this.permissions)
   }
 
   ngAfterViewInit(){
@@ -143,7 +155,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * @param event 
    */
   onKeyPress(event){
-    if(this._ContainerService.permissions[0]["permissions"]["Can add assignee"] || this._ContainerService.permissions[0]["permissions"]["Can change assignee"]){
+    // if(this._ContainerService.permissions[0]["permissions"]["Can add assignee"] || this._ContainerService.permissions[0]["permissions"]["Can change assignee"]){
     console.log(event.target.value);
     this._dataService.fetchData(`/users.json?startsWith=${event.target.value}`)
       .subscribe(res=>{
@@ -153,20 +165,17 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
       err=>{
         console.log(err);
       });
-    }
+    // }
   }
 
-  createdAssignees = [];
   /**
    * Select a name on click and display it in the assignee to input box
    * @param option 
    */
   onSelect(option:any){
-    // this._dataService.postData(`/sop/${this._cardService.sopId}/assignee.json`, {user: option.email, role: 'Manager'})
-    //   .subscribe(res=>{
     this.createdAssignees.unshift(option);
-      // });
-    console.log(this.createdAssignees);
+    this.newlyCreatedAssignees.push(option);
+    console.log(this.createdAssignees, this.newlyCreatedAssignees);
     this.options = [];
   }
 
@@ -200,8 +209,8 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     this.border = "1px solid #D1D1D1";
     this.assigneeName = '';
     this.filePreview = '';
+    this.options = [];
     
-  
     /**
      * Clear the form
      */
@@ -238,8 +247,8 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * @param assigneeListItem
    */
   onRemove(id){
-    if(this._ContainerService.permissions[0]["permissions"]["Can delete assignee"]){
-      this._dataService.delete(`/sop/assignee`, `${this._cardService.sopId}.json`)
+    // if(this._ContainerService.permissions[0]["permissions"]["Can delete assignee"]){
+      this._dataService.delete(`/sop/assignee`, `${id}.json`)
         .subscribe(res=>{
           this.createdAssignees.forEach(element=>{
             if(element.id == id){
@@ -247,7 +256,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
             }
           });
       });
-    }
+    // }
   }
 
   /**
@@ -255,22 +264,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * 
    */
   addAssignee(status){
-    //if status==true then add name in the create new dialog box
-    // if(status){
-    //   if(this.imagePath==""){
-    //     this.imagePath = 'http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg';
-    //   }
-    //   this.createAssignees.unshift([this.imagePath,this.assigneeName]);
-    //   this.assigneeName = '';
-    //   this.imagePath = '';
-    //   //console.log(this.imagePath,this.assigneeName);
-    // }else{
-    //   let acknowledge = this._dataService.addBackdropData(this.imagePath,this.assigneeName);
-    //   this.assigneeName = '';
-    //   this.imagePath = '';
-    // }
-    // let payload
-    // this.createdAssignees
   }
 
   /**
@@ -318,37 +311,36 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     this.sopForm.value.due_date = this.formatDate(this.sopForm.value.due_date);
     let validationCheck = this.validateForm(this.sopForm.value);
     if(validationCheck == 0){
-      this._preloaderService.openPreloader = true;
+      this.spinner.show();
       // console.log("the created sop form is ", this.sopForm.value);
       let formData = this.JSONtoFormData(this.sopForm.value);
       let sopId:number;
       this._dataService.postData('/sop.json',  formData)
       .subscribe(
         (response)=> {
-          // console.log("Response ",response);
-          if(response){
-            sopId = response["id"];
-            this._ContainerService.cardContents.push(
-              {
-                themeColor: this._ContainerService.colorPicker[this._ContainerService.getUniqueNumber()],
-                reasonCodes: 0,
-                ...response,
-                logo: response["image_url"]
-              }
-            );
-            // console.log("this is the service contents", this._ContainerService.cardContents)
-          }
-          if(this.createdAssignees.length > 0){
-            this.createdAssignees.forEach((ele, index, array)=>{
+          // if(response){
+          //   sopId = response["id"];
+          //   this._ContainerService.cardContents.push(
+          //     {
+          //       themeColor: this._ContainerService.colorPicker[this._ContainerService.getUniqueNumber()],
+          //       reasonCodes: 0,
+          //       ...response,
+          //       logo: response["image_url"]
+          //     }
+          //   );
+          // }
+          this.__containerComponent.getListOfAllProjects();
+          if(this.newlyCreatedAssignees.length > 0){
+            this.newlyCreatedAssignees.forEach((ele, index, array)=>{
               this._dataService.postData(`/sop/${sopId}/assignee.json`, {user: ele.email, role: 'Manager'})
                 .subscribe(res=>{});
               if(index == array.length - 1){
-                this._preloaderService.openPreloader = false;
+                this.spinner.hide();
                 this.onOverlayClose();
               }
             });
           }else{
-            this._preloaderService.openPreloader = false;
+            this.spinner.hide();
             this.onOverlayClose();
           }
         },
@@ -361,12 +353,13 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * Save an editted card
    */
   onSave(){
+    let sopId = this.sopForm.value.id;
     this.sopForm.value.due_date = this.formatDate(this.sopForm.value.due_date);
     
     let validationCheck = this.validateForm(this.sopForm.value);
 
     if(validationCheck == 0){
-      this._preloaderService.openPreloader = true;
+      this.spinner.show();
       console.log("the edited sop form is ", this.sopForm.value);
 
       let formData = this.JSONtoFormData(this.sopForm.value);
@@ -375,26 +368,37 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
       }
 
 
-        this._dataService.update('/sop', this.sopForm.value.id + '.json', formData)
+      this._dataService.update('/sop', this.sopForm.value.id + '.json', formData)
         .subscribe(response=>{
-          this._ContainerService.cardContents.forEach((element, index)=>{
-            if(element.id == this.sopForm.value.id){
-              this._ContainerService.cardContents[index] = {
-                themeColor: this._ContainerService.colorPicker[this._ContainerService.getUniqueNumber()],
-                reasonCodes: 0,
-                ...response,
-                logo: response["image_url"]
+          console.log("RESPONSE ON SOP EDIT", response)
+          // this._ContainerService.cardContents.forEach((element, index)=>{
+          //   if(element.id == this.sopForm.value.id){
+          //     this._ContainerService.cardContents[index] = {
+          //       themeColor: this._ContainerService.colorPicker[this._ContainerService.getUniqueNumber()],
+          //       reasonCodes: 0,
+          //       ...response,
+          //       logo: response["image_url"]
+          //     }
+          //   }
+          // });
+          this.__containerComponent.getListOfAllProjects();
+          if(this.newlyCreatedAssignees.length > 0){
+            this.newlyCreatedAssignees.forEach((ele, index, array)=>{
+              this._dataService.postData(`/sop/${sopId}/assignee.json`, {user: ele.email, role: 'Manager'})
+                .subscribe(res=>{});
+              if(index == array.length - 1){
+                this.spinner.hide();
+                this.onOverlayClose();
               }
-            }
-          });
-          this._preloaderService.openPreloader = false;
-          this.onOverlayClose();
-
-          setTimeout(()=>{
-            this._preloaderService.openPreloader = false;
-          });
+            });
+          }else{
+            this.spinner.hide();
+            this.onOverlayClose();
+          }
+      },
+      err=>{
+        console.error("ERROR while editing project", err);
       });
-
     }
 
     

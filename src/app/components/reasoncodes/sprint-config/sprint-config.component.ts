@@ -1,4 +1,14 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ElementRef, AfterViewChecked, HostListener } from '@angular/core';
+import { 
+  Component, 
+  OnInit,
+  Output, 
+  EventEmitter, 
+  Input, 
+  ViewChild, 
+  ElementRef, 
+  AfterViewChecked, 
+  HostListener, 
+  OnChanges } from '@angular/core';
 import {ReasonCodeService} from '../reason-code.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {fromEvent} from 'rxjs';
@@ -22,7 +32,7 @@ interface ReasonCode{
   templateUrl: './sprint-config.component.html',
   styleUrls: ['./sprint-config.component.scss']
 })
-export class SprintConfigComponent implements OnInit, AfterViewChecked {
+export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChanges {
 
   @ViewChild('sprintContainer') sprintContainer: ElementRef;
   @ViewChild('rcContainer') rcContainer: ElementRef;
@@ -76,6 +86,9 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
 
   file_name:string = "";
 
+  role:string;
+  permissions:any;
+
   uploadForm = this.formBuilder.group({
     upload_file: ['', Validators.required],
     confirm_template_checkbox : false
@@ -106,6 +119,11 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
     //   this.scrollTop = Number(res["target"].scrollTop.toFixed(0));
     // });
     
+  }
+
+  ngOnChanges(){
+    this.role = this.__rcService.role;
+    this.permissions = this.__rcService.grantedPermission;
   }
 
   ngAfterViewChecked() {        
@@ -169,6 +187,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
       this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
       this.__rcService.getProjectStatus(this.__rcService.sopId);
       this.__rcService.getCurrentSprintData(this.__rcService.sopId);
+      this.__rcService.getSprintStatus(this.__rcService.sopId);
     }
     // else if(this.changedDetected.length === 0 && this.addNewRow.length === 0){
     //   this.onSelectYes();

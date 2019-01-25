@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnChanges } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ActivatedRoute } from '@angular/router';
 import {ReasonCodeService} from './reason-code.service';
@@ -6,6 +6,7 @@ import {ContainerService} from '../projects/container/container.service';
 import {CreateUserstoryService} from './userstory-card-create/create-userstory.service';
 import {charts} from './chartoptions';
 import {fromEvent} from 'rxjs';
+import {ScrollbarService} from '../../services/scrollbarService/scrollbar.service';
 
 export interface UserData {
   id: string;
@@ -61,7 +62,7 @@ export interface ReceivedSprintConfig{
   templateUrl: './reasoncodes.component.html',
   styleUrls: ['./reasoncodes.component.scss', './move-user-story.scss','./draggable.scss', './completed-warning.scss']
 })
-export class ReasoncodesComponent implements OnInit, AfterViewInit {
+export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('totalPage') totalPage:ElementRef;
   @ViewChild('userStoryContainer') userStoryContainer:ElementRef;
   panelOpenState = false;
@@ -82,6 +83,11 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
   warning: boolean = false;
   warningToDeleteUserStory:boolean = false;
   clearAllFilter:boolean = true;
+  rippleColor = 'rbga(0,0,0,0.2)';
+  selectedTabIndex:number = 0;
+  activateStickybar:boolean = false;
+  activateVirtualFilter:boolean = false;
+
 
   addSprintPayload:SprintConfig = {
     sprint_name: '',
@@ -128,51 +134,78 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
   constructor(private route: ActivatedRoute,
               private _reasonCode: ReasonCodeService,
               private _containerService: ContainerService,
-              private _createUserStory: CreateUserstoryService) {}
+              private _createUserStory: CreateUserstoryService,
+              private __scrollbar:ScrollbarService) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this._reasonCode.sopId = this._createUserStory.sopId = parseInt(params.id);
+      this.getPermissionForEpicsPage(2, this._reasonCode.sopId);
       this._containerService.cardContents.forEach(element => {
         if(element.id == this._reasonCode.sopId){
           this.currentProject = element;
         }
       });
     });
-
-  this._reasonCode.refresh(this._reasonCode.sopId);
-   
-   this.pieChartOptions = charts.pieChart;
-   this.barChartOptions = charts.barChart;
-
-   fromEvent(window, 'scroll')
-      .subscribe(res => {
-        let position = res.target['scrollingElement'].scrollTop;
-        if(position > 360){
-          this.fixToTop = true;
-          // console.log(this.fixToTop);
-        }
-      });
     
-    setTimeout(()=>{
-      fromEvent(this.userStoryContainer.nativeElement, 'scroll')
-      .subscribe(res => {
-        console.log(res["target"].scrollTop);
-        if(res["target"].scrollTop <= 0){
-          this.fixToTop = false;
-          // console.log(this.fixToTop);
-        }
-      });
-    }, 500);
+    this._reasonCode.refresh(this._reasonCode.sopId);
+   
+    this.pieChartOptions = charts.pieChart;
+    this.barChartOptions = charts.barChart;
+
+    this.__scrollbar.broadCastScrollPosition.subscribe(res=>{
+      if(res > 401){
+        this.activateStickybar = true;
+        this.activateVirtualFilter = true;
+      }else{
+        this.activateStickybar = false;
+        this.activateVirtualFilter = false;
+      }
+    });
+
+    // fromEvent(window, 'scroll')
+    //     .subscribe(res => {
+    //       let position = res.target['scrollingElement'].scrollTop;
+    
+        // });
+      
+      // setTimeout(()=>{
+      //   fromEvent(this.userStoryContainer.nativeElement, 'scroll')
+      //   .subscribe(res => {
+      //     console.log(res["target"].scrollTop);
+      //     if(res["target"].scrollTop <= 0){
+      //       // this.fixToTop = false;
+      //       // console.log(this.fixToTop);
+      //     }
+      //   });
+      // }, 500);
 
   }
 
+  ngOnChanges(){
+    
+  }
+  
   ngAfterViewInit(){
   }
 
   onSelectDeletedUS(){
     // console.log("deleted us")
     // this._deletedTable.getDeletedUserStories();
+  }
+
+  getPermissionForEpicsPage(pageNumber:number, projectId:number){
+    this._reasonCode.getPermission(pageNumber, projectId).subscribe(res=>{
+      this._reasonCode.role = res[0].name;
+      this._reasonCode.grantedPermission = res[0].permissions;
+      console.log("Permission for epics", this._reasonCode.role, this._reasonCode.grantedPermission);
+    },
+    err=>{
+      console.log("Error while fetching permissions for epics page", err);
+    },
+    ()=>{
+      console.log(this._reasonCode.role, this._reasonCode.grantedPermission);
+    });
   }
 
   getChart(){
@@ -187,6 +220,8 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
   showNotification(){
     
   }
+
+  
 
   clearAllSort(){
     this._reasonCode.getUserStories(this._reasonCode.sopId);
@@ -311,14 +346,35 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
     this._reasonCode.doneSelectStatus.emit(true);
   }
 
-  onTabChange($event){
-    if($event.index == 0){
+  onVirtualTabClicked(value:number){
+    if(value == 0){
+      this.selectedTabIndex = value;
       this._reasonCode.getUserStories(this._reasonCode.sopId);
-    }else if($event.index == 1){
+    }else if(value == 1){
+      this.selectedTabIndex = value;
       this._reasonCode.getCompletedUserStories(this._reasonCode.sopId);
-    }else if($event.index == 2){
+    }else if(value == 2){
+      this.selectedTabIndex = value;
       this._reasonCode.getDeletedUserStories(this._reasonCode.sopId);
     }
+  }
+
+  onTabChange($event){
+    if($event.index == 0){
+      this.selectedTabIndex = 0;
+      this._reasonCode.getUserStories(this._reasonCode.sopId);
+    }else if($event.index == 1){
+      this.selectedTabIndex = 1;
+      this._reasonCode.getCompletedUserStories(this._reasonCode.sopId);
+    }else if($event.index == 2){
+      this.selectedTabIndex = 2;
+      this._reasonCode.getDeletedUserStories(this._reasonCode.sopId);
+    }
+  }
+
+  openVirtualFilter(){
+    this.activateVirtualFilter = !this.activateVirtualFilter;
+    this.openFilter();
   }
 
   idOfUserStoryToDelete:number;

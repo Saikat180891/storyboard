@@ -1,4 +1,4 @@
-<app-header></app-header>
+<!-- <app-header></app-header> -->
 <div class="universal" #totalPage>
 
   <ng-container>
@@ -35,7 +35,7 @@
 
 
   <div class="userstory-container" [ngClass]="{'userstory-container-active':fixToTop}">
-    <mat-tab-group class="userstory-container-tabs" (selectedTabChange)="onTabChange($event)">
+    <mat-tab-group class="userstory-container-tabs" (selectedTabChange)="onTabChange($event)" [selectedIndex]="selectedTabIndex">
       <mat-tab label="Open U/S">
 
         <div class="filter-selected" *ngIf="_reasonCode.filteredValues.length > 0">
@@ -102,7 +102,11 @@
     <div class="menu-btn-group">
       <button class="sort-btn btn btn-flat-grey" [ngClass]="{'filter-btn-active':false}" [matMenuTriggerFor]="sortby" (click)="sortBy = !sortBy"><i class="fas fa-sort-amount-down"></i> Sort By</button>
       <button class="btn btn-flat-grey" (click)="openFilter()" [ngClass]="{'filter-btn-active':filter}"><i class="fas fa-filter"></i> Filter</button>
-      <button class="btn btn-flat-grey" (click)="onCreate()" [ngStyle]="{'width':'150px'}">
+      <button 
+      class="btn btn-flat-grey" 
+      (click)="onCreate()" 
+      [ngStyle]="{'width':'150px'}"
+      >
         <img width="10px" height="10px" src="../../../assets/pics/plus.svg" alt="create user story"> Create New U/S
       </button>
       <div class="material-menu">
@@ -153,7 +157,7 @@
         <button mat-menu-item (click)="onSortBy('sort=revised_delivery,Latest_to_Earliest')">Latest to Earliest</button>
       </mat-menu>
 
-      <div class="filter" [ngClass]="{'filter-active': filter}">
+      <div class="filter" [ngClass]="{'filter-active': filter, 'filter-new-position': activateVirtualFilter}">
         <userstory-filter (closeFilter)="filter=$event" *ngIf="clearAllFilter"></userstory-filter>
       </div>
       
@@ -273,3 +277,30 @@
 </div>
 
 <!-- <snackbar></snackbar> -->
+
+<div class="stickybar" [ngClass]="{'stickybar-active':activateStickybar}">
+  <div class="tabs">
+    <button matRipple [matRippleColor]="rippleColor" (click)="onVirtualTabClicked(0)" [ngClass]="{'active':selectedTabIndex==0}">Open U/S</button>
+    <button matRipple [matRippleColor]="rippleColor" (click)="onVirtualTabClicked(1)" [ngClass]="{'active':selectedTabIndex==1}">Completed U/S</button>
+    <button matRipple [matRippleColor]="rippleColor" (click)="onVirtualTabClicked(2)" [ngClass]="{'active':selectedTabIndex==2}">Deleted U/S</button>
+  </div>
+  <div class="page-options">
+    <button class="sort-btn btn btn-flat-grey" [ngClass]="{'filter-btn-active':false}" [matMenuTriggerFor]="sortby" (click)="sortBy = !sortBy"><i class="fas fa-sort-amount-down"></i> Sort By</button>
+    <button class="btn btn-flat-grey" (click)="openVirtualFilter()" [ngClass]="{'filter-btn-active':filter}"><i class="fas fa-filter"></i> Filter</button>
+    <button 
+    class="btn btn-flat-grey" 
+    (click)="onCreate()" 
+    [ngStyle]="{'width':'150px'}"
+    >
+      <img width="10px" height="10px" src="../../../assets/pics/plus.svg" alt="create user story"> Create New U/S
+    </button>
+  </div>
+</div>
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple">
+ <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

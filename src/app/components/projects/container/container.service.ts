@@ -32,11 +32,6 @@ export class ContainerService{
       return this.lastNumber;
     }
 
-    resetProjectsOnLoad(){
-      this.cardContents = [];
-      this.cardContents.push(this.createNewCard);
-    }
-
     getListOfAllProjects(){
       return this._dataService.fetchData(`/sop.json`);
     }

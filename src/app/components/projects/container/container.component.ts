@@ -17,6 +17,8 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
   cards = [1,2,3,4,5,6,7,8,9,10];
   userPermissions = [];
   activateSpinner:boolean = true;
+
+  permissionsGrantedForBackdrop:any;
   
   constructor(
     private _dataService: DataService, 
@@ -89,7 +91,7 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
             }
           });
         });
-        projectlist.unshift({id:0});
+        // projectlist.unshift({id:0});
         this._ContainerService.cardContents = projectlist;
 
         this.__spinner.hide();
@@ -120,6 +122,11 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
           }
         })
     });
+  }
+
+  givenPermissions(permissions){
+    this.permissionsGrantedForBackdrop = permissions;
+    console.log(permissions)
   }
   
 }

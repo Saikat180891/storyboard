@@ -1,5 +1,6 @@
 <div class="filter-container">
   <div class="filter-body">
+    
     <div class="form-group">
       <div class="heading">
         Priority
@@ -8,6 +9,7 @@
         <mat-checkbox *ngFor="let priority of priorities" [(ngModel)]="__rcService.filterItems['priority$'+priority]">{{priority}}</mat-checkbox>
       </div>
     </div>
+
     <div class="form-group">
       <div class="heading">
         Sprint Name 
@@ -54,6 +56,7 @@
       </div>
     </div>
   </div>
+
   <div class="filter-footer">
     <div class="btn-holder">
       <button class="btn btn-blue" (click)="onApplyFilter()">Apply</button>

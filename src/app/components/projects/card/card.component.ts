@@ -26,6 +26,7 @@ export class CardComponent implements OnInit, OnChanges{
   sopPermissions:any = []; 
   @Input() cardData;
   @Output('deleteSop')  deleteSop = new EventEmitter();
+  @Output('grantedPermissions') grantedPermissions = new EventEmitter();
   rippleColor = 'rbga(0,0,0,0.2)';
   localData;
   createSOP = "Create New Project";
@@ -72,6 +73,7 @@ export class CardComponent implements OnInit, OnChanges{
     this._UIcontrolerService.overlayHeaderAssigner(this.editSOP);
     this._UIcontrolerService.setCardEdit(cardData);
     this._UIcontrolerService.data.emit(cardData);
+    this.grantedPermissions.emit({role: cardData.assignee[0].role, permissions:cardData.currentUserPermission});
   }
 
   onDelete(localData){

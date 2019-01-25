@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import {EditUserStoryService} from '../userstory-card-edit/edit-user-story.service';
 import {ReasonCodeService} from '../reason-code.service';
 import {ReasoncodesComponent} from '../reasoncodes.component';
@@ -8,7 +8,7 @@ import {ReasoncodesComponent} from '../reasoncodes.component';
   templateUrl: './userstory-card.component.html',
   styleUrls: ['./userstory-card.component.scss']
 })
-export class UserstoryCardComponent implements OnInit {
+export class UserstoryCardComponent implements OnInit, OnChanges {
   @Output('editUserStory') editUserStory = new EventEmitter();
 
   @Input('userStory') inputUserStory;
@@ -23,6 +23,8 @@ export class UserstoryCardComponent implements OnInit {
 
   rippleColor = 'rbga(0,0,0,0.2)';
   color = 'primary';
+  permissions:any;
+  role:string;
 
   constructor(private __editUS: EditUserStoryService, private __rcService: ReasonCodeService, private rcComponent: ReasoncodesComponent) {  }
 
@@ -30,10 +32,23 @@ export class UserstoryCardComponent implements OnInit {
     this.userStory = JSON.parse(JSON.stringify(this.inputUserStory));
   }
 
+  ngOnChanges(){
+    this.permissions = this.__rcService.grantedPermission;
+    this.role = this.__rcService.role;
+  }
+
   onEdit(){
     this.editUserStory.emit(true);
     this.__editUS.selected = this.inputUserStory.id;
     this.rcComponent.createOptionsWithSprintName();
+  }
+
+  checkIfPermissiongranted(requiredPermission:string){
+    if(requiredPermission in this.permissions){
+      return !this.permissions[requiredPermission];
+    }else{
+      return true;
+    }
   }
 
   toggleRules(event, uid, uss_name){

@@ -205,9 +205,7 @@ li span{
     max-height: 70px;
     overflow: auto;
 }
-.height-max::-webkit-scrollbar {
-    display: none;
-}
+
 .mat-raised-button:not([class*=mat-elevation-z]){
     box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12);
 }
