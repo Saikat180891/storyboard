@@ -170,11 +170,11 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
     this.saveEpics();
   }
 
-  async saveSprint(){
+  saveSprint(){
     this.spinner.show();
     if(this.addNewRow.length > 0){
+      this.__rcService.createSprint(this.addNewRow);
       this.__rcService.refresh(this.__rcService.sopId)
-      // this.__rcService.createSprint(this.addNewRow);
       // this.__rcService.getBenefits(this.__rcService.sopId);
       // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
       // this.__rcService.getProjectStatus(this.__rcService.sopId);
@@ -251,7 +251,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
     this.addNewRowForReasonCode.push(temObj);
   }
 
-  async saveEpics(){
+  saveEpics(){
     if(this.reasonCodeEditChangeDetector.length > 0){
       this.reasonCodeEditChangeDetector.forEach((element, index)=>{
         if(element){
