@@ -9,7 +9,7 @@ import {fromEvent} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {PreloaderService} from '../shared/preloader/preloader.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-
+import {DataService} from '../../data.service';
 
 export interface UserData {
   id: string;
@@ -136,7 +136,8 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
               private _containerService: ContainerService,
               private _createUserStory: CreateUserstoryService,
               private __preloaderService: PreloaderService,
-              public spinner: NgxSpinnerService) {}
+              public spinner: NgxSpinnerService,
+              private __api:DataService) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -192,11 +193,11 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit {
 
   benefitChartImage:string;
   onShowBenefits(){
-    if(environment.production){
-      this.benefitChartImage = `http://storyboard.service.soroco/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png?q=${new Date().getTime()}`;
-    }else{
-      this.benefitChartImage = `http://localhost:8000/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png?q=${new Date().getTime()}`;
-    }
+    // if(environment.production){
+    this.benefitChartImage = `${this.__api.apiUrl}/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png?q=${new Date().getTime()}`;
+    // }else{
+    //   this.benefitChartImage = `http://localhost:8000/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png?q=${new Date().getTime()}`;
+    // }
     this.showBenefitsChart = true;
   }
 

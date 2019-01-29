@@ -15,6 +15,8 @@ export class ExportDialogBoxComponent implements OnInit {
   startDate = ""
   endDate = ""
   projectTypeSelected;
+  startDateValidator: boolean = false;
+  endDateValidator: boolean = false;
 
   constructor(private __rcService:ReasonCodeService) { }
 
@@ -35,10 +37,11 @@ export class ExportDialogBoxComponent implements OnInit {
 
   onExportAuditTrail(){
     console.log(this.projectTypeSelected)
+    
+    if(this.projectTypeSelected == 2 && this.startDate && this.endDate)
+    {
     let startDate = this.reArrangeDate(this.startDate);
     let endDate = this.reArrangeDate(this.endDate);
-    if(this.projectTypeSelected == 2 && startDate && endDate)
-    {
       this.__rcService.downLoadAuditTrailFile(this.__rcService.sopId, startDate, endDate);
     }
     else{

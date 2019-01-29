@@ -13,16 +13,16 @@
         </div>
       </div>
       <div class="input-container md">
-        <div class="title" [ngClass]="{'warning':userStoryNameValidator}">User Story Name</div>
+        <div class="title" [ngClass]="{'warning':userStoryNameValidator}" >User Story Name</div>
         <div class="editable">
-          <input type="text" maxlength="100px" placeholder="Ex: User Story 1" [(ngModel)]="userStoryPayload.us_name" [ngStyle]="{'width':'250px'}">
+          <input type="text" placeholder="Ex: User Story 1" [(ngModel)]="userStoryPayload.us_name" [ngStyle]="{'width':'250px'}" maxlength="100">
         </div>
       </div>
     </div>
 
     <div class="form-group">
       <div class="input-container md">
-        <div class="title" [ngClass]="{'warning':userStroryReasonCodeValidator}">Epics</div>
+        <div class="title" [ngClass]="{'warning':userStroryReasonCodeValidator}">Epic</div>
         <div class="editable">
           <normal-dropdown (optionSelected)="userStoryPayload.rc_name=$event.status" [options]="reasonCodeOptions" [defaultOption]="'Select'"></normal-dropdown>
         </div>
@@ -51,15 +51,15 @@
         </div>
       </div>
       <div class="input-container sm">
-        <div class="title align-center">Dev Hrs</div>
+        <div class="title align-center" [ngClass]="{'warning':userStoryDevHrsValidator}">Dev Hrs</div>
         <div class="editable">
-          <input type="number" placeholder="Ex: 23"  [(ngModel)]="userStoryPayload.dev_hrs" (keyup)="onUpdateProductivity()">
+          <input type="text" placeholder="Ex: 23"  [(ngModel)]="userStoryPayload.dev_hrs" (keyup)="onUpdateProductivity()">
         </div>
       </div>
       <div class="input-container sm">
-        <div class="title align-center">Benefits</div>
+        <div class="title align-center" [ngClass]="{'warning':userStoryBenefitValidator}">Benefits</div>
         <div class="editable">
-          <input type="number" placeholder="Ex: 3" [(ngModel)]="userStoryPayload.ftes" (keyup)="onUpdateProductivity()">
+          <input type="text" placeholder="Ex: 3" [(ngModel)]="userStoryPayload.ftes" (keyup)="onUpdateProductivity()">
         </div>
       </div>
     </div>
@@ -89,7 +89,7 @@
         </div>
       </div>
       <div class="input-container">
-        <div class="title" [ngClass]="{'warning':userStoryDescValidator}">Description</div>
+        <div class="title">Description</div>
         <div class="editable">
           <input type="text" placeholder="Add description here" maxlength="100" [(ngModel)]="userStoryPayload.notes">
         </div>
@@ -143,7 +143,7 @@
       <button class="btn btn-blue" (click)="onCreate()">Save Changes</button>
       <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
 
-      <span class="message" *ngIf="userStoryNumberValidator || userStoryNameValidator || userStoryPriorityValidator || userStorySprintNameValidator || userStoryStatusValidator || userStoryDescValidator || userStroryReasonCodeValidator">Please enter the mandatory fields</span>
+      <span class="message" *ngIf="userStoryNumberValidator || userStoryNameValidator || userStoryPriorityValidator || userStorySprintNameValidator || userStoryStatusValidator || userStroryReasonCodeValidator">Please enter the mandatory fields</span>
     </div>
   </div>
 </div>

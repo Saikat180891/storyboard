@@ -246,7 +246,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked {
 
   onAddRC(){
     let temObj = {
-      name: 'Epics X'
+      name: 'Epic X'
     }
     this.addNewRowForReasonCode.push(temObj);
   }

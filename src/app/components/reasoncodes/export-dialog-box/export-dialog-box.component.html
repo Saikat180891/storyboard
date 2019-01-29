@@ -9,8 +9,8 @@
     <div>
       <div class="form-group">
         <mat-radio-group [(ngModel)]="projectTypeSelected">
-          <mat-radio-button value="1" (click)="onEntireProject()">Since Created</mat-radio-button>
-          <mat-radio-button value="2" (click)="onTimedProject()">Time Frame</mat-radio-button>
+          <mat-radio-button value="1" (click)="onEntireProject()" name="since">Since Created</mat-radio-button>
+          <mat-radio-button value="2" (click)="onTimedProject()" name="time" checked>Time Frame</mat-radio-button>
         </mat-radio-group>
       </div>
       <div class="form-group form-group-expand">

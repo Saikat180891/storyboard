@@ -289,13 +289,14 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
         validationStatus[2] = !(this.sopForm.value[key] == '');
         this.validateChargeCode = !validationStatus[2];
       }
-
       if(key == 'due_date'){
+        console.log("Date",this.sopForm.value[key]);
         validationStatus[3] = !(this.sopForm.value[key] == 'NaN/NaN/NaN');
         this.validateSelectedDate = !validationStatus[3];
         this.border = !validationStatus[3]?"1px solid rgb(245, 117, 117)":"1px solid #D1D1D1";
       }
     }
+    console.log(validationStatus);
 
     let sum = 0;
     for(let i of validationStatus){
@@ -338,14 +339,15 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
         },
         //if response not successfull
         (err)=> {
-          console.error("ERROR",err);
-          // if(err.status == 0 || err.status >= 400){
-          //   setTimeout(()=>{
-            //   }, 2000);
-            
+            console.error("ERROR",err);
             this._preloaderService.openPreloader = false;
-            console.log("ERROR :", err.statusText);
-            this.snackBar.open(err.statusText, "Failed", {duration: 2000});
+            var keys = Object.keys(err.error);
+            var error= "";
+            keys.forEach(key => {
+              error += key+": "+err.error[key] +"\n";
+            });
+
+            this.snackBar.open(error, "Failed", {duration: 2000});
         }
       );
     }
@@ -355,8 +357,8 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * Save an editted card
    */
   onSave(){
+    var dateBeforeSave = this.sopForm.value.due_date;
     this.sopForm.value.due_date = this.formatDate(this.sopForm.value.due_date);
-    
     let validationCheck = this.validateForm(this.sopForm.value);
 
     if(validationCheck == 0){
@@ -370,7 +372,8 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
 
 
         this._dataService.update('/sop', this.sopForm.value.id + '.json', formData)
-        .subscribe(response=>{
+        .subscribe(
+          response=>{
           this._ContainerService.cardContents.forEach((element, index)=>{
             if(element.id == this.sopForm.value.id){
               this._ContainerService.cardContents[index] = {
@@ -383,14 +386,23 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
           });
           this._preloaderService.openPreloader = false;
           this.onOverlayClose();
-
-          setTimeout(()=>{
-            this._preloaderService.openPreloader = false;
-          });
-      });
-
+          this._preloaderService.openPreloader = false;
+          this.snackBar.open("Project has been created", "Success", {duration: 2000});
+      }, 
+      (err)=> {
+        console.error("ERROR",err);
+        this._preloaderService.openPreloader = false;
+        var keys = Object.keys(err.error);
+        var error= "";
+        keys.forEach(key => {
+          error += key+": "+err.error[key] +"\n";
+        });
+        this.snackBar.open(error, "Failed", {duration: 2000});
     }
-  }
+        );
+    this.sopForm.value.due_date = dateBeforeSave;
+      }
+    }
 
   /**
    * Rearrange the date in the following format DD/MM/YYYY

@@ -25,7 +25,7 @@
   
       <div class="form-group">
         <div class="input-container md">
-          <div class="title">Epics</div>
+          <div class="title">Epic</div>
           <div class="editable">
             <normal-dropdown (optionSelected)="editUSData.rc_name=$event.status" [options]="reasonCodeOptions" [defaultOption]="editUSData.rc_name?editUSData.rc_name:'Unassigned'"></normal-dropdown>
           </div>
@@ -54,15 +54,15 @@
           </div>
         </div>
         <div class="input-container sm">
-          <div class="title">Dev Hrs</div>
+          <div class="title" [ngClass]="{'warning':userStoryDevHrsValidator}">Dev Hrs</div>
           <div class="editable">
-            <input type="number" placeholder="Ex: 23" [(ngModel)]="editUSData.dev_hrs" (keyup)="onUpdateProductivity()">
+            <input type="text" placeholder="Ex: 23" [(ngModel)]="editUSData.dev_hrs" (keyup)="onUpdateProductivity()">
           </div>
         </div>
         <div class="input-container sm">
-          <div class="title">Benefits</div>
+          <div class="title" [ngClass]="{'warning':userStoryBenefitValidator}">Benefits</div>
           <div class="editable">
-            <input type="number" placeholder="Ex: 3" [(ngModel)]="editUSData.ftes" (keyup)="onUpdateProductivity()">
+            <input type="text" placeholder="Ex: 3" [(ngModel)]="editUSData.ftes" (keyup)="onUpdateProductivity()">
           </div>
         </div>
       </div>
@@ -92,7 +92,7 @@
           </div>
         </div>
         <div class="input-container">
-          <div class="title" [ngClass]="{'warning':userStoryDescValidator}">Description</div>
+          <div class="title">Description</div>
           <div class="editable">
             <input type="text" placeholder="Add description here" maxlength="100" [(ngModel)]="editUSData.notes" maxlength="100">
           </div>
@@ -132,7 +132,7 @@
         <button class="btn btn-blue" (click)="onSaveAll()">Save Changes</button>
         <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
 
-        <span class="message" *ngIf="userStoryNumberValidator || userStoryNameValidator || userStoryPriorityValidator || userStorySprintNameValidator || userStoryStatusValidator || userStoryDescValidator">Please enter the mandatory fields</span>
+        <span class="message" *ngIf="userStoryNumberValidator || userStoryNameValidator || userStoryPriorityValidator || userStorySprintNameValidator || userStoryStatusValidator ">Please enter the mandatory fields</span>
       </div>
     </div>
   </div>

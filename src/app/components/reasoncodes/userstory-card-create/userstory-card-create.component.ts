@@ -82,7 +82,9 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
   userStorySprintNameValidator: boolean = false;
   userStoryStatusValidator: boolean = false;
   userStoryDescValidator: boolean = false;
-  userStroryReasonCodeValidator:boolean = false;
+  userStoryReasonCodeValidator:boolean = false;
+  userStoryDevHrsValidator: boolean = false;
+  userStoryBenefitValidator: boolean = false;
   validationSuccessfull = [];
   edit:boolean = true;
 
@@ -172,25 +174,36 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
       this.userStoryStatusValidator = false;
       this.validationSuccessfull[4] = 1;
     }
-    if(this.userStoryPayload.notes == ''){
-      this.userStoryDescValidator = true;
+    if(this.userStoryPayload.rc_name == ''){
+      this.userStoryReasonCodeValidator = true;
       this.validationSuccessfull[5] = 0;
     }else{
-      this.userStoryDescValidator = false;
+      this.userStoryReasonCodeValidator = false;
       this.validationSuccessfull[5] = 1;
     }
-    if(this.userStoryPayload.rc_name == ''){
-      this.userStroryReasonCodeValidator = true;
-      this.validationSuccessfull[6] = 0;
-    }else{
-      this.userStroryReasonCodeValidator = false;
-      this.validationSuccessfull[6] = 1;
-    }
-    const value = this.validationSuccessfull.reduce((acc, val)=>{
+    var value = this.validationSuccessfull.reduce((acc, val)=>{
       return acc + val;
     });
+    var pattern = /^([0-9]*(\.)?)[0-9]*$/;
+    if ((this.userStoryPayload.ftes!=null && this.userStoryPayload.ftes!='-----') && !pattern.test(this.userStoryPayload.ftes))
+      {
+        this.userStoryBenefitValidator = true;
+      }
+      else{this.userStoryBenefitValidator = false;
+        value++;
+      }
+      console.log(this.userStoryPayload.dev_hrs+" "+this.userStoryPayload.ftes);
+      console.log(pattern.test(this.userStoryPayload.dev_hrs)+" "+pattern.test(this.userStoryPayload.ftes));
+      if ((this.userStoryPayload.dev_hrs!=null && this.userStoryPayload.dev_hrs!='-----' )&& !pattern.test(this.userStoryPayload.dev_hrs))
+        {
+          this.userStoryDevHrsValidator = true;
+        }
+        else{
+          this.userStoryDevHrsValidator = false;
+          value++;
+        }
     console.log(value)
-    if(value === 7){
+    if(value === 8){
       let id:number;
       this.__rcService.sprintConfig.forEach(element=>{
         if(element.sprint_name == this.userStoryPayload.sprint_name){
