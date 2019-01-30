@@ -62,7 +62,14 @@
                 <input maxlength="100" type="text" [(ngModel)]="rcdata.name" (keyup)="onReasonCodeEdit(i)">
               </mat-grid-tile>
               <mat-grid-tile>
-                <div class="delete" (click)="onDeleteCreatedRC(rcdata.id, i)">
+                <div 
+                class="delete" 
+                (click)="onDeleteCreatedRC(rcdata.id)"
+                [appCanAccess]="{
+                  role:role, 
+                  permissionRequired:'Can delete epics',
+                  permissionList: permissions
+                }">
                   <i class="far fa-trash-alt"></i>
                 </div>
               </mat-grid-tile>
@@ -76,7 +83,14 @@
                 <input type="text" [(ngModel)]="addNewRow.name">
               </mat-grid-tile>
               <mat-grid-tile>
-                <div class="delete" (click)="onDeleteRC(i)">
+                <div 
+                class="delete" 
+                (click)="onDeleteRC(i)"
+                [appCanAccess]="{
+                  role:role, 
+                  permissionRequired:'Can delete epics',
+                  permissionList: permissions
+                }">
                   <i class="far fa-trash-alt"></i>
                 </div>
               </mat-grid-tile>
@@ -87,7 +101,13 @@
             <mat-grid-list cols="1" rowHeight="50px">
               <mat-grid-tile>
                 <div class="row">
-                  <button (click)="onAddRC()">Add Epic</button>
+                  <button 
+                  (click)="onAddRC()"
+                  [appCanAccess]="{
+                    role:role, 
+                    permissionRequired:'Can add epics',
+                    permissionList: permissions
+                  }">Add Epics</button>
                 </div>
               </mat-grid-tile>
             </mat-grid-list>
@@ -96,7 +116,14 @@
 
       </div>
       <div class="modal-footer footer-position">
-        <button class="btn btn-blue" (click)="onSaveAllChanges()">Save</button>
+        <button 
+        class="btn btn-blue" 
+        (click)="onSaveAllChangesInRC()"
+        [appCanAccess]="{
+          role:role, 
+          permissionRequired:'Can change epics',
+          permissionList: permissions
+        }">Save</button>
         <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
       </div>
     </mat-tab>
@@ -148,7 +175,14 @@
                 <input type="text" [(ngModel)]="sprintConfig.end_date" readonly>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="4">
-                <div class="delete" (click)="deleteSprint(sprintConfig.id, sprintConfig.sprint_name)">
+                <div 
+                class="delete" 
+                (click)="deleteSprint(sprintConfig.id, sprintConfig.sprint_name)"
+                [appCanAccess]="{
+                  role:role, 
+                  permissionRequired:'Can delete sprint',
+                  permissionList: permissions
+                }">
                   <i class="far fa-trash-alt"></i>
                 </div>
               </mat-grid-tile>
@@ -185,7 +219,14 @@
                 <input type="text" [(ngModel)]="sprintConfig.end_date" readonly placeholder="End Date">
               </mat-grid-tile>
               <mat-grid-tile [colspan]="4">
-                <div class="delete" (click)="onDeleteRow(i)">
+                <div 
+                class="delete" 
+                (click)="onDeleteRow(i)"
+                [appCanAccess]="{
+                  role:role, 
+                  permissionRequired:'Can delete sprint',
+                  permissionList: permissions
+                }">
                   <i class="far fa-trash-alt"></i>
                 </div>
               </mat-grid-tile>
@@ -196,7 +237,13 @@
             <mat-grid-list cols="1" rowHeight="50px">
               <mat-grid-tile>
                 <div class="row">
-                  <button (click)="onAddSprints(sprintContainer)">Add Sprints</button>
+                  <button 
+                  (click)="onAddSprints(sprintContainer)"
+                  [appCanAccess]="{
+                    role:role, 
+                    permissionRequired:'Can add sprint',
+                    permissionList: permissions
+                  }">Add Sprints</button>
                 </div>
               </mat-grid-tile>
             </mat-grid-list>
@@ -205,7 +252,14 @@
 
       </div>
       <div class="modal-footer footer-position">
-        <button class="btn btn-blue" (click)="onSaveAllChanges()">Save</button>
+        <button 
+        class="btn btn-blue" 
+        (click)="onSaveAllChanges()"
+        [appCanAccess]="{
+          role:role, 
+          permissionRequired:'Can change sprint',
+          permissionList: permissions
+        }">Save</button>
         <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
       </div>
     </mat-tab>

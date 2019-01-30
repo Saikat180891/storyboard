@@ -2,26 +2,21 @@ import { Injectable, EventEmitter } from '@angular/core';
 import {DataService} from '.././../../data.service';
 import {AppcontrolService} from '../../../services/controlservice/appcontrol.service';
 import {CommondbService} from '../../../commondb.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class ContainerService{
+  permissions = [];
     constructor(
       private _dataService: DataService, 
       private _UIControlService: AppcontrolService,
       private _centralDB: CommondbService){ }
 
     createNewCard = {
-      id: 0,
-      automationSystemName: "",
-      chargeCode: "",
-      clientName: "",
-      due_date: "",
-      logo: "",
-      rCodes: "",
-      themeColor: ""
+      id: 0
     }
 
     cardContents = [];
@@ -37,29 +32,15 @@ export class ContainerService{
       return this.lastNumber;
     }
 
-    getdataFromDB(){
-      
-      if(this.cardContents.length > 1){
+    getListOfAllProjects(){
+      return this._dataService.fetchData(`/sop.json`);
+    }
 
-      }else{
-        this.cardContents = [];
-        this.cardContents.push(this.createNewCard);
-        this._dataService.fetchData('/sop.json')
-        .subscribe(data => {
-          // console.log("Response received GET", data)
-          data.forEach((element)=>{
-            this.cardContents.push({
-              themeColor: this._UIControlService.colorPicker[this.getUniqueNumber()],
-              reasonCodes: this._UIControlService.firstZero(Number(element["number_epics"])),
-              ...element,
-              logo: element["image_url"]
-            });
-          });
-          this._centralDB.cardContents = this.cardContents;
-            console.log("GET", this._centralDB.cardContents);
-            }
-          );
-        }
-      }
 
+    /**
+     * Return details of all the projects
+     */
+    getProjects(){
+      return this.cardContents;
+    }
 }

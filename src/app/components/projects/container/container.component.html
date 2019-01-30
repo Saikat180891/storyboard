@@ -1,29 +1,38 @@
 
-<app-header></app-header>
+<!-- <app-header></app-header> -->
 <div class="container">
   <div class="file-list">
-      
     <mat-tab-group>
-      <mat-tab label="{{filesList}}" *ngFor="let filesList of filesLists">
-        <div *ngIf="filesList=='Recent Files'">
+      <mat-tab label="Recent Files">
           <div class="top-padding">
             <div class="row">
-              <div class="card grid-item" *ngFor="let cardData of _ContainerService.cardContents">
-                <app-card [cardData]="cardData" (deleteSop)="onDeleteSop($event)"></app-card>
+              <ng-container>
+                <div class="grid-item">
+                  <app-card [cardData]="{id:0}"></app-card>
+                </div>
+              </ng-container>
+              <div class="grid-item" *ngFor="let cardData of _ContainerService.cardContents">
+                <app-card [cardData]="cardData" (deleteSop)="onDeleteSop($event)" (grantedPermissions)="givenPermissions($event)"></app-card>
               </div>
             </div>
           </div>
-        </div>
-        <div *ngIf="filesList=='All Files'">
-          <!-- <multi-chart></multi-chart> -->
-        </div>
-      </mat-tab>
-    </mat-tab-group>
-    
+        </mat-tab>
+        <mat-tab label="All Files">
+          Comming soon...
+        </mat-tab>
+      </mat-tab-group>
+    </div>
   </div>
-</div>
 
-<!-- <div class="filter">
+  <ngx-spinner 
+    bdColor="rgba(0,0,0,0.7)"
+    size="medium"
+    color="#fff"
+    type="ball-scale-multiple">
+    <p style="font-size: 20px; color: #fff">Loading...</p>
+  </ngx-spinner>
+  
+  <!-- <div class="filter">
     <app-filter></app-filter>
 </div>
  -->
@@ -36,3 +45,6 @@
     </div>
   </div>
 </div>
+
+
+<app-backdrop [permissions]="permissionsGrantedForBackdrop"></app-backdrop>

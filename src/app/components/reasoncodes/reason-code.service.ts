@@ -35,10 +35,22 @@ export class ReasonCodeService {
   sortBy = '';
   filterPath = '';
 
+  grantedPermission:any;
+  role:string;
+
   constructor(private _api:DataService,
               private __preLoad: PreloaderService, 
               public snackbar:MatSnackBar) { }
 
+  
+  /**
+   * 
+   * get permission
+   */
+  getPermission(pageNumber:number, projectId:number){
+    return this._api.getPermission(pageNumber, projectId);
+  }
+  
 
   /**
    * This api is used to create a new sprint, it is called in the sprint config component
@@ -94,14 +106,15 @@ export class ReasonCodeService {
     this.__preLoad.openPreloader = true;
     this._api.delete('/sop/sprint', `${id}.json`)
       .subscribe(response=>{
-        this.sprintConfig.forEach(element=>{
-          if(element.id === id){
-            let pos = this.sprintConfig.indexOf(element);
-            this.sprintConfig.splice(pos, 1);
-            console.log(`Delete sprint with id = ${id}`);
-            this.getProjectStatus(this.sopId);
-          }
-        });
+        this.refresh(this.sopId);
+        // this.sprintConfig.forEach(element=>{
+        //   if(element.id === id){
+        //     let pos = this.sprintConfig.indexOf(element);
+        //     this.sprintConfig.splice(pos, 1);
+        //     console.log(`Delete sprint with id = ${id}`);
+        //     this.getProjectStatus(this.sopId);
+        //   }
+        // });
       });
       this.__preLoad.openPreloader = false;    
   }
@@ -112,15 +125,6 @@ export class ReasonCodeService {
     this._api.update(`/sop/sprint`, `${id}.json`, data)
       .subscribe(response=>{
         this.getSprint(this.sopId);
-        // this.sprintConfig.forEach(element=>{
-        //   if(element.id === response[id]){
-        //     // console.log("The edit response is 2", response);
-        //     let pos = this.sprintConfig.indexOf(element);
-        //     response['start_date'] = this.arrangeDateInCorrectFormat(response['start_date']);
-        //     this.sprintConfig[pos] = response;
-        //   }
-        // });
-        // console.log("The response is ",response);
       });
       this.__preLoad.openPreloader = false;    
   }
@@ -166,8 +170,8 @@ export class ReasonCodeService {
         });
         
         this.userStories = response.reverse();
-        this.getProjectStatusChartData(this.sopId);
-        this.getChartData(this.sopId);
+        this.getProjectStatusChartData(this.sopId); //check
+        this.getChartData(this.sopId); //check
       });
       console.log("the userstories are", this.userStories)
       this.__preLoad.openPreloader = false;    
@@ -177,20 +181,7 @@ export class ReasonCodeService {
     this.__preLoad.openPreloader = true;    
     this._api.delete(`/sop/epics/userstories`, `${id}.json`)
       .subscribe(response=>{
-        this.userStories.forEach(element=>{
-            let pos = this.userStories.indexOf(element);
-            this.userStories.splice(pos, 1);
-            this.getProjectStatusChartData(this.sopId);
-            this.getProjectStatus(this.sopId);
-            this.getSprintStatus(this.sopId);
-            // this.getChartData(this.sopId);
-            this.getUserStories(this.sopId);
-            this.getBenefits(this.sopId);
-            this.getCurrentSprintData(this.sopId);
-            // this.getDeletedUserStories(this.sopId);
-            this.getCompletedUserStories(this.sopId);
-        });
-        // this.getDeletedUserStories();
+        this.refresh(this.sopId);
         console.log(`Rpw with id ${id} deleted successfully.`);
       });
       this.__preLoad.openPreloader = false;    
@@ -238,14 +229,7 @@ export class ReasonCodeService {
   restoreUserStories(id){
     this._api.fetchData(`/sop/epics/userstories/${id}/unarchive/`)
       .subscribe(response=>{
-        this.getDeletedUserStories(this.sopId);
-        this.getProjectStatusChartData(this.sopId);
-        this.getProjectStatus(this.sopId);
-        this.getSprintStatus(this.sopId);
-        // this.getChartData(this.sopId);
-        // this.getUserStories(this.sopId);
-        this.getBenefits(this.sopId);
-        this.getCurrentSprintData(this.sopId);
+        this.refresh(this.sopId);
         console.log(`Restored US with id ${id}`, response);
       });
   }
@@ -351,8 +335,8 @@ export class ReasonCodeService {
     this.getCurrentSprintData(sopID);
     this.getBenefits(sopID);
     this.getSprintStatus(sopID);
-    // this.getCompletedUserStories(sopID);
-    // this.getDeletedUserStories(sopID);
+    this.getCompletedUserStories(sopID);
+    this.getDeletedUserStories(sopID);
     this.getReasonCode(sopID);
     this.getSprint(sopID);
   }

@@ -138,6 +138,13 @@ export class DataService {
     return this.http.get(this.apiUrl + endpoint, authcode);
   }
 
+  getPermission(num:number, id?:number|string){
+    if(id === undefined){
+      id = '';
+    }
+    return this.fetchData(`/user/group/permissions.json?proj_id=${id}&page_no=${num}`);
+  }
+
 }
 
 interface CardContents{

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {DataService} from '../../../data.service';
 import {ReasonCodeService} from '../../reasoncodes/reason-code.service';
+import { NgxSpinnerService  } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class CreateUserstoryService {
 
   sopId:number;
 
-  constructor(private __api: DataService, private __rcService: ReasonCodeService) { }
+  constructor(private __api: DataService, private __rcService: ReasonCodeService, private spinner: NgxSpinnerService) { }
 
   createUserStory(sprintID, reasonCodeId, payload){
     if(sprintID){
@@ -28,6 +29,7 @@ export class CreateUserstoryService {
     console.log(api, payload)
     this.__api.postData(api, payload)
       .subscribe(response=>{
+        this.spinner.show();
         this.__rcService.getUserStories(this.sopId);
         this.__rcService.getProjectStatusChartData(this.sopId);
         this.__rcService.getProjectStatus(this.sopId);
@@ -36,6 +38,10 @@ export class CreateUserstoryService {
         // this.getUserStories(this.sopId);
         this.__rcService.getBenefits(this.sopId);
         this.__rcService.getCurrentSprintData(this.sopId);
+      },
+      (err)=>{console.log("Error while creating user story", err);},
+      ()=>{
+        this.spinner.hide();
       });
   }
 }

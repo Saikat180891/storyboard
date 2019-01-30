@@ -42,11 +42,19 @@
     <div class="col c3">
       <span class="h-center reduce-margin">Rules Approved</span>
       <span class="block">
-        <mat-slide-toggle [disabled]="disableEdit" class="rules-approved" [checked]="userStory.rules_approved" (change)="toggleRules($event, userStory.id, userStory.sprint_name)"></mat-slide-toggle>
+        <mat-slide-toggle 
+        class="rules-approved" 
+        [checked]="userStory.rules_approved" 
+        (change)="toggleRules($event, userStory.id, userStory.sprint_name)" 
+        [disabled]="checkIfPermissiongranted('Can change user stories')"
+        ></mat-slide-toggle>
       </span>
       <span class="h-center reduce-margin">Test Case Verified</span>
       <span class="block">
-        <mat-slide-toggle [disabled]="disableEdit" [checked]="userStory.verified_test_cases" (change)="toggleTVC($event, userStory.id, userStory.sprint_name)"></mat-slide-toggle>
+        <mat-slide-toggle 
+        [checked]="userStory.verified_test_cases" 
+        (change)="toggleTVC($event, userStory.id, userStory.sprint_name)"
+        [disabled]="checkIfPermissiongranted('Can change user stories')"></mat-slide-toggle>
       </span>
     </div>
   </div>
@@ -80,10 +88,20 @@
     <div class="col c42">
 
       <div class="btn-box">
-        <button class="btn btn-flat-ash" matRipple (click)="onEdit(userStory.id)" [ngClass]="{'hide':restore}">
+        <button 
+        class="btn btn-flat-ash" 
+        matRipple 
+        (click)="onEdit(userStory.id)" 
+        [ngClass]="{'hide':restore}"
+        [appCanAccess]="{
+          role:__rcService.role, 
+          permissionRequired:'Can add epics',
+          permissionList: __rcService.grantedPermission
+        }">
           <i class="fas fa-pencil-alt"></i>
         </button>
-        <button class="btn btn-blue" matRipple [matRippleColor]="rippleColor" *ngIf="!restore; else restoreContent" [ngStyle]="{'visibility':'hidden'}">View SOP</button>
+        <button class="btn btn-blue" matRipple [matRippleColor]="rippleColor" *ngIf="!restore; else restoreContent" [ngStyle]="{'visibility':'visible'}" 
+        routerLink="/projects/epics/{{__rcService.sopId}}/sop/{{userStory.id}}">View SOP</button>
         <ng-template #restoreContent>
             <button class="btn btn-blue" matRipple [matRippleColor]="rippleColor" (click)="restoreUserStories(userStory.id)">Restore</button>
         </ng-template>
@@ -91,13 +109,24 @@
 
     </div>
   </div>
-
-  <div class="options-btn" [matMenuTriggerFor]="options" *ngIf="!restore && disableDeleteBtn">
+<ng-container>
+  <div 
+  class="options-btn" 
+  [matMenuTriggerFor]="options" 
+  *ngIf="!restore && disableDeleteBtn"
+  [appCanAccess]="{
+    role:role, 
+    permissionRequired:'Can delete user stories',
+    permissionList: permissions
+  }"
+  >
     <i class="fas fa-ellipsis-h"></i>
     <mat-menu #options="matMenu">
       <button mat-menu-item (click)="onDelete(userStory.id)">Delete</button>
     </mat-menu>
   </div>
+</ng-container>
+
   <div class="created-date">
     <span>Created On</span><br>
     <span>{{userStory.date}}</span>

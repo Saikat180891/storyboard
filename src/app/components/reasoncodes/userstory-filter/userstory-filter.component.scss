@@ -7,26 +7,34 @@
   display: flex;
   flex-direction: column;
   align-content: space-between;
-
+  border-radius: 5px;
   .filter-body{
     display: flex;
     flex-direction: column;
+    max-height: 300px;
+    overflow: auto;
+    border-radius: 5px;
+    box-shadow: inset 0 0 2px rgba($color: #000000, $alpha: 0.1);
+    padding: 5px;
 
     .form-group{
-      display: flex;
-      flex-direction: column;
-      margin: 7px 0;
+      // display: flex;
+      // flex-direction: column;
+      // margin: 7px 0;
+      // padding-bottom: 50px;
+      padding: 5px 0;
 
       .heading{
-        height: 30px;
-        line-height: 30px;
+        // height: 30px;
+        // line-height: 30px;
         color: #999999;
       }
 
       .checkbox{
-        display: flex;
-        // justify-content: space-evenly;
-        flex-wrap: wrap;
+        // display: flex;
+        // // justify-content: space-evenly;
+        // flex-wrap: wrap;
+        display: inline-block;
 
         mat-checkbox{
           margin-right: 10px;
@@ -37,10 +45,10 @@
         }
       }
       .scrollable-checkboxes{
-        flex-direction: column;
-        flex-wrap: nowrap;
-        max-height: 100px;
-        overflow: auto;
+        // flex-direction: column;
+        // flex-wrap: nowrap;
+        // max-height: 100px;
+        // overflow: auto;
       }
     }
   }
