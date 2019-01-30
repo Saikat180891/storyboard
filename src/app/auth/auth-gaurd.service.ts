@@ -34,7 +34,7 @@ export class AuthGaurdService implements CanActivate {
   isUserLoggedIn(){
     this._api.fetchData('/checkLogin').subscribe(res=>{
       if(res["user_logged_in"] === true){
-        this.router.navigate(['/projects']);
+        this.router.navigate(['/dashboard/projects']);
         const value = this.cookieService.getAll();
         localStorage.setItem("csrftoken", value["csrftoken"]);
         if(res["name"]){

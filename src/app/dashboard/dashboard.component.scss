@@ -1,0 +1,8 @@
+.router-outlet{
+  width: 100%;
+  height: calc(100% - 3.4375rem);
+  position: fixed;
+  top: 3.4375rem;
+  overflow: auto;
+  overflow-x: hidden;
+}

@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatGridListModule} from '@angular/material/grid-list';
 
-import { CreatesopRoutingModule } from './createsop-routing.module';
+// import { CreatesopRoutingModule } from './createsop-routing.module';
 import { CreatesopComponent } from './createsop/createsop.component';
 import { Route, Routes, RouterModule } from '@angular/router';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -14,7 +14,7 @@ import { SidebarButtonsComponent } from './sidebar-buttons/sidebar-buttons.compo
 
 
 const routes: Routes = [
-  {path: '', component: CreatesopComponent}
+  { path: '', component: CreatesopComponent }
 ];
 @NgModule({
   declarations: [CreatesopComponent, SidebarComponent, RecentScreenShotsComponent, LeftPanelComponent, RightPanelComponent, OperationsBarComponent, SidebarButtonsComponent],
@@ -23,6 +23,11 @@ const routes: Routes = [
     MatGridListModule,
     RouterModule.forChild(routes)
     // CreatesopRoutingModule
-  ]
+  ],
 })
-export class CreatesopModule { }
+export class CreatesopModule { 
+
+  constructor(){ 
+    console.log('KJKKKJJKJK')
+  }
+}

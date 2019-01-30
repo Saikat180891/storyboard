@@ -100,7 +100,12 @@
         }">
           <i class="fas fa-pencil-alt"></i>
         </button>
-        <button class="btn btn-blue" matRipple [matRippleColor]="rippleColor" *ngIf="!restore; else restoreContent" [ngStyle]="{'visibility':'visible'}" 
+        <button 
+        class="btn btn-blue" 
+        matRipple 
+        [matRippleColor]="rippleColor" 
+        *ngIf="!restore; else restoreContent" 
+        [ngStyle]="{'visibility':'visible'}" 
         routerLink="/projects/epics/{{__rcService.sopId}}/sop/{{userStory.id}}">View SOP</button>
         <ng-template #restoreContent>
             <button class="btn btn-blue" matRipple [matRippleColor]="rippleColor" (click)="restoreUserStories(userStory.id)">Restore</button>

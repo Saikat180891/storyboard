@@ -69,24 +69,44 @@ import { ExportDialogBoxComponent } from './components/reasoncodes/export-dialog
 import { CookieService } from 'ngx-cookie-service';
 import { PermissionsDirective } from './directives/permissions.directive';
 import {AuthorizationService} from './services/authorization/authorization.service';
+import { DashboardComponent } from './dashboard/dashboard.component';
 // import { ScrollbarComponent } from './services/scrollbarService/scrollbar/scrollbar.component';
 
 const routes = [
-  {path: '', component: AuthComponent, pathMatch: 'full'},
-  {path: 'projects', component: ContainerComponent, canActivate: [AuthGaurdService]},
   {
-    path: 'projects/epics/:id', 
-    component: ReasoncodesComponent, 
-    // canActivate: [AuthGaurdService],
-  },
-  {
-    path: 'projects/epics/:id/sop/:userStoryId', 
-    loadChildren: './components/createsop/createsop.module#CreatesopModule'
+    path: '', 
+    component: AppComponent, 
+    children: [
+      {
+        path: '', 
+        component: AuthComponent, 
+        pathMatch: 'full'
+      },
+      {
+        path: 'projects', 
+        component: DashboardComponent,
+        canActivate: [AuthGaurdService],
+        children: [
+          {
+            path: '', 
+            component: ContainerComponent, 
+          },
+          {
+            path: 'epics/:id', 
+            component: ReasoncodesComponent,
+          },
+          {
+            path: 'epics/:id/sop/:userStoryId', 
+            loadChildren: './components/createsop/createsop.module#CreatesopModule'
+          },
+        ]
+      }
+    ]
   },
   {path: '**', redirectTo: '/'}
 ];
 
-export const routing: ModuleWithProviders = RouterModule.forChild(routes);
+// export const routing: ModuleWithProviders = RouterModule.forChild(routes);
 
 @NgModule({
   declarations: [
@@ -114,6 +134,7 @@ export const routing: ModuleWithProviders = RouterModule.forChild(routes);
     MultiChartComponent,
     ExportDialogBoxComponent,
     PermissionsDirective,
+    DashboardComponent,
     // ScrollbarComponent,
   ],
 
