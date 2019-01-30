@@ -73,11 +73,12 @@ import {AuthorizationService} from './services/authorization/authorization.servi
 
 const routes = [
   {path: '', component: AuthComponent, pathMatch: 'full'},
+  {path: 'home', component: AppComponent, canActivate: [AuthGaurdService]},
   {path: 'projects', component: ContainerComponent, canActivate: [AuthGaurdService]},
   {
     path: 'projects/epics/:id', 
     component: ReasoncodesComponent, 
-    // canActivate: [AuthGaurdService],
+    canActivate: [AuthGaurdService],
   },
   {
     path: 'projects/epics/:id/sop/:userStoryId', 

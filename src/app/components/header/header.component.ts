@@ -3,6 +3,7 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
 import {HeaderService} from './header.service';
 import {DataService} from '../../data.service';
 import { CookieService } from 'ngx-cookie-service';
+import {AuthGaurdService} from '../../auth/auth-gaurd.service';
 
 // import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
 
@@ -28,7 +29,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // private _msAdalSvc: MsAdalAngular6Service,
     private _userInfo: HeaderService,
     private __api: DataService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private __auth:AuthGaurdService
   ) { }
 
   ngOnInit() {

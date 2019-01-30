@@ -1,4 +1,4 @@
-<nav class="navbar">
+<nav class="navbar" *ngIf="__auth.isUserLoggedIn()">
   <div class="brand" routerLink="/projects">Storyboard</div>
 
   <div class="profile">
