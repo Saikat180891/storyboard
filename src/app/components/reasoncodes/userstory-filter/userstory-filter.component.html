@@ -21,7 +21,7 @@
     </div>
     <div class="form-group">
       <div class="heading">
-        Epics
+        Epic
       </div>
       <div class="checkbox scrollable-checkboxes" *ngIf="epics">
         <mat-checkbox *ngFor="let epic of epics; let i = index" [(ngModel)]="__rcService.filterItems['rcName$'+epic.name]">{{epic.name}}</mat-checkbox>

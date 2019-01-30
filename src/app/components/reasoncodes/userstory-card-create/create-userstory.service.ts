@@ -16,7 +16,12 @@ export class CreateUserstoryService {
     if(sprintID){
 
     }else{
-      sprintID = -1;
+      sprintID = 0;
+    }    
+    if(reasonCodeId){
+
+    }else{
+      reasonCodeId = 0;
     }
     payload.planned_delivery = this.__rcService.formatDate(payload.planned_delivery);
     payload.revised_delivery == null ? delete payload.revised_delivery : payload.revised_delivery = this.__rcService.formatDate(payload.revised_delivery);

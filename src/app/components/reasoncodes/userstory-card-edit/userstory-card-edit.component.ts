@@ -107,6 +107,14 @@ export class UserstoryCardEditComponent implements OnInit {
       this.activateRevisedDelivery = true;
       this.checked = true;
     }
+    if(this.editUSData.dev_hrs == '-----')
+    {
+      this.editUSData.dev_hrs = '';
+    }    
+    if(this.editUSData.ftes == '-----')
+    {
+      this.editUSData.ftes = '';
+    }
     this.editUSData.revised_delivery = this.formatDateToDisplay(this.editUSData.revised_delivery);
     this.editUSDatas = this.editUSData;
     // console.log("Edit user stories", this.editUSData)
@@ -147,8 +155,9 @@ export class UserstoryCardEditComponent implements OnInit {
   userStoryPriorityValidator: boolean = false;
   userStorySprintNameValidator: boolean = false;
   userStoryStatusValidator: boolean = false;
-  userStoryDescValidator: boolean = false;
   userStoryReasonCodeValidator: boolean = false;
+  userStoryDevHrsValidator: boolean = false;
+  userStoryBenefitValidator: boolean = false;
   validationSuccessfull = [];
 
   onSaveAll(){
@@ -198,24 +207,36 @@ export class UserstoryCardEditComponent implements OnInit {
       this.userStoryStatusValidator = false;
       this.validationSuccessfull[4] = 1;
     }
-    if(this.editUSData.notes === ''){
-      this.userStoryDescValidator = true;
-      this.validationSuccessfull[5] = 0;
-    }else{
-      this.userStoryDescValidator = false;
-      this.validationSuccessfull[5] = 1;
-    }
     if(this.editUSData.rc_name === ''){
       this.userStoryReasonCodeValidator = true;
-      this.validationSuccessfull[6] = 0;
+      this.validationSuccessfull[5] = 0;
     }else{
       this.userStoryReasonCodeValidator = false;
-      this.validationSuccessfull[6] = 1;
+      this.validationSuccessfull[5] = 1;
     }
-    const value = this.validationSuccessfull.reduce((acc, val)=>{
+    var value = this.validationSuccessfull.reduce((acc, val)=>{
       return acc + val;
     });
-    if(value === 7){
+    var pattern = /^([0-9]*(\.)?)[0-9]*$/;
+    if ((this.editUSData.ftes!=null && this.editUSData.ftes!='-----') && !pattern.test(this.editUSData.ftes))
+      {
+        this.userStoryBenefitValidator = true;
+      }
+      else{this.userStoryBenefitValidator = false;
+        value++;
+      }
+      console.log(this.editUSData.dev_hrs+" "+this.editUSData.ftes);
+      console.log(pattern.test(this.editUSData.dev_hrs)+" "+pattern.test(this.editUSData.ftes));
+      if ((this.editUSData.dev_hrs!=null && this.editUSData.dev_hrs!='-----' )&& !pattern.test(this.editUSData.dev_hrs))
+        {
+          this.userStoryDevHrsValidator = true;
+        }
+        else{
+          this.userStoryDevHrsValidator = false;
+          value++;
+        }
+
+    if(value === 8){
       let sprintId = 0;
       this.__rcService.sprintConfig.forEach(element=>{
         if(element.sprint_name === this.editUSData.sprint_name){
@@ -228,7 +249,7 @@ export class UserstoryCardEditComponent implements OnInit {
         this.editUSData.ftes = 0.0;
       }
       if(this.editUSData.dev_hrs === null || this.editUSData.dev_hrs === '' || this.editUSData.dev_hrs === '-----' || isNaN(this.editUSData.dev_hrs)){
-        this.editUSData.dev_hrs = '';
+        this.editUSData.dev_hrs = 0.0;
       }
       console.log("From the edit user story",this.editUSData);
       let rc_id = 0;

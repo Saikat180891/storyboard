@@ -13,7 +13,8 @@
   
         <div class="middle header__btn">
           <button [ngStyle]="{'width' : '150px'}" class="btn btn-blue btn-lg btn-shadow btn-active clearfill" (click)="onOpenAddSprint()"><i class="fas fa-cog"></i> Config Project</button>
-          <!-- <button (click)="showNotification()">click</button> -->
+          <button [ngStyle]="{'width' : '150px', 'margin-left': '20px'}" [ngClass]="{'btn-export-active':showBenefitsChart}" class="btn btn-blue btn-lg btn-shadow btn-active clearfill" (click)="onShowBenefits()"><i class="fas fa-chart-line"></i> Show Benefits</button>
+          <button [ngStyle]="{'width' : '100px', 'margin-left': '20px'}" [ngClass]="{'btn-export-active':openExport}" class="btn btn-blue btn-lg btn-shadow btn-active clearfill" (click)="onOpenExport()"><i class="fas fa-file-export"></i> Export</button>
         </div>
   
       </div>
@@ -56,7 +57,7 @@
         <!-- <ng-template #openPlaceholder> -->
           <div class="card-holder user-story-placeholder" *ngIf="_reasonCode.userStories.length == 0">
             <img width="40px" height="40px" src="../../../assets/pics/open_user_story.svg" alt="placeholder">
-            <p>Hi there, Start by creating User Story & Sprints</p>
+            <p>Get started by creating user stories & sprints</p>
           </div>
         <!-- </ng-template> -->
       </mat-tab>
@@ -94,13 +95,13 @@
         </div>
 
         <div class="card-holder">
-            <app-userstory-card [restore]="true" *ngFor="let userStory of _reasonCode.deletedUserStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
+            <app-userstory-card [restore]="true" [disableEdit]="true" *ngFor="let userStory of _reasonCode.deletedUserStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
         </div>
       </mat-tab>
     </mat-tab-group>
 
     <div class="menu-btn-group">
-      <button class="sort-btn btn btn-flat-grey" [ngClass]="{'filter-btn-active':false}" [matMenuTriggerFor]="sortby" (click)="sortBy = !sortBy"><i class="fas fa-sort-amount-down"></i> Sort By</button>
+      <button class="sort-btn btn btn-flat-grey" [ngClass]="{'filter-btn-active':sortBy}" [matMenuTriggerFor]="sortby" (click)="sortBy = !sortBy"><i class="fas fa-sort-amount-down"></i> Sort By</button>
       <button class="btn btn-flat-grey" (click)="openFilter()" [ngClass]="{'filter-btn-active':filter}"><i class="fas fa-filter"></i> Filter</button>
       <button 
       class="btn btn-flat-grey" 
@@ -111,7 +112,7 @@
         <img width="10px" height="10px" src="../../../assets/pics/plus.svg" alt="create user story"> Create New U/S
       </button>
       <div class="material-menu">
-        <mat-menu #sortby="matMenu">
+        <mat-menu #sortby="matMenu" (closed)="sortBy=false">
           <button mat-menu-item (click)="clearAllSort()">Clear sort</button>
           <button mat-menu-item [matMenuTriggerFor]="usName">U/S Name</button>
           <button mat-menu-item [matMenuTriggerFor]="sprintName">Sprint Name</button>
@@ -188,7 +189,7 @@
 <div class="overlay animate-scale" [ngClass]="{'animate-scale-active': openAddSprint}">
 
   <div class="sprint-config-modal">
-    <sprint-config *ngIf="openAddSprint" [reasonCodeConfigData]="_reasonCode.reasonCodeData" [sprintConfigData]="_reasonCode.sprintConfig" (closeSprints)="openAddSprint=$event"></sprint-config>
+    <sprint-config *ngIf="openAddSprint" [reasonCodeConfigData]="_reasonCode.reasonCodeData" [sprintConfigData]="_reasonCode.sprintConfig" (closeSprints)="openAddSprint=$event;onClearAllFilters()"></sprint-config>
   </div>
   
 </div>
@@ -279,6 +280,28 @@
 
 <!-- <snackbar></snackbar> -->
 
+
+<div class="export" [ngClass]="{'export-active':openExport}">
+  <export-dialog-box (close)="openExport=false"></export-dialog-box>
+</div>
+
+<div class="overlay" *ngIf="showBenefitsChart">
+  <div class="benefits-frame">
+    <img [src]="benefitChartImage" alt="">
+    <div class="frame-close" (click)="onCloseBenefits()">
+      <i class="fas fa-times" (click)="onCloseBenefits()"></i>
+    </div>
+  </div>
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.9)"
+  size="medium"
+  color="#fff"
+  type="ball-spin-clockwise"
+  class="myspinner"
+  >
+ <!-- <p style="font-size: 20px; color: white; position: fixed">Loading...Please wait</p> -->
+</ngx-spinner>
 <div class="stickybar" [ngClass]="{'stickybar-active':activateStickybar}">
   <div class="tabs">
     <button matRipple [matRippleColor]="rippleColor" (click)="onVirtualTabClicked(0)" [ngClass]="{'active':selectedTabIndex==0}">Open U/S</button>
@@ -297,11 +320,3 @@
     </button>
   </div>
 </div>
-
-<ngx-spinner
-  bdColor="rgba(51,51,51,0.8)"
-  size="medium"
-  color="#fff"
-  type="ball-scale-multiple">
- <p style="font-size: 20px; color: white">Loading...</p>
-</ngx-spinner>

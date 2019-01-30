@@ -5,6 +5,7 @@ import {slideDown, hideInOut} from '../../../animation';
 import {AppcontrolService} from '../../../services/controlservice/appcontrol.service';
 import {DataService} from '../../../data.service';
 import {ContainerService} from '../container/container.service';
+import {MatSnackBar} from '@angular/material';
 import {PreloaderService} from '../../shared/preloader/preloader.service';
 import {CardService} from '../card/card.service';
 import {ContainerComponent} from '../container/container.component';
@@ -89,10 +90,12 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
               private _dataService:DataService,
               private _ContainerService:ContainerService,
               private formBuilder: FormBuilder,
-              private _cardService: CardService,
               private _preloaderService: PreloaderService,
+              private _cardService: CardService,
+              private snackBar: MatSnackBar,
               private spinner: NgxSpinnerService,
-              private __containerComponent: ContainerComponent) {
+              private __containerComponent: ContainerComponent
+              ) {
 
               this._UIControllerService.data.subscribe(
                   (data:any)=>{
@@ -289,13 +292,14 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
         validationStatus[2] = !(this.sopForm.value[key] == '');
         this.validateChargeCode = !validationStatus[2];
       }
-
       if(key == 'due_date'){
+        console.log("Date",this.sopForm.value[key]);
         validationStatus[3] = !(this.sopForm.value[key] == 'NaN/NaN/NaN');
         this.validateSelectedDate = !validationStatus[3];
         this.border = !validationStatus[3]?"1px solid rgb(245, 117, 117)":"1px solid #D1D1D1";
       }
     }
+    console.log(validationStatus);
 
     let sum = 0;
     for(let i of validationStatus){
@@ -317,6 +321,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
       let sopId:number;
       this._dataService.postData('/sop.json',  formData)
       .subscribe(
+        //if response successfull
         (response)=> {
           // if(response){
           //   sopId = response["id"];
@@ -343,8 +348,20 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
             this.spinner.hide();
             this.onOverlayClose();
           }
+          this.snackBar.open("Project has been created", "Success", {duration: 2000});
         },
-        (err)=> console.log(err)
+        //if response not successfull
+        (err)=> {
+            console.error("ERROR",err);
+            this._preloaderService.openPreloader = false;
+            var keys = Object.keys(err.error);
+            var error= "";
+            keys.forEach(key => {
+              error += key+": "+err.error[key] +"\n";
+            });
+
+            this.snackBar.open(error, "Failed", {duration: 2000});
+        }
       );
     }
   }
@@ -353,9 +370,9 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * Save an editted card
    */
   onSave(){
+    var dateBeforeSave = this.sopForm.value.due_date;
     let sopId = this.sopForm.value.id;
     this.sopForm.value.due_date = this.formatDate(this.sopForm.value.due_date);
-    
     let validationCheck = this.validateForm(this.sopForm.value);
 
     if(validationCheck == 0){
@@ -395,14 +412,22 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
             this.spinner.hide();
             this.onOverlayClose();
           }
+          this.snackBar.open("Project has been created", "Success", {duration: 2000});
       },
-      err=>{
-        console.error("ERROR while editing project", err);
-      });
+      (err)=> {
+        console.error("ERROR",err);
+        this._preloaderService.openPreloader = false;
+        var keys = Object.keys(err.error);
+        var error= "";
+        keys.forEach(key => {
+          error += key+": "+err.error[key] +"\n";
+        });
+        this.snackBar.open(error, "Failed", {duration: 2000});
     }
-
-    
+    );
+    this.sopForm.value.due_date = dateBeforeSave;
   }
+    }
 
   /**
    * Rearrange the date in the following format DD/MM/YYYY

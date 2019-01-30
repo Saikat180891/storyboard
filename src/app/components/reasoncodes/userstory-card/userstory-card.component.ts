@@ -19,6 +19,8 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
 
   @Output('deleteUserStory') deleteUserStory = new EventEmitter();
 
+  @Input('disableEdit') disableEdit:boolean = false;
+
   userStory;
 
   rippleColor = 'rbga(0,0,0,0.2)';
@@ -60,7 +62,7 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
       }
     });
     this.userStory.ftes === "-----" ? delete this.userStory.ftes : '';
-    let rc_id = -1;
+    let rc_id = 0;
     this.__rcService.reasonCodeData.forEach(element=>{
       if(element.name === this.userStory.rc_name){
         rc_id = element.id;
@@ -83,7 +85,7 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
       }
     });
     this.userStory.ftes === "-----" ? delete this.userStory.ftes : '';
-    let rc_id = -1;
+    let rc_id = 0;
     this.__rcService.reasonCodeData.forEach(element=>{
       if(element.name === this.userStory.rc_name){
         rc_id = element.id;

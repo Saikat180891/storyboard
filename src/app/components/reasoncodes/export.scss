@@ -1,0 +1,15 @@
+.export{
+    position: absolute;
+    top: 7rem;
+    // background-color: #ffffff;
+    z-index: 100;
+    right: 30px;
+    display: none;
+}
+.export-active{
+    display: block;
+}
+.btn-export-active{
+    color: rgb(42, 125, 225);
+    background: #ffffff;
+}

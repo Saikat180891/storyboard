@@ -6,6 +6,10 @@ import {ContainerService} from '../projects/container/container.service';
 import {CreateUserstoryService} from './userstory-card-create/create-userstory.service';
 import {charts} from './chartoptions';
 import {fromEvent} from 'rxjs';
+import {environment} from '../../../environments/environment';
+import {PreloaderService} from '../shared/preloader/preloader.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import {DataService} from '../../data.service';
 import {ScrollbarService} from '../../services/scrollbarService/scrollbar.service';
 
 export interface UserData {
@@ -60,7 +64,7 @@ export interface ReceivedSprintConfig{
 @Component({
   selector: 'app-reasoncodes',
   templateUrl: './reasoncodes.component.html',
-  styleUrls: ['./reasoncodes.component.scss', './move-user-story.scss','./draggable.scss', './completed-warning.scss']
+  styleUrls: ['./reasoncodes.component.scss', './move-user-story.scss','./draggable.scss', './completed-warning.scss', './export.scss']
 })
 export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('totalPage') totalPage:ElementRef;
@@ -83,6 +87,8 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
   warning: boolean = false;
   warningToDeleteUserStory:boolean = false;
   clearAllFilter:boolean = true;
+  openExport:boolean = false;
+  showBenefitsChart:boolean = false;
   rippleColor = 'rbga(0,0,0,0.2)';
   selectedTabIndex:number = 0;
   activateStickybar:boolean = false;
@@ -110,31 +116,34 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
 
   addSprint = [this.addSprintPayload];
 
-  fruits = [
-    {name: 'Lemon'},
-    {name: 'Lime'},
-    {name: 'Apple'},
-  ];
+  // fruits = [
+  //   {name: 'Lemon'},
+  //   {name: 'Lime'},
+  //   {name: 'Apple'},
+  // ];
 
-  todo = [
-    'Get to work',
-    'Pick up groceries',
-    'Go home',
-    'Fall asleep'
-  ];
+  // todo = [
+  //   'Get to work',
+  //   'Pick up groceries',
+  //   'Go home',
+  //   'Fall asleep'
+  // ];
 
-  done = [
-    'Get up',
-    'Brush teeth',
-    'Take a shower',
-    'Check e-mail',
-    'Walk dog'
-  ];
+  // done = [
+  //   'Get up',
+  //   'Brush teeth',
+  //   'Take a shower',
+  //   'Check e-mail',
+  //   'Walk dog'
+  // ];
 
   constructor(private route: ActivatedRoute,
               private _reasonCode: ReasonCodeService,
               private _containerService: ContainerService,
               private _createUserStory: CreateUserstoryService,
+              private __preloaderService: PreloaderService,
+              public spinner: NgxSpinnerService,
+              private __api:DataService,
               private __scrollbar:ScrollbarService) {}
 
   ngOnInit() {
@@ -217,6 +226,20 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
 
   getChart(){
     this._reasonCode.getChartData(35);
+  }
+
+  onCloseBenefits(){
+    this.showBenefitsChart = false;
+  }
+
+  benefitChartImage:string;
+  onShowBenefits(){
+    // if(environment.production){
+    this.benefitChartImage = `${this.__api.apiUrl}/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png?q=${new Date().getTime()}`;
+    // }else{
+    //   this.benefitChartImage = `http://localhost:8000/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png?q=${new Date().getTime()}`;
+    // }
+    this.showBenefitsChart = true;
   }
 
   onAddSprint(){
@@ -343,6 +366,10 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
     this.warning = $event;
   }
 
+  onOpenExport(){
+    this.openExport = !this.openExport;
+  }
+
   onSelectNo(){
     this.warning = false;
     this._reasonCode.doneSelectStatus.emit(false);
@@ -402,6 +429,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
 
   onSortBy(args:string){
     this._reasonCode.sortBy = args;
+    this.sortBy = true;
     let path = '';
     if(this._reasonCode.filterPath != ''){
       path = "?" + this._reasonCode.filterPath + "&" + this._reasonCode.sortBy;
@@ -419,8 +447,8 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
     this._reasonCode.testCasesVerified = '';
     this._reasonCode.filteredValues = [];
     this._reasonCode.filterPath = '';
-    // this._reasonCode.getUserStories(this._reasonCode.sopId);
-    this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, "?" + this._reasonCode.sortBy);
+    this._reasonCode.getUserStories(this._reasonCode.sopId);
+    // this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, "?" + this._reasonCode.sortBy);
     this.clearAllFilter = false;
     this._reasonCode.filtersAppliedFlag = false;
 

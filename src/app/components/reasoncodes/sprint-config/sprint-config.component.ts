@@ -12,6 +12,7 @@ import {
 import {ReasonCodeService} from '../reason-code.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {fromEvent} from 'rxjs';
+import {PreloaderService} from '../../shared/preloader/preloader.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SharedServicesService} from '../../../services/shared-services/shared-services.service';
 
@@ -102,7 +103,8 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     private __rcService:ReasonCodeService, 
     private spinner: NgxSpinnerService, 
     private formBuilder:FormBuilder, 
-    private __sharedService: SharedServicesService
+    private __sharedService: SharedServicesService,
+    private _preloadService: PreloaderService
     ) { }
 
   @HostListener('document:keyup.escape', ['$event'])
@@ -129,16 +131,16 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
   ngAfterViewChecked() {        
     // this.scrollToBottom();   
          
-    this.sprintContainer.nativeElement.scrollTo({
-      top: this.sprintContainer.nativeElement.scrollHeight,
-      left: 0,
-      behavior: 'smooth'
-    });
-    this.rcContainer.nativeElement.scrollTo({
-      top: this.rcContainer.nativeElement.scrollHeight,
-      left: 0,
-      behavior: 'smooth'
-    });
+    // this.sprintContainer.nativeElement.scrollTo({
+    //   top: this.sprintContainer.nativeElement.scrollHeight,
+    //   left: 0,
+    //   behavior: 'smooth'
+    // });
+    // this.rcContainer.nativeElement.scrollTo({
+    //   top: this.rcContainer.nativeElement.scrollHeight,
+    //   left: 0,
+    //   behavior: 'smooth'
+    // });
   } 
 
   onClose(){
@@ -150,12 +152,14 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
       this.changedDetected = [];
       this.closeSprints.emit(false);
     }
-    this.__rcService.getBenefits(this.__rcService.sopId);          
-    this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
-    this.__rcService.getProjectStatus(this.__rcService.sopId);
-    this.__rcService.getCurrentSprintData(this.__rcService.sopId);
-    this.__rcService.getSprintStatus(this.__rcService.sopId);
-    this.__rcService.getUserStories(this.__rcService.sopId)
+    //#TODO: please put a check to see if the save button is clicked or not, if yes only then execute the below lines
+    // this.__rcService.getBenefits(this.__rcService.sopId);          
+    // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+    // this.__rcService.getProjectStatus(this.__rcService.sopId);
+    // this.__rcService.getCurrentSprintData(this.__rcService.sopId);
+    // this.__rcService.getSprintStatus(this.__rcService.sopId);
+    // this.__rcService.getUserStories(this.__rcService.sopId);
+    this.__rcService.refresh(this.__rcService.sopId);
   }
 
   closeAll(){
@@ -180,14 +184,21 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
   }
 
   onSaveAllChanges(){
+    this.saveSprint();
+    this.saveEpics();
+  }
+
+  saveSprint(){
     this.spinner.show();
     if(this.addNewRow.length > 0){
       this.__rcService.createSprint(this.addNewRow);
-      this.__rcService.getBenefits(this.__rcService.sopId);
-      this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
-      this.__rcService.getProjectStatus(this.__rcService.sopId);
-      this.__rcService.getCurrentSprintData(this.__rcService.sopId);
-      this.__rcService.getSprintStatus(this.__rcService.sopId);
+      this.__rcService.refresh(this.__rcService.sopId)
+      // this.__rcService.getBenefits(this.__rcService.sopId);
+      // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+      // this.__rcService.getProjectStatus(this.__rcService.sopId);
+      // this.__rcService.getCurrentSprintData(this.__rcService.sopId);
+      // this.__rcService.getSprintStatus(this.__rcService.sopId);
+      // this.__rcService.getUserStories(this.__rcService.sopId)
     }
     // else if(this.changedDetected.length === 0 && this.addNewRow.length === 0){
     //   this.onSelectYes();
@@ -199,12 +210,13 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
           this.__rcService.editSprint(this.sprintConfigData[index].id, this.sprintConfigData[index]);
         }
       });
-      this.__rcService.getBenefits(this.__rcService.sopId);          
-      this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
-      this.__rcService.getProjectStatus(this.__rcService.sopId);
-      this.__rcService.getCurrentSprintData(this.__rcService.sopId);
-      this.__rcService.getSprintStatus(this.__rcService.sopId);
-      this.__rcService.getUserStories(this.__rcService.sopId)
+      this.__rcService.refresh(this.__rcService.sopId)
+      // this.__rcService.getBenefits(this.__rcService.sopId);          
+      // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+      // this.__rcService.getProjectStatus(this.__rcService.sopId);
+      // this.__rcService.getCurrentSprintData(this.__rcService.sopId);
+      // this.__rcService.getSprintStatus(this.__rcService.sopId);
+      // this.__rcService.getUserStories(this.__rcService.sopId)
     }
     // else if(this.changedDetected.length === 0 && this.addNewRow.length === 0){
     //   this.onSelectYes();
@@ -232,11 +244,12 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
 
   onDoNotDelete(){
     this.displayWarningBox = false;
-    this.__rcService.getBenefits(this.__rcService.sopId);          
-    this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
-    this.__rcService.getProjectStatus(this.__rcService.sopId);
-    this.__rcService.getCurrentSprintData(this.__rcService.sopId);
-    this.__rcService.getSprintStatus(this.__rcService.sopId);
+    this.__rcService.refresh(this.__rcService.sopId);
+    // this.__rcService.getBenefits(this.__rcService.sopId);          
+    // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+    // this.__rcService.getProjectStatus(this.__rcService.sopId);
+    // this.__rcService.getCurrentSprintData(this.__rcService.sopId);
+    // this.__rcService.getSprintStatus(this.__rcService.sopId);
   }
 
   onDelete(){
@@ -251,17 +264,18 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
 
   onAddRC(){
     let temObj = {
-      name: 'Epics X'
+      name: 'Epic X'
     }
     this.addNewRowForReasonCode.push(temObj);
   }
 
-  onSaveAllChangesInRC(){
+  saveEpics(){
     if(this.reasonCodeEditChangeDetector.length > 0){
       this.reasonCodeEditChangeDetector.forEach((element, index)=>{
         if(element){
           this.__rcService.editReasonCode(this.reasonCodeConfigData[index].id, this.reasonCodeConfigData[index]);
-          this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+          // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+          this.__rcService.refresh(this.__rcService.sopId);
         }
       });
     }else if(this.addNewRowForReasonCode.length > 0){
@@ -272,8 +286,8 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
         }
       });
       this.__rcService.createReasonCode(this.__rcService.sopId, this.addNewRowForReasonCode);
-      this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
-
+      // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+      this.__rcService.refresh(this.__rcService.sopId);
     }else if(this.reasonCodeEditChangeDetector.length > 0 || this.addNewRowForReasonCode.length > 0){
       this.addNewRowForReasonCode.forEach((element, index)=>{
         if(element.name === ''){
@@ -281,12 +295,15 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
           this.addNewRowForReasonCode.splice(pos, 1);
         }
         this.__rcService.createReasonCode(this.__rcService.sopId, this.addNewRowForReasonCode);
-        this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+        // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+        this.__rcService.refresh(this.__rcService.sopId);
       });
       this.reasonCodeEditChangeDetector.forEach((element, index)=>{
         if(element){
           this.__rcService.editReasonCode(this.reasonCodeConfigData[index].id, this.reasonCodeConfigData[index]);
-          this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+          // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+          this.__rcService.refresh(this.__rcService.sopId);
+
         }
       });
     }
@@ -304,7 +321,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     this.reasonCodeEditChangeDetector[index] = true;
   }
 
-  onDeleteCreatedRC(id){
+  onDeleteCreatedRC(id, index){
     this.__rcService.deleteReasonCode(id);
     this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
   }
@@ -385,10 +402,10 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
         this.dateCounter = 0;
         // this.addNewRow[index].duration = this.dateCounter + 'W'
       }else{
-      this.addNewRow[index].duration = (this.dateCounter -= 1) + 'W';
+        this.addNewRow[index].duration = (this.dateCounter -= 1) + 'W';
       }
     }else if(this.addNewRow[index].start_date){
-      this.addNewRow[index].duration = (this.dateCounter -= 1) + 'W';
+      this.addNewRow[index].duration = (this.dateCounter == 0? this.dateCounter = 0 : this.dateCounter -= 1) + 'W';
     }
 
     if(this.addNewRow[index].start_date){
@@ -396,7 +413,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
 
       this.createEndDate(startDate, index, 'substract', this.dateCounter);
   
-      console.log(this.lastIndex, this.dateCounter);
+      // console.log(this.lastIndex, this.dateCounter);
 
       this.warning = false;
     }else{
@@ -533,10 +550,35 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
 
   onUpload(){
     let validation = this.validateUploadForm();
+    let message:string = '';
+    let status: string = '';
     if(validation){
-       this.__rcService.importStories(this.excelFile);
-      this.onClose();
-      }
+      this.spinner.show();
+      this.__rcService.importStories(this.excelFile).subscribe(res=>{
+        console.log(res);
+        status = res["status"];
+        message = res["message"];
+      },
+      err=>{
+        console.error(err);
+        status = err["status"];
+        message = err["message"];
+        this.__rcService.snackbar.open("Please check the template and try again." , "Fail", {"duration": 5000});
+      },
+      ()=>{
+        this.spinner.hide();
+        console.log("COMPLETED", status);
+        this.onClose();
+        if(status == 'Success'){
+          this.__rcService.snackbar.open("Your sprints, epics and stories are now available on the dashboard", status, {duration : 5000});
+        }else if(status == 'Failure'){
+          this.__rcService.snackbar.open(message, status, {"duration": 5000});
+        }else{
+          this.__rcService.snackbar.open("Please check the template and try again." , "Fail", {"duration": 5000});
+        }
+        this.__rcService.refresh(this.__rcService.sopId);
+      })
+    }
   }
 
   oncheckBoxChange(value){
@@ -546,6 +588,8 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
 
   exportToExcel(){
     console.log("Downloading File");
+    // this.__preload.openPreloader = true;
     this.__rcService.downloadFile();
+    // this.__preload.openPreloader = false;
   }
 }

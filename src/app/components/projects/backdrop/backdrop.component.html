@@ -69,7 +69,8 @@
               [ngClass]="{'ASN-box':true, 'validators':validateAutomationSystemName===true}" 
               placeholder="Automation System Name" 
               required 
-              formControlName = "title" 
+              formControlName="title"
+              maxlength="50" 
               [appCanAccess]="{
                 role:permissions.role, 
                 permissionRequired:'Can change sop', 
@@ -93,8 +94,7 @@
               placeholder="Charge Code" 
               required 
               formControlName = "chargeCode"
-              [ngClass]="{'validators':validateChargeCode===true}" 
-              >
+              [ngClass]="{'validators':validateChargeCode===true}" maxlength="50">
 
               <input 
               *ngIf="_UIControllerService.getOverlayHeader()==editSOP"

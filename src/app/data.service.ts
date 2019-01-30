@@ -116,7 +116,7 @@ export class DataService {
   }
 
   postData(param, body){
-    return this.http.post(this.apiUrl + param, body, {withCredentials: true, headers: httpOptions.headers});
+    return this.http.post<any>(this.apiUrl + param, body, {withCredentials: true, headers: httpOptions.headers});
   }
 
   fetchFile(param){
@@ -127,11 +127,11 @@ export class DataService {
   }
 
   delete(param, id){
-    return this.http.delete(this.apiUrl + param + '/' + id, {withCredentials: true, headers: httpOptions.headers});
+    return this.http.delete(this.apiUrl + param + '/' + id,  {withCredentials: true, headers: httpOptions.headers});
   }
 
   update(param, id, body){
-    return this.http.put(this.apiUrl + param + '/' + id, body, {withCredentials: true, headers: httpOptions.headers});
+    return this.http.put(this.apiUrl + param + '/' + id, body,  {withCredentials: true, headers: httpOptions.headers});
   }
 
   getAToken(endpoint, authcode){

@@ -2,7 +2,9 @@ import { Injectable, EventEmitter } from '@angular/core';
 import {DataService}  from '../../data.service';
 import {environment} from '../../../environments/environment';
 import {PreloaderService} from '../shared/preloader/preloader.service';
-// import { EventEmitter } from 'protractor';
+// import { EventEmitter } from 'protractor'
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +39,8 @@ export class ReasonCodeService {
   role:string;
 
   constructor(private _api:DataService,
-              private __preLoad: PreloaderService) { }
+              private __preLoad: PreloaderService, 
+              public snackbar:MatSnackBar) { }
 
   
   /**
@@ -54,6 +57,7 @@ export class ReasonCodeService {
    * @param payload 
    */
   createSprint(payload){
+    this.__preLoad.openPreloader = true;
     payload.forEach(element => {
       element.start_date = this.formatDate(element.start_date);
       if(element.duration){
@@ -61,6 +65,7 @@ export class ReasonCodeService {
       }
     });
     this.getSprint(this.sopId);
+    this.__preLoad.openPreloader = false;
   }
 
   /**
@@ -68,17 +73,20 @@ export class ReasonCodeService {
    * @param id 
    */
   getSopByID(id:number){
+    this.__preLoad.openPreloader = true;
     this._api.fetchData(`/sop/${id}.json`)
       .subscribe(response=>{
         this.currentProject = response;
         console.log("The sop is ", this.currentProject);
       });
+    this.__preLoad.openPreloader = false;
   }
 
   /**
    * This api is used to get details of all the sprints
    */
   getSprint(id){
+    this.__preLoad.openPreloader = true;
     this._api.fetchData(`/sop/${id}/sprint.json`)
       .subscribe(response=>{
         response.forEach((element, index)=>{
@@ -87,6 +95,7 @@ export class ReasonCodeService {
         });
         this.sprintConfig = response.reverse();
       });
+      this.__preLoad.openPreloader = false;    
   }
 
   /**
@@ -94,6 +103,7 @@ export class ReasonCodeService {
    * @param id - id of the sprint
    */
   deleteSprint(id){
+    this.__preLoad.openPreloader = true;
     this._api.delete('/sop/sprint', `${id}.json`)
       .subscribe(response=>{
         this.refresh(this.sopId);
@@ -106,30 +116,38 @@ export class ReasonCodeService {
         //   }
         // });
       });
+      this.__preLoad.openPreloader = false;    
   }
 
   editSprint(id, data){
+    this.__preLoad.openPreloader = true;
     data['start_date'] = this.formatDate(data['start_date']);
     this._api.update(`/sop/sprint`, `${id}.json`, data)
       .subscribe(response=>{
         this.getSprint(this.sopId);
       });
+      this.__preLoad.openPreloader = false;    
   }
 
   getDeletedUserStories(id){
+    this.__preLoad.openPreloader = true;
     this._api.fetchData(`/sop/epics/${id}/userstories/fetchDeleted.json`)
       .subscribe(response=>{
         response.forEach(element=>{
           element['productivity'] = (parseFloat(element.ftes) / parseFloat(element.dev_hrs)).toFixed(1);
           element['productivity'] = isFinite(element['productivity']) ? element['productivity'] : '----';
+          element['planned_delivery'] = this.reArrangeDate(element['planned_delivery']);
+          element['revised_delivery'] = element['revised_delivery'] != null ? this.reArrangeDate(element['revised_delivery']) : '-----';
         });
         this.deletedUserStories = response;
         // this.getUserStories(id);
         console.log("Deleted user stories",response);
       });
+      this.__preLoad.openPreloader = false;    
   }
 
   getUserStories(id){
+    this.__preLoad.openPreloader = true;
     console.log("Get all user story", id)
     const api =  `/sop/epics/${id}/userstories.json`;
     this._api.fetchData(api)
@@ -156,41 +174,52 @@ export class ReasonCodeService {
         this.getChartData(this.sopId); //check
       });
       console.log("the userstories are", this.userStories)
+      this.__preLoad.openPreloader = false;    
   }
 
   deleteUserStory(id){
+    this.__preLoad.openPreloader = true;    
     this._api.delete(`/sop/epics/userstories`, `${id}.json`)
       .subscribe(response=>{
         this.refresh(this.sopId);
         console.log(`Rpw with id ${id} deleted successfully.`);
       });
+      this.__preLoad.openPreloader = false;    
   }
 
   getCompletedUserStories(id){
+    this.__preLoad.openPreloader = true;
     this._api.fetchData(`/sop/epics/${id}/userstories/fetchCompleted.json`)
       .subscribe(response=>{
         response.forEach(element=>{
           element['productivity'] = (parseFloat(element.ftes) / parseFloat(element.dev_hrs)).toFixed(1);
           element['productivity'] = isFinite(element['productivity']) ? element['productivity'] : '----';
+          element['planned_delivery'] = this.reArrangeDate(element['planned_delivery']);
+          element['revised_delivery'] = element['revised_delivery'] != null ? this.reArrangeDate(element['revised_delivery']) : '-----';
         });
         this.completeUserStories = response;
         console.log("The completed user stories are" ,response);
       });
+      this.__preLoad.openPreloader = false;    
   }
 
   getProjectStatus(id){
+    this.__preLoad.openPreloader = true;
     this._api.fetchData(`/sop/${id}/duration.json`)
       .subscribe(response=>{
         this.totalProjectStatus = response[0];
         console.log("Total project status", this.totalProjectStatus);
       });
+      this.__preLoad.openPreloader = false;    
   }
 
   getSprintStatus(id){
+    this.__preLoad.openPreloader = true;    
     this._api.fetchData(`/sop/${id}/currentSprint/duration.json`)
       .subscribe(response=>{
         this.currentSprintDuration = response[0];
       });
+    this.__preLoad.openPreloader = false;    
   }
   
   getUserStory(){
@@ -217,11 +246,13 @@ export class ReasonCodeService {
   }
 
   getCurrentSprintData(id){
+    this.__preLoad.openPreloader = true;
     this._api.fetchData(`/sop/${id}/currentSprint/graphdata.json`)
       .subscribe(response=>{
         this.currentSprintData = response;
         console.log("Current Sprint Data", response);
-      })
+      });
+      this.__preLoad.openPreloader = false;    
   }
 
   /**
@@ -229,10 +260,12 @@ export class ReasonCodeService {
    * @param id -->sop id
    */
   getProjectStatusChartData(id){
+    this.__preLoad.openPreloader = true;
     this._api.fetchData(`/sop/${id}/graphdata.json`)
       .subscribe(response=>{
         this.totalSprintData = response;
       });
+    this.__preLoad.openPreloader = false;    
   }
 
   /**
@@ -240,21 +273,25 @@ export class ReasonCodeService {
    * @param id 
    */
   getBenefits(id){
+    this.__preLoad.openPreloader = true;    
     this._api.fetchData(`/sop/${id}/ftes.json`)
       .subscribe(response=>{
         this.benefitsChartData = response;
       });
+    this.__preLoad.openPreloader = false;    
   }
 
   
 
   createReasonCode(id, body){
+    this.__preLoad.openPreloader = true;
     body.forEach(element=>{
       this._api.postData(`/sop/${id}/epics.json`, element)
         .subscribe(response=>{
           this.reasonCodeData.push(response);
         });
     });
+    this.__preLoad.openPreloader = false;
   }
 
   getReasonCode(id){
@@ -268,9 +305,9 @@ export class ReasonCodeService {
     this._api.delete(`/sop/epics`, `${id}.json`)
       .subscribe(response=>{
         // this.getReasonCode(this.sopId);
-        this.reasonCodeData.forEach(element=>{
+        this.reasonCodeData.forEach((element, index)=>{
           if(element.id == id){
-            this.reasonCodeData.splice(element, 1);
+            this.reasonCodeData.splice(index, 1);
           }
         });
       });
@@ -344,12 +381,31 @@ export class ReasonCodeService {
 
   importStories(file){
     console.log("File", file);
-    this._api.postData(`/sop/${this.sopId}/import.json`, file).subscribe(response=>{});
+    return this._api.postData(`/sop/${this.sopId}/import.json`, file)
+    
+    // .subscribe(response=>{
+
+    //   console.log("Response",response["status"])
+    //   console.log("Response",response["message"])
+
+    //   if(response["status"] == "Success")
+    //   { 
+    //     this.snackbar.open("Your sprints, epics and stories are now available on the dashboard", "Success", {duration : 2000, panelClass: "style-success"});
+    //   }
+    //   else if(response["status"]=="Failure")
+    //   {
+    //     this.snackbar.open(response["message"], "Fail", {"duration": 3500});
+    //   }
+    //   else{
+    //     this.snackbar.open("Please check the template and try again." , "Fail", {"duration": 3500});
+    //   }
+    // });
   }
+
   downloadFile(){
     window.location.href = this._api.apiUrl+`/sop/${this.sopId}/export.json`;
-    }
-
+  }
+ 
   filterUserStories(endpointUrl:string, queryParameter:string){
     this._api.fetchData(endpointUrl + queryParameter)
       .subscribe(response=>{
@@ -461,5 +517,21 @@ export class ReasonCodeService {
     const blob = new Blob([data], { type: 'text/csv' });
     const url= window.URL.createObjectURL(blob);
     window.open(url);
+  }
+
+  downLoadAuditTrailFile(projectId: number, startDate?:string, endDate?:string){
+    let api:string;
+    if(startDate && endDate){
+      api = `/audit_trails/${projectId}/${startDate}/${endDate}/`;
+    }else{
+      api = `/audit_trails/${projectId}/`;
+    }
+    window.location.href = this._api.apiUrl+api;
+  }
+
+  getBenefiftChart(projectId:number){
+    this._api.fetchData(`/sop/epics/charts/${projectId}/benefits_realization.png`).subscribe(res=>{
+      console.log(res)
+    });
   }
 }

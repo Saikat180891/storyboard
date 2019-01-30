@@ -33,6 +33,7 @@ import {MatRippleModule} from '@angular/material/core';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {DateAdapter} from '@angular/material';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {AuthGaurdService} from './auth/auth-gaurd.service';
 
 
@@ -64,6 +65,7 @@ import { SprintConfigComponent } from './components/reasoncodes/sprint-config/sp
 import { UserstoryFilterComponent } from './components/reasoncodes/userstory-filter/userstory-filter.component';
 import { NormalDropdownComponent } from './components/shared/normal-dropdown/normal-dropdown.component';
 import { MultiChartComponent } from './components/reasoncodes/multi-chart/multi-chart.component';
+import { ExportDialogBoxComponent } from './components/reasoncodes/export-dialog-box/export-dialog-box.component';
 import { CookieService } from 'ngx-cookie-service';
 import { PermissionsDirective } from './directives/permissions.directive';
 import {AuthorizationService} from './services/authorization/authorization.service';
@@ -110,6 +112,7 @@ export const routing: ModuleWithProviders = RouterModule.forChild(routes);
     UserstoryFilterComponent,
     NormalDropdownComponent,
     MultiChartComponent,
+    ExportDialogBoxComponent,
     PermissionsDirective,
     // ScrollbarComponent,
   ],
@@ -152,6 +155,7 @@ export const routing: ModuleWithProviders = RouterModule.forChild(routes);
     }),
     NgxSpinnerModule,
     MatTableModule,
+    MatSnackBarModule,
     RouterModule.forRoot(routes),
     // MsAdalAngular6Module.forRoot({
     //   tenant: '217024cc-23bf-42d2-a7cf-d270166db3e2',
@@ -166,6 +170,7 @@ export const routing: ModuleWithProviders = RouterModule.forChild(routes);
   providers: [
     DataService, 
     MatDatepickerModule,
+    MatSnackBarModule,
     AppcontrolService, 
     ContainerService, 
     PreloaderService, 
