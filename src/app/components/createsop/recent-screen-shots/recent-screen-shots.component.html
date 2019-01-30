@@ -1,0 +1,25 @@
+<div class="expansion-panel">
+  <div class="expansion-panel-header">
+    <span class="expansion-panel-name">Recent Screenshots</span>
+    <button class="toggle-caret" (click)="onExpandPanel()">
+      <i class="fas fa-caret-up" *ngIf="!toggleExpansionPanel"></i>
+      <i class="fas fa-caret-down" *ngIf="toggleExpansionPanel"></i>
+    </button>
+  </div>
+  <div class="expanded">
+    <mat-grid-list cols="3" rowHeight="1:1" gutterSize="20px">
+      <mat-grid-tile>1</mat-grid-tile>
+      <mat-grid-tile>2</mat-grid-tile>
+      <mat-grid-tile>3</mat-grid-tile>
+      <mat-grid-tile>4</mat-grid-tile>
+      <mat-grid-tile>1</mat-grid-tile>
+      <mat-grid-tile>2</mat-grid-tile>
+      <mat-grid-tile>3</mat-grid-tile>
+      <mat-grid-tile>4</mat-grid-tile>
+      <mat-grid-tile>1</mat-grid-tile>
+      <mat-grid-tile>2</mat-grid-tile>
+      <mat-grid-tile>3</mat-grid-tile>
+      <mat-grid-tile>4</mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>

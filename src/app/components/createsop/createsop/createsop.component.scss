@@ -1,0 +1,76 @@
+@import "../global.scss";
+
+.flex{
+  display: flex;
+  width: calc(100vw - 40px);
+  height: calc(100vh - 3.4375rem);
+  position: fixed;
+  top: 3.4375rem;
+  right: 0;
+  background-color: red;
+
+  .flex-item{
+    width: calc(50vw - 20px);
+  }
+}
+
+.sidebar{
+  position: fixed;
+  top: 3.4375rem;
+  height: calc(100vh - 3.4375rem);
+  width: 50vw;
+  background-color: $sidebar-background-color;
+  overflow: hidden;
+  transform: translateX(calc(-100% + 40px));
+  transition: transform 0.3s ease;
+  z-index: 2000;
+}
+
+.sidebar-open{
+  transform: translateX(0);
+  box-shadow: $box-shadow-sidebar;
+}
+
+.sidebar-buttons{
+  position: fixed;
+  top: 3.4375rem;
+  height: calc(100vh - 3.4375rem);
+  width: 40px;
+  background-color: $sidebar-background-color;
+  overflow: hidden;
+  z-index: 2300;
+}
+
+.panel{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: calc(100vw - 40px);
+  box-shadow: $box-shadow-top;
+  
+  .panel-body{
+    width: calc(50vw - 20px);
+    height: 50px;
+    transition: all 0.3s ease;
+
+    &__left{
+      position: absolute;
+      background-color: #686868;
+      bottom: 0;
+      left: 0;
+    }
+
+    &__right{
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background-color: #FFFFFF;
+      box-shadow: $box-shadow-top;
+    }
+
+    &-active{
+      // height: 20vh;
+      transform: translateY(-30vh);
+    }
+  }
+}

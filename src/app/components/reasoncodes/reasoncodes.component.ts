@@ -148,11 +148,16 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
       });
     });
     
-    this._reasonCode.refresh(this._reasonCode.sopId);
    
+    /**
+     * assign chart options
+     */
     this.pieChartOptions = charts.pieChart;
     this.barChartOptions = charts.barChart;
 
+    /**
+     * to make the tab navbar fixed
+     */
     this.__scrollbar.broadCastScrollPosition.subscribe(res=>{
       if(res > 401){
         this.activateStickybar = true;
@@ -198,12 +203,14 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
     this._reasonCode.getPermission(pageNumber, projectId).subscribe(res=>{
       this._reasonCode.role = res[0].name;
       this._reasonCode.grantedPermission = res[0].permissions;
+      this._reasonCode.refresh(this._reasonCode.sopId);
       console.log("Permission for epics", this._reasonCode.role, this._reasonCode.grantedPermission);
     },
     err=>{
       console.log("Error while fetching permissions for epics page", err);
     },
     ()=>{
+
       console.log(this._reasonCode.role, this._reasonCode.grantedPermission);
     });
   }

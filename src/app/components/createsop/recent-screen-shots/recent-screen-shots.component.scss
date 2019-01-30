@@ -1,0 +1,32 @@
+@import "../global.scss";
+
+.expansion-panel{
+  background-color: #686868;
+
+  .expansion-panel-header{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    align-items: center;
+    color: #cccccc;
+  
+    .toggle-caret{
+      color: #cccccc;
+    }
+  }
+  
+  // .expansion-panel-expanded{
+  //   height: 200px;
+  // }
+}
+
+.expanded{
+  max-height: 30vh;
+  padding: 20px;
+  overflow: auto;
+}
+mat-grid-tile {
+  background: lightblue;
+}

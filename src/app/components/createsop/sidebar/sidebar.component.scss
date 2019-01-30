@@ -1,0 +1,14 @@
+button{
+  position: absolute;
+  top: 100px;
+  right: 0;
+}
+
+.sidebar-body{
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #ffffff;
+  height: 100%;
+  width: calc(100% - 40px);
+}

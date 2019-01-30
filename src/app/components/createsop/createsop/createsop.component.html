@@ -1,7 +1,28 @@
-<!-- 
-<p>
-  createsop works!
-</p> -->
-<div [ngStyle]="{'margin-top':'56px'}">
-  hello world
+<div class="flex">
+  <div class="flex-item">
+    <left-panel></left-panel>
+  </div>
+  <div class="flex-item">
+    <right-panel></right-panel>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-body panel-body__left" [ngClass]="{'panel-body-active':toggleRecentSnapshot}">
+    <recent-screen-shots (open)="onOpenRecentScreenshot($event)"></recent-screen-shots>
+  </div>
+  <div class="panel-body panel-body__right">
+    <operations-bar></operations-bar>
+  </div>
+</div>
+
+
+<div class="overlay" *ngIf="openSidebar">
+</div>
+<div class="sidebar" [ngClass]="{'sidebar-open':openSidebar}">
+  <app-sidebar (isSideBarOpen)="isSideBarOpen($event)"></app-sidebar>
+</div>
+
+<div class="sidebar-buttons">
+  <app-sidebar-buttons (open)="onOpenSidebar($event)"></app-sidebar-buttons>
 </div>
