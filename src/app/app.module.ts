@@ -70,6 +70,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { PermissionsDirective } from './directives/permissions.directive';
 import {AuthorizationService} from './services/authorization/authorization.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { SignupusersComponent } from './authentication/signupusers/signupusers.component';
 // import { ScrollbarComponent } from './services/scrollbarService/scrollbar/scrollbar.component';
 
 const routes = [
@@ -81,6 +82,10 @@ const routes = [
         path: '', 
         component: AuthComponent, 
         pathMatch: 'full'
+      },
+      {
+        path: 'signup',
+        component: SignupusersComponent
       },
       {
         path: 'projects', 
@@ -135,6 +140,7 @@ const routes = [
     ExportDialogBoxComponent,
     PermissionsDirective,
     DashboardComponent,
+    SignupusersComponent,
     // ScrollbarComponent,
   ],
 
