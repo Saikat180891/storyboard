@@ -61,6 +61,9 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
 
   border = "1px solid #D1D1D1";
 
+  users:string[] = ['SuperAdmin', 'Manager', 'Analyst'];
+  user:string;
+
   /**
    * This variables are used while rearranging the date
    */
@@ -337,7 +340,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
           this.__containerComponent.getListOfAllProjects();
           if(this.newlyCreatedAssignees.length > 0){
             this.newlyCreatedAssignees.forEach((ele, index, array)=>{
-              this._dataService.postData(`/sop/${sopId}/assignee.json`, {user: ele.email, role: 'Manager'})
+              this._dataService.postData(`/sop/${sopId}/assignee.json`, {user: ele.email, role: this.user})
                 .subscribe(res=>{});
               if(index == array.length - 1){
                 this.spinner.hide();

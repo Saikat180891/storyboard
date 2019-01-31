@@ -1,0 +1,21 @@
+.gallery{
+  position: relative;
+  overflow: auto;
+  padding: 20px;
+  height: 100%;
+}
+
+mat-grid-tile {
+  background: lightblue;
+}
+mat-grid-tile.add-video{
+  background-color: #040404;
+  cursor: pointer;
+  
+  .grid-content{
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
