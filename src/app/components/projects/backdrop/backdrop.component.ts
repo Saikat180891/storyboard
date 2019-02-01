@@ -318,7 +318,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     this.sopForm.value.due_date = this.formatDate(this.sopForm.value.due_date);
     let validationCheck = this.validateForm(this.sopForm.value);
     if(validationCheck == 0){
-      this.spinner.show();
       // console.log("the created sop form is ", this.sopForm.value);
       let formData = this.JSONtoFormData(this.sopForm.value);
       let sopId:number;
@@ -326,6 +325,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
       .subscribe(
         //if response successfull
         (response)=> {
+          this.spinner.show();
           // if(response){
           //   sopId = response["id"];
           //   this._ContainerService.cardContents.push(
@@ -364,6 +364,9 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
             });
 
             this.snackBar.open(error, "Failed", {duration: 2000});
+        },
+        ()=>{
+          this.spinner.hide();
         }
       );
     }
