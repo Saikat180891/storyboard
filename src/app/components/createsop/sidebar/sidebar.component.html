@@ -49,18 +49,18 @@
             <span>Video name application</span>
           </div>
           <div class="video-gellery">
-            <app-gallery></app-gallery>
+            <app-gallery [data]="carouselImages" [type]="'VIDEO'"></app-gallery>
           </div>
         </div>
       </mat-tab>
       <mat-tab label="Images">
         <div class="tab">
           <div class="slide-show">
-            <app-carousel></app-carousel>
-            <div class="carousel-position carousel-left">
+            <app-carousel [data]="carouselImages" [currentImage]="currentImage"></app-carousel>
+            <div class="carousel-position carousel-left" (click)="onCarouselMoveRight()">
               <i class="fas fa-chevron-left"></i>
             </div>
-            <div class="carousel-position carousel-right">
+            <div class="carousel-position carousel-right" (click)="onCarouselMoveLeft()">
               <i class="fas fa-chevron-right"></i>
             </div>
             <div class="carousel-overlay">
@@ -71,7 +71,7 @@
             <span>Video name application</span>
           </div>
           <div class="video-gellery">
-            <app-gallery></app-gallery>
+            <app-gallery [data]="carouselImages" [type]="'IMAGE'" (optionSelected)="onselectRequestedThumbnail($event)"></app-gallery>
           </div>
         </div>
       </mat-tab>

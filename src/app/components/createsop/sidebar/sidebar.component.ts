@@ -12,6 +12,26 @@ export class SidebarComponent implements OnInit, OnChanges {
   duration:any = "00:00";
   currentTime:any = "00:00";
   progress:number = 0;
+  videos = [1, 2, 3, 4, 5, 6, 7, 8];
+  currentImage:number = 0;
+
+  carouselImages = [
+    {
+      image: '../../../../assets/pics/6-tips-best-video-custom-thumbnails-youtube.jpg'
+    },
+    {
+      image: '../../../../assets/pics/2img.jpg'
+    },
+    {
+      image: '../../../../assets/pics/3img.jpg'
+    },
+    {
+      image: '../../../../assets/pics/4img.jpg'
+    },
+    {
+      image: '../../../../assets/pics/5img.jpg'
+    }
+  ]
 
   constructor(private __uic:UicontrolService) { }
 
@@ -22,7 +42,24 @@ export class SidebarComponent implements OnInit, OnChanges {
   ngOnChanges(){
     
   }
-  
+  //for carousel
+  onCarouselMoveLeft(){
+    if(this.currentImage < this.carouselImages.length - 1){
+      this.currentImage = this.currentImage + 1;
+      console.log(this.currentImage)
+    }
+  }
+
+  onCarouselMoveRight(){
+    if(this.currentImage > 0){
+      this.currentImage = this.currentImage - 1;
+    }
+  }
+
+  onselectRequestedThumbnail($event:any){
+    this.currentImage = $event.index;
+  }
+  //for video player
   onPlayPause(){
     if(this.videoPlayer.nativeElement.paused){
       this.videoPlayer.nativeElement.play();

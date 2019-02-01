@@ -1,3 +1,3 @@
-<p>
-  carousel works!
-</p>
+<div class="carousel-container">
+  <img [src]="content.image" alt="" *ngFor="let content of data; let i=index" [ngStyle]="{'transform':'translateX(-' + currentImage * 100 + '%)'}">
+</div>

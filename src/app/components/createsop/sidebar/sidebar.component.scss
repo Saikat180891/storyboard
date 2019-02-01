@@ -209,21 +209,20 @@ button{
 
   .carousel-overlay{
     position: absolute;
-    bottom: -40px;
+    bottom: 0;
     left: 0;
-    height: 40px;
+    height: 0;
     width: 100%;
     background-color: rgba($color: #2A7DE1, $alpha: 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
     color: #ffffff;
-    transition: bottom 0.1s ease;
-    visibility: hidden;
+    transition: all 0.1s ease;
+    overflow: hidden;
   }
 }
 
 .slide-show:hover .carousel-overlay{
-  bottom: 0;
-  visibility: visible;
+  height: 40px;
 }
