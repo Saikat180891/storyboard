@@ -1,21 +1,40 @@
 <div class="gallery">
   <mat-grid-list cols="3" rowHeight="2:1.5" gutterSize="20px">
-    <mat-grid-tile class="add-video">
-      <div class="grid-content">
-        <div class="icon">
-
-        </div>
-        <div class="title">
-          Add Video
+    <mat-grid-tile>
+      <div class="add-video">
+        <div class="grid-content">
+          <div class="icon">
+            <i class="far fa-plus-square"></i>
+          </div>
+          <div class="title">
+            Add Video
+          </div>
+          <div class="file-loader">
+            <input type="file" name="" id="">
+          </div>
         </div>
       </div>
     </mat-grid-tile>
 
     <ng-container>
-      <mat-grid-tile>2</mat-grid-tile>
-      <mat-grid-tile>3</mat-grid-tile>
-      <mat-grid-tile>4</mat-grid-tile>
+      <mat-grid-tile *ngFor="let video of videos">
+        <div class="grid-content-next">
+          <div class="picture">
+            <img src="../../../../assets/pics/6-tips-best-video-custom-thumbnails-youtube.jpg" alt="">
+            <div class="picture-overlay">
+              <div class="picture-overlay-btns">
+                <button><i class="fas fa-play"></i><span>Play</span></button>
+                <button><i class="far fa-trash-alt"></i><span>Delete</span></button>
+              </div>
+            </div>
+          </div>
+          <div class="picture-title">
+            <span>PicturenamePicturename Picture name</span>
+            <span>12:22</span>
+          </div>
+        </div>
+      </mat-grid-tile>
     </ng-container>
-    
+
   </mat-grid-list>
 </div>

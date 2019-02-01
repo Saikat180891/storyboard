@@ -13,13 +13,15 @@ import { RightPanelComponent } from './right-panel/right-panel.component';
 import { OperationsBarComponent } from './operations-bar/operations-bar.component';
 import { SidebarButtonsComponent } from './sidebar-buttons/sidebar-buttons.component';
 import { VideoGalleryComponent } from './video-gallery/video-gallery.component';
+import { ProgressbarComponent } from './shared/progressbar/progressbar.component';
+import { CarouselComponent } from './carousel/carousel.component';
 
 
 const routes: Routes = [
   { path: '', component: CreatesopComponent }
 ];
 @NgModule({
-  declarations: [CreatesopComponent, SidebarComponent, RecentScreenShotsComponent, LeftPanelComponent, RightPanelComponent, OperationsBarComponent, SidebarButtonsComponent, VideoGalleryComponent],
+  declarations: [CreatesopComponent, SidebarComponent, RecentScreenShotsComponent, LeftPanelComponent, RightPanelComponent, OperationsBarComponent, SidebarButtonsComponent, VideoGalleryComponent, ProgressbarComponent, CarouselComponent],
   imports: [
     CommonModule,
     MatGridListModule,
