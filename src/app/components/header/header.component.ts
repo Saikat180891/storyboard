@@ -47,6 +47,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // this.__api.fetchData('/logoutUser').subscribe(res=>{localStorage.clear()});
     // this.__api.apiUrl + 
     this.cookieService.deleteAll();
+    sessionStorage.clear();
+    localStorage.clear()
   }
 
 }

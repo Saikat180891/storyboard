@@ -28,15 +28,16 @@ export class AuthGaurdService implements CanActivate {
   }
 
   getToken(){
-    return localStorage.getItem("csrftoken") ? true : false;
+    return sessionStorage.getItem("status") ? true : false;
   }
 
   isUserLoggedIn(){
     this._api.fetchData('/checkLogin').subscribe(res=>{
       if(res["user_logged_in"] === true){
         this.router.navigate(['/projects']);
-        const value = this.cookieService.getAll();
-        localStorage.setItem("csrftoken", value["csrftoken"]);
+        sessionStorage.setItem('status', 'loggedIn');
+        // const value = this.cookieService.getAll();
+        // localStorage.setItem("csrftoken", value["csrftoken"]);
         if(res["name"]){
           localStorage.setItem("userName", res["name"]);
         }

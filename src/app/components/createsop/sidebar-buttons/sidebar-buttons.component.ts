@@ -11,13 +11,23 @@ export class SidebarButtonsComponent implements OnInit {
 
   openMediaPane:boolean = false;
 
+  selected:number = -1;
+
+  sidebarLinks = [
+    {
+      logo: '',
+      linkCaption: 'Media',
+      function: 'media'
+    }
+  ]
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  onOpenMediaPane(type:string){
+  onOpenMediaPane(type:string, index:number){
+    this.selected = index;
     this.openMediaPane = !this.openMediaPane;
     console.log(this.openMediaPane);
     this.open.emit({type:type, shouldOpen: this.openMediaPane});

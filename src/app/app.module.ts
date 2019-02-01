@@ -177,7 +177,7 @@ const routes = [
     HttpClientModule,
     MatInputModule,
     HttpClientXsrfModule.withOptions({
-      cookieName: localStorage.getItem('csrftoken'),
+      cookieName: 'csrftoken',
       headerName: 'X-CSRFToken'
     }),
     NgxSpinnerModule,
