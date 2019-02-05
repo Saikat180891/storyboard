@@ -1,0 +1,23 @@
+<div class="select">
+  <div>
+    <input 
+    [ngClass]="{'input-active':defaultOption==='Select' || defaultOption==='Unassigned' ? false : true, 'input-active': applyPadding}" 
+    [ngStyle]="{
+      'color':defaultOption==='Select' || defaultOption==='Unassigned' ? '#000' : '',
+      'color':selected?selected.color:''
+    }" 
+    type="text" [placeholder]="'placeholder'" readonly [value]="value?value.status:defaultOption">
+  </div>
+  <div class="ball" 
+  [ngStyle]="{
+    'background-color': selected?selected.color:''}"></div>
+  <span class="down-caret" (click)="onOpen()"><i class="fas fa-angle-down"></i></span>
+  <div *ngIf="isOpen && options" class="select-dropdown">
+    
+    <span *ngFor="let option of options" (click)="onSelect($event, option)" [ngStyle]="{'color': option.color==='transparent'?'#000':option.color}">
+      <span class="ball" [ngStyle]="{'background-color': option.color}" *ngIf="option.color!='transparent'"></span>
+      {{option.status}}
+    </span>
+  </div>
+  <div *ngIf="isOpen" class="overlay custom-overlay" (click)="onOpen()"></div>
+</div>

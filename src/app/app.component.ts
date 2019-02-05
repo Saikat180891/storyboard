@@ -1,22 +1,15 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import {AppcontrolService} from './controlservice/appcontrol.service';
-
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  constructor(private _constrolService:AppcontrolService){
+  constructor(){
 
   }
-  title = 'project-test';
-  // @Output() overlayH: EventEmitter<any> = new EventEmitter<any>();
-  
-  // fn(){
-  //   this.overlayH.emit(1);
-  //   console.log("hello")
-  // }
+  ngOnInit(){
+  }  
 }

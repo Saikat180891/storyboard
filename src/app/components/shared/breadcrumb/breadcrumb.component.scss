@@ -41,3 +41,18 @@ ul.breadcrumb li:hover {
   transform: translateY(-50%);
   left: 345px;
 }
+
+.save-btn{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 150px;
+  height: 35px;
+  right: 40px;
+  font-size: 14px;
+  border-radius: 2px;
+}
+.save-change{
+  background-color: #2A7DE1;
+  color: #ffffff;
+}
