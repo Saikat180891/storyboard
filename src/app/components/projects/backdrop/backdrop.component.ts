@@ -321,22 +321,11 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
       // console.log("the created sop form is ", this.sopForm.value);
       let formData = this.JSONtoFormData(this.sopForm.value);
       let sopId:number;
+      this.spinner.show();
       this._dataService.postData('/sop.json',  formData)
       .subscribe(
         //if response successfull
         (response)=> {
-          this.spinner.show();
-          // if(response){
-          //   sopId = response["id"];
-          //   this._ContainerService.cardContents.push(
-          //     {
-          //       themeColor: this._ContainerService.colorPicker[this._ContainerService.getUniqueNumber()],
-          //       reasonCodes: 0,
-          //       ...response,
-          //       logo: response["image_url"]
-          //     }
-          //   );
-          // }
           this.__containerComponent.getListOfAllProjects();
           if(this.newlyCreatedAssignees.length > 0){
             this.newlyCreatedAssignees.forEach((ele, index, array)=>{
@@ -362,11 +351,13 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
             keys.forEach(key => {
               error += key+": "+err.error[key] +"\n";
             });
-
+            this.spinner.hide();
+            this.onOverlayClose();
             this.snackBar.open(error, "Failed", {duration: 2000});
         },
         ()=>{
           this.spinner.hide();
+          this.onOverlayClose();
         }
       );
     }

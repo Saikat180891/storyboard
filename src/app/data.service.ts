@@ -57,7 +57,10 @@ export class DataService implements OnInit {
   getBackdropData(){
     return this.backdropData;
   }
-
+  
+  /**
+   * Get CSRF token from the cookie by using the cookie service class
+   */
   getCSRFToken(){
     return this.cookie.get("csrftoken");
   }
