@@ -1,0 +1,137 @@
+@import "../global.scss";
+
+button{
+  position: absolute;
+  top: 100px;
+  right: 0;
+}
+
+.sidebar-body{
+  position: absolute;
+  top: 0;
+  right: 0;
+  // background-color: #252525;
+  height: 100%;
+  width: calc(100% - 40px);
+}
+.tab{
+  display: flex;
+  position: relative;
+  flex-direction: column;
+}
+.video-player{
+  margin: 20px 20px 0 20px;
+  position: relative;
+
+  .controls{
+    position: absolute;
+    height: 50px;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    background: linear-gradient( rgba($color: #C1C1C1, $alpha: 0.7), rgba($color: #040404, $alpha: 0.7));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+
+    .slider{
+      width: 100%;
+      position: absolute;
+      top: -15px;
+      left: -2;
+
+      .slider-button{
+        width: 100%;
+        appearance: none;
+        height: 5px;
+        margin: 0;
+        background-color: $main-blue;
+      }
+      .slider-button::-webkit-slider-thumb {
+        -webkit-appearance: none; /* Override default look */
+        appearance: none;
+        width: 13px; /* Set a specific slider handle width */
+        height: 13px; /* Slider handle height */
+        background: $main-blue; /* Green background */
+        box-shadow: 0 0 10px rgba($color: #040404, $alpha: 0.7);
+        border-radius: 50%;
+        cursor: pointer; /* Cursor on hover */
+      }
+      
+      .slider-button::-moz-range-thumb {
+        width: 13px; /* Set a specific slider handle width */
+        height: 13px; /* Slider handle height */
+        background: $main-blue; /* Green background */
+        box-shadow: 0 0 10px rgba($color: #040404, $alpha: 0.7);
+        border-radius: 50%;
+        cursor: pointer; /* Cursor on hover */
+      }
+    }
+    .player-center-buttons{
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      height: 100%;
+      width: 100px;
+      justify-content: space-around;
+      color: #ffffff;
+    }
+    .player-center-buttons > div{
+      cursor: pointer;
+    }
+    .player-right-buttons{
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      width: 70px;
+      justify-content: space-between;
+      color: #ffffff;
+      padding-right: 20px;
+    }
+    .player-right-buttons > div{
+      cursor: pointer;
+    }
+    .player-start-buttons{
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding-left: 20px;
+      width: 150px;
+      color: #ffffff;
+    }
+  }
+
+  video{
+    width: 100%;
+    height: 45vh
+  }
+}
+.video-player:hover .controls{
+  opacity: 1;
+}
+.application-name{
+  width: 100%;
+  height: 40px;
+  padding-left: 20px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+.video-gellery{
+  position: fixed;
+  bottom: 0;
+  left: 40px;
+  width: calc(100% - 40px);
+  height: calc(100% - (45vh + 120px));
+  background-color: #171717;
+}

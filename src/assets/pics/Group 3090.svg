@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 17">
+  <defs>
+    <style>
+      .cls-1, .cls-3 {
+        fill: #2a7de1;
+      }
+
+      .cls-1 {
+        font-size: 14px;
+        font-family: Roboto-Medium, Roboto;
+        font-weight: 500;
+      }
+
+      .cls-2, .cls-5 {
+        fill: none;
+      }
+
+      .cls-2 {
+        stroke: #2a7de1;
+      }
+
+      .cls-4 {
+        stroke: none;
+      }
+    </style>
+  </defs>
+  <g id="Group_3090" data-name="Group 3090" transform="translate(-1167 -597)">
+    <g id="Group_3091" data-name="Group 3091">
+      <g id="Group_3089" data-name="Group 3089">
+        <text id="STEP" class="cls-1" transform="translate(1187 610)"><tspan x="0" y="0">STEP</tspan></text>
+        <g id="Ellipse_2" data-name="Ellipse 2" class="cls-2" transform="translate(1167 598)">
+          <circle class="cls-4" cx="7.646" cy="7.646" r="7.646"/>
+          <circle class="cls-5" cx="7.646" cy="7.646" r="7.146"/>
+        </g>
+      </g>
+    </g>
+    <g id="Group_182" data-name="Group 182" transform="translate(1170.437 601)">
+      <path id="Path_93" data-name="Path 93" class="cls-3" d="M7.96,3.622H4.8V.458A.57.57,0,0,0,4.208,0,.569.569,0,0,0,3.62.458V3.622H.458A.568.568,0,0,0,0,4.208.569.569,0,0,0,.458,4.8H3.622V7.96a.568.568,0,0,0,.586.458A.569.569,0,0,0,4.8,7.96V4.8H7.96a.57.57,0,0,0,.458-.588.566.566,0,0,0-.458-.586Zm0,0"/>
+    </g>
+  </g>
+</svg>

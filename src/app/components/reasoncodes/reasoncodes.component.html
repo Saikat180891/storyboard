@@ -1,32 +1,322 @@
-<div class="container">
-  <div class="header">
-    <div class="heading">
-      <span class="heading__name">AON Project 2</span>
-      <span class="heading__divider"> | </span>
-      <span class="heading__id">AON001</span>
-      <span class="heading__assignees">Assignee's</span>
-      <span class="heading__date">
-        <i class="heading__date__icon far fa-calendar-alt"></i>
-         Date {{'12/12/12'}}
-      </span>
-      <i class="heading__date__icon edit fas fa-pen"></i>
-    </div>
+<!-- <app-header></app-header> -->
+<div class="universal" #totalPage>
 
-    <div class="header__images">
-      <img src="../../../assets/pics/img5.jpg" alt="">
-      <img src="../../../assets/pics/img5.jpg" alt="">
-      <img src="../../../assets/pics/img5.jpg" alt="">
+  <ng-container>
+    <div class="container" [ngClass]="{'container-hide': fixToTop}">
+      <div class="header">
+  
+        <div class="heading">
+          <span class="heading__name">{{_reasonCode.currentProject?_reasonCode.currentProject.clientName:''}}</span>
+          <span class="heading__divider"> | </span>
+          <span class="heading__id">{{_reasonCode.currentProject?_reasonCode.currentProject.title:''}}</span>
+        </div>
+  
+        <div class="middle header__btn">
+          <button [ngStyle]="{'width' : '150px'}" class="btn btn-blue btn-lg btn-shadow btn-active clearfill" (click)="onOpenAddSprint()"><i class="fas fa-cog"></i> Config Project</button>
+          <button [ngStyle]="{'width' : '150px', 'margin-left': '20px'}" [ngClass]="{'btn-export-active':showBenefitsChart}" class="btn btn-blue btn-lg btn-shadow btn-active clearfill" (click)="onShowBenefits()"><i class="fas fa-chart-line"></i> Show Benefits</button>
+          <button [ngStyle]="{'width' : '100px', 'margin-left': '20px'}" [ngClass]="{'btn-export-active':openExport}" class="btn btn-blue btn-lg btn-shadow btn-active clearfill" (click)="onOpenExport()"><i class="fas fa-file-export"></i> Export</button>
+        </div>
+  
+      </div>
+      <div class="chart-section">
+        <div class="chart">
+          <app-charts [extras]="false" [projectStatus]="_reasonCode.totalProjectStatus" [meter]="true" [options]="pieChartOptions" [data]="_reasonCode.totalSprintData" [title]="'Project Status'"></app-charts>
+        </div>
+        <div class="chart">
+          <app-charts [extras]="true" [projectStatus]="_reasonCode.currentSprintDuration" [meter]="true" [options]="pieChartOptions" [data]="_reasonCode.currentSprintData" [title]="'Current Sprint'" [selectOptions]="_reasonCode.sprintConfig"></app-charts>
+        </div>
+        <div class="chart">
+          <app-charts [extras]="false" [projectStatus]="_reasonCode.totalProjectStatus" [meter]="false" [options]="barChartOptions" [title]="'Benefits'" [data]="_reasonCode.benefitsChartData"></app-charts>
+        </div>
+      </div>
     </div>
+  </ng-container>
 
-    <div class="header__btn">
-      <div class="btn">NEW REASON CODE</div>
+
+
+
+  <div class="userstory-container" [ngClass]="{'userstory-container-active':fixToTop}">
+    <mat-tab-group class="userstory-container-tabs" (selectedTabChange)="onTabChange($event)" [selectedIndex]="selectedTabIndex">
+      <mat-tab label="Open U/S">
+
+        <div class="filter-selected" *ngIf="_reasonCode.filteredValues.length > 0">
+          <mat-chip-list>
+              <mat-chip *ngFor="let filteredValue of _reasonCode.filteredValues; let i = index">
+                {{filteredValue}}
+                <i class="fas fa-times-circle badge-close" (click)="onRemoveFilter(filteredValue, i)"></i>
+              </mat-chip>
+          </mat-chip-list>
+          <button class="btn reset-filter" (click)="onClearAllFilters()">Clear all filters</button>
+        </div>
+
+        <div class="card-holder" [ngClass]="{'card-holder-active':fixToTop, 'userstory-slide-left':openCreateSideBar}" *ngIf="_reasonCode.userStories" #userStoryContainer>
+          
+          <app-userstory-card (deleteUserStory)="onDeleteUserStory($event)" [restore]="false" [disableDeleteBtn]="true" *ngFor="let userStory of _reasonCode.userStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
+        </div>
+
+        <!-- <ng-template #openPlaceholder> -->
+          <div class="card-holder user-story-placeholder" *ngIf="_reasonCode.userStories.length == 0">
+            <img width="40px" height="40px" src="../../../assets/pics/open_user_story.svg" alt="placeholder">
+            <p>Get started by creating user stories & sprints</p>
+          </div>
+        <!-- </ng-template> -->
+      </mat-tab>
+      <mat-tab label="Completed U/S">
+        <div class="filter-selected" *ngIf="_reasonCode.filteredValues.length > 0">
+          <mat-chip-list>
+              <mat-chip *ngFor="let filteredValue of _reasonCode.filteredValues; let i = index">
+                {{filteredValue}}
+                <i class="fas fa-times-circle badge-close" (click)="onRemoveFilter(filteredValue, i)"></i>
+              </mat-chip>
+          </mat-chip-list>
+          <button class="btn reset-filter" (click)="onClearAllFilters()">Clear all filters</button>
+        </div>
+
+        <div class ='info'>
+          <img src= "../../../assets/pics/info_logo.svg" height="23px" width="23px">
+          <div class ='info_text'>
+            To re-open a user story, change its status from "Done" to another state and assign to an open/future sprint.
+          </div>
+        </div>
+        <div class="card-holder">
+            <!-- <app-userstory-card (deleteUserStory)="onDeleteUserStory($event)" [restore]="false" *ngFor="let userStory of _reasonCode.completeUserStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card> -->
+            <app-userstory-card [restore]="false" [disableDeleteBtn]="false" *ngFor="let userStory of _reasonCode.completeUserStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
+        </div>
+      </mat-tab>
+      <mat-tab label="Deleted U/S">
+        <div class="filter-selected" *ngIf="_reasonCode.filteredValues.length > 0">
+          <mat-chip-list>
+              <mat-chip *ngFor="let filteredValue of _reasonCode.filteredValues; let i = index">
+                {{filteredValue}}
+                <i class="fas fa-times-circle badge-close" (click)="onRemoveFilter(filteredValue, i)"></i>
+              </mat-chip>
+          </mat-chip-list>
+          <button class="btn reset-filter" (click)="onClearAllFilters()">Clear all filters</button>
+        </div>
+
+        <div class="card-holder">
+            <app-userstory-card [restore]="true" [disableEdit]="true" *ngFor="let userStory of _reasonCode.deletedUserStories" [userStory]="userStory" (editUserStory)="onOpenUserStorySidebar($event, userStory)"></app-userstory-card>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+    <div class="menu-btn-group">
+      <button class="sort-btn btn btn-flat-grey" [ngClass]="{'filter-btn-active':sortBy}" [matMenuTriggerFor]="sortby" (click)="sortBy = !sortBy"><i class="fas fa-sort-amount-down"></i> Sort By</button>
+      <button class="btn btn-flat-grey" (click)="openFilter()" [ngClass]="{'filter-btn-active':filter}"><i class="fas fa-filter"></i> Filter</button>
+      <button 
+      class="btn btn-flat-grey" 
+      (click)="onCreate()" 
+      [ngStyle]="{'width':'150px'}"
+      [appCanAccess]="{role:_reasonCode.role, permissionRequired:'Can add user stories', permissionList:_reasonCode.grantedPermission}"
+      >
+        <img width="10px" height="10px" src="../../../assets/pics/plus.svg" alt="create user story"> Create New U/S
+      </button>
+      <div class="material-menu">
+        <mat-menu #sortby="matMenu" (closed)="sortBy=false">
+          <button mat-menu-item (click)="clearAllSort()">Clear sort</button>
+          <button mat-menu-item [matMenuTriggerFor]="usName">U/S Name</button>
+          <button mat-menu-item [matMenuTriggerFor]="sprintName">Sprint Name</button>
+          <button mat-menu-item [matMenuTriggerFor]="priority">Priority</button>
+          <button mat-menu-item [matMenuTriggerFor]="reasonCode">Epics</button>
+          <button mat-menu-item [matMenuTriggerFor]="productivity">Productivity</button>
+          <button mat-menu-item [matMenuTriggerFor]="plannedDelivery">Planned delivery</button>
+          <button mat-menu-item [matMenuTriggerFor]="revisedDelivery">Revised delivery</button>
+        </mat-menu>
+      </div>
+
+      <mat-menu #usName="matMenu">
+        <button mat-menu-item (click)="onSortBy('sort=us_name,A_to_Z')">A to Z</button>
+        <button mat-menu-item (click)="onSortBy('sort=us_name,Z_to_A')">Z to A</button>
+      </mat-menu>
+
+      <mat-menu #sprintName="matMenu">
+        <button mat-menu-item (click)="onSortBy('sort=sprintName,A_to_Z')">A to Z</button>
+        <button mat-menu-item (click)="onSortBy('sort=sprintName,Z_to_A')">Z to A</button>
+      </mat-menu>
+      
+      <mat-menu #priority="matMenu">
+        <button mat-menu-item (click)="onSortBy('sort=priority,High_to_Low')">High to Low</button>
+        <button mat-menu-item (click)="onSortBy('sort=priority,Low_to_High')">Low to High</button>
+      </mat-menu>
+
+      <mat-menu #productivity="matMenu">
+        <button mat-menu-item (click)="onSortBy('sort=productivity,High_to_Low')">High to Low</button>
+        <button mat-menu-item (click)="onSortBy('sort=productivity,Low_to_High')">Low to High</button>
+      </mat-menu>
+
+      <mat-menu #reasonCode="matMenu">
+        <button mat-menu-item (click)="onSortBy('sort=reasonCode,A_to_Z')">A to Z</button>
+        <button mat-menu-item (click)="onSortBy('sort=reasonCode,Z_to_A')">Z to A</button>
+      </mat-menu>
+
+      <mat-menu #plannedDelivery="matMenu">
+        <button mat-menu-item (click)="onSortBy('sort=planned_delivery,Earliest_to_Latest')">Earliest to Latest</button>
+        <button mat-menu-item (click)="onSortBy('sort=planned_delivery,Latest_to_Earliest')">Latest to Earliest</button>
+      </mat-menu>
+
+      <mat-menu #revisedDelivery="matMenu">
+        <button mat-menu-item (click)="onSortBy('sort=revised_delivery,Earliest_to_Latest')">Earliest to Latest</button>
+        <button mat-menu-item (click)="onSortBy('sort=revised_delivery,Latest_to_Earliest')">Latest to Earliest</button>
+      </mat-menu>
+
+      <div class="filter" [ngClass]="{'filter-active': filter, 'filter-new-position': activateVirtualFilter}">
+        <userstory-filter (closeFilter)="filter=$event" *ngIf="clearAllFilter"></userstory-filter>
+      </div>
+      
     </div>
   </div>
 
-  <div class="accordian-container">
-    <app-reason-code-accordian></app-reason-code-accordian>
+  <div class="transparent-overlay" [ngClass]="{'transparent-overlay-active':openCreateSideBar}">
+    <div class="create-user-story" [ngClass]="{'create-user-story-active': openCreateSideBar}">
+        <app-userstory-card-create *ngIf="openCreateSideBar" [reasonCodeOptions]="reasonCodeOptions" [sprintOptions]="sprintOptions" (close)="onCloseCreateUserStories($event)"></app-userstory-card-create>
+    </div>
+  </div>
+  <div class="transparent-overlay" [ngClass]="{'transparent-overlay-active':openEditSideBar, 'overlay': warning}">
+    <div class="create-user-story" [ngClass]="{'create-user-story-active': openEditSideBar}">
+        <app-userstory-card-edit [reasonCodeOptions]="reasonCodeOptions" (warning)="onDoneWarning($event)" *ngIf="openEditSideBar" (close)="onCloseEditUserStories($event)" [editUSData]="userStoryData" [sprintOptions]="sprintOptions"></app-userstory-card-edit>
+    </div>
+    <div class="warning" *ngIf="warning">
+      <p>Are you sure you want to move it to <strong>Completed</strong>?</p>
+      <div class="btn-group">
+        <button class="btn btn-blue" (click)="onSelectYes()">Yes</button>
+        <button class="btn btn-flat-ash" (click)="onSelectNo()">No</button>
+      </div>
+    </div>
   </div>
 
 </div>
+<!-- Create new sprint 'openAddSprint' -->
+<div class="overlay animate-scale" [ngClass]="{'animate-scale-active': openAddSprint}">
+
+  <div class="sprint-config-modal">
+    <sprint-config *ngIf="openAddSprint" [reasonCodeConfigData]="_reasonCode.reasonCodeData" [sprintConfigData]="_reasonCode.sprintConfig" (closeSprints)="openAddSprint=$event;onClearAllFilters()"></sprint-config>
+  </div>
+  
+</div>
 
 
+
+<div class="overlay opacity" *ngIf="_reasonCode.movemodal">
+  <div id="move-user-story">
+    <div class="modal">
+      <div class="header">
+        <span>Move User Story</span>
+        <span><i class="fas fa-times"></i></span>
+      </div>
+      <div class="sub-header">Drag & Drop U/S from one box to another</div>
+
+      <div class="move-box flex">
+        <div class="banner">
+          <div class="dropdown">
+            <app-select [placeholder]="'Select'" [options]="options"></app-select>
+          </div>
+          <div class="drag-box">
+              <div
+              cdkDropList
+              #todoList="cdkDropList"
+              [cdkDropListData]="todo"
+              [cdkDropListConnectedTo]="[doneList]"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}} <span><i class="fas fa-arrows-alt"></i></span></div>
+              </div>
+          </div>
+        </div>
+        
+        <div class="banner">
+          <div class="dropdown">
+            <app-select [placeholder]="'Select'" [options]="options"></app-select>
+          </div>
+          <div class="drag-box">
+              <div
+              cdkDropList
+              #doneList="cdkDropList"
+              [cdkDropListData]="done"
+              [cdkDropListConnectedTo]="[todoList]"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}} <span><i class="fas fa-arrows-alt"></i></span></div>
+              </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer">
+        <div class="footer-note">
+            *Note: You can only move U/S for the same clients only
+        </div>
+
+        <div class="footer-buttons flex">
+          <button class="btn btn-flat-blue btn-blue">OK</button>
+          <button class="btn btn-flat-grey" (click)="onCancel()">CANCEL</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-preloader></app-preloader>
+
+<!-- <div class="overlay" *ngIf="warning">
+  <div class="warning">
+    <p>Are you sure you want to move it to <strong>Completed</strong>?</p>
+    <div class="btn-group">
+      <button class="btn btn-blue" (click)="onSelectYes()">Yes</button>
+      <button class="btn btn-flat-ash" (click)="onSelectNo()">No</button>
+    </div>
+  </div>
+</div> -->
+
+<div class="overlay" *ngIf="warningToDeleteUserStory">
+  <div class="warning">
+    <p>Are you sure you want to delete this user story?</p>
+    <div class="btn-group">
+      <button class="btn btn-blue" (click)="onSelectDeleteUserStory()">Yes</button>
+      <button class="btn btn-flat-ash" (click)="onSelectDoNotDeleteUserStory()">No</button>
+    </div>
+  </div>
+</div>
+
+<!-- <snackbar></snackbar> -->
+
+
+<div class="export" [ngClass]="{'export-active':openExport}">
+  <export-dialog-box (close)="openExport=false"></export-dialog-box>
+</div>
+
+<div class="overlay" *ngIf="showBenefitsChart">
+  <div class="benefits-frame">
+    <img [src]="benefitChartImage" alt="">
+    <div class="frame-close" (click)="onCloseBenefits()">
+      <i class="fas fa-times" (click)="onCloseBenefits()"></i>
+    </div>
+  </div>
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.9)"
+  size="medium"
+  color="#fff"
+  type="ball-spin-clockwise"
+  class="myspinner"
+  >
+ <!-- <p style="font-size: 20px; color: white; position: fixed">Loading...Please wait</p> -->
+</ngx-spinner>
+<div class="stickybar" [ngClass]="{'stickybar-active':activateStickybar}">
+  <div class="tabs">
+    <button matRipple [matRippleColor]="rippleColor" (click)="onVirtualTabClicked(0)" [ngClass]="{'active':selectedTabIndex==0}">Open U/S</button>
+    <button matRipple [matRippleColor]="rippleColor" (click)="onVirtualTabClicked(1)" [ngClass]="{'active':selectedTabIndex==1}">Completed U/S</button>
+    <button matRipple [matRippleColor]="rippleColor" (click)="onVirtualTabClicked(2)" [ngClass]="{'active':selectedTabIndex==2}">Deleted U/S</button>
+  </div>
+  <div class="page-options">
+    <button class="sort-btn btn btn-flat-grey" [ngClass]="{'filter-btn-active':false}" [matMenuTriggerFor]="sortby" (click)="sortBy = !sortBy"><i class="fas fa-sort-amount-down"></i> Sort By</button>
+    <button class="btn btn-flat-grey" (click)="openVirtualFilter()" [ngClass]="{'filter-btn-active':filter}"><i class="fas fa-filter"></i> Filter</button>
+    <button 
+    class="btn btn-flat-grey" 
+    (click)="onCreate()" 
+    [ngStyle]="{'width':'150px'}"
+    >
+      <img width="10px" height="10px" src="../../../assets/pics/plus.svg" alt="create user story"> Create New U/S
+    </button>
+  </div>
+</div>

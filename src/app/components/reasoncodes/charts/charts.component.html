@@ -1,0 +1,25 @@
+<div class="container" #dimensionController>
+  <div class="header" *ngIf="projectStatus?true:false">
+    <span>{{title}} 
+      <span *ngIf="extras">-</span> 
+      {{projectStatus.current_sprint?projectStatus.current_sprint:''}}
+    </span> 
+    <span *ngIf="selectedSprint"> ({{selectedSprint}})</span>
+  </div>
+  <div class="option" *ngIf="data.length && projectStatus">
+    <span>{{projectStatus.benefits}}</span>
+    <span>Benefits</span>
+  </div>
+  <div class="chart" *ngIf="data.length; else message">
+    <nvd3 [options]="options" [data]="data"></nvd3>
+    <div class="title" *ngIf="meter && projectStatus">
+      <span>{{projectStatus.days_left}}/{{projectStatus.total_days}}</span>
+      <small>days left</small>
+    </div>
+  </div>
+  <ng-template #message>
+    <div class="message">
+      <span>No data to display, please configure a sprint</span>
+    </div>
+  </ng-template>
+</div>

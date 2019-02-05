@@ -1,8 +1,0 @@
-
-<div class="filter-container sort" (click)="onClickDropdown()">
-    <input type="text" placeholder="Sort By Client" [(ngModel)]="selectedValue" readonly>
-    <span><i class="fas fa-angle-down"></i></span>
-</div>
-<div class="dropdown" *ngIf="expandDropdown">
-  <span *ngFor="let option of options" (click)="onSelect(option)">{{option}}</span>
-</div>
