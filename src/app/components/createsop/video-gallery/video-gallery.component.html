@@ -20,7 +20,7 @@
             </div>
           </ng-container>
           <div class="file-loader">
-            <input type="file" name="" id="">
+            <input type="file" name="" id="" (change)="onFileSelected($event)">
           </div>
         </div>
       </div>
@@ -30,12 +30,12 @@
       <mat-grid-tile *ngFor="let content of data; let i=index" (click)="onThumbnailSelect(i, content)" [ngClass]="{'selected':selected==i}">
         <div class="grid-content-next">
           <div class="picture">
-            <img [src]="content.image" alt="">
+            <img [src]="content.thumbnail" alt="">
             <div class="picture-overlay">
               <div class="picture-overlay-btns" [ngSwitch]="type">
-                <button *ngSwitchCase="'VIDEO'"><i class="fas fa-play"></i><span>Play</span></button>
+                <button *ngSwitchCase="'VIDEO'" (click)="onPlayVideo(content, i)"><i class="fas fa-play"></i><span>Play</span></button>
                 <button *ngSwitchCase="'IMAGE'" (click)="onViewImage(i, content)"><i class="fas fa-play"></i><span>View</span></button>
-                <button><i class="far fa-trash-alt"></i><span>Delete</span></button>
+                <button><i class="far fa-trash-alt" (click)="onDeleteContent(content, i)"></i><span>Delete</span></button>
               </div>
             </div>
           </div>

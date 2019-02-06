@@ -107,7 +107,7 @@
       class="btn btn-flat-grey" 
       (click)="onCreate()" 
       [ngStyle]="{'width':'150px'}"
-      [appCanAccess]="{role:_reasonCode.role, permissionRequired:'Can add user stories', permissionList:_reasonCode.grantedPermission}"
+      *ngIf="enableView"
       >
         <img width="10px" height="10px" src="../../../assets/pics/plus.svg" alt="create user story"> Create New U/S
       </button>

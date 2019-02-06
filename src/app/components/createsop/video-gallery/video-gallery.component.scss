@@ -5,6 +5,19 @@
   overflow: auto;
   padding: 20px;
   height: 100%;
+
+  &::-webkit-scrollbar{
+    width: 7px;
+  }
+  &::-webkit-scrollbar-track {
+    background: rgb(105, 105, 105); 
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba($color: $main-blue, $alpha: 0.3);
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba($color: $main-blue, $alpha: 1.0);
+  }
 }
 
 mat-grid-tile {

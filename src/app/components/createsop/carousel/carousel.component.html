@@ -1,3 +1,12 @@
-<div class="carousel-container">
-  <img [src]="content.image" alt="" *ngFor="let content of data; let i=index" [ngStyle]="{'transform':'translateX(-' + currentImage * 100 + '%)'}">
+<div class="carousel-container" #carouselContainer>
+  <img [src]="content.thumbnail" alt="" *ngFor="let content of data; let i=index" [ngStyle]="{'transform':'translateX(-' + currentImage * 100 + '%)'}">
+  <!-- <div class="image-content" 
+  *ngFor="let content of data" 
+  [ngStyle]="
+  {
+    'background-image':'url('+content.image+')', 
+    'transform':'translateX(-' + currentImage * 100 + '%)'
+  }"> -->
+
+  <!-- </div> -->
 </div>

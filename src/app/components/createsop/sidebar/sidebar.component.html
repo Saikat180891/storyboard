@@ -1,21 +1,25 @@
 <div class="sidebar-body">
+  <div class="close-btn" (click)="onCloseSideBar()">
+    <i class="fas fa-times"></i>
+  </div>
   <div class="tab-group">
-    <mat-tab-group selectedIndex="1">
+    <mat-tab-group selectedIndex="0" (selectedTabChange)="onTabChange($event.index)">
       <mat-tab label="Videos">
         <div class="tab">
           <div class="video-player">
-            <video #videoPlayer (timeupdate)="onTimeUpdate($event)">
-              <source src="../../../../assets/pics/video-test.mp4" type="video/mp4">
+            <video #videoPlayer (timeupdate)="onTimeUpdate($event)" [src]="playThisVideo" crossOrigin="Anonymous" (durationchange)="onCanPlay($event)">
+              <!-- <source src="../../../../assets/pics/video-test.mp4" type="video/mp4"> -->
+              <!-- <source [src]="playThisVideo" type="video/mp4"> -->
               Your browser does not support HTML5 video.
             </video>
-            <div class="controls">
+            <div class="controls" *ngIf="true">
               <div class="slider">
                 <progress-bar [progressChange]="progress" (changeCurrentTime)="onChangeCurrentTime($event)"></progress-bar>
               </div>
               <div class="player-start-buttons">
-                <div class="video-length">
+                <span class="video-length">
                   {{currentTime}} / {{duration}}
-                </div>
+                </span>
               </div>
               <div class="player-center-buttons">
                 <div class="rewind" (click)="onRewind()"><i class="fas fa-backward"></i></div>
@@ -40,23 +44,27 @@
                     <input class="volume-slider-handle" type="range" name="vol" id="volume" min="0" max="100" #volumeController (change)="onDragVolumeHandle(volumeController.value)">
                   </div>
                 </div>
-
-                <div class="snapshot"><i class="fas fa-camera"></i></div>
+                <div class="snapshot" (click)="onTakeSnapshot()">
+                  <i class="fas fa-camera"></i>
+                </div>
               </div>
             </div>
           </div>
           <div class="application-name">
-            <span>Video name application</span>
+            <a [download]="createdImage" [href]="createdImage">Download here</a>
+            <!-- <span>Video name application</span> -->
           </div>
           <div class="video-gellery">
-            <app-gallery [data]="carouselImages" [type]="'VIDEO'"></app-gallery>
+            <app-gallery [data]="videoGalleryContent" [type]="'VIDEO'" (optionSelected)="onSelectedVideo($event)" (addNewFile)="onVideoUpload($event)"></app-gallery>
           </div>
         </div>
       </mat-tab>
+
+
       <mat-tab label="Images">
         <div class="tab">
           <div class="slide-show">
-            <app-carousel [data]="carouselImages" [currentImage]="currentImage"></app-carousel>
+            <app-carousel [data]="imageGalleryContent" [currentImage]="currentImage"></app-carousel>
             <div class="carousel-position carousel-left" (click)="onCarouselMoveRight()">
               <i class="fas fa-chevron-left"></i>
             </div>
@@ -71,10 +79,22 @@
             <span>Video name application</span>
           </div>
           <div class="video-gellery">
-            <app-gallery [data]="carouselImages" [type]="'IMAGE'" (optionSelected)="onselectRequestedThumbnail($event)"></app-gallery>
+            <app-gallery [data]="imageGalleryContent" [type]="'IMAGE'" (optionSelected)="onselectRequestedThumbnail($event)"></app-gallery>
           </div>
         </div>
       </mat-tab>
     </mat-tab-group>
   </div>
 </div>
+
+<div class="upload-progress" *ngIf="false">
+  <span>Please wait, uploading video (40%)</span>
+  <div class="progress">
+    <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+  </div>
+  <div class="upload-cancel">
+    Cancel
+  </div>
+</div>
+
+<canvas id="snapshot-holder" #canvas crossOrigin="Anonymous"></canvas>

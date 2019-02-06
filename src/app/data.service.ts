@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpHeaders } from '@angular/common/http';
 // import { Observable, of } from 'rxjs';
 import {environment} from '../environments/environment';
-import { HttpHeaders} from '@angular/common/http';
 import { ResponseContentType } from '@angular/http'
 import { CookieService } from 'ngx-cookie-service';
+import { Observable } from 'rxjs';
 
 export const httpOptions = {
   headers: new HttpHeaders({
@@ -143,6 +143,11 @@ export class DataService {
       id = '';
     }
     return this.fetchData(`/user/group/permissions.json?proj_id=${id}&page_no=${num}`);
+  }
+
+  uploadFile(endpoint:string, payload:any):Observable<any>{
+    const req = new HttpRequest('POST', this.apiUrl + endpoint, payload, {reportProgress:true, headers: httpOptions.headers});
+    return this.http.request(req);
   }
 
 }

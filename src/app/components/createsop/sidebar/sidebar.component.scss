@@ -5,14 +5,33 @@ button{
   top: 100px;
   right: 0;
 }
-
+canvas#snapshot-holder{
+  // display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: none;
+}
 .sidebar-body{
   position: absolute;
-  top: 0;
+  top: 7px;
   right: 0;
   // background-color: #252525;
   height: 100%;
   width: calc(100% - 40px);
+
+  .close-btn{
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 30px;
+    color: #C1C1C1;
+    cursor: pointer;
+    width: auto;
+    height: auto;
+    z-index: 1000000;
+  }
 }
 .tab{
   display: flex;
@@ -26,7 +45,7 @@ button{
   .controls{
     position: absolute;
     height: 50px;
-    bottom: 5px;
+    bottom: 4px;
     left: 0;
     width: 100%;
     background: linear-gradient( rgba($color: #C1C1C1, $alpha: 0.7), rgba($color: #040404, $alpha: 0.7));
@@ -144,8 +163,11 @@ button{
       display: flex;
       align-items: center;
       padding-left: 20px;
-      width: 150px;
       color: #ffffff;
+
+      span.video-length{
+        width: auto;
+      }
     }
   }
 
@@ -193,8 +215,8 @@ button{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba($color: #040404, $alpha: 0.6);
-    color: #C1C1C1;
+    background-color: rgba($color: #ffffff, $alpha: 0.6);
+    color: #000000;
     font-size: 20px;
     cursor: pointer;
   }
@@ -225,4 +247,63 @@ button{
 
 .slide-show:hover .carousel-overlay{
   height: 40px;
+}
+
+.tab-group::ng-deep .mat-tab-label, .mat-tab-link{
+  color: #ffffff;
+}
+
+.tab-group::ng-deep .mat-tab-header, .mat-tab-nav-bar{
+  border-bottom: 1px solid #878787;
+}
+
+.tab-group::ng-deep .mat-tab-label-active{
+  color: $main-blue !important;
+}
+.tab-group::ng-deep .mat-tab-label .mat-tab-label-content{
+  font-size: 16px;
+}
+.upload-progress{
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  align-items: center;
+  width: 30vw;
+  height: 100px;
+  background-color: #040404;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  box-shadow: 0 0 20px rgba($color: #040404, $alpha: 0.7);
+  z-index: 100;
+
+  .progress{
+    width: 20vw;
+
+    ::ng-deep .mat-progress-bar-fill::after{
+      background-color: $main-blue;
+    }
+
+    ::ng-deep .mat-progress-bar-buffer{
+      background-color: rgb(87, 87, 87);
+    }
+  }
+  .upload-cancel{
+    width: 5vw;
+    padding: 10px;
+    background-color: rgb(87, 87, 87);
+    border-radius: 5px;
+    color: #ffffff;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  span{
+    position: absolute;
+    top: 18px;
+    left: 21px;
+    color: $main-blue;
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-carousel',
@@ -6,6 +6,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
   styleUrls: ['./carousel.component.scss']
 })
 export class CarouselComponent implements OnInit, OnChanges {
+  @ViewChild('carouselContainer') carouselContainer:ElementRef
   @Input('data') data:any;
   @Input('currentImage') currentImage:any;
 
@@ -16,6 +17,7 @@ export class CarouselComponent implements OnInit, OnChanges {
   
   ngOnChanges(){
     console.log(this.currentImage)
+    console.log(this.carouselContainer);
 
   }
 
