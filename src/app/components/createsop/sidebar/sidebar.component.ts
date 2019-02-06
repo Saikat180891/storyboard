@@ -2,12 +2,13 @@ import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef, OnChang
 import {UicontrolService} from '../services/uicontrol.service';
 import {SidebarService} from '../services/sidebar/sidebar.service';
 import {PageService} from '../services/page/page.service';
+import {HttpEventType, HttpResponse} from '@angular/common/http';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss', './volume-slider-handle.scss']
 })
-export class SidebarComponent implements OnInit, OnChanges {
+export class SidebarComponent implements OnInit {
   @Output('close') close = new EventEmitter<any>();
   @ViewChild('videoPlayer') videoPlayer:ElementRef;
   @ViewChild('canvas') canvas:ElementRef;
@@ -21,8 +22,11 @@ export class SidebarComponent implements OnInit, OnChanges {
   playThisVideo:string = '';
   createdImage:any; //optional to test if image is created or not
   content:any;
-  videoGalleryContent:any = [];
-  imageGalleryContent:any = [];
+  videoGalleryContent = [];
+  imageGalleryContent = [];
+  uploadProgress:boolean = false;
+  uploadProgressPercentage:any;
+  uploadProgressText:any;
 
   constructor(private __uic:UicontrolService, private __sidebarService:SidebarService, private __page:PageService) { }
 
@@ -32,10 +36,6 @@ export class SidebarComponent implements OnInit, OnChanges {
     this.fetchAllSnapshotsAlreadyTaken();
   }
   
-  ngOnChanges(){
-    // this.playThisVideo = this.content.content.video_url;
-    // console.log(this.playThisVideo)
-  }
 
   fetchAllVideosAlreadyUploaded(){
     this.__sidebarService.getAllUploadedVideo(`/sop/${this.__page.projectId}/video.json`).subscribe(res=>{
@@ -49,7 +49,7 @@ export class SidebarComponent implements OnInit, OnChanges {
     err=>{
       console.log("Error occured while fetching videos", err);
     },
-    ()=>{}
+    ()=>{this.progress = this.videoPlayer.nativeElement.currentTime = 0;}
     );
   }
 
@@ -86,6 +86,14 @@ export class SidebarComponent implements OnInit, OnChanges {
 
   //for video player
   onPlayPause(){
+    let EventSource = window['EventSource'];
+    let fx = new EventSource(this.playThisVideo);
+    fx.onmessage = function (evt){
+      console.log(evt.data);
+    }
+    // this.__sidebarService.videoStreaming(this.playThisVideo).subscribe(res=>{
+    //   console.log(res)
+    // })
     if(this.videoPlayer.nativeElement.paused){
       this.videoPlayer.nativeElement.play();
       this.isPlaying = true;
@@ -171,38 +179,54 @@ export class SidebarComponent implements OnInit, OnChanges {
 
   onSelectedVideo($event:any){
     this.videoPlayer.nativeElement.pause();
-    this.isPlaying = false;
+    this.isPlaying =  false;
     this.playThisVideo = $event.content.video_url;
     this.__page.videoId = $event.content.id;
     this.progress = this.videoPlayer.nativeElement.currentTime = 0;
     this.duration = this.convertSecondsToMinutes(0);
     this.currentTime = this.convertSecondsToMinutes(0);
-    console.log($event, this.playThisVideo);
   }
 
   onTimeUpdate($event){
     this.duration = this.convertSecondsToMinutes(this.videoPlayer.nativeElement.duration);
     this.currentTime = this.convertSecondsToMinutes(this.videoPlayer.nativeElement.currentTime);
     this.progress = (this.videoPlayer.nativeElement.currentTime / this.videoPlayer.nativeElement.duration) * 100;
-    // console.log(this.duration, this.currentTime, this.videoPlayer.nativeElement.currentTime)
+    if(this.videoPlayer.nativeElement.currentTime == this.videoPlayer.nativeElement.duration){
+      this.videoPlayer.nativeElement.pause();
+      this.isPlaying = false;
+    }
   }
 
-  convertSecondsToMinutes(sec:number){
-    var measuredTime = new Date(null);
-    measuredTime.setSeconds(sec);
-    var MHSTime = measuredTime.toISOString().substr(11, 8);
-    return MHSTime;
+  convertSecondsToMinutes(time:number){
+    // let secs = JSON.stringify(time);
+    // var measuredTime = new Date(null);
+    // measuredTime.setSeconds(Number(secs));
+    // var MHSTime = measuredTime.toISOString().substr(11, 8);
+    // return MHSTime;
+      var toHHMMSS = (secs) => {
+        var sec_num = parseInt(secs, 10)    
+        var hours   = Math.floor(sec_num / 3600) % 24
+        var minutes = Math.floor(sec_num / 60) % 60
+        var seconds = sec_num % 60    
+        return [hours,minutes,seconds]
+            .map(v => v < 10 ? "0" + v : v)
+            .filter((v,i) => v !== "00" || i > 0)
+            .join(":")
+    }
+
+    return toHHMMSS(time);
   }
 
   onChangeCurrentTime($event){
-    console.log($event)
     let actualTime = ($event / 100) * this.videoPlayer.nativeElement.duration;
-    console.log(actualTime);
-    this.videoPlayer.nativeElement.pause();
-    // this.videoPlayer.nativeElement.currentTime = Number(actualTime.toFixed(1));
-    // this.videoPlayer.nativeElement.currentTime = 10;
-    this.videoPlayer.nativeElement.play();
-    console.log(this.videoPlayer)
+    let bufferedStart = this.videoPlayer.nativeElement.buffered.start(0);
+    let bufferedEnd = this.videoPlayer.nativeElement.buffered.end(0);
+    // if(actualTime > bufferedEnd){
+    //   this.videoPlayer.nativeElement.currentTime = bufferedEnd;
+    // }else{
+      this.videoPlayer.nativeElement.currentTime = actualTime;
+    // }
+    console.log(actualTime, bufferedEnd, this.videoPlayer)
   }
 
   onTabChange(value:number){
@@ -211,17 +235,40 @@ export class SidebarComponent implements OnInit, OnChanges {
     }
   }
 
-  onCanPlay($event){
-    console.log($event)
-  }
-
   onVideoUpload($event){
     const apiEndpoint = `/sop/${this.__page.projectId}/video.json`;
     let videoData = new FormData();
     videoData.append('video', $event);
-    this.__sidebarService.sendVideo(apiEndpoint, videoData).subscribe(res=>{
+    this.__sidebarService.sendVideo(apiEndpoint, videoData).subscribe(event=>{
       this.fetchAllVideosAlreadyUploaded();
+      if (event.type === HttpEventType.UploadProgress) {
+        // This is an upload progress event. Compute and show the % done:
+        this.uploadProgress = true;
+        const percentDone = Math.round(100 * event.loaded / event.total);
+        this.uploadProgressPercentage = percentDone;
+        this.uploadProgressText = `File is ${percentDone}% uploaded.`;
+        console.log(`File is ${percentDone}% uploaded.`);
+      } else if (event instanceof HttpResponse) {
+        this.uploadProgressText = 'File is completely uploaded!';
+        console.log('File is completely uploaded!');
+      }
+    },
+    err=>{
+      console.log("Error while uploading video", err);
+    },
+    ()=>{
+      // setTimeout(()=>{
+        this.uploadProgress = false;
+      // }, 2000);
+    });
+  }
+
+  onDeleteVideo($event){
+    console.log($event)
+    const apiEndpoint = `/sop/video/${$event.content.id}.json`;
+    this.__sidebarService.deleteContent(apiEndpoint).subscribe(res=>{
       console.log(res);
+      this.videoGalleryContent.slice($event.index, 1);
     });
   }
 }

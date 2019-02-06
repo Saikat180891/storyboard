@@ -7,7 +7,7 @@
       <mat-tab label="Videos">
         <div class="tab">
           <div class="video-player">
-            <video #videoPlayer (timeupdate)="onTimeUpdate($event)" [src]="playThisVideo" crossOrigin="Anonymous" (durationchange)="onCanPlay($event)">
+            <video #videoPlayer (timeupdate)="onTimeUpdate($event)" [src]="playThisVideo" crossOrigin="Anonymous">
               <!-- <source src="../../../../assets/pics/video-test.mp4" type="video/mp4"> -->
               <!-- <source [src]="playThisVideo" type="video/mp4"> -->
               Your browser does not support HTML5 video.
@@ -51,11 +51,11 @@
             </div>
           </div>
           <div class="application-name">
-            <a [download]="createdImage" [href]="createdImage">Download here</a>
-            <!-- <span>Video name application</span> -->
+            <!-- <a [download]="createdImage" [href]="createdImage">Download here</a> -->
+            <span>Video name application</span>
           </div>
           <div class="video-gellery">
-            <app-gallery [data]="videoGalleryContent" [type]="'VIDEO'" (optionSelected)="onSelectedVideo($event)" (addNewFile)="onVideoUpload($event)"></app-gallery>
+            <app-gallery [data]="videoGalleryContent" [type]="'VIDEO'" (optionSelected)="onSelectedVideo($event)" (addNewFile)="onVideoUpload($event)" (deleteContent)="onDeleteVideo($event)"></app-gallery>
           </div>
         </div>
       </mat-tab>
@@ -87,10 +87,10 @@
   </div>
 </div>
 
-<div class="upload-progress" *ngIf="false">
-  <span>Please wait, uploading video (40%)</span>
+<div class="upload-progress" *ngIf="uploadProgress">
+  <span>{{uploadProgressText}}</span>
   <div class="progress">
-    <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+    <mat-progress-bar mode="determinate" [value]="uploadProgressPercentage"></mat-progress-bar>
   </div>
   <div class="upload-cancel">
     Cancel

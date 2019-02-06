@@ -41,4 +41,12 @@ export class SidebarService {
   getAllThumbnails(endpoint:string){
     return this.http.get(this.__api.apiUrl + endpoint, this.accessToken);
   }
+
+  videoStreaming(endpoint:string){
+    return this.http.get(endpoint, this.accessToken);
+  }
+
+  deleteContent(endpoint:string){
+    return this.http.delete(this.__api.apiUrl + endpoint, this.accessToken);
+  }
 }

@@ -11,6 +11,7 @@ export class VideoGalleryComponent implements OnInit, OnChanges {
   @Input('data') data:any;
   @Output('optionSelected') optionSelected = new EventEmitter<any>();
   @Output('addNewFile') addNewFile = new EventEmitter<any>();
+  @Output('deleteContent') deleteContent = new EventEmitter<any>();
 
   selected:number = -1;
 
@@ -43,6 +44,10 @@ export class VideoGalleryComponent implements OnInit, OnChanges {
 
   onPlayVideo(content:any, index:number){
     this.optionSelected.emit({index:index, content:content});
+  }
+
+  onDeleteContent(content, i){
+    this.deleteContent.emit({content: content, index:i});
   }
 
 }
