@@ -10,6 +10,8 @@ import {PreloaderService} from '../../shared/preloader/preloader.service';
 import {CardService} from '../card/card.service';
 import {ContainerComponent} from '../container/container.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {MatSelectModule} from '@angular/material/select';
+import { ConditionalExpr } from '@angular/compiler';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -37,11 +39,20 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
 
   arr = ["Saikat paul", "sujit", "Aadesh", "kanishka", "Manjit", "rakesh", "ayush", "arpit", "arijit", "venkat", "Bhavana", "manbir", "shankar"];
 
+  roles: string[] = ['SuperAdmin', 'Manager', 'Analyst'];
+  disableSelect:boolean = false;
+  // role = 'Super Admin';
   /**
    * This variables are used while creating a new card
    */
 
   createAssignees = [];
+
+  inviteEmail = "";
+  inviteFirstName = "";
+  inviteLastName = "";
+  inviteRole="";
+  inviteMessage="";
 
   /**
    * Validate SOP form
@@ -50,6 +61,18 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   validateClientName:boolean = false;
   validateChargeCode:boolean = false;
   validateSelectedDate:boolean = false;
+
+  /**
+   * Validate Invite New User Form
+   */
+
+  validateInviteEmail: boolean = false;
+  validateFirstName: boolean = false;
+  validateLastName: boolean = false;
+  validateRole: boolean = false;
+
+  selectedTabIndex: number = 0;
+  invitationSuccess: boolean = false;
 
   /**
    * These variables are used to display messages using string interpolation technique
@@ -151,8 +174,9 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   
   ngOnChanges(){
     console.log('current permissions granted', this.permissions)
+    
   }
-
+  
   ngAfterViewInit(){
   }
 
@@ -179,6 +203,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * @param option 
    */
   onSelect(option:any){
+    console.log(option);
     this.createdAssignees.unshift(option);
     this.newlyCreatedAssignees.push(option);
     console.log(this.createdAssignees, this.newlyCreatedAssignees);
@@ -199,6 +224,11 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    */
   preventPropagation(clickEvent){
     clickEvent.stopPropagation();
+  }
+
+  onSelectionChange(value, index){
+    this.newlyCreatedAssignees
+    console.log(this.newlyCreatedAssignees, value, index, this.createdAssignees)
   }
 
   /**
@@ -314,29 +344,27 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     return sum;
    }
 
+   onTabChange($event){
+     console.log($event.index);
+    if($event.index == 0){
+      this.selectedTabIndex = 0;
+    }else if($event.index == 1){
+      this.selectedTabIndex = 1;
+  }
+  }
+
   onCreateNew(){
     this.sopForm.value.due_date = this.formatDate(this.sopForm.value.due_date);
     let validationCheck = this.validateForm(this.sopForm.value);
     if(validationCheck == 0){
-      this.spinner.show();
       // console.log("the created sop form is ", this.sopForm.value);
       let formData = this.JSONtoFormData(this.sopForm.value);
       let sopId:number;
+      this.spinner.show();
       this._dataService.postData('/sop.json',  formData)
       .subscribe(
         //if response successfull
         (response)=> {
-          // if(response){
-          //   sopId = response["id"];
-          //   this._ContainerService.cardContents.push(
-          //     {
-          //       themeColor: this._ContainerService.colorPicker[this._ContainerService.getUniqueNumber()],
-          //       reasonCodes: 0,
-          //       ...response,
-          //       logo: response["image_url"]
-          //     }
-          //   );
-          // }
           this.__containerComponent.getListOfAllProjects();
           if(this.newlyCreatedAssignees.length > 0){
             this.newlyCreatedAssignees.forEach((ele, index, array)=>{
@@ -362,8 +390,15 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
             keys.forEach(key => {
               error += key+": "+err.error[key] +"\n";
             });
-
+            this.spinner.hide();
+            this.onOverlayClose();
             this.snackBar.open(error, "Failed", {duration: 2000});
+            this.spinner.hide();
+            this.onOverlayClose();
+        },
+        ()=>{
+          this.spinner.hide();
+          this.onOverlayClose();
         }
       );
     }
@@ -473,5 +508,21 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
         formData.append(fieldValue, json[fieldValue])
       }
       return formData;
+  }
+
+  onSendInvitation(){
+    console.log("Success");
+    console.log(this.inviteEmail+" "+this.inviteFirstName+" "+this.inviteLastName+" "+this.inviteRole);
+    this._dataService.postData('/invite_users/', {"first_name": this.inviteFirstName, "email": this.inviteEmail, 
+                                                  "last_name": this.inviteLastName, "role": this.inviteRole, "sop": this.sopForm.value.id}).subscribe(
+                                                    res=>{
+                                                      this.invitationSuccess = true;
+                                                      this.inviteMessage = res;
+                                                      console.log(this.inviteMessage);
+                                                    }, 
+                                                    (err)=>{
+                                                      this.inviteMessage = err;
+                                                    })
+    
   }
 }

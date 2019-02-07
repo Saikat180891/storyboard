@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpRequest, HttpHeaders } from '@angular/common/http';
 // import { Observable, of } from 'rxjs';
 import {environment} from '../environments/environment';
@@ -6,17 +6,16 @@ import { ResponseContentType } from '@angular/http'
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 
+
 export const httpOptions = {
-  headers: new HttpHeaders({
-        'X-CSRFToken': localStorage.getItem("csrftoken"),
-  })
+  headers: new HttpHeaders()
 };
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class DataService {
+export class DataService implements OnInit {
   lastNumber:number = 0;
   production:boolean = true;
   ID:number = 0;
@@ -38,41 +37,33 @@ export class DataService {
     ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Shravan'],
     ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Aadesh'],
     ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Praveen'],
-                        
+
   ]
   httpClient: any;
-  
 
-  private getUniqueNumber(){
-    this.lastNumber += 1;
-    if(this.lastNumber == 5){
-      this.lastNumber = 0;
-    }
-    return this.lastNumber;
+
+
+
+  constructor(private http: HttpClient, private cookie:CookieService) {  }
+
+  ngOnInit(){
+    this.getCSRFToken()
   }
-
-  private getID(){
-    this.ID += 1;
-    return this.ID; 
-  }
-
-  private firstZero(value){
-    let temp = value.toString().split("");
-    if(temp.length>1){
-      return value;
-    }else{
-      return 0 + "" + value;
-    }
-  }
-
-  constructor(private http: HttpClient) {  }
 
   getData(){
     return this.cardContent;
   }
-  
+
   getBackdropData(){
     return this.backdropData;
+  }
+
+  /**
+   * Get CSRF token from the cookie by using the cookie service class
+   */
+
+  getCSRFToken(){
+    return this.cookie.get("csrftoken");
   }
 
   addBackdropData(imagePath, assigneeName){
@@ -84,19 +75,19 @@ export class DataService {
     }else{
       return true;
     }
-    
+
   }
 
   removeBackdropData(id, item){
     console.log(id)
     let pos = this.cardContent.indexOf(id);
     console.log(pos)
-    
+
   }
 
   setCardContent(title, dueDate, chargeCode, logo){
     this.cardContent.push(
-      
+
     );
     return true;
   }
@@ -116,22 +107,30 @@ export class DataService {
   }
 
   postData(param, body){
-    return this.http.post<any>(this.apiUrl + param, body, {withCredentials: true, headers: httpOptions.headers});
+    return this.http.post<any>(this.apiUrl + param, body,
+      {withCredentials: true, headers: httpOptions.headers.set('X-CSRFToken', this.getCSRFToken())});
+  }
+
+  postLogin(param, body){
+    return this.http.post<any>(this.apiUrl + param, body, {withCredentials: true});
   }
 
   fetchFile(param){
-    return this.http.get(this.apiUrl + param, {responseType: 'blob', headers: new HttpHeaders().append('Content-Type', 'application/json')});
+    return this.http.get(this.apiUrl + param, {responseType: 'blob', headers: new HttpHeaders().set('Content-Type', 'application/json')});
   }
+
   postDataWithProgress (param, body){
     return this.http.post(this.apiUrl + param, body);
   }
 
   delete(param, id){
-    return this.http.delete(this.apiUrl + param + '/' + id,  {withCredentials: true, headers: httpOptions.headers});
+    return this.http.delete(this.apiUrl + param + '/' + id,
+    {withCredentials: true, headers: httpOptions.headers.set('X-CSRFToken', this.getCSRFToken())});
   }
 
   update(param, id, body){
-    return this.http.put(this.apiUrl + param + '/' + id, body,  {withCredentials: true, headers: httpOptions.headers});
+    return this.http.put(this.apiUrl + param + '/' + id, body,
+    {withCredentials: true, headers: httpOptions.headers.set('X-CSRFToken', this.getCSRFToken())});
   }
 
   getAToken(endpoint, authcode){

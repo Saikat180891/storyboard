@@ -11,6 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class AuthGaurdService implements CanActivate {
 
   userLoggedIn:boolean = false;
+  externalLoggedIn:boolean;
     
   constructor(
     private router: Router, 
@@ -28,15 +29,16 @@ export class AuthGaurdService implements CanActivate {
   }
 
   getToken(){
-    return localStorage.getItem("csrftoken") ? true : false;
+    return sessionStorage.getItem("status") ? true : false;
   }
 
   isUserLoggedIn(){
     this._api.fetchData('/checkLogin').subscribe(res=>{
       if(res["user_logged_in"] === true){
         this.router.navigate(['/projects']);
-        const value = this.cookieService.getAll();
-        localStorage.setItem("csrftoken", value["csrftoken"]);
+        sessionStorage.setItem('status', 'loggedIn');
+        // const value = this.cookieService.getAll();
+        // localStorage.setItem("csrftoken", value["csrftoken"]);
         if(res["name"]){
           localStorage.setItem("userName", res["name"]);
         }
@@ -48,5 +50,21 @@ export class AuthGaurdService implements CanActivate {
       }
     });
     return false;
+  }
+
+  externalUserLogin(login_details){
+    this._api.postLogin('/external_user_login/', login_details).subscribe(res=>{
+      if (res == "Login successful")
+      {
+        this.isUserLoggedIn();
+      // this.router.navigate(['/signup']);
+      }
+      else{
+        alert(res);
+      }
+    });
+  }
+  forgotPasswordUser(forgot_password_fields){
+    return this._api.postLogin('/reset_password/', forgot_password_fields)
   }
 }

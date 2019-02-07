@@ -166,23 +166,23 @@ ul{
 .color-red{
     background-color: red;
 }
-li{
-    height: 26px;
-    width: 100%;
-    margin-bottom: 5px;
-    position: relative;
-}
-li img{
-    height: 26px;
-    width: 26px;
-    margin-right: 20px;
-}
-li span{
-    line-height: 26px;
-    font-size: 14px;
-    color: #707070;
-    position: absolute;
-}
+// li{
+//     height: 26px;
+//     width: 100%;
+//     margin-bottom: 5px;
+//     position: relative;
+// }
+// li img{
+//     height: 26px;
+//     width: 26px;
+//     margin-right: 20px;
+// }
+// li span{
+//     line-height: 26px;
+//     font-size: 14px;
+//     color: #707070;
+//     position: absolute;
+// }
 .list-close{
     position: absolute;
     right: 0;
@@ -218,13 +218,7 @@ li span{
 .image-profile-pic{
     margin-right: 5px;
 }
-.upload button{
-    width: 100%;
-    height: 100px;
-    color: #BFBFBF;
-    border: 1px solid #D1D1D1;
-    overflow: hidden;
-}
+
 .preview-logo{
     width: 100px;
     height: 100px;
@@ -307,7 +301,3 @@ li span{
   transform-origin: 50% 50%;
   transform: rotate(90deg);
 }
-
-// .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background{
-//   background-color: rgba($color: #6CC24A, $alpha: 0.6);
-// }

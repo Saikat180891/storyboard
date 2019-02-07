@@ -1,12 +1,59 @@
 <!-- structure for the auth component goes here -->
 <div class="background-overlay">
+
   <div class="login-box">
     <div class="auth">
       <div class="logo"></div>
       <span>Storyboard</span>
-      <p>Inspiring/Motivational message lorem ipsum, dev eduva froevere</p>
-      <!-- <button class="button button--login" (click)="initiateLogin($event)"><i class="fab fa-windows"></i> Sign in with Microsoft account</button> -->
-      <a class="button button--login" href="{{baseUrl}}/login_ms"><i class="fab fa-windows"></i> Sign in with Microsoft account</a>
+
+      <div [ngSwitch]="login_form_page">
+
+        <form class="form">
+          <ng-container *ngSwitchCase="1">
+            <p>Inspiring/Motivational message lorem ipsum, dev eduva froevere</p>
+            <div class="form-group">
+              <label for="username">Email Id</label>
+              <input class="text-box" type="email" [(ngModel)]="email" id="email" [ngModelOptions]="{standalone: true}">
+
+            </div>
+            <div class="form-group">
+              <label for="newpassword">Password</label>
+              <input class="text-box" type="password" [(ngModel)]="password" id="newpassword" [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="form-group horizontal-flex">
+              <mat-checkbox>Remember Me</mat-checkbox>
+              <a class="right" (click)="initiateForgotPassword()">Forgot Password</a>
+            </div>
+            <div class="form-group">
+              <button class="button button--login" href="" (click)="externalUserLogin()">Login</button>
+              <button class="button button--login" href="" (click)="azureLogin()">
+                <i class="fab fa-windows"></i> Sign in with Microsoft account</button>
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="2">
+            <div class="form-group">
+              <label for="username">Email Id</label>
+              <input class="text-box" type="email" [(ngModel)]="email" id="email" [ngModelOptions]="{standalone: true}">
+
+            </div>
+            <div class="form-group">
+              <button class="button button--login" (click)="forgotPassword()">Continue</button>
+            </div>
+            <p>{{errorMessage}}</p>
+          </ng-container>
+          <ng-container *ngSwitchCase="3">
+
+            <p>Email has been sent to the provided email id</p>
+          </ng-container>
+          <ng-container *ngSwitchCase="4">
+
+            <p>Email Id not registered</p>
+          </ng-container>
+
+        </form>
+
+        <!-- <button class="button button--login" (click)="initiateLogin($event)"><i class="fab fa-windows"></i> Sign in with Microsoft account</button> -->
+      </div>
     </div>
+
   </div>
-</div>

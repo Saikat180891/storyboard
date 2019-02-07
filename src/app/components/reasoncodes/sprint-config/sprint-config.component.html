@@ -1,7 +1,7 @@
 <div class="modal">
   <mat-tab-group>
     <!------------------------------------------------------------Import Stories Tab ------------------------------------------------------------------------------------------>
-    <mat-tab label="Import Stories">
+    <mat-tab label="Import Stories" >
       <div class="modal-body" #rcContainer>
         <div class="grid-list">
           <mat-grid-list cols="12" rowHeight="50px">
@@ -18,8 +18,12 @@
           <span style="color: #2A7DE1; padding-left: 2px; cursor: pointer;" (click)="exportToExcel()">Existing project
             as Excel template</span>
         </span>
-        <br><br>
-        <span class="highlight"> Upload File</span>
+        <div class ="upload-file" [appCanAccess]="{
+          role:role, 
+          permissionRequired:'Can change sprint',
+          permissionList: permissions
+        }">
+        <span class="highlight" > Upload File</span>
         <div class="dialog-group padding-all upload height-auto">
           <div class="relative pointer">
             <button mat-stroked-button>
@@ -28,18 +32,24 @@
               <span *ngIf="file_name">{{file_name}}</span>
               <span><i class="fas fa-upload"></i>CHOOSE FILE</span>
             </button>
-            <input type="file" (change)="onFileSelected($event)" />
+            <input type="file" (change)="onFileSelected($event)"/>
           </div>
         </div>
         <small [ngClass]="{'validation-message':validateFileExtension===true}" *ngIf="validateFileExtension">
           <em>*Supported File Extension is .xlsx</em><br>
         </small>
-        <mat-checkbox color=primary (change)="oncheckBoxChange($event.checked)" [ngClass]="{'validation-message':validateCheckBox===true}"><span style="padding :2px;">Yes, I used
+        <mat-checkbox color=primary (change)="oncheckBoxChange($event.checked)" [ngClass]="{'validation-message':validateCheckBox===true}" >
+        <span style="padding :2px;">Yes, I used
             Soroco Excel Template</span></mat-checkbox><br>
         <small [ngClass]="{'validation-message':validateCheckBox===true}" *ngIf="validateCheckBox">
           <em>* Please Accept by checking the checkbox.</em></small><br>
+        </div>
         <div class="modal-footer footer-position">
-          <button class="btn btn-blue" (click)="onUpload()">Upload</button>
+          <button class="btn btn-blue" (click)="onUpload()" [appCanAccess]="{
+            role:role, 
+            permissionRequired:'Can change sprint',
+            permissionList: permissions
+          }">Upload</button>
           <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
         </div>
       </div>
