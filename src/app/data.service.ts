@@ -61,6 +61,7 @@ export class DataService implements OnInit {
   /**
    * Get CSRF token from the cookie by using the cookie service class
    */
+  
   getCSRFToken(){
     return this.cookie.get("csrftoken");
   }
@@ -108,6 +109,10 @@ export class DataService implements OnInit {
   postData(param, body){
     return this.http.post<any>(this.apiUrl + param, body, 
       {withCredentials: true, headers: httpOptions.headers.set('X-CSRFToken', this.getCSRFToken())});
+  }
+
+  postLogin(param, body){
+    return this.http.post<any>(this.apiUrl + param, body, {withCredentials: true});
   }
 
   fetchFile(param){

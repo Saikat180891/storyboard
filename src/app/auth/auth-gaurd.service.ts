@@ -11,6 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class AuthGaurdService implements CanActivate {
 
   userLoggedIn:boolean = false;
+  externalLoggedIn:boolean;
     
   constructor(
     private router: Router, 
@@ -49,5 +50,21 @@ export class AuthGaurdService implements CanActivate {
       }
     });
     return false;
+  }
+
+  externalUserLogin(login_details){
+    this._api.postLogin('/external_user_login/', login_details).subscribe(res=>{
+      if (res == "Login successful")
+      {
+        this.isUserLoggedIn();
+      // this.router.navigate(['/signup']);
+      }
+      else{
+        alert(res);
+      }
+    });
+  }
+  forgotPasswordUser(forgot_password_fields){
+    return this._api.postLogin('/reset_password/', forgot_password_fields)
   }
 }
