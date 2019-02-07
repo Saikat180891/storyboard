@@ -4,15 +4,15 @@ import {BehaviorSubject, Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class UicontrolService {
-  // private openSidebar = new BehaviorSubject<boolean>(false);
+  videoProgress = new BehaviorSubject<number>(0);
 
-  // getSidebarStatus():Observable<boolean>{
-  //   return this.openSidebar.asObservable();
-  // }
+  setProgress(progressPercent:number){
+    this.videoProgress.next(progressPercent);
+  }
 
-  // setSidebarStatus(status:boolean){
-  //   this.openSidebar.next(status);
-  // }
+  getProgress(){
+    return this.videoProgress;
+  }
 
   constructor() { }
 }

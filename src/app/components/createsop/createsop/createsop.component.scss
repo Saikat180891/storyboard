@@ -7,10 +7,17 @@
   position: fixed;
   top: 3.4375rem;
   right: 0;
-  background-color: red;
-
+  
   .flex-item{
     width: calc(50vw - 20px);
+  }
+  
+  .flex-item:first-child{
+    background-color: #F2F2F2;
+  }
+
+  .flex-item:last-child{
+    background-color: #ffffff;
   }
 }
 
@@ -19,7 +26,7 @@
   top: 3.4375rem;
   height: calc(100vh - 3.4375rem);
   width: 50vw;
-  background-color: #eeeeee;
+  background-color: #040404;
   // overflow: hidden;
   transform: translateX(calc(-100% - 50px));
   transition: transform 0.3s ease;
@@ -67,7 +74,7 @@
   
   .panel-body{
     width: calc(50vw - 20px);
-    height: 50px;
+    height: 60px;
     transition: all 0.3s ease;
 
     &__left{

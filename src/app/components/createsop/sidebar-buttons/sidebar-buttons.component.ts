@@ -18,7 +18,12 @@ export class SidebarButtonsComponent implements OnInit {
       logo: '',
       linkCaption: 'Media',
       function: 'media'
-    }
+    },
+    // {
+    //   logo: '',
+    //   linkCaption: 'Media',
+    //   function: 'media'
+    // }
   ]
 
   constructor() { }

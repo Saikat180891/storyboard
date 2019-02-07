@@ -93,7 +93,9 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
   selectedTabIndex:number = 0;
   activateStickybar:boolean = false;
   activateVirtualFilter:boolean = false;
-
+  role:string;
+  permissions:any;
+  enableView:boolean = true;
 
   addSprintPayload:SprintConfig = {
     sprint_name: '',
@@ -116,27 +118,6 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
 
   addSprint = [this.addSprintPayload];
 
-  // fruits = [
-  //   {name: 'Lemon'},
-  //   {name: 'Lime'},
-  //   {name: 'Apple'},
-  // ];
-
-  // todo = [
-  //   'Get to work',
-  //   'Pick up groceries',
-  //   'Go home',
-  //   'Fall asleep'
-  // ];
-
-  // done = [
-  //   'Get up',
-  //   'Brush teeth',
-  //   'Take a shower',
-  //   'Check e-mail',
-  //   'Walk dog'
-  // ];
-
   constructor(private route: ActivatedRoute,
               private _reasonCode: ReasonCodeService,
               private _containerService: ContainerService,
@@ -156,6 +137,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
         }
       });
     });
+    
     
    
     /**
@@ -177,23 +159,6 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
       }
     });
 
-    // fromEvent(window, 'scroll')
-    //     .subscribe(res => {
-    //       let position = res.target['scrollingElement'].scrollTop;
-    
-        // });
-      
-      // setTimeout(()=>{
-      //   fromEvent(this.userStoryContainer.nativeElement, 'scroll')
-      //   .subscribe(res => {
-      //     console.log(res["target"].scrollTop);
-      //     if(res["target"].scrollTop <= 0){
-      //       // this.fixToTop = false;
-      //       // console.log(this.fixToTop);
-      //     }
-      //   });
-      // }, 500);
-
   }
 
   ngOnChanges(){
@@ -210,16 +175,18 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
 
   getPermissionForEpicsPage(pageNumber:number, projectId:number){
     this._reasonCode.getPermission(pageNumber, projectId).subscribe(res=>{
-      this._reasonCode.role = res[0].name;
-      this._reasonCode.grantedPermission = res[0].permissions;
-      this._reasonCode.refresh(this._reasonCode.sopId);
+      this._reasonCode.role = this.role = res[0].name;
+      this._reasonCode.grantedPermission = this.permissions = res[0].permissions;
+      if('Can add user stories' in  this.permissions){
+        this.enableView = this.permissions['Can add user stories'];
+      }
       console.log("Permission for epics", this._reasonCode.role, this._reasonCode.grantedPermission);
     },
     err=>{
       console.log("Error while fetching permissions for epics page", err);
     },
     ()=>{
-
+      this._reasonCode.refresh(this._reasonCode.sopId);
       console.log(this._reasonCode.role, this._reasonCode.grantedPermission);
     });
   }
@@ -233,6 +200,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   benefitChartImage:string;
+
   onShowBenefits(){
     // if(environment.production){
     this.benefitChartImage = `${this.__api.apiUrl}/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png?q=${new Date().getTime()}`;

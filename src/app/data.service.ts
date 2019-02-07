@@ -1,10 +1,10 @@
 import { Injectable, OnInit } from '@angular/core';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpHeaders } from '@angular/common/http';
 // import { Observable, of } from 'rxjs';
 import {environment} from '../environments/environment';
-import { HttpHeaders} from '@angular/common/http';
 import { ResponseContentType } from '@angular/http'
 import { CookieService } from 'ngx-cookie-service';
+import { Observable } from 'rxjs';
 
 
 export const httpOptions = {
@@ -37,10 +37,10 @@ export class DataService implements OnInit {
     ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Shravan'],
     ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Aadesh'],
     ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Praveen'],
-                        
+
   ]
   httpClient: any;
-  
+
 
 
 
@@ -53,15 +53,15 @@ export class DataService implements OnInit {
   getData(){
     return this.cardContent;
   }
-  
+
   getBackdropData(){
     return this.backdropData;
   }
-  
+
   /**
    * Get CSRF token from the cookie by using the cookie service class
    */
-  
+
   getCSRFToken(){
     return this.cookie.get("csrftoken");
   }
@@ -75,19 +75,19 @@ export class DataService implements OnInit {
     }else{
       return true;
     }
-    
+
   }
 
   removeBackdropData(id, item){
     console.log(id)
     let pos = this.cardContent.indexOf(id);
     console.log(pos)
-    
+
   }
 
   setCardContent(title, dueDate, chargeCode, logo){
     this.cardContent.push(
-      
+
     );
     return true;
   }
@@ -107,7 +107,7 @@ export class DataService implements OnInit {
   }
 
   postData(param, body){
-    return this.http.post<any>(this.apiUrl + param, body, 
+    return this.http.post<any>(this.apiUrl + param, body,
       {withCredentials: true, headers: httpOptions.headers.set('X-CSRFToken', this.getCSRFToken())});
   }
 
@@ -124,12 +124,12 @@ export class DataService implements OnInit {
   }
 
   delete(param, id){
-    return this.http.delete(this.apiUrl + param + '/' + id, 
+    return this.http.delete(this.apiUrl + param + '/' + id,
     {withCredentials: true, headers: httpOptions.headers.set('X-CSRFToken', this.getCSRFToken())});
   }
 
   update(param, id, body){
-    return this.http.put(this.apiUrl + param + '/' + id, body, 
+    return this.http.put(this.apiUrl + param + '/' + id, body,
     {withCredentials: true, headers: httpOptions.headers.set('X-CSRFToken', this.getCSRFToken())});
   }
 
@@ -142,6 +142,11 @@ export class DataService implements OnInit {
       id = '';
     }
     return this.fetchData(`/user/group/permissions.json?proj_id=${id}&page_no=${num}`);
+  }
+
+  uploadFile(endpoint:string, payload:any):Observable<any>{
+    const req = new HttpRequest('POST', this.apiUrl + endpoint, payload, {reportProgress:true, headers: httpOptions.headers});
+    return this.http.request(req);
   }
 
 }
