@@ -19,7 +19,44 @@ export class AuthComponent {
     private authService: AuthGaurdService
   ) { }
 
+  email: string;
+  password: string;
+  login_form_page: number = 1;
+  errorMessage: string = "";
   ngOnInit() {
     this.authService.isUserLoggedIn();
   }
+  
+  externalUserLogin()
+  {
+    let login_details = {'email': this.email, 'password': this.password};
+    console.log("Login Details", login_details);
+    this.authService.externalUserLogin(login_details);
+  }
+  azureLogin(){
+    window.location.href= this.baseUrl+'/login_ms';
+  }
+
+  initiateForgotPassword()
+  {
+    this.login_form_page = 2;
+  }
+  
+forgotPassword(){
+  let forgot_password_fields = {'email': this.email}
+  if (this.email){
+    this.errorMessage="";
+    this.authService.forgotPasswordUser(forgot_password_fields).subscribe(res=>{
+      if(res == "Password Reset Email Sent"){
+        this.login_form_page = 3;
+      }
+      else{
+        this.login_form_page = 4;
+      }
+    })
+  }
+  else{
+    this.errorMessage = "Enter the email ID";
+  }
+}
 }

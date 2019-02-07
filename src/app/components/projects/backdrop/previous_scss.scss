@@ -1,5 +1,5 @@
 .autocomplete{
-    position: fixed;
+    position: absolute;
     display: block;
     max-height: 250px;
     overflow-y: auto;
@@ -20,12 +20,8 @@
     background-color: #E4E4E4;
     cursor: pointer;
 }
-.input-box{
-    width: 100%;
-}
 .input-box input[type="text"]{
     height: 35px;
-    width: 100%;
     border-radius: 2px;
     background-color: #fff;
     outline: none;
@@ -34,6 +30,7 @@
     border: 1px solid #D1D1D1;
     font-weight: 500;
     position: relative;
+    width: 100%;
 }
 
 .input-box input[type="text"].validators{
@@ -69,7 +66,6 @@
   // height: 45px;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
-  overflow: auto;
 }
 .dialog-group-2{
   display: flex;
@@ -89,7 +85,7 @@
 }
 .datepicker{
   position: absolute;
-  top: 157px;
+  top: 190px;
   left: 16.5rem;
 }
 .height-max::-webkit-scrollbar {
@@ -98,7 +94,7 @@
 ul{
     list-style: none;
     margin: 0;
-    padding: 2px 5px 2px 0;
+    padding: 0;
 }
 .color-red{
     background-color: red;
@@ -107,13 +103,11 @@ ul{
 li{
     height: 50px;
     width: 100%;
-    margin: 2px;
-    box-shadow: 0 0 2px rgba($color: #000000, $alpha: 0.3);
+    margin-bottom: 5px;
     
     .horizontal-flex{
         position: relative;
-        // display: flex;
-        // align-items: center;
+        display: flex;
 
         img{
             height: 26px;
@@ -131,7 +125,7 @@ li{
         .select-role{
             width: 150px;
             height: 50px;
-            position: relative;
+            position: absolute;
             right: 40px;
             top: 0;
         }
@@ -160,131 +154,4 @@ li{
     }
 
     
-}
-.horizontal-flex{
-    display: flex;
-    justify-content: space-between;
-}
-.relative{
-    position: relative;
-}
-.pointer{
-    cursor: pointer !important;
-    overflow: hidden;
-    top: 10px;
-}
-.emblem{
-    width: 250px;
-    height: 100px;
-    overflow: hidden;
-    margin-right: 15px;
-}
-.vertical-flex{
-    width: 80%;
-}
-.assignee-container{
-    height: 100%;
-}
-.create-container-tabs{
-    margin-left: 15px;
-    margin-right: 17px;
-}
-.assignee-list{
-    height: 150px;
-}
-.margin-top-10{
-    margin-top: 10px;
-}
-// #first_name{
-//     width: 47%;
-//     margin-right: 6%;
-// }
-
-.select-role-invite{
-    width: 150px;
-    margin-top: 10px;
-    margin-left: 10px;
-}
-.send-invite{
-    margin-left: 160px;
-    width: 160px
-}
-.first-name{
-  width: 225px;
-}
-
-.last-name{
-  width: 225px;
-}
-.grey-background{
-    // background: #eee;
-}
-.invitation-success{
-    padding-top: 40px;
-    color: rgb(141, 169, 173);
-    position: absolute;
-    left: 18%;
-    font-size:20px;
-}
-.success_container{
-    width: 200px;
-    height: 100px;
-}
-.invite-text{
-    font-size: 14px;
-    left: 2%;
-    position: relative;
-}
-.delete{
-    color: #2A7DE1;
-    cursor: pointer;
-  }
-// #last
-.tab-wrapper{
-    position: absolute;
-    width: 100%;
-    height: 64%;
-    background-color: #eee;
-    bottom: 0;
-    left: 0;
-}
-.tab-footer{
-    position: relative;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    button{
-        margin-bottom: 20px;
-    }
-}
-
-.header-banner{
-    color: #2A7DE1;
-
-    .dialog-header{
-
-        span:last-child{
-            color: #707070;
-        }
-    }
-}
-.top-input-width{
-    width: 350px;
-}
-.upload button{
-    width: 100%;
-    height: 90px;
-    color: #BFBFBF;
-    background-color: #fff;
-    border: 1px solid #D1D1D1;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
 }

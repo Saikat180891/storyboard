@@ -72,6 +72,8 @@ import {AuthorizationService} from './services/authorization/authorization.servi
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SignupusersComponent } from './authentication/signupusers/signupusers.component';
 // import { ScrollbarComponent } from './services/scrollbarService/scrollbar/scrollbar.component';
+import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
+import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 
 const routes = [
   {
@@ -86,6 +88,10 @@ const routes = [
       {
         path: 'signup',
         component: SignupusersComponent
+      },
+      {
+        path: 'resetPassword',
+        component: ResetPasswordComponent
       },
       {
         path: 'projects', 
@@ -141,6 +147,7 @@ const routes = [
     PermissionsDirective,
     DashboardComponent,
     SignupusersComponent,
+    ResetPasswordComponent,
     // ScrollbarComponent,
   ],
 
@@ -193,6 +200,7 @@ const routes = [
     //   navigateToLoginRequestUrl: true,
     //   cacheLocation: 'localStorage'
     // }),
+    PasswordStrengthMeterModule,
   ],
   providers: [
     DataService, 
