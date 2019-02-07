@@ -79,7 +79,7 @@
             <span>Video name application</span>
           </div>
           <div class="video-gellery">
-            <app-gallery [data]="imageGalleryContent" [type]="'IMAGE'" (optionSelected)="onselectRequestedThumbnail($event)"></app-gallery>
+            <app-gallery [data]="imageGalleryContent" [type]="'IMAGE'" (optionSelected)="onselectRequestedThumbnail($event)" (deleteContent)="onDeleteImage($event)"></app-gallery>
           </div>
         </div>
       </mat-tab>
@@ -92,7 +92,7 @@
   <div class="progress">
     <mat-progress-bar mode="determinate" [value]="uploadProgressPercentage"></mat-progress-bar>
   </div>
-  <div class="upload-cancel">
+  <div class="upload-cancel" (click)="onCancelVideoUpload()">
     Cancel
   </div>
 </div>

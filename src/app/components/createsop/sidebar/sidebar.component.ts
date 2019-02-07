@@ -27,6 +27,7 @@ export class SidebarComponent implements OnInit {
   uploadProgress:boolean = false;
   uploadProgressPercentage:any;
   uploadProgressText:any;
+  videoUpload:any;
 
   constructor(private __uic:UicontrolService, private __sidebarService:SidebarService, private __page:PageService) { }
 
@@ -58,7 +59,7 @@ export class SidebarComponent implements OnInit {
       res.forEach(element => {
         element['thumbnail'] = element['image_url'];
       });
-      this.imageGalleryContent = res;
+      this.__page.imageGalleryContent = this.imageGalleryContent = res;
       // console.log(res);
     });
   }
@@ -239,8 +240,7 @@ export class SidebarComponent implements OnInit {
     const apiEndpoint = `/sop/${this.__page.projectId}/video.json`;
     let videoData = new FormData();
     videoData.append('video', $event);
-    this.__sidebarService.sendVideo(apiEndpoint, videoData).subscribe(event=>{
-      this.fetchAllVideosAlreadyUploaded();
+    this.videoUpload = this.__sidebarService.sendVideo(apiEndpoint, videoData).subscribe(event=>{
       if (event.type === HttpEventType.UploadProgress) {
         // This is an upload progress event. Compute and show the % done:
         this.uploadProgress = true;
@@ -257,18 +257,36 @@ export class SidebarComponent implements OnInit {
       console.log("Error while uploading video", err);
     },
     ()=>{
-      // setTimeout(()=>{
-        this.uploadProgress = false;
-      // }, 2000);
+      this.fetchAllVideosAlreadyUploaded();
+      this.uploadProgress = false;
     });
   }
 
   onDeleteVideo($event){
-    console.log($event)
+    console.log($event);
     const apiEndpoint = `/sop/video/${$event.content.id}.json`;
     this.__sidebarService.deleteContent(apiEndpoint).subscribe(res=>{
-      console.log(res);
-      this.videoGalleryContent.slice($event.index, 1);
+      this.videoGalleryContent.splice($event.index, 1);
+    },
+    err=>{
+      console.log("Error while deleteing video", err);
+    },
+    ()=>{
+      if($event.index - 1 != -1 && $event.index != this.videoGalleryContent.length -1){
+        this.playThisVideo = this.videoGalleryContent[$event.index - 1].video_url;
+      }
     });
+  }
+
+  onCancelVideoUpload(){
+    // this.videoUpload.unsubscribe();
+  }
+
+  onDeleteImage($event){
+    const apiEndpoint = `/sop/image/${$event.content.id}.json`;
+    this.__sidebarService.deleteContent(apiEndpoint).subscribe(res=>{
+      this.imageGalleryContent.splice($event.index, 1);
+      this.__page.imageGalleryContent.splice($event.index, 1);
+    })
   }
 }

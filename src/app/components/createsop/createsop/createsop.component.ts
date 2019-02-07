@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterContentChecked } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {UicontrolService} from '../services/uicontrol.service';
 import {PageService} from '../services/page/page.service';
@@ -7,10 +7,10 @@ import {PageService} from '../services/page/page.service';
   templateUrl: './createsop.component.html',
   styleUrls: ['./createsop.component.scss']
 })
-export class CreatesopComponent implements OnInit, OnChanges {
+export class CreatesopComponent implements OnInit, AfterContentChecked {
   openSidebar:any;
   toggleRecentSnapshot:boolean = false;
-
+  imageGalleryContent = [];
   constructor(
     private routes:ActivatedRoute, 
     private __uic:UicontrolService,
@@ -22,10 +22,10 @@ export class CreatesopComponent implements OnInit, OnChanges {
       this.__page.projectId = res.id;
       this.__page.userStoryId = res.userStoryId;
     });
-    console.log(this.routes)
   }
   
-  ngOnChanges(){
+  ngAfterContentChecked(){
+    this.imageGalleryContent = this.__page.imageGalleryContent;
   }
 
 

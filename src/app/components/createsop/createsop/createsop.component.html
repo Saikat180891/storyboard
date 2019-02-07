@@ -9,7 +9,7 @@
 
 <div class="panel">
   <div class="panel-body panel-body__left" [ngClass]="{'panel-body-active':toggleRecentSnapshot}">
-    <recent-screen-shots (open)="onOpenRecentScreenshot($event)"></recent-screen-shots>
+    <recent-screen-shots (open)="onOpenRecentScreenshot($event)" [data]="imageGalleryContent"></recent-screen-shots>
   </div>
   <div class="panel-body panel-body__right">
     <operations-bar></operations-bar>
