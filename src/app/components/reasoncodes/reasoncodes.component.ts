@@ -201,7 +201,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
 
   benefitChartImage:string;
 
-  onShowBenefits(){
+  onShowBenefits(event){
     // if(environment.production){
     this.benefitChartImage = `${this.__api.apiUrl}/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png?q=${new Date().getTime()}`;
     // }else{

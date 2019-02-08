@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input, ViewChild, ElementRef, AfterViewChecked, OnChanges  } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, ViewChild, ElementRef, AfterViewChecked, OnChanges, EventEmitter, Output  } from '@angular/core';
 import {ReasonCodeService} from '../reason-code.service';
 import {fromEvent} from 'rxjs';
 
@@ -19,6 +19,8 @@ export class ChartsComponent implements OnInit, AfterViewChecked, OnChanges {
   @Input('meter') meter:boolean;
   @Input('projectStatus') projectStatus;
   @Input('extras') extras:boolean;
+  @Input('ifButtonRequired') ifButtonRequired:boolean = false;
+  @Output('onClick') onClick = new EventEmitter<any>();
   selectedSprint;
 
   @ViewChild('dimensionController') dimensionController: ElementRef;
@@ -39,6 +41,10 @@ export class ChartsComponent implements OnInit, AfterViewChecked, OnChanges {
 
   ngOnChanges(){
     
+  }
+
+  onButtonClick(){
+    this.onClick.emit(true);
   }
   
   ngOnInit() {

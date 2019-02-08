@@ -35,7 +35,7 @@
               <div class="picture-overlay-btns" [ngSwitch]="type">
                 <button *ngSwitchCase="'VIDEO'" (click)="onPlayVideo(content, i)"><i class="fas fa-play"></i><span>Play</span></button>
                 <button *ngSwitchCase="'IMAGE'" (click)="onViewImage(i, content)"><i class="fas fa-play"></i><span>View</span></button>
-                <button><i class="far fa-trash-alt" (click)="onDeleteContent(content, i)"></i><span>Delete</span></button>
+                <button><i class="far fa-trash-alt" (click)="onDeleteContent(content, i, type)"></i><span>Delete</span></button>
               </div>
             </div>
           </div>
