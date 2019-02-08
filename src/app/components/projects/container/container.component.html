@@ -8,7 +8,7 @@
             <div class="row">
               <ng-container>
                 <div class="grid-item">
-                  <app-card [cardData]="{id:0}" (openSopBox)="onCreateProject($event)"></app-card>
+                  <app-card [cardData]="{id:0}" (openCreateProject)="onCreateProject($event)"></app-card>
                 </div>
               </ng-container>
               <div class="grid-item" *ngFor="let cardData of _ContainerService.cardContents">
@@ -49,6 +49,6 @@
 
 <app-backdrop [permissions]="permissionsGrantedForBackdrop"></app-backdrop>
 
-<div class="overlay">
-  <app-create-sop></app-create-sop>
+<div class="overlay" *ngIf="openCreateProjectDialogBox">
+  <app-create-sop (close)="openCreateProjectDialogBox=false"></app-create-sop>
 </div>

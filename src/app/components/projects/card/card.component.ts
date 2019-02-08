@@ -27,7 +27,7 @@ export class CardComponent implements OnInit, OnChanges{
   @Input() cardData;
   @Output('deleteSop')  deleteSop = new EventEmitter();
   @Output('grantedPermissions') grantedPermissions = new EventEmitter();
-  @Output('openSopBox') openSopBox = new EventEmitter();
+  @Output('openCreateProject') openCreateProject = new EventEmitter();
 
   rippleColor = 'rbga(0,0,0,0.2)';
   localData;
@@ -59,7 +59,7 @@ export class CardComponent implements OnInit, OnChanges{
    }
 
   onCreateSOP(){
-    this.openSopBox.emit({open:'create', status:true});
+    this.openCreateProject.emit(true);
     // this._UIcontrolerService.setOverlay(true);
     // this._UIcontrolerService.overlayHeaderAssigner(this.createSOP);
   }

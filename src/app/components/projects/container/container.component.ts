@@ -18,6 +18,8 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
   userPermissions = [];
   activateSpinner:boolean = true;
 
+  openCreateProjectDialogBox:boolean = false;
+
   permissionsGrantedForBackdrop:any;
   
   constructor(
@@ -130,8 +132,6 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
   }
   
   onCreateProject($event){
-    if($event.open === 'create' && $event.status == true){
-      console.log("ok");
-    }
+    this.openCreateProjectDialogBox = true;
   }
 }

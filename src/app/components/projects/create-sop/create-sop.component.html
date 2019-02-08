@@ -5,7 +5,6 @@
         class="dialog" 
         (keydown.esc)="onEscape($event)" 
         (click)="preventPropagation($event)" 
-        [formGroup]="sopForm"
         >
     
           <div class="dialog-group padding-all header-banner">
@@ -25,13 +24,13 @@
         [ngClass]="{'ASN-box':true, 'validators':validateClientName===true}" 
         placeholder="Client Name" 
         required 
-        formControlName="clientName"
+        [(ngModel)]="projectDetails.clientName"
       >
 
     </div>
-    <small [ngClass]="{'validation-message':validateClientName}" *ngIf="validateClientName">
+    <!-- <small [ngClass]="{'validation-message':validateClientName}" *ngIf="validateClientName">
       <em>{{validateClientNameMessage}}</em>
-    </small>
+    </small> -->
               
   </div>
     <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
@@ -42,13 +41,13 @@
                   [ngClass]="{'ASN-box':true, 'validators':validateAutomationSystemName===true}" 
                   placeholder="Automation System Name" 
                   required 
-                  formControlName = "title" 
+                  [(ngModel)]="projectDetails.title"
                   >
     
               </div>
-              <small [ngClass]="{'validation-message':validateAutomationSystemName===true}" *ngIf="validateAutomationSystemName">
+              <!-- <small [ngClass]="{'validation-message':validateAutomationSystemName===true}" *ngIf="validateAutomationSystemName">
                 <em>{{validateAutomationSystemNameMessage}}</em>
-              </small>
+              </small> -->
           </div>
         </div>
               
@@ -85,9 +84,9 @@
                   id="charge-code" 
                   placeholder="Charge Code" 
                   required 
-                  formControlName = "chargeCode"
                   [ngClass]="{'validators':validateChargeCode===true}" 
                   maxlength="50"
+                  [(ngModel)]="projectDetails.chargeCode"
                   >
     
     <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
@@ -100,9 +99,8 @@
                       [matDatepicker]="picker" 
                       required 
                       readonly  
-                      formControlName = "due_date"
-                      [ngClass]="{'validators':validateChargeCode===true}"
-                      [ngStyle]="{'border':validateChargeCode?border:false}"
+                      [ngStyle]="{'border':validateChargeCode?border:false}" 
+                      (dateInput)="onDueDateChange($event.value)"
                     >
                     <div class="datepicker">
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -110,18 +108,18 @@
                     </div>
                   </ng-container>
               </div>
-              <small 
+              <!-- <small 
                 [ngClass]="{'validation-message':validateChargeCode===true||validateSelectedDate===true}" 
                 *ngIf="validateChargeCode||validateSelectedDate">
                   <em>{{validateChargeCodeMessage}}</em>
-              </small>
+              </small> -->
           </div>
 
     <!-- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
   <div class="tab-wrapper">
 
   
-    <mat-tab-group class="create-container-tabs"  (selectedTabChange)="onTabChange($event)" [selectedIndex]="selectedTabIndex">
+    <mat-tab-group class="create-container-tabs">
         <mat-tab label="Assign User">
             <div class="dialog-group height-auto padding-top-0 grey-background" id="add-assign">
                 <div class="input-box margin-top-10">
@@ -143,12 +141,15 @@
           </div>
           <div class="dialog-group height-auto margin-bottom-10 assignee-list">
               <ul userDatas>
-                <li *ngFor="let userData of createdAssignees; let i=index" @hideInOut>
+                <li *ngFor="let userData of createdAssignees; let i=index" @hideInOut 
+                [ngClass]="{'validation-failed':userData.indecatedUserAboutMistakes?userData.indecatedUserAboutMistakes:false}">
                   <div class="horizontal-flex user-card">
                     <img [src]="" [alt]=""/>
                     <div class="user-details">
-                      <span *ngIf="userData.user">{{userData.user}}</span>
-                      <span *ngIf="userData.email">{{userData.email}}</span>
+                      <b>
+                        <span *ngIf="userData.user">{{userData.user}}</span>
+                        <span *ngIf="userData.email">{{userData.email}}</span>
+                      </b>
                     </div>
                     <div class="select-role">
                       <mat-select placeholder=" Assign role" (selectionChange)="onSelectionChange($event.value, i)">
@@ -159,7 +160,7 @@
                     </div>
                     <div 
                     class="list-close" 
-                    (click)="onRemove(userData.id)">
+                    (click)="onRemove(i)">
                     <i class="far fa-trash-alt"></i>
                   </div>
                   </div>
@@ -176,30 +177,16 @@
           <div class="dialog-group-2 padding-all fixed-bottom height-auto margin-bottom-10">
             <div class="button-box">
                 <button 
-                *ngIf="_UIControllerService.getOverlayHeader()==createSOP && selectedTabIndex==0" 
                 mat-raised-button 
                 color="primary" 
                 (click)="onCreateNew()" 
                 >CREATE NEW</button>
-    
-                <button 
-                *ngIf="_UIControllerService.getOverlayHeader()==editSOP && selectedTabIndex==0" 
-                mat-raised-button 
-                color="primary" 
-                (click)="onSave()" 
-                [appCanAccess]="{
-                  role:permissions.role, 
-                  permissionRequired:'Can change sop', 
-                  permissionList: permissions.permissions
-                }">SAVE</button>
 
-                <button mat-raised-button (click)="onClose()" *ngIf="selectedTabIndex==0">CANCEL</button>
+                <button mat-raised-button (click)="onClose()">CANCEL</button>
             </div>
           </div>
     
         </div>
-    <!-- ------------------------------------------------------------------------------------- -->
-    <app-preloader></app-preloader>
     <!-- ------------------------------------------------------------------------------------- -->
       </div>
         

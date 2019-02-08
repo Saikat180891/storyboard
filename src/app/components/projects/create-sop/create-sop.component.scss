@@ -124,6 +124,11 @@ li{
       line-height: 26px;
       font-size: 14px;
       color: #707070;
+      width: 200px;
+
+      span{
+        color: #333333;
+      }
     }
 
     .select-role{
@@ -132,22 +137,25 @@ li{
       line-height: 30px;
       padding: 0 10px;
       border: 1px solid #D1D1D1;
+      background-color: #fff;
     }
 
     div.list-close{
       cursor: pointer;
-      color: #D1D1D1;
+      color: #2A7DE1;
     }
   }
 
   .user-card{
-    // background-color: #fff;
     border-radius: 5px;
     padding: 10px;
   }
-
-  
 }
+
+.validation-failed{
+  border: 1px solid red;
+}
+
 .horizontal-flex{
   display: flex;
 }
@@ -176,7 +184,7 @@ li{
   margin-right: 17px;
 }
 .assignee-list{
-  height: 150px;
+  height: 200px;
 }
 .margin-top-10{
   margin-top: 10px;
