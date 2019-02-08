@@ -55,7 +55,7 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
           themeColor: this.__uic.colorPicker[this._ContainerService.getUniqueNumber()],
           reasonCodes: this.__uic.firstZero(Number(element["number_epics"])),
           ...element,
-          logo: element["image_url"]
+          logo: element["logo_url"]
         });
       });
       // console.log(this._ContainerService.cardContents);
