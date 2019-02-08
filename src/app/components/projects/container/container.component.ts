@@ -129,4 +129,9 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
     console.log(permissions)
   }
   
+  onCreateProject($event){
+    if($event.open === 'create' && $event.status == true){
+      console.log("ok");
+    }
+  }
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 import { environment } from '../../../environments/environment';
 import {SignupService} from './signup.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+
 @Component({
   selector: 'app-signupusers',
   templateUrl: './signupusers.component.html',
@@ -10,9 +11,9 @@ import { ActivatedRoute } from '@angular/router';
 export class SignupusersComponent implements OnInit {
 
   baseUrl = environment.production ? window.location.origin :'http://localhost:8000';
-  constructor(private _api: SignupService, private route: ActivatedRoute) { }
+  constructor(private _api: SignupService, private route: ActivatedRoute, private router: Router) { }
   password_mismatch = false;
-  signup_form=1;
+  signup_form = 1;
   email: string;
   firstName: string;
   lastName: string;
@@ -50,6 +51,10 @@ export class SignupusersComponent implements OnInit {
     this.passwordMessage = password_status["passwordMessage"];
   }
 
+  loginPage(){
+    this.router.navigate(['/']);
+  }
+
   externalSignup()
   {
     let signup_details = {'email': this.email, 'password': this.password, 
@@ -81,5 +86,16 @@ export class SignupusersComponent implements OnInit {
     this.passwordMessage = "Password should contain atleast 1 Small Alphabet, 1 Capital Alphabet , 1 Number, 1 Special Character";
   }
  
-}
+  }
+
+  passwordStrengthStatus:string = 'Weak';
+  onStrengthChange($event){
+    if($event < 3){
+      this.passwordStrengthStatus = 'Weak';
+    }else if($event == 3){
+      this.passwordStrengthStatus = 'Medium';
+    }else if($event > 3){
+      this.passwordStrengthStatus = 'Strong';
+    }
+  }
 }

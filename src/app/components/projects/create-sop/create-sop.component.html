@@ -1,0 +1,205 @@
+<div (click)="onOverlayClose()">
+  
+    <!-- This is for editing new SOP -->
+        <div 
+        class="dialog" 
+        (keydown.esc)="onEscape($event)" 
+        (click)="preventPropagation($event)" 
+        [formGroup]="sopForm"
+        >
+    
+          <div class="dialog-group padding-all header-banner">
+            <div class="dialog-header">
+              <span>{{createSOP}}</span>
+              <span class="close" (click)="onClose()"><i class="fas fa-times"></i></span>
+            </div>
+          </div>
+    <!-- ---------------------------------------------------------client name--------------------------------------------------------------------------------------------------- -->
+    <div class="horizontal-flex">    
+    <div class="vertical-flex">
+    <div class="dialog-group padding-all top-input-width">
+    <div class="input-box">
+      <input 
+        id="clientName"
+        type="text" 
+        [ngClass]="{'ASN-box':true, 'validators':validateClientName===true}" 
+        placeholder="Client Name" 
+        required 
+        formControlName="clientName"
+      >
+
+    </div>
+    <small [ngClass]="{'validation-message':validateClientName}" *ngIf="validateClientName">
+      <em>{{validateClientNameMessage}}</em>
+    </small>
+              
+  </div>
+    <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+          <div class="dialog-group padding-all top-input-width">
+              <div class="input-box">
+                  <input 
+                  type="text" 
+                  [ngClass]="{'ASN-box':true, 'validators':validateAutomationSystemName===true}" 
+                  placeholder="Automation System Name" 
+                  required 
+                  formControlName = "title" 
+                  >
+    
+              </div>
+              <small [ngClass]="{'validation-message':validateAutomationSystemName===true}" *ngIf="validateAutomationSystemName">
+                <em>{{validateAutomationSystemNameMessage}}</em>
+              </small>
+          </div>
+        </div>
+              
+          <div class="dialog-group upload emblem">
+              <div class="relative pointer">
+                <button>
+                  <img class="preview-logo" *ngIf="filePreview" [src]="filePreview" [alt]="filePreview">
+                  <span class="client-logo" *ngIf="!filePreview">Upload Client Logo</span>
+                  <span *ngIf="!filePreview"><small>(Max Size 200px-200px)</small></span>
+                  <span *ngIf="!filePreview"><i class="fas fa-download"></i>CHOOSE FILE</span>
+                </button>
+      
+                <input 
+                type="file" 
+                (change)="onFileSelected($event)"/>
+      
+                <input 
+                *ngIf="_UIControllerService.getOverlayHeader()==editSOP"
+                type="file" 
+                (change)="onFileSelected($event)"
+                [appCanAccess]="{
+                  role:permissions.role, 
+                  permissionRequired:'Can change sop', 
+                  permissionList: permissions.permissions
+                }"/>
+              </div>
+            </div>
+            </div>
+    <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+          <div class="dialog-group padding-all margin-bottom-10">
+              <div class="input-box">
+                  <input 
+                  type="text" 
+                  id="charge-code" 
+                  placeholder="Charge Code" 
+                  required 
+                  formControlName = "chargeCode"
+                  [ngClass]="{'validators':validateChargeCode===true}" 
+                  maxlength="50"
+                  >
+    
+    <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+                  <ng-container>
+                    <input
+                      id="date" 
+                      placeholder="Due Date" 
+                      type="text"
+                      matInput 
+                      [matDatepicker]="picker" 
+                      required 
+                      readonly  
+                      formControlName = "due_date"
+                      [ngClass]="{'validators':validateChargeCode===true}"
+                      [ngStyle]="{'border':validateChargeCode?border:false}"
+                    >
+                    <div class="datepicker">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </div>
+                  </ng-container>
+              </div>
+              <small 
+                [ngClass]="{'validation-message':validateChargeCode===true||validateSelectedDate===true}" 
+                *ngIf="validateChargeCode||validateSelectedDate">
+                  <em>{{validateChargeCodeMessage}}</em>
+              </small>
+          </div>
+
+    <!-- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+  <div class="tab-wrapper">
+
+  
+    <mat-tab-group class="create-container-tabs"  (selectedTabChange)="onTabChange($event)" [selectedIndex]="selectedTabIndex">
+        <mat-tab label="Assign User">
+            <div class="dialog-group height-auto padding-top-0 grey-background" id="add-assign">
+                <div class="input-box margin-top-10">
+                  <ng-container>
+                    <input 
+                    type="text" 
+                    placeholder="Type name or email address" 
+                    (keyup)="onKeyPress($event)">
+                    <div 
+                    class="autocomplete" 
+                    *ngIf="options; else load">
+                      <ng-container *ngFor="let option of options; let i=index">
+                        <span class="autocomplete-item" (click)="onSelect(option)">{{option.email}}</span>
+                      </ng-container>
+                    </div>
+                  </ng-container>
+
+                </div>
+          </div>
+          <div class="dialog-group height-auto margin-bottom-10 assignee-list">
+              <ul userDatas>
+                <li *ngFor="let userData of createdAssignees; let i=index" @hideInOut>
+                  <div class="horizontal-flex user-card">
+                    <img [src]="" [alt]=""/>
+                    <div class="user-details">
+                      <span *ngIf="userData.user">{{userData.user}}</span>
+                      <span *ngIf="userData.email">{{userData.email}}</span>
+                    </div>
+                    <div class="select-role">
+                      <mat-select placeholder=" Assign role" (selectionChange)="onSelectionChange($event.value, i)">
+                          <mat-option *ngFor="let role of roles" [value]="role">
+                          {{role}}
+                          </mat-option>
+                      </mat-select>
+                    </div>
+                    <div 
+                    class="list-close" 
+                    (click)="onRemove(userData.id)">
+                    <i class="far fa-trash-alt"></i>
+                  </div>
+                  </div>
+                </li>
+              </ul>
+          </div>
+          </mat-tab>
+          <mat-tab label="Invite New User" disabled>
+
+          </mat-tab>
+          </mat-tab-group>
+        </div>
+    <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+          <div class="dialog-group-2 padding-all fixed-bottom height-auto margin-bottom-10">
+            <div class="button-box">
+                <button 
+                *ngIf="_UIControllerService.getOverlayHeader()==createSOP && selectedTabIndex==0" 
+                mat-raised-button 
+                color="primary" 
+                (click)="onCreateNew()" 
+                >CREATE NEW</button>
+    
+                <button 
+                *ngIf="_UIControllerService.getOverlayHeader()==editSOP && selectedTabIndex==0" 
+                mat-raised-button 
+                color="primary" 
+                (click)="onSave()" 
+                [appCanAccess]="{
+                  role:permissions.role, 
+                  permissionRequired:'Can change sop', 
+                  permissionList: permissions.permissions
+                }">SAVE</button>
+
+                <button mat-raised-button (click)="onClose()" *ngIf="selectedTabIndex==0">CANCEL</button>
+            </div>
+          </div>
+    
+        </div>
+    <!-- ------------------------------------------------------------------------------------- -->
+    <app-preloader></app-preloader>
+    <!-- ------------------------------------------------------------------------------------- -->
+      </div>
+        

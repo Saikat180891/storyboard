@@ -17,15 +17,13 @@ export enum KEY_CODE {
   ESCAPE = 27,
   ENTER = 13
 }
-
 @Component({
-  selector: 'app-backdrop',
-  templateUrl: './backdrop.component.html',
-  styleUrls: ['./backdrop.component.scss'],
+  selector: 'app-create-sop',
+  templateUrl: './create-sop.component.html',
+  styleUrls: ['./create-sop.component.scss'],
   animations: [slideDown, hideInOut]
 })
-
-export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
+export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
   @Input() cardID;
   @Input('permissions') permissions:any;
   imagePath:string = '';
@@ -523,4 +521,5 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
                                                     })
     
   }
+
 }

@@ -4,7 +4,7 @@
   <div class="login-box">
     <div class="auth">
       <div class="logo"></div>
-      <span>Storyboard</span>
+      <span class="app-name">Storyboard</span>
 
       <div [ngSwitch]="login_form_page">
 
@@ -12,28 +12,32 @@
           <ng-container *ngSwitchCase="1">
             <p>Inspiring/Motivational message lorem ipsum, dev eduva froevere</p>
             <div class="form-group">
-              <label for="username">Email Id</label>
+              <label for="email">Email Id</label>
               <input class="text-box" type="email" [(ngModel)]="email" id="email" [ngModelOptions]="{standalone: true}">
-
             </div>
             <div class="form-group">
               <label for="newpassword">Password</label>
               <input class="text-box" type="password" [(ngModel)]="password" id="newpassword" [ngModelOptions]="{standalone: true}">
             </div>
-            <div class="form-group horizontal-flex">
-              <mat-checkbox>Remember Me</mat-checkbox>
-              <a class="right" (click)="initiateForgotPassword()">Forgot Password</a>
+            <div class="form-group horizontal-flex-wrapper">
+              <div class="content-wrapper">
+                <mat-checkbox>Remember Me</mat-checkbox>
+              </div>
+              <div class="content-wrapper">
+                <div (click)="initiateForgotPassword()">Forgot Password</div>
+              </div>
             </div>
-            <div class="form-group">
-              <button class="button button--login" href="" (click)="externalUserLogin()">Login</button>
-              <button class="button button--login" href="" (click)="azureLogin()">
-                <i class="fab fa-windows"></i> Sign in with Microsoft account</button>
+            <div class="form-group form-btn-group">
+              <button class="button button--login" (click)="externalUserLogin()">Login</button>
+              <button class="button button--login" (click)="azureLogin()">
+                <span><i class="fab fa-windows"></i></span> <span class="microsoft-login"> Sign in with Microsoft Azure</span>
+              </button>
             </div>
           </ng-container>
           <ng-container *ngSwitchCase="2">
             <div class="form-group">
               <label for="username">Email Id</label>
-              <input class="text-box" type="email" [(ngModel)]="email" id="email" [ngModelOptions]="{standalone: true}">
+              <input class="text-box" type="email" [(ngModel)]="email" id="email" [ngModelOptions]="{standalone: true}" placeholder="Enter Valid Email Id">
 
             </div>
             <div class="form-group">

@@ -183,27 +183,6 @@ ul{
 //     color: #707070;
 //     position: absolute;
 // }
-.list-close{
-    position: absolute;
-    right: 0;
-    cursor: pointer;
-}
-.list-close i{
-    color: #D1D1D1;
-}
-.list-close button.mat-raised-button.mat-primary{
-    background-color: transparent;
-}
-.list-close button.mat-raised-button{
-    min-width: 26px;
-    padding: 0;
-    line-height: 26px;
-    border-radius: 50%;
-    font-size: 20px;
-    color: #707070;
-    -webkit-box-shadow: 0;
-            box-shadow: 0;
-}
 .height-max{
     max-height: 70px;
     overflow: auto;
