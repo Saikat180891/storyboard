@@ -40,8 +40,8 @@
             </div>
           </div>
           <div class="picture-title">
-            <span>PicturenamePicturename Picture name</span>
-            <span>12:22</span>
+            <span>{{content.video_name?content.video_name:content.image_name}}</span>
+            <span>{{content.video_length?content.video_length:''}}</span>
           </div>
         </div>
       </mat-grid-tile>

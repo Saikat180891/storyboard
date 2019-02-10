@@ -52,7 +52,7 @@
           </div>
           <div class="application-name">
             <!-- <a [download]="createdImage" [href]="createdImage">Download here</a> -->
-            <span>Video name application</span>
+            <span>{{videoName}}</span>
           </div>
           <div class="video-gellery">
             <app-gallery [data]="videoGalleryContent" [type]="'VIDEO'" (optionSelected)="onSelectedVideo($event)" (addNewFile)="onVideoUpload($event)" (deleteContent)="onDeleteVideo($event)"></app-gallery>

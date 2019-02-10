@@ -32,6 +32,7 @@ export class SidebarComponent implements OnInit {
   uploadProgressText:any;
   videoUpload:any;
   buffered:number;
+  videoName:string;
 
   constructor(
     private __uic:UicontrolService, 
@@ -43,6 +44,8 @@ export class SidebarComponent implements OnInit {
     this.videoPlayer.nativeElement.volume = 0.5;
     this.fetchAllVideosAlreadyUploaded();
     this.fetchAllSnapshotsAlreadyTaken();
+    this.duration = '00:00';
+    this.currentTime = '00:00';
   }
   
 
@@ -51,8 +54,6 @@ export class SidebarComponent implements OnInit {
       this.videoGalleryContent = res;
       this.playThisVideo = this.videoGalleryContent[0].video_url;
       this.__page.videoId = this.videoGalleryContent[0].id;
-      this.duration = this.convertSecondsToMinutes(0);
-      this.currentTime = this.convertSecondsToMinutes(0);
       // console.log(res);
     },
     err=>{
@@ -193,6 +194,7 @@ export class SidebarComponent implements OnInit {
     this.videoPlayer.nativeElement.pause();
     this.isPlaying =  false;
     this.playThisVideo = $event.content.video_url;
+    this.videoName = $event.content.video_name;
     this.__page.videoId = $event.content.id;
     this.progress = this.videoPlayer.nativeElement.currentTime = 0;
     this.duration = this.convertSecondsToMinutes(0);
@@ -200,7 +202,11 @@ export class SidebarComponent implements OnInit {
   }
   
   onTimeUpdate($event){
-    this.duration = this.convertSecondsToMinutes(this.videoPlayer.nativeElement.duration);
+    if(isNaN(this.videoPlayer.nativeElement.duration)){
+      this.duration = this.convertSecondsToMinutes(0);
+    }else{
+      this.duration = this.convertSecondsToMinutes(this.videoPlayer.nativeElement.duration);
+    }
     this.currentTime = this.convertSecondsToMinutes(this.videoPlayer.nativeElement.currentTime);
     this.progress = (this.videoPlayer.nativeElement.currentTime / this.videoPlayer.nativeElement.duration) * 100;
     if(this.videoPlayer.nativeElement.currentTime == this.videoPlayer.nativeElement.duration){
@@ -292,6 +298,11 @@ export class SidebarComponent implements OnInit {
     this.__sidebarService.deleteContent(apiEndpoint).subscribe(res=>{
       this.imageGalleryContent.splice($event.index, 1);
       this.__page.imageGalleryContent.splice($event.index, 1);
+      this.snackBar.open('Snapshot deleted successfully', 'Success', {duration: 3000});
+    },
+    err=>{
+      console.log("Error while deleting snapshot", err);
+      this.snackBar.open('Failed to delete the selected snapshot', 'Failed', {duration: 3000});
     })
   }
 }
