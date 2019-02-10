@@ -351,6 +351,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
             });
           }else{
             this.spinner.hide();
+            this.onClose();
             // this.onOverlayClose();
           }
           this.snackBar.open("Project has been modified", "Success", {duration: 2000});

@@ -57,33 +57,6 @@ canvas#snapshot-holder{
       position: absolute;
       top: 0;
       left: 0;
-
-      // .slider-button{
-      //   width: 100%;
-      //   appearance: none;
-      //   height: 5px;
-      //   margin: 0;
-      //   background-color: $main-blue;
-      // }
-      // .slider-button::-webkit-slider-thumb {
-      //   -webkit-appearance: none; /* Override default look */
-      //   appearance: none;
-      //   width: 13px; /* Set a specific slider handle width */
-      //   height: 13px; /* Slider handle height */
-      //   background: $main-blue; /* Green background */
-      //   box-shadow: 0 0 10px rgba($color: #040404, $alpha: 0.7);
-      //   border-radius: 50%;
-      //   cursor: pointer; /* Cursor on hover */
-      // }
-      
-      // .slider-button::-moz-range-thumb {
-      //   width: 13px; /* Set a specific slider handle width */
-      //   height: 13px; /* Slider handle height */
-      //   background: $main-blue; /* Green background */
-      //   box-shadow: 0 0 10px rgba($color: #040404, $alpha: 0.7);
-      //   border-radius: 50%;
-      //   cursor: pointer; /* Cursor on hover */
-      // }
     }
     .player-center-buttons{
       position: absolute;
@@ -200,7 +173,7 @@ canvas#snapshot-holder{
 
 .slide-show{
   margin: 20px 20px 5px 20px;
-  background-color: red;
+  background-color: #000000;
   width: calc(100% - 40px);
   height: 45vh;
   position: relative;
