@@ -80,17 +80,18 @@
     width: 150px;
     background-color: #2A7DE1;
   }
-  button:first-child{
+  button:nth-child(1){
     margin-right: 20px;
   }
-  button:last-child{
+  button:nth-child(2){
     background-color: #ffffff;
+    border: 1px solid #54585A;
   }
 }
 .datepicker{
   position: absolute;
-  top: 157px;
-  left: 16.5rem;
+  top: 159px;
+  left: 16.8rem;
 }
 .height-max::-webkit-scrollbar {
   // display: none;
@@ -109,88 +110,105 @@ li{
     width: 100%;
     margin: 2px;
     box-shadow: 0 0 2px rgba($color: #000000, $alpha: 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
     
     .horizontal-flex{
-        position: relative;
+        // position: relative;
         // display: flex;
         // align-items: center;
 
         img{
-            height: 26px;
-            width: 26px;
-            margin-right: 20px;
+            height: 30px;
+            width: 30px;
         }
     
         span{
             display: block;
-            line-height: 26px;
+            line-height: 30px;
             font-size: 14px;
             color: #707070;
         }
     
         .select-role{
-            width: 150px;
-            height: 50px;
-            position: relative;
-            right: 40px;
-            top: 0;
+          width: 150px;
+          height: 30px;
+          line-height: 30px;
+          padding: 0 10px;
+          border: 1px solid #D1D1D1;
+          background-color: #fff;
         }
+        
+        div.list-close{
+          color: #2A7DE1;
+          cursor: pointer;
+          line-height: 30px;
+        } 
+    } 
+}
+li.list{
+  width: 150px;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+  border: 1px solid #D1D1D1;
+  background-color: #fff;
+  border-radius: 15px;
 
-        .list-close{
-            position: absolute;
-            right: 0;
-            cursor: pointer;
-        }
-        .list-close i{
-            color: #D1D1D1;
-        }
-        // .list-close button.mat-raised-button.mat-primary{
-        //     background-color: transparent;
-        // }
-        // .list-close button.mat-raised-button{
-        //     min-width: 26px;
-        //     padding: 0;
-        //     line-height: 26px;
-        //     border-radius: 50%;
-        //     font-size: 20px;
-        //     color: #707070;
-        //     -webkit-box-shadow: 0;
-        //             box-shadow: 0;
-        // }
-    }
+  span{
+    color: #fff;
+  }
 
-    
+  img{
+    border-radius: 50%;
+  }
+
+  .select-role{
+    border-radius: 15px;
+  }
+
+  div.list-close{
+    color: #fff;
+  }
 }
 .horizontal-flex{
     display: flex;
     justify-content: space-between;
+    width: 100%;
+}
+.horizontal-flex-2{
+  display: flex;
+  justify-content: space-between;
 }
 .relative{
-    position: relative;
+  position: relative;
 }
 .pointer{
-    cursor: pointer !important;
-    overflow: hidden;
-    top: 10px;
+  cursor: pointer !important;
+  overflow: hidden;
+  top: 10px;
 }
 .emblem{
-    width: 250px;
-    height: 100px;
-    overflow: hidden;
-    margin-right: 15px;
+  width: 250px;
+  height: 100px;
+  overflow: hidden;
+  margin-right: 15px;
 }
 .vertical-flex{
-    width: 80%;
+  width: 80%;
 }
 .assignee-container{
-    height: 100%;
+  height: 100%;
 }
 .create-container-tabs{
-    margin-left: 15px;
-    margin-right: 17px;
+  margin-left: 15px;
+  margin-right: 17px;
 }
 .assignee-list{
-    height: 150px;
+  max-height: 211px;
+  overflow: auto;
 }
 .margin-top-10{
     margin-top: 10px;
@@ -201,20 +219,23 @@ li{
 // }
 
 .select-role-invite{
-    width: 150px;
-    margin-top: 10px;
-    margin-left: 10px;
+    width: 180px;
+    background-color: #fff;
+    min-height: 30px;
+    border: 1px solid #D1D1D1;
+    line-height: 30px;
+    padding: 0 5px;
 }
 .send-invite{
     margin-left: 160px;
     width: 160px
 }
 .first-name{
-  width: 225px;
+  width: 215px;
 }
 
 .last-name{
-  width: 225px;
+  width: 215px;
 }
 .grey-background{
     // background: #eee;
@@ -247,6 +268,8 @@ li{
     background-color: #eee;
     bottom: 0;
     left: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 .tab-footer{
     position: relative;
@@ -287,4 +310,51 @@ li{
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+}
+.invite-user-through-email{
+  width: 250px;
+}
+.add-user{
+  max-height: 250px;
+  overflow: auto;
+
+  button{
+    border: none;
+    background-color: transparent;
+    color: #2A7DE1;
+    font-weight: bold;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+    margin: 10px;
+  }
+}
+.invite-model{
+  margin: 2px;
+  border: 1px solid #D1D1D1;
+  border-radius: 5px;
+  padding: 0 10px;
+  position: relative;
+
+  div.delete-list-item{
+    position: absolute;
+    top: 0;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    color: #fff;
+    background-color: #2A7DE1;
+    border-radius: 3px;
+  }
+}
+.user-details{
+  line-height: 26px;
+  font-size: 14px;
+  color: #707070;
+  width: 200px;
+}
+.datepicker{
+  ::ng-deep path{
+    fill: #F47074;
+  }
 }

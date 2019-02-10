@@ -85,12 +85,13 @@ button:first-child{
 }
 button:last-child{
   background-color: #ffffff;
+  border: 1px solid #54585A;
 }
 }
 .datepicker{
 position: absolute;
-top: 157px;
-left: 16.5rem;
+top: 159px;
+left: 16.8rem;
 }
 .height-max::-webkit-scrollbar {
 // display: none;
@@ -116,18 +117,18 @@ li{
     align-items: center;
 
     img{
-      height: 26px;
-      width: 26px;
+      height: 30px;
+      width: 30px;
     }
 
     div.user-details{
-      line-height: 26px;
       font-size: 14px;
       color: #707070;
       width: 200px;
 
       span{
         color: #333333;
+        line-height: 30px
       }
     }
 
@@ -241,6 +242,8 @@ width: 225px;
   background-color: #eee;
   bottom: 0;
   left: 0;
+  border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 .tab-footer{
   position: relative;
@@ -282,3 +285,12 @@ width: 225px;
   align-items: center;
   justify-content: space-around;
 }
+.heading{
+  font-size: 18px;
+}
+.datepicker{
+  ::ng-deep path{
+    fill: #F47074;
+  }
+}
+

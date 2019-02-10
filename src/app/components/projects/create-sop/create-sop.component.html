@@ -9,7 +9,11 @@
     
           <div class="dialog-group padding-all header-banner">
             <div class="dialog-header">
-              <span>{{createSOP}}</span>
+              <span class="heading">
+                <b>
+                  Create New Project
+                </b>
+              </span>
               <span class="close" (click)="onClose()"><i class="fas fa-times"></i></span>
             </div>
           </div>
@@ -63,16 +67,7 @@
                 <input 
                 type="file" 
                 (change)="onFileSelected($event)"/>
-      
-                <input 
-                *ngIf="_UIControllerService.getOverlayHeader()==editSOP"
-                type="file" 
-                (change)="onFileSelected($event)"
-                [appCanAccess]="{
-                  role:permissions.role, 
-                  permissionRequired:'Can change sop', 
-                  permissionList: permissions.permissions
-                }"/>
+
               </div>
             </div>
             </div>
@@ -140,7 +135,7 @@
                 </div>
           </div>
           <div class="dialog-group height-auto margin-bottom-10 assignee-list">
-              <ul userDatas>
+              <ul>
                 <li *ngFor="let userData of createdAssignees; let i=index" @hideInOut 
                 [ngClass]="{'validation-failed':userData.indecatedUserAboutMistakes?userData.indecatedUserAboutMistakes:false}">
                   <div class="horizontal-flex user-card">
@@ -176,13 +171,16 @@
     <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
           <div class="dialog-group-2 padding-all fixed-bottom height-auto margin-bottom-10">
             <div class="button-box">
-                <button 
+              <button 
                 mat-raised-button 
                 color="primary" 
-                (click)="onCreateNew()" 
-                >CREATE NEW</button>
+                (click)="onCreateNew()">
+                CREATE NEW
+              </button>
 
-                <button mat-raised-button (click)="onClose()">CANCEL</button>
+                <button mat-raised-button (click)="onClose()">
+                  CANCEL
+                </button>
             </div>
           </div>
     
