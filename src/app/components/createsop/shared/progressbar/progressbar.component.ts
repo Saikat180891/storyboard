@@ -7,6 +7,7 @@ import {UicontrolService} from '../../services/uicontrol.service';
 })
 export class ProgressbarComponent implements OnInit, OnChanges {
   @Input('progressChange') progressChange:number;
+  @Input('buffer') buffer:number;
   @Output('changeCurrentTime') changeCurrentTime = new EventEmitter<any>();
   width:string;
   progressValue:number = 0;

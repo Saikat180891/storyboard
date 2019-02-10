@@ -14,7 +14,7 @@
             </video>
             <div class="controls" *ngIf="true">
               <div class="slider">
-                <progress-bar [progressChange]="progress" (changeCurrentTime)="onChangeCurrentTime($event)"></progress-bar>
+                <progress-bar [progressChange]="progress" (changeCurrentTime)="onChangeCurrentTime($event)" [buffer]="buffered"></progress-bar>
               </div>
               <div class="player-start-buttons">
                 <span class="video-length">

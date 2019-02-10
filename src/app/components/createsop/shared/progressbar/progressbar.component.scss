@@ -14,6 +14,10 @@
     background-color: $main-blue;
   }
 
+  .buffered-progress{
+    background-color: #cccccc;
+  }
+
   input[type="range"]{
     position: absolute;
     top: 0;

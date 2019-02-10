@@ -35,7 +35,10 @@
   font-weight: 500;
   position: relative;
 }
-
+.input-box input[type="text"]:focus{
+  border: 1px solid #2A7DE1;
+  box-shadow: inset 0 0 2px rgba($color: #000000, $alpha: 0.5);
+}
 .input-box input[type="text"].validators{
   border: 1px solid rgb(245, 117, 117);
 }

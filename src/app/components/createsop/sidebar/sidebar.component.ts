@@ -3,6 +3,8 @@ import {UicontrolService} from '../services/uicontrol.service';
 import {SidebarService} from '../services/sidebar/sidebar.service';
 import {PageService} from '../services/page/page.service';
 import {HttpEventType, HttpResponse} from '@angular/common/http';
+import {MatSnackBar} from '@angular/material';
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -12,6 +14,7 @@ export class SidebarComponent implements OnInit {
   @Output('close') close = new EventEmitter<any>();
   @ViewChild('videoPlayer') videoPlayer:ElementRef;
   @ViewChild('canvas') canvas:ElementRef;
+  @ViewChild('volumeController') volumeController:ElementRef;
   isPlaying:boolean = false;
   isMuted:boolean = false;
   duration:any = "00:00";
@@ -28,8 +31,13 @@ export class SidebarComponent implements OnInit {
   uploadProgressPercentage:any;
   uploadProgressText:any;
   videoUpload:any;
+  buffered:number;
 
-  constructor(private __uic:UicontrolService, private __sidebarService:SidebarService, private __page:PageService) { }
+  constructor(
+    private __uic:UicontrolService, 
+    private __sidebarService:SidebarService, 
+    private __page:PageService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.videoPlayer.nativeElement.volume = 0.5;
@@ -87,14 +95,6 @@ export class SidebarComponent implements OnInit {
 
   //for video player
   onPlayPause(){
-    let EventSource = window['EventSource'];
-    let fx = new EventSource(this.playThisVideo);
-    fx.onmessage = function (evt){
-      console.log(evt.data);
-    }
-    // this.__sidebarService.videoStreaming(this.playThisVideo).subscribe(res=>{
-    //   console.log(res)
-    // })
     if(this.videoPlayer.nativeElement.paused){
       this.videoPlayer.nativeElement.play();
       this.isPlaying = true;
@@ -108,9 +108,13 @@ export class SidebarComponent implements OnInit {
     if(!this.isMuted){
       this.videoPlayer.nativeElement.muted = true;
       this.isMuted = true;
+      localStorage.setItem('lastvol', this.volumeController.nativeElement.value);
+      this.videoPlayer.nativeElement.volume = this.volumeController.nativeElement.value = 0;
     }else{
       this.videoPlayer.nativeElement.muted = false;
       this.isMuted = false;
+      this.videoPlayer.nativeElement.volume = Number(localStorage.getItem('lastvol')) / 100;
+      this.volumeController.nativeElement.value = localStorage.getItem('lastvol');
     }
   }
 
@@ -172,6 +176,13 @@ export class SidebarComponent implements OnInit {
       const apiEndpoint = `/sop/${this.__page.projectId}/image.json?video_id=${this.__page.videoId}`;
       this.__sidebarService.sendSnapshot(apiEndpoint, snapshotData).subscribe(res=>{
         console.log("Response on taking snapshot", res);
+        this.snackBar.open('Snapshot taken successfully', 'Success', {duration: 3000});
+      },
+      err=>{
+        console.log("Error while saving snapshot", err);
+        this.snackBar.open('An error occured while saving snapshot', 'Failed', {duration: 3000});
+      },
+      ()=>{
       });
       this.createdImage = imageData;
       // console.log(file);
@@ -187,7 +198,7 @@ export class SidebarComponent implements OnInit {
     this.duration = this.convertSecondsToMinutes(0);
     this.currentTime = this.convertSecondsToMinutes(0);
   }
-
+  
   onTimeUpdate($event){
     this.duration = this.convertSecondsToMinutes(this.videoPlayer.nativeElement.duration);
     this.currentTime = this.convertSecondsToMinutes(this.videoPlayer.nativeElement.currentTime);
@@ -221,13 +232,7 @@ export class SidebarComponent implements OnInit {
   onChangeCurrentTime($event){
     let actualTime = ($event / 100) * this.videoPlayer.nativeElement.duration;
     let bufferedStart = this.videoPlayer.nativeElement.buffered.start(0);
-    let bufferedEnd = this.videoPlayer.nativeElement.buffered.end(0);
-    // if(actualTime > bufferedEnd){
-    //   this.videoPlayer.nativeElement.currentTime = bufferedEnd;
-    // }else{
-      this.videoPlayer.nativeElement.currentTime = actualTime;
-    // }
-    console.log(actualTime, bufferedEnd, this.videoPlayer)
+    this.videoPlayer.nativeElement.currentTime = actualTime;
   }
 
   onTabChange(value:number){
