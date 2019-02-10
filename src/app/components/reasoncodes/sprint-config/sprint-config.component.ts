@@ -323,7 +323,8 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
 
   onDeleteCreatedRC(id, index){
     this.__rcService.deleteReasonCode(id);
-    this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+    // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
+    this.__rcService.refresh(this.__rcService.sopId);
   }
 
   onDateSelected($event){

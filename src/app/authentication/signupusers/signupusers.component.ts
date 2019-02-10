@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { environment } from '../../../environments/environment';
+import {SignupService} from './signup.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-signupusers',
@@ -7,9 +10,92 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignupusersComponent implements OnInit {
 
-  constructor() { }
-
+  baseUrl = environment.production ? window.location.origin :'http://localhost:8000';
+  constructor(private _api: SignupService, private route: ActivatedRoute, private router: Router) { }
+  password_mismatch = false;
+  signup_form = 1;
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  confirmPassword: string;
+  invitation_id: string;
+  project_id: number;
+  strong_password: boolean = false;
+  passwordMessage = "";
   ngOnInit() {
+   this.route.queryParams.subscribe(res=>{
+     if (res.status == "success")
+     {
+       this.signup_form = 2;
+     }
+     else if(res.status == "failure")
+     {
+       this.signup_form = 3;
+     }
+     else{
+     this.project_id = parseInt(res.sop);
+     this.invitation_id = res.invitation_id;
+     this.email = res.email;
+     this.firstName = res.first_name;
+     this.lastName = res.last_name;
+     }
+
+   })
   }
 
+  checkStrength(){
+    console.log(this.password);
+    let password_status = this._api.strengthMessage(this.password);
+    this.strong_password = password_status["strong_password"];
+    this.passwordMessage = password_status["passwordMessage"];
+  }
+
+  loginPage(){
+    this.router.navigate(['/']);
+  }
+
+  externalSignup()
+  {
+    let signup_details = {'email': this.email, 'password': this.password, 
+                          'invitation_id':this.invitation_id,
+                          'sop': this.project_id};
+
+    
+    if(this.strong_password){
+      if(this.password == this.confirmPassword)
+    {
+      this.password_mismatch = false;
+    this._api.signUpUser(signup_details).subscribe(res=>{
+  
+      if(res == "Success"){
+        this.signup_form=2;
+       }
+       else{
+         this.signup_form=3;
+       }
+    })
+     
+   }
+  
+  else {
+    this.passwordMessage="Password Mismatch"
+  }
+  }
+  else{
+    this.passwordMessage = "Password should contain atleast 1 Small Alphabet, 1 Capital Alphabet , 1 Number, 1 Special Character";
+  }
+ 
+  }
+
+  passwordStrengthStatus:string = 'Weak';
+  onStrengthChange($event){
+    if($event < 3){
+      this.passwordStrengthStatus = 'Weak';
+    }else if($event == 3){
+      this.passwordStrengthStatus = 'Medium';
+    }else if($event > 3){
+      this.passwordStrengthStatus = 'Strong';
+    }
+  }
 }

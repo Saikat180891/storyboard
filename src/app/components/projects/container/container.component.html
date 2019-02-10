@@ -8,11 +8,16 @@
             <div class="row">
               <ng-container>
                 <div class="grid-item">
-                  <app-card [cardData]="{id:0}"></app-card>
+                  <app-card [cardData]="{id:0}" (openCreateProject)="onCreateProject($event)"></app-card>
                 </div>
               </ng-container>
-              <div class="grid-item" *ngFor="let cardData of _ContainerService.cardContents">
-                <app-card [cardData]="cardData" (deleteSop)="onDeleteSop($event)" (grantedPermissions)="givenPermissions($event)"></app-card>
+              <div class="grid-item" *ngFor="let cardData of _ContainerService.cardContents; let i=index">
+                <app-card 
+                  [cardData]="cardData" 
+                  (deleteSop)="onDeleteSop($event)" 
+                  (grantedPermissions)="givenPermissions($event)" 
+                  (openEditProject)="onEditProject($event, i)">
+                </app-card>
               </div>
             </div>
           </div>
@@ -25,11 +30,13 @@
   </div>
 
   <ngx-spinner 
-    bdColor="rgba(0,0,0,0.7)"
+    bdColor="rgba(56, 73, 109, 0.8)"
     size="medium"
     color="#fff"
-    type="ball-scale-multiple">
-    <p style="font-size: 20px; color: #fff">Loading...</p>
+    type="ball-spin-clockwise"
+    class="myspinner"
+    >
+    <!-- <p style="font-size: 20px; color: #fff">Loading...</p> -->
   </ngx-spinner>
   
   <!-- <div class="filter">
@@ -46,5 +53,11 @@
   </div>
 </div>
 
+<div class="overlay" *ngIf="openEditProjectDialogBox">
+  <app-backdrop [permissions]="permissionsGrantedForBackdrop" [projectData]="projectData" 
+  (close)="openEditProjectDialogBox=false"></app-backdrop>
+</div>
 
-<app-backdrop [permissions]="permissionsGrantedForBackdrop"></app-backdrop>
+<div class="overlay" *ngIf="openCreateProjectDialogBox">
+  <app-create-sop (close)="openCreateProjectDialogBox=false"></app-create-sop>
+</div>
