@@ -70,7 +70,7 @@ export class SidebarComponent implements OnInit {
   fetchAllSnapshotsAlreadyTaken(){
     this.__sidebarService.getAllThumbnails(`/sop/${this.__page.projectId}/image.json`).subscribe((res:any)=>{
       res.forEach(element => {
-        element['thumbnail'] = element['image_url'];
+        element['thumbnail'] = element['logo_url'];
       });
       this.__page.imageGalleryContent = this.imageGalleryContent = res;
       // console.log(res);
