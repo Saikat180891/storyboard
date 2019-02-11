@@ -49,4 +49,8 @@ export class SidebarService {
   deleteContent(endpoint:string){
     return this.http.delete(this.__api.apiUrl + endpoint, this.accessToken);
   }
+
+  uploadImage(endpoint:string, file){
+    return this.http.post(this.__api.apiUrl + endpoint, file, this.accessToken);
+  }
 }

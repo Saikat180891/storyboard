@@ -219,6 +219,15 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  onImageUpload(file){
+    const apiEndpoint = `/sop/${this.__page.projectId}/image.json`;
+    let formData = new FormData();
+    formData.append('image', file);
+    this.__sidebarService.uploadImage(apiEndpoint, formData).subscribe(res=>{
+      this.fetchAllSnapshotsAlreadyTaken();
+    })
+  }
+
   convertSecondsToMinutes(time:number){
     var toHHMMSS = (secs) => {
       var sec_num = parseInt(secs, 10)    
@@ -298,13 +307,16 @@ export class SidebarComponent implements OnInit {
   onDeleteImage($event){
     const apiEndpoint = `/sop/image/${$event.content.id}.json`;
     this.__sidebarService.deleteContent(apiEndpoint).subscribe(res=>{
-      this.imageGalleryContent.splice($event.index, 1);
-      this.__page.imageGalleryContent.splice($event.index, 1);
+      // this.imageGalleryContent.splice($event.index, 1);
+      // this.__page.imageGalleryContent.splice($event.index, 1);
       this.snackBar.open('Snapshot deleted successfully', 'Success', {duration: 3000});
     },
     err=>{
       console.log("Error while deleting snapshot", err);
       this.snackBar.open('Failed to delete the selected snapshot', 'Failed', {duration: 3000});
+    },
+    ()=>{
+      this.fetchAllSnapshotsAlreadyTaken();
     })
   }
 }

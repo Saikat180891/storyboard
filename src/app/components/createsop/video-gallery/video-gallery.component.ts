@@ -18,7 +18,7 @@ export class VideoGalleryComponent implements OnInit, OnChanges {
   constructor(private __sidebarService:SidebarService, private __page:PageService) { }
 
   ngOnInit() {
-    console.log(this.type)
+    console.log(this.data)
   }
   
   ngOnChanges(){
@@ -38,8 +38,6 @@ export class VideoGalleryComponent implements OnInit, OnChanges {
 
   onFileSelected($event:any){
     this.addNewFile.emit($event.target.files[0]);
-    
-    console.log($event.target.files[0]);
   }
 
   onPlayVideo(content:any, index:number){
