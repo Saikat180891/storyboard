@@ -26,7 +26,7 @@
         <span class="highlight" > Upload File</span>
         <div class="dialog-group padding-all upload height-auto">
           <div class="relative pointer">
-            <button mat-stroked-button>
+            <button mat-stroked-button [ngStyle]="{'width':'100%'}">
               <span *ngIf="!file_name">Upload Excel File</span>
               <span *ngIf="!file_name"><small>(Max Size 200MB)</small></span>
               <span *ngIf="file_name">{{file_name}}</span>

@@ -4,6 +4,8 @@ import {SidebarService} from '../services/sidebar/sidebar.service';
 import {PageService} from '../services/page/page.service';
 import {HttpEventType, HttpResponse} from '@angular/common/http';
 import {MatSnackBar} from '@angular/material';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidebar',
@@ -15,6 +17,8 @@ export class SidebarComponent implements OnInit {
   @ViewChild('videoPlayer') videoPlayer:ElementRef;
   @ViewChild('canvas') canvas:ElementRef;
   @ViewChild('volumeController') volumeController:ElementRef;
+  protected ngUnsubscribe = new Subject<void>();
+
   isPlaying:boolean = false;
   isMuted:boolean = false;
   duration:any = "00:00";
@@ -216,20 +220,15 @@ export class SidebarComponent implements OnInit {
   }
 
   convertSecondsToMinutes(time:number){
-    // let secs = JSON.stringify(time);
-    // var measuredTime = new Date(null);
-    // measuredTime.setSeconds(Number(secs));
-    // var MHSTime = measuredTime.toISOString().substr(11, 8);
-    // return MHSTime;
-      var toHHMMSS = (secs) => {
-        var sec_num = parseInt(secs, 10)    
-        var hours   = Math.floor(sec_num / 3600) % 24
-        var minutes = Math.floor(sec_num / 60) % 60
-        var seconds = sec_num % 60    
-        return [hours,minutes,seconds]
-            .map(v => v < 10 ? "0" + v : v)
-            .filter((v,i) => v !== "00" || i > 0)
-            .join(":")
+    var toHHMMSS = (secs) => {
+      var sec_num = parseInt(secs, 10)    
+      var hours   = Math.floor(sec_num / 3600) % 24
+      var minutes = Math.floor(sec_num / 60) % 60
+      var seconds = sec_num % 60    
+      return [hours,minutes,seconds]
+          .map(v => v < 10 ? "0" + v : v)
+          .filter((v,i) => v !== "00" || i > 0)
+          .join(":");
     }
 
     return toHHMMSS(time);
@@ -251,7 +250,9 @@ export class SidebarComponent implements OnInit {
     const apiEndpoint = `/sop/${this.__page.projectId}/video.json`;
     let videoData = new FormData();
     videoData.append('video', $event);
-    this.videoUpload = this.__sidebarService.sendVideo(apiEndpoint, videoData).subscribe(event=>{
+    this.videoUpload = this.__sidebarService.sendVideo(apiEndpoint, videoData)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(event=>{
       if (event.type === HttpEventType.UploadProgress) {
         // This is an upload progress event. Compute and show the % done:
         this.uploadProgress = true;
@@ -290,7 +291,8 @@ export class SidebarComponent implements OnInit {
   }
 
   onCancelVideoUpload(){
-    // this.videoUpload.unsubscribe();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   onDeleteImage($event){
