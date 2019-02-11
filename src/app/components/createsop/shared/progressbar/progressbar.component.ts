@@ -6,7 +6,8 @@ import {UicontrolService} from '../../services/uicontrol.service';
   styleUrls: ['./progressbar.component.scss']
 })
 export class ProgressbarComponent implements OnInit, OnChanges {
-  @Input('progressChange') progressChange:number;
+  @Input('progressChange') progressChange:number = 0;
+  @Input('buffer') buffer:number;
   @Output('changeCurrentTime') changeCurrentTime = new EventEmitter<any>();
   width:string;
   progressValue:number = 0;
@@ -18,7 +19,13 @@ export class ProgressbarComponent implements OnInit, OnChanges {
   
   ngOnChanges(){
     this.width = this.progressChange.toFixed(1) + "%";
-    this.progressValue = this.progressChange;
+    if(this.progressChange == undefined || isNaN(this.progressChange)){
+      this.progressValue = this.progressChange = 0;
+    }else{
+      this.progressValue = this.progressChange;
+    }
+    console.log(this.progressValue)
+
   }
 
   onDragHandle($event){

@@ -46,8 +46,8 @@ export class VideoGalleryComponent implements OnInit, OnChanges {
     this.optionSelected.emit({index:index, content:content});
   }
 
-  onDeleteContent(content, i){
-    this.deleteContent.emit({content: content, index:i});
+  onDeleteContent(content, i, type){
+    this.deleteContent.emit({content: content, index:i, type:type});
   }
 
 }

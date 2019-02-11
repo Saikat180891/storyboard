@@ -45,21 +45,32 @@ export class ResetPasswordComponent implements OnInit {
     this.strong_password = password_status["strong_password"];
     this.passwordMessage = password_status["passwordMessage"];
   }
-
-resetPassword(){
-
-  let reset_password_fields = {'email': this.email, 'password': this.password, 'reset_password_token':this.passwordResetToken};
-  if(this.strong_password && this.password == this.confirmPassword)
-  {
-  this._api.resetPasswordUser(reset_password_fields).subscribe(res=>{
-    if(res == "Success"){
-      this.reset_password_form = 2;
+  
+  passwordStrengthStatus:string = 'Weak';
+  onStrengthChange($event){
+    if($event < 3){
+      this.passwordStrengthStatus = 'Weak';
+    }else if($event == 3){
+      this.passwordStrengthStatus = 'Medium';
+    }else if($event > 3){
+      this.passwordStrengthStatus = 'Strong';
     }
-    else{
-      this.reset_password_form = 3;
-    }
-  })
+  }
 
-}
-}
+  resetPassword(){
+
+    let reset_password_fields = {'email': this.email, 'password': this.password, 'reset_password_token':this.passwordResetToken};
+    if(this.strong_password && this.password == this.confirmPassword)
+    {
+    this._api.resetPasswordUser(reset_password_fields).subscribe(res=>{
+      if(res == "Success"){
+        this.reset_password_form = 2;
+      }
+      else{
+        this.reset_password_form = 3;
+      }
+    })
+
+  }
+  }
 }

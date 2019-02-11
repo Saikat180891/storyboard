@@ -19,7 +19,9 @@ export class DashboardComponent implements OnInit {
         .subscribe((res:any) => {
           this.__scrollbar.setScrollPosition(res.target.scrollTop)
           // this.__scrollbar.scrollbarPosition = res.target.scrollTop;
-          // console.log(this.__scrollbar.scrollbarPosition);
+          // this.__scrollbar.broadCastScrollPosition.subscribe(res=>{
+          //   console.log(res);
+          // })
     });
   }
 

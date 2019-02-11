@@ -35,13 +35,13 @@
               <div class="picture-overlay-btns" [ngSwitch]="type">
                 <button *ngSwitchCase="'VIDEO'" (click)="onPlayVideo(content, i)"><i class="fas fa-play"></i><span>Play</span></button>
                 <button *ngSwitchCase="'IMAGE'" (click)="onViewImage(i, content)"><i class="fas fa-play"></i><span>View</span></button>
-                <button><i class="far fa-trash-alt" (click)="onDeleteContent(content, i)"></i><span>Delete</span></button>
+                <button><i class="far fa-trash-alt" (click)="onDeleteContent(content, i, type)"></i><span>Delete</span></button>
               </div>
             </div>
           </div>
           <div class="picture-title">
-            <span>PicturenamePicturename Picture name</span>
-            <span>12:22</span>
+            <span>{{content.video_name?content.video_name:content.image_name}}</span>
+            <span>{{content.video_length?content.video_length:''}}</span>
           </div>
         </div>
       </mat-grid-tile>

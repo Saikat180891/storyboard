@@ -4,6 +4,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http'; 
 
 // import { CreatesopRoutingModule } from './createsop-routing.module';
@@ -33,6 +34,7 @@ const routes: Routes = [
     MatSliderModule,
     MatProgressBarModule,
     HttpClientModule,
+    MatSnackBarModule,
     RouterModule.forChild(routes)
     // CreatesopRoutingModule
   ],

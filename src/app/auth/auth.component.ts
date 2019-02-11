@@ -34,7 +34,7 @@ export class AuthComponent {
     this.authService.externalUserLogin(login_details);
   }
   azureLogin(){
-    window.location.href= this.baseUrl+'/login_ms';
+    window.location.href = this.baseUrl+'/login_ms';
   }
 
   initiateForgotPassword()

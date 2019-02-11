@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, OnChanges, AfterViewInit, AfterContentInit, HostListener } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, AfterViewInit, AfterContentInit, HostListener, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import {FormBuilder, FormGroup, FormControlName, FormControl, Validators} from '@angular/forms';
 import {slideDown, hideInOut} from '../../../animation';
+import {fromEvent} from 'rxjs';
 
 import {AppcontrolService} from '../../../services/controlservice/appcontrol.service';
 import {DataService} from '../../../data.service';
@@ -10,9 +11,8 @@ import {PreloaderService} from '../../shared/preloader/preloader.service';
 import {CardService} from '../card/card.service';
 import {ContainerComponent} from '../container/container.component';
 import { NgxSpinnerService } from 'ngx-spinner';
-import {MatSelectModule} from '@angular/material/select';
-import { ConditionalExpr } from '@angular/compiler';
-
+import {EditProject} from '../model/edit-project.model';
+import { identifierModuleUrl } from '@angular/compiler';
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
   LEFT_ARROW = 37,
@@ -30,14 +30,27 @@ export enum KEY_CODE {
 export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() cardID;
   @Input('permissions') permissions:any;
+  @Input('projectData') projectData:any;
+  @Output('close') close = new EventEmitter<boolean>();
+  @ViewChild('dialogBox') dialogBox:ElementRef;
+
   imagePath:string = '';
   userDatas;
   assigneeName:string = '';
+  projectDataToEdit:EditProject = {
+    id: -1,
+    clientName: '',
+    title: '',
+    chargeCode: '',
+    rCodes: '',
+    logo: '',
+    due_date: ''
+  };
 
   createSOP = "Create New Project";
   editSOP = "Edit Project";
 
-  arr = ["Saikat paul", "sujit", "Aadesh", "kanishka", "Manjit", "rakesh", "ayush", "arpit", "arijit", "venkat", "Bhavana", "manbir", "shankar"];
+  invitationList = [];
 
   roles: string[] = ['SuperAdmin', 'Manager', 'Analyst'];
   disableSelect:boolean = false;
@@ -73,6 +86,8 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
 
   selectedTabIndex: number = 0;
   invitationSuccess: boolean = false;
+  filePreview:any;
+
 
   /**
    * These variables are used to display messages using string interpolation technique
@@ -87,10 +102,13 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   users:string[] = ['SuperAdmin', 'Manager', 'Analyst'];
   user:string;
 
+  //payload structure
+  logo:any;
+
   /**
    * This variables are used while rearranging the date
    */
-  editSelectedDate;
+  editSelectedDate:Date;
 
   options = [];
 
@@ -98,18 +116,8 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
 
   permissionGranted:any;
   newlyCreatedAssignees:any = [];
-  createdAssignees:any = [];
-
-
-  sopForm = this.formBuilder.group({
-            id: [''],
-            clientName: ['', Validators.required],
-            title: ['', Validators.required],
-            chargeCode: ['', Validators.required],
-            due_date: ['', Validators.required],
-            rCodes: [''],
-            logo: ['']
-          });
+  alreadyCreatedUsers:any = [];
+  dueDate:Date;
  
 
   constructor(private _UIControllerService:AppcontrolService,
@@ -121,25 +129,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
               private snackBar: MatSnackBar,
               private spinner: NgxSpinnerService,
               private __containerComponent: ContainerComponent
-              ) {
-
-              this._UIControllerService.data.subscribe(
-                  (data:any)=>{
-                    console.log("dataFrom_UIControllerService ",data)
-                    this.sopForm.patchValue({
-                      id: data.id,
-                      clientName: data.clientName,
-                      title: data.title,
-                      chargeCode: data.chargeCode,
-                      due_date: this.arrangeDateInCorrectFormat(data.due_date),
-                      rCodes: 5,
-                      logo: data.logo
-                    });
-                    this.filePreview = this.sopForm.value.logo;
-                    this.createdAssignees = data.assignee;
-                  }
-                );
-  }
+              ) {}
 
   /**
    * Hide backdrop when escape is pressed
@@ -158,23 +148,37 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    */
   @HostListener('document:keyup.enter', ['$event'])
   keyEventEnter(event: KeyboardEvent) {
-    //console.log(event)
     if (event.keyCode === KEY_CODE.ENTER) {
-      this.onCreateNew();
+      this.onSave();
     } 
   }
 
   ngOnInit() {
-    // this.permissionGranted = this._ContainerService.cardContents[]
-    setTimeout(()=>{
-      this.userDatas = this._dataService.getBackdropData();
+    this.projectDataToEdit = {
+      id: JSON.parse(JSON.stringify(this.projectData)).id,
+      title: JSON.parse(JSON.stringify(this.projectData)).title,
+      chargeCode: JSON.parse(JSON.stringify(this.projectData)).chargeCode,
+      clientName: JSON.parse(JSON.stringify(this.projectData)).clientName,
+      due_date: JSON.parse(JSON.stringify(this.projectData)).due_date,
+      rCodes: JSON.parse(JSON.stringify(this.projectData)).number_epics,
+      logo: JSON.parse(JSON.stringify(this.projectData)).logo
+    };
+    this.filePreview = this.projectDataToEdit.logo;
+    this.alreadyCreatedUsers = JSON.parse(JSON.stringify(this.projectData.assignee));
+    this.dueDate = this.arrangeDateInCorrectFormat(JSON.parse(JSON.stringify(this.projectData)).due_date);
+
+    fromEvent(document, 'click').subscribe(res=>{
+      this.options = [];
     })
+  }
+
+  onSelectedDateChange(date:Date){
+    this.projectDataToEdit.due_date = this.formatDate(date);
+    this.dueDate = date;
   }
   
   
   ngOnChanges(){
-    console.log('current permissions granted', this.permissions)
-    
   }
   
   ngAfterViewInit(){
@@ -185,17 +189,14 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * @param event 
    */
   onKeyPress(event){
-    // if(this._ContainerService.permissions[0]["permissions"]["Can add assignee"] || this._ContainerService.permissions[0]["permissions"]["Can change assignee"]){
     console.log(event.target.value);
     this._dataService.fetchData(`/users.json?startsWith=${event.target.value}`)
       .subscribe(res=>{
         this.options = res;
-        console.log(res);
       },
       err=>{
-        console.log(err);
+        console.log("Error while fetching users", err);
       });
-    // }
   }
 
   /**
@@ -203,11 +204,9 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * @param option 
    */
   onSelect(option:any){
-    console.log(option);
-    this.createdAssignees.unshift(option);
     this.newlyCreatedAssignees.push(option);
-    console.log(this.createdAssignees, this.newlyCreatedAssignees);
     this.options = [];
+    console.log(this.newlyCreatedAssignees, this.alreadyCreatedUsers);
   }
 
   /**
@@ -228,48 +227,23 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
 
   onSelectionChange(value, index){
     this.newlyCreatedAssignees
-    console.log(this.newlyCreatedAssignees, value, index, this.createdAssignees)
+    console.log(this.newlyCreatedAssignees, value, index)
   }
 
   /**
    * To close the backdrop dialog-box
    */
   onClose(){
-    this._UIControllerService.setOverlay(false);
-    this.imagePath = '';
-    this.createAssignees = [];
-    this.validateAutomationSystemName = false;
-    this.validateClientName = false;
-    this.validateChargeCode = false;
-    this.validateSelectedDate = false;
-    this.border = "1px solid #D1D1D1";
-    this.assigneeName = '';
-    this.filePreview = '';
-    this.options = [];
-    
-    /**
-     * Clear the form
-     */
-    this.sopForm.setValue({
-      id: '',
-      clientName: '',
-      title: '',
-      chargeCode: '',
-      due_date: '',
-      rCodes: '',
-      logo: ''
-    });
-
+    this.close.emit(false);
   }
-  filePreview;
+
   /**
    * To select and preview image for logo
    * @param fileSelected
    */
   onFileSelected(fileSelected){
     if (fileSelected.target.files && fileSelected.target.files[0]) {
-      this.sopForm.value.logo = fileSelected.target.files[0];
-      console.log(this.sopForm.value.logo)
+      this.projectDataToEdit.logo = fileSelected.target.files[0];
       let reader:any = new FileReader();
       reader.readAsDataURL(fileSelected.target.files[0]);
       reader.onload = (fileSelected) => {
@@ -278,59 +252,36 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
+  onRemoveListItem(index:number){
+    this.newlyCreatedAssignees.splice(index, 1);
+  }
+
   /**
    * To remove an assignee from the 'Assign To' list
    * @param assigneeListItem
    */
-  onRemove(id){
+  onRemove(id:number){
     // if(this._ContainerService.permissions[0]["permissions"]["Can delete assignee"]){
       this._dataService.delete(`/sop/assignee`, `${id}.json`)
         .subscribe(res=>{
-          this.createdAssignees.forEach(element=>{
+          this.alreadyCreatedUsers.forEach(element=>{
             if(element.id == id){
-              this.createdAssignees.splice(this.createdAssignees.indexOf(element), 1);
+              this.alreadyCreatedUsers.splice(this.alreadyCreatedUsers.indexOf(element), 1);
             }
           });
       });
     // }
   }
 
-  /**
-   * To add an assignee to the 'Assign To' list
-   * 
-   */
-  addAssignee(status){
-  }
 
   /**
    * Create a new SOP on click
    */
-
-
    validateForm(object){
     let validationStatus = [];
 
-    for (let key in this.sopForm.value) {
-      if(key == 'clientName'){
-        validationStatus[0] = !(this.sopForm.value[key] == '');
-        this.validateClientName = !validationStatus[0];
-      }
+    for (let key in object) {
 
-      if(key == 'title'){
-        validationStatus[1] = !(this.sopForm.value[key] == '');
-        this.validateAutomationSystemName = !validationStatus[1];
-      }
-
-      if(key == 'chargeCode'){
-        validationStatus[2] = !(this.sopForm.value[key] == '');
-        this.validateChargeCode = !validationStatus[2];
-      }
-      if(key == 'due_date'){
-        console.log("Date",this.sopForm.value[key]);
-        validationStatus[3] = !(this.sopForm.value[key] == 'NaN/NaN/NaN');
-        this.validateSelectedDate = !validationStatus[3];
-        this.border = !validationStatus[3]?"1px solid rgb(245, 117, 117)":"1px solid #D1D1D1";
-      }
     }
     console.log(validationStatus);
 
@@ -345,127 +296,87 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    }
 
    onTabChange($event){
-     console.log($event.index);
-    if($event.index == 0){
-      this.selectedTabIndex = 0;
-    }else if($event.index == 1){
-      this.selectedTabIndex = 1;
-  }
+      this.selectedTabIndex = $event.index;
   }
 
-  onCreateNew(){
-    this.sopForm.value.due_date = this.formatDate(this.sopForm.value.due_date);
-    let validationCheck = this.validateForm(this.sopForm.value);
-    if(validationCheck == 0){
-      // console.log("the created sop form is ", this.sopForm.value);
-      let formData = this.JSONtoFormData(this.sopForm.value);
-      let sopId:number;
+  onAddUser(){
+    let temporaryObject = {
+      inviteEmail:'',
+      inviteRole:'',
+      inviteFirstName:'',
+      inviteLastName:''
+    };
+    this.invitationList.push(temporaryObject);
+  }
+  
+  // onSave(){
+    // }
+    
+    
+    /**
+     * Save an editted card
+     */
+    onSave(){
+      console.log(this.invitationList, this.projectDataToEdit)
+    // let validationCheck = this.validateForm(this.sopForm.value);
+
+    // if(validationCheck == 0){
       this.spinner.show();
-      this._dataService.postData('/sop.json',  formData)
-      .subscribe(
-        //if response successfull
-        (response)=> {
-          this.__containerComponent.getListOfAllProjects();
-          if(this.newlyCreatedAssignees.length > 0){
-            this.newlyCreatedAssignees.forEach((ele, index, array)=>{
-              this._dataService.postData(`/sop/${sopId}/assignee.json`, {user: ele.email, role: this.user})
-                .subscribe(res=>{});
-              if(index == array.length - 1){
-                this.spinner.hide();
-                this.onOverlayClose();
-              }
-            });
-          }else{
-            this.spinner.hide();
-            this.onOverlayClose();
-          }
-          this.snackBar.open("Project has been created", "Success", {duration: 2000});
-        },
-        //if response not successfull
-        (err)=> {
-            console.error("ERROR",err);
-            this._preloaderService.openPreloader = false;
-            var keys = Object.keys(err.error);
-            var error= "";
-            keys.forEach(key => {
-              error += key+": "+err.error[key] +"\n";
-            });
-            this.spinner.hide();
-            this.onOverlayClose();
-            this.snackBar.open(error, "Failed", {duration: 2000});
-            this.spinner.hide();
-            this.onOverlayClose();
-        },
-        ()=>{
-          this.spinner.hide();
-          this.onOverlayClose();
-        }
-      );
-    }
-  }
 
-  /**
-   * Save an editted card
-   */
-  onSave(){
-    var dateBeforeSave = this.sopForm.value.due_date;
-    let sopId = this.sopForm.value.id;
-    this.sopForm.value.due_date = this.formatDate(this.sopForm.value.due_date);
-    let validationCheck = this.validateForm(this.sopForm.value);
-
-    if(validationCheck == 0){
-      this.spinner.show();
-      console.log("the edited sop form is ", this.sopForm.value);
-
-      let formData = this.JSONtoFormData(this.sopForm.value);
-      if(typeof formData.get("logo") === "string"){
-        formData.delete("logo");
+      let formData = new FormData();
+      for(let formFieldValue in this.projectDataToEdit){
+        formData.append(formFieldValue, this.projectDataToEdit[formFieldValue]);
+        console.log(formData.get(formFieldValue));
       }
+      if(typeof formData.get('logo') === 'string'){
+        formData.set('logo', '');
+      }
+      formData.set('rCodes', '');
 
-
-      this._dataService.update('/sop', this.sopForm.value.id + '.json', formData)
+      this._dataService.update('/sop', this.projectDataToEdit.id + '.json', formData)
         .subscribe(response=>{
           console.log("RESPONSE ON SOP EDIT", response)
-          // this._ContainerService.cardContents.forEach((element, index)=>{
-          //   if(element.id == this.sopForm.value.id){
-          //     this._ContainerService.cardContents[index] = {
-          //       themeColor: this._ContainerService.colorPicker[this._ContainerService.getUniqueNumber()],
-          //       reasonCodes: 0,
-          //       ...response,
-          //       logo: response["image_url"]
-          //     }
-          //   }
-          // });
-          this.__containerComponent.getListOfAllProjects();
+
           if(this.newlyCreatedAssignees.length > 0){
             this.newlyCreatedAssignees.forEach((ele, index, array)=>{
-              this._dataService.postData(`/sop/${sopId}/assignee.json`, {user: ele.email, role: 'Manager'})
-                .subscribe(res=>{});
-              if(index == array.length - 1){
-                this.spinner.hide();
-                this.onOverlayClose();
-              }
+              this._dataService.postData(`/sop/${this.projectDataToEdit.id}/assignee.json`, 
+              {
+                user: ele.email, 
+                role: ele.role
+              })
+                .subscribe(res=>{
+                  this.alreadyCreatedUsers.push(ele);
+                  this.newlyCreatedAssignees.splice(this.newlyCreatedAssignees.indexOf(ele), 1);
+                });
             });
           }else{
             this.spinner.hide();
-            this.onOverlayClose();
+            this.onClose();
+            // this.onOverlayClose();
           }
-          this.snackBar.open("Project has been created", "Success", {duration: 2000});
+          this.snackBar.open("Project has been modified", "Success", {duration: 2000});
+
       },
       (err)=> {
         console.error("ERROR",err);
-        this._preloaderService.openPreloader = false;
+        // this._preloaderService.openPreloader = false;
         var keys = Object.keys(err.error);
         var error= "";
         keys.forEach(key => {
           error += key+": "+err.error[key] +"\n";
         });
+        this.spinner.hide();
+
         this.snackBar.open(error, "Failed", {duration: 2000});
+    },
+    ()=>{
+      this.__containerComponent.getListOfAllProjects();
+      this.onClose();
+      this.spinner.hide();
     }
     );
-    this.sopForm.value.due_date = dateBeforeSave;
+  // }
   }
-    }
 
   /**
    * Rearrange the date in the following format DD/MM/YYYY
@@ -498,31 +409,42 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     this.editSelectedDate.setFullYear(Number(newDate[2]));
     this.editSelectedDate.setMonth(Number(newDate[1])-1);
     this.editSelectedDate.setDate(Number(newDate[0]));
-    console.log(this.editSelectedDate)
     return this.editSelectedDate;
   }
 
   JSONtoFormData(json){
     let formData = new FormData();
       for(let fieldValue in json){
-        formData.append(fieldValue, json[fieldValue])
+        if(typeof fieldValue === 'string'){
+          delete json.fieldValue;
+        }else{
+          formData.append(fieldValue, json[fieldValue]);
+          console.log(formData.get(fieldValue));
+        }
       }
       return formData;
   }
 
   onSendInvitation(){
-    console.log("Success");
-    console.log(this.inviteEmail+" "+this.inviteFirstName+" "+this.inviteLastName+" "+this.inviteRole);
-    this._dataService.postData('/invite_users/', {"first_name": this.inviteFirstName, "email": this.inviteEmail, 
-                                                  "last_name": this.inviteLastName, "role": this.inviteRole, "sop": this.sopForm.value.id}).subscribe(
-                                                    res=>{
-                                                      this.invitationSuccess = true;
-                                                      this.inviteMessage = res;
-                                                      console.log(this.inviteMessage);
-                                                    }, 
-                                                    (err)=>{
-                                                      this.inviteMessage = err;
-                                                    })
-    
+    // console.log(this.inviteEmail+" "+this.inviteFirstName+" "+this.inviteLastName+" "+this.inviteRole);
+    this.invitationList.forEach(ele=>{
+      console.log(ele);
+
+      this._dataService.postData('/invite_users/', 
+      {
+        "first_name": ele.inviteFirstName, 
+        "email": ele.inviteEmail,               
+        "last_name": ele.inviteLastName, 
+        "role": ele.inviteRole, 
+        "sop": this.projectDataToEdit.id
+      }).subscribe(res=>{
+          this.invitationSuccess = true;
+          this.inviteMessage = res;
+          console.log(this.inviteMessage);
+        }, 
+        (err)=>{
+          this.inviteMessage = err;
+        });
+    });
   }
 }

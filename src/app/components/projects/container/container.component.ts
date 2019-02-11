@@ -18,7 +18,12 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
   userPermissions = [];
   activateSpinner:boolean = true;
 
+  openCreateProjectDialogBox:boolean = false;
+  openEditProjectDialogBox:boolean = false;
+
   permissionsGrantedForBackdrop:any;
+
+  projectData:any;
   
   constructor(
     private _dataService: DataService, 
@@ -39,6 +44,7 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
   }
   
   ngAfterViewChecked(){
+    // this.__spinner.show();
   }
   /**
    * fetch all projects and permission and combine both of them
@@ -100,6 +106,12 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
     });
   }
 
+  onEditProject($event:any, i){
+    this.projectData = $event.data;
+    this.openEditProjectDialogBox = $event.status;
+    console.log($event, i)
+  }
+
 
   onDeleteSop($event){
     this.warningToDeleteSop = $event.status;
@@ -129,4 +141,7 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
     console.log(permissions)
   }
   
+  onCreateProject($event){
+    this.openCreateProjectDialogBox = true;
+  }
 }

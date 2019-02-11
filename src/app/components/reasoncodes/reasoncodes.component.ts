@@ -11,7 +11,7 @@ import {PreloaderService} from '../shared/preloader/preloader.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {DataService} from '../../data.service';
 import {ScrollbarService} from '../../services/scrollbarService/scrollbar.service';
-
+import {hideInOut} from '../../animation';
 export interface UserData {
   id: string;
   name: string;
@@ -64,7 +64,8 @@ export interface ReceivedSprintConfig{
 @Component({
   selector: 'app-reasoncodes',
   templateUrl: './reasoncodes.component.html',
-  styleUrls: ['./reasoncodes.component.scss', './move-user-story.scss','./draggable.scss', './completed-warning.scss', './export.scss']
+  styleUrls: ['./reasoncodes.component.scss', './move-user-story.scss','./draggable.scss', './completed-warning.scss', './export.scss'],
+  animations: [hideInOut]
 })
 export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('totalPage') totalPage:ElementRef;
@@ -128,6 +129,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
               private __scrollbar:ScrollbarService) {}
 
   ngOnInit() {
+    // this.spinner.show();
     this.route.params.subscribe(params => {
       this._reasonCode.sopId = this._createUserStory.sopId = parseInt(params.id);
       this.getPermissionForEpicsPage(2, this._reasonCode.sopId);
@@ -201,7 +203,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
 
   benefitChartImage:string;
 
-  onShowBenefits(){
+  onShowBenefits(event){
     // if(environment.production){
     this.benefitChartImage = `${this.__api.apiUrl}/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png?q=${new Date().getTime()}`;
     // }else{
@@ -349,6 +351,10 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   onVirtualTabClicked(value:number){
+    let scrollPositionOfPage:number;
+    this.__scrollbar.broadCastScrollPosition.subscribe(res=>{
+      scrollPositionOfPage = Number(res);
+    });
     if(value == 0){
       this.selectedTabIndex = value;
       this._reasonCode.getUserStories(this._reasonCode.sopId);
@@ -358,6 +364,10 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
     }else if(value == 2){
       this.selectedTabIndex = value;
       this._reasonCode.getDeletedUserStories(this._reasonCode.sopId);
+      window.scrollTo({
+        top: scrollPositionOfPage,
+        left: 0
+      })
     }
   }
 

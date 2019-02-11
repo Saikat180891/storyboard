@@ -14,7 +14,7 @@
             </video>
             <div class="controls" *ngIf="true">
               <div class="slider">
-                <progress-bar [progressChange]="progress" (changeCurrentTime)="onChangeCurrentTime($event)"></progress-bar>
+                <progress-bar [progressChange]="progress" (changeCurrentTime)="onChangeCurrentTime($event)" [buffer]="buffered"></progress-bar>
               </div>
               <div class="player-start-buttons">
                 <span class="video-length">
@@ -52,7 +52,7 @@
           </div>
           <div class="application-name">
             <!-- <a [download]="createdImage" [href]="createdImage">Download here</a> -->
-            <span>Video name application</span>
+            <span>{{videoName}}</span>
           </div>
           <div class="video-gellery">
             <app-gallery [data]="videoGalleryContent" [type]="'VIDEO'" (optionSelected)="onSelectedVideo($event)" (addNewFile)="onVideoUpload($event)" (deleteContent)="onDeleteVideo($event)"></app-gallery>

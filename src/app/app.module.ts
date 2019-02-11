@@ -74,6 +74,7 @@ import { SignupusersComponent } from './authentication/signupusers/signupusers.c
 // import { ScrollbarComponent } from './services/scrollbarService/scrollbar/scrollbar.component';
 import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
+import { CreateSopComponent } from './components/projects/create-sop/create-sop.component';
 
 const routes = [
   {
@@ -148,6 +149,7 @@ const routes = [
     DashboardComponent,
     SignupusersComponent,
     ResetPasswordComponent,
+    CreateSopComponent,
     // ScrollbarComponent,
   ],
 

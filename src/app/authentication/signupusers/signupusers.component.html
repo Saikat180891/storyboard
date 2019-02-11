@@ -7,46 +7,55 @@
         <span>Storyboard</span>
         <div [ngSwitch]="signup_form">
         <ng-container *ngSwitchCase="1">
+
         <form class="form">
-          <div class="form-group">
-            <label for="username">Email Id</label>
+
+          <div class="form-group padding-all-side">
+            <label for="email">Email Id</label>
             <input class="text-box" type="email" [(ngModel)]="email" id="email" [ngModelOptions]="{standalone: true}" disabled>
-  
           </div>
+
           <div class="form-group horizontal-flex">
               <div class = "vertical-flex">
                 <label for="firstName">First Name</label>
-                <input class="horizontal-flex-text-box" type="text" [(ngModel)]="firstName" id="firstName" [ngModelOptions]="{standalone: true}" disabled>  
+                <input type="text" [(ngModel)]="firstName" id="firstName" [ngModelOptions]="{standalone: true}" disabled>  
               </div>
               <div class="vertical-flex">
                 <label for="lastName">Last Name</label>
-                <input class="horizontal-flex-text-box" type="text" [(ngModel)]="lastName" id="lastName" [ngModelOptions]="{standalone: true}" disabled>
+                <input type="text" [(ngModel)]="lastName" id="lastName" [ngModelOptions]="{standalone: true}" disabled>
               </div>
           </div>
 
-           <div class="form-group horizontal-flex">
-              <div class = "vertical-flex">
+            <div class="form-group horizontal-flex">
+              <div class = "vertical-flex increment-height">
                 <label for="newpassword">Password</label>
-                <input class="horizontal-flex-text-box" type="password" (blur)="checkStrength($event.value)" [(ngModel)]="password" id="newpassword" [ngModelOptions]="{standalone: true}">
-                <div class="password-strength-meter">
-                  <password-strength-meter [enableFeedback]="true" [password]="password"></password-strength-meter>  
+                <input type="password" (blur)="checkStrength($event.value)" [(ngModel)]="password" id="newpassword" [ngModelOptions]="{standalone: true}">
+                <div class="password-strength-meter gutter-top">
+                  <label for="">Password Strength: <b>{{passwordStrengthStatus}}</b></label>
+                  <password-strength-meter [password]="password" (strengthChange)="onStrengthChange($event)"></password-strength-meter>  
                 </div>
               </div>
-              <div class="vertical-flex">
+
+              <div class="vertical-flex increment-height">
                 <label for="confirmPassword">Confirm Password</label>
                 <input class="horizontal-flex-text-box" type="password" [(ngModel)]="confirmPassword" id="confirmPassword" [ngModelOptions]="{standalone: true}">
+                <div class="password-strength-meter password-message">
+                    {{passwordMessage}}
+                </div>
               </div>
+
             </div>
-            <p class ="message">{{passwordMessage}}</p>
-          <div class="form-group">
-            <button class="button button--login" (click)="externalSignup()">Sign up</button>
-          </div>
+
+            <div class="form-group">
+              <button class="button button--login" (click)="externalSignup()">Sign up</button>
+            </div>
         </form>
+
         <p>By clicking on Sign Up, you agree to the <a href="">Terms & Conditions</a> of Soroco</p>
         </ng-container>
         <ng-container *ngSwitchCase="2">
           <p> You have been successfully signed up for Storyboard. Click on the button below to login </p>
-          <a class="button button--login" href="/">login</a>
+          <button class="button button--login" (click)="loginPage()">Login</button>
         </ng-container>
         <ng-container *ngSwitchCase="3">
             <p> Invalid Invitation </p>
