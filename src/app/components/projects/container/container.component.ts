@@ -64,7 +64,7 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
           logo: element["logo_url"]
         });
       });
-      // console.log(this._ContainerService.cardContents);
+      console.log("LGOGGO", res);
     },
     (err)=>{
       this.__spinner.hide();
