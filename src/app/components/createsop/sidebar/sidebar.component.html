@@ -79,7 +79,7 @@
             <span>Video name application</span>
           </div>
           <div class="video-gellery">
-            <app-gallery [data]="imageGalleryContent" [type]="'IMAGE'" (optionSelected)="onselectRequestedThumbnail($event)" (deleteContent)="onDeleteImage($event)"></app-gallery>
+            <app-gallery [data]="imageGalleryContent" [type]="'IMAGE'" (optionSelected)="onselectRequestedThumbnail($event)" (addNewFile)="onImageUpload($event)" (deleteContent)="onDeleteImage($event)"></app-gallery>
           </div>
         </div>
       </mat-tab>

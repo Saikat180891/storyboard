@@ -4,6 +4,8 @@ import {SidebarService} from '../services/sidebar/sidebar.service';
 import {PageService} from '../services/page/page.service';
 import {HttpEventType, HttpResponse} from '@angular/common/http';
 import {MatSnackBar} from '@angular/material';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidebar',
@@ -15,6 +17,8 @@ export class SidebarComponent implements OnInit {
   @ViewChild('videoPlayer') videoPlayer:ElementRef;
   @ViewChild('canvas') canvas:ElementRef;
   @ViewChild('volumeController') volumeController:ElementRef;
+  protected ngUnsubscribe = new Subject<void>();
+
   isPlaying:boolean = false;
   isMuted:boolean = false;
   duration:any = "00:00";
@@ -66,7 +70,7 @@ export class SidebarComponent implements OnInit {
   fetchAllSnapshotsAlreadyTaken(){
     this.__sidebarService.getAllThumbnails(`/sop/${this.__page.projectId}/image.json`).subscribe((res:any)=>{
       res.forEach(element => {
-        element['thumbnail'] = element['logo_url'];
+        element['thumbnail'] = element['image_url'];
       });
       this.__page.imageGalleryContent = this.imageGalleryContent = res;
       // console.log(res);
@@ -215,21 +219,25 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  onImageUpload(file){
+    const apiEndpoint = `/sop/${this.__page.projectId}/image.json`;
+    let formData = new FormData();
+    formData.append('image', file);
+    this.__sidebarService.uploadImage(apiEndpoint, formData).subscribe(res=>{
+      this.fetchAllSnapshotsAlreadyTaken();
+    })
+  }
+
   convertSecondsToMinutes(time:number){
-    // let secs = JSON.stringify(time);
-    // var measuredTime = new Date(null);
-    // measuredTime.setSeconds(Number(secs));
-    // var MHSTime = measuredTime.toISOString().substr(11, 8);
-    // return MHSTime;
-      var toHHMMSS = (secs) => {
-        var sec_num = parseInt(secs, 10)    
-        var hours   = Math.floor(sec_num / 3600) % 24
-        var minutes = Math.floor(sec_num / 60) % 60
-        var seconds = sec_num % 60    
-        return [hours,minutes,seconds]
-            .map(v => v < 10 ? "0" + v : v)
-            .filter((v,i) => v !== "00" || i > 0)
-            .join(":")
+    var toHHMMSS = (secs) => {
+      var sec_num = parseInt(secs, 10)    
+      var hours   = Math.floor(sec_num / 3600) % 24
+      var minutes = Math.floor(sec_num / 60) % 60
+      var seconds = sec_num % 60    
+      return [hours,minutes,seconds]
+          .map(v => v < 10 ? "0" + v : v)
+          .filter((v,i) => v !== "00" || i > 0)
+          .join(":");
     }
 
     return toHHMMSS(time);
@@ -251,7 +259,9 @@ export class SidebarComponent implements OnInit {
     const apiEndpoint = `/sop/${this.__page.projectId}/video.json`;
     let videoData = new FormData();
     videoData.append('video', $event);
-    this.videoUpload = this.__sidebarService.sendVideo(apiEndpoint, videoData).subscribe(event=>{
+    this.videoUpload = this.__sidebarService.sendVideo(apiEndpoint, videoData)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(event=>{
       if (event.type === HttpEventType.UploadProgress) {
         // This is an upload progress event. Compute and show the % done:
         this.uploadProgress = true;
@@ -290,19 +300,23 @@ export class SidebarComponent implements OnInit {
   }
 
   onCancelVideoUpload(){
-    // this.videoUpload.unsubscribe();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   onDeleteImage($event){
     const apiEndpoint = `/sop/image/${$event.content.id}.json`;
     this.__sidebarService.deleteContent(apiEndpoint).subscribe(res=>{
-      this.imageGalleryContent.splice($event.index, 1);
-      this.__page.imageGalleryContent.splice($event.index, 1);
+      // this.imageGalleryContent.splice($event.index, 1);
+      // this.__page.imageGalleryContent.splice($event.index, 1);
       this.snackBar.open('Snapshot deleted successfully', 'Success', {duration: 3000});
     },
     err=>{
       console.log("Error while deleting snapshot", err);
       this.snackBar.open('Failed to delete the selected snapshot', 'Failed', {duration: 3000});
+    },
+    ()=>{
+      this.fetchAllSnapshotsAlreadyTaken();
     })
   }
 }
