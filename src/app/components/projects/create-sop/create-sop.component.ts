@@ -6,7 +6,6 @@ import {AppcontrolService} from '../../../services/controlservice/appcontrol.ser
 import {DataService} from '../../../data.service';
 import {ContainerService} from '../container/container.service';
 import {MatSnackBar} from '@angular/material';
-import {PreloaderService} from '../../shared/preloader/preloader.service';
 import {CardService} from '../card/card.service';
 import {ContainerComponent} from '../container/container.component';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -126,7 +125,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
               private _dataService:DataService,
               private _ContainerService:ContainerService,
               private formBuilder: FormBuilder,
-              private _preloaderService: PreloaderService,
               private _cardService: CardService,
               private snackBar: MatSnackBar,
               private spinner: NgxSpinnerService,

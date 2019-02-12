@@ -1,15 +1,9 @@
 import { NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatSliderModule} from '@angular/material/slider';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http'; 
-
-// import { CreatesopRoutingModule } from './createsop-routing.module';
+import { GlobalmoduleModule } from '../../module/globalmodule/globalmodule.module';
 import { CreatesopComponent } from './createsop/createsop.component';
-import { Route, Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { RecentScreenShotsComponent } from './recent-screen-shots/recent-screen-shots.component';
 import { LeftPanelComponent } from './left-panel/left-panel.component';
@@ -26,22 +20,25 @@ const routes: Routes = [
   { path: '', component: CreatesopComponent }
 ];
 @NgModule({
-  declarations: [CreatesopComponent, SidebarComponent, RecentScreenShotsComponent, LeftPanelComponent, RightPanelComponent, OperationsBarComponent, SidebarButtonsComponent, VideoGalleryComponent, ProgressbarComponent, CarouselComponent, BreadcrumbComponent],
+  declarations: [
+    CreatesopComponent, 
+    SidebarComponent, 
+    RecentScreenShotsComponent, 
+    LeftPanelComponent, 
+    RightPanelComponent, 
+    OperationsBarComponent, 
+    SidebarButtonsComponent, 
+    VideoGalleryComponent, 
+    ProgressbarComponent, 
+    CarouselComponent, 
+    BreadcrumbComponent
+  ],
   imports: [
     CommonModule,
-    MatGridListModule,
-    MatTabsModule,
-    MatSliderModule,
-    MatProgressBarModule,
     HttpClientModule,
-    MatSnackBarModule,
+    GlobalmoduleModule,
     RouterModule.forChild(routes)
-    // CreatesopRoutingModule
   ],
 })
 export class CreatesopModule { 
-
-  constructor(){ 
-    console.log('KJKKKJJKJK')
-  }
 }

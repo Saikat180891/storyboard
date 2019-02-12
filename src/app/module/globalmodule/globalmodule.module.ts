@@ -1,0 +1,113 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {PermissionsDirective} from '../../directives/permissions.directive';
+import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { RouterModule } from '@angular/router';
+
+import {
+  MatButtonModule, 
+  MatNativeDateModule, 
+  MatCheckboxModule, 
+  MatMenuModule, 
+  MatRadioModule, 
+  MatTabsModule,
+  MatGridListModule,
+  MatRippleModule,
+  MatChipsModule,
+  MatSlideToggleModule,
+  MatDividerModule,
+  MatTooltipModule,
+  MatSnackBarModule,
+  MatDatepickerModule,
+  MatToolbarModule,
+  MatExpansionModule,
+  MatDialogModule,
+  MatListModule,
+  MatSelectModule,
+  MatButtonToggleModule,
+  MatAutocompleteModule,
+  MatProgressSpinnerModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatIconModule,
+  MatTableModule,
+  MatProgressBarModule,
+} from '@angular/material';
+
+
+@NgModule({
+  declarations: [PermissionsDirective],
+  imports: [
+    CommonModule,
+    MatButtonModule, 
+    MatNativeDateModule, 
+    MatCheckboxModule, 
+    MatMenuModule, 
+    MatRadioModule, 
+    MatTabsModule,
+    MatGridListModule,
+    MatRippleModule,
+    MatChipsModule,
+    MatSlideToggleModule,
+    MatDividerModule,
+    MatTooltipModule,
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatToolbarModule,
+    MatExpansionModule,
+    MatDialogModule,
+    MatListModule,
+    MatSelectModule,
+    MatButtonToggleModule,
+    MatAutocompleteModule,
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatTableModule,
+    MatProgressBarModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgxSpinnerModule,
+    RouterModule
+  ],
+  exports: [
+    PermissionsDirective,
+    MatButtonModule, 
+    MatNativeDateModule, 
+    MatCheckboxModule, 
+    MatMenuModule, 
+    MatRadioModule, 
+    MatTabsModule,
+    MatGridListModule,
+    MatRippleModule,
+    MatChipsModule,
+    MatSlideToggleModule,
+    MatDividerModule,
+    MatTooltipModule,
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatToolbarModule,
+    MatExpansionModule,
+    MatDialogModule,
+    MatListModule,
+    MatSelectModule,
+    MatButtonToggleModule,
+    MatAutocompleteModule,
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatTableModule,
+    MatProgressBarModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgxSpinnerModule,
+    RouterModule
+  ],
+  providers: [
+    MatSnackBarModule
+  ]
+})
+export class GlobalmoduleModule { }

@@ -7,12 +7,11 @@ import {AppcontrolService} from '../../../services/controlservice/appcontrol.ser
 import {DataService} from '../../../data.service';
 import {ContainerService} from '../container/container.service';
 import {MatSnackBar} from '@angular/material';
-import {PreloaderService} from '../../shared/preloader/preloader.service';
 import {CardService} from '../card/card.service';
 import {ContainerComponent} from '../container/container.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {EditProject} from '../model/edit-project.model';
-import { identifierModuleUrl } from '@angular/compiler';
+
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
   LEFT_ARROW = 37,
@@ -124,7 +123,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
               private _dataService:DataService,
               private _ContainerService:ContainerService,
               private formBuilder: FormBuilder,
-              private _preloaderService: PreloaderService,
               private _cardService: CardService,
               private snackBar: MatSnackBar,
               private spinner: NgxSpinnerService,
@@ -440,10 +438,13 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
       }).subscribe(res=>{
           this.invitationSuccess = true;
           this.inviteMessage = res;
-          console.log(this.inviteMessage);
+          // console.log(this.inviteMessage);
+          this.snackBar.open(`Invitation mail has been sent to ${ele.inviteEmail}`, 'Success', {duration: 3000});
         }, 
         (err)=>{
           this.inviteMessage = err;
+          console.log(`Error while sending invitation to ${ele.inviteEmail}`, err);
+          this.snackBar.open(`Can not send invitation to ${ele.inviteEmail}`, 'Failed', {duration: 3000});
         });
     });
   }

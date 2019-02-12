@@ -5,7 +5,6 @@ import {AppcontrolService} from '../../../services/controlservice/appcontrol.ser
 import {DataService} from '../../../data.service';
 import {CardService} from './card.service';
 import {ContainerService} from '../container/container.service';
-import {PreloaderService} from '../../shared/preloader/preloader.service';
 
 @Component({
   selector: 'app-card',
@@ -47,7 +46,6 @@ export class CardComponent implements OnInit, OnChanges{
     private _dataService:DataService,
     private _cardService:CardService,
     private _containerService: ContainerService,
-    private _preloader: PreloaderService
     ) { }
 
    ngOnInit(){
