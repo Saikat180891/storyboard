@@ -16,8 +16,8 @@ export class CarouselComponent implements OnInit, OnChanges {
   }
   
   ngOnChanges(){
-    console.log(this.currentImage)
-    console.log(this.carouselContainer);
+    // console.log(this.currentImage)
+    // console.log(this.carouselContainer);
 
   }
 

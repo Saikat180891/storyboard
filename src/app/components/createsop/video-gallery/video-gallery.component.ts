@@ -18,7 +18,7 @@ export class VideoGalleryComponent implements OnInit, OnChanges {
   constructor(private __sidebarService:SidebarService, private __page:PageService) { }
 
   ngOnInit() {
-    console.log(this.data)
+    // console.log(this.data)
   }
   
   ngOnChanges(){

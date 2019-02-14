@@ -1,6 +1,11 @@
 
 /**
  * [appCanAccess]="{role:role<string>, permissionRequired:requiredPermission<string>, permissionList: permissionList<Object>}"
+ * this is the authorization directive, directive can take 4 parameters role, permissionRequired, permissionList, action
+ * the role attribute is currently redundant and is kept for future scope, the permissionRequired attribute takes a string
+ * parameter ex: 'can edit sop' and compares it with the permission present in the permissionList if the result is false then
+ * the directive will either stop rendering the component or will disable the component.
+ * appCanAccess is the name of the directive
  */
 
 import { Directive, ElementRef, OnInit, Renderer2, HostBinding, Input,  } from '@angular/core';
@@ -18,8 +23,6 @@ interface Permission{
   selector: '[appCanAccess]'
 })
 export class PermissionsDirective implements OnInit {
-  // @HostBinding('style.display') display: Array<string>;
-  // @Input('appCanAccess') role: Array<string> = ['SuperAdmin', 'Manager', 'Analyst'];
   @Input('appCanAccess') appCanAccess: any | Permission;
 
   constructor(
@@ -30,34 +33,26 @@ export class PermissionsDirective implements OnInit {
     ) { }
 
   ngOnInit(){
-
-    // console.log("From directive", Object.entries(this.appCanAccess).length === 0 && this.appCanAccess.constructor === Object);
-    // console.log("From directive", this.appCanAccess);
-    // if(this.appCanAccess){
-  
-      let grantedPermissions = this.appCanAccess.permissionList;
-      if(this.appCanAccess.action == 'disable'){
-        if(this.appCanAccess.permissionRequired in grantedPermissions){
-          if(!grantedPermissions[this.appCanAccess.permissionRequired]){
-            if(this.el.nativeElement.nodeName == 'BUTTON'){
-              this.renderer.setProperty(this.el.nativeElement, 'disabled', 'true');
-              this.renderer.setStyle(this.el.nativeElement, 'display', 'none');
-            }else{
-              this.renderer.setAttribute(this.el.nativeElement, 'readonly', 'true');
-            }
-          }
-        }
-      }else{
-        if(this.appCanAccess.permissionRequired in grantedPermissions){
-          if(!grantedPermissions[this.appCanAccess.permissionRequired]){
-            this.renderer.setStyle(this.el.nativeElement, 'visibility', 'hidden');
-            this.renderer.setStyle(this.el.nativeElement, 'opacity', '0');
+    let grantedPermissions = this.appCanAccess.permissionList;
+    if(this.appCanAccess.action == 'disable'){
+      if(this.appCanAccess.permissionRequired in grantedPermissions){
+        if(!grantedPermissions[this.appCanAccess.permissionRequired]){
+          if(this.el.nativeElement.nodeName == 'BUTTON'){
+            this.renderer.setProperty(this.el.nativeElement, 'disabled', 'true');
             this.renderer.setStyle(this.el.nativeElement, 'display', 'none');
+          }else{
+            this.renderer.setAttribute(this.el.nativeElement, 'readonly', 'true');
           }
         }
       }
-
-    // }
-
+    }else{
+      if(this.appCanAccess.permissionRequired in grantedPermissions){
+        if(!grantedPermissions[this.appCanAccess.permissionRequired]){
+          this.renderer.setStyle(this.el.nativeElement, 'visibility', 'hidden');
+          this.renderer.setStyle(this.el.nativeElement, 'opacity', '0');
+          this.renderer.setStyle(this.el.nativeElement, 'display', 'none');
+        }
+      }
+    }
   }
 }

@@ -8,9 +8,10 @@ import {DragDropService} from '../../services/draganddrop/drag-drop.service';
 })
 export class SectionTitleComponent implements OnInit, OnChanges {
   @ViewChild('droppable') droppable:ElementRef;
-  isCollapsed:boolean = false;
   @Input('stepParameters') stepParameters:any;
   @Input('externalStepIndex') externalStepIndex:number;
+  
+  isCollapsed:boolean = false;
   hovered:boolean = false;
   steps = ['Read', 'Type', 'Condition'];
   constructor(private __dragDrop:DragDropService) {

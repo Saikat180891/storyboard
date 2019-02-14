@@ -24,7 +24,7 @@ export class ProgressbarComponent implements OnInit, OnChanges {
     }else{
       this.progressValue = this.progressChange;
     }
-    console.log(this.progressValue)
+    // console.log(this.progressValue)
 
   }
 

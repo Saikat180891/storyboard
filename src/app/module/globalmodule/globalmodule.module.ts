@@ -1,9 +1,15 @@
+/**
+ * the global module has all the material modules as well as the directivs required to control the entire app
+ * this module can be imported to any other module which uses Angular Material and the custom directives
+ * ANY CHANGE IN THIS MODULE MIGHT BREAK THE APP OR MIGHT EFFECT THE APP'S PERFORMANCE
+ */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {PermissionsDirective} from '../../directives/permissions.directive';
-import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
+import { PermissionsDirective } from '../../directives/permissions.directive';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { RouterModule } from '@angular/router';
+import { DragDropDirective } from '../../directives/dragDrop/drag-drop.directive';
 
 import {
   MatButtonModule, 
@@ -37,7 +43,10 @@ import {
 
 
 @NgModule({
-  declarations: [PermissionsDirective],
+  declarations: [
+    PermissionsDirective,
+    DragDropDirective
+  ],
   imports: [
     CommonModule,
     MatButtonModule, 
@@ -71,7 +80,6 @@ import {
     ReactiveFormsModule,
     NgxSpinnerModule,
     RouterModule,
-
   ],
   exports: [
     PermissionsDirective,
@@ -105,7 +113,7 @@ import {
     FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
-    RouterModule,
+    RouterModule
   ],
   providers: [
     MatSnackBarModule,

@@ -38,7 +38,14 @@ const routes: Routes = [
     VideoGalleryComponent, 
     ProgressbarComponent, 
     CarouselComponent, 
-    BreadcrumbComponent, StepsContainerComponent, StepReadComponent, StepTypeComponent, StepUiInteractionComponent, StepConditionComponent, StepCalculationComponent, SectionTitleComponent
+    BreadcrumbComponent, 
+    StepsContainerComponent, 
+    StepReadComponent, 
+    StepTypeComponent, 
+    StepUiInteractionComponent, 
+    StepConditionComponent, 
+    StepCalculationComponent, 
+    SectionTitleComponent
   ],
   imports: [
     CommonModule,

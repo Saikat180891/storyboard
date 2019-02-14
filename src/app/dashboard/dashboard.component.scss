@@ -1,8 +1,14 @@
 .router-outlet{
   width: 100%;
-  height: calc(100% - 3.4375rem);
-  position: fixed;
-  top: 3.4375rem;
+  height: 100%;
   overflow: auto;
-  overflow-x: hidden;
+  margin: 0 auto;
+  padding-top: 3.4375rem;
+}
+
+.app-header{
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
 }

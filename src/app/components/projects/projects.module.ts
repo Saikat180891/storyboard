@@ -1,3 +1,10 @@
+/**
+ * Author: Saikat Paul
+ * Date: 12/02/2019
+ * This is a lazy loaded module which is used to display all the created projects to the user 
+ * it also allows a user to edit, create, delete a project. The module also has the permission 
+ * directive which depending on the user's role, renders the UI.
+ */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ContainerComponent} from './container/container.component';
