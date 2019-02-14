@@ -21,6 +21,11 @@ export class CreatesopComponent implements OnInit, AfterContentChecked {
     ) { }
 
   ngOnInit() {
+    /**
+     * in the ngOnInit function the windows.location in checked and
+     * the the project id and userstory id is extracted and stored in
+     * the PageService service
+     */
     this.routes.params.subscribe(res=>{
       this.__page.projectId = res.id;
       this.__page.userStoryId = res.userStoryId;

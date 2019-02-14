@@ -18,6 +18,5 @@ export class RightPanelComponent implements OnInit {
   onButtonDragged($event:any){
     this.__steps.insertItem($event.index, $event.data);
     console.log(this.__steps.getList(), this.stepList);
-
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router'
+import { ActivatedRoute } from '@angular/router'
 import { ResetPasswordService } from './reset-password.service';
 import { SignupService } from '../signupusers/signup.service'
 
@@ -10,7 +10,12 @@ import { SignupService } from '../signupusers/signup.service'
 })
 export class ResetPasswordComponent implements OnInit {
 
-  constructor(private route:ActivatedRoute, private _api:ResetPasswordService, private signUpService: SignupService) { }
+  constructor(
+    private route:ActivatedRoute, 
+    private _api:ResetPasswordService, 
+    private signUpService: SignupService
+  ) { }
+
   email: string;
   password: string ="";
   confirmPassword: string;
@@ -24,20 +29,9 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit() {
     console.log(this.password)
     this.route.queryParams.subscribe(res=>{
-      // if (res.status == "success")
-      // {
-      //   // this.signup_form = 2;
-      // }
-      // else if(res.status == "failure")
-      // {
-      //   // this.signup_form = 3;
-      // }
-      // else{
       this.email = res.email;
       this.passwordResetToken = res.reset_password_token;
-      // }
- 
-    })
+    });
   }
   checkStrength(){
     
@@ -58,19 +52,20 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   resetPassword(){
-
-    let reset_password_fields = {'email': this.email, 'password': this.password, 'reset_password_token':this.passwordResetToken};
-    if(this.strong_password && this.password == this.confirmPassword)
-    {
-    this._api.resetPasswordUser(reset_password_fields).subscribe(res=>{
-      if(res == "Success"){
-        this.reset_password_form = 2;
-      }
-      else{
-        this.reset_password_form = 3;
-      }
-    })
-
-  }
+    let reset_password_fields = {
+      'email': this.email, 
+      'password': this.password, 
+      'reset_password_token':this.passwordResetToken
+    };
+    if(this.strong_password && this.password == this.confirmPassword){
+      this._api.resetPasswordUser(reset_password_fields).subscribe(res=>{
+        if(res == "Success"){
+          this.reset_password_form = 2;
+        }
+        else{
+          this.reset_password_form = 3;
+        }
+      });
+    }
   }
 }

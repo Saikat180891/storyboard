@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-// import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
-import {DataService} from '../data.service';
-import {environment} from '../../environments/environment';
-import { HttpHeaders} from '@angular/common/http';
-import {AuthGaurdService} from './auth-gaurd.service';
+import { environment } from '../../environments/environment';
+import { AuthGaurdService } from './auth-gaurd.service';
 
 @Component({
   selector: 'app-auth',
@@ -33,12 +29,12 @@ export class AuthComponent {
     console.log("Login Details", login_details);
     this.authService.externalUserLogin(login_details);
   }
+
   azureLogin(){
     window.location.href = this.baseUrl+'/login_ms';
   }
 
-  initiateForgotPassword()
-  {
+  initiateForgotPassword(){
     this.login_form_page = 2;
   }
   

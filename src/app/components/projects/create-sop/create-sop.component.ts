@@ -159,7 +159,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
   
   
   ngOnChanges(){
-    console.log('current permissions granted', this.permissions);
   }
   
   ngAfterViewInit(){
@@ -170,14 +169,11 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
    * @param event 
    */
   onKeyPress(event){
-    console.log(event.target.value);
     this._dataService.fetchData(`/users.json?startsWith=${event.target.value}`)
       .subscribe(res=>{
         this.options = res;
-        console.log(res);
       },
       err=>{
-        console.log(err);
       });
     // }
   }
@@ -192,7 +188,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
     };
     this.createdAssignees.unshift(temporaryObject);
     this.options = [];
-    console.log(this.createdAssignees);
   }
 
   /**
@@ -219,7 +214,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
     let temporaryObject = this.createdAssignees[index];
     temporaryObject.role = value;
     this.createdAssignees[index] = temporaryObject;
-    console.log(value, index, this.createdAssignees);
   }
 
   /**
@@ -247,7 +241,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
   onFileSelected(fileSelected){
     if (fileSelected.target.files && fileSelected.target.files[0]) {
       this.projectDetails.logo = fileSelected.target.files[0];
-      console.log(this.projectDetails.logo);
       let reader:any = new FileReader();
       reader.readAsDataURL(fileSelected.target.files[0]);
       reader.onload = (fileSelected) => {
@@ -299,7 +292,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
         } 
       }
     }
-    console.log(validationStatus);
 
     if(validationStatus.indexOf(true) == -1){
       return 0;
@@ -351,17 +343,13 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
   onCreateNew(){
     let validationCheck = this.validateForm(this.projectDetails);
     let assigneeValidationStatus = this.indicateUserIfValidationWentWrong(this.validateAssigneeArrayList(this.resetValidation(this.createdAssignees)));
-    console.log("Form validation", validationCheck, assigneeValidationStatus, this.projectDetails);
     if(validationCheck == 0 && assigneeValidationStatus == true){
       this.spinner.show();
-      // console.log("the created sop form is ", this.sopForm.value);
       let formData = this.JSONtoFormData(this.projectDetails);
-      console.log(formData)
       let sopId:number;
       this._dataService.postData('/sop.json',  formData).subscribe(
         //if response successfull
         (response)=> {
-          console.log(response)
           if(this.createdAssignees.length > 0){
             this.createdAssignees.forEach((ele, index, array)=>{
               delete ele.indecatedUserAboutMistakes;
@@ -373,7 +361,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
         //if response not successfull
         (err)=> {
           this.spinner.hide();
-          console.log("Error occured while creating new project", err);
         },
         ()=>{
           this.__containerComponent.getListOfAllProjects();
@@ -384,59 +371,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
       );
     }
   }
-
-  // /**
-  //  * Save an editted card
-  //  */
-  // onSave(){
-  //   var dateBeforeSave = this.sopForm.value.due_date;
-  //   let sopId = this.sopForm.value.id;
-  //   this.sopForm.value.due_date = this.formatDate(this.sopForm.value.due_date);
-  //   let validationCheck = this.validateForm(this.sopForm.value);
-
-  //   if(validationCheck == 0){
-  //     this.spinner.show();
-  //     console.log("the edited sop form is ", this.sopForm.value);
-
-  //     let formData = this.JSONtoFormData(this.sopForm.value);
-  //     if(typeof formData.get("logo") === "string"){
-  //       formData.delete("logo");
-  //     }
-
-
-  //     this._dataService.update('/sop', this.sopForm.value.id + '.json', formData)
-  //       .subscribe(response=>{
-  //         console.log("RESPONSE ON SOP EDIT", response)
-  //         this.__containerComponent.getListOfAllProjects();
-  //         if(this.newlyCreatedAssignees.length > 0){
-  //           this.newlyCreatedAssignees.forEach((ele, index, array)=>{
-  //             this._dataService.postData(`/sop/${sopId}/assignee.json`, {user: ele.email, role: 'Manager'})
-  //               .subscribe(res=>{});
-  //             if(index == array.length - 1){
-  //               this.spinner.hide();
-  //               this.onOverlayClose();
-  //             }
-  //           });
-  //         }else{
-  //           this.spinner.hide();
-  //           this.onOverlayClose();
-  //         }
-  //         this.snackBar.open("Project has been created", "Success", {duration: 2000});
-  //     },
-  //     (err)=> {
-  //       console.error("ERROR",err);
-  //       this._preloaderService.openPreloader = false;
-  //       var keys = Object.keys(err.error);
-  //       var error= "";
-  //       keys.forEach(key => {
-  //         error += key+": "+err.error[key] +"\n";
-  //       });
-  //       this.snackBar.open(error, "Failed", {duration: 2000});
-  //   }
-  //   );
-  //   this.sopForm.value.due_date = dateBeforeSave;
-  // }
-  //   }
 
   /**
    * Rearrange the date in the following format DD/MM/YYYY
@@ -469,7 +403,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
     this.editSelectedDate.setFullYear(Number(newDate[2]));
     this.editSelectedDate.setMonth(Number(newDate[1])-1);
     this.editSelectedDate.setDate(Number(newDate[0]));
-    console.log(this.editSelectedDate)
     return this.editSelectedDate;
   }
 
@@ -480,25 +413,4 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
       }
       return formData;
   }
-
-  // onSendInvitation(){
-  //   console.log("Success");
-  //   console.log(this.inviteEmail+" "+this.inviteFirstName+" "+this.inviteLastName+" "+this.inviteRole);
-  //   this._dataService.postData('/invite_users/', 
-  //   {
-  //     first_name: this.inviteFirstName, 
-  //     email: this.inviteEmail, 
-  //     last_name: this.inviteLastName, 
-  //     role: this.inviteRole, 
-  //     sop: this.sopForm.value.id
-  //   }).subscribe(res=>{
-  //       this.invitationSuccess = true;
-  //       this.inviteMessage = res;
-  //       console.log(this.inviteMessage);
-  //     }, 
-  //     (err)=>{
-  //       this.inviteMessage = err;
-  //   });
-  // }
-
 }

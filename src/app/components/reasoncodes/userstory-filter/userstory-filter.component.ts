@@ -46,22 +46,18 @@ export class UserstoryFilterComponent implements OnInit, AfterContentChecked {
   }
 
   onApplyFilter(){
-    // console.log(this.filter, "rules_approved=" + this.rulesApproved + "," + "verified_test_cases=" + this.testCasesVerified);
-
     let filter = this.__rcService.convertToStringPath(this.__rcService.filterItems);
     this.__rcService.filterPath = filter;
-
     let path = '';
     if(this.__rcService.sortBy != ''){
       path = "?" + this.__rcService.filterPath + "&" + this.__rcService.sortBy;
     }else{
       path = "?" + this.__rcService.filterPath;
     }
-
     this.__rcService.filterUserStories(`/sop/epics/${this.__rcService.sopId}/userstories/filter.json`, path);
     this.__rcService.filtersAppliedFlag = true;
     this.closeFilter.emit(false);
-    console.log(path);
+    // console.log(path); //this is required while testing
   }
   
 }

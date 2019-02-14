@@ -16,6 +16,9 @@ export class RecentScreenShotsComponent implements OnInit {
   }
 
   onExpandPanel(){
+    /**
+     * this function is used to open and close the recents tabs panel
+     */
     this.toggleExpansionPanel = !this.toggleExpansionPanel;
     this.open.emit(this.toggleExpansionPanel);
   }

@@ -192,8 +192,6 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
       else{this.userStoryBenefitValidator = false;
         value++;
       }
-      console.log(this.userStoryPayload.dev_hrs+" "+this.userStoryPayload.ftes);
-      console.log(pattern.test(this.userStoryPayload.dev_hrs)+" "+pattern.test(this.userStoryPayload.ftes));
       if ((this.userStoryPayload.dev_hrs!=null && this.userStoryPayload.dev_hrs!='-----' )&& !pattern.test(this.userStoryPayload.dev_hrs))
         {
           this.userStoryDevHrsValidator = true;
@@ -202,7 +200,6 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
           this.userStoryDevHrsValidator = false;
           value++;
         }
-    console.log(value)
     if(value === 8){
       let id:number;
       this.__rcService.sprintConfig.forEach(element=>{
@@ -225,11 +222,9 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
           rc_id = element.id;
         }
       });
-      console.log("Before null",this.userStoryPayload)
       if(isNaN(this.userStoryPayload.revised_delivery)){
         this.userStoryPayload.revised_delivery = null;
       }
-      console.log("after null",this.userStoryPayload)
       this.__createUserStory.createUserStory(id, rc_id, this.userStoryPayload);
       this.close.emit(false);
     }
@@ -241,7 +236,6 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
 
   onSprintSelect($event){
     this.userStoryPayload.sprint_name=$event.status;
-    console.log(this.__rcService.sprintConfig)
     this.__rcService.sprintConfig.forEach(element=>{
       if(element.sprint_name === this.userStoryPayload.sprint_name){
         let date = new Date(JSON.parse(JSON.stringify(element.end_date.split("/").reverse().join("-"))));
@@ -250,14 +244,11 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
     });
   }
 
-
   onDatePickerClosePD($event){
     this.userStoryPayload.planned_delivery = $event.value;
-    // this.userStoryPayload.planned_delivery = JSON.parse(JSON.stringify(this.userStoryPayload.planned_delivery));
   }
 
   onDatePickerCloseRD($event){
-    // this.userStoryPayload.revised_delivery = this.__rcService.formatDate($event.value);
     this.userStoryPayload.revised_delivery = $event.value;
   }
 

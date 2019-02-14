@@ -1,6 +1,6 @@
 import { NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http'; 
 import { GlobalmoduleModule } from '../../module/globalmodule/globalmodule.module';
 import { CreatesopComponent } from './createsop/createsop.component';
 import { Routes, RouterModule } from '@angular/router';

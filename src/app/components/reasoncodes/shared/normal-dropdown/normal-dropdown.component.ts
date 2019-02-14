@@ -42,15 +42,12 @@ export class NormalDropdownComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   ngOnChanges(changes: SimpleChanges){
-    // this.value.status = changes.defaultOption.currentValue;
-    console.log(changes);
   }
 
   changeColorofDefaultOption(){
     this.options.forEach(element=>{
       if(element.status === this.defaultOption){
         this.selectedColor = element.color;
-        console.log(element)
       }
     });
   }
@@ -62,17 +59,13 @@ export class NormalDropdownComponent implements OnInit, AfterViewInit, OnChanges
   onSelect(event, option){
     event.stopPropagation();
     this.selected = this.value = option;
-    // let pos = this.options.indexOf(this.selected);
-    // this.selectedColor = this.options[pos];
     this.applyPadding = true;
-    // console.log(this.applyPadding)
     this.optionSelected.emit(option);
     this.isOpen = false;
   }
 
   onSelectObj(event, option){
     event.stopPropagation();
-    // this.selected = this.value = option;
     this.optionSelected.emit(option);
     this.isOpen = false;
   }

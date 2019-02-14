@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-import {Observable} from 'rxjs';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import {DataService} from '../data.service';
+import { DataService } from '../data.service';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
@@ -37,8 +37,6 @@ export class AuthGaurdService implements CanActivate {
       if(res["user_logged_in"] === true){
         this.router.navigate(['/projects']);
         sessionStorage.setItem('status', 'loggedIn');
-        // const value = this.cookieService.getAll();
-        // localStorage.setItem("csrftoken", value["csrftoken"]);
         if(res["name"]){
           localStorage.setItem("userName", res["name"]);
         }
@@ -57,7 +55,6 @@ export class AuthGaurdService implements CanActivate {
       if (res == "Login successful")
       {
         this.isUserLoggedIn();
-      // this.router.navigate(['/signup']);
       }
       else{
         alert(res);

@@ -101,8 +101,6 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
 
   onDelete(id){
     this.deleteUserStory.emit({id:id, status:true});
-    // this.__rcService.deleteUserStory(id);
-    // this.__rcService.getDeletedUserStories(this.__rcService.sopId);
   }
 
   restoreUserStories(id){

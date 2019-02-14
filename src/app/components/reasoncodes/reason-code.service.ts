@@ -28,7 +28,8 @@ export class ReasonCodeService {
   filteredValues = [];
   filterItems = {};
   filtersAppliedFlag:boolean = false;
-
+  rulesApproved:string;
+  testCasesVerified:string;
   doneSelectStatus:EventEmitter<boolean> = new EventEmitter();
 
   sortBy = '';
@@ -72,7 +73,6 @@ export class ReasonCodeService {
     this._api.fetchData(`/sop/${id}.json`)
       .subscribe(response=>{
         this.currentProject = response;
-        console.log("The sop is ", this.currentProject);
       });
   }
 
@@ -98,14 +98,6 @@ export class ReasonCodeService {
     this._api.delete('/sop/sprint', `${id}.json`)
       .subscribe(response=>{
         this.refresh(this.sopId);
-        // this.sprintConfig.forEach(element=>{
-        //   if(element.id === id){
-        //     let pos = this.sprintConfig.indexOf(element);
-        //     this.sprintConfig.splice(pos, 1);
-        //     console.log(`Delete sprint with id = ${id}`);
-        //     this.getProjectStatus(this.sopId);
-        //   }
-        // });
       });
   }
 
@@ -127,13 +119,10 @@ export class ReasonCodeService {
           element['revised_delivery'] = element['revised_delivery'] != null ? this.reArrangeDate(element['revised_delivery']) : '-----';
         });
         this.deletedUserStories = response;
-        // this.getUserStories(id);
-        console.log("Deleted user stories",response);
       });
   }
 
   getUserStories(id){
-    console.log("Get all user story", id)
     const api =  `/sop/epics/${id}/userstories.json`;
     this._api.fetchData(api)
       .subscribe(response=>{
@@ -158,14 +147,12 @@ export class ReasonCodeService {
         this.getProjectStatusChartData(this.sopId); //check
         this.getChartData(this.sopId); //check
       });
-      console.log("the userstories are", this.userStories)
   }
 
   deleteUserStory(id){
     this._api.delete(`/sop/epics/userstories`, `${id}.json`)
       .subscribe(response=>{
         this.refresh(this.sopId);
-        console.log(`Rpw with id ${id} deleted successfully.`);
       });
   }
 
@@ -179,7 +166,6 @@ export class ReasonCodeService {
           element['revised_delivery'] = element['revised_delivery'] != null ? this.reArrangeDate(element['revised_delivery']) : '-----';
         });
         this.completeUserStories = response;
-        console.log("The completed user stories are" ,response);
       });
   }
 
@@ -187,7 +173,6 @@ export class ReasonCodeService {
     this._api.fetchData(`/sop/${id}/duration.json`)
       .subscribe(response=>{
         this.totalProjectStatus = response[0];
-        console.log("Total project status", this.totalProjectStatus);
       });
   }
 
@@ -206,7 +191,6 @@ export class ReasonCodeService {
     this._api.fetchData(`/sop/epics/userstories/${id}/unarchive/`)
       .subscribe(response=>{
         this.refresh(this.sopId);
-        console.log(`Restored US with id ${id}`, response);
       });
   }
 
@@ -215,17 +199,12 @@ export class ReasonCodeService {
    * @param id Current not in use
    */
   getChartData(id){
-    // this._api.fetchData(`/sop/sprint/${id}/graphdata.json`)
-    //   .subscribe(response=>{
-    //     this.currentSprintData = response;
-    //   });
   }
 
   getCurrentSprintData(id){
     this._api.fetchData(`/sop/${id}/currentSprint/graphdata.json`)
       .subscribe(response=>{
         this.currentSprintData = response;
-        console.log("Current Sprint Data", response);
       });
   }
 
@@ -251,8 +230,6 @@ export class ReasonCodeService {
       });
   }
 
-  
-
   createReasonCode(id, body){
     body.forEach(element=>{
       this._api.postData(`/sop/${id}/epics.json`, element)
@@ -272,7 +249,6 @@ export class ReasonCodeService {
   deleteReasonCode(id){
     this._api.delete(`/sop/epics`, `${id}.json`)
       .subscribe(response=>{
-        // this.getReasonCode(this.sopId);
         this.reasonCodeData.forEach((element, index)=>{
           if(element.id == id){
             this.reasonCodeData.splice(index, 1);
@@ -348,26 +324,7 @@ export class ReasonCodeService {
   }
 
   importStories(file){
-    console.log("File", file);
-    return this._api.postData(`/sop/${this.sopId}/import.json`, file)
-    
-    // .subscribe(response=>{
-
-    //   console.log("Response",response["status"])
-    //   console.log("Response",response["message"])
-
-    //   if(response["status"] == "Success")
-    //   { 
-    //     this.snackbar.open("Your sprints, epics and stories are now available on the dashboard", "Success", {duration : 2000, panelClass: "style-success"});
-    //   }
-    //   else if(response["status"]=="Failure")
-    //   {
-    //     this.snackbar.open(response["message"], "Fail", {"duration": 3500});
-    //   }
-    //   else{
-    //     this.snackbar.open("Please check the template and try again." , "Fail", {"duration": 3500});
-    //   }
-    // });
+    return this._api.postData(`/sop/${this.sopId}/import.json`, file);
   }
 
   downloadFile(){
@@ -377,7 +334,6 @@ export class ReasonCodeService {
   filterUserStories(endpointUrl:string, queryParameter:string){
     this._api.fetchData(endpointUrl + queryParameter)
       .subscribe(response=>{
-        console.log(response);
         response.forEach(element=>{
           if(element['ftes'] == 0 ){
             element['ftes'] = '-----';
@@ -391,17 +347,12 @@ export class ReasonCodeService {
           element['productivity'] = isFinite(element['productivity']) ? element['productivity'] : '-----';
           element['planned_delivery'] = this.reArrangeDate(element['planned_delivery']);
           element['revised_delivery'] = element['revised_delivery'] != null ? this.reArrangeDate(element['revised_delivery']) : '-----';
-
         });
-        
         this.userStories = response;
-        // this.getProjectStatusChartData(this.sopId);
-        // this.getChartData(this.sopId);
       });
   }
 
-  rulesApproved:string;
-  testCasesVerified:string;
+
 
   convertToStringPath(object){
 
@@ -499,7 +450,6 @@ export class ReasonCodeService {
 
   getBenefiftChart(projectId:number){
     this._api.fetchData(`/sop/epics/charts/${projectId}/benefits_realization.png`).subscribe(res=>{
-      console.log(res)
     });
   }
 }
