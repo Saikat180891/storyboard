@@ -6,7 +6,9 @@ import { Directive, Input, OnInit, ElementRef, Renderer2 } from '@angular/core';
 export class DragDropDirective implements OnInit {
   // @Input('appDraggable') appDraggable:any|ElementRef;
 
-  constructor(private el:ElementRef) { }
+  constructor(private el:ElementRef) { 
+    console.log(el)
+  }
 
   ngOnInit(){
     this.el.nativeElement.style.backgroundColor = "green";
