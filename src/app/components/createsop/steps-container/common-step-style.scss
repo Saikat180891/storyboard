@@ -1,0 +1,203 @@
+@mixin flex-left-center {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+@mixin flex-middle-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@mixin flex-space-between-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+@mixin flex-space-around-center {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+@mixin flex-space-evenly-center {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.step-banner{
+  width: 100%;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px rgba($color: #000000, $alpha: 0.3);
+
+  .step-header{
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #D1D1D1;
+
+    .left-controls{
+      height: 100%;
+      display: flex;
+      justify-content: flex-start;
+
+      .step-icon{
+        background-color: #2A7DE1;
+        color: #ffffff;
+        height: 100%;
+        width: 30px;
+        box-shadow: 0 0 4px rgba($color: #000000, $alpha: 0.3);
+        @include flex-middle-center();
+      }
+      .icon-type{
+        color: #2A7DE1;
+        padding: 0 10px;
+        height: 100%;
+        @include flex-middle-center();
+      }
+      .step-number{
+        height: 100%;
+        width: 126px;
+        color: #999999;
+        border-right: 1px solid #D1D1D1;
+        border-left: 1px solid #D1D1D1;
+        @include flex-space-evenly-center();
+
+        span{
+          color: #2A7DE1;
+        }
+      }
+      .screen-name{
+        color: #999999;
+        @include flex-space-evenly-center();
+        width: 250px;
+        span{
+          margin-right: 20px;
+        }
+
+        div.select{
+          height: 30px;
+          width: 150px;
+          line-height: 30px;
+          color: #000000;
+        }
+      }
+    }
+    .right-controls{
+      color: #2A7DE1;
+      display: flex;
+      justify-content: flex-start;
+
+      div{
+        width: 30px;
+        height: 30px;
+        @include flex-middle-center();
+        cursor: pointer;
+      }
+      div:nth-child(1){
+        border-right: 1px solid #D1D1D1;
+      }
+      .color-light-red{
+        color: #F47074;
+      }
+      .color-green{
+        color: #6CC24A;
+      }
+    }
+  }
+  .step-body{
+    padding: 10px;
+
+    .form{
+      display: flex;
+      flex-direction: column;
+
+      .form-group{
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 10px;
+
+        .form-sub-group{
+          display: flex;
+          flex-direction: column;
+          width: 50%;
+          font-size: 14px;
+
+          label{
+            color: #999999;
+            padding-bottom: 5px;
+          }
+          input[type="text"]{
+            height: 30px;
+          }
+          input[type="text"], textarea{
+            border: 1px solid #D1D1D1;
+            width: 100%;
+            padding: 5px;
+            font-weight: bold;
+            color: #000000;
+            border-radius: 2px;
+            font-size: 14px;
+          }
+          span{
+            display: block;
+            height: 30px;
+            width: 100%;
+            line-height: 30px;
+            word-wrap: break-word;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+        .form-sub-group-3{
+          width: 33.33%;
+
+          .if-logic{
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+
+            span.if-text{
+              color: #2A7DE1;
+              width: 10%;
+              font-weight: bold;
+            }
+
+            .select{
+              width: 90%;
+            }
+          }
+
+          .select{
+            border: 1px solid #D1D1D1;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 5px;
+          }
+        }
+        .form-sub-group-40{
+          width: 40%;
+        }
+        .form-sub-group-20{
+          width: 20%;
+        }
+        .full-width{
+          width: 100%;
+          padding-top: 10px;
+
+          textarea{
+            min-height: 100px;
+          }
+        }
+        .padding-right{
+          padding-right: 10px;
+        }
+        .padding-left{
+          padding-left: 10px;
+        }
+        .padding-both{
+          padding: 0 10px;
+        }
+      }
+    }
+  }
+}

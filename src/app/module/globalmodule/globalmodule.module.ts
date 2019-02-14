@@ -70,7 +70,8 @@ import {
     FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
-    RouterModule
+    RouterModule,
+
   ],
   exports: [
     PermissionsDirective,
@@ -104,10 +105,10 @@ import {
     FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
-    RouterModule
+    RouterModule,
   ],
   providers: [
-    MatSnackBarModule
+    MatSnackBarModule,
   ]
 })
 export class GlobalmoduleModule { }

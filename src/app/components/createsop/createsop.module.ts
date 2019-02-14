@@ -14,6 +14,13 @@ import { VideoGalleryComponent } from './video-gallery/video-gallery.component';
 import { ProgressbarComponent } from './shared/progressbar/progressbar.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { StepsContainerComponent } from './steps-container/steps-container.component';
+import { StepReadComponent } from './steps-container/step-read/step-read.component';
+import { StepTypeComponent } from './steps-container/step-type/step-type.component';
+import { StepUiInteractionComponent } from './steps-container/step-ui-interaction/step-ui-interaction.component';
+import { StepConditionComponent } from './steps-container/step-condition/step-condition.component';
+import { StepCalculationComponent } from './steps-container/step-calculation/step-calculation.component';
+import { SectionTitleComponent } from './steps-container/section-title/section-title.component';
 
 
 const routes: Routes = [
@@ -31,7 +38,7 @@ const routes: Routes = [
     VideoGalleryComponent, 
     ProgressbarComponent, 
     CarouselComponent, 
-    BreadcrumbComponent
+    BreadcrumbComponent, StepsContainerComponent, StepReadComponent, StepTypeComponent, StepUiInteractionComponent, StepConditionComponent, StepCalculationComponent, SectionTitleComponent
   ],
   imports: [
     CommonModule,

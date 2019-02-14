@@ -5,7 +5,7 @@ import {DataService} from '../../data.service';
   providedIn: 'root'
 })
 export class HeaderService {
-
+  loading:boolean = false;
   constructor(private _api:DataService) { }
 
 }

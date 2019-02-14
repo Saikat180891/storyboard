@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import {HeaderService} from './header.service';
 import {DataService} from '../../data.service';
 import { CookieService } from 'ngx-cookie-service';
 import {AuthGaurdService} from '../../auth/auth-gaurd.service';
-
 // import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
 
 @Component({
@@ -21,13 +20,14 @@ import {AuthGaurdService} from '../../auth/auth-gaurd.service';
   ]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-
+  @Input('isLoading') isLoading:boolean;
   userName: string = '';
   userImage;
+  
 
   constructor(
     // private _msAdalSvc: MsAdalAngular6Service,
-    private _userInfo: HeaderService,
+    private _header: HeaderService,
     private __api: DataService,
     private cookieService: CookieService,
     private __auth:AuthGaurdService
@@ -35,8 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userName = localStorage.getItem("userName");
-    console.log(this.cookieService.getAll())
-    
+    // console.log(this.cookieService.getAll())
   }
 
   ngOnDestroy(){
@@ -50,5 +49,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     sessionStorage.clear();
     localStorage.clear()
   }
+
 
 }
