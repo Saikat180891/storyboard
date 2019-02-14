@@ -21,12 +21,12 @@
     </div>
   </div>
   <div class="section-body">
-    <ng-container *ngFor="let step of steps">
+    <ng-container *ngFor="let step of stepParameters">
       <div class="steps">
         <app-steps-container [stepType]="step"></app-steps-container>
       </div>
     </ng-container>
-    <div class="droppable-area" #droppable (dragover)="allowDrop($event)" (drop)="onDrop($event)" (dragenter)="onDragEnter($event)" [ngClass]="{'hovering':hovered}" (dragleave)="onDragLeave($event)">
+    <div class="droppable-area" appDroppable (transferedData)="onDropData($event)" (dragover)="allowDrop($event)">
       Drag & drop steps here
     </div>
   </div>

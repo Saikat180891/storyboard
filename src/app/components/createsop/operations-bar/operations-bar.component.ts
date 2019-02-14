@@ -17,27 +17,9 @@ export class OperationsBarComponent implements OnInit {
     private __dragDrop:DragDropService) { }
 
   ngOnInit() {
-
-    // fromEvent(this.calc.nativeElement, 'dragend').subscribe(res=>{
-    //   if(this.isMouseDown){
-    //     this.__dragDrop.setEvent(res);
-    //     // console.log("dragend", res);
-    //   }
-    // });
-
-    // fromEvent(this.calc.nativeElement, 'mouseup').subscribe(res=>{
-    //   console.log("mouseup", res);
-    //   this.isMouseDown = false;
-    // });
   }
 
   onInsertNewSection(){
-    this.selectedType.emit('section');
+    // this.selectedType.emit('section');
   }
-
-  onDragStart($event){
-    console.log($event);
-    $event.dataTransfer.setData('text/plain', $event.target.innerText);
-  }
-
 }

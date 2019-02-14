@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { RouterModule } from '@angular/router';
 import { DragDropDirective } from '../../directives/dragDrop/drag-drop.directive';
+import { DroppableDirective } from '../../directives/dragDrop/droppable.directive';
 
 import {
   MatButtonModule, 
@@ -45,7 +46,8 @@ import {
 @NgModule({
   declarations: [
     PermissionsDirective,
-    DragDropDirective
+    DragDropDirective,
+    DroppableDirective
   ],
   imports: [
     CommonModule,
@@ -83,6 +85,8 @@ import {
   ],
   exports: [
     PermissionsDirective,
+    DragDropDirective,
+    DroppableDirective,
     MatButtonModule, 
     MatNativeDateModule, 
     MatCheckboxModule, 
