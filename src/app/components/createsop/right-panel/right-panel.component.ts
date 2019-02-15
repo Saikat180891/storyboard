@@ -15,8 +15,14 @@ export class RightPanelComponent implements OnInit {
     this.stepList = this.__steps.getList();
   }
 
-  onButtonDragged($event:any){
-    this.__steps.insertItem($event.index, $event.data);
-    console.log(this.__steps.getList(), this.stepList);
+  onButtonDragged($event:any, index:number){
+    if($event.data === 'Section' && index == this.__steps.getListLength() - 1){
+      this.__steps.appendList(index);
+    }else if($event.data === 'Section' && index < this.__steps.getListLength() - 1){
+      this.__steps.insertInList(index);
+    }else{
+      this.__steps.insertItem($event.index, $event.data);
+    }
+    console.log(this.__steps.getList(), $event, index);
   }
 }

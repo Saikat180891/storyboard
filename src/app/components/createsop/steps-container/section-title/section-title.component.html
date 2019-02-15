@@ -22,7 +22,7 @@
   </div>
   <div class="section-body">
     <ng-container *ngFor="let step of stepParameters">
-      <div class="steps">
+      <div class="steps" appDraggable>
         <app-steps-container [stepType]="step"></app-steps-container>
       </div>
     </ng-container>

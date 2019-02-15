@@ -11,5 +11,6 @@ export class AppComponent implements OnInit {
 
   }
   ngOnInit(){
+    document.body.style.zoom = "90%"
   }  
 }
