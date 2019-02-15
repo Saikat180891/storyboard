@@ -7,7 +7,6 @@ import {CreateUserstoryService} from './userstory-card-create/create-userstory.s
 import {charts} from './chartoptions';
 import {fromEvent} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {PreloaderService} from '../shared/preloader/preloader.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {DataService} from '../../data.service';
 import {ScrollbarService} from '../../services/scrollbarService/scrollbar.service';
@@ -123,7 +122,6 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
               private _reasonCode: ReasonCodeService,
               private _containerService: ContainerService,
               private _createUserStory: CreateUserstoryService,
-              private __preloaderService: PreloaderService,
               public spinner: NgxSpinnerService,
               private __api:DataService,
               private __scrollbar:ScrollbarService) {}

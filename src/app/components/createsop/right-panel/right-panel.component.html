@@ -1,0 +1,5 @@
+<div class="infinite-scroll">
+  <div class="section" *ngFor="let step of steps; let i=index">
+    <app-section-title [stepParameters]="step" [externalStepIndex]="i"></app-section-title>
+  </div>
+</div>

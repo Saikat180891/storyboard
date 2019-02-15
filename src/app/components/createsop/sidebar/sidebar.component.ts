@@ -225,7 +225,7 @@ export class SidebarComponent implements OnInit {
     formData.append('image', file);
     this.__sidebarService.uploadImage(apiEndpoint, formData).subscribe(res=>{
       this.fetchAllSnapshotsAlreadyTaken();
-    })
+    });
   }
 
   convertSecondsToMinutes(time:number){

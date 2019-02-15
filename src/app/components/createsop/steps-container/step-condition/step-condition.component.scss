@@ -1,0 +1,30 @@
+@import '../common-step-style.scss';
+
+.add-another-btn{
+  display: flex;
+  padding: 10px 10px 10px 0;
+
+  button{
+    background-color: transparent;
+    color: #2A7DE1;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+}
+
+.select-with-delete{
+  display: flex;
+  justify-content: space-between;
+  .select{
+    width: 80%;
+  }
+  .delete{
+    width: 20%;
+    line-height: 30px;
+    text-align: center;
+    color: #2A7DE1;
+    cursor: pointer;
+  }
+}

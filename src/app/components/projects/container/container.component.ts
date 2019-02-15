@@ -12,17 +12,12 @@ import {AuthorizationService} from '../../../services/authorization/authorizatio
 })
 
 export class ContainerComponent implements OnInit, AfterViewChecked {
-  filesLists: string[] = ['Recent Files', 'All Files'];
-  selected;
-  cards = [1,2,3,4,5,6,7,8,9,10];
   userPermissions = [];
-  activateSpinner:boolean = true;
-
   openCreateProjectDialogBox:boolean = false;
   openEditProjectDialogBox:boolean = false;
-
   permissionsGrantedForBackdrop:any;
-
+  warningToDeleteSop:boolean = false;
+  sopIdToDelete:number;
   projectData:any;
   
   constructor(
@@ -32,9 +27,7 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
     private __spinner: NgxSpinnerService,
     private __authorization: AuthorizationService) {  }
 
-  warningToDeleteSop:boolean = false;
 
-  sopIdToDelete:number;
 
   ngOnInit() {
     /**
@@ -44,7 +37,6 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
   }
   
   ngAfterViewChecked(){
-    // this.__spinner.show();
   }
   /**
    * fetch all projects and permission and combine both of them
@@ -64,11 +56,9 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
           logo: element["logo_url"]
         });
       });
-      console.log("LGOGGO", res);
     },
     (err)=>{
       this.__spinner.hide();
-      console.log("ERROR IN FETCHING PROJECT LIST", err);
     },
     ()=>{
       // once the above call the completed make another call to get the permissions dictionary
@@ -81,11 +71,9 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
               permissions: ele["permissions"]
             });
         });
-        // console.log(this._ContainerService.permissions);
       },
       (err)=>{
         this.__spinner.hide();
-        console.log("ERROR IN FETCHING PERMISSIONS LIST", err);
       },
       ()=>{
         // combine the list of projects and the list of permission with respect to their respective ids
@@ -97,19 +85,15 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
             }
           });
         });
-        // projectlist.unshift({id:0});
         this._ContainerService.cardContents = projectlist;
-
         this.__spinner.hide();
-        console.log("COMPLETED", projectlist);
       });
     });
   }
 
-  onEditProject($event:any, i){
+  onEditProject($event:any, index:number){
     this.projectData = $event.data;
     this.openEditProjectDialogBox = $event.status;
-    console.log($event, i)
   }
 
 
@@ -138,7 +122,6 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
 
   givenPermissions(permissions){
     this.permissionsGrantedForBackdrop = permissions;
-    console.log(permissions)
   }
   
   onCreateProject($event){

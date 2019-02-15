@@ -69,10 +69,10 @@ export class SignupusersComponent implements OnInit {
     this._api.signUpUser(signup_details).subscribe(res=>{
   
       if(res == "Success"){
-        this.signup_form=2;
+        this.signup_form = 2;
        }
        else{
-         this.signup_form=3;
+         this.signup_form = 3;
        }
     })
      

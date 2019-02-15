@@ -1,6 +1,6 @@
 <div class="operation-button-box">
-  <div class="full-blue-btn">Section Title</div>
-  <div class="partial-blue-btn">
+  <div class="full-blue-btn" (click)="onInsertNewSection()">Section Title</div>
+  <div class="partial-blue-btn" draggable="true" (dragstart)="onDragStart($event)">
     <span></span>
     Read
   </div>
@@ -8,7 +8,7 @@
     <span></span>
     Type
   </div>
-  <div class="partial-blue-btn">
+  <div class="partial-blue-btn" appDraggable>
     <span></span>
     UI Interaction
   </div>

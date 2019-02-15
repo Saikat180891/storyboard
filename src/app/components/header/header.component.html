@@ -21,5 +21,9 @@
     </div>
 
   </div>
+  <ng-container *ngIf="_header.loading">
+    <div class="page-loading-progress-bar">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+  </ng-container>
 </nav>
-<!-- [@rotatedState]='state' -->

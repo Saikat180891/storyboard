@@ -12,7 +12,6 @@ import {
 import {ReasonCodeService} from '../reason-code.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {fromEvent} from 'rxjs';
-import {PreloaderService} from '../../shared/preloader/preloader.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SharedServicesService} from '../../../services/shared-services/shared-services.service';
 
@@ -104,7 +103,6 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     private spinner: NgxSpinnerService, 
     private formBuilder:FormBuilder, 
     private __sharedService: SharedServicesService,
-    private _preloadService: PreloaderService
     ) { }
 
   @HostListener('document:keyup.escape', ['$event'])

@@ -1,0 +1,33 @@
+<div class="section" [ngClass]="{'collapse':isCollapsed}">
+  <div class="section-header">
+    <div class="section-header-title">
+      Section name
+    </div>
+    <div class="section-header-options">
+      <div class="checkbox">
+        <mat-checkbox>Loop</mat-checkbox>
+      </div>
+      <div class="common-option option-menu">
+        <i class="fas fa-ellipsis-h"></i>
+      </div>
+      <div class="common-option collapsable-btn" (click)="onCollapse()">
+        <ng-container *ngIf="!isCollapsed; else down">
+          <i class="fas fa-caret-up"></i>
+        </ng-container>
+        <ng-template #down>
+          <i class="fas fa-caret-down"></i>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="section-body">
+    <ng-container *ngFor="let step of steps">
+      <div class="steps">
+        <app-steps-container [stepType]="step"></app-steps-container>
+      </div>
+    </ng-container>
+    <div class="droppable-area" #droppable (dragover)="allowDrop($event)" (drop)="onDrop($event)" (dragenter)="onDragEnter($event)" [ngClass]="{'hovering':hovered}" (dragleave)="onDragLeave($event)">
+      Drag & drop steps here
+    </div>
+  </div>
+</div>
