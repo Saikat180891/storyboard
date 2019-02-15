@@ -23,6 +23,8 @@ export class SignupusersComponent implements OnInit {
   project_id: number;
   strong_password: boolean = false;
   passwordMessage = "";
+  passwordStrengthStatus:string = 'Weak';
+
   ngOnInit() {
    this.route.queryParams.subscribe(res=>{
      if (res.status == "success")
@@ -59,36 +61,27 @@ export class SignupusersComponent implements OnInit {
   {
     let signup_details = {'email': this.email, 'password': this.password, 
                           'invitation_id':this.invitation_id,
-                          'sop': this.project_id};
+                          'sop': this.project_id
+                        };
 
-    
     if(this.strong_password){
-      if(this.password == this.confirmPassword)
-    {
-      this.password_mismatch = false;
-    this._api.signUpUser(signup_details).subscribe(res=>{
-  
-      if(res == "Success"){
-        this.signup_form = 2;
-       }
-       else{
-         this.signup_form = 3;
-       }
-    })
-     
-   }
-  
-  else {
-    this.passwordMessage="Password Mismatch"
-  }
-  }
-  else{
-    this.passwordMessage = "Password should contain atleast 1 Small Alphabet, 1 Capital Alphabet , 1 Number, 1 Special Character";
-  }
- 
+      if(this.password == this.confirmPassword){
+        this.password_mismatch = false;
+        this._api.signUpUser(signup_details).subscribe(res=>{
+          if(res == "Success"){
+            this.signup_form = 2;
+          }else{
+            this.signup_form = 3;
+          }
+        });
+      }else{
+        this.passwordMessage="Password Mismatch"
+      }
+    }else{
+      this.passwordMessage = "Password should contain atleast 1 Small Alphabet, 1 Capital Alphabet , 1 Number, 1 Special Character";
+    }
   }
 
-  passwordStrengthStatus:string = 'Weak';
   onStrengthChange($event){
     if($event < 3){
       this.passwordStrengthStatus = 'Weak';

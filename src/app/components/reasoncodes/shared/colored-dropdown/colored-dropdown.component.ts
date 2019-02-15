@@ -41,15 +41,11 @@ export class ColoredDropdownComponent implements OnInit, AfterViewInit, OnChange
   }
 
   ngOnChanges(changes: SimpleChanges){
-    // this.value.status = changes.defaultOption.currentValue;
-    console.log(changes);
   }
 
   changeColorofDefaultOption(){
     this.options.forEach(element=>{
       if(element.status === this.defaultOption){
-        // this.selectedColor = element.color;
-        // console.log(element)
         let pos = this.options.indexOf(element);
         this.selected = this.value = this.options[pos];
         this.applyPadding = true;
@@ -64,8 +60,6 @@ export class ColoredDropdownComponent implements OnInit, AfterViewInit, OnChange
   onSelect(event, option){
     event.stopPropagation();
     this.selected = this.value = option;
-    // let pos = this.options.indexOf(this.selected);
-    // this.selectedColor = this.options[pos];
     this.applyPadding = true;
     console.log(this.applyPadding)
     this.optionSelected.emit(option);
@@ -74,7 +68,6 @@ export class ColoredDropdownComponent implements OnInit, AfterViewInit, OnChange
 
   onSelectObj(event, option){
     event.stopPropagation();
-    // this.selected = this.value = option;
     this.optionSelected.emit(option);
     this.isOpen = false;
   }

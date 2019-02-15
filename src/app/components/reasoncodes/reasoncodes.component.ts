@@ -18,13 +18,6 @@ export interface UserData {
   color: string;
 }
 
-/** Constants used to fill up our data base. */
-const COLORS: string[] = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
-  'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
-const NAMES: string[] = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
-  'Charlotte', 'Theodore', 'Isla', 'Oliver', 'Isabella', 'Jasper',
-  'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
-
 /**
  * @title Data table with sorting, pagination, and filtering.
  */
@@ -127,7 +120,6 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
               private __scrollbar:ScrollbarService) {}
 
   ngOnInit() {
-    // this.spinner.show();
     this.route.params.subscribe(params => {
       this._reasonCode.sopId = this._createUserStory.sopId = parseInt(params.id);
       this.getPermissionForEpicsPage(2, this._reasonCode.sopId);
@@ -169,8 +161,6 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   onSelectDeletedUS(){
-    // console.log("deleted us")
-    // this._deletedTable.getDeletedUserStories();
   }
 
   getPermissionForEpicsPage(pageNumber:number, projectId:number){
@@ -180,14 +170,11 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
       if('Can add user stories' in  this.permissions){
         this.enableView = this.permissions['Can add user stories'];
       }
-      console.log("Permission for epics", this._reasonCode.role, this._reasonCode.grantedPermission);
     },
     err=>{
-      console.log("Error while fetching permissions for epics page", err);
     },
     ()=>{
       this._reasonCode.refresh(this._reasonCode.sopId);
-      console.log(this._reasonCode.role, this._reasonCode.grantedPermission);
     });
   }
 
@@ -202,16 +189,11 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
   benefitChartImage:string;
 
   onShowBenefits(event){
-    // if(environment.production){
     this.benefitChartImage = `${this.__api.apiUrl}/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png?q=${new Date().getTime()}`;
-    // }else{
-    //   this.benefitChartImage = `http://localhost:8000/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png?q=${new Date().getTime()}`;
-    // }
     this.showBenefitsChart = true;
   }
 
   onAddSprint(){
-    // this.addSprint.push(this.addSprintPayload);
     console.log(this.addSprintPayload)
   }
 
@@ -239,7 +221,6 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
   onOpenAddSprint(){
     this._reasonCode.getSprint(this._reasonCode.sopId);
     this._reasonCode.getReasonCode(this._reasonCode.sopId);
-    console.log(this._reasonCode.sprintConfig)
     let sprints = this._reasonCode.sprintConfig;
     this.openAddSprint = !this.openAddSprint;
     
@@ -263,7 +244,6 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
       }
         , temp);
       this.sprintOptions.push(temp);
-      console.log(this.sprintOptions);
     });
 
     this.createOptionsWithReasonCodeName();
@@ -283,27 +263,12 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
       }
         , temp);
       this.reasonCodeOptions.push(temp);
-      console.log(this.reasonCodeOptions);
     })
   }
 
   onCloseAddSprint(){
     this.openAddSprint = false;
   }
-
-  // onSaveSprint(){
-  //   this.addSprintPayload.start_date = this.formatDate(this.addSprintPayload.start_date);
-  //   this._reasonCode.createSprint(this.addSprintPayload);
-  //   this.addSprintPayload = {
-  //     sprint_name: '',
-  //     start_date: '',
-  //     duration: '',
-  //     end_date: ''
-  //   };
-  //   console.log("Received data",this._reasonCode.sprintConfig);
-  // }
-
-
 
   onCancel(){
     this._reasonCode.movemodal = false;
@@ -414,7 +379,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
     }
     this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, path);
 
-    console.log(path)
+    // console.log(path)
   }
 
   onClearAllFilters(){
@@ -424,7 +389,6 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
     this._reasonCode.filteredValues = [];
     this._reasonCode.filterPath = '';
     this._reasonCode.getUserStories(this._reasonCode.sopId);
-    // this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, "?" + this._reasonCode.sortBy);
     this.clearAllFilter = false;
     this._reasonCode.filtersAppliedFlag = false;
 
@@ -459,7 +423,6 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
       this._reasonCode.rulesApproved = '';  
       this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, this.makePath());
     }
-    console.log(this._reasonCode.filterItems, value);
   }
 
 

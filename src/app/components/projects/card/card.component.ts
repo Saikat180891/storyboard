@@ -27,6 +27,12 @@ export class CardComponent implements OnInit, OnChanges{
     ) { }
 
   ngOnInit(){
+    /**
+     * the initial values received from the Input is 
+     * initiated to the local variables also the 
+     * permission received for the projects page is and
+     * is stored in the 'sopPermissions' variable
+     */
     this.localData = this.cardData;
     this._cardService.cardContent = this.cardData;
     this.sopPermissions = this._containerService.permissions;
@@ -37,6 +43,10 @@ export class CardComponent implements OnInit, OnChanges{
   }
 
   onCreateSOP(){
+    /**
+     * this function open the create project dialog box when
+     * the user clicks on the create project card
+     */
     this.openCreateProject.emit(true);
   }
 
@@ -45,6 +55,10 @@ export class CardComponent implements OnInit, OnChanges{
   }
 
   onEdit(cardData:any){
+    /**
+     * this function is used to open the edit dialog box with the data 
+     * of the projects and the permission required for authorization
+     */
     this.openEditProject.emit({
       data:cardData, 
       role: cardData.assignee[0].role, 
@@ -54,6 +68,9 @@ export class CardComponent implements OnInit, OnChanges{
   }
 
   onDelete(localData){
+    /**
+     * this function is used to open the confirm deletion of projects
+     */
     this.deleteSop.emit({id: localData.id, status: true});
   }
   

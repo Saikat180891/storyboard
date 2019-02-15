@@ -117,9 +117,7 @@ export class UserstoryCardEditComponent implements OnInit {
     }
     this.editUSData.revised_delivery = this.formatDateToDisplay(this.editUSData.revised_delivery);
     this.editUSDatas = this.editUSData;
-    // console.log("Edit user stories", this.editUSData)
     this.__rcService.doneSelectStatus.subscribe(response=>{
-      // console.log("Subscribed Method", response)
       if(response){
         this.editUSData.status = 'Done';
       }else{
@@ -161,17 +159,9 @@ export class UserstoryCardEditComponent implements OnInit {
   validationSuccessfull = [];
 
   onSaveAll(){
-    // console.log(this.editUSData);
-
     this.editUSData.planned_delivery = this.__editUS.formatDateToSendData(this.editUSData.planned_delivery);
-    // console.log(this.editUSData);
     isNaN(this.editUSData.revised_delivery) || this.editUSData.revised_delivery == null ? this.editUSData.revised_delivery = null : this.editUSData.revised_delivery = this.__editUS.formatDateToSendData(this.editUSData.revised_delivery);
 
-
-    console.log(this.editUSData);
-    // this.statusSelected();
-    // console.log(this.userStoryPayload)
-    
     if(this.editUSData.us_number == ''){
       this.userStoryNumberValidator = true;
       this.validationSuccessfull[0] = 0;
@@ -225,8 +215,6 @@ export class UserstoryCardEditComponent implements OnInit {
       else{this.userStoryBenefitValidator = false;
         value++;
       }
-      console.log(this.editUSData.dev_hrs+" "+this.editUSData.ftes);
-      console.log(pattern.test(this.editUSData.dev_hrs)+" "+pattern.test(this.editUSData.ftes));
       if ((this.editUSData.dev_hrs!=null && this.editUSData.dev_hrs!='-----' )&& !pattern.test(this.editUSData.dev_hrs))
         {
           this.userStoryDevHrsValidator = true;
@@ -251,16 +239,12 @@ export class UserstoryCardEditComponent implements OnInit {
       if(this.editUSData.dev_hrs === null || this.editUSData.dev_hrs === '' || this.editUSData.dev_hrs === '-----' || isNaN(this.editUSData.dev_hrs)){
         this.editUSData.dev_hrs = 0.0;
       }
-      console.log("From the edit user story",this.editUSData);
       let rc_id = 0;
       this.__rcService.reasonCodeData.forEach(element=>{
         if(element.name === this.editUSData.rc_name){
           rc_id = element.id;
         }
       });
-      // if(isNaN(this.editUSData.revised_delivery) || this.editUSData.revised_delivery === '-----' ){
-      //   this.editUSData.revised_delivery = null;
-      // }
       this.__editUS.editUserStory(this.editUSData.id, sprintId, rc_id, this.editUSData);
       this.onClose();
     }
@@ -282,7 +266,6 @@ export class UserstoryCardEditComponent implements OnInit {
 
   onSprintSelect($event){
     this.editUSData.sprint_name=$event.status;
-    console.log(this.__rcService.sprintConfig)
     this.__rcService.sprintConfig.forEach(element=>{
       if(element.sprint_name === this.editUSData.sprint_name){
         let date = new Date(JSON.parse(JSON.stringify(element.end_date.split("/").reverse().join("-"))));

@@ -1,7 +1,9 @@
 /**
- * the global module has all the material modules as well as the directivs required to control the entire app
- * this module can be imported to any other module which uses Angular Material and the custom directives
- * ANY CHANGE IN THIS MODULE MIGHT BREAK THE APP OR MIGHT EFFECT THE APP'S PERFORMANCE
+ * the global module has all the material modules 
+ * as well as the directivs required to control the entire app
+ * this module can be imported to any other module 
+ * which uses Angular Material and the custom directives
+ * ANY CHANGES IN THIS MODULE MIGHT BREAK THE APP OR MIGHT EFFECT THE APP'S PERFORMANCE
  */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
