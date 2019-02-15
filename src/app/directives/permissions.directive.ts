@@ -33,9 +33,13 @@ export class PermissionsDirective implements OnInit {
     ) { }
 
   ngOnInit(){
+    //storing the list of permission received from the backend in a local variable
     let grantedPermissions = this.appCanAccess.permissionList;
+    //check if action attribute has 'disable' as parameter or not
     if(this.appCanAccess.action == 'disable'){
+      //check if the required permission is present in the permission list or not
       if(this.appCanAccess.permissionRequired in grantedPermissions){
+        //if the granted permission value is false the proceed to the else block
         if(!grantedPermissions[this.appCanAccess.permissionRequired]){
           if(this.el.nativeElement.nodeName == 'BUTTON'){
             this.renderer.setProperty(this.el.nativeElement, 'disabled', 'true');

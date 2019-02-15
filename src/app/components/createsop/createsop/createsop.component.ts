@@ -47,9 +47,10 @@ export class CreatesopComponent implements OnInit, AfterContentChecked {
   }
 
   onRequestedSelectType($event){
-    if($event === 'section'){
-      this.__steps.sopStepsList.push({sectionName:'section name'});
-    }
+    // if($event === 'section'){
+    //   this.__steps.sopStepsList.push({sectionName:'section name'});
+    //   console.log(this.__steps.sopStepsList);
+    // }
   }
 
 }

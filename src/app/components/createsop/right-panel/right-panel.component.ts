@@ -7,12 +7,17 @@ import {StepcontrolService} from '../services/stepcontrol/stepcontrol.service';
   styleUrls: ['./right-panel.component.scss']
 })
 export class RightPanelComponent implements OnInit {
-  steps:any = [];
+  stepList:any = [];
 
   constructor(private __steps:StepcontrolService) { }
 
   ngOnInit() {
-    this.steps = this.__steps.sopStepsList;
+    this.stepList = this.__steps.getList();
   }
 
+  onButtonDragged($event:any){
+    this.__steps.insertItem($event.index, $event.data);
+    console.log(this.__steps.getList(), this.stepList);
+
+  }
 }

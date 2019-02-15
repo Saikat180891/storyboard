@@ -1,54 +1,38 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, OnChanges } from '@angular/core';
-import {fromEvent} from 'rxjs';
-import {DragDropService} from '../../services/draganddrop/drag-drop.service';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import {StepcontrolService} from '../../services/stepcontrol/stepcontrol.service';
 @Component({
   selector: 'app-section-title',
   templateUrl: './section-title.component.html',
   styleUrls: ['./section-title.component.scss']
 })
 export class SectionTitleComponent implements OnInit, OnChanges {
-  @ViewChild('droppable') droppable:ElementRef;
   @Input('stepParameters') stepParameters:any;
   @Input('externalStepIndex') externalStepIndex:number;
-  
-  isCollapsed:boolean = false;
-  hovered:boolean = false;
-  steps = ['Read', 'Type', 'Condition'];
-  constructor(private __dragDrop:DragDropService) {
+  @Output('sectionPayload') sectionPayload = new EventEmitter<any>();
 
-   }
+  isCollapsed:boolean = false;
+  constructor(private stepCtrl:StepcontrolService) {}
 
   ngOnInit() {
-    fromEvent(this.droppable.nativeElement, 'drop').subscribe(res=>{
-      console.log(res)
-    });
-    // this.__dragDrop.getEventLocation().subscribe(res=>{
-    //   // console.log(res.clientX, res.clientY, this.droppable)
-    // });
   }
-
+  
   ngOnChanges(){
+    console.log(this.stepParameters)
   }
 
   onCollapse(){
     this.isCollapsed = !this.isCollapsed;
   }
 
-  onDrop($event){
-    console.log($event.dataTransfer.getData("text"));
-    this.hovered = false;
-  }
-
   allowDrop($event){
     $event.preventDefault();
   }
 
-  onDragEnter($event){
-    $event.preventDefault();
-    this.hovered = true;
-  }
-
-  onDragLeave($event){
-    this.hovered = false;
+  onDropData($event:any){
+    this.sectionPayload.emit({
+      data: $event,
+      index: this.externalStepIndex
+    });
+    console.log($event);
   }
 }
