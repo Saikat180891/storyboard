@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 
 @Component({
   selector: 'app-canvas-crousel',
@@ -7,6 +7,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 })
 export class CanvasCrouselComponent implements OnInit {
   @ViewChild('canvasCarousel') canvasCarousel:ElementRef;
+  @Input('data') data:any;
+  @Input('currentImage') currentImage:any;
 
   constructor() { }
 

@@ -2,7 +2,15 @@
   <app-breadcrumb></app-breadcrumb>
 </div>
 <div class="left-panel-display">
-  <app-canvas-crousel></app-canvas-crousel>
+  <div class="slide-show">
+  <app-canvas-crousel [data]="imageGalleryContent" [currentImage]="currentImage"></app-canvas-crousel>
+    <div class="carousel-position carousel-up" (click)="onCarouselMoveUp()">
+      <i class="fas fa-chevron-up"></i>
+    </div>
+    <div class="carousel-position carousel-down" (click)="onCarouselMoveDown()">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
 </div>
 <div class="posters">
   <div class="poster-segments">

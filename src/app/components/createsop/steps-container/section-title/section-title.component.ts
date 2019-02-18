@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import {StepcontrolService} from '../../services/stepcontrol/stepcontrol.service';
+
 @Component({
   selector: 'app-section-title',
   templateUrl: './section-title.component.html',
