@@ -1,10 +1,12 @@
 <div class="buttons-menu">
 
   <ng-container *ngFor="let link of sidebarLinks; let i = index">
-    <button (click)="onOpenMediaPane(link.function, i)" class="menu-buttons" [ngClass]="{'menu-buttons-highlight':selected == i}">
-      <img src="../../../../assets/pics/media-icon.svg" alt="mediapane">
+    <div (click)="onOpenMediaPane(link.function, i)" class="menu-buttons" [ngClass]="{'menu-buttons-highlight':selected == i}">
+      <div class="image-pane">
+        <img src="../../../../assets/pics/media-icon.svg" alt="mediapane">
+      </div>
       <span>{{link.linkCaption}}</span>
-    </button>
+    </div>
   </ng-container>
 
 </div>

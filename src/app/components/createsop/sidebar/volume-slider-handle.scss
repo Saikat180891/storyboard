@@ -1,0 +1,18 @@
+@import "../global.scss";
+
+.volume-slider{
+  input[type="range"].volume-slider-handle{
+    height: 5px;
+    appearance: none;
+    background-color: $main-blue;
+  }
+  
+  input[type="range"].volume-slider-handle::-webkit-slider-thumb{
+    appearance: none;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.3);
+  }
+}

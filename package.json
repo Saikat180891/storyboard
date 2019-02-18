@@ -22,6 +22,7 @@
     "@angular/platform-browser": "^7.0.3",
     "@angular/platform-browser-dynamic": "^7.0.3",
     "@angular/router": "^7.0.3",
+    "angular-password-strength-meter": "0.0.4",
     "core-js": "^2.5.4",
     "microsoft-adal-angular6": "^1.0.0",
     "ng2-nvd3": "^2.0.0",
@@ -29,9 +30,11 @@
     "ngx-progressbar": "^2.1.1",
     "ngx-spinner": "^6.1.2",
     "nodemon": "^1.18.6",
-    "rxjs": "^6.0.0",
+    "rxjs": "^6.4.0",
+    "rxjs-compat": "^6.4.0",
     "web-animations-js": "^2.3.1",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.12.2",
@@ -44,7 +47,7 @@
     "codelyzer": "~4.2.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~1.7.1",
+    "karma": "^4.0.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.0",
     "karma-jasmine": "~1.1.1",

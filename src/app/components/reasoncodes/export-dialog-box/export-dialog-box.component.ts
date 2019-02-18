@@ -36,12 +36,10 @@ export class ExportDialogBoxComponent implements OnInit {
   }
 
   onExportAuditTrail(){
-    console.log(this.projectTypeSelected)
-    
     if(this.projectTypeSelected == 2 && this.startDate && this.endDate)
     {
-    let startDate = this.reArrangeDate(this.startDate);
-    let endDate = this.reArrangeDate(this.endDate);
+      let startDate = this.reArrangeDate(this.startDate);
+      let endDate = this.reArrangeDate(this.endDate);
       this.__rcService.downLoadAuditTrailFile(this.__rcService.sopId, startDate, endDate);
     }
     else{

@@ -18,7 +18,12 @@ export class SidebarButtonsComponent implements OnInit {
       logo: '',
       linkCaption: 'Media',
       function: 'media'
-    }
+    },
+    // {
+    //   logo: '',
+    //   linkCaption: 'Media',
+    //   function: 'media'
+    // }
   ]
 
   constructor() { }
@@ -27,9 +32,11 @@ export class SidebarButtonsComponent implements OnInit {
   }
 
   onOpenMediaPane(type:string, index:number){
+    /**
+     * this function is used to open the media pane
+     */
     this.selected = index;
     this.openMediaPane = !this.openMediaPane;
-    console.log(this.openMediaPane);
     this.open.emit({type:type, shouldOpen: this.openMediaPane});
   }
 

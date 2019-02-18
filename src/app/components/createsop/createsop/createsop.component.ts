@@ -1,25 +1,39 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterContentChecked } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {UicontrolService} from '../services/uicontrol.service';
+import {PageService} from '../services/page/page.service';
+import {StepcontrolService} from '../services/stepcontrol/stepcontrol.service';
+
 @Component({
   selector: 'app-createsop',
   templateUrl: './createsop.component.html',
   styleUrls: ['./createsop.component.scss']
 })
-export class CreatesopComponent implements OnInit, OnChanges {
+export class CreatesopComponent implements OnInit, AfterContentChecked {
   openSidebar:any;
   toggleRecentSnapshot:boolean = false;
-
+  imageGalleryContent = [];
   constructor(
     private routes:ActivatedRoute, 
-    private __uic:UicontrolService
+    private __uic:UicontrolService,
+    private __page:PageService,
+    private __steps:StepcontrolService
     ) { }
 
   ngOnInit() {
-    console.log(this.routes)
+    /**
+     * in the ngOnInit function the windows.location is checked and
+     * the the project id and userstory id is extracted and stored in
+     * the PageService service
+     */
+    this.routes.params.subscribe(res=>{
+      this.__page.projectId = res.id;
+      this.__page.userStoryId = res.userStoryId;
+    });
   }
   
-  ngOnChanges(){
+  ngAfterContentChecked(){
+    this.imageGalleryContent = this.__page.imageGalleryContent;
   }
 
 
@@ -28,7 +42,6 @@ export class CreatesopComponent implements OnInit, OnChanges {
   }
 
   onOpenSidebar($event:Event){
-    console.log($event);
     if($event.type == 'media'){
       this.openSidebar = $event["shouldOpen"];
     }
@@ -36,6 +49,13 @@ export class CreatesopComponent implements OnInit, OnChanges {
 
   onOpenRecentScreenshot($event:boolean){
     this.toggleRecentSnapshot = $event;
+  }
+
+  onRequestedSelectType($event){
+    // if($event === 'section'){
+    //   this.__steps.sopStepsList.push({sectionName:'section name'});
+    //   console.log(this.__steps.sopStepsList);
+    // }
   }
 
 }

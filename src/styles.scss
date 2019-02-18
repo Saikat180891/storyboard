@@ -1,14 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i');
 // html, body { height: 100vh; }
 *{
   box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
 }
 body {
     margin: 0;
     overflow-x: hidden;
     background-color: #eee;
-    font-family: 'Roboto', sans-serif;
 }
 .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar{
     background-color: #2A7DE1;
@@ -141,18 +142,18 @@ input::placeholder{
 .center{
     text-align: center;
 }
-.button-box{
-    display: block;
-    width: 320px;
-    margin: 0 auto;
-}
-.dialog-group .button-box button{
-    width: 150px;
-}
-.dialog-group .button-box button:first-child{
-    margin-right: 20px;
-    background-color: #2A7DE1;
-}
+// .button-box{
+//     display: block;
+//     width: 320px;
+//     margin: 0 auto;
+// }
+// .dialog-group .button-box button{
+//     width: 150px;
+// }
+// .dialog-group .button-box button:first-child{
+//     margin-right: 20px;
+//     background-color: #2A7DE1;
+// }
 .fixed-bottom{
     position: absolute;
     bottom: 0;
@@ -165,44 +166,7 @@ ul{
 .color-red{
     background-color: red;
 }
-li{
-    height: 26px;
-    width: 100%;
-    margin-bottom: 5px;
-    position: relative;
-}
-li img{
-    height: 26px;
-    width: 26px;
-    margin-right: 20px;
-}
-li span{
-    line-height: 26px;
-    font-size: 14px;
-    color: #707070;
-    position: absolute;
-}
-.list-close{
-    position: absolute;
-    right: 0;
-    cursor: pointer;
-}
-.list-close i{
-    color: #D1D1D1;
-}
-.list-close button.mat-raised-button.mat-primary{
-    background-color: transparent;
-}
-.list-close button.mat-raised-button{
-    min-width: 26px;
-    padding: 0;
-    line-height: 26px;
-    border-radius: 50%;
-    font-size: 20px;
-    color: #707070;
-    -webkit-box-shadow: 0;
-            box-shadow: 0;
-}
+
 .height-max{
     max-height: 70px;
     overflow: auto;
@@ -211,22 +175,16 @@ li span{
 .mat-raised-button:not([class*=mat-elevation-z]){
     box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12);
 }
-.button-box button:last-child{
-    border: 1px solid #54585A;
-}
+// .button-box button:last-child{
+//     border: 1px solid #54585A;
+// }
 .image-profile-pic{
     margin-right: 5px;
 }
-.upload button{
-    width: 100%;
-    height: 100px;
-    color: #BFBFBF;
-    border: 1px solid #D1D1D1;
-    overflow: hidden;
-}
+
 .preview-logo{
-    width: 100px;
-    height: 100px;
+    width: 100%;
+    height: 100%;
 }
 .upload button span{
     display: block;
@@ -307,6 +265,11 @@ li span{
   transform: rotate(90deg);
 }
 
-// .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background{
-//   background-color: rgba($color: #6CC24A, $alpha: 0.6);
-// }
+
+::ng-deep .mat-tab-label{
+  opacity: 1;
+}
+
+.myspinner /deep/ .black-overlay{
+  position: fixed !important;
+}

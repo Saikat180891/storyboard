@@ -6,7 +6,7 @@
       <span>
         <i class="far fa-plus-square"></i>
       </span>
-      {{createSOP}}
+      Create New Project
     </a>
   </div>
 </ng-container>
@@ -36,7 +36,7 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="onEdit($event, localData)">
+            <button mat-menu-item (click)="onEdit(localData)">
               <span>Edit</span>
             </button>
             <button 

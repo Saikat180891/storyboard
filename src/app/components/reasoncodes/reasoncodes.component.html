@@ -13,7 +13,7 @@
   
         <div class="middle header__btn">
           <button [ngStyle]="{'width' : '150px'}" class="btn btn-blue btn-lg btn-shadow btn-active clearfill" (click)="onOpenAddSprint()"><i class="fas fa-cog"></i> Config Project</button>
-          <button [ngStyle]="{'width' : '150px', 'margin-left': '20px'}" [ngClass]="{'btn-export-active':showBenefitsChart}" class="btn btn-blue btn-lg btn-shadow btn-active clearfill" (click)="onShowBenefits()"><i class="fas fa-chart-line"></i> Show Benefits</button>
+          <!-- <button [ngStyle]="{'width' : '150px', 'margin-left': '20px'}" [ngClass]="{'btn-export-active':showBenefitsChart}" class="btn btn-blue btn-lg btn-shadow btn-active clearfill" (click)="onShowBenefits()"><i class="fas fa-chart-line"></i> Show Benefits</button> -->
           <button [ngStyle]="{'width' : '100px', 'margin-left': '20px'}" [ngClass]="{'btn-export-active':openExport}" class="btn btn-blue btn-lg btn-shadow btn-active clearfill" (click)="onOpenExport()"><i class="fas fa-file-export"></i> Export</button>
         </div>
   
@@ -26,7 +26,7 @@
           <app-charts [extras]="true" [projectStatus]="_reasonCode.currentSprintDuration" [meter]="true" [options]="pieChartOptions" [data]="_reasonCode.currentSprintData" [title]="'Current Sprint'" [selectOptions]="_reasonCode.sprintConfig"></app-charts>
         </div>
         <div class="chart">
-          <app-charts [extras]="false" [projectStatus]="_reasonCode.totalProjectStatus" [meter]="false" [options]="barChartOptions" [title]="'Benefits'" [data]="_reasonCode.benefitsChartData"></app-charts>
+          <app-charts [extras]="false" [projectStatus]="_reasonCode.totalProjectStatus" [meter]="false" [options]="barChartOptions" [title]="'Benefits'" [data]="_reasonCode.benefitsChartData" [ifButtonRequired]="true" (onClick)="onShowBenefits($event)"></app-charts>
         </div>
       </div>
     </div>
@@ -107,7 +107,7 @@
       class="btn btn-flat-grey" 
       (click)="onCreate()" 
       [ngStyle]="{'width':'150px'}"
-      [appCanAccess]="{role:_reasonCode.role, permissionRequired:'Can add user stories', permissionList:_reasonCode.grantedPermission}"
+      *ngIf="enableView"
       >
         <img width="10px" height="10px" src="../../../assets/pics/plus.svg" alt="create user story"> Create New U/S
       </button>
@@ -196,7 +196,7 @@
 
 
 
-<div class="overlay opacity" *ngIf="_reasonCode.movemodal">
+<!-- <div class="overlay opacity" *ngIf="_reasonCode.movemodal">
   <div id="move-user-story">
     <div class="modal">
       <div class="header">
@@ -256,7 +256,7 @@
   </div>
 </div>
 
-<app-preloader></app-preloader>
+<app-preloader></app-preloader> -->
 
 <!-- <div class="overlay" *ngIf="warning">
   <div class="warning">
@@ -293,8 +293,9 @@
     </div>
   </div>
 </div>
+
 <ngx-spinner
-  bdColor="rgba(51,51,51,0.9)"
+  bdColor="rgba(56, 73, 109,0.8)"
   size="medium"
   color="#fff"
   type="ball-spin-clockwise"

@@ -1,21 +1,51 @@
 <div class="gallery">
   <mat-grid-list cols="3" rowHeight="2:1.5" gutterSize="20px">
-    <mat-grid-tile class="add-video">
-      <div class="grid-content">
-        <div class="icon">
-
-        </div>
-        <div class="title">
-          Add Video
+    <mat-grid-tile>
+      <div class="add-video">
+        <div class="grid-content" [ngSwitch]="type">
+          <ng-container *ngSwitchCase="'VIDEO'">
+            <div class="icon">
+              <i class="far fa-plus-square"></i>
+            </div>
+            <div class="title">
+              Add Video
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="'IMAGE'">
+            <div class="icon">
+              <i class="far fa-plus-square"></i>
+            </div>
+            <div class="title">
+              Add Image From File
+            </div>
+          </ng-container>
+          <div class="file-loader">
+            <input type="file" name="" id="" (change)="onFileSelected($event)">
+          </div>
         </div>
       </div>
     </mat-grid-tile>
 
     <ng-container>
-      <mat-grid-tile>2</mat-grid-tile>
-      <mat-grid-tile>3</mat-grid-tile>
-      <mat-grid-tile>4</mat-grid-tile>
+      <mat-grid-tile *ngFor="let content of data; let i=index" (click)="onThumbnailSelect(i, content)" [ngClass]="{'selected':selected==i}">
+        <div class="grid-content-next">
+          <div class="picture">
+            <img [src]="content.thumbnail" alt="">
+            <div class="picture-overlay">
+              <div class="picture-overlay-btns" [ngSwitch]="type">
+                <button *ngSwitchCase="'VIDEO'" (click)="onPlayVideo(content, i)"><i class="fas fa-play"></i><span>Play</span></button>
+                <button *ngSwitchCase="'IMAGE'" (click)="onViewImage(i, content)"><i class="fas fa-play"></i><span>View</span></button>
+                <button><i class="far fa-trash-alt" (click)="onDeleteContent(content, i, type)"></i><span>Delete</span></button>
+              </div>
+            </div>
+          </div>
+          <div class="picture-title">
+            <span>{{content.video_name?content.video_name:content.image_name}}</span>
+            <span>{{content.video_length?content.video_length:''}}</span>
+          </div>
+        </div>
+      </mat-grid-tile>
     </ng-container>
-    
+
   </mat-grid-list>
 </div>

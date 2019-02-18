@@ -7,24 +7,16 @@ import {CreateUserstoryService} from './userstory-card-create/create-userstory.s
 import {charts} from './chartoptions';
 import {fromEvent} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {PreloaderService} from '../shared/preloader/preloader.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {DataService} from '../../data.service';
 import {ScrollbarService} from '../../services/scrollbarService/scrollbar.service';
-
+import {hideInOut} from '../../animation';
 export interface UserData {
   id: string;
   name: string;
   progress: string;
   color: string;
 }
-
-/** Constants used to fill up our data base. */
-const COLORS: string[] = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
-  'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
-const NAMES: string[] = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
-  'Charlotte', 'Theodore', 'Isla', 'Oliver', 'Isabella', 'Jasper',
-  'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
 
 /**
  * @title Data table with sorting, pagination, and filtering.
@@ -64,7 +56,8 @@ export interface ReceivedSprintConfig{
 @Component({
   selector: 'app-reasoncodes',
   templateUrl: './reasoncodes.component.html',
-  styleUrls: ['./reasoncodes.component.scss', './move-user-story.scss','./draggable.scss', './completed-warning.scss', './export.scss']
+  styleUrls: ['./reasoncodes.component.scss', './move-user-story.scss','./draggable.scss', './completed-warning.scss', './export.scss'],
+  animations: [hideInOut]
 })
 export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('totalPage') totalPage:ElementRef;
@@ -93,7 +86,9 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
   selectedTabIndex:number = 0;
   activateStickybar:boolean = false;
   activateVirtualFilter:boolean = false;
-
+  role:string;
+  permissions:any;
+  enableView:boolean = true;
 
   addSprintPayload:SprintConfig = {
     sprint_name: '',
@@ -116,32 +111,10 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
 
   addSprint = [this.addSprintPayload];
 
-  // fruits = [
-  //   {name: 'Lemon'},
-  //   {name: 'Lime'},
-  //   {name: 'Apple'},
-  // ];
-
-  // todo = [
-  //   'Get to work',
-  //   'Pick up groceries',
-  //   'Go home',
-  //   'Fall asleep'
-  // ];
-
-  // done = [
-  //   'Get up',
-  //   'Brush teeth',
-  //   'Take a shower',
-  //   'Check e-mail',
-  //   'Walk dog'
-  // ];
-
   constructor(private route: ActivatedRoute,
               private _reasonCode: ReasonCodeService,
               private _containerService: ContainerService,
               private _createUserStory: CreateUserstoryService,
-              private __preloaderService: PreloaderService,
               public spinner: NgxSpinnerService,
               private __api:DataService,
               private __scrollbar:ScrollbarService) {}
@@ -156,6 +129,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
         }
       });
     });
+    
     
    
     /**
@@ -177,23 +151,6 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
       }
     });
 
-    // fromEvent(window, 'scroll')
-    //     .subscribe(res => {
-    //       let position = res.target['scrollingElement'].scrollTop;
-    
-        // });
-      
-      // setTimeout(()=>{
-      //   fromEvent(this.userStoryContainer.nativeElement, 'scroll')
-      //   .subscribe(res => {
-      //     console.log(res["target"].scrollTop);
-      //     if(res["target"].scrollTop <= 0){
-      //       // this.fixToTop = false;
-      //       // console.log(this.fixToTop);
-      //     }
-      //   });
-      // }, 500);
-
   }
 
   ngOnChanges(){
@@ -204,23 +161,20 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   onSelectDeletedUS(){
-    // console.log("deleted us")
-    // this._deletedTable.getDeletedUserStories();
   }
 
   getPermissionForEpicsPage(pageNumber:number, projectId:number){
     this._reasonCode.getPermission(pageNumber, projectId).subscribe(res=>{
-      this._reasonCode.role = res[0].name;
-      this._reasonCode.grantedPermission = res[0].permissions;
-      this._reasonCode.refresh(this._reasonCode.sopId);
-      console.log("Permission for epics", this._reasonCode.role, this._reasonCode.grantedPermission);
+      this._reasonCode.role = this.role = res[0].name;
+      this._reasonCode.grantedPermission = this.permissions = res[0].permissions;
+      if('Can add user stories' in  this.permissions){
+        this.enableView = this.permissions['Can add user stories'];
+      }
     },
     err=>{
-      console.log("Error while fetching permissions for epics page", err);
     },
     ()=>{
-
-      console.log(this._reasonCode.role, this._reasonCode.grantedPermission);
+      this._reasonCode.refresh(this._reasonCode.sopId);
     });
   }
 
@@ -233,17 +187,13 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   benefitChartImage:string;
-  onShowBenefits(){
-    // if(environment.production){
+
+  onShowBenefits(event){
     this.benefitChartImage = `${this.__api.apiUrl}/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png?q=${new Date().getTime()}`;
-    // }else{
-    //   this.benefitChartImage = `http://localhost:8000/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png?q=${new Date().getTime()}`;
-    // }
     this.showBenefitsChart = true;
   }
 
   onAddSprint(){
-    // this.addSprint.push(this.addSprintPayload);
     console.log(this.addSprintPayload)
   }
 
@@ -271,7 +221,6 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
   onOpenAddSprint(){
     this._reasonCode.getSprint(this._reasonCode.sopId);
     this._reasonCode.getReasonCode(this._reasonCode.sopId);
-    console.log(this._reasonCode.sprintConfig)
     let sprints = this._reasonCode.sprintConfig;
     this.openAddSprint = !this.openAddSprint;
     
@@ -295,7 +244,6 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
       }
         , temp);
       this.sprintOptions.push(temp);
-      console.log(this.sprintOptions);
     });
 
     this.createOptionsWithReasonCodeName();
@@ -315,27 +263,12 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
       }
         , temp);
       this.reasonCodeOptions.push(temp);
-      console.log(this.reasonCodeOptions);
     })
   }
 
   onCloseAddSprint(){
     this.openAddSprint = false;
   }
-
-  // onSaveSprint(){
-  //   this.addSprintPayload.start_date = this.formatDate(this.addSprintPayload.start_date);
-  //   this._reasonCode.createSprint(this.addSprintPayload);
-  //   this.addSprintPayload = {
-  //     sprint_name: '',
-  //     start_date: '',
-  //     duration: '',
-  //     end_date: ''
-  //   };
-  //   console.log("Received data",this._reasonCode.sprintConfig);
-  // }
-
-
 
   onCancel(){
     this._reasonCode.movemodal = false;
@@ -381,6 +314,10 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   onVirtualTabClicked(value:number){
+    let scrollPositionOfPage:number;
+    this.__scrollbar.broadCastScrollPosition.subscribe(res=>{
+      scrollPositionOfPage = Number(res);
+    });
     if(value == 0){
       this.selectedTabIndex = value;
       this._reasonCode.getUserStories(this._reasonCode.sopId);
@@ -390,6 +327,10 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
     }else if(value == 2){
       this.selectedTabIndex = value;
       this._reasonCode.getDeletedUserStories(this._reasonCode.sopId);
+      window.scrollTo({
+        top: scrollPositionOfPage,
+        left: 0
+      })
     }
   }
 
@@ -438,7 +379,7 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
     }
     this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, path);
 
-    console.log(path)
+    // console.log(path)
   }
 
   onClearAllFilters(){
@@ -448,7 +389,6 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
     this._reasonCode.filteredValues = [];
     this._reasonCode.filterPath = '';
     this._reasonCode.getUserStories(this._reasonCode.sopId);
-    // this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, "?" + this._reasonCode.sortBy);
     this.clearAllFilter = false;
     this._reasonCode.filtersAppliedFlag = false;
 
@@ -483,7 +423,6 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
       this._reasonCode.rulesApproved = '';  
       this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, this.makePath());
     }
-    console.log(this._reasonCode.filterItems, value);
   }
 
 

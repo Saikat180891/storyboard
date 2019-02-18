@@ -1,0 +1,49 @@
+@import "../../global.scss";
+.progress-bar{
+  position: relative;
+  width: 100%;
+  height: 5px;
+  background-color: #777;
+
+  .progress{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 5px;
+    // width: 40px;
+    background-color: $main-blue;
+  }
+
+  .buffered-progress{
+    background-color: #cccccc;
+  }
+
+  input[type="range"]{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    appearance: none;
+    margin: 0;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  input[type="range"]:hover{
+    height: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 13px; /* Set a specific slider handle width */
+    height: 13px; /* Slider handle height */
+    background: $main-blue; /* Green background */
+    box-shadow: 0 0 10px rgba($color: #040404, $alpha: 0.7);
+    border-radius: 50%;
+    cursor: pointer; /* Cursor on hover */
+  }
+}

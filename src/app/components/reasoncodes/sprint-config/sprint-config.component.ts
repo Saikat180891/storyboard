@@ -12,7 +12,6 @@ import {
 import {ReasonCodeService} from '../reason-code.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {fromEvent} from 'rxjs';
-import {PreloaderService} from '../../shared/preloader/preloader.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SharedServicesService} from '../../../services/shared-services/shared-services.service';
 
@@ -104,7 +103,6 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     private spinner: NgxSpinnerService, 
     private formBuilder:FormBuilder, 
     private __sharedService: SharedServicesService,
-    private _preloadService: PreloaderService
     ) { }
 
   @HostListener('document:keyup.escape', ['$event'])
@@ -114,13 +112,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     } 
   }
 
-  ngOnInit() {
-    // fromEvent(this.sprintContainer.nativeElement, 'scroll')
-    // .subscribe(res => {
-    //   console.log(Number(res["target"].scrollTop.toFixed(0)));
-    //   this.scrollTop = Number(res["target"].scrollTop.toFixed(0));
-    // });
-    
+  ngOnInit() { 
   }
 
   ngOnChanges(){
@@ -128,19 +120,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     this.permissions = this.__rcService.grantedPermission;
   }
 
-  ngAfterViewChecked() {        
-    // this.scrollToBottom();   
-         
-    // this.sprintContainer.nativeElement.scrollTo({
-    //   top: this.sprintContainer.nativeElement.scrollHeight,
-    //   left: 0,
-    //   behavior: 'smooth'
-    // });
-    // this.rcContainer.nativeElement.scrollTo({
-    //   top: this.rcContainer.nativeElement.scrollHeight,
-    //   left: 0,
-    //   behavior: 'smooth'
-    // });
+  ngAfterViewChecked() {
   } 
 
   onClose(){
@@ -152,13 +132,6 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
       this.changedDetected = [];
       this.closeSprints.emit(false);
     }
-    //#TODO: please put a check to see if the save button is clicked or not, if yes only then execute the below lines
-    // this.__rcService.getBenefits(this.__rcService.sopId);          
-    // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
-    // this.__rcService.getProjectStatus(this.__rcService.sopId);
-    // this.__rcService.getCurrentSprintData(this.__rcService.sopId);
-    // this.__rcService.getSprintStatus(this.__rcService.sopId);
-    // this.__rcService.getUserStories(this.__rcService.sopId);
     this.__rcService.refresh(this.__rcService.sopId);
   }
 
@@ -193,17 +166,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     if(this.addNewRow.length > 0){
       this.__rcService.createSprint(this.addNewRow);
       this.__rcService.refresh(this.__rcService.sopId)
-      // this.__rcService.getBenefits(this.__rcService.sopId);
-      // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
-      // this.__rcService.getProjectStatus(this.__rcService.sopId);
-      // this.__rcService.getCurrentSprintData(this.__rcService.sopId);
-      // this.__rcService.getSprintStatus(this.__rcService.sopId);
-      // this.__rcService.getUserStories(this.__rcService.sopId)
     }
-    // else if(this.changedDetected.length === 0 && this.addNewRow.length === 0){
-    //   this.onSelectYes();
-    //   console.log("Nothing to change");
-    // }
     if(this.changedDetected){
       this.changedDetected.forEach((element, index)=>{
         if(element === true){
@@ -211,28 +174,9 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
         }
       });
       this.__rcService.refresh(this.__rcService.sopId)
-      // this.__rcService.getBenefits(this.__rcService.sopId);          
-      // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
-      // this.__rcService.getProjectStatus(this.__rcService.sopId);
-      // this.__rcService.getCurrentSprintData(this.__rcService.sopId);
-      // this.__rcService.getSprintStatus(this.__rcService.sopId);
-      // this.__rcService.getUserStories(this.__rcService.sopId)
     }
-    // else if(this.changedDetected.length === 0 && this.addNewRow.length === 0){
-    //   this.onSelectYes();
-    //   console.log("Nothing to change");
-    // }
-    // if(ack){
-    //   this.addNewRow = [];
-    //   console.log("Done")
-    //   this.onSelectYes();
-    //   this.spinner.hide();
-    // }else{
-    //   this.spinner.hide();
-    // }
     this.spinner.hide();
     this.onSelectYes();
-    // console.log(this.addNewRow);
     
   }
 
@@ -245,11 +189,6 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
   onDoNotDelete(){
     this.displayWarningBox = false;
     this.__rcService.refresh(this.__rcService.sopId);
-    // this.__rcService.getBenefits(this.__rcService.sopId);          
-    // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
-    // this.__rcService.getProjectStatus(this.__rcService.sopId);
-    // this.__rcService.getCurrentSprintData(this.__rcService.sopId);
-    // this.__rcService.getSprintStatus(this.__rcService.sopId);
   }
 
   onDelete(){
@@ -274,7 +213,6 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
       this.reasonCodeEditChangeDetector.forEach((element, index)=>{
         if(element){
           this.__rcService.editReasonCode(this.reasonCodeConfigData[index].id, this.reasonCodeConfigData[index]);
-          // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
           this.__rcService.refresh(this.__rcService.sopId);
         }
       });
@@ -286,7 +224,6 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
         }
       });
       this.__rcService.createReasonCode(this.__rcService.sopId, this.addNewRowForReasonCode);
-      // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
       this.__rcService.refresh(this.__rcService.sopId);
     }else if(this.reasonCodeEditChangeDetector.length > 0 || this.addNewRowForReasonCode.length > 0){
       this.addNewRowForReasonCode.forEach((element, index)=>{
@@ -295,13 +232,11 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
           this.addNewRowForReasonCode.splice(pos, 1);
         }
         this.__rcService.createReasonCode(this.__rcService.sopId, this.addNewRowForReasonCode);
-        // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
         this.__rcService.refresh(this.__rcService.sopId);
       });
       this.reasonCodeEditChangeDetector.forEach((element, index)=>{
         if(element){
           this.__rcService.editReasonCode(this.reasonCodeConfigData[index].id, this.reasonCodeConfigData[index]);
-          // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
           this.__rcService.refresh(this.__rcService.sopId);
 
         }
@@ -310,7 +245,6 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     this.addNewRowForReasonCode = [];
     this.reasonCodeEditChangeDetector = [];
     this.closeSprints.emit(false);
-    console.log(this.addNewRowForReasonCode);
   }
 
   onDeleteRC(selected){
@@ -323,14 +257,12 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
 
   onDeleteCreatedRC(id, index){
     this.__rcService.deleteReasonCode(id);
-    // this.__rcService.getProjectStatusChartData(this.__rcService.sopId);
     this.__rcService.refresh(this.__rcService.sopId);
   }
 
   onDateSelected($event){
-    console.log($event)
   }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   createEndDate(startDate, index, operation, weeks){
     let someDate = startDate;
     switch(operation){
@@ -375,17 +307,11 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
 
     if(this.addNewRow[index].start_date){
       let startDate = new Date(JSON.parse(JSON.stringify(this.addNewRow[index])).start_date);
-
       this.createEndDate(startDate, index, 'add', this.dateCounter);
-  
-      console.log(this.lastIndex, this.dateCounter);
-
       this.warning = false;
     }else{
       this.warning = true;
     }
-
-    // console.log(this.addNewRow[index]);
   }
 
   onArrowDown(index){
@@ -401,7 +327,6 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
       this.dateCounter = parseInt(weeks);
       if(this.dateCounter < 1){
         this.dateCounter = 0;
-        // this.addNewRow[index].duration = this.dateCounter + 'W'
       }else{
         this.addNewRow[index].duration = (this.dateCounter -= 1) + 'W';
       }
@@ -411,11 +336,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
 
     if(this.addNewRow[index].start_date){
       let startDate = new Date(JSON.parse(JSON.stringify(this.addNewRow[index])).start_date);
-
       this.createEndDate(startDate, index, 'substract', this.dateCounter);
-  
-      // console.log(this.lastIndex, this.dateCounter);
-
       this.warning = false;
     }else{
       this.warning = true;
@@ -429,28 +350,24 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
   onDatePickerClose($event, index){
     this.sprintConfigData[index].start_date = $event.value;
     let date = new Date(JSON.parse(JSON.stringify($event.value)));
-
     let weeks = this.sprintConfigData[index].duration.split('');
     let period = weeks.pop();
     weeks = weeks.join("");
     let days = parseInt(weeks) * 7;
     let newDate = new Date(date.setDate(date.getDate() + days));
-
     let dd = newDate.getDate();
     let mm = newDate.getMonth() + 1;
     let y = newDate.getFullYear();
     this.sprintConfigData[index].end_date = dd + '/'+ mm + '/'+ y;
-    console.log(date, this.sprintConfigData[index].end_date);
     this.changedDetected[index] = true;
   }
 
   onUpdateSprint(index){
     this.changedDetected[index] = true;
   }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   updateEndDate(startDate, index, operation, weeks){
     let someDate = startDate;
-    console.log(someDate)
     switch(operation){
       case 'add':
       someDate.setDate(someDate.getDate() + (weeks * 7) - 1); 
@@ -483,7 +400,6 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     this.sprintConfigData[index].duration = (this.weekCounter += 1) + 'W';
     let startDate = new Date(JSON.parse(JSON.stringify(this.sprintConfigData[index])).start_date);
     this.updateEndDate(startDate, index, 'add', this.weekCounter);
-    console.log(this.sprintConfigData[index]);
     this.changedDetected[index] = true;
   }
 
@@ -492,10 +408,6 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     let period = durationSplitted.pop();
     durationSplitted = durationSplitted.join("");
     this.weekCounter = parseInt(durationSplitted);
-
-    // let startDate = this.sprintConfigData[index].start_date;
-    // let endDate = new Date(this.sprintConfigData[index].end_date.split("/").reverse().join("-"));
-
     if(this.weekCounter < 1){
       this.weekCounter = 0;
     }else{
@@ -504,18 +416,13 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
       this.updateEndDate(startDate, index, 'substract', this.weekCounter);
 
     }
-    console.log(this.sprintConfigData[index]);
     this.changedDetected[index] = true;
-    console.log(this.changedDetected)
   }
 
   onFileSelected(fileSelected){
-    console.log("File Selected", fileSelected)
-    
     if(fileSelected.target.files && fileSelected.target.files[0]){
       this.uploadForm.value.upload_file = fileSelected.target.files[0];
       this.excelFile.append("File", fileSelected.target.files[0]);
-      console.log(this.file_name);
       this.file_name = fileSelected.target.files[0].name;
     }
   }
@@ -524,7 +431,6 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     var file_extension="";
     if(file)
     {file_extension = file.name.split(".").pop();}
-    console.log("File Extension", file_extension);
     if(file_extension == "xlsx"){
       this.validateFileExtension = false;
       return true;
@@ -543,11 +449,8 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     else{
       this.validateCheckBox = true;
     }
-    console.log(this.validateCheckBox)
     return false;
   }
-
-
 
   onUpload(){
     let validation = this.validateUploadForm();
@@ -556,19 +459,16 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     if(validation){
       this.spinner.show();
       this.__rcService.importStories(this.excelFile).subscribe(res=>{
-        console.log(res);
         status = res["status"];
         message = res["message"];
       },
       err=>{
-        console.error(err);
         status = err["status"];
         message = err["message"];
         this.__rcService.snackbar.open("Please check the template and try again." , "Fail", {"duration": 5000});
       },
       ()=>{
         this.spinner.hide();
-        console.log("COMPLETED", status);
         this.onClose();
         if(status == 'Success'){
           this.__rcService.snackbar.open("Your sprints, epics and stories are now available on the dashboard", status, {duration : 5000});
@@ -583,14 +483,11 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
   }
 
   oncheckBoxChange(value){
-    console.log("Value",value);
     this.uploadForm.value["confirm_template_checkbox"] = value;
   }
 
   exportToExcel(){
     console.log("Downloading File");
-    // this.__preload.openPreloader = true;
     this.__rcService.downloadFile();
-    // this.__preload.openPreloader = false;
   }
 }

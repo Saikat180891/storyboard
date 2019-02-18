@@ -3,6 +3,7 @@
     <span>{{title}} 
       <span *ngIf="extras">-</span> 
       {{projectStatus.current_sprint?projectStatus.current_sprint:''}}
+      <span *ngIf="ifButtonRequired" (click)="onButtonClick()" class="extra-btn"> | View Details <i class="far fa-eye"></i></span>
     </span> 
     <span *ngIf="selectedSprint"> ({{selectedSprint}})</span>
   </div>

@@ -1,3 +1,5 @@
-<p>
-  right-panel works!
-</p>
+<div class="infinite-scroll">
+  <div class="section" *ngFor="let stepListItem of stepList; let i=index">
+    <app-section-title [stepParameters]="stepListItem.steps" [externalStepIndex]="i" (sectionPayload)="onButtonDragged($event)"></app-section-title>
+  </div>
+</div>

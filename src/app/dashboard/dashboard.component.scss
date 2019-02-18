@@ -3,6 +3,16 @@
   height: calc(100% - 3.4375rem);
   position: fixed;
   top: 3.4375rem;
+  left: 0;
   overflow: auto;
   overflow-x: hidden;
+  margin: 0 auto;
+}
+
+.app-header{
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10000;
 }

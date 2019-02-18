@@ -1,0 +1,77 @@
+.section{
+  width: 100%;
+  height: auto;
+  background-color: #F1F1F1;
+  box-shadow: 0 0 2px rgba($color: #000000, $alpha: 0.3);
+  // transition: all 0.3s ease;
+
+  &-header{
+    width: 100%;
+    height: 30px;
+    border: 1px solid #DDDDDD;
+    color: #2A7DE1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 12px;
+    background-color: #fff;
+
+    &-options{
+      display: flex;
+
+      .common-option{
+        width: 30px;
+        color: #999999;
+        text-align: center;
+      }
+
+      .option-menu{
+        margin: 0 5px;
+      }
+      .collapsable-btn{
+        position: relative;
+      }
+      .collapsable-btn::before{
+        content: '';
+        position: absolute;
+        top: -3px;
+        left: 0;
+        width: 1px;
+        height: 30px;
+        background: #DDDDDD;
+      }
+    }
+  }
+
+  &-body{
+    width: 100%;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+
+    .steps{
+      margin: 5px 10px;
+    }
+    .droppable-area{
+      height: 85px;
+      border: 1px dashed #989B9C;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 5px 10px;
+      color: #989B9C;
+      font-weight: bold;
+      font-size: 18px;
+      transition: border 0.1s ease;
+    }
+    .hovering{
+      border: 5px dashed #989B9C;
+    }
+  }
+
+  
+}
+.collapse{
+  height: 30px;
+  overflow: hidden;
+}

@@ -1,0 +1,17 @@
+<div class="steps-container" [ngSwitch]="stepType">
+  <ng-container *ngSwitchCase="'Read'">
+    <app-step-read></app-step-read>
+  </ng-container>
+  <ng-container *ngSwitchCase="'Type'">
+    <app-step-type></app-step-type>
+  </ng-container>
+  <ng-container *ngSwitchCase="'Calculation'">
+    <app-step-calculation></app-step-calculation>
+  </ng-container>
+  <ng-container *ngSwitchCase="'UI Interaction'">
+    <app-step-ui-interaction></app-step-ui-interaction>
+  </ng-container>
+  <ng-container *ngSwitchCase="'Condition'">
+    <app-step-condition></app-step-condition>
+  </ng-container>
+</div>
