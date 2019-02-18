@@ -2,4 +2,5 @@
   <div class="section" *ngFor="let stepListItem of stepList; let i=index">
     <app-section-title [stepParameters]="stepListItem.steps" [externalStepIndex]="i" (sectionPayload)="onButtonDragged($event, i)"></app-section-title>
   </div>
+  <app-step-loop></app-step-loop>
 </div>

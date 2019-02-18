@@ -21,6 +21,8 @@ import { StepUiInteractionComponent } from './steps-container/step-ui-interactio
 import { StepConditionComponent } from './steps-container/step-condition/step-condition.component';
 import { StepCalculationComponent } from './steps-container/step-calculation/step-calculation.component';
 import { SectionTitleComponent } from './steps-container/section-title/section-title.component';
+import { CanvasCrouselComponent } from './canvas-crousel/canvas-crousel.component';
+import { StepLoopComponent } from './steps-container/step-loop/step-loop.component';
 
 
 const routes: Routes = [
@@ -45,7 +47,7 @@ const routes: Routes = [
     StepUiInteractionComponent, 
     StepConditionComponent, 
     StepCalculationComponent, 
-    SectionTitleComponent
+    SectionTitleComponent, CanvasCrouselComponent, StepLoopComponent
   ],
   imports: [
     CommonModule,

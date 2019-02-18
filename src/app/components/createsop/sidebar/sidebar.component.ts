@@ -232,6 +232,12 @@ export class SidebarComponent implements OnInit {
       },
       ()=>{
       });
+
+      /**
+       * the createdImage contains the image of the snapshot taken and is kept for future use
+       * this variable will be used with an anchor tag in the html template with download as a 
+       * property or attribute so that the user the download the file if required
+       */
       this.createdImage = imageData;
     }
   }

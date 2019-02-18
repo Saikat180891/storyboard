@@ -1,12 +1,8 @@
 <div #dialogBox>
-  
-    <!-- This is for editing new SOP -->
-  <div 
-  class="dialog" 
-  (keydown.esc)="onEscape($event)" 
-  (click)="preventPropagation($event)" 
-  >
-    
+
+  <!-- This is for editing new SOP -->
+  <div class="dialog" (keydown.esc)="onEscape($event)" (click)="preventPropagation($event)">
+
     <div class="dialog-group padding-all header-banner">
       <div class="dialog-header">
         <span>
@@ -18,21 +14,15 @@
       </div>
     </div>
 
-    <div class="horizontal-flex">    
+    <div class="horizontal-flex">
       <div class="vertical-flex">
         <div class="dialog-group padding-all top-input-width">
           <div class="input-box">
-            <input 
-              id="clientName"
-              type="text" 
-              [ngClass]="{'ASN-box':true, 'validators':validateClientName===true}" 
-              placeholder="Client Name" 
-              required 
-              [(ngModel)]="projectDataToEdit.clientName"
-            >
+            <input id="clientName" type="text" [ngClass]="{'ASN-box':true, 'validators':validateClientName===true}"
+              placeholder="Client Name" required [(ngModel)]="projectDataToEdit.clientName">
           </div>
         </div>
-            <!-- [appCanAccess]="{
+        <!-- [appCanAccess]="{
               role:permissions.role, 
               permissionRequired:'Can change sop',
               permissionList: permissions.permissions,
@@ -40,183 +30,150 @@
             }" -->
         <div class="dialog-group padding-all top-input-width">
           <div class="input-box">
-            <input 
-            type="text" 
-            [ngClass]="{'ASN-box':true, 'validators':validateAutomationSystemName===true}" 
-            placeholder="Automation System Name" 
-            required 
-            maxlength="50" 
-            [(ngModel)]="projectDataToEdit.title"
-            >
+            <input type="text" [ngClass]="{'ASN-box':true, 'validators':validateAutomationSystemName===true}"
+              placeholder="Automation System Name" required maxlength="50" [(ngModel)]="projectDataToEdit.title">
           </div>
         </div>
       </div>
-                
+
       <div class="dialog-group upload emblem">
         <div class="relative pointer">
           <button>
-            <img 
-            class="preview-logo" 
-            *ngIf="filePreview" 
-            [src]="filePreview" 
-            [alt]="filePreview">
+            <img class="preview-logo" *ngIf="filePreview" [src]="filePreview" [alt]="filePreview">
             <!-- <span class="client-logo" *ngIf="!filePreview">Upload Client Logo</span>
             <span *ngIf="!filePreview"><small>(Max Size 200px-200px)</small></span>
             <span *ngIf="!filePreview"><i class="fas fa-download"></i>CHOOSE FILE</span> -->
           </button>
 
-          <input 
-          type="file" 
-          (change)="onFileSelected($event)"
-          />
+          <input type="file" (change)="onFileSelected($event)" />
         </div>
       </div>
-              </div>
+    </div>
     <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-          <div class="dialog-group padding-all margin-bottom-10">
-              <div class="input-box">
-    
-                  <input 
-                  type="text" 
-                  id="charge-code" 
-                  placeholder="Charge Code" 
-                  required 
-                  [ngClass]="{'validators':validateChargeCode===true}" 
-                  [(ngModel)]="projectDataToEdit.chargeCode"
-                  >
+    <div class="dialog-group padding-all margin-bottom-10">
+      <div class="input-box">
 
-                  <ng-container>
-                    <input
-                      id="date" 
-                      placeholder="Due Date" 
-                      type="text"
-                      matInput 
-                      [matDatepicker]="picker" 
-                      required 
-                      readonly  
-                      [ngClass]="{'validators':validateChargeCode===true}"
-                      [ngStyle]="{'border':validateChargeCode?border:false}"
-                      [value]="dueDate"
-                      (dateInput)="onSelectedDateChange($event.value)"
-                    >
-                    <div class="datepicker" 
-                    >
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                      <mat-datepicker #picker></mat-datepicker>
-                    </div>
-                  </ng-container>
-              </div>
-              <!-- <small 
+        <input type="text" id="charge-code" placeholder="Charge Code" required [ngClass]="{'validators':validateChargeCode===true}"
+          [(ngModel)]="projectDataToEdit.chargeCode">
+
+        <ng-container>
+          <input id="date" placeholder="Due Date" type="text" matInput [matDatepicker]="picker" required readonly
+            [ngClass]="{'validators':validateChargeCode===true}" [ngStyle]="{'border':validateChargeCode?border:false}"
+            [value]="dueDate" (dateInput)="onSelectedDateChange($event.value)">
+          <div class="datepicker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </div>
+        </ng-container>
+      </div>
+      <!-- <small 
                 [ngClass]="{'validation-message':validateChargeCode===true||validateSelectedDate===true}" 
                 *ngIf="validateChargeCode||validateSelectedDate">
                   <em>{{validateChargeCodeMessage}}</em>
               </small> -->
-          </div>
+    </div>
 
     <!-- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-  <div class="tab-wrapper">
+    <div class="tab-wrapper">
 
-  
-    <mat-tab-group class="create-container-tabs" (selectedTabChange)="onTabChange($event)" selectedIndex="selectedTabIndex">
+
+      <mat-tab-group class="create-container-tabs" (selectedTabChange)="onTabChange($event)" selectedIndex="selectedTabIndex">
         <mat-tab label="Assign User">
           <div class="dialog-group height-auto padding-top-0 grey-background" id="add-assign">
             <div class="input-box margin-top-10">
               <ng-container>
-                <input 
-                type="text" 
-                placeholder="Type name or email address" 
-                (keyup)="onKeyPress($event)"
-                >
+                <input type="text" placeholder="Type name or email address" (keyup)="onKeyPress($event)">
                 <div class="autocomplete" *ngIf="options; else load">
                   <ng-container *ngFor="let option of options; let i=index">
-                    <span class="autocomplete-item" (click)="onSelect(option)">{{option.name ? option.name : option.email}}</span>
+                    <span class="autocomplete-item" (click)="onSelect(option)">{{option.name ? option.name :
+                      option.email}}</span>
                   </ng-container>
                 </div>
               </ng-container>
             </div>
           </div>
           <div class="dialog-group assignee-list">
-              <ul>
-                <li *ngFor="let userData of alreadyCreatedUsers; let i=index">
-                  <div class="horizontal-flex">
-                    <img [src]="" [alt]=""/>
-                    <div class="user-details">
-                      <b>
-                        <span *ngIf="userData.user">{{userData.user}}</span>
-                        <span *ngIf="userData.email">{{userData.email}}</span>
-                      </b>
-                    </div>
-                    <div class="select-role">
-                      <mat-select placeholder="Assign role" [value]="userData.role" disabled>
-                          <mat-option *ngFor="let role of roles" [value]="role">
-                          {{role}}
-                          </mat-option>
-                      </mat-select>
-                    </div>
-                    <div class="list-close" (click)="onRemove(userData.id)">
-                      <i class="far fa-trash-alt"></i>
-                    </div>
+            <ul>
+              <li *ngFor="let userData of alreadyCreatedUsers; let i=index">
+                <div class="horizontal-flex">
+                  <img [src]="" [alt]="" />
+                  <div class="user-details">
+                    <b>
+                      <span *ngIf="userData.user">{{userData.user}}</span>
+                      <span *ngIf="userData.email">{{userData.email}}</span>
+                    </b>
                   </div>
-                </li>
-                <li *ngFor="let userData of newlyCreatedAssignees; let i=index">
-                    <div class="horizontal-flex">
-                      <img [src]="" [alt]=""/>
-                      <div class="user-details">
-                        <b>
-                          <span>{{userData.name ? userData.name : userData.email}}</span>
-                        </b>
-                      </div>
-                      <div class="select-role">
-                        <mat-select placeholder="Assign role" (selectionChange)="userData.role=$event.value">
-                            <mat-option *ngFor="let role of roles" [value]="role">
-                            {{role}}
-                            </mat-option>
-                        </mat-select>
-                      </div>
-                      <div class="list-close" (click)="onRemoveListItem(i)">
-                        <i class="far fa-trash-alt"></i>
-                      </div>
-                    </div>
-                </li>
-              </ul>
-          </div>
-          </mat-tab>
-          <mat-tab label="Invite New User">
-            <div class = "add-user">
-
-              <div class="horizontal-flex-2 invite-model" *ngFor="let invites of invitationList">
-                <div class="dialog-group margin-bottom-10">
-
-                  <div class="input-box margin-top-10 horizontal-flex">
-                    <div class="invite-user-through-email">
-                      <input type="text" id="inviteEmail" placeholder="Email Address" [(ngModel)]="invites.inviteEmail">
-                    </div>
-                    <div class="select-role-invite">
-                      <mat-select placeholder="Assign role" (selectionChange)="invites.inviteRole=$event.value">
-                        <mat-option *ngFor="let role of roles" [value]="role">
+                  <div class="select-role">
+                    <mat-select placeholder="Assign role" [value]="userData.role" disabled>
+                      <mat-option *ngFor="let role of roles" [value]="role">
                         {{role}}
-                        </mat-option>
-                      </mat-select>
-                    </div>
+                      </mat-option>
+                    </mat-select>
                   </div>
-                  <div class="input-box margin-top-10 horizontal-flex">
-                    <div class = "first-name">
-                      <input type="text" id="first_name" placeholder="First Name" [(ngModel)]="invites.inviteFirstName">
-                    </div>
-                    <div class = "last-name">
-                      <input type="text" id="last_name" placeholder="Last Name" [(ngModel)]="invites.inviteLastName">
-                      </div>
+                  <div class="list-close" (click)="onRemove(userData.id)">
+                    <i class="far fa-trash-alt"></i>
                   </div>
-                  
                 </div>
+              </li>
+              <li *ngFor="let userData of newlyCreatedAssignees; let i=index">
+                <div class="horizontal-flex">
+                  <img [src]="" [alt]="" />
+                  <div class="user-details">
+                    <b>
+                      <span>{{userData.name ? userData.name : userData.email}}</span>
+                    </b>
+                  </div>
+                  <div class="select-role">
+                    <mat-select placeholder="Assign role" (selectionChange)="userData.role=$event.value">
+                      <mat-option *ngFor="let role of roles" [value]="role">
+                        {{role}}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                  <div class="list-close" (click)="onRemoveListItem(i)">
+                    <i class="far fa-trash-alt"></i>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </mat-tab>
+        <mat-tab label="Invite New User">
+          <div class="add-user">
+
+            <div class="horizontal-flex-2 invite-model" *ngFor="let invites of invitationList">
+              <div class="dialog-group margin-bottom-10">
+
+                <div class="input-box margin-top-10 horizontal-flex">
+                  <div class="invite-user-through-email">
+                    <input type="text" id="inviteEmail" placeholder="Email Address" [(ngModel)]="invites.inviteEmail">
+                  </div>
+                  <div class="select-role-invite">
+                    <mat-select placeholder="Assign role" (selectionChange)="invites.inviteRole=$event.value">
+                      <mat-option *ngFor="let role of roles" [value]="role">
+                        {{role}}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                <div class="input-box margin-top-10 horizontal-flex">
+                  <div class="first-name">
+                    <input type="text" id="first_name" placeholder="First Name" [(ngModel)]="invites.inviteFirstName">
+                  </div>
+                  <div class="last-name">
+                    <input type="text" id="last_name" placeholder="Last Name" [(ngModel)]="invites.inviteLastName">
+                  </div>
+                </div>
+
               </div>
-              <!-- <div class="delete-list-item">
+            </div>
+            <!-- <div class="delete-list-item">
                 <i class="fas fa-times"></i>
               </div> -->
 
-              <button (click)="onAddUser()">Add Another</button>
+            <button (click)="onAddUser()">Add Another</button>
 
-              <!-- <div class="horizontal-flex"> 
+            <!-- <div class="horizontal-flex"> 
                 <span *ngIf="validateInviteEmail">
                   <em>*Email Id is a mandatory field</em>
                 </span>
@@ -243,22 +200,21 @@
                 </span>
               </div>
                -->
-            </div>
-          </mat-tab>
-          </mat-tab-group>
-        </div>
-    <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-          <div class="dialog-group-2 padding-all fixed-bottom height-auto margin-bottom-10" [ngSwitch]="selectedTabIndex">
-            <div class="button-box" *ngSwitchCase="0">
-              <button mat-raised-button color="primary" (click)="onSave()">SAVE</button>
-              <button mat-raised-button (click)="onClose()">CANCEL</button>
-            </div>
-            <div class="button-box" *ngSwitchCase="1">
-              <button mat-raised-button color="primary" (click)="onSendInvitation()">Send Invitation</button>
-            </div>
           </div>
-    
-        </div>
-    <!-- ------------------------------------------------------------------------------------- -->
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+    <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <div class="dialog-group-2 padding-all fixed-bottom height-auto margin-bottom-10" [ngSwitch]="selectedTabIndex">
+      <div class="button-box" *ngSwitchCase="0">
+        <button mat-raised-button color="primary" (click)="onSave()">SAVE</button>
+        <button mat-raised-button (click)="onClose()">CANCEL</button>
       </div>
-        
+      <div class="button-box" *ngSwitchCase="1">
+        <button mat-raised-button color="primary" (click)="onSendInvitation()">Send Invitation</button>
+      </div>
+    </div>
+
+  </div>
+  <!-- ------------------------------------------------------------------------------------- -->
+</div>
