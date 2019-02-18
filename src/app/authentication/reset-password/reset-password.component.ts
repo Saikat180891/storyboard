@@ -1,3 +1,8 @@
+/**
+ * Author: Anmol Dhingra
+ * 
+ * Reset Password Component Type Script file
+ */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { ResetPasswordService } from './reset-password.service';
@@ -26,6 +31,10 @@ export class ResetPasswordComponent implements OnInit {
   pageContent: number=1;
 
   reset_password_form: number = 1;
+
+  /**
+   * Get Query Parameters as email-id and passwordResetToken
+   */
   ngOnInit() {
     console.log(this.password)
     this.route.queryParams.subscribe(res=>{
@@ -33,6 +42,9 @@ export class ResetPasswordComponent implements OnInit {
       this.passwordResetToken = res.reset_password_token;
     });
   }
+  /**
+   * Calls a service to check if the password is strong password or not
+   */
   checkStrength(){
     
     let password_status = this.signUpService.strengthMessage(this.password);
@@ -40,6 +52,9 @@ export class ResetPasswordComponent implements OnInit {
     this.passwordMessage = password_status["passwordMessage"];
   }
   
+  /**
+   * Changes label to Weak, Medium and Strong on password change.
+   */
   passwordStrengthStatus:string = 'Weak';
   onStrengthChange($event){
     if($event < 3){
@@ -51,6 +66,9 @@ export class ResetPasswordComponent implements OnInit {
     }
   }
 
+  /**
+   * Calls a resetPassword Service to reset password and navigate to the respective page on success or failure
+   */
   resetPassword(){
     let reset_password_fields = {
       'email': this.email, 
