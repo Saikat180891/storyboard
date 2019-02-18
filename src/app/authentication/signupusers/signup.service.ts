@@ -1,3 +1,8 @@
+/**
+ * Author: Anmol Dhingra
+ * Date : 08/02/2019
+ * SignUp Service file for external user sign up 
+ */
 import { Injectable } from '@angular/core';
 import {DataService} from '../../data.service';
 import {Router} from '@angular/router';
@@ -8,10 +13,18 @@ export class SignupService {
 
   constructor(private _api:DataService,  private router: Router) { }
 
+  /**
+   * Post Request to backend for signing up.
+   * @param signup_fields : Json file containing signUpDetails
+   */
   signUpUser(signup_fields){
-    return this._api.postLogin('/invited_signup/', signup_fields)
+    return this._api.postLogin('/invited_signup/', signup_fields);
   }
 
+  /**
+   * Checks the passwordStrength 
+   * @param password 
+   */
   strengthMessage(password){
     
     let numberOfElements = 0;

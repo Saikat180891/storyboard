@@ -1,3 +1,8 @@
+/**
+ * Author: Anmol Dhingra
+ * 
+ * SignUp User Type Script for signing up
+ */
 import { Component, OnInit} from '@angular/core';
 import { environment } from '../../../environments/environment';
 import {SignupService} from './signup.service';
@@ -25,6 +30,10 @@ export class SignupusersComponent implements OnInit {
   passwordMessage = "";
   passwordStrengthStatus:string = 'Weak';
 
+  /**
+   * Get Query parameters and if status is "success" or "failure" show respective page 
+   * otherwise Show Signup populating fields from Query params
+   */
   ngOnInit() {
    this.route.queryParams.subscribe(res=>{
      if (res.status == "success")
@@ -46,6 +55,9 @@ export class SignupusersComponent implements OnInit {
    })
   }
 
+  /**
+   * Calls SignUp Service to check strength of password
+   */
   checkStrength(){
     console.log(this.password);
     let password_status = this._api.strengthMessage(this.password);
@@ -53,10 +65,16 @@ export class SignupusersComponent implements OnInit {
     this.passwordMessage = password_status["passwordMessage"];
   }
 
+  /**
+   * Function to navigate to Login Page
+   */
   loginPage(){
     this.router.navigate(['/']);
   }
 
+  /**
+   * Calls SignUp service to externalSignUp
+   */
   externalSignup()
   {
     let signup_details = {'email': this.email, 'password': this.password, 
@@ -82,6 +100,9 @@ export class SignupusersComponent implements OnInit {
     }
   }
 
+  /**
+   * Changes label between "Weak", "Medium" and "Strong" based on passwordChange
+   */
   onStrengthChange($event){
     if($event < 3){
       this.passwordStrengthStatus = 'Weak';
