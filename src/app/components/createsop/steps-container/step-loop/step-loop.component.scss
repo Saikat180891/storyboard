@@ -1,0 +1,57 @@
+.loop-box{
+  width: 100%;
+  height: 30px;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 20px;
+  background-color: #40C0C4;
+  color: #fff;
+
+  &-name{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &-options{
+    cursor: pointer;
+  }
+
+  .comment-box{
+    width: 250px;
+    height: 125px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0;
+    transform: translateY(125px);
+    right: 0;
+    box-shadow: 0 3px 4px rgba($color: #000000, $alpha: 0.3);
+    border-radius: 2px;
+    background-color: #fff;
+    color: #999999;
+    align-items: flex-start;
+    justify-content: space-between;
+    z-index: 100;
+
+    textarea{
+      width: 100%;
+      border: 1px solid #999999;
+      margin: 2px 0;
+      padding: 5px;
+    }
+
+    button{
+      width: 100%;
+      height: 30px;
+      color: #54585A;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+  }
+}

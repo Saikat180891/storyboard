@@ -19,6 +19,12 @@
     &-options{
       display: flex;
 
+      .checkbox{
+        ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background{
+          background-color: #2A7DE1;
+        }
+      }
+
       .common-option{
         width: 30px;
         color: #999999;
