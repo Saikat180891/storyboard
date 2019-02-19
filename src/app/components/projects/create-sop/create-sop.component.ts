@@ -9,6 +9,7 @@ import {MatSnackBar} from '@angular/material';
 import {CardService} from '../card/card.service';
 import {ContainerComponent} from '../container/container.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {UtilsService} from '../../../utils.service'
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -128,7 +129,8 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
               private _cardService: CardService,
               private snackBar: MatSnackBar,
               private spinner: NgxSpinnerService,
-              private __containerComponent: ContainerComponent
+              private __containerComponent: ContainerComponent,
+              private utils: UtilsService
               ) {}
 
   /**
@@ -258,7 +260,10 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
   }
 
   onDueDateChange($event:Date){
-    this.projectDetails.due_date = this.formatDate($event);
+    console.log($event);
+    this.projectDetails.due_date = this.utils.datetypeToStringtype($event);
+    console.log(this.projectDetails.due_date);
+    // this.projectDetails.due_date = $event
   }
 
   /**
@@ -372,15 +377,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
     }
   }
 
-  /**
-   * Rearrange the date in the following format DD/MM/YYYY
-   * @param date 
-   */
-  formatDate(date){
-    let dateStr = new Date(date)
-    let strDate =  "" + dateStr.getDate() + "/" + (dateStr.getMonth()+1) + "/" + dateStr.getFullYear();
-    return strDate;
-  }
   
   /**
    * Format the year as 00YY
