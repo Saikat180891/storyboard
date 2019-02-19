@@ -18,11 +18,11 @@ export class StepcontrolService {
 
   constructor() { }
 
-  insertItem(index, data){
+  insertStep(index, data){
     this.sopStepsList[index].steps.push(data);
   }
 
-  appendList(indexAfter){
+  appendSection(indexAfter){
     let data = {
       sectionName: 'section name',
       steps:[]
@@ -30,7 +30,7 @@ export class StepcontrolService {
     this.sopStepsList.push(data);
   }
 
-  insertInList(indexAfter){
+  insertSectionAt(indexAfter){
     let data = {
       sectionName: 'section name',
       steps:[]
