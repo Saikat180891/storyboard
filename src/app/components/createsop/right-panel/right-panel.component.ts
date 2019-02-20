@@ -18,11 +18,15 @@ export class RightPanelComponent implements OnInit {
 
   onButtonDragged($event:any, index:number){
     if($event.data === 'Section' && index == this.__steps.getListLength() - 1){
-      this.__steps.appendSection(index);
+      this.__steps.appendSection();
     }else if($event.data === 'Section' && index < this.__steps.getListLength() - 1){
       this.__steps.insertSectionAt(index);
     }else{
       this.__steps.insertStep($event.index, $event.data);
     }
+  }
+
+  onCreateNewSection(){
+    this.__steps.appendSection();
   }
 }

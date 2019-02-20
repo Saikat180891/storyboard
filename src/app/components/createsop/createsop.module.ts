@@ -24,6 +24,7 @@ import { SectionTitleComponent } from './steps-container/section-title/section-t
 import { CanvasCrouselComponent } from './canvas-crousel/canvas-crousel.component';
 import { StepLoopComponent } from './steps-container/step-loop/step-loop.component';
 import { StepEndLoopComponent } from './steps-container/step-end-loop/step-end-loop.component';
+import { ExportToSopComponent } from './export-to-sop/export-to-sop.component';
 
 
 const routes: Routes = [
@@ -48,7 +49,7 @@ const routes: Routes = [
     StepUiInteractionComponent, 
     StepConditionComponent, 
     StepCalculationComponent, 
-    SectionTitleComponent, CanvasCrouselComponent, StepLoopComponent, StepEndLoopComponent
+    SectionTitleComponent, CanvasCrouselComponent, StepLoopComponent, StepEndLoopComponent, ExportToSopComponent
   ],
   imports: [
     CommonModule,
