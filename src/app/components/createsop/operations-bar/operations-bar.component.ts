@@ -18,8 +18,4 @@ export class OperationsBarComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  onInsertNewSection(){
-    // this.selectedType.emit('section');
-  }
 }

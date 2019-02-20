@@ -22,7 +22,7 @@ export class StepcontrolService {
     this.sopStepsList[index].steps.push(data);
   }
 
-  appendSection(indexAfter){
+  appendSection(){
     let data = {
       sectionName: 'section name',
       steps:[]
@@ -36,6 +36,10 @@ export class StepcontrolService {
       steps:[]
     }
     this.sopStepsList.splice(indexAfter, 0, data);
+  }
+
+  moveItem(newPosition, previousPosition, data){
+    this.sopStepsList.splice(newPosition, 0, data);
   }
 
   getList(){
