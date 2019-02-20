@@ -4,6 +4,7 @@ import {environment} from '../../../environments/environment';
 // import { EventEmitter } from 'protractor'
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {UtilsService} from '../../utils.service'
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +40,8 @@ export class ReasonCodeService {
   role:string;
 
   constructor(private _api:DataService,
-              public snackbar:MatSnackBar) { }
+              public snackbar:MatSnackBar,
+              private __utils: UtilsService) { }
 
   
   /**
@@ -57,7 +59,7 @@ export class ReasonCodeService {
    */
   createSprint(payload){
     payload.forEach(element => {
-      element.start_date = this.formatDate(element.start_date);
+      element.start_date = this.__utils.datetypeToStringWithTime(element.start_date);
       if(element.duration){
         this._api.postData(`/sop/${this.sopId}/sprint.json`, element).subscribe(response=>{});
       }
@@ -83,7 +85,6 @@ export class ReasonCodeService {
     this._api.fetchData(`/sop/${id}/sprint.json`)
       .subscribe(response=>{
         response.forEach((element, index)=>{
-          element['start_date'] = this.arrangeDateInCorrectFormat(element['start_date']);
           element['sprintNumber'] = index + 1;
         });
         this.sprintConfig = response.reverse();
@@ -102,7 +103,7 @@ export class ReasonCodeService {
   }
 
   editSprint(id, data){
-    data['start_date'] = this.formatDate(data['start_date']);
+    data['start_date'] = this.__utils.datetypeToStringWithTime(data['start_date']);
     this._api.update(`/sop/sprint`, `${id}.json`, data)
       .subscribe(response=>{
         this.getSprint(this.sopId);
@@ -115,8 +116,8 @@ export class ReasonCodeService {
         response.forEach(element=>{
           element['productivity'] = (parseFloat(element.ftes) / parseFloat(element.dev_hrs)).toFixed(1);
           element['productivity'] = isFinite(element['productivity']) ? element['productivity'] : '----';
-          element['planned_delivery'] = this.reArrangeDate(element['planned_delivery']);
-          element['revised_delivery'] = element['revised_delivery'] != null ? this.reArrangeDate(element['revised_delivery']) : '-----';
+          element['planned_delivery'] = this.__utils.formatDateToUS(element['planned_delivery']);
+          element['revised_delivery'] = element['revised_delivery'] != null ? this.__utils.formatDateToUS(element['revised_delivery']) : '-----';
         });
         this.deletedUserStories = response;
       });
@@ -126,7 +127,7 @@ export class ReasonCodeService {
     const api =  `/sop/epics/${id}/userstories.json`;
     this._api.fetchData(api)
       .subscribe(response=>{
-
+        console.log("UserStory", response);
         response.forEach(element=>{
           if(element['ftes'] == 0 ){
             element['ftes'] = '-----';
@@ -138,8 +139,8 @@ export class ReasonCodeService {
           element['ftes'] = isFinite(element['ftes']) ? element['ftes'] : '-----';
           element['productivity'] = (parseFloat(element.ftes) / parseFloat(element.dev_hrs)).toFixed(1);
           element['productivity'] = isFinite(element['productivity']) ? element['productivity'] : '-----';
-          element['planned_delivery'] = this.reArrangeDate(element['planned_delivery']);
-          element['revised_delivery'] = element['revised_delivery'] != null ? this.reArrangeDate(element['revised_delivery']) : '-----';
+          element['planned_delivery'] = this.__utils.formatDateToUS(element['planned_delivery']);
+          element['revised_delivery'] = element['revised_delivery'] != null ? this.__utils.formatDateToUS(element['revised_delivery']) : '-----';
 
         });
         
@@ -162,8 +163,8 @@ export class ReasonCodeService {
         response.forEach(element=>{
           element['productivity'] = (parseFloat(element.ftes) / parseFloat(element.dev_hrs)).toFixed(1);
           element['productivity'] = isFinite(element['productivity']) ? element['productivity'] : '----';
-          element['planned_delivery'] = this.reArrangeDate(element['planned_delivery']);
-          element['revised_delivery'] = element['revised_delivery'] != null ? this.reArrangeDate(element['revised_delivery']) : '-----';
+          element['planned_delivery'] = this.__utils.formatDateToUS(element['planned_delivery']);
+          element['revised_delivery'] = element['revised_delivery'] != null ? this.__utils.formatDateToUS(element['revised_delivery']) : '-----';
         });
         this.completeUserStories = response;
       });
@@ -285,44 +286,6 @@ export class ReasonCodeService {
     this.getSprint(sopID);
   }
 
-  /**
-   * Rearrange the date in the following format DD/MM/YYYY
-   * @param date 
-   */
-  formatDate(date){
-    let dateStr = new Date(date)
-    let strDate =  "" + dateStr.getFullYear() + "-" + (dateStr.getMonth()+1) + "-" + dateStr.getDate();
-    return strDate;
-  }
-
-
-    /**
-   * Get the date as a string and then split the string using 
-   * the "/" then using the date, month and year 
-   * set the due date in the editSelectedDate property
-   * @param date 
-   */
-  arrangeDateInCorrectFormat(date){
-    
-    // let newDate = date
-    // console.log(newDate)
-    // let dateFormat = new Date(date);
-    // dateFormat.setFullYear(Number(newDate[2]));
-    // dateFormat.setMonth(Number(newDate[1])-1);
-    // dateFormat.setDate(Number(newDate[0]));
-    // console.log(dateFormat)
-    return new Date(date);
-  }
-
-  reArrangeDate(date){
-    
-    let newDate = new Date(date);
-
-    let strDate = newDate.getDate() + "/" + (newDate.getMonth() + 1)+ "/" + newDate.getFullYear();
-    
-    return strDate;
-  }
-
   importStories(file){
     return this._api.postData(`/sop/${this.sopId}/import.json`, file);
   }
@@ -345,8 +308,8 @@ export class ReasonCodeService {
           element['ftes'] = isFinite(element['ftes']) ? element['ftes'] : '-----';
           element['productivity'] = (parseFloat(element.ftes) / parseFloat(element.dev_hrs)).toFixed(1);
           element['productivity'] = isFinite(element['productivity']) ? element['productivity'] : '-----';
-          element['planned_delivery'] = this.reArrangeDate(element['planned_delivery']);
-          element['revised_delivery'] = element['revised_delivery'] != null ? this.reArrangeDate(element['revised_delivery']) : '-----';
+          element['planned_delivery'] = this.__utils.formatDateToUS(element['planned_delivery']);
+          element['revised_delivery'] = element['revised_delivery'] != null ? this.__utils.formatDateToUS(element['revised_delivery']) : '-----';
         });
         this.userStories = response;
       });

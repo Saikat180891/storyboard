@@ -128,7 +128,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
               private snackBar: MatSnackBar,
               private spinner: NgxSpinnerService,
               private __containerComponent: ContainerComponent,
-              private utils:UtilsService
+              private _utils:UtilsService
               ) {}
 
   /**
@@ -165,7 +165,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     };
     this.filePreview = this.projectDataToEdit.logo;
     this.alreadyCreatedUsers = JSON.parse(JSON.stringify(this.projectData.assignee));
-    this.dueDate = this.arrangeDateInCorrectFormat(JSON.parse(JSON.stringify(this.projectData)).due_date);
+    this.dueDate = this._utils.arrangeDateInCorrectFormat(JSON.parse(JSON.stringify(this.projectData)).due_date);
 
     fromEvent(document, 'click').subscribe(res=>{
       this.options = [];
@@ -173,7 +173,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   onSelectedDateChange(date:Date){
-    this.projectDataToEdit.due_date = this.utils.datetypeToStringtype(date);
+    this.projectDataToEdit.due_date = this._utils.datetypeToStringWithTime(date);
     this.dueDate = date;
   }
   
@@ -387,21 +387,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     return ""+ digits[2] + digits[3];
   }
 
-  /**
-   * Get the date as a string and then split the string using 
-   * the "/" then using the date, month and year 
-   * set the due date in the editSelectedDate property
-   * @param date 
-   */
-  arrangeDateInCorrectFormat(date){
-    const newDate = date.toString().split("/");
-    console.log(newDate);
-    let currentDate = new Date();
-    currentDate.setFullYear(Number(newDate[2]));
-    currentDate.setMonth(Number(newDate[0])-1);
-    currentDate.setDate(Number(newDate[1]));
-    return currentDate;
-  }
 
   JSONtoFormData(json){
     let formData = new FormData();

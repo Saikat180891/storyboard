@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input, HostListener } from '@a
 import {ReasonCodeService} from '../reason-code.service';
 import {EditUserStoryService} from './edit-user-story.service';
 import {SharedServicesService} from '../../../services/shared-services/shared-services.service';
+import {UtilsService} from '../../../utils.service'
 
 interface UserStory{
   us_number: string;
@@ -97,12 +98,13 @@ export class UserstoryCardEditComponent implements OnInit {
   constructor(
     private __rcService: ReasonCodeService, 
     private __editUS: EditUserStoryService,
-    private __sharedService: SharedServicesService) { }
+    private __sharedService: SharedServicesService,
+    private __utils: UtilsService) { }
 
   ngOnInit() {
     this.onUpdateProductivity();
     this.editUSData = JSON.parse(JSON.stringify(this.editUSData));
-    this.editUSData.planned_delivery = this.formatDateToDisplay(this.editUSData.planned_delivery);
+    this.editUSData.planned_delivery = this.__utils.arrangeDateInCorrectFormat(this.editUSData.planned_delivery);
     if(this.editUSData.revised_delivery != '-----'){
       this.activateRevisedDelivery = true;
       this.checked = true;
@@ -115,7 +117,7 @@ export class UserstoryCardEditComponent implements OnInit {
     {
       this.editUSData.ftes = '';
     }
-    this.editUSData.revised_delivery = this.formatDateToDisplay(this.editUSData.revised_delivery);
+    this.editUSData.revised_delivery = this.__utils.arrangeDateInCorrectFormat(this.editUSData.revised_delivery);
     this.editUSDatas = this.editUSData;
     this.__rcService.doneSelectStatus.subscribe(response=>{
       if(response){
@@ -138,15 +140,6 @@ export class UserstoryCardEditComponent implements OnInit {
     this.__editUS.selected = -1;
   }
 
-  formatDateToDisplay(date){
-    let newDate = date.split("/").reverse().join("-");
-    return new Date(newDate);
-  }
-
-  formatDateToSend(date){
-    let newDate = new Date(date);
-    return newDate.getFullYear() + "-" + (newDate.getMonth() + 1) + "-" + newDate.getDate();
-  }
 
   userStoryNumberValidator:boolean = false;
   userStoryNameValidator:boolean = false;
@@ -159,8 +152,8 @@ export class UserstoryCardEditComponent implements OnInit {
   validationSuccessfull = [];
 
   onSaveAll(){
-    this.editUSData.planned_delivery = this.__editUS.formatDateToSendData(this.editUSData.planned_delivery);
-    isNaN(this.editUSData.revised_delivery) || this.editUSData.revised_delivery == null ? this.editUSData.revised_delivery = null : this.editUSData.revised_delivery = this.__editUS.formatDateToSendData(this.editUSData.revised_delivery);
+    this.editUSData.planned_delivery = this.__utils.datetypeToStringWithTime(this.editUSData.planned_delivery);
+    isNaN(this.editUSData.revised_delivery) || this.editUSData.revised_delivery == null ? this.editUSData.revised_delivery = null : this.editUSData.revised_delivery = this.__utils.datetypeToStringWithTime(this.editUSData.revised_delivery);
 
     if(this.editUSData.us_number == ''){
       this.userStoryNumberValidator = true;

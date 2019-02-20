@@ -60,7 +60,6 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
           due_date:this.__utils.formatDateToUS(element["due_date"])
         });
       });
-      console.log(projectlist)
     },
     (err)=>{
       this.__spinner.hide();

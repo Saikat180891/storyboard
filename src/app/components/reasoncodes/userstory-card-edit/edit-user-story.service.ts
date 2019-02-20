@@ -65,14 +65,4 @@ export class EditUserStoryService {
       );
   }
 
-  formatDateToSendData(date){
-    let newDate = new Date(date);
-    return newDate.getFullYear() + "-" + (newDate.getMonth() + 1) + "-" + newDate.getDate();
-  }
-
-  formatDateToSendDataFromDisplayDate(date){
-    let newDate = date.toString().split("/").reverse().join("-");
-    newDate = new Date(newDate);
-    return newDate.getFullYear() + "-" + (newDate.getMonth() + 1) + "-" + newDate.getDate();
-  }
 }
