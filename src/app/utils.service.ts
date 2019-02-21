@@ -13,7 +13,7 @@ export class UtilsService {
    */
   datetypeToStringtype(date){
       let myDate = new Date(date);
-      return myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate()+" 00:00:00";
+      return myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate();
   }
   
   formatDateToUS(date){
