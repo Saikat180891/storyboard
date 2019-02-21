@@ -463,9 +463,10 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
         message = res["message"];
       },
       err=>{
+        this.spinner.hide();
         status = err["status"];
         message = err["message"];
-        this.__rcService.snackbar.open("Please check the template and try again." , "Fail", {"duration": 5000});
+        this.__rcService.snackbar.open("Please check the template and try again" , "Fail", {"duration": 5000});
       },
       ()=>{
         this.spinner.hide();
@@ -475,7 +476,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
         }else if(status == 'Failure'){
           this.__rcService.snackbar.open(message, status, {"duration": 5000});
         }else{
-          this.__rcService.snackbar.open("Please check the template and try again." , "Fail", {"duration": 5000});
+          this.__rcService.snackbar.open("Please check the template and try again" , "Fail", {"duration": 5000});
         }
         this.__rcService.refresh(this.__rcService.sopId);
       })
@@ -487,7 +488,6 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
   }
 
   exportToExcel(){
-    console.log("Downloading File");
     this.__rcService.downloadFile();
   }
 }
