@@ -187,13 +187,11 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * @param event 
    */
   onKeyPress(event){
-    console.log(event.target.value);
     this._dataService.fetchData(`/users.json?startsWith=${event.target.value}`)
       .subscribe(res=>{
         this.options = res;
       },
       err=>{
-        console.log("Error while fetching users", err);
       });
   }
 
@@ -204,7 +202,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   onSelect(option:any){
     this.newlyCreatedAssignees.push(option);
     this.options = [];
-    console.log(this.newlyCreatedAssignees, this.alreadyCreatedUsers);
   }
 
   /**
@@ -225,7 +222,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
 
   onSelectionChange(value, index){
     this.newlyCreatedAssignees
-    console.log(this.newlyCreatedAssignees, value, index)
   }
 
   /**
@@ -315,16 +311,11 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
      * Save an editted card
      */
     onSave(){
-      console.log(this.invitationList, this.projectDataToEdit)
-    // let validationCheck = this.validateForm(this.sopForm.value);
-
-    // if(validationCheck == 0){
       this.spinner.show();
 
       let formData = new FormData();
       for(let formFieldValue in this.projectDataToEdit){
         formData.append(formFieldValue, this.projectDataToEdit[formFieldValue]);
-        console.log(formData.get(formFieldValue));
       }
       if(typeof formData.get('logo') === 'string'){
         formData.set('logo', '');
@@ -333,7 +324,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
 
       this._dataService.update('/sop', this.projectDataToEdit.id + '.json', formData)
         .subscribe(response=>{
-          console.log("RESPONSE ON SOP EDIT", response)
 
           if(this.newlyCreatedAssignees.length > 0){
             this.newlyCreatedAssignees.forEach((ele, index, array)=>{
@@ -350,14 +340,11 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
           }else{
             this.spinner.hide();
             this.onClose();
-            // this.onOverlayClose();
           }
           this.snackBar.open("Project has been modified", "Success", {duration: 2000});
 
       },
       (err)=> {
-        console.error("ERROR",err);
-        // this._preloaderService.openPreloader = false;
         var keys = Object.keys(err.error);
         var error= "";
         keys.forEach(key => {
@@ -417,16 +404,13 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
           delete json.fieldValue;
         }else{
           formData.append(fieldValue, json[fieldValue]);
-          console.log(formData.get(fieldValue));
         }
       }
       return formData;
   }
 
   onSendInvitation(){
-    // console.log(this.inviteEmail+" "+this.inviteFirstName+" "+this.inviteLastName+" "+this.inviteRole);
     this.invitationList.forEach(ele=>{
-      console.log(ele);
 
       this._dataService.postData('/invite_users/', 
       {
@@ -438,12 +422,10 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
       }).subscribe(res=>{
           this.invitationSuccess = true;
           this.inviteMessage = res;
-          // console.log(this.inviteMessage);
           this.snackBar.open(`Invitation mail has been sent to ${ele.inviteEmail}`, 'Success', {duration: 3000});
         }, 
         (err)=>{
           this.inviteMessage = err;
-          console.log(`Error while sending invitation to ${ele.inviteEmail}`, err);
           this.snackBar.open(`Can not send invitation to ${ele.inviteEmail}`, 'Failed', {duration: 3000});
         });
     });

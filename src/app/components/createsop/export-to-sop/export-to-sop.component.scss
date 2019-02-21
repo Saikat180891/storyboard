@@ -1,0 +1,85 @@
+.dialog-export{
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+
+  .dialog-header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .dialog-name{
+      color: #2A7DE1;
+    }
+
+    .dialog-close{
+      color: #C1C1C1;
+      cursor: pointer;
+    }
+  }
+
+  .form{
+    display: flex;
+    flex-direction: column;
+
+    .image-frame{
+      height: 300px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      background-color: #000;
+
+      img{
+        max-height: 100%;
+        max-width: 100%;
+      }
+    }
+    .form-footer{
+      display: flex;
+      flex-direction: column;
+
+      span{
+        color: #2A7DE1;
+      }
+
+      .form-controls{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+
+        input{
+          height: 30px;
+          padding: 7px;
+          border: 1px solid #D1D1D1;
+        }
+
+        input:nth-child(2){
+          margin: 0 20px;
+        }
+      }
+      .form-button{
+        margin: 20px;
+        display: flex;
+        justify-content: space-around;
+
+        button{
+          height: 30px;
+          min-width: 200px;
+          background-color: #F5F5F5;
+          color: #54585A;
+          border: none;
+          cursor: pointer;
+          border-radius: 5px;
+          box-shadow: 0 0 5px rgba($color: #000000, $alpha: 0.3);
+        }
+
+        button:first-child{
+          background-color: #2A7DE1;
+          color: #fff;
+        }
+      }
+    }
+  }
+}

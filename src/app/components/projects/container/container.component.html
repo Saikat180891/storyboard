@@ -53,5 +53,7 @@
 </div>
 
 <div class="overlay" *ngIf="openCreateProjectDialogBox">
-  <app-create-sop (close)="openCreateProjectDialogBox=false"></app-create-sop>
+  <div class="project-dialog-box">
+    <app-create-sop (close)="openCreateProjectDialogBox=false"></app-create-sop>
+  </div>
 </div>

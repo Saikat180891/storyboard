@@ -1,24 +1,31 @@
 <div class="operation-button-box">
-  <div class="full-blue-btn" (click)="onInsertNewSection()" appDraggable>
-    Section Title
-  </div>
-  <div class="partial-blue-btn" appDraggable>
+  <div class="partial-blue-btn" appDraggable data-buttontype="Read">
     <span></span>
     Read
   </div>
-  <div class="partial-blue-btn" appDraggable>
+  <div class="partial-blue-btn" appDraggable data-buttontype="Type">
     <span></span>
     Type
   </div>
-  <div class="partial-blue-btn" appDraggable>
+  <div class="partial-blue-btn" appDraggable data-buttontype="UI Interaction">
     <span></span>
     UI Interaction
   </div>
-  <div class="partial-blue-btn" appDraggable>
+  <div class="partial-blue-btn" appDraggable data-buttontype="Calculation">
     <span></span>
     Calculation
   </div>
-  <div class="full-dark-btn" appDraggable>
+  <div class="full-dark-btn" appDraggable data-buttontype="Condition">
     Condition
   </div>
+  <ng-container *ngIf="true; else endLoop">
+    <div class="full-blue-btn" appDraggable data-buttontype="Start Loop">
+      Loop
+    </div>
+  </ng-container>
+  <ng-template #endLoop>
+    <div class="full-dark-btn" appDraggable data-buttontype="End Loop">
+      End Loop
+    </div>
+  </ng-template>
 </div>

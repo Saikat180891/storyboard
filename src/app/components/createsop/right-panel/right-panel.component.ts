@@ -9,14 +9,24 @@ import {StepcontrolService} from '../services/stepcontrol/stepcontrol.service';
 export class RightPanelComponent implements OnInit {
   stepList:any = [];
 
-  constructor(private __steps:StepcontrolService) { }
+  constructor(private __steps:StepcontrolService) {
+   }
 
   ngOnInit() {
     this.stepList = this.__steps.getList();
   }
 
-  onButtonDragged($event:any){
-    this.__steps.insertItem($event.index, $event.data);
-    console.log(this.__steps.getList(), this.stepList);
+  onButtonDragged($event:any, index:number){
+    if($event.data === 'Section' && index == this.__steps.getListLength() - 1){
+      this.__steps.appendSection();
+    }else if($event.data === 'Section' && index < this.__steps.getListLength() - 1){
+      this.__steps.insertSectionAt(index);
+    }else{
+      this.__steps.insertStep($event.index, $event.data);
+    }
+  }
+
+  onCreateNewSection(){
+    this.__steps.appendSection();
   }
 }
