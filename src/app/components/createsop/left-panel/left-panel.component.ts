@@ -13,8 +13,4 @@ export class LeftPanelComponent implements OnInit {
 
   }
 
-  initialize(){
-
-  }
-
 }
