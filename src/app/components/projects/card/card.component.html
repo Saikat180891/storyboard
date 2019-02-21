@@ -1,5 +1,3 @@
-<!-- Card design starts here -->
-<!-- code for blank card starts here -->
 <ng-container>
   <div (click)="onCreateSOP()" class="container" id="0"  *ngIf="localData.id===0" matRipple [matRippleColor]="rippleColor" appPermissions>
     <a class="new-sop">
@@ -10,9 +8,6 @@
     </a>
   </div>
 </ng-container>
-
-
-<!-- code for existing card starts here -->
 <div class="container" *ngIf="localData.id != 0" matRipple [matRippleColor]="rippleColor">
   <div
   [routerLink]="['/projects/epics', localData.id]" 
@@ -27,11 +22,6 @@
         class="edit" 
         (click)="onPrevent($event)"  
         >
-        <!-- [appCanAccess]="{
-          role:localData.assignee[0].role, 
-          permissionRequired:'Can change sop', 
-          permissionList: cardData.currentUserPermission
-        }" -->
           <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>more_vert</mat-icon>
           </button>
@@ -60,8 +50,6 @@
       </div>
       <div class="assigne">
         <p>Assignee's</p>
-        <!-- display only 3 profiles from the profile image holder array => localData.image -->
-
         <div class="aname" *ngIf="localData.assignee">
           <ng-container *ngFor="let imageURL of localData.assignee; let i=index;">
             <img class="image-profile-pic" src="../../../../assets/pics/default.jpg" alt="" *ngIf="i<3" matTooltip="{{imageURL.user || imageURL.email}}" matTooltipPosition="above">
@@ -71,7 +59,6 @@
             <span></span>
           </ng-template>
         </div>
-
       </div>
       <mat-divider></mat-divider>
       <div class="footer">

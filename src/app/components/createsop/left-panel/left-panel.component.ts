@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 
 @Component({
   selector: 'left-panel',
@@ -10,6 +10,7 @@ export class LeftPanelComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

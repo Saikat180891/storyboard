@@ -3,6 +3,7 @@ interface StepList{
   sectionName:string;
   steps:any[];
 }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,11 +18,35 @@ export class StepcontrolService {
 
   constructor() { }
 
-  insertItem(index, data){
+  insertStep(index, data){
     this.sopStepsList[index].steps.push(data);
+  }
+
+  appendSection(){
+    let data = {
+      sectionName: 'section name',
+      steps:[]
+    }
+    this.sopStepsList.push(data);
+  }
+
+  insertSectionAt(indexAfter){
+    let data = {
+      sectionName: 'section name',
+      steps:[]
+    }
+    this.sopStepsList.splice(indexAfter, 0, data);
+  }
+
+  moveItem(newPosition, previousPosition, data){
+    this.sopStepsList.splice(newPosition, 0, data);
   }
 
   getList(){
     return this.sopStepsList;
+  }
+
+  getListLength(){
+    return this.sopStepsList.length;
   }
 }

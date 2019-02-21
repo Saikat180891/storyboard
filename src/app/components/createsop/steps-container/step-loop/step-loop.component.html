@@ -1,0 +1,11 @@
+<div class="loop-box">
+  <div class="loop-box-name">Start Loop</div>
+  <div class="loop-box-options">
+    <span (click)="onOpenDialogBox()"><i class="fas fa-ellipsis-h"></i></span>
+  </div>
+  <div class="comment-box" *ngIf="openDialogBox">
+    <label for="comments">Comments</label>
+    <textarea name="" id="comments" class="textarea"></textarea>
+    <button matRipple [matRippleColor]="rippleColor">Delete Loop</button>
+  </div>
+</div>

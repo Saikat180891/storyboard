@@ -14,6 +14,9 @@ import { RouterModule } from '@angular/router';
 import { DragDropDirective } from '../../directives/dragDrop/drag-drop.directive';
 import { DroppableDirective } from '../../directives/dragDrop/droppable.directive';
 import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from "@angular/material-moment-adapter";
+import {ListDragDirective} from '../../directives/dragDrop/list-drag.directive';
+import {ListDropDirective} from '../../directives/dragDrop/list-drop.directive';
+
 import {
   MatButtonModule, 
   MatNativeDateModule, 
@@ -49,7 +52,9 @@ import {
   declarations: [
     PermissionsDirective,
     DragDropDirective,
-    DroppableDirective
+    DroppableDirective,
+    ListDragDirective,
+    ListDropDirective
   ],
   imports: [
     CommonModule,
@@ -90,6 +95,8 @@ import {
     PermissionsDirective,
     DragDropDirective,
     DroppableDirective,
+    ListDragDirective,
+    ListDropDirective,
     MatButtonModule, 
     MatNativeDateModule, 
     MatCheckboxModule, 
