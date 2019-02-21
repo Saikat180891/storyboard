@@ -7,14 +7,14 @@
   height: 45vh;
   padding: 0 20px;
 }
-.posters{
+.small-card{
   width: 100%;
   padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  .poster-segments{
+  .small-card-segments{
     width: calc(100% / 3);
     height: 5vh;
     display: flex;
@@ -23,12 +23,12 @@
     justify-content: space-between;
     font-size: 14px;
 
-    .poster-heding{
+    .small-card-heading{
       color: #999999;
       padding-bottom: 10px;
     }
 
-    .poster-content{
+    .small-card-content{
       color: #333333;
     }
   }
