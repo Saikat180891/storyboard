@@ -4,6 +4,7 @@ import { AppcontrolService } from '../../../services/controlservice/appcontrol.s
 import {ContainerService} from './container.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {AuthorizationService} from '../../../services/authorization/authorization.service';
+import {UtilsService} from '../../../utils.service';
 
 @Component({
   selector: 'app-container',
@@ -25,7 +26,8 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
     private __uic: AppcontrolService,
     private _ContainerService: ContainerService,
     private __spinner: NgxSpinnerService,
-    private __authorization: AuthorizationService) {  }
+    private __authorization: AuthorizationService,
+    private __utils:UtilsService) {  }
 
 
 
@@ -49,13 +51,16 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
     this._ContainerService.getListOfAllProjects().subscribe(res=>{
       // rearrange the project list as required for the frontend
       res.forEach((element)=>{
+        // console.log(element["due_date"] + " "+ this.__utils.formatDateToUS(element["due_date"]));
         projectlist.push({
           themeColor: this.__uic.colorPicker[this._ContainerService.getUniqueNumber()],
           reasonCodes: this.__uic.firstZero(Number(element["number_epics"])),
           ...element,
-          logo: element["logo_url"]
+          logo: element["logo_url"],
+          due_date:this.__utils.formatDateToUS(element["due_date"])
         });
       });
+      console.log(projectlist)
     },
     (err)=>{
       this.__spinner.hide();

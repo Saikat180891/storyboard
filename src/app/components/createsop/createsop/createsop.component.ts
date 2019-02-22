@@ -22,7 +22,7 @@ export class CreatesopComponent implements OnInit, AfterContentChecked {
 
   ngOnInit() {
     /**
-     * in the ngOnInit function the windows.location in checked and
+     * in the ngOnInit function the windows.location is checked and
      * the the project id and userstory id is extracted and stored in
      * the PageService service
      */

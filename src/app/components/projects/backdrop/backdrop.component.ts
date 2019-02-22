@@ -11,6 +11,7 @@ import {CardService} from '../card/card.service';
 import {ContainerComponent} from '../container/container.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {EditProject} from '../model/edit-project.model';
+import {UtilsService} from '../../../utils.service'
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -126,7 +127,8 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
               private _cardService: CardService,
               private snackBar: MatSnackBar,
               private spinner: NgxSpinnerService,
-              private __containerComponent: ContainerComponent
+              private __containerComponent: ContainerComponent,
+              private utils:UtilsService
               ) {}
 
   /**
@@ -171,7 +173,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   onSelectedDateChange(date:Date){
-    this.projectDataToEdit.due_date = this.formatDate(date);
+    this.projectDataToEdit.due_date = this.utils.datetypeToStringtype(date);
     this.dueDate = date;
   }
   
@@ -364,16 +366,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   /**
-   * Rearrange the date in the following format DD/MM/YYYY
-   * @param date 
-   */
-  formatDate(date){
-    let dateStr = new Date(date)
-    let strDate =  "" + dateStr.getDate() + "/" + (dateStr.getMonth()+1) + "/" + dateStr.getFullYear();
-    return strDate;
-  }
-  
-  /**
    * Format the year as 00YY
    * @param year 
    */
@@ -389,12 +381,13 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * @param date 
    */
   arrangeDateInCorrectFormat(date){
-    let newDate = date.toString().split("/");
-    this.editSelectedDate = new Date();
-    this.editSelectedDate.setFullYear(Number(newDate[2]));
-    this.editSelectedDate.setMonth(Number(newDate[1])-1);
-    this.editSelectedDate.setDate(Number(newDate[0]));
-    return this.editSelectedDate;
+    const newDate = date.toString().split("/");
+    console.log(newDate);
+    let currentDate = new Date();
+    currentDate.setFullYear(Number(newDate[2]));
+    currentDate.setMonth(Number(newDate[0])-1);
+    currentDate.setDate(Number(newDate[1]));
+    return currentDate;
   }
 
   JSONtoFormData(json){
