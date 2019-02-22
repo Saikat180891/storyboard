@@ -1,13 +1,13 @@
-import { 
-  Component, 
+import {
+  Component,
   OnInit,
-  Output, 
-  EventEmitter, 
-  Input, 
-  ViewChild, 
-  ElementRef, 
-  AfterViewChecked, 
-  HostListener, 
+  Output,
+  EventEmitter,
+  Input,
+  ViewChild,
+  ElementRef,
+  AfterViewChecked,
+  HostListener,
   OnChanges } from '@angular/core';
 import {ReasonCodeService} from '../reason-code.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -40,13 +40,13 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
   @Output('closeSprints') closeSprints = new EventEmitter<boolean>();
 
   /**
-   * sprintConfigData contains an array of objects which is aquired from the backend to 
+   * sprintConfigData contains an array of objects which is aquired from the backend to
    * display the number of sprints
    */
   @Input('sprintConfigData') sprintConfigData;
 
   /**
-   * reasonCodeConfigData contains an array of objects which is aquired from the backend to 
+   * reasonCodeConfigData contains an array of objects which is aquired from the backend to
    * display the number of reason-codes / epics
    */
   @Input('reasonCodeConfigData') reasonCodeConfigData;
@@ -67,9 +67,9 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
    * a flag to display show the warning depending on the user behaviour
    */
   displayWarningBox:boolean = false;
-  
+
   sprintToDeleteId:number;
-  
+
   sprintNameToDelete:string = '';
 
   cancel:boolean = false;
@@ -99,9 +99,9 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
   changedDetected:boolean[] = [];
 
   constructor(
-    private __rcService:ReasonCodeService, 
-    private spinner: NgxSpinnerService, 
-    private formBuilder:FormBuilder, 
+    private __rcService:ReasonCodeService,
+    private spinner: NgxSpinnerService,
+    private formBuilder:FormBuilder,
     private __sharedService: SharedServicesService,
     ) { }
 
@@ -109,10 +109,10 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
   keyEvent(event: KeyboardEvent) {
     if (event.keyCode === this.__sharedService.KEY_CODE.ESCAPE) {
       this.closeSprints.emit(false)
-    } 
+    }
   }
 
-  ngOnInit() { 
+  ngOnInit() {
   }
 
   ngOnChanges(){
@@ -121,7 +121,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
   }
 
   ngAfterViewChecked() {
-  } 
+  }
 
   onClose(){
     this.cancel = true;
@@ -177,7 +177,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     }
     this.spinner.hide();
     this.onSelectYes();
-    
+
   }
 
   deleteSprint(id, sprintName){
@@ -267,7 +267,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     let someDate = startDate;
     switch(operation){
       case 'add':
-      someDate.setDate(someDate.getDate() + (weeks * 7) - 1); 
+      someDate.setDate(someDate.getDate() + (weeks * 7) - 1);
       break;
       case 'substract':
       if(weeks === 0){
@@ -344,8 +344,8 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
   }
   /**
    * Change the end date if there is a change in the start date
-   * @param $event 
-   * @param index 
+   * @param $event
+   * @param index
    */
   onDatePickerClose($event, index){
     this.sprintConfigData[index].start_date = $event.value;
@@ -370,7 +370,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     let someDate = startDate;
     switch(operation){
       case 'add':
-      someDate.setDate(someDate.getDate() + (weeks * 7) - 1); 
+      someDate.setDate(someDate.getDate() + (weeks * 7) - 1);
       break;
       case 'substract':
       if(weeks === 0){
@@ -396,7 +396,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     let period = durationSplitted.pop();
     durationSplitted = durationSplitted.join("");
     this.weekCounter = parseInt(durationSplitted);
-    
+
     this.sprintConfigData[index].duration = (this.weekCounter += 1) + 'W';
     let startDate = new Date(JSON.parse(JSON.stringify(this.sprintConfigData[index])).start_date);
     this.updateEndDate(startDate, index, 'add', this.weekCounter);
@@ -466,13 +466,9 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
         this.spinner.hide();
         status = err["status"];
         message = err["message"];
-<<<<<<< HEAD
-        this.__rcService.snackbar.open("Please check the template and try again." , "Fail", {"duration": 5000});
+        this.__rcService.snackbar.open("Please check the template and try again" , "Fail", {"duration": 5000});
         this.spinner.hide();
         this.onClose();
-=======
-        this.__rcService.snackbar.open("Please check the template and try again" , "Fail", {"duration": 5000});
->>>>>>> staging
       },
       ()=>{
         this.spinner.hide();
