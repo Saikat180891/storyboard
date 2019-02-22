@@ -39,7 +39,7 @@
         <input type="text" id="charge-code" placeholder="Charge Code" required [ngClass]="{'validators':validateChargeCode===true}"
           [(ngModel)]="projectDataToEdit.chargeCode">
         <ng-container>
-          <input id="date" placeholder="Due Date" type="text" matInput [matDatepicker]="picker" required readonly
+          <input id="date" placeholder="Due Date(MM/DD/YYYY)" type="text" matInput [matDatepicker]="picker" required readonly
             [ngClass]="{'validators':validateChargeCode===true}" [ngStyle]="{'border':validateChargeCode?border:false}"
             [value]="dueDate" (dateInput)="onSelectedDateChange($event.value)">
           <div class="datepicker">

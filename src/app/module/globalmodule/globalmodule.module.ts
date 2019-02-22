@@ -13,6 +13,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { RouterModule } from '@angular/router';
 import { DragDropDirective } from '../../directives/dragDrop/drag-drop.directive';
 import { DroppableDirective } from '../../directives/dragDrop/droppable.directive';
+import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from "@angular/material-moment-adapter";
 import {ListDragDirective} from '../../directives/dragDrop/list-drag.directive';
 import {ListDropDirective} from '../../directives/dragDrop/list-drop.directive';
 
@@ -88,6 +89,7 @@ import {
     ReactiveFormsModule,
     NgxSpinnerModule,
     RouterModule,
+    MatMomentDateModule
   ],
   exports: [
     PermissionsDirective,
@@ -125,10 +127,12 @@ import {
     FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
-    RouterModule
+    RouterModule,
+    MatMomentDateModule
   ],
   providers: [
     MatSnackBarModule,
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
   ]
 })
 export class GlobalmoduleModule { }
