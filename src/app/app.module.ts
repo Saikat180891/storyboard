@@ -1,22 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http'; 
 import { NvD3Module } from 'ng2-nvd3';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {ScrollbarService} from './services/scrollbarService/scrollbar.service';
+import { ScrollbarService } from './services/scrollbarService/scrollbar.service';
 import 'd3';
 import 'nvd3';
 
-import {DragDropModule} from '@angular/cdk/drag-drop';
 
-import {DateAdapter} from '@angular/material';
-import {AuthGaurdService} from './auth/auth-gaurd.service';
-import {DataService} from './data.service';
-import {AppcontrolService} from './services/controlservice/appcontrol.service';
-import {ContainerService} from './components/projects/container/container.service';
+import { DateAdapter } from '@angular/material';
+import { AuthGaurdService } from './auth/auth-gaurd.service';
+import { DataService } from './data.service';
+import { AppcontrolService } from './services/controlservice/appcontrol.service';
+import { ContainerService } from './components/projects/container/container.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -74,7 +73,6 @@ const routes = [
   {path: '**', redirectTo: '/'}
 ];
 
-// export const routing: ModuleWithProviders = RouterModule.forChild(routes);
 
 @NgModule({
   declarations: [
@@ -92,7 +90,6 @@ const routes = [
     NvD3Module,
     FormsModule,
     BrowserAnimationsModule,
-    DragDropModule,
     ReactiveFormsModule,
     HttpClientModule,
     GlobalmoduleModule,
@@ -102,15 +99,6 @@ const routes = [
     }),
     NgxSpinnerModule,
     RouterModule.forRoot(routes),
-    // MsAdalAngular6Module.forRoot({
-    //   tenant: '217024cc-23bf-42d2-a7cf-d270166db3e2',
-    //   clientId: 'd2b68bba-05ea-4053-811d-6f62047adf21',
-    //   // redirectUri: envProd.production ? envProd.azure.redirectUri : envDev.azure.redirectUri,
-    //   redirectUri: window.location.origin,
-    //   endpoints: { },
-    //   navigateToLoginRequestUrl: true,
-    //   cacheLocation: 'localStorage'
-    // }),
     PasswordStrengthMeterModule,
   ],
   providers: [

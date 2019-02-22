@@ -15,6 +15,7 @@ import { DragDropDirective } from '../../directives/dragDrop/drag-drop.directive
 import { DroppableDirective } from '../../directives/dragDrop/droppable.directive';
 import {ListDragDirective} from '../../directives/dragDrop/list-drag.directive';
 import {ListDropDirective} from '../../directives/dragDrop/list-drop.directive';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import {
   MatButtonModule, 
@@ -88,6 +89,7 @@ import {
     ReactiveFormsModule,
     NgxSpinnerModule,
     RouterModule,
+    DragDropModule,
   ],
   exports: [
     PermissionsDirective,
@@ -125,7 +127,8 @@ import {
     FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
-    RouterModule
+    RouterModule,
+    DragDropModule
   ],
   providers: [
     MatSnackBarModule,
