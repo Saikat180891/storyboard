@@ -42,6 +42,10 @@ export class StepcontrolService {
     this.sopStepsList.splice(newPosition, 0, data);
   }
 
+  removeSection(sectionIndex:number){
+    this.sopStepsList.splice(sectionIndex, 1);
+  }
+
   getList(){
     return this.sopStepsList;
   }

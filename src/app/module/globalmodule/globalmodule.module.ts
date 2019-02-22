@@ -16,6 +16,7 @@ import { DroppableDirective } from '../../directives/dragDrop/droppable.directiv
 import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from "@angular/material-moment-adapter";
 import {ListDragDirective} from '../../directives/dragDrop/list-drag.directive';
 import {ListDropDirective} from '../../directives/dragDrop/list-drop.directive';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import {
   MatButtonModule, 
@@ -89,6 +90,7 @@ import {
     ReactiveFormsModule,
     NgxSpinnerModule,
     RouterModule,
+    DragDropModule,
     MatMomentDateModule
   ],
   exports: [
@@ -128,6 +130,7 @@ import {
     ReactiveFormsModule,
     NgxSpinnerModule,
     RouterModule,
+    DragDropModule,
     MatMomentDateModule
   ],
   providers: [
