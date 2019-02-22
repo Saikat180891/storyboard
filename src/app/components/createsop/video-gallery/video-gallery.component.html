@@ -20,7 +20,12 @@
             </div>
           </ng-container>
           <div class="file-loader">
-            <input type="file" name="" id="" (change)="onFileSelected($event)">
+            <ng-container *ngIf="type==='VIDEO'; else selectImg">
+              <input type="file" name="" id="" (change)="onFileSelected($event)" accept="video/mp4,video/x-m4v,video/*">
+            </ng-container>
+            <ng-template #selectImg>
+              <input type="file" name="" id="" (change)="onFileSelected($event)" accept="image/png, image/jpeg">
+            </ng-template>
           </div>
         </div>
       </div>

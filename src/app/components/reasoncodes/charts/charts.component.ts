@@ -45,7 +45,7 @@ export class ChartsComponent implements OnInit, AfterViewChecked, OnChanges {
   ngOnInit() {
     fromEvent(window, 'resize')
     .subscribe(res => {
-    this.options.chart.width = this.dimensionController.nativeElement.parentNode.parentNode.clientWidth;
+      this.options.chart.width = this.dimensionController.nativeElement.parentNode.parentNode.clientWidth;
     });
     this.options.chart.width = this.dimensionController.nativeElement.parentNode.parentNode.clientWidth;
   }
