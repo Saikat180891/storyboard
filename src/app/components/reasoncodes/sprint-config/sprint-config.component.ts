@@ -466,7 +466,13 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
         this.spinner.hide();
         status = err["status"];
         message = err["message"];
+<<<<<<< HEAD
+        this.__rcService.snackbar.open("Please check the template and try again." , "Fail", {"duration": 5000});
+        this.spinner.hide();
+        this.onClose();
+=======
         this.__rcService.snackbar.open("Please check the template and try again" , "Fail", {"duration": 5000});
+>>>>>>> staging
       },
       ()=>{
         this.spinner.hide();

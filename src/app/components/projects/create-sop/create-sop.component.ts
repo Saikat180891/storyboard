@@ -261,7 +261,7 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
 
   onDueDateChange($event:Date){
     console.log($event);
-    this.projectDetails.due_date = this.utils.datetypeToStringtype($event);
+    this.projectDetails.due_date = this.utils.datetypeToStringWithoutTime($event);
     console.log(this.projectDetails.due_date);
     // this.projectDetails.due_date = $event
   }

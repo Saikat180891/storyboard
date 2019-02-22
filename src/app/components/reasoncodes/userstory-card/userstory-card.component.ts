@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angu
 import {EditUserStoryService} from '../userstory-card-edit/edit-user-story.service';
 import {ReasonCodeService} from '../reason-code.service';
 import {ReasoncodesComponent} from '../reasoncodes.component';
+import {UtilsService} from '../../../utils.service'
 // import {EditUserStoryService} from '../userstory-card-edit/edit-user-story.service';
 @Component({
   selector: 'app-userstory-card',
@@ -28,10 +29,11 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
   permissions:any;
   role:string;
 
-  constructor(private __editUS: EditUserStoryService, private __rcService: ReasonCodeService, private rcComponent: ReasoncodesComponent) {  }
+  constructor(private __editUS: EditUserStoryService, private __rcService: ReasonCodeService, private rcComponent: ReasoncodesComponent, private __utils:UtilsService) {  }
 
   ngOnInit() {
     this.userStory = JSON.parse(JSON.stringify(this.inputUserStory));
+    this.userStory.created = this.__utils.formatDateToUS(this.userStory.created);
   }
 
   ngOnChanges(){
@@ -68,10 +70,11 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
         rc_id = element.id;
       }
     });
-    this.userStory.planned_delivery = this.__editUS.formatDateToSendDataFromDisplayDate(this.userStory.planned_delivery);
+    this.userStory.planned_delivery = this.__utils.datetypeToStringWithoutTime(this.userStory.planned_delivery);
 
     this.userStory.revised_delivery == '-----' ? this.userStory.revised_delivery = null : 
-    this.userStory.revised_delivery =  this.__editUS.formatDateToSendDataFromDisplayDate(this.userStory.revised_delivery);
+    this.userStory.revised_delivery =  this.__utils.datetypeToStringWithoutTime(this.userStory.revised_delivery);
+    this.userStory.created = this.__utils.datetypeToStringWithoutTime(this.userStory.created);
 
     this.__editUS.editUserStory(uid, sprintId, rc_id, this.userStory);
   }
@@ -91,10 +94,11 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
         rc_id = element.id;
       }
     });
-    this.userStory.planned_delivery = this.__editUS.formatDateToSendDataFromDisplayDate(this.userStory.planned_delivery);
+    this.userStory.planned_delivery = this.__utils.datetypeToStringWithoutTime(this.userStory.planned_delivery);
 
     this.userStory.revised_delivery == '-----' ? this.userStory.revised_delivery = null : 
-    this.userStory.revised_delivery =  this.__editUS.formatDateToSendDataFromDisplayDate(this.userStory.revised_delivery);
+    this.userStory.revised_delivery =  this.__utils.datetypeToStringWithoutTime(this.userStory.revised_delivery);
+    this.userStory.created = this.__utils.datetypeToStringWithoutTime(this.userStory.created);
 
     this.__editUS.editUserStory(uid, sprintId, rc_id, this.userStory);
   }

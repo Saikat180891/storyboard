@@ -121,6 +121,6 @@ const routes = [
  */
 export class AppModule {
   constructor(private dateAdapter:DateAdapter<Date>) {
-		dateAdapter.setLocale('en-in'); // DD/MM/YYYY
+		dateAdapter.setLocale('en-us'); // DD/MM/YYYY
 	}
  }

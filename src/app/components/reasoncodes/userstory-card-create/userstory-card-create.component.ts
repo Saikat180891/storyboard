@@ -98,7 +98,6 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
     dev_hrs: '',
     notes: '',
     status: '',
-    created: '',
     sprint_name: '',
     // planned_delivery: '',
     // revised_delivery: '',
