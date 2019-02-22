@@ -70,11 +70,11 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
         rc_id = element.id;
       }
     });
-    this.userStory.planned_delivery = this.__utils.datetypeToStringWithTime(this.userStory.planned_delivery);
+    this.userStory.planned_delivery = this.__utils.datetypeToStringWithoutTime(this.userStory.planned_delivery);
 
     this.userStory.revised_delivery == '-----' ? this.userStory.revised_delivery = null : 
-    this.userStory.revised_delivery =  this.__utils.datetypeToStringWithTime(this.userStory.revised_delivery);
-    this.userStory.created = this.__utils.datetypeToStringWithTime(this.userStory.created);
+    this.userStory.revised_delivery =  this.__utils.datetypeToStringWithoutTime(this.userStory.revised_delivery);
+    this.userStory.created = this.__utils.datetypeToStringWithoutTime(this.userStory.created);
 
     this.__editUS.editUserStory(uid, sprintId, rc_id, this.userStory);
   }
@@ -94,11 +94,11 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
         rc_id = element.id;
       }
     });
-    this.userStory.planned_delivery = this.__utils.datetypeToStringWithTime(this.userStory.planned_delivery);
+    this.userStory.planned_delivery = this.__utils.datetypeToStringWithoutTime(this.userStory.planned_delivery);
 
     this.userStory.revised_delivery == '-----' ? this.userStory.revised_delivery = null : 
-    this.userStory.revised_delivery =  this.__utils.datetypeToStringWithTime(this.userStory.revised_delivery);
-    this.userStory.created = this.__utils.datetypeToStringWithTime(this.userStory.created);
+    this.userStory.revised_delivery =  this.__utils.datetypeToStringWithoutTime(this.userStory.revised_delivery);
+    this.userStory.created = this.__utils.datetypeToStringWithoutTime(this.userStory.created);
 
     this.__editUS.editUserStory(uid, sprintId, rc_id, this.userStory);
   }

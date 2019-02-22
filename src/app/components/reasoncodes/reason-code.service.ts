@@ -59,7 +59,7 @@ export class ReasonCodeService {
    */
   createSprint(payload){
     payload.forEach(element => {
-      element.start_date = this.__utils.datetypeToStringWithTime(element.start_date);
+      element.start_date = this.__utils.datetypeToStringWithoutTime(element.start_date);
       if(element.duration){
         this._api.postData(`/sop/${this.sopId}/sprint.json`, element).subscribe(response=>{});
       }
@@ -103,7 +103,7 @@ export class ReasonCodeService {
   }
 
   editSprint(id, data){
-    data['start_date'] = this.__utils.datetypeToStringWithTime(data['start_date']);
+    data['start_date'] = this.__utils.datetypeToStringWithoutTime(data['start_date']);
     this._api.update(`/sop/sprint`, `${id}.json`, data)
       .subscribe(response=>{
         this.getSprint(this.sopId);

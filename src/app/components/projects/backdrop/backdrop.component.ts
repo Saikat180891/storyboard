@@ -173,7 +173,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   onSelectedDateChange(date:Date){
-    this.projectDataToEdit.due_date = this._utils.datetypeToStringWithTime(date);
+    this.projectDataToEdit.due_date = this._utils.datetypeToStringWithoutTime(date);
     this.dueDate = date;
   }
   

@@ -152,8 +152,8 @@ export class UserstoryCardEditComponent implements OnInit {
   validationSuccessfull = [];
 
   onSaveAll(){
-    this.editUSData.planned_delivery = this.__utils.datetypeToStringWithTime(this.editUSData.planned_delivery);
-    isNaN(this.editUSData.revised_delivery) || this.editUSData.revised_delivery == null ? this.editUSData.revised_delivery = null : this.editUSData.revised_delivery = this.__utils.datetypeToStringWithTime(this.editUSData.revised_delivery);
+    this.editUSData.planned_delivery = this.__utils.datetypeToStringWithoutTime(this.editUSData.planned_delivery);
+    isNaN(this.editUSData.revised_delivery) || this.editUSData.revised_delivery == null ? this.editUSData.revised_delivery = null : this.editUSData.revised_delivery = this.__utils.datetypeToStringWithoutTime(this.editUSData.revised_delivery);
 
     if(this.editUSData.us_number == ''){
       this.userStoryNumberValidator = true;

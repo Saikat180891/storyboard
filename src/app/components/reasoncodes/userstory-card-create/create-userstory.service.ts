@@ -24,8 +24,8 @@ export class CreateUserstoryService {
     }else{
       reasonCodeId = 0;
     }
-    payload.planned_delivery = this.__utils.datetypeToStringWithTime(payload.planned_delivery);
-    payload.revised_delivery == null ? delete payload.revised_delivery : payload.revised_delivery = this.__utils.datetypeToStringWithTime(payload.revised_delivery);
+    payload.planned_delivery = this.__utils.datetypeToStringWithoutTime(payload.planned_delivery);
+    payload.revised_delivery == null ? delete payload.revised_delivery : payload.revised_delivery = this.__utils.datetypeToStringWithoutTime(payload.revised_delivery);
     const api = `/sop/epics/${this.sopId}/userstories/${sprintID}/${reasonCodeId}.json`;
     console.log(api, payload)
     this.__api.postData(api, payload)
