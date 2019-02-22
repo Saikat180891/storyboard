@@ -15,11 +15,13 @@ export class DragDropDirective implements OnInit {
 
   ngOnInit(){
     this.render.setAttribute(this.el.nativeElement, 'draggable', 'true');
+
     fromEvent(this.el.nativeElement, 'dragstart').subscribe((res:any)=>{
       this.dragDrop.setPayload(res.target.getAttribute('data-buttonType'));
-      console.log('dragstart', res.target.getAttribute('data-buttonType'));
     });
+
     fromEvent(this.el.nativeElement, 'drag').subscribe(res=>{
+      this.render.addClass(this.el.nativeElement, 'hold');
     });
   }
 
