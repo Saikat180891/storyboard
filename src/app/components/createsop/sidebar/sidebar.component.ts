@@ -61,8 +61,10 @@ export class SidebarComponent implements OnInit {
      */
     this.__sidebarService.getAllUploadedVideo(`/sop/${this.__page.projectId}/video.json`).subscribe(res=>{
       this.videoGalleryContent = res;
-      this.playThisVideo = this.videoGalleryContent[0].video_url;
-      this.__page.videoId = this.videoGalleryContent[0].id;
+      if(this.videoGalleryContent.length > 0){
+        this.playThisVideo = this.videoGalleryContent[0].video_url;
+        this.__page.videoId = this.videoGalleryContent[0].id;
+      }
     },
     err=>{
     },
@@ -254,6 +256,7 @@ export class SidebarComponent implements OnInit {
     this.progress = this.videoPlayer.nativeElement.currentTime = 0;
     this.duration = this.convertSecondsToMinutes(0);
     this.currentTime = this.convertSecondsToMinutes(0);
+    this.onPlayPause();
   }
   
   onTimeUpdate($event){
