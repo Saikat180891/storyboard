@@ -48,10 +48,44 @@ backdrop css
     height: 100%;
     background-color: rgba($color: #38496D, $alpha: 0.8);
     z-index: 1000;
+    transform-origin: 50% 50%;
+    opacity: 0;
+    transform: scale(0);
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+.overlay-hide{
+  opacity: 0;
+  transform: scale(0);
+  visibility: hidden;
+}
+.overlay-show{
+  opacity: 1;
+  transform: scale(1);
+  visibility: visible;
+}
+.overlay-left{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($color: #38496D, $alpha: 0.8);
+  z-index: 1000;
+  transform-origin: 50% 50%;
+  opacity: 0;
+  transform: scaleX(0);
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+.overlay-left-active{
+  opacity: 1;
+  transform: scaleX(1);
+  visibility: visible;
 }
 .new-sop{
-    cursor: pointer;
-    font-size: 20px;
+  cursor: pointer;
+  font-size: 20px;
 }
 
 
@@ -75,13 +109,6 @@ backdrop css
 }
 .ASN-box{
     width: 100%;
-    /* height: 40px;
-    background-color: #DDE5ED;
-    outline: none;
-    border: 0px solid;
-    padding-left: 10px;
-    font-size: 22px;
-    border-radius: 2px; */
 }
 textarea:focus, input:focus{
     outline: none;
@@ -128,11 +155,6 @@ input::placeholder{
     color: #BFBFBF;
     font-weight: 500;
 }
-// mat-datepicker-toggle{
-//     position: absolute;
-//     top: 31.5%;
-//     left: 54%;
-// }
 .height-auto{
     height: auto;
 }
@@ -142,18 +164,6 @@ input::placeholder{
 .center{
     text-align: center;
 }
-// .button-box{
-//     display: block;
-//     width: 320px;
-//     margin: 0 auto;
-// }
-// .dialog-group .button-box button{
-//     width: 150px;
-// }
-// .dialog-group .button-box button:first-child{
-//     margin-right: 20px;
-//     background-color: #2A7DE1;
-// }
 .fixed-bottom{
     position: absolute;
     bottom: 0;
@@ -166,18 +176,13 @@ ul{
 .color-red{
     background-color: red;
 }
-
 .height-max{
     max-height: 70px;
     overflow: auto;
 }
-
 .mat-raised-button:not([class*=mat-elevation-z]){
     box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12);
 }
-// .button-box button:last-child{
-//     border: 1px solid #54585A;
-// }
 .image-profile-pic{
     margin-right: 5px;
 }

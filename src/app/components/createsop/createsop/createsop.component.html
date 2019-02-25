@@ -17,7 +17,7 @@
 </div>
 
 
-<div class="overlay" *ngIf="openSidebar">
+<div class="overlay-left" [ngClass]="{'overlay-left-active':openSidebar}">
 </div>
 <div class="sidebar" [ngClass]="{'sidebar-open':openSidebar}">
   <app-sidebar (close)="onOpenSidebar($event)"></app-sidebar>

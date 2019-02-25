@@ -50,22 +50,7 @@ const routes: Routes = [
     CommonModule,
     GlobalmoduleModule,
     NvD3Module,
-    RouterModule.forChild(routes),
-    // FormsModule,
-    // ReactiveFormsModule,
-
-    // MatTabsModule,
-    // MatDatepickerModule,
-    // MatSnackBarModule,
-    // MatTooltipModule,
-    // MatChipsModule,
-    // MatMenuModule,
-    // NgxSpinnerModule,
-    // MatSlideToggleModule,
-    // MatRippleModule,
-    // MatGridListModule,
-    // MatCheckboxModule,
-    // MatRadioModule,
+    RouterModule.forChild(routes)
   ]
 })
 export class ReasoncodeModule { }

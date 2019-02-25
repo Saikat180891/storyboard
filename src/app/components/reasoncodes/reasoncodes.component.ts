@@ -62,11 +62,11 @@ export interface ReceivedSprintConfig{
 export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('totalPage') totalPage:ElementRef;
   @ViewChild('userStoryContainer') userStoryContainer:ElementRef;
+  openAddSprint:boolean = false;
   panelOpenState = false;
   options = [1,2,3];
   pieChartOptions = {};
   barChartOptions = {};
-  openAddSprint = false;
   sopId:number;
   dateCounter:number = 0;
   userStories = [];
