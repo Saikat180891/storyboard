@@ -89,6 +89,9 @@ export class ReasonCodeService {
           element['sprintNumber'] = index + 1;
         });
         this.sprintConfig = response.reverse();
+        for(let sprint of this.sprintConfig){
+          sprint.end_date = this.__utils.formatDateToUS(sprint.end_date);
+        }
       });
   }
 
