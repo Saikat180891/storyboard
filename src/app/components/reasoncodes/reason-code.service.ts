@@ -60,6 +60,7 @@ export class ReasonCodeService {
   createSprint(payload){
     payload.forEach(element => {
       element.start_date = this.__utils.datetypeToStringWithoutTime(element.start_date);
+      element.end_date = this.__utils.datetypeToStringWithoutTime(element.end_date);
       if(element.duration){
         this._api.postData(`/sop/${this.sopId}/sprint.json`, element).subscribe(response=>{});
       }
@@ -88,6 +89,9 @@ export class ReasonCodeService {
           element['sprintNumber'] = index + 1;
         });
         this.sprintConfig = response.reverse();
+        for(let sprint of this.sprintConfig){
+          sprint.end_date = this.__utils.formatDateToUS(sprint.end_date);
+        }
       });
   }
 
@@ -104,6 +108,7 @@ export class ReasonCodeService {
 
   editSprint(id, data){
     data['start_date'] = this.__utils.datetypeToStringWithoutTime(data['start_date']);
+    data['end_date'] = this.__utils.datetypeToStringWithoutTime(data['end_date']);
     this._api.update(`/sop/sprint`, `${id}.json`, data)
       .subscribe(response=>{
         this.getSprint(this.sopId);
