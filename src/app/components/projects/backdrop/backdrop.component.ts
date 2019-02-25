@@ -159,7 +159,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
       title: JSON.parse(JSON.stringify(this.projectData)).title,
       chargeCode: JSON.parse(JSON.stringify(this.projectData)).chargeCode,
       clientName: JSON.parse(JSON.stringify(this.projectData)).clientName,
-      due_date: JSON.parse(JSON.stringify(this.projectData)).due_date,
+      due_date: this._utils.datetypeToStringWithoutTime(JSON.parse(JSON.stringify(this.projectData)).due_date),
       rCodes: JSON.parse(JSON.stringify(this.projectData)).number_epics,
       logo: JSON.parse(JSON.stringify(this.projectData)).logo
     };
