@@ -468,7 +468,7 @@
     }
   }
 } 
-.create-user-story{
+.side-modal{
   position: absolute;
   bottom: 0;
   right: 0;
@@ -498,7 +498,7 @@
   opacity: 1;
   visibility: visible;
 }
-.create-user-story-active{
+.side-modal-active{
   opacity: 1;
   transform: translateX(0);
 }

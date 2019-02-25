@@ -167,7 +167,14 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
 
     fromEvent(document, 'click').subscribe(res=>{
       this.options = [];
-    })
+    });
+    const temporaryObject = {
+      inviteEmail:'',
+      inviteRole:'',
+      inviteFirstName:'',
+      inviteLastName:''
+    };
+    this.invitationList.push(temporaryObject);
   }
 
   onSelectedDateChange(date:Date){
@@ -411,7 +418,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
 
   onSendInvitation(){
     this.invitationList.forEach(ele=>{
-
       this._dataService.postData('/invite_users/', 
       {
         "first_name": ele.inviteFirstName, 

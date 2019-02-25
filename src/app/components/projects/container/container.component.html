@@ -47,13 +47,15 @@
   </div>
 </div>
 
-<div class="overlay" *ngIf="openEditProjectDialogBox">
-  <app-backdrop [permissions]="permissionsGrantedForBackdrop" [projectData]="projectData" 
-  (close)="openEditProjectDialogBox=false"></app-backdrop>
+<div class="overlay" [ngClass]="{'overlay-show':openEditProjectDialogBox, 'overlay-hide':!openEditProjectDialogBox}">
+  <div class="project-dialog-box" *ngIf="openEditProjectDialogBox">
+    <app-backdrop [permissions]="permissionsGrantedForBackdrop" [projectData]="projectData" 
+    (close)="openEditProjectDialogBox=false"></app-backdrop>
+  </div>
 </div>
 
-<div class="overlay" *ngIf="openCreateProjectDialogBox">
-  <div class="project-dialog-box">
+<div class="overlay" [ngClass]="{'overlay-show':openCreateProjectDialogBox, 'overlay-hide':!openCreateProjectDialogBox}">
+  <div class="project-dialog-box" *ngIf="openCreateProjectDialogBox">
     <app-create-sop (close)="openCreateProjectDialogBox=false"></app-create-sop>
   </div>
 </div>
