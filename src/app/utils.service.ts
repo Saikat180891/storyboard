@@ -24,16 +24,16 @@ export class UtilsService {
   }
 
   /**
-   * Changes Date Object to String with time as 00:00:00 to send to Backend
+   * Changes Date Object to String(YYYY-mm-dd 00:00:00) with time as 00:00:00 to send to Backend
    * @param date: Date Object
    */
-  // datetypeToStringWithTime(date){
-  //     let myDate = new Date(date);
-  //     return myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate()+" 00:00:00";
-  // }
+  datetypeToStringWithTime(date){
+      let myDate = new Date(date);
+      return myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate()+" 00:00:00";
+  }
 
   /**
-   * Changes Date Object to String to send to Backend
+   * Changes Date Object to String (YYYY-mm-dd) to send to Backend
    * @param date: Date Object
    */
   datetypeToStringWithoutTime(date){

@@ -14,6 +14,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import {fromEvent} from 'rxjs';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SharedServicesService} from '../../../services/shared-services/shared-services.service';
+import { UtilsService } from 'src/app/utils.service';
 
 interface SprintConfig{
   duration: string;
@@ -103,6 +104,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     private spinner: NgxSpinnerService, 
     private formBuilder:FormBuilder, 
     private __sharedService: SharedServicesService,
+    private __utils: UtilsService,
     ) { }
 
   @HostListener('document:keyup.escape', ['$event'])
@@ -112,8 +114,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     } 
   }
 
-  ngOnInit() { 
-  }
+  ngOnInit() {}
 
   ngOnChanges(){
     this.role = this.__rcService.role;
@@ -283,7 +284,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     let dd = someDate.getDate();
     let mm = someDate.getMonth() + 1;
     let y = someDate.getFullYear();
-    this.addNewRow[index].end_date = dd + '/'+ mm + '/'+ y;
+    this.addNewRow[index].end_date = mm + '/'+ dd + '/'+ y;
   }
 
   dateCounter:number = 0;
@@ -358,7 +359,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     let dd = newDate.getDate();
     let mm = newDate.getMonth() + 1;
     let y = newDate.getFullYear();
-    this.sprintConfigData[index].end_date = dd + '/'+ mm + '/'+ y;
+    this.sprintConfigData[index].end_date = mm + '/'+ dd + '/'+ y;
     this.changedDetected[index] = true;
   }
 
@@ -386,7 +387,7 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
     let dd = someDate.getDate();
     let mm = someDate.getMonth() + 1;
     let y = someDate.getFullYear();
-    this.sprintConfigData[index].end_date = dd + '/'+ mm + '/'+ y;
+    this.sprintConfigData[index].end_date = mm + '/'+ dd + '/'+ y;
   }
 
   weekCounter:number = 0;
@@ -466,13 +467,9 @@ export class SprintConfigComponent implements OnInit, AfterViewChecked, OnChange
         this.spinner.hide();
         status = err["status"];
         message = err["message"];
-<<<<<<< HEAD
         this.__rcService.snackbar.open("Please check the template and try again." , "Fail", {"duration": 5000});
         this.spinner.hide();
         this.onClose();
-=======
-        this.__rcService.snackbar.open("Please check the template and try again" , "Fail", {"duration": 5000});
->>>>>>> staging
       },
       ()=>{
         this.spinner.hide();

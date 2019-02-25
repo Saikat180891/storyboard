@@ -34,7 +34,7 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.userStory = JSON.parse(JSON.stringify(this.inputUserStory));
     this.userStory.created = this.__utils.formatDateToUS(this.userStory.created);
-  }
+    }
 
   ngOnChanges(){
     this.permissions = this.__rcService.grantedPermission;
@@ -74,7 +74,7 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
 
     this.userStory.revised_delivery == '-----' ? this.userStory.revised_delivery = null : 
     this.userStory.revised_delivery =  this.__utils.datetypeToStringWithoutTime(this.userStory.revised_delivery);
-    this.userStory.created = this.__utils.datetypeToStringWithoutTime(this.userStory.created);
+    this.userStory.created = this.__utils.datetypeToStringWithTime(this.userStory.created);
 
     this.__editUS.editUserStory(uid, sprintId, rc_id, this.userStory);
   }
@@ -98,7 +98,7 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
 
     this.userStory.revised_delivery == '-----' ? this.userStory.revised_delivery = null : 
     this.userStory.revised_delivery =  this.__utils.datetypeToStringWithoutTime(this.userStory.revised_delivery);
-    this.userStory.created = this.__utils.datetypeToStringWithoutTime(this.userStory.created);
+    this.userStory.created = this.__utils.datetypeToStringWithTime(this.userStory.created);
 
     this.__editUS.editUserStory(uid, sprintId, rc_id, this.userStory);
   }
