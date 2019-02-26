@@ -1,8 +1,8 @@
 <div class="modal">
-  <mat-tab-group>
+  <mat-tab-group animationDuration="0">
     <!------------------------------------------------------------Import Stories Tab ------------------------------------------------------------------------------------------>
     <mat-tab label="Import Stories" >
-      <div class="modal-body" #rcContainer>
+      <div class="modal-body" #rcContainer [ngStyle]="{'overflow':'hidden'}">
         <div class="grid-list">
           <mat-grid-list cols="12" rowHeight="50px">
             <mat-grid-tile [colspan]="12">
