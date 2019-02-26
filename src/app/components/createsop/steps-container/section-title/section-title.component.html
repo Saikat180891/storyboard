@@ -34,9 +34,9 @@
   </div>
 
   <div class="section-body" cdkDropList (cdkDropListDropped)="drop($event)">
-    <ng-container *ngFor="let step of stepParameters">
+    <ng-container *ngFor="let step of stepParameters; let i=index">
       <div class="steps" cdkDrag>
-        <app-steps-container [stepType]="step"></app-steps-container>
+        <app-steps-container [stepType]="step" [stepIndex]="i"></app-steps-container>
       </div>
     </ng-container>
     <div class="droppable-area" appDroppable (transferedData)="onDropData($event)" (dragover)="allowDrop($event)">

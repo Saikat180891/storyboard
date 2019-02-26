@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-step-loop',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./step-loop.component.scss']
 })
 export class StepLoopComponent implements OnInit {
+  @Input('stepIndex') stepIndex:number;
   openDialogBox:boolean = false;
   rippleColor = 'rbga(0,0,0,0.2)';
 
