@@ -8,10 +8,7 @@ import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 export class LeftPanelComponent implements OnInit {
 
   currentImage :number=0;
-  imageGalleryContent = [
-                        '../../../../assets/pics/download.jpg',
-                        '../../../../assets/pics/logo.png',
-                        '../../../../assets/pics/wallpaper.jpg'];
+  imageGalleryContent = [];
   constructor() { }
 
   ngOnInit() {
