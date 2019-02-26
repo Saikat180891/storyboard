@@ -63,8 +63,22 @@
     height: 60px;
     width: 100%;
     background-color: #fff;
-    padding: 10px 25px;
     font-size: 18px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+
+    .left-control-wrapper{
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        span{
+            margin-right: 10px;
+        }
+    }
 }
 .footer > span:not(:first-child){
     color: #707070;
@@ -316,4 +330,10 @@ mat-toolbar span .automation-system-name{
 }
 .container{
   height: 260px;
+}
+.btn-position{
+    // position: absolute;
+    // top: 50%;
+    // transform: translateY(-50%);
+    // right: 30px;
 }
