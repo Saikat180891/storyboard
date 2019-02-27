@@ -326,12 +326,12 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  /**
+   * this function is used to upload video from the desktop
+   * it also shows the percentage of video being uploaded in 
+   * real time
+   */
   onVideoUpload($event){
-    /**
-     * this function is used to upload video from the desktop
-     * it also shows the percentage of video being uploaded in 
-     * real time
-     */
     const apiEndpoint = `/sop/${this.__page.projectId}/video.json`;
     let videoData = new FormData();
     videoData.append('video', $event);

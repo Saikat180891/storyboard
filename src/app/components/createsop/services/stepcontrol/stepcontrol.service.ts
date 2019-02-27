@@ -53,4 +53,8 @@ export class StepcontrolService {
   getListLength(){
     return this.sopStepsList.length;
   }
+
+  deleteStep(sectionIndex, stepIntex){
+    this.sopStepsList[sectionIndex].steps.splice(stepIntex, 1);
+  }
 }

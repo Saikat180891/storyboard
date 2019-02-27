@@ -9,18 +9,22 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 })
 export class SectionTitleComponent implements OnInit, OnChanges {
   @Input('stepParameters') stepParameters:any;
-  @Input('externalStepIndex') externalStepIndex:number;
+  @Input('sectionIndex') sectionIndex:number;
   @Output('sectionPayload') sectionPayload = new EventEmitter<any>();
+  @Output('deleteStep') deleteStep = new EventEmitter();
+  @Output('outputChange') outputChange = new EventEmitter();
+  @Output('sectionChange') sectionChange = new EventEmitter();
+
   openEditSectionName:boolean = false;
   isSectionNameEditable:boolean = true;
   isCollapsed:boolean = false;
 
-  sectionName:string = 'Section Name';
+  section_name:string = '';
 
   constructor(private stepCtrl:StepcontrolService) {}
 
   ngOnInit() {
-    if(this.sectionName === ''){
+    if(this.section_name === ''){
       this.isSectionNameEditable = false;
     }
   }
@@ -40,22 +44,36 @@ export class SectionTitleComponent implements OnInit, OnChanges {
   onDropData($event:any){
     this.sectionPayload.emit({
       data: $event,
-      index: this.externalStepIndex
+      index: this.sectionIndex
     });
     console.log($event);
   }
 
   onCheckedSectionName(){
-    this.isSectionNameEditable = !this.isSectionNameEditable;
+    if(!this.section_name){
+      this.stepCtrl.removeSection(this.sectionIndex);
+    }else{
+      this.isSectionNameEditable = !this.isSectionNameEditable;
+      this.sectionChange.emit({sectionName:this.section_name, sectionIndex:this.sectionIndex});    
+    }
   }
 
   onRemoveSectionName(){
-    if(!this.sectionName){
-      this.stepCtrl.removeSection(this.externalStepIndex);
+    if(!this.section_name){
+      this.stepCtrl.removeSection(this.sectionIndex);
     }
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.stepCtrl.sopStepsList[this.externalStepIndex].steps, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.stepCtrl.sopStepsList[this.sectionIndex].steps, event.previousIndex, event.currentIndex);
   }
+
+  onDeleteStep($event:Event){
+    this.deleteStep.emit($event);
+  }
+
+  onOutputChange($event:Event){
+    this.outputChange.emit($event);
+  }
+
 }

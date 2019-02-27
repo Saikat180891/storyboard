@@ -2,6 +2,7 @@
 
 .add-another-btn{
   display: flex;
+  justify-content: space-between;
   padding: 10px 10px 10px 0;
 
   button{
@@ -11,6 +12,24 @@
     border: none;
     outline: none;
     cursor: pointer;
+    margin-top: 1rem;
+  }
+
+  .group{
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+
+    label{
+      color: #999999;
+      padding-bottom: 5px;
+    }
+
+    input[type="text"]{
+      height: 30px;
+      border: 1px solid #D1D1D1;
+      padding: 7px;
+    }
   }
 }
 
@@ -27,4 +46,35 @@
     color: #2A7DE1;
     cursor: pointer;
   }
+}
+.radio-group{
+  margin: 0 30px 10px 20px;
+  .mat-radio-button ~ .mat-radio-button {
+    margin-left: 20px;
+  }
+
+  ::ng-deep .mat-radio-label-content{
+    font-size: 14px;
+  }
+
+  ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle, .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple{
+    background-color: #2A7DE1;
+  }
+
+  ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    border-color: #2A7DE1;
+  }
+}
+.select-size{
+  width: 100px;
+  margin-top: 11px;
+}
+.select-wrapper{
+  border: 1px solid #D1D1D1;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 5px;
+}
+.gutter-left{
+  padding-left: 20px;
 }

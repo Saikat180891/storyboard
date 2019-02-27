@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {StepcontrolService} from '../services/stepcontrol/stepcontrol.service';
-
+import { StepcontrolService } from '../services/stepcontrol/stepcontrol.service';
+import { DataService } from "../../../data.service";
+import { PageService } from "../services/page/page.service";
 @Component({
   selector: 'right-panel',
   templateUrl: './right-panel.component.html',
@@ -9,7 +10,10 @@ import {StepcontrolService} from '../services/stepcontrol/stepcontrol.service';
 export class RightPanelComponent implements OnInit {
   stepList:any = [];
 
-  constructor(private __steps:StepcontrolService) {
+  constructor(
+    private __steps:StepcontrolService,
+    private __api:DataService,
+    private __page:PageService) {
    }
 
   ngOnInit() {
@@ -28,5 +32,24 @@ export class RightPanelComponent implements OnInit {
 
   onCreateNewSection(){
     this.__steps.appendSection();
+  }
+
+  onDeleteStep($event){
+    this.__steps.deleteStep($event.sectionIndex, $event.stepIndex);
+  }
+
+  onOutputChange($event){
+    console.log($event)
+  }
+
+  onSectionChange($event){
+    const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/create.json`
+    let payload = {
+      section_name: $event.sectionName,
+      prev_insertion_id: $event.sectionIndex === 0 ? '' : $event.sectionIndex - 1,
+      next_insertion_id: '',
+      description: 'testing'
+    }
+    console.log($event, $event.sectionIndex);
   }
 }

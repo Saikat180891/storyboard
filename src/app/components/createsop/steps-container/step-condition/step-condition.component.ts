@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-step-condition',
@@ -9,6 +9,7 @@ export class StepConditionComponent implements OnInit {
   @Input('stepIndex') stepIndex:number;
   canEdit:boolean = false;
   addAnotherRow:any = [1];
+  conditionSelection
 
   constructor() { }
 
@@ -29,5 +30,9 @@ export class StepConditionComponent implements OnInit {
 
   onDeleteNewRow(index:number){
     this.addAnotherRow.splice(index, 1);
+  }
+
+  onChangeSelection($event){
+    console.log(this.conditionSelection)
   }
 }

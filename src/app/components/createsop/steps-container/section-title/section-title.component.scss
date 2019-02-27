@@ -18,6 +18,11 @@
 
     &-title{
 
+      input[type="text"]:focus{
+        border: 1px solid #2A7DE1;
+        border-radius: 2px;
+      }
+
       span{
         margin-right: 20px;
       }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-export-to-sop',
@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./export-to-sop.component.scss']
 })
 export class ExportToSopComponent implements OnInit {
+  @Output('close') close = new EventEmitter<boolean>();
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  onCloseExportModal(){
+    this.close.emit(false);
+  }
 }

@@ -1,9 +1,9 @@
 <div class="steps-container" [ngSwitch]="stepType">
   <ng-container *ngSwitchCase="'Read'">
-    <app-step-read [stepIndex]="stepIndex"></app-step-read>
+    <app-step-read [stepIndex]="stepIndex" [sectionIndex]="sectionIndex" (deleteStep)="onDeleteStep($event)" (outputChange)="onOutputChange($event)"></app-step-read>
   </ng-container>
   <ng-container *ngSwitchCase="'Type'">
-    <app-step-type [stepIndex]="stepIndex"></app-step-type>
+    <app-step-type [stepIndex]="stepIndex" [sectionIndex]="sectionIndex" (deleteStep)="onDeleteStep($event)" (outputChange)="onOutputChange($event)"></app-step-type>
   </ng-container>
   <ng-container *ngSwitchCase="'Calculation'">
     <app-step-calculation [stepIndex]="stepIndex"></app-step-calculation>

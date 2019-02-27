@@ -27,8 +27,8 @@
   <app-sidebar-buttons (open)="onOpenSidebar($event)"></app-sidebar-buttons>
 </div>
 
-<div class="overlay higher-stack" *ngIf="false">
+<div class="overlay higher-stack" [ngClass]="{'overlay-show':showExportToSop, 'overlay-hide':!showExportToSop}">
   <div class="export-to-sop">
-    <app-export-to-sop></app-export-to-sop>
+    <app-export-to-sop (close)="showExportToSop=$event"></app-export-to-sop>
   </div>
 </div>

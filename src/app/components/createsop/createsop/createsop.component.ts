@@ -9,10 +9,11 @@ import {DataService} from "../../../data.service";
   templateUrl: './createsop.component.html',
   styleUrls: ['./createsop.component.scss']
 })
-export class CreatesopComponent implements OnInit, AfterContentChecked {
+export class CreatesopComponent implements OnInit, AfterContentChecked, OnChanges {
   openSidebar:any;
   toggleRecentSnapshot:boolean = false;
   imageGalleryContent = [];
+  showExportToSop:boolean = false;
   constructor(
     private routes:ActivatedRoute, 
     private __uic:UicontrolService,
@@ -31,10 +32,14 @@ export class CreatesopComponent implements OnInit, AfterContentChecked {
       this.__page.projectId = res.id;
       this.__page.userStoryId = res.userStoryId;
     });
+    this.showExportToSop = this.__page.shouldShowExportToSopModal;
   }
   
   ngAfterContentChecked(){
     this.imageGalleryContent = this.__page.imageGalleryContent;
+  }
+
+  ngOnChanges(){
   }
 
 

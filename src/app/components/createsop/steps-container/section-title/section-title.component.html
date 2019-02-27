@@ -1,9 +1,9 @@
 <div class="section" [ngClass]="{'collapse':isCollapsed}">
-  <div class="section-header">
+  <div class="section-header" [title]="section_name">
     <div class="section-header-title">
-      <div *ngIf="isSectionNameEditable; else editTextBox">{{sectionName}}</div>
+      <div *ngIf="isSectionNameEditable; else editTextBox">{{section_name}}</div>
       <ng-template #editTextBox>
-        <input type="text" class="edit-section-name" [(ngModel)]="sectionName" placeholder="Section Name">
+        <input type="text" class="edit-section-name" [(ngModel)]="section_name" placeholder="Section Name" (keydown.enter)="onCheckedSectionName()">
       </ng-template>
     </div>
 
@@ -36,7 +36,7 @@
   <div class="section-body" cdkDropList (cdkDropListDropped)="drop($event)">
     <ng-container *ngFor="let step of stepParameters; let i=index">
       <div class="steps" cdkDrag>
-        <app-steps-container [stepType]="step" [stepIndex]="i"></app-steps-container>
+        <app-steps-container [stepType]="step" [stepIndex]="i" [sectionIndex]="sectionIndex" (delete)="onDeleteStep($event)"  (outputChange)="onOutputChange($event)"></app-steps-container>
       </div>
     </ng-container>
     <div class="droppable-area" appDroppable (transferedData)="onDropData($event)" (dragover)="allowDrop($event)">
