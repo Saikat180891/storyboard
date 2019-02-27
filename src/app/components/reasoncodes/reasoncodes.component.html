@@ -32,7 +32,7 @@
     </div>
   </ng-container>
   <div class="userstory-container" [ngClass]="{'userstory-container-active':fixToTop}">
-    <mat-tab-group class="userstory-container-tabs" (selectedTabChange)="onTabChange($event)" [selectedIndex]="selectedTabIndex">
+    <mat-tab-group class="userstory-container-tabs" (selectedTabChange)="onTabChange($event)" [selectedIndex]="selectedTabIndex" animationDuration="0">
       <mat-tab label="Open U/S">
 
         <div class="filter-selected" *ngIf="_reasonCode.filteredValues.length > 0">
