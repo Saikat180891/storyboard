@@ -13,7 +13,7 @@
       <div class="screen-name">
         <span>Screen</span>
         <div class="select">
-          <mat-select [(value)]="selected" placeholder="None">
+          <mat-select [(value)]="data.screen" placeholder="None" [disabled]="!canEdit">
             <mat-option>None</mat-option>
             <mat-option value="option1">Option 1</mat-option>
             <mat-option value="option2">Option 2</mat-option>
@@ -25,7 +25,7 @@
 
     <ng-container *ngIf="canEdit; else edit">
       <div class="right-controls">
-        <div class="step-edit color-green" (click)="onClikedOnEdit()">
+        <div class="step-edit color-green" (click)="onClickOnOk()">
           <i class="fas fa-check"></i>
         </div>
         <div class="step-delete color-light-red">
@@ -35,7 +35,7 @@
     </ng-container>
     <ng-template #edit>
       <div class="right-controls">
-        <div class="step-edit" (click)="onClickOnOk()">
+        <div class="step-edit" (click)="onClikedOnEdit()">
           <i class="fas fa-pencil-alt"></i>
         </div>
         <div class="step-delete">
@@ -51,19 +51,19 @@
         <div class="form-sub-group padding-right">
           <label for="field">Field</label>
           <ng-container *ngIf="canEdit; else editField">
-            <input type="text" id="field">
+            <input type="text" id="field" [(ngModel)]="data.field">
           </ng-container>
           <ng-template #editField>
-            <span>Lorem ipsum dolor</span>
+            <span>{{data.field}}</span>
           </ng-template>
         </div>
         <div class="form-sub-group padding-left">
           <label for="field">Value</label>
           <ng-container *ngIf="canEdit; else editValue">
-            <input type="text" id="Value">
+            <input type="text" id="Value" [(ngModel)]="data.value">
           </ng-container>
           <ng-template #editValue>
-            <span>Lorem ipsum dolor</span>
+            <span>{{data.value}}</span>
           </ng-template>
         </div>
       </div>
@@ -71,19 +71,19 @@
         <div class="form-sub-group padding-right">
           <label for="data-type">Data Type</label>
           <ng-container *ngIf="canEdit; else editDataType">
-            <input type="text" id="data-type">
+            <input type="text" id="data-type" [(ngModel)]="data.dataType">
           </ng-container>
           <ng-template #editDataType>
-            <span>Lorem ipsum dolor</span>
+            <span>{{data.dataType}}</span>
           </ng-template>
         </div>
         <div class="form-sub-group padding-left">
           <label for="data-value">Data Value Constraints</label>
           <ng-container *ngIf="canEdit; else editDataValue">
-            <input type="text" id="data-value">
+            <input type="text" id="data-value" [(ngModel)]="data.dataValueConstraint">
           </ng-container>
           <ng-template #editDataValue>
-            <span>Lorem ipsum dolor</span>
+            <span>{{data.dataValueConstraint}}</span>
           </ng-template>
         </div>
       </div>
@@ -91,19 +91,19 @@
         <div class="form-sub-group padding-right">
           <label for="notes">Notes</label>
           <ng-container *ngIf="canEdit; else editNotes">
-            <textarea name="" id="notes"></textarea>
+            <textarea name="" id="notes" [(ngModel)]="data.notes"></textarea>
           </ng-container>
           <ng-template #editNotes>
-            <span>Lorem ipsum dolor</span>
+            <span>{{data.notes}}</span>
           </ng-template>
         </div>
         <div class="form-sub-group padding-left">
           <label for="exception-handling">Exception Handling</label>
           <ng-container *ngIf="canEdit; else editException">
-            <textarea name="" id="exception-handling"></textarea>
+            <textarea name="" id="exception-handling" [(ngModel)]="data.exceptionHandling"></textarea>
           </ng-container>
           <ng-template #editException>
-            <span>Lorem ipsum dolor</span>
+            <span>{{data.exceptionHandling}}</span>
           </ng-template>
         </div>
       </div>

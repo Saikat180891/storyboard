@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class StepsContainerComponent implements OnInit {
   @Input('stepType') stepType:string = 'Read';
+  @Input('stepIndex') stepIndex:number;
 
   constructor() { }
 
