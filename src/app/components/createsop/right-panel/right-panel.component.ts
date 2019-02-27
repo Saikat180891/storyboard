@@ -39,8 +39,8 @@ export class RightPanelComponent implements OnInit {
   onOutputChange($event){
     const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/${$event.sectionId}/stepgroups/${'step group id'}.json`;
     let payload = {
-      prev_insertion_id: '',
-      next_insertion_id: '',
+      prev_insertion_id: this.stepList[$event.sectionIndex].steps[$event.stepIndex - 1].id,
+      next_insertion_id: this.stepList[$event.sectionIndex].steps[$event.stepIndex + 1].id,
       section_insertion_id: $event.sectionId,
       step_group_insertion_id: '',
       propagate: '',
@@ -48,7 +48,7 @@ export class RightPanelComponent implements OnInit {
       data: $event.data
     }
     this.__api.post(endpoint, payload).subscribe(res=>{
-      
+
     });
     console.log($event)
   }
