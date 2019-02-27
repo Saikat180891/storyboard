@@ -13,7 +13,7 @@
       <div class="screen-name">
         <span>Screen</span>
         <div class="select">
-          <mat-select [(value)]="selected" placeholder="None">
+          <mat-select [(value)]="selected" placeholder="None" [disabled]="!canEdit">
             <mat-option>None</mat-option>
             <mat-option value="option1">Option 1</mat-option>
             <mat-option value="option2">Option 2</mat-option>

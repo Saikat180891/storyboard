@@ -6,6 +6,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
   styleUrls: ['./step-condition.component.scss']
 })
 export class StepConditionComponent implements OnInit {
+  @Input('sectionId') sectionId:number;
   @Input('stepIndex') stepIndex:number;
   canEdit:boolean = false;
   addAnotherRow:any = [1];

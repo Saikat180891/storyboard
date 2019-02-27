@@ -6,6 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./step-calculation.component.scss']
 })
 export class StepCalculationComponent implements OnInit {
+  @Input('sectionId') sectionId:number;
   @Input('stepIndex') stepIndex:number;
   canEdit:boolean = false;
 

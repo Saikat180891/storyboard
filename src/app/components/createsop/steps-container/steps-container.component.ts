@@ -6,6 +6,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./steps-container.component.scss']
 })
 export class StepsContainerComponent implements OnInit {
+  @Input('sectionId') sectionId:number;
   @Input('stepType') stepType:string = 'Read';
   @Input('stepIndex') stepIndex:number;
   @Input('sectionIndex') sectionIndex:number;

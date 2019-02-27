@@ -21,9 +21,7 @@ export class RightPanelComponent implements OnInit {
   }
 
   onButtonDragged($event:any, index:number){
-    if($event.data === 'Section' && index == this.__steps.getListLength() - 1){
-      this.__steps.appendSection();
-    }else if($event.data === 'Section' && index < this.__steps.getListLength() - 1){
+    if($event.data === 'Section' && index < this.__steps.getListLength() - 1){
       this.__steps.insertSectionAt(index);
     }else{
       this.__steps.insertStep($event.index, $event.data);
@@ -39,6 +37,19 @@ export class RightPanelComponent implements OnInit {
   }
 
   onOutputChange($event){
+    const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/${$event.sectionId}/stepgroups/${'step group id'}.json`;
+    let payload = {
+      prev_insertion_id: '',
+      next_insertion_id: '',
+      section_insertion_id: $event.sectionId,
+      step_group_insertion_id: '',
+      propagate: '',
+      type: $event.stepType,
+      data: $event.data
+    }
+    this.__api.post(endpoint, payload).subscribe(res=>{
+      
+    });
     console.log($event)
   }
 
@@ -50,6 +61,9 @@ export class RightPanelComponent implements OnInit {
       next_insertion_id: '',
       description: 'testing'
     }
-    console.log($event, $event.sectionIndex);
+    this.__api.post(endpoint, payload).subscribe(res=>{
+      this.__steps.editSectionDetailsWithResponse(res, $event.sectionIndex);
+    });
+    console.log($event);
   }
 }

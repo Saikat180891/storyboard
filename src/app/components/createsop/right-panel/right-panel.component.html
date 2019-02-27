@@ -1,6 +1,6 @@
 <div class="infinite-scroll">
   <div class="section" *ngFor="let stepListItem of stepList; let i=index">
-    <app-section-title [stepParameters]="stepListItem.steps" [sectionIndex]="i" (sectionPayload)="onButtonDragged($event, i)" (deleteStep)="onDeleteStep($event)"  (outputChange)="onOutputChange($event)" (sectionChange)="onSectionChange($event)"></app-section-title>
+    <app-section-title [stepParameters]="stepListItem.steps" [sectionIndex]="i" (sectionPayload)="onButtonDragged($event, i)" (deleteStep)="onDeleteStep($event)"  (outputChange)="onOutputChange($event)" (sectionChange)="onSectionChange($event)" [sectionId]="i"></app-section-title>
   </div>
   <div class="add-section" (click)="onCreateNewSection()">
       <i class="fas fa-plus"></i> New Section Title

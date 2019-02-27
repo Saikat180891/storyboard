@@ -6,6 +6,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./step-type.component.scss']
 })
 export class StepTypeComponent implements OnInit {
+  @Input('sectionId') sectionId:number;
   @Input('stepIndex') stepIndex:number;
   @Input('sectionIndex') sectionIndex:number;
   @Output('deleteStep') deleteStep = new EventEmitter();

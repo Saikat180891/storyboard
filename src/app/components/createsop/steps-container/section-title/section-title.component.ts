@@ -8,6 +8,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
   styleUrls: ['./section-title.component.scss']
 })
 export class SectionTitleComponent implements OnInit, OnChanges {
+  @Input('sectionId') sectionId:number;
   @Input('stepParameters') stepParameters:any;
   @Input('sectionIndex') sectionIndex:number;
   @Output('sectionPayload') sectionPayload = new EventEmitter<any>();

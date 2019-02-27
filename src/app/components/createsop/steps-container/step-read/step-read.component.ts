@@ -6,6 +6,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./step-read.component.scss']
 })
 export class StepReadComponent implements OnInit {
+  @Input('sectionId') sectionId:number;
   @Input('stepIndex') stepIndex:number;
   @Input('sectionIndex') sectionIndex:number;
   @Output('deleteStep') deleteStep = new EventEmitter();
@@ -35,7 +36,7 @@ export class StepReadComponent implements OnInit {
 
   onClickOnOk(){
     this.canEdit = false;
-    this.outputChange.emit({data:this.data, sectionIndex:this.sectionIndex, stepIndex:this.stepIndex});
+    this.outputChange.emit({data:this.data, sectionIndex:this.sectionIndex, stepIndex:this.stepIndex, stepType: 'Read', sectionId: this.sectionId});
   }
 
   onCancelEdit(){
