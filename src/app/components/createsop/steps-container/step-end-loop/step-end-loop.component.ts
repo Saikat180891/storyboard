@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-step-end-loop',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./step-end-loop.component.scss']
 })
 export class StepEndLoopComponent implements OnInit {
+  @Input('stepIndex') stepIndex:number;
   openDialogBox:boolean = false;
 
   constructor() { }

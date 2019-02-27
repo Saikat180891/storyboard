@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-step-ui-interaction',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./step-ui-interaction.component.scss']
 })
 export class StepUiInteractionComponent implements OnInit {
+  @Input('stepIndex') stepIndex:number;
   canEdit:boolean = false;
 
   constructor() { }

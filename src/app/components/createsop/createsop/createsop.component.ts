@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import {UicontrolService} from '../services/uicontrol.service';
 import {PageService} from '../services/page/page.service';
 import {StepcontrolService} from '../services/stepcontrol/stepcontrol.service';
-
+import {DataService} from "../../../data.service";
 @Component({
   selector: 'app-createsop',
   templateUrl: './createsop.component.html',
@@ -17,7 +17,8 @@ export class CreatesopComponent implements OnInit, AfterContentChecked {
     private routes:ActivatedRoute, 
     private __uic:UicontrolService,
     private __page:PageService,
-    private __steps:StepcontrolService
+    private __steps:StepcontrolService,
+    private __api:DataService
     ) { }
 
   ngOnInit() {

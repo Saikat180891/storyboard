@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-step-read',
@@ -6,7 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./step-read.component.scss']
 })
 export class StepReadComponent implements OnInit {
-  canEdit:boolean = false;
+  @Input('stepIndex') stepIndex:number;
+  canEdit:boolean = true;
+  data = {
+    field:'',
+    value:'',
+    dataType:'',
+    dataValueConstraint:'',
+    notes:'',
+    exceptionHandling:'',
+    screen:'',
+    stepNumber:''
+  }
 
   constructor() { }
 
@@ -14,11 +25,12 @@ export class StepReadComponent implements OnInit {
   }
 
   onClikedOnEdit(){
-    this.canEdit = false;
+    this.canEdit = !this.canEdit;
   }
 
   onClickOnOk(){
-    this.canEdit = true;
+    this.canEdit = false;
+    console.log(this.data)
   }
 
 }

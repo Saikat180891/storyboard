@@ -1,23 +1,23 @@
 <div class="steps-container" [ngSwitch]="stepType">
   <ng-container *ngSwitchCase="'Read'">
-    <app-step-read></app-step-read>
+    <app-step-read [stepIndex]="stepIndex"></app-step-read>
   </ng-container>
   <ng-container *ngSwitchCase="'Type'">
-    <app-step-type></app-step-type>
+    <app-step-type [stepIndex]="stepIndex"></app-step-type>
   </ng-container>
   <ng-container *ngSwitchCase="'Calculation'">
-    <app-step-calculation></app-step-calculation>
+    <app-step-calculation [stepIndex]="stepIndex"></app-step-calculation>
   </ng-container>
   <ng-container *ngSwitchCase="'UI Interaction'">
-    <app-step-ui-interaction></app-step-ui-interaction>
+    <app-step-ui-interaction [stepIndex]="stepIndex"></app-step-ui-interaction>
   </ng-container>
   <ng-container *ngSwitchCase="'Condition'">
-    <app-step-condition></app-step-condition>
+    <app-step-condition [stepIndex]="stepIndex"></app-step-condition>
   </ng-container>
   <ng-container *ngSwitchCase="'Start Loop'">
-    <app-step-loop></app-step-loop>
+    <app-step-loop [stepIndex]="stepIndex"></app-step-loop>
   </ng-container>
   <ng-container *ngSwitchCase="'End Loop'">
-    <app-step-end-loop></app-step-end-loop>
+    <app-step-end-loop [stepIndex]="stepIndex"></app-step-end-loop>
   </ng-container>
 </div>

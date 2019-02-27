@@ -21,41 +21,14 @@ export class DataService implements OnInit {
   ID:number = 0;
   colorPicker:string[] =["#0033A1", "#2A7DE1", "#40C0C4", "#54585A", "#8677C4", "#94BEF0"]
   apiUrl = environment.production ? window.location.origin :'http://localhost:8000';
-  cardContent = [
-    {
-      id: 0,
-    },
-  ];
-
-  backdropData = [
-    ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Shubhrangshu Naval'],
-    ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Saikat paul'],
-    ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Manjit'],
-    ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Sujit'],
-    ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Kanishka'],
-    ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Manbir'],
-    ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Shravan'],
-    ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Aadesh'],
-    ['http://wattleparkkgn.sa.edu.au/wp-content/uploads/2017/06/placeholder-profile-sq.jpg', 'Praveen'],
-
-  ]
   httpClient: any;
-
-
-
+  headers:any;
 
   constructor(private http: HttpClient, private cookie:CookieService) {  }
 
   ngOnInit(){
     this.getCSRFToken()
-  }
-
-  getData(){
-    return this.cardContent;
-  }
-
-  getBackdropData(){
-    return this.backdropData;
+    this.headers = httpOptions.headers.set('X-CSRFToken', this.getCSRFToken())
   }
 
   /**
@@ -65,34 +38,6 @@ export class DataService implements OnInit {
   getCSRFToken(){
     return this.cookie.get("csrftoken");
   }
-
-  addBackdropData(imagePath, assigneeName){
-    console.log("ADD ",assigneeName, imagePath)
-    this.backdropData.unshift([imagePath, assigneeName]);
-    console.log(this.backdropData);
-    if(this.backdropData.indexOf([imagePath, assigneeName])==-1){
-      return false;
-    }else{
-      return true;
-    }
-
-  }
-
-  removeBackdropData(id, item){
-    console.log(id)
-    let pos = this.cardContent.indexOf(id);
-    console.log(pos)
-
-  }
-
-  setCardContent(title, dueDate, chargeCode, logo){
-    this.cardContent.push(
-
-    );
-    return true;
-  }
-
-
 
   /**
    * Get the data from the server to load the cards
@@ -147,6 +92,14 @@ export class DataService implements OnInit {
   uploadFile(endpoint:string, payload:any):Observable<any>{
     const req = new HttpRequest('POST', this.apiUrl + endpoint, payload, {reportProgress:true, headers: httpOptions.headers});
     return this.http.request(req);
+  }
+
+  post(endpoint:string, body:any):Observable<any>{
+    return this.http.post(endpoint, body, {withCredentials: true, headers: this.headers});
+  }
+
+  get(endpoint:string):Observable<any>{
+    return this.http.get<any[]>(endpoint, {withCredentials: true, headers: this.headers});
   }
 
 }

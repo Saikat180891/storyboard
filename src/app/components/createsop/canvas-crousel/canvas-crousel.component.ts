@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 
 @Component({
   selector: 'app-canvas-crousel',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./canvas-crousel.component.scss']
 })
 export class CanvasCrouselComponent implements OnInit {
+  @Input('data') data:any;
+  @Input('currentImage') currentImage:any;
 
   constructor() { }
 

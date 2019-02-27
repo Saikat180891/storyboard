@@ -17,6 +17,7 @@ import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from "@angular/m
 import {ListDragDirective} from '../../directives/dragDrop/list-drag.directive';
 import {ListDropDirective} from '../../directives/dragDrop/list-drop.directive';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import {DataService} from "../../data.service";
 
 import {
   MatButtonModule, 
@@ -135,6 +136,7 @@ import {
   ],
   providers: [
     MatSnackBarModule,
+    DataService,
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
   ]
 })
