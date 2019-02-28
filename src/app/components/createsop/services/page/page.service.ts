@@ -8,5 +8,6 @@ export class PageService {
   userStoryId:number;
   videoId:number;
   imageGalleryContent = [];
+  shouldShowExportToSopModal:boolean = false;
   constructor() { }
 }

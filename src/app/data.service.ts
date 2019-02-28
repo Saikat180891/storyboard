@@ -95,11 +95,11 @@ export class DataService implements OnInit {
   }
 
   post(endpoint:string, body:any):Observable<any>{
-    return this.http.post(endpoint, body, {withCredentials: true, headers: this.headers});
+    return this.http.post(this.apiUrl + endpoint, body, {withCredentials: true, headers: this.headers});
   }
 
   get(endpoint:string):Observable<any>{
-    return this.http.get<any[]>(endpoint, {withCredentials: true, headers: this.headers});
+    return this.http.get<any[]>(this.apiUrl + endpoint, {withCredentials: true, headers: this.headers});
   }
 
 }

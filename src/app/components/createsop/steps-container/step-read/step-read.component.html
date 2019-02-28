@@ -8,7 +8,7 @@
         Read
       </div>
       <div class="step-number">
-        Step No. <span>1.2.2</span>
+        Step No. <span>{{data.stepNumber}}</span>
       </div>
       <div class="screen-name">
         <span>Screen</span>
@@ -28,7 +28,7 @@
         <div class="step-edit color-green" (click)="onClickOnOk()">
           <i class="fas fa-check"></i>
         </div>
-        <div class="step-delete color-light-red">
+        <div class="step-delete color-light-red" (click)="onCancelEdit()">
           <i class="fas fa-times"></i>
         </div>
       </div>
@@ -38,7 +38,7 @@
         <div class="step-edit" (click)="onClikedOnEdit()">
           <i class="fas fa-pencil-alt"></i>
         </div>
-        <div class="step-delete">
+        <div class="step-delete" (click)="onDeleteStep()">
           <i class="far fa-trash-alt"></i>
         </div>
       </div>

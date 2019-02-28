@@ -1,30 +1,30 @@
 <div class="operation-button-box">
-  <div class="partial-blue-btn" appDraggable data-buttontype="Read">
+  <div class="partial-blue-btn" appDraggable data-buttontype="Read" title="Read">
     <span></span>
     Read
   </div>
-  <div class="partial-blue-btn" appDraggable data-buttontype="Type">
+  <div class="partial-blue-btn" appDraggable data-buttontype="Type" title="Type">
     <span></span>
     Type
   </div>
-  <div class="partial-blue-btn" appDraggable data-buttontype="UI Interaction">
+  <div class="partial-blue-btn" appDraggable data-buttontype="UI Interaction" title="UI Interaction">
     <span></span>
     UI Interaction
   </div>
-  <div class="partial-blue-btn" appDraggable data-buttontype="Calculation">
+  <div class="partial-blue-btn" appDraggable data-buttontype="Calculation" title="Calculation">
     <span></span>
     Calculation
   </div>
-  <div class="full-dark-btn" appDraggable data-buttontype="Condition">
+  <div class="full-dark-btn" appDraggable data-buttontype="Condition" title="Condition">
     Condition
   </div>
   <ng-container *ngIf="true; else endLoop">
-    <div class="full-blue-btn" appDraggable data-buttontype="Start Loop">
+    <div class="full-blue-btn" appDraggable data-buttontype="Start Loop" title="Loop">
       Loop
     </div>
   </ng-container>
   <ng-template #endLoop>
-    <div class="full-dark-btn" appDraggable data-buttontype="End Loop">
+    <div class="full-dark-btn" appDraggable data-buttontype="End Loop" title="End Loop">
       End Loop
     </div>
   </ng-template>
