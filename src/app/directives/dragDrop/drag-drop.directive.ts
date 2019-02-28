@@ -21,7 +21,7 @@ export class DragDropDirective implements OnInit {
     });
 
     fromEvent(this.el.nativeElement, 'drag').subscribe(res=>{
-      this.render.addClass(this.el.nativeElement, 'hold');
+      // this.render.addClass(this.el.nativeElement, 'hold');
     });
   }
 

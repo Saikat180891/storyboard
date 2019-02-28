@@ -71,7 +71,7 @@
         <div class="form-sub-group padding-right">
           <label for="data-type">Data Type</label>
           <ng-container *ngIf="canEdit; else editDataType">
-            <input type="text" id="data-type" [(ngModel)]="data.dataType">
+            <input type="text" id="data-type" [(ngModel)]="data.data_type">
           </ng-container>
           <ng-template #editDataType>
             <span>{{data.dataType}}</span>
@@ -80,7 +80,7 @@
         <div class="form-sub-group padding-left">
           <label for="data-value">Data Value Constraints</label>
           <ng-container *ngIf="canEdit; else editDataValue">
-            <input type="text" id="data-value" [(ngModel)]="data.dataValueConstraint">
+            <input type="text" id="data-value" [(ngModel)]="data.dataV_value_constraint">
           </ng-container>
           <ng-template #editDataValue>
             <span>{{data.dataValueConstraint}}</span>
@@ -100,7 +100,7 @@
         <div class="form-sub-group padding-left">
           <label for="exception-handling">Exception Handling</label>
           <ng-container *ngIf="canEdit; else editException">
-            <textarea name="" id="exception-handling" [(ngModel)]="data.exceptionHandling"></textarea>
+            <textarea name="" id="exception-handling" [(ngModel)]="data.exception_handling"></textarea>
           </ng-container>
           <ng-template #editException>
             <span>{{data.exceptionHandling}}</span>

@@ -15,10 +15,10 @@ export class StepReadComponent implements OnInit {
   data = {
     field:'',
     value:'',
-    dataType:'',
-    dataValueConstraint:'',
+    data_type:'',
+    dataV_value_constraint:'',
     notes:'',
-    exceptionHandling:'',
+    exception_handling:'',
     screen:'',
     stepNumber:''
   }
@@ -36,7 +36,7 @@ export class StepReadComponent implements OnInit {
 
   onClickOnOk(){
     this.canEdit = false;
-    this.outputChange.emit({data:this.data, sectionIndex:this.sectionIndex, stepIndex:this.stepIndex, stepType: 'Read', sectionId: this.sectionId});
+    this.outputChange.emit({data:this.data, sectionIndex:this.sectionIndex, stepIndex:this.stepIndex, stepType: 'read', sectionId: this.sectionId});
   }
 
   onCancelEdit(){
