@@ -140,25 +140,24 @@
 
     <!----------------------------------------------------------------------------------    Sprint Tab  ------------------------------------------------------------------------>
     <mat-tab label="Sprints">
-      <div class="modal-body" #sprintContainer>
-        <div class="grid-list">
-          <mat-grid-list cols="21" rowHeight="50px">
-            <mat-grid-tile [colspan]="1"><span class="heading"></span></mat-grid-tile>
-            <mat-grid-tile [colspan]="4"><span class="heading">Name</span></mat-grid-tile>
-            <mat-grid-tile [colspan]="4"><span class="heading">Start Date</span></mat-grid-tile>
-            <mat-grid-tile [colspan]="4"><span class="heading">Duration</span></mat-grid-tile>
-            <mat-grid-tile [colspan]="4"><span class="heading">End Date</span></mat-grid-tile>
-            <mat-grid-tile [colspan]="4"></mat-grid-tile>
+      <div class="modal-body" #sprintContainer [ngStyle]="{'padding':'20px 0'}">
+        <div class="grid-list" [ngStyle]="{'padding':'0 20px'}">
+          <mat-grid-list cols="27" rowHeight="50px">
+            <!-- <mat-grid-tile [colspan]="1"><span class="heading"></span></mat-grid-tile> -->
+            <mat-grid-tile [colspan]="6"><span class="heading">Name</span></mat-grid-tile>
+            <mat-grid-tile [colspan]="6"><span class="heading">Start Date</span></mat-grid-tile>
+            <mat-grid-tile [colspan]="6"><span class="heading">Duration</span></mat-grid-tile>
+            <mat-grid-tile [colspan]="6"><span class="heading">End Date</span></mat-grid-tile>
+            <mat-grid-tile [colspan]="3"></mat-grid-tile>
           </mat-grid-list>
         </div>
         <div class="content-body">
-          <div class="grid-list" [ngClass]="{'grid-list-current-sprint':sprintConfig.current_sprint_flag}" *ngFor="let sprintConfig of sprintConfigData; let i=index">
-            <mat-grid-list cols="21" rowHeight="70px" gutterSize="10px">
-              <mat-grid-tile [colspan]="1"></mat-grid-tile>
-              <mat-grid-tile [colspan]="4">
+          <div class="grid-list" [ngClass]="{'grid-list-current-sprint':sprintConfig.current_sprint_flag}" *ngFor="let sprintConfig of sprintConfigData; let i=index" [ngStyle]="{'padding':'0 20px'}">
+            <mat-grid-list cols="27" rowHeight="70px" gutterSize="10px">
+              <mat-grid-tile [colspan]="6">
                 <input type="text" [(ngModel)]="sprintConfig.sprint_name" (blur)="onUpdateSprint(i)" maxlength="100">
               </mat-grid-tile>
-              <mat-grid-tile [colspan]="4">
+              <mat-grid-tile [colspan]="6">
                 <div class="p-relative">
                   <input matInput type="text" class="extra-padding" (dateChange)="onDatePickerClose($event, i)" [value]="sprintConfig.start_date"
                     [matDatepicker]="picker" readonly>
@@ -168,7 +167,7 @@
                   </div>
                 </div>
               </mat-grid-tile>
-              <mat-grid-tile [colspan]="4">
+              <mat-grid-tile [colspan]="6">
                 <div class="p-relative">
                   <input type="text" [(ngModel)]="sprintConfig.duration" readonly>
                   <div class="arrow">
@@ -181,10 +180,10 @@
                   </div>
                 </div>
               </mat-grid-tile>
-              <mat-grid-tile [colspan]="4">
+              <mat-grid-tile [colspan]="6">
                 <input type="text" [(ngModel)]="sprintConfig.end_date" readonly>
               </mat-grid-tile>
-              <mat-grid-tile [colspan]="4">
+              <mat-grid-tile [colspan]="3">
                 <div 
                 class="delete" 
                 (click)="deleteSprint(sprintConfig.id, sprintConfig.sprint_name)"
@@ -200,13 +199,12 @@
           </div>
           <!--  -->
 
-          <div class="grid-list" *ngFor="let sprintConfig of addNewRow; let i=index">
-            <mat-grid-list cols="21" rowHeight="70px" gutterSize="10px">
-              <mat-grid-tile [colspan]="1"></mat-grid-tile>
-              <mat-grid-tile [colspan]="4">
+          <div class="grid-list" *ngFor="let sprintConfig of addNewRow; let i=index" [ngStyle]="{'padding':'0 20px'}">
+            <mat-grid-list cols="27" rowHeight="70px" gutterSize="10px">
+              <mat-grid-tile [colspan]="6">
                 <input maxlength="30" type="text" [(ngModel)]="sprintConfig.sprint_name">
               </mat-grid-tile>
-              <mat-grid-tile [colspan]="4">
+              <mat-grid-tile [colspan]="6">
                 <div class="p-relative">
                   <input type="text" class="extra-padding" (dateInput)="sprintConfig.start_date=$event.value"
                     [matDatepicker]="picker1" readonly placeholder="Start date">
@@ -216,7 +214,7 @@
                   </div>
                 </div>
               </mat-grid-tile>
-              <mat-grid-tile [colspan]="4">
+              <mat-grid-tile [colspan]="6">
                 <div class="p-relative">
                   <input type="text" [(ngModel)]="sprintConfig.duration" readonly placeholder="Weeks">
                   <div class="arrow">
@@ -225,10 +223,10 @@
                   </div>
                 </div>
               </mat-grid-tile>
-              <mat-grid-tile [colspan]="4">
+              <mat-grid-tile [colspan]="6">
                 <input type="text" [(ngModel)]="sprintConfig.end_date" readonly placeholder="End Date">
               </mat-grid-tile>
-              <mat-grid-tile [colspan]="4">
+              <mat-grid-tile [colspan]="3">
                 <div 
                 class="delete" 
                 (click)="onDeleteRow(i)"
@@ -273,18 +271,11 @@
         <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
       </div>
     </mat-tab>
-    <!-- <mat-tab label="Audit Log">
-      
-    </mat-tab> -->
   </mat-tab-group>
-  <!-- <div class="heading">
-    <span>Config Sprints</span>
-    <span (click)="onClose()"><i class="fas fa-times"></i></span>
-  </div> -->
 
 </div>
 
-<div class="overlay" *ngIf="displayWarningBox">
+<div class="overlay" [ngClass]="{'overlay-show':displayWarningBox, 'overlay-hide':!displayWarningBox}">
   <div class="warning">
     <p>User stories are currently assigned to this sprint. Deleting this sprint will remove the sprint from the user
       stories</p>
@@ -296,7 +287,7 @@
   </div>
 </div>
 
-<div class="overlay" *ngIf="warningBoxForCancel">
+<div class="overlay" [ngClass]="{'overlay-show':warningBoxForCancel, 'overlay-hide':!warningBoxForCancel}">
   <div class="warning">
     <!-- <p>User stories are currently assigned to this sprint. Deleting this sprint will remove the sprint from the user stories</p> -->
     <p class="warning-message-2">Some of the fields have been changed or newly created. Cancelling the current status
@@ -307,11 +298,3 @@
     </div>
   </div>
 </div>
-
-<!-- <ngx-spinner
-  bdColor="rgba(51,51,51,0.8)"
-  size="medium"
-  color="#fff"
-  type="ball-scale-multiple">
- <p style="font-size: 20px; color: white">Loading...</p>
-</ngx-spinner> -->
