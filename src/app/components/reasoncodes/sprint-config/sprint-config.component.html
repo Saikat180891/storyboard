@@ -154,7 +154,6 @@
         <div class="content-body">
           <div class="grid-list" [ngClass]="{'grid-list-current-sprint':sprintConfig.current_sprint_flag}" *ngFor="let sprintConfig of sprintConfigData; let i=index" [ngStyle]="{'padding':'0 20px'}">
             <mat-grid-list cols="27" rowHeight="70px" gutterSize="10px">
-              <!-- <mat-grid-tile [colspan]="1"></mat-grid-tile> -->
               <mat-grid-tile [colspan]="6">
                 <input type="text" [(ngModel)]="sprintConfig.sprint_name" (blur)="onUpdateSprint(i)" maxlength="100">
               </mat-grid-tile>
@@ -202,7 +201,6 @@
 
           <div class="grid-list" *ngFor="let sprintConfig of addNewRow; let i=index" [ngStyle]="{'padding':'0 20px'}">
             <mat-grid-list cols="27" rowHeight="70px" gutterSize="10px">
-              <!-- <mat-grid-tile [colspan]="1"></mat-grid-tile> -->
               <mat-grid-tile [colspan]="6">
                 <input maxlength="30" type="text" [(ngModel)]="sprintConfig.sprint_name">
               </mat-grid-tile>
@@ -273,14 +271,7 @@
         <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
       </div>
     </mat-tab>
-    <!-- <mat-tab label="Audit Log">
-      
-    </mat-tab> -->
   </mat-tab-group>
-  <!-- <div class="heading">
-    <span>Config Sprints</span>
-    <span (click)="onClose()"><i class="fas fa-times"></i></span>
-  </div> -->
 
 </div>
 
@@ -307,11 +298,3 @@
     </div>
   </div>
 </div>
-
-<!-- <ngx-spinner
-  bdColor="rgba(51,51,51,0.8)"
-  size="medium"
-  color="#fff"
-  type="ball-scale-multiple">
- <p style="font-size: 20px; color: white">Loading...</p>
-</ngx-spinner> -->
