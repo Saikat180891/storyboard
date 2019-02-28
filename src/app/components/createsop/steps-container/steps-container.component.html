@@ -9,7 +9,7 @@
     <app-step-calculation [stepIndex]="stepIndex" [sectionIndex]="sectionIndex" (deleteStep)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId"></app-step-calculation>
   </ng-container>
   <ng-container *ngSwitchCase="'UI Interaction'">
-    <app-step-ui-interaction [stepIndex]="stepIndex" [sectionId]="sectionId"></app-step-ui-interaction>
+    <app-step-ui-interaction [stepIndex]="stepIndex" [sectionIndex]="sectionIndex" (deleteStep)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId"></app-step-ui-interaction>
   </ng-container>
   <ng-container *ngSwitchCase="'Condition'">
     <app-step-condition [stepIndex]="stepIndex" [sectionId]="sectionId"></app-step-condition>
