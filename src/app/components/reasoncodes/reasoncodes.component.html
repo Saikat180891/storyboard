@@ -151,17 +151,19 @@
         (close)="onCloseCreateUserStories($event)"></app-userstory-card-create>
     </div>
   </div>
-  <div class="transparent-overlay" [ngClass]="{'transparent-overlay-active':openEditSideBar, 'overlay': warning}">
+  <div class="transparent-overlay" [ngClass]="{'transparent-overlay-active':openEditSideBar}">
     <div class="side-modal" [ngClass]="{'side-modal-active': openEditSideBar}">
       <app-userstory-card-edit [reasonCodeOptions]="reasonCodeOptions" (warning)="onDoneWarning($event)" *ngIf="openEditSideBar"
         (close)="onCloseEditUserStories($event)" [editUSData]="userStoryData" [sprintOptions]="sprintOptions"></app-userstory-card-edit>
     </div>
-    <div class="warning" *ngIf="warning">
-      <p>Are you sure you want to move it to <strong>Completed</strong>?</p>
-      <div class="btn-group">
-        <button class="btn btn-blue" (click)="onSelectYes()">Yes</button>
-        <button class="btn btn-flat-ash" (click)="onSelectNo()">No</button>
-      </div>
+  </div>
+</div>
+<div class="overlay" [ngClass]="{'overlay-show':warning, 'overlay-hide':!warning}">
+  <div class="warning">
+    <p>Are you sure you want to move it to <strong>Completed</strong>?</p>
+    <div class="btn-group">
+      <button class="btn btn-blue" (click)="onSelectYes()">Yes</button>
+      <button class="btn btn-flat-ash" (click)="onSelectNo()">No</button>
     </div>
   </div>
 </div>
@@ -171,7 +173,7 @@
       (closeSprints)="openAddSprint=$event;onClearAllFilters()"></sprint-config>
   </div>
 </div>
-<div class="overlay" *ngIf="warningToDeleteUserStory">
+<div class="overlay" [ngClass]="{'overlay-show':warningToDeleteUserStory, 'overlay-hide':!warningToDeleteUserStory}">
   <div class="warning">
     <p>Are you sure you want to delete this user story?</p>
     <div class="btn-group">
@@ -183,7 +185,7 @@
 <div class="export" [ngClass]="{'export-active':openExport}">
   <export-dialog-box (close)="openExport=false"></export-dialog-box>
 </div>
-<div class="overlay" *ngIf="showBenefitsChart">
+<div class="overlay" [ngClass]="{'overlay-show':showBenefitsChart, 'overlay-hide':!showBenefitsChart}">
   <div class="benefits-frame">
     <img [src]="benefitChartImage" alt="">
     <div class="frame-close" (click)="onCloseBenefits()">

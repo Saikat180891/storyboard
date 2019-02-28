@@ -1,10 +1,10 @@
 @import "../global.scss";
 
-button{
-  position: absolute;
-  top: 100px;
-  right: 0;
-}
+// button{
+//   position: absolute;
+//   top: 100px;
+//   right: 0;
+// }
 canvas#snapshot-holder{
   // display: none;
   position: fixed;
@@ -278,5 +278,15 @@ canvas#snapshot-holder{
     top: 18px;
     left: 21px;
     color: $main-blue;
+  }
+}
+.warning {
+  .warning-btn-group{
+    display: flex;
+    justify-content: space-evenly;
+
+    button{
+      min-width: 90px;
+    }
   }
 }

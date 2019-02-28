@@ -83,7 +83,7 @@
                       </mat-option>
                     </mat-select>
                   </div>
-                  <div class="list-close" (click)="onRemove(userData.id)">
+                  <div class="list-close" (click)="onRemove(userData.id)" *ngIf="projectRole=='SuperAdmin'">
                     <i class="far fa-trash-alt"></i>
                   </div>
                 </div>
