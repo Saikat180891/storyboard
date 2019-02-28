@@ -45,7 +45,7 @@
             </div>
           </div>
           <div class="picture-title">
-            <span>{{content.video_name?content.video_name:content.image_name}}</span>
+            <span [title]="content.video_name? content.video_name:content.image_name">{{content.video_name?content.video_name:content.image_name}}</span>
             <span>{{content.video_length?content.video_length:''}}</span>
           </div>
         </div>

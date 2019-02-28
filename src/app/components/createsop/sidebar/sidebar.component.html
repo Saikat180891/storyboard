@@ -72,11 +72,11 @@
               <i class="fas fa-chevron-right"></i>
             </div>
             <div class="carousel-overlay">
-              Export To SOP
+                <i class="fas fa-file-export" style="margin-right:10px"></i>  Export To SOP
             </div>
           </div>
           <div class="application-name">
-            <span></span>
+            <span>{{imageName}}</span>
           </div>
           <div class="video-gellery">
             <app-gallery [data]="imageGalleryContent" [type]="'IMAGE'" (optionSelected)="onselectRequestedThumbnail($event)" (addNewFile)="onImageUpload($event)" (deleteContent)="onDeleteImage($event)"></app-gallery>
