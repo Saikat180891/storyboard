@@ -37,6 +37,7 @@ export class SidebarComponent implements OnInit {
   videoUpload:any;
   buffered:number;
   videoName:string;
+  imageName:string;
 
   constructor(
     private __uic:UicontrolService, 
@@ -119,6 +120,7 @@ export class SidebarComponent implements OnInit {
      * this function is called when a particular image is selected
      */
     this.currentImage = $event.index;
+    this.imageName = $event.content.image_name;
   }
 
   //for video player
