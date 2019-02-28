@@ -15,11 +15,11 @@
     <span></span>
     Calculation
   </div>
-  <div class="full-dark-btn" appDraggable data-buttontype="Condition" title="Condition">
+  <div class="full-dark-btn" appDraggable data-buttontype="Condition" title="Condition" [ngStyle]="{'display':'none'}">
     Condition
   </div>
   <ng-container *ngIf="true; else endLoop">
-    <div class="full-blue-btn" appDraggable data-buttontype="Start Loop" title="Loop">
+    <div class="full-blue-btn" appDraggable data-buttontype="Start Loop" title="Loop" [ngStyle]="{'display':'none'}">
       Loop
     </div>
   </ng-container>

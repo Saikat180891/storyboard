@@ -5,15 +5,15 @@
         <i class="fas fa-book-reader"></i>
       </div>
       <div class="icon-type">
-        Calculation
+        Calc
       </div>
       <div class="step-number">
-        Step No. <span>1.2.2</span>
+        Step No. <span>{{data.stepNumber}}</span>
       </div>
       <div class="screen-name">
         <span>Screen</span>
         <div class="select">
-          <mat-select [(value)]="selected" placeholder="None">
+          <mat-select [(value)]="data.screen" placeholder="None" [disabled]="!canEdit">
             <mat-option>None</mat-option>
             <mat-option value="option1">Option 1</mat-option>
             <mat-option value="option2">Option 2</mat-option>
@@ -25,20 +25,20 @@
 
     <ng-container *ngIf="canEdit; else edit">
       <div class="right-controls">
-        <div class="step-edit color-green" (click)="onClikedOnEdit()">
+        <div class="step-edit color-green" (click)="onClickOnOk()">
           <i class="fas fa-check"></i>
         </div>
-        <div class="step-delete color-light-red">
+        <div class="step-delete color-light-red" (click)="onCancelEdit()">
           <i class="fas fa-times"></i>
         </div>
       </div>
     </ng-container>
     <ng-template #edit>
       <div class="right-controls">
-        <div class="step-edit" (click)="onClickOnOk()">
+        <div class="step-edit" (click)="onClikedOnEdit()">
           <i class="fas fa-pencil-alt"></i>
         </div>
-        <div class="step-delete">
+        <div class="step-delete" (click)="onDeleteStep()">
           <i class="far fa-trash-alt"></i>
         </div>
       </div>
@@ -50,10 +50,10 @@
       <div class="form-group">
         <div class="form-sub-group full-width">
           <ng-container *ngIf="canEdit; else editField">
-            <textarea name="" id=""></textarea>
+            <textarea name="" id="" placeholder="Enter formula or equations or expressions" [(ngModel)]="data.calc_value"></textarea>
           </ng-container>
           <ng-template #editField>
-            <span>Lorem ipsum dolor</span>
+            <span>{{data.calc_value}}</span>
           </ng-template>
         </div>
       </div>
