@@ -16,7 +16,7 @@ export class StepReadComponent implements OnInit {
     field:'',
     value:'',
     data_type:'',
-    dataV_value_constraint:'',
+    data_value_constraint:'',
     notes:'',
     exception_handling:'',
     screen:'',

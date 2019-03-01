@@ -15,9 +15,9 @@
         <div class="select">
           <mat-select [(value)]="data.screen" placeholder="None" [disabled]="!canEdit">
             <mat-option>None</mat-option>
-            <mat-option value="option1">Option 1</mat-option>
-            <mat-option value="option2">Option 2</mat-option>
-            <mat-option value="option3">Option 3</mat-option>
+            <mat-option value="option1">Screen 1</mat-option>
+            <mat-option value="option2">Screen 2</mat-option>
+            <mat-option value="option3">Screen 3</mat-option>
           </mat-select>
         </div>
       </div>
@@ -74,16 +74,16 @@
             <input type="text" id="data-type" [(ngModel)]="data.data_type">
           </ng-container>
           <ng-template #editDataType>
-            <span>{{data.dataType}}</span>
+            <span>{{data.data_type}}</span>
           </ng-template>
         </div>
         <div class="form-sub-group padding-left">
           <label for="data-value">Data Value Constraints</label>
           <ng-container *ngIf="canEdit; else editDataValue">
-            <input type="text" id="data-value" [(ngModel)]="data.dataV_value_constraint">
+            <input type="text" id="data-value" [(ngModel)]="data.data_value_constraint">
           </ng-container>
           <ng-template #editDataValue>
-            <span>{{data.dataValueConstraint}}</span>
+            <span>{{data.data_value_constraint}}</span>
           </ng-template>
         </div>
       </div>
@@ -103,7 +103,7 @@
             <textarea name="" id="exception-handling" [(ngModel)]="data.exception_handling"></textarea>
           </ng-container>
           <ng-template #editException>
-            <span>{{data.exceptionHandling}}</span>
+            <span>{{data.exception_handling}}</span>
           </ng-template>
         </div>
       </div>
