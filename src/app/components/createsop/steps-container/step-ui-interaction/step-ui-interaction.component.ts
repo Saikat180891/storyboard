@@ -35,7 +35,8 @@ export class StepUiInteractionComponent implements OnInit {
 
   onClickOnOk(){
     this.canEdit = false;
-    this.outputChange.emit({data:this.data, sectionIndex:this.sectionIndex, stepIndex:this.stepIndex, stepType: 'ui_interaction', sectionId: this.sectionId});
+    console.log(this.data);
+    // this.outputChange.emit({data:this.data, sectionIndex:this.sectionIndex, stepIndex:this.stepIndex, stepType: 'ui_interaction', sectionId: this.sectionId});
   }
 
   onCancelEdit(){
