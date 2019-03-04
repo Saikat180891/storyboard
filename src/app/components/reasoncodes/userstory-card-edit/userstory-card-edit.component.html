@@ -25,7 +25,7 @@
   
       <div class="form-group">
         <div class="input-container md">
-          <div class="title">Epic</div>
+          <div class="title" [ngClass]="{'warning':userStoryReasonCodeValidator}">Epic</div>
           <div class="editable">
             <normal-dropdown (optionSelected)="editUSData.rc_name=$event.status" [options]="reasonCodeOptions" [defaultOption]="editUSData.rc_name?editUSData.rc_name:'Unassigned'"></normal-dropdown>
           </div>
