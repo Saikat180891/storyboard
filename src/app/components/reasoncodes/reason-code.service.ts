@@ -43,6 +43,20 @@ export class ReasonCodeService {
               public snackbar:MatSnackBar,
               private __utils: UtilsService) { }
 
+  destroyAllService(){
+    this.benefitsChartData = [];
+    this.totalProjectStatus = [];
+    this.currentSprintDuration = [];
+    this.completeUserStories = [];
+    this.deletedUserStories = [];
+    this.reasonCodeData = [];
+    this.filteredValues = [];
+    this.sprintConfig = [];
+    this.currentSprintData = [];
+    this.totalSprintData = [];
+    this.userStories = [];
+  }
+
   
   /**
    * 
@@ -132,7 +146,6 @@ export class ReasonCodeService {
     const api =  `/sop/epics/${id}/userstories.json`;
     this._api.fetchData(api)
       .subscribe(response=>{
-        console.log("UserStory", response);
         response.forEach(element=>{
           if(element['ftes'] == 0 ){
             element['ftes'] = '-----';

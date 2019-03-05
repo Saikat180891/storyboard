@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnChanges, OnDestroy } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ActivatedRoute } from '@angular/router';
 import {ReasonCodeService} from './reason-code.service';
@@ -59,7 +59,7 @@ export interface ReceivedSprintConfig{
   styleUrls: ['./reasoncodes.component.scss', './move-user-story.scss','./draggable.scss', './completed-warning.scss', './export.scss'],
   animations: [hideInOut]
 })
-export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
+export class ReasoncodesComponent implements OnInit, OnDestroy {
   @ViewChild('totalPage') totalPage:ElementRef;
   @ViewChild('userStoryContainer') userStoryContainer:ElementRef;
   openAddSprint:boolean = false;
@@ -153,11 +153,8 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
 
   }
 
-  ngOnChanges(){
-    
-  }
-  
-  ngAfterViewInit(){
+  ngOnDestroy(){
+    this._reasonCode.destroyAllService();
   }
 
   onSelectDeletedUS(){
