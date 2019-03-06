@@ -54,6 +54,14 @@
           padding: 7px;
           border: 1px solid #D1D1D1;
         }
+        input:focus{
+          border: 1px solid #2A7DE1;
+          box-shadow: inset 0 0 5px rgba($color: #2A7DE1, $alpha: 0.5);
+        }
+
+        input.validate-failed{
+          border: 1px solid #F47074;
+        }
 
         input:nth-child(2){
           margin: 0 20px;

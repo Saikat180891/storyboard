@@ -10,18 +10,18 @@
 
   <div class="form">
     <div class="image-frame">
-      <img src="../../../../assets/pics/login_page.jpg" alt="">
+      <img [src]="data ? data.thumbnail:''" alt="image to export">
     </div>
     <div class="form-footer">
       <span>Add Screen Details</span>
       <div class="form-controls">
-        <input type="text" placeholder="*Application name">
-        <input type="text" placeholder="*Screen name">
-        <input type="text" placeholder="*Tab name">
+        <input type="text" placeholder="*Application name" [(ngModel)]="applicationName">
+        <input type="text" placeholder="*Screen name" [(ngModel)]="screenName">
+        <input type="text" placeholder="*Tab name" [(ngModel)]="tabName">
       </div>
       <div class="form-button">
-        <button>Yes, Export to User Story</button>
-        <button>No, Continue Taking Screenshots</button>
+        <button (click)="onExportToSop()">Yes, Export to SOP</button>
+        <button (click)="onCloseExportModal()">No, Continue Taking Screenshots</button>
       </div>
     </div>
   </div>

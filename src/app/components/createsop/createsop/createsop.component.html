@@ -20,15 +20,15 @@
 <div class="overlay-left" [ngClass]="{'overlay-left-active':openSidebar}">
 </div>
 <div class="sidebar" [ngClass]="{'sidebar-open':openSidebar}">
-  <app-sidebar (close)="onOpenSidebar($event)"></app-sidebar>
+  <app-sidebar (close)="onOpenSidebar($event)" (exportSelectedImageToSop)="onSelectedImageToExport($event)"></app-sidebar>
 </div>
 
 <div class="sidebar-buttons">
   <app-sidebar-buttons (open)="onOpenSidebar($event)"></app-sidebar-buttons>
 </div>
 
-<div class="overlay higher-stack" [ngClass]="{'overlay-show':showExportToSop, 'overlay-hide':!showExportToSop}">
+<div class="overlay higher-stack" [ngClass]="{'overlay-show':__page.shouldShowExportToSopModal, 'overlay-hide':!__page.shouldShowExportToSopModal}">
   <div class="export-to-sop">
-    <app-export-to-sop (close)="showExportToSop=$event"></app-export-to-sop>
+    <app-export-to-sop (close)="__page.shouldShowExportToSopModal=$event" [data]="imageDataToExport"></app-export-to-sop>
   </div>
 </div>

@@ -14,6 +14,7 @@ export class CreatesopComponent implements OnInit, AfterContentChecked, OnChange
   toggleRecentSnapshot:boolean = false;
   imageGalleryContent = [];
   showExportToSop:boolean = false;
+  imageDataToExport:any;
   constructor(
     private routes:ActivatedRoute, 
     private __uic:UicontrolService,
@@ -32,7 +33,6 @@ export class CreatesopComponent implements OnInit, AfterContentChecked, OnChange
       this.__page.projectId = res.id;
       this.__page.userStoryId = res.userStoryId;
     });
-    this.showExportToSop = this.__page.shouldShowExportToSopModal;
   }
   
   ngAfterContentChecked(){
@@ -62,6 +62,10 @@ export class CreatesopComponent implements OnInit, AfterContentChecked, OnChange
     //   this.__steps.sopStepsList.push({sectionName:'section name'});
     //   console.log(this.__steps.sopStepsList);
     // }
+  }
+
+  onSelectedImageToExport($event){
+    this.imageDataToExport = $event.content;
   }
 
 }
