@@ -4,7 +4,7 @@
       <div class="header">
         <div class="heading">
           <span class="heading__name">{{_reasonCode.currentProject?_reasonCode.currentProject.clientName:''}}</span>
-          <span class="heading__divider"> | </span>
+          <span class="heading__divider" *ngIf="_reasonCode.currentProject.clientName"> | </span>
           <span class="heading__id">{{_reasonCode.currentProject?_reasonCode.currentProject.title:''}}</span>
         </div>
         <div class="middle header__btn">
