@@ -43,7 +43,6 @@
         </span>
 
       </mat-toolbar>
-      <mat-divider></mat-divider>
       <div class="codes">
         <h1 [style.color]="localData ? localData.themeColor : ''">{{ localData.number_epics ? localData.number_epics : '0'}}</h1>
         <p [style.color]="localData ? localData.themeColor : ''">Epic</p>
@@ -60,7 +59,6 @@
           </ng-template>
         </div>
       </div>
-      <mat-divider></mat-divider>
       <div class="footer">
         <span><i class="far fa-calendar-alt"></i></span>
         <span>Due Date</span><span>{{ localData ? localData.due_date : ''}}</span>
