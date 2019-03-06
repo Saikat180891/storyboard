@@ -55,6 +55,7 @@ export class ReasonCodeService {
     this.currentSprintData = [];
     this.totalSprintData = [];
     this.userStories = [];
+    this.currentProject = {};
   }
 
   
