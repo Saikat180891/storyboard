@@ -44,6 +44,7 @@ export class ReasonCodeService {
               private __utils: UtilsService) { }
 
   destroyAllService(){
+    this.currentSprintDuration = [];
     this.benefitsChartData = [];
     this.totalProjectStatus = [];
     this.currentSprintDuration = [];
