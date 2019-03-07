@@ -4,6 +4,10 @@ import {UicontrolService} from '../services/uicontrol.service';
 import {PageService} from '../services/page/page.service';
 import {StepcontrolService} from '../services/stepcontrol/stepcontrol.service';
 import {DataService} from "../../../data.service";
+interface Snapshot {
+  id: number;
+  thumbnail: string;
+}
 @Component({
   selector: 'app-createsop',
   templateUrl: './createsop.component.html',
@@ -14,7 +18,7 @@ export class CreatesopComponent implements OnInit, AfterContentChecked, OnChange
   toggleRecentSnapshot:boolean = false;
   imageGalleryContent = [];
   showExportToSop:boolean = false;
-  imageDataToExport:any;
+  imageDataToExport: Snapshot;
   constructor(
     private routes:ActivatedRoute, 
     private __uic:UicontrolService,
@@ -64,8 +68,9 @@ export class CreatesopComponent implements OnInit, AfterContentChecked, OnChange
     // }
   }
 
-  onSelectedImageToExport($event){
+  onSelectedImageToExport($event) {
     this.imageDataToExport = $event.content;
+    console.log(this.imageDataToExport)
   }
 
 }
