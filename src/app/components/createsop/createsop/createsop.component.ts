@@ -70,7 +70,6 @@ export class CreatesopComponent implements OnInit, AfterContentChecked, OnChange
 
   onSelectedImageToExport($event) {
     this.imageDataToExport = $event.content;
-    console.log(this.imageDataToExport)
   }
 
 }
