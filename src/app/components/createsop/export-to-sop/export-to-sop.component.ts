@@ -3,6 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../../data.service';
 import { PageService } from '../services/page/page.service';
 import { ExportToSopService } from '../services/export-to-sop/export-to-sop.service';
+interface Snapshot {
+  id: number;
+  thumbnail: string;
+}
 @Component({
   selector: 'app-export-to-sop',
   templateUrl: './export-to-sop.component.html',
@@ -10,7 +14,7 @@ import { ExportToSopService } from '../services/export-to-sop/export-to-sop.serv
 })
 export class ExportToSopComponent implements OnInit {
   // data is an input to this component
-  @Input('data') data: any;
+  @Input('data') data: Snapshot;
   // close event is called when during modal close
   @Output('close') close = new EventEmitter<boolean>();
   // create component from its parent component
