@@ -28,7 +28,7 @@
 </div>
 
 <div class="overlay higher-stack" [ngClass]="{'overlay-show':__page.shouldShowExportToSopModal, 'overlay-hide':!__page.shouldShowExportToSopModal}">
-  <div class="export-to-sop">
-    <app-export-to-sop (close)="__page.shouldShowExportToSopModal=$event" [data]="imageDataToExport"></app-export-to-sop>
+  <div class="export-to-sop" *ngIf="__page.shouldShowExportToSopModal">
+    <app-export-to-sop (close)="__page.shouldShowExportToSopModal=$event" [data]="imageDataToExport" [isComponentActive]="__page.shouldShowExportToSopModal"></app-export-to-sop>
   </div>
 </div>

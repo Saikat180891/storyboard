@@ -1,4 +1,4 @@
-<form class="dialog-export" [formGroup]="exportToSop" (ngSubmit)="onExportToSop()">
+<form class="dialog-export" [formGroup]="exportToSop" (ngSubmit)="onExportToSop()" *ngIf="isComponentActive">
   <div class="dialog-header">
     <div class="dialog-name">
       Export Screenshot to User Story Name Example

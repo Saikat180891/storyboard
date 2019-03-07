@@ -13,13 +13,11 @@ export class ExportToSopComponent implements OnInit {
   @Input('data') data: any;
   // close event is called when during modal close
   @Output('close') close = new EventEmitter<boolean>();
+  // create component from its parent component
+  @Input('isComponentActive') isComponentActive: boolean;
   // outputChange event is currently not in used but can is kept for
   // future requirements it will be triggered to output data from the component
   @Output('outputChange') outputChange = new EventEmitter<any>();
-  // this variables are used for the user inputs
-  applicationName: string;
-  screenName: string;
-  tabName: string;
 
   exportToSop = new FormGroup({
     application_name: new FormControl('', Validators.required),
@@ -36,6 +34,7 @@ export class ExportToSopComponent implements OnInit {
   constructor(private __api: DataService, private __page: PageService, private __export: ExportToSopService) { }
 
   ngOnInit() {
+    console.log(this.isComponentActive)
   }
 
   /**
@@ -43,6 +42,9 @@ export class ExportToSopComponent implements OnInit {
    */
   onCloseExportModal() {
     this.close.emit(false);
+    this.isComponentActive = false;
+    console.log(this.isComponentActive)
+
   }
 
   /**
