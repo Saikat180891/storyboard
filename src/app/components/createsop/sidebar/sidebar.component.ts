@@ -14,6 +14,7 @@ import {takeUntil} from 'rxjs/operators';
 })
 export class SidebarComponent implements OnInit {
   @Output('close') close = new EventEmitter<any>();
+  @Output('exportSelectedImageToSop') exportSelectedImageToSop = new EventEmitter<any>();
   @ViewChild('videoPlayer') videoPlayer:ElementRef;
   @ViewChild('canvas') canvas:ElementRef;
   @ViewChild('volumeController') volumeController:ElementRef;
@@ -413,5 +414,10 @@ export class SidebarComponent implements OnInit {
     ()=>{
       this.fetchAllSnapshotsAlreadyTaken();
     })
+  }
+
+  onExportToSop(){
+    this.exportSelectedImageToSop.emit({content:this.imageGalleryContent[this.currentImage]});
+    this.__page.shouldShowExportToSopModal = true;
   }
 }
