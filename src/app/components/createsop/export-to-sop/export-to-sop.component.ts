@@ -34,7 +34,6 @@ export class ExportToSopComponent implements OnInit {
   constructor(private __api: DataService, private __page: PageService, private __export: ExportToSopService) { }
 
   ngOnInit() {
-    console.log(this.isComponentActive)
   }
 
   /**
@@ -43,8 +42,6 @@ export class ExportToSopComponent implements OnInit {
   onCloseExportModal() {
     this.close.emit(false);
     this.isComponentActive = false;
-    console.log(this.isComponentActive)
-
   }
 
   /**
