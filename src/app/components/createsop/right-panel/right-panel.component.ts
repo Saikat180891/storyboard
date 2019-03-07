@@ -18,12 +18,13 @@ export class RightPanelComponent implements OnInit {
 
   ngOnInit() {
     this.stepList = this.__steps.getList();
+    console.log(this.stepList)
   }
 
-  onButtonDragged($event:any, index:number){
-    if($event.data === 'Section' && index < this.__steps.getListLength() - 1){
+  onButtonDragged($event: any, index: number) {
+    if ($event.data === 'Section' && index < this.__steps.getListLength() - 1){
       this.__steps.insertSectionAt(index);
-    }else{
+    } else {
       this.__steps.insertStep($event.index, $event.data);
     }
   }
@@ -37,7 +38,7 @@ export class RightPanelComponent implements OnInit {
   }
 
   onOutputChange($event){
-    const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/${$event.sectionId}/stepgroups/${'step group id'}.json`;
+    const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections.json`;
     let payload = {
       prev_insertion_id: this.stepList[$event.sectionIndex].steps[$event.stepIndex - 1].id,
       next_insertion_id: this.stepList[$event.sectionIndex].steps[$event.stepIndex + 1].id,
@@ -53,17 +54,23 @@ export class RightPanelComponent implements OnInit {
     console.log($event)
   }
 
-  onSectionChange($event){
-    const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/create.json`
-    let payload = {
-      section_name: $event.sectionName,
-      prev_insertion_id: $event.sectionIndex === 0 ? '' : $event.sectionIndex - 1,
-      next_insertion_id: '',
-      description: 'testing'
-    }
-    this.__api.post(endpoint, payload).subscribe(res=>{
-      this.__steps.editSectionDetailsWithResponse(res, $event.sectionIndex);
+  /**
+   * to create a section
+   * @param $event contains the section name and section index in frontend
+   */
+  onSectionChange($event: Event) {
+    // the required endpoint for creating section
+    const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/create.json`;
+    const payload = {
+      section_name: $event['sectionName'],
+      prev_insertion_id: this.__steps.getPreviousInsertionIdOfSection($event['sectionIndex']),
+      next_insertion_id: this.__steps.getNextInsertionIdOfSection($event['sectionIndex']),
+      description: null
+    };
+    // make the call with the payload and body
+    this.__api.post(endpoint, payload).subscribe(res => {
+      this.__steps.updateSection(res, $event['sectionIndex']);
     });
-    console.log($event);
+    console.log($event, this.__steps.getList(), payload);
   }
 }

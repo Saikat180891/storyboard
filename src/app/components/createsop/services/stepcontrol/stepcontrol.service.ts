@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
+
 interface StepList{
-  sectionName:string;
-  steps:any[];
-  id?:number;
+  section_name: string;
+  steps_list: any[];
+  insertion_id?: number;
+  description: string;
+  user_story_id?: number;
+  section_id?: number;
+  id?: number;
 }
 
 @Injectable({
@@ -10,22 +15,17 @@ interface StepList{
 })
 export class StepcontrolService {
 
-  sopStepsList:StepList[] = [
-    {
-      sectionName: 'section name',
-      steps:[]
-    }
-  ];
+  sopStepsList: StepList[] = [];
 
   constructor() { }
 
   /**
    * 
-   * @param index 
-   * @param data 
+   * @param index
+   * @param data
    */
   insertStep(index, data){
-    this.sopStepsList[index].steps.push(data);
+    this.sopStepsList[index].steps_list.push(data);
   }
 
   /**
@@ -33,22 +33,22 @@ export class StepcontrolService {
    */
   appendSection(){
     let data = {
-      sectionName: '',
-      steps:[],
+      section_name: '',
+      steps_list: [],
+      description: 'test',
       id: -1
     }
     this.sopStepsList.push(data);
   }
 
   /**
-   * this function is used to modity section properties
+   * this function is used to modify section properties
    * @param responseData data received from backend will the over write the respected values of section
    * @param sectionIndex is required to find where to modify
    * NOTE: steps are not modified
    */
-  editSectionDetailsWithResponse(responseData:any, sectionIndex:number){
-    this.sopStepsList[sectionIndex].sectionName = responseData.section_name;
-    this.sopStepsList[sectionIndex].id = responseData.id;
+  updateSection(responseData: any, sectionIndex: number) {
+    this.sopStepsList[sectionIndex] = responseData;
   }
 
   /**
@@ -58,7 +58,7 @@ export class StepcontrolService {
    * @param stepIndex frontend index of steps array
    */
   editStepValues(responseData:any, sectionIndex:number, stepIndex:number){
-    this.sopStepsList[sectionIndex].steps[stepIndex] = responseData;
+    this.sopStepsList[sectionIndex].steps_list[stepIndex] = responseData;
   }
 
   insertSectionAt(indexAfter){
@@ -66,26 +66,51 @@ export class StepcontrolService {
       sectionName: 'section name',
       steps:[]
     }
-    this.sopStepsList.splice(indexAfter, 0, data);
+    // this.sopStepsList.splice(indexAfter, 0, data);
   }
 
   moveItem(newPosition, previousPosition, data){
     this.sopStepsList.splice(newPosition, 0, data);
   }
 
-  removeSection(sectionIndex:number){
+  removeSection(sectionIndex: number) {
     this.sopStepsList.splice(sectionIndex, 1);
   }
 
-  getList(){
+  getList() {
     return this.sopStepsList;
   }
 
-  getListLength(){
+  getListLength() {
     return this.sopStepsList.length;
   }
 
-  deleteStep(sectionIndex, stepIntex){
-    this.sopStepsList[sectionIndex].steps.splice(stepIntex, 1);
+  deleteStep(sectionIndex, stepIntex) {
+    this.sopStepsList[sectionIndex].steps_list.splice(stepIntex, 1);
+  }
+
+  getPreviousInsertionIdOfSection(sectionIndex: number) {
+    // check if the array contains any element
+    if (this.sopStepsList.length === 1) {
+      return null;
+    } else {
+      // if the user is creating a section at the middle of the 'sopStepsList' then return the 'prev_insertion_id' for the previous element
+      return +this.sopStepsList[sectionIndex - 1]['insertion_id'];
+    }
+  }
+
+  getNextInsertionIdOfSection(sectionIndex: number) {
+    // check if the array contains any element
+    if (this.sopStepsList.length === 1) {
+      // if no element is there then it is the first element
+      return null;
+    }
+    // if the user is creating a section at the end of the 'sopStepsList' then return null
+    if (sectionIndex === this.sopStepsList.length - 1) {
+      return null;
+    } else {
+      // if the user is creating a section at the middle of the 'sopStepsList' then return the 'next_insertion_id' for the next element
+      return +this.sopStepsList[sectionIndex + 1]['insertion_id'];
+    }
   }
 }

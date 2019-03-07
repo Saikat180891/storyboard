@@ -17,20 +17,22 @@
     background-color: #fff;
 
     &-title{
+      display: flex;
+      align-items: center;
 
       input[type="text"]:focus{
         border: 1px solid #2A7DE1;
         border-radius: 2px;
       }
-
+      
       span{
         margin-right: 20px;
       }
-
+      
       .edit-section-name{
         height: 30px;
         width: 150px;
-        margin: 10px 0;
+        margin: 10px 16px 10px 0;
         padding: 7px;
         border: 1px solid #D1D1D1;
       }
@@ -63,15 +65,6 @@
       }
       .collapsable-btn{
         position: relative;
-      }
-      .collapsable-btn::before{
-        content: '';
-        position: absolute;
-        top: -3px;
-        left: 0;
-        width: 1px;
-        height: 30px;
-        background: #DDDDDD;
       }
     }
   }
@@ -125,4 +118,14 @@
 
 .section-body.cdk-drop-list-dragging .steps:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
 }

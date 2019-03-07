@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import {StepcontrolService} from '../../services/stepcontrol/stepcontrol.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { FormGroup, FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-section-title',
@@ -20,7 +21,13 @@ export class SectionTitleComponent implements OnInit, OnChanges {
   isSectionNameEditable:boolean = true;
   isCollapsed:boolean = false;
 
+  panelOpenState = false;
+
   section_name:string = '';
+
+  section = new FormGroup({
+    section_name: new FormControl('', Validators.required)
+  });
 
   constructor(private stepCtrl:StepcontrolService) {}
 
@@ -50,12 +57,10 @@ export class SectionTitleComponent implements OnInit, OnChanges {
     console.log($event);
   }
 
-  onCheckedSectionName(){
-    if(!this.section_name){
-      this.stepCtrl.removeSection(this.sectionIndex);
-    }else{
+  onCreateSection() {
+    if (this.section.valid) {
       this.isSectionNameEditable = !this.isSectionNameEditable;
-      this.sectionChange.emit({sectionName:this.section_name, sectionIndex:this.sectionIndex});    
+      this.sectionChange.emit({sectionName: this.section.value, sectionIndex: this.sectionIndex});
     }
   }
 
@@ -66,7 +71,7 @@ export class SectionTitleComponent implements OnInit, OnChanges {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.stepCtrl.sopStepsList[this.sectionIndex].steps, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.stepCtrl.sopStepsList[this.sectionIndex].steps_list, event.previousIndex, event.currentIndex);
   }
 
   onDeleteStep($event:Event){
@@ -75,6 +80,10 @@ export class SectionTitleComponent implements OnInit, OnChanges {
 
   onOutputChange($event:Event){
     this.outputChange.emit($event);
+  }
+
+  onEditSectionName() {
+
   }
 
 }
