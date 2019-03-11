@@ -140,136 +140,137 @@
 
     <!----------------------------------------------------------------------------------    Sprint Tab  ------------------------------------------------------------------------>
     <mat-tab label="Sprints">
-      <div class="modal-body" #sprintContainer [ngStyle]="{'padding':'20px 0'}">
-        <div class="grid-list" [ngStyle]="{'padding':'0 20px'}">
-          <mat-grid-list cols="27" rowHeight="50px">
-            <!-- <mat-grid-tile [colspan]="1"><span class="heading"></span></mat-grid-tile> -->
-            <mat-grid-tile [colspan]="6"><span class="heading">Name</span></mat-grid-tile>
-            <mat-grid-tile [colspan]="6"><span class="heading">Start Date</span></mat-grid-tile>
-            <mat-grid-tile [colspan]="6"><span class="heading">Duration</span></mat-grid-tile>
-            <mat-grid-tile [colspan]="6"><span class="heading">End Date</span></mat-grid-tile>
-            <mat-grid-tile [colspan]="3"></mat-grid-tile>
-          </mat-grid-list>
-        </div>
-        <div class="content-body">
-          <div class="grid-list" [ngClass]="{'grid-list-current-sprint':sprintConfig.current_sprint_flag}" *ngFor="let sprintConfig of sprintConfigData; let i=index" [ngStyle]="{'padding':'0 20px'}">
-            <mat-grid-list cols="27" rowHeight="70px" gutterSize="10px">
-              <mat-grid-tile [colspan]="6">
-                <input type="text" [(ngModel)]="sprintConfig.sprint_name" (blur)="onUpdateSprint(i)" maxlength="100">
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="6">
-                <div class="p-relative">
-                  <input matInput type="text" class="extra-padding" (dateChange)="onDatePickerClose($event, i)" [value]="sprintConfig.start_date"
-                    [matDatepicker]="picker" readonly>
-                  <div class="date-picker">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                  </div>
-                </div>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="6">
-                <div class="p-relative">
-                  <input type="text" [(ngModel)]="sprintConfig.duration" readonly>
-                  <div class="arrow">
-                    <button (click)="onArrowUpforAlreadyCreated(i)">
-                      <i class="fas fa-caret-up"></i>
-                    </button>
-                    <button (click)="onArrowDownforAlreadyCreated(i)">
-                      <i class="fas fa-caret-down"></i>
-                    </button>
-                  </div>
-                </div>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="6">
-                <input type="text" [(ngModel)]="sprintConfig.end_date" readonly>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="3">
-                <div 
-                class="delete" 
-                (click)="deleteSprint(sprintConfig.id, sprintConfig.sprint_name)"
-                [appCanAccess]="{
-                  role:role, 
-                  permissionRequired:'Can delete sprint',
-                  permissionList: permissions
-                }">
-                  <i class="far fa-trash-alt"></i>
-                </div>
-              </mat-grid-tile>
+      <form name="sprints-form" (ngSubmit)="sprintsForm.form.valid && onSaveAllChanges()"  #sprintsForm="ngForm" [ngClass]="{'submitted':sprintsForm.submitted}">
+        <div class="modal-body" #sprintContainer [ngStyle]="{'padding':'20px 0'}">
+          <div class="grid-list" [ngStyle]="{'padding':'0 20px'}">
+            <mat-grid-list cols="27" rowHeight="50px">
+              <mat-grid-tile [colspan]="6"><span class="heading">Name</span></mat-grid-tile>
+              <mat-grid-tile [colspan]="6"><span class="heading">Start Date</span></mat-grid-tile>
+              <mat-grid-tile [colspan]="6"><span class="heading">Duration</span></mat-grid-tile>
+              <mat-grid-tile [colspan]="6"><span class="heading">End Date</span></mat-grid-tile>
+              <mat-grid-tile [colspan]="3"></mat-grid-tile>
             </mat-grid-list>
           </div>
-          <!--  -->
-
-          <div class="grid-list" *ngFor="let sprintConfig of addNewRow; let i=index" [ngStyle]="{'padding':'0 20px'}">
-            <mat-grid-list cols="27" rowHeight="70px" gutterSize="10px">
-              <mat-grid-tile [colspan]="6">
-                <input maxlength="30" type="text" [(ngModel)]="sprintConfig.sprint_name">
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="6">
-                <div class="p-relative">
-                  <input type="text" class="extra-padding" (dateInput)="sprintConfig.start_date=$event.value"
-                    [matDatepicker]="picker1" readonly placeholder="Start date">
-                  <div class="date-picker">
-                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                    <mat-datepicker #picker1></mat-datepicker>
+          <div class="content-body">
+            <div class="grid-list" [ngClass]="{'grid-list-current-sprint':sprintConfig.current_sprint_flag}" *ngFor="let sprintConfig of sprintConfigData; let i=index" [ngStyle]="{'padding':'0 20px'}">
+              <mat-grid-list cols="27" rowHeight="70px" gutterSize="10px">
+                <mat-grid-tile [colspan]="6">
+                  <input type="text" [(ngModel)]="sprintConfig.sprint_name" (blur)="onUpdateSprint(i)" maxlength="100" name="sprint_name_{{i}}" required>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="6">
+                  <div class="p-relative">
+                    <input matInput type="text" class="extra-padding" (dateChange)="onDatePickerClose($event, i)" [value]="sprintConfig.start_date"
+                      [matDatepicker]="picker" readonly required name="sprint_start_{{i}}">
+                    <div class="date-picker">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </div>
                   </div>
-                </div>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="6">
-                <div class="p-relative">
-                  <input type="text" [(ngModel)]="sprintConfig.duration" readonly placeholder="Weeks">
-                  <div class="arrow">
-                    <button (click)="onArrowUp(i)"><i class="fas fa-caret-up"></i></button>
-                    <button (click)="onArrowDown(i)"><i class="fas fa-caret-down"></i></button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="6">
+                  <div class="p-relative">
+                    <input type="text" [(ngModel)]="sprintConfig.duration" readonly required name="sprint_duration_{{i}}">
+                    <div class="arrow">
+                      <button type="button" (click)="onArrowUpforAlreadyCreated(i)">
+                        <i class="fas fa-caret-up"></i>
+                      </button>
+                      <button type="button" (click)="onArrowDownforAlreadyCreated(i)">
+                        <i class="fas fa-caret-down"></i>
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="6">
-                <input type="text" [(ngModel)]="sprintConfig.end_date" readonly placeholder="End Date">
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="3">
-                <div 
-                class="delete" 
-                (click)="onDeleteRow(i)"
-                [appCanAccess]="{
-                  role:role, 
-                  permissionRequired:'Can delete sprint',
-                  permissionList: permissions
-                }">
-                  <i class="far fa-trash-alt"></i>
-                </div>
-              </mat-grid-tile>
-            </mat-grid-list>
-          </div>
-
-          <div class="grid-list-footer">
-            <mat-grid-list cols="1" rowHeight="50px">
-              <mat-grid-tile>
-                <div class="row">
-                  <button 
-                  (click)="onAddSprints(sprintContainer)"
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="6">
+                  <input type="text" [(ngModel)]="sprintConfig.end_date" readonly required name="sprint_end_{{i}}">
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="3">
+                  <div 
+                  class="delete" 
+                  (click)="deleteSprint(sprintConfig.id, sprintConfig.sprint_name)"
                   [appCanAccess]="{
                     role:role, 
-                    permissionRequired:'Can add sprint',
+                    permissionRequired:'Can delete sprint',
                     permissionList: permissions
-                  }">Add Sprints</button>
-                </div>
-              </mat-grid-tile>
-            </mat-grid-list>
-          </div>
-        </div>
+                  }">
+                    <i class="far fa-trash-alt"></i>
+                  </div>
+                </mat-grid-tile>
+              </mat-grid-list>
+            </div>
 
-      </div>
-      <div class="modal-footer footer-position">
-        <button 
-        class="btn btn-blue" 
-        (click)="onSaveAllChanges()"
-        [appCanAccess]="{
-          role:role, 
-          permissionRequired:'Can change sprint',
-          permissionList: permissions
-        }">Save</button>
-        <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
-      </div>
+            <div class="grid-list" *ngFor="let sprintConfig of addNewRow; let i=index" [ngStyle]="{'padding':'0 20px'}">
+              <mat-grid-list cols="27" rowHeight="70px" gutterSize="10px">
+                <mat-grid-tile [colspan]="6">
+                  <input maxlength="30" type="text" [(ngModel)]="sprintConfig.sprint_name" required name="new_sprint_name_{{i}}">
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="6">
+                  <div class="p-relative">
+                    <input type="text" class="extra-padding" (dateInput)="sprintConfig.start_date=$event.value"
+                      [matDatepicker]="picker1" readonly placeholder="Start date" required name="new_sprint_start_{{i}}">
+                    <div class="date-picker">
+                      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                    </div>
+                  </div>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="6">
+                  <div class="p-relative">
+                    <input type="text" [(ngModel)]="sprintConfig.duration" readonly placeholder="Weeks" required name="new_sprint_duration_{{i}}">
+                    <div class="arrow">
+                      <button type="button" (click)="onArrowUp(i)"><i class="fas fa-caret-up"></i></button>
+                      <button type="button" (click)="onArrowDown(i)"><i class="fas fa-caret-down"></i></button>
+                    </div>
+                  </div>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="6">
+                  <input type="text" [(ngModel)]="sprintConfig.end_date" readonly placeholder="End Date" required name="new_sprint_end_{{i}}">
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="3">
+                  <div 
+                  class="delete" 
+                  (click)="onDeleteRow(i)"
+                  [appCanAccess]="{
+                    role:role, 
+                    permissionRequired:'Can delete sprint',
+                    permissionList: permissions
+                  }">
+                    <i class="far fa-trash-alt"></i>
+                  </div>
+                </mat-grid-tile>
+              </mat-grid-list>
+            </div>
+
+            <div class="grid-list-footer">
+              <mat-grid-list cols="1" rowHeight="50px">
+                <mat-grid-tile>
+                  <div class="row">
+                    <button
+                    type="button"
+                    (click)="onAddSprints(sprintContainer)"
+                    [appCanAccess]="{
+                      role:role, 
+                      permissionRequired:'Can add sprint',
+                      permissionList: permissions
+                    }">Add Sprints</button>
+                  </div>
+                </mat-grid-tile>
+              </mat-grid-list>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer footer-position">
+          <button 
+          type="submit"
+          class="btn btn-blue" 
+          [appCanAccess]="{
+            role:role, 
+            permissionRequired:'Can change sprint',
+            permissionList: permissions
+          }">Save</button>
+          <button type="button" class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
+        </div>
+      </form>
     </mat-tab>
   </mat-tab-group>
 
