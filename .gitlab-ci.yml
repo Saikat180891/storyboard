@@ -1,5 +1,26 @@
 stages:
+  - inspection
   - deploy
+
+code-format:
+  image: trion/ng-cli-karma
+  stage: inspection
+  tags:
+    - docker
+  script:
+    - npm install
+    - npm run format:check
+  allow_failure: true
+
+lint:
+  image: trion/ng-cli-karma
+  stage: inspection
+  tags:
+    - docker
+  script:
+    - npm install
+    - npm run lint
+  allow_failure: true
 
 deploy_staging:
   stage: deploy
@@ -12,11 +33,10 @@ deploy_staging:
     - /usr/bin/npm install
     # Todo: Use --prod while generating the build
     - ng build
-    - cp -r dist/project-test /opt/soroco/www/storyboard/
+    - cp -r dist/storyboard-frontend /opt/soroco/www/storyboard/
     - rm -rf /opt/soroco/www/storyboard/static-bkp
     - mv /opt/soroco/www/storyboard/static /opt/soroco/www/storyboard/static-bkp
-    - mv /opt/soroco/www/storyboard/project-test /opt/soroco/www/storyboard/static
-
+    - mv /opt/soroco/www/storyboard/storyboard-frontend /opt/soroco/www/storyboard/static
 
 deploy_production:
   stage: deploy
@@ -29,7 +49,7 @@ deploy_production:
     - /usr/bin/npm install
     # Todo: Use --prod while generating the build
     - ng build
-    - cp -r dist/project-test /opt/soroco/www/storyboard/
+    - cp -r dist/storyboard-frontend /opt/soroco/www/storyboard/
     - rm -rf /opt/soroco/www/storyboard/static-bkp
     - mv /opt/soroco/www/storyboard/static /opt/soroco/www/storyboard/static-bkp
-    - mv /opt/soroco/www/storyboard/project-test /opt/soroco/www/storyboard/static
+    - mv /opt/soroco/www/storyboard/storyboard-frontend /opt/soroco/www/storyboard/static
