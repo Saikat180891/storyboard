@@ -1,21 +1,12 @@
 import { Injectable } from '@angular/core';
-
-interface StepList{
-  section_name: string;
-  steps_list: any[];
-  insertion_id?: number;
-  description: string;
-  user_story_id?: number;
-  section_id?: number;
-  id?: number;
-}
+import { SectionListItem } from '../../common-model/section-list-item.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StepcontrolService {
 
-  sopStepsList: StepList[] = [];
+  sopStepsList: SectionListItem[] = [];
 
   constructor() { }
 
@@ -32,11 +23,10 @@ export class StepcontrolService {
    * Creates a new section
    */
   appendSection(){
-    let data = {
+    const data = {
       section_name: '',
       steps_list: [],
-      description: 'test',
-      id: -1
+      description: 'test'
     }
     this.sopStepsList.push(data);
   }
