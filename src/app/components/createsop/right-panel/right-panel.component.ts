@@ -4,6 +4,10 @@ import { DataService } from '../../../data.service';
 import { PageService } from '../services/page/page.service';
 import { SectionListItem } from '../common-model/section-list-item.model';
 
+interface StepTypeDropEvent {
+  data: string;
+  index: number;
+}
 @Component({
   selector: 'right-panel',
   templateUrl: './right-panel.component.html',
@@ -21,16 +25,28 @@ export class RightPanelComponent implements OnInit {
     private __page:PageService) {
    }
 
+   /**
+    * get the section list and render it in the browser
+    */
   ngOnInit() {
     this.sectionList = this.__steps.getList();
   }
 
-  onButtonDragged($event: any, index: number) {
-    if ($event.data === 'Section' && index < this.__steps.getListLength() - 1){
-      this.__steps.insertSectionAt(index);
-    } else {
-      this.__steps.insertStep($event.index, $event.data);
-    }
+  /**
+   * this function is triggered when the user drops a button at the dropable area
+   * an event called 'sectionPayload' is triggered and which contains a payload
+   * generated from the child component called section-title.component.ts
+   * -$event is an object and contains the following:-
+   * -- data  -> it contains the type of button/step that is dragged over the droppable area,
+   * so every button/step that is dragged has a data attribute emdedded in it which contains
+   * the value of the button ex: 'Read', 'Type' etc.
+   * -- index -> it is the section index where the button is dropped
+   * @param $event
+   * @param index it is the section index i.e. the position of that section in the
+   * 'sopStepsList' array present in the stepcontrol.service.ts file
+   */
+  onButtonDragged($event: StepTypeDropEvent, index: number) {
+    this.__steps.insertStep($event.index, $event.data);
   }
 
   onCreateNewSection(){
@@ -42,20 +58,19 @@ export class RightPanelComponent implements OnInit {
   }
 
   onOutputChange($event){
-    // const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections.json`;
-    // let payload = {
-    //   prev_insertion_id: this.sectionList[$event.sectionIndex].steps[$event.stepIndex - 1].id,
-    //   next_insertion_id: this.sectionList[$event.sectionIndex].steps[$event.stepIndex + 1].id,
-    //   section_insertion_id: $event.sectionId,
-    //   step_group_insertion_id: '',
-    //   propagate: '',
-    //   type: $event.stepType,
-    //   data: $event.data
-    // }
-    // this.__api.post(endpoint, payload).subscribe(res=>{
-
-    // });
-    console.log($event)
+    const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/${$event.sectionId}.json`;
+    const payload = {
+      prev_insertion_id: this.__steps.getPreviousInsertionIdOfStepInSection($event.sectionIndex, $event.stepIndex),
+      next_insertion_id: this.__steps.getNextInsertionIdOfStepInSection($event.sectionIndex, $event.stepIndex),
+      section_insertion_id: $event.sectionId,
+      step_group_insertion_id: '',
+      propagate: '',
+      type: $event.stepType,
+      data: $event.data
+    };
+    this.__api.post(endpoint, payload).subscribe(res => {
+      this.__steps.updateStepWithResponse($event.sectionIndex, $event.stepIndex, res);
+    });
   }
 
   /**

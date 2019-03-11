@@ -32,29 +32,27 @@ export class SectionTitleComponent implements OnInit, OnChanges {
   constructor(private stepCtrl:StepcontrolService) {}
 
   ngOnInit() {
-    if(this.section_name === ''){
+    if (this.section_name === '') {
       this.isSectionNameEditable = false;
     }
   }
-  
-  ngOnChanges(){
-    console.log(this.stepParameters)
+
+  ngOnChanges() {
   }
 
   onCollapse(){
     this.isCollapsed = !this.isCollapsed;
   }
 
-  allowDrop($event){
+  allowDrop($event: Event) {
     $event.preventDefault();
   }
 
-  onDropData($event:any){
+  onDropData($event: Event) {
     this.sectionPayload.emit({
       data: $event,
       index: this.sectionIndex
     });
-    console.log($event);
   }
 
   onCreateSection() {
@@ -64,21 +62,25 @@ export class SectionTitleComponent implements OnInit, OnChanges {
     }
   }
 
-  onRemoveSectionName(){
-    if(!this.section_name){
+  onRemoveSectionName() {
+    if (!this.section_name) {
       this.stepCtrl.removeSection(this.sectionIndex);
     }
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.stepCtrl.sopStepsList[this.sectionIndex].steps_list, event.previousIndex, event.currentIndex);
+    // moveItemInArray(this.stepCtrl.sopStepsList[this.sectionIndex].steps_list, event.previousIndex, event.currentIndex);
   }
 
-  onDeleteStep($event:Event){
+  onDeleteStep($event: Event){
     this.deleteStep.emit($event);
   }
 
-  onOutputChange($event:Event){
+  /**
+   * this function contains the data of a step
+   * @param $event 
+   */
+  onOutputChange($event: Event){
     this.outputChange.emit($event);
   }
 
