@@ -1,4 +1,4 @@
-<div class="dialog-export">
+<form class="dialog-export" [formGroup]="exportToSop" (ngSubmit)="onExportToSop()" *ngIf="isComponentActive">
   <div class="dialog-header">
     <div class="dialog-name">
       Export Screenshot to User Story Name Example
@@ -10,20 +10,23 @@
 
   <div class="form">
     <div class="image-frame">
-      <img src="../../../../assets/pics/login_page.jpg" alt="">
+      <img [src]="data ? data.thumbnail:''" alt="image to export">
     </div>
     <div class="form-footer">
       <span>Add Screen Details</span>
       <div class="form-controls">
-        <input type="text" placeholder="*Application name">
-        <input type="text" placeholder="*Screen name">
-        <input type="text" placeholder="*Tab name">
+        <input type="text" placeholder="*Application name" formControlName="application_name" [ngClass]="{'validate-failed':exportToSop.get('application_name').touched && exportToSop.get('application_name').invalid}">
+        <input type="text" placeholder="*Screen name" formControlName="screen_name" [ngClass]="{'validate-failed':exportToSop.get('screen_name').touched && exportToSop.get('screen_name').invalid}">
+        <input type="text" placeholder="*Tab name" formControlName="tab_name" [ngClass]="{'validate-failed':exportToSop.get('tab_name').touched && exportToSop.get('tab_name').invalid}">
       </div>
       <div class="form-button">
-        <button>Yes, Export to User Story</button>
-        <button>No, Continue Taking Screenshots</button>
+        <button class="btn btn-blue" type="submit" [disabled]="!exportToSop.valid" [ngClass]="{'disabled':!exportToSop.valid}">Yes, Export to SOP</button>
+        <button class="btn btn-flat-grey" (click)="onCloseExportModal()">No, Continue Taking Screenshots</button>
       </div>
+      <ng-container *ngIf="exportToSop.get('application_name').touched && exportToSop.get('application_name').invalid || exportToSop.get('screen_name').touched && exportToSop.get('screen_name').invalid || exportToSop.get('tab_name').touched && exportToSop.get('tab_name').invalid">
+        <small class="invalid-validation">*These fields are required to create screen</small>
+      </ng-container>
     </div>
   </div>
 
-</div>
+</form>
