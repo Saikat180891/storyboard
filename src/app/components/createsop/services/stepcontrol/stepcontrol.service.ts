@@ -31,6 +31,10 @@ export class StepcontrolService {
     this.sopStepsList.push(data);
   }
 
+  setSectionList(sectionList: SectionListItem[]){
+    this.sopStepsList = sectionList;
+  }
+
   /**
    * this function is used to modify section properties
    * @param responseData data received from backend will the over write the respected values of section

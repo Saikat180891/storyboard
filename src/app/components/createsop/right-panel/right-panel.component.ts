@@ -3,6 +3,7 @@ import { StepcontrolService } from '../services/stepcontrol/stepcontrol.service'
 import { DataService } from '../../../data.service';
 import { PageService } from '../services/page/page.service';
 import { SectionListItem } from '../common-model/section-list-item.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'right-panel',
@@ -22,7 +23,13 @@ export class RightPanelComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.sectionList = this.__steps.getList();
+    this.getListOfCreatedSectionFromServer().subscribe(res => {
+      this.__steps.setSectionList(res);
+    },
+    err => {},
+    () => {
+      this.sectionList = this.__steps.getList();
+    });
   }
 
   onButtonDragged($event: any, index: number) {
@@ -39,6 +46,11 @@ export class RightPanelComponent implements OnInit {
 
   onDeleteStep($event){
     this.__steps.deleteStep($event.sectionIndex, $event.stepIndex);
+  }
+
+  getListOfCreatedSectionFromServer(): Observable<SectionListItem[]>{
+    const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections.json`;
+    return this.__api.get(endpoint);
   }
 
   onOutputChange($event){
