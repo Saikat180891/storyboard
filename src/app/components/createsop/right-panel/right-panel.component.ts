@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { StepcontrolService } from '../services/stepcontrol/stepcontrol.service';
-import { DataService } from "../../../data.service";
-import { PageService } from "../services/page/page.service";
+import { DataService } from '../../../data.service';
+import { PageService } from '../services/page/page.service';
+import { SectionListItem } from '../common-model/section-list-item.model';
+
 @Component({
   selector: 'right-panel',
   templateUrl: './right-panel.component.html',
   styleUrls: ['./right-panel.component.scss']
 })
 export class RightPanelComponent implements OnInit {
-  stepList:any = [];
+  /**
+   * 'sectionList' is the main array and it has collection of objects
+   */
+  sectionList: SectionListItem[] = [];
 
   constructor(
     private __steps:StepcontrolService,
@@ -17,8 +22,7 @@ export class RightPanelComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.stepList = this.__steps.getList();
-    console.log(this.stepList)
+    this.sectionList = this.__steps.getList();
   }
 
   onButtonDragged($event: any, index: number) {
@@ -38,19 +42,19 @@ export class RightPanelComponent implements OnInit {
   }
 
   onOutputChange($event){
-    const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections.json`;
-    let payload = {
-      prev_insertion_id: this.stepList[$event.sectionIndex].steps[$event.stepIndex - 1].id,
-      next_insertion_id: this.stepList[$event.sectionIndex].steps[$event.stepIndex + 1].id,
-      section_insertion_id: $event.sectionId,
-      step_group_insertion_id: '',
-      propagate: '',
-      type: $event.stepType,
-      data: $event.data
-    }
-    this.__api.post(endpoint, payload).subscribe(res=>{
+    // const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections.json`;
+    // let payload = {
+    //   prev_insertion_id: this.sectionList[$event.sectionIndex].steps[$event.stepIndex - 1].id,
+    //   next_insertion_id: this.sectionList[$event.sectionIndex].steps[$event.stepIndex + 1].id,
+    //   section_insertion_id: $event.sectionId,
+    //   step_group_insertion_id: '',
+    //   propagate: '',
+    //   type: $event.stepType,
+    //   data: $event.data
+    // }
+    // this.__api.post(endpoint, payload).subscribe(res=>{
 
-    });
+    // });
     console.log($event)
   }
 
