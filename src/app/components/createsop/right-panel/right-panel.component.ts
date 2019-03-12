@@ -3,6 +3,7 @@ import { StepcontrolService } from '../services/stepcontrol/stepcontrol.service'
 import { DataService } from '../../../data.service';
 import { PageService } from '../services/page/page.service';
 import { SectionListItem } from '../common-model/section-list-item.model';
+import { Observable } from 'rxjs';
 
 interface StepTypeDropEvent {
   data: string;
@@ -29,7 +30,19 @@ export class RightPanelComponent implements OnInit {
     * get the section list and render it in the browser
     */
   ngOnInit() {
-    this.sectionList = this.__steps.getList();
+    // fetch all the previously created section when the component loads
+    this.getListOfCreatedSectionFromServer().subscribe(res => {
+      // store the response in the step control service
+      this.__steps.setSectionList(res);
+    },
+    err => {
+      // initiate the 'sectionList' with the step control service
+      this.sectionList = this.__steps.getList();
+    },
+    () => {
+      // initiate the 'sectionList' with the step control service
+      this.sectionList = this.__steps.getList();
+    });
   }
 
   /**
@@ -55,6 +68,11 @@ export class RightPanelComponent implements OnInit {
 
   onDeleteStep($event){
     this.__steps.deleteStep($event.sectionIndex, $event.stepIndex);
+  }
+
+  getListOfCreatedSectionFromServer(): Observable<SectionListItem[]>{
+    const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections.json`;
+    return this.__api.get(endpoint);
   }
 
   onOutputChange($event){

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import {StepcontrolService} from '../../services/stepcontrol/stepcontrol.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
@@ -16,10 +16,12 @@ export class SectionTitleComponent implements OnInit, OnChanges {
   @Output('deleteStep') deleteStep = new EventEmitter();
   @Output('outputChange') outputChange = new EventEmitter();
   @Output('sectionChange') sectionChange = new EventEmitter();
+  @ViewChild('sectionHeight') sectionHeight: ElementRef;
 
   openEditSectionName:boolean = false;
   isSectionNameEditable:boolean = true;
   isCollapsed:boolean = false;
+  accordianHeight: string;
 
   panelOpenState = false;
 
@@ -29,7 +31,7 @@ export class SectionTitleComponent implements OnInit, OnChanges {
     section_name: new FormControl('', Validators.required)
   });
 
-  constructor(private stepCtrl:StepcontrolService) {}
+  constructor(private stepCtrl:StepcontrolService, private render: Renderer2) {}
 
   ngOnInit() {
     if (this.section_name === '') {
@@ -40,7 +42,7 @@ export class SectionTitleComponent implements OnInit, OnChanges {
   ngOnChanges() {
   }
 
-  onCollapse(){
+  onCollapse() {
     this.isCollapsed = !this.isCollapsed;
   }
 
@@ -85,7 +87,7 @@ export class SectionTitleComponent implements OnInit, OnChanges {
   }
 
   onEditSectionName() {
-
+    this.isSectionNameEditable = !this.isSectionNameEditable;
   }
 
 }

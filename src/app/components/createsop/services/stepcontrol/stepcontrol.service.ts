@@ -7,6 +7,7 @@ import { StepType } from '../../common-model/step-type.model';
 export class StepcontrolService {
 
   private sopSectionList: SectionListItem[] = [];
+  private sectionIdList = [];
 
   constructor() { }
 
@@ -45,6 +46,10 @@ export class StepcontrolService {
       description: 'test'
     }
     this.sopSectionList.push(data);
+  }
+
+  setSectionList(sectionList: SectionListItem[]){
+    this.sopSectionList = sectionList;
   }
 
   /**
@@ -130,7 +135,8 @@ export class StepcontrolService {
     if (this.sopSectionList.length === 1) {
       return null;
     } else {
-    // if the user is creating a section at the middle of the 'sopSectionList' then return the 'prev_insertion_id' for the previous element
+      // if the user is creating a section at the middle of the 'sopSectionList'
+      // then return the 'prev_insertion_id' for the previous element
       return +this.sopSectionList[sectionIndex - 1]['insertion_id'];
     }
   }

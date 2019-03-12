@@ -1,4 +1,4 @@
-<div class="section" [ngClass]="{'collapse':isCollapsed}">
+<div class="section">
   <form class="section-header" [title]="section_name" [formGroup]="section">
     <div class="section-header-title">
       <div *ngIf="isSectionNameEditable; else editTextBox">{{section.value.section_name}}</div>
@@ -28,7 +28,7 @@
         </div>
       </ng-container>
       <ng-template #editCreateSection>
-        <div class="common-option divider-right check-btn" (click)="onCreateSection()">
+        <div class="common-option divider-right check-btn" (click)="onCreateSection()" [ngClass]="{'check-btn-disabled':!section.valid}">
           <i class="fas fa-check"></i>
         </div>
         <div class="common-option cross-btn" (click)="onRemoveSectionName()">
@@ -36,18 +36,24 @@
         </div>
       </ng-template>
     </div>
-
   </form>
-
-  <div class="section-body" cdkDropList (cdkDropListDropped)="drop($event)">
-    <ng-container *ngFor="let step of stepParameters; let i=index">
-      <div class="steps" cdkDrag>
-        <app-steps-container [stepType]="step.type" [stepIndex]="i" [sectionIndex]="sectionIndex" (delete)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId"></app-steps-container>
-      </div>
-    </ng-container>
-    <div class="droppable-area" appDroppable (transferedData)="onDropData($event)" (dragover)="allowDrop($event)">
-      Drag & drop steps here
+  <div class="step-expansion-panel">
+    <mat-accordion>
+      <mat-expansion-panel [expanded]="!isCollapsed">
+        <div class="section-body" cdkDropList (cdkDropListDropped)="drop($event)" #sectionHeight>
+          <ng-container *ngFor="let step of stepParameters; let i=index">
+            <div class="steps-margin-around" cdkDrag>
+              <app-steps-container [stepType]="step.type" [stepIndex]="i" [sectionIndex]="sectionIndex" (delete)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId"></app-steps-container>
+            </div>
+          </ng-container>
+          <div class="droppable-area steps-margin-around" appDroppable (transferedData)="onDropData($event)" (dragover)="allowDrop($event)">
+            Drag & drop steps here
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <div class="disable-expansion-panel" *ngIf="!isSectionNameEditable && !isCollapsed">
+      <span>Section name is required</span>
     </div>
   </div>
-  
 </div>

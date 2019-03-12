@@ -54,6 +54,9 @@
       .check-btn{
         color: #6CC24A;
       }
+      .check-btn-disabled{
+        color: #54585A;
+      }
       .cross-btn{
         color: #F47074;
       }
@@ -71,20 +74,27 @@
 
   &-body{
     width: 100%;
-    padding-bottom: 20px;
     display: flex;
     flex-direction: column;
+    height: auto;
+    transition: max-height 0.4s ease;
+    overflow: hidden;
 
-    .steps{
-      margin: 5px 10px;
+    .steps-margin-around{
+      margin: 5px;
+    }
+    .steps-margin-around:first-child{
+      margin-top: 5px;
+    }
+    .steps-margin-around:last-child{
+      margin-bottom: 5px;
     }
     .droppable-area{
-      height: 85px;
+      padding: 30px 20px;
       border: 1px dashed #989B9C;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 5px 10px;
       color: #989B9C;
       font-weight: bold;
       font-size: 18px;
@@ -94,10 +104,32 @@
       border: 5px dashed #989B9C;
     }
   }
+
+  .step-expansion-panel {
+    position: relative;
+
+    .disable-expansion-panel {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+
+      span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+        font-size: 18px;
+        font-weight: 500;
+      }
+    }
+  }
 }
 .collapse{
-  height: 30px;
-  overflow: hidden;
+  height: 0;
 }
 
 .cdk-drag-preview {
@@ -128,4 +160,15 @@
 .example-headers-align .mat-expansion-panel-header-description {
   justify-content: space-between;
   align-items: center;
+}
+
+.section {
+  ::ng-deep {
+    .mat-expansion-panel-body {
+      padding: 10px;
+    }
+    .mat-expansion-panel{
+      background-color: transparent;
+    }
+  }
 }
