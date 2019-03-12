@@ -41,7 +41,7 @@ export class StepcontrolService {
    */
   appendSection() {
     const data = {
-      section_name: '',
+      section_name: null,
       steps_list: [],
       description: 'test'
     }
@@ -98,6 +98,10 @@ export class StepcontrolService {
 
   deleteStep(sectionIndex, stepIntex) {
     this.sopSectionList[sectionIndex].steps_list.splice(stepIntex, 1);
+  }
+
+  deleteSection(stepIndex: number){
+    this.sopSectionList.splice(stepIndex, 1);
   }
 
   // moving steps inside section

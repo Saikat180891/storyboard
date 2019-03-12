@@ -64,10 +64,18 @@ export class RightPanelComponent implements OnInit {
 
   onCreateNewSection(){
     this.__steps.appendSection();
+    console.log(this.__steps.getList())
   }
 
-  onDeleteStep($event){
+  onDeleteStep($event) {
     this.__steps.deleteStep($event.sectionIndex, $event.stepIndex);
+  }
+
+  onDeleteSection($event: Event) {
+    const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/destroy/${$event['sectionId']}.json?insertion_id=${$event['insertionId']}`;
+    this.__api.deleteValue(endpoint).subscribe(res => {
+      this.__steps.deleteSection($event['sectionIndex']);
+    });
   }
 
   getListOfCreatedSectionFromServer(): Observable<SectionListItem[]>{
@@ -99,10 +107,10 @@ export class RightPanelComponent implements OnInit {
     // the required endpoint for creating section
     const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/create.json`;
     const payload = {
-      section_name: $event['sectionName'],
+      section_name: $event['sectionName']['section_name'],
       prev_insertion_id: this.__steps.getPreviousInsertionIdOfSection($event['sectionIndex']),
       next_insertion_id: this.__steps.getNextInsertionIdOfSection($event['sectionIndex']),
-      description: null
+      description: 'test'
     };
     // make the call with the payload and body
     this.__api.post(endpoint, payload).subscribe(res => {

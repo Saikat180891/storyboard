@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges, Output, EventEmitter, ViewChild, E
 import {StepcontrolService} from '../../services/stepcontrol/stepcontrol.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { SectionListItem } from '../../common-model/section-list-item.model';
 
 @Component({
   selector: 'app-section-title',
@@ -10,12 +11,13 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
 })
 export class SectionTitleComponent implements OnInit, OnChanges {
   @Input('sectionId') sectionId:number;
-  @Input('stepParameters') stepParameters:any;
+  @Input('stepParameters') stepParameters: SectionListItem;
   @Input('sectionIndex') sectionIndex:number;
   @Output('sectionPayload') sectionPayload = new EventEmitter<any>();
   @Output('deleteStep') deleteStep = new EventEmitter();
   @Output('outputChange') outputChange = new EventEmitter();
   @Output('sectionChange') sectionChange = new EventEmitter();
+  @Output('deleteSection') deleteSection = new EventEmitter();
   @ViewChild('sectionHeight') sectionHeight: ElementRef;
 
   openEditSectionName:boolean = false;
@@ -25,8 +27,6 @@ export class SectionTitleComponent implements OnInit, OnChanges {
 
   panelOpenState = false;
 
-  section_name:string = '';
-
   section = new FormGroup({
     section_name: new FormControl('', Validators.required)
   });
@@ -34,7 +34,11 @@ export class SectionTitleComponent implements OnInit, OnChanges {
   constructor(private stepCtrl:StepcontrolService, private render: Renderer2) {}
 
   ngOnInit() {
-    if (this.section_name === '') {
+    if ( this.stepParameters.section_name !== null ) {
+      this.section.setValue({
+        section_name  : this.stepParameters.section_name
+      });
+    } else {
       this.isSectionNameEditable = false;
     }
   }
@@ -44,6 +48,14 @@ export class SectionTitleComponent implements OnInit, OnChanges {
 
   onCollapse() {
     this.isCollapsed = !this.isCollapsed;
+  }
+
+  onDeleteSection() {
+    this.deleteSection.emit({
+      sectionId: this.sectionId,
+      sectionIndex: this.sectionIndex,
+      insertionId: this.stepParameters.insertion_id
+    });
   }
 
   allowDrop($event: Event) {
@@ -64,8 +76,8 @@ export class SectionTitleComponent implements OnInit, OnChanges {
     }
   }
 
-  onRemoveSectionName() {
-    if (!this.section_name) {
+  onRemoveSection() {
+    if (!this.section.value.section_name) {
       this.stepCtrl.removeSection(this.sectionIndex);
     }
   }

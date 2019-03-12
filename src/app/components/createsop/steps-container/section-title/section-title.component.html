@@ -1,5 +1,5 @@
 <div class="section">
-  <form class="section-header" [title]="section_name" [formGroup]="section">
+  <form class="section-header" title="Section name" [formGroup]="section">
     <div class="section-header-title">
       <div *ngIf="isSectionNameEditable; else editTextBox">{{section.value.section_name}}</div>
       <ng-template #editTextBox>
@@ -16,7 +16,7 @@
         </div>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="onEditSectionName()">Edit section name</button>
-          <button mat-menu-item>Delete section</button>
+          <button mat-menu-item (click)="onDeleteSection()">Delete section</button>
         </mat-menu>
         <div class="common-option collapsable-btn" (click)="onCollapse()">
           <ng-container *ngIf="!isCollapsed; else down">
@@ -31,7 +31,7 @@
         <div class="common-option divider-right check-btn" (click)="onCreateSection()" [ngClass]="{'check-btn-disabled':!section.valid}">
           <i class="fas fa-check"></i>
         </div>
-        <div class="common-option cross-btn" (click)="onRemoveSectionName()">
+        <div class="common-option cross-btn" (click)="onRemoveSection()">
           <i class="fas fa-times"></i>        
         </div>
       </ng-template>
@@ -41,7 +41,7 @@
     <mat-accordion>
       <mat-expansion-panel [expanded]="!isCollapsed">
         <div class="section-body" cdkDropList (cdkDropListDropped)="drop($event)" #sectionHeight>
-          <ng-container *ngFor="let step of stepParameters; let i=index">
+          <ng-container *ngFor="let step of stepParameters.steps_list; let i=index">
             <div class="steps-margin-around" cdkDrag>
               <app-steps-container [stepType]="step.type" [stepIndex]="i" [sectionIndex]="sectionIndex" (delete)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId"></app-steps-container>
             </div>
