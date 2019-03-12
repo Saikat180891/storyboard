@@ -95,11 +95,16 @@ export class DataService implements OnInit {
   }
 
   post(endpoint:string, body:any):Observable<any>{
-    return this.http.post(this.apiUrl + endpoint, body, {withCredentials: true, headers: this.headers});
+    return this.http.post(this.apiUrl + endpoint, body, {withCredentials: true, headers: httpOptions.headers.set('X-CSRFToken', this.getCSRFToken())});
   }
 
   get(endpoint:string):Observable<any>{
-    return this.http.get<any[]>(this.apiUrl + endpoint, {withCredentials: true, headers: this.headers});
+    return this.http.get<any[]>(this.apiUrl + endpoint, {withCredentials: true, headers: httpOptions.headers.set('X-CSRFToken', this.getCSRFToken())});
+  }
+  
+  deleteValue(endpoint: string): Observable<any>{
+    return this.http.delete(this.apiUrl + endpoint,
+    {withCredentials: true, headers: httpOptions.headers.set('X-CSRFToken', this.getCSRFToken())});
   }
 
 }
