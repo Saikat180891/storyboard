@@ -23,11 +23,17 @@ export class RightPanelComponent implements OnInit {
    }
 
   ngOnInit() {
+    // fetch all the previously created section when the component loads
     this.getListOfCreatedSectionFromServer().subscribe(res => {
+      // store the response in the step control service
       this.__steps.setSectionList(res);
     },
-    err => {},
+    err => {
+      // initiate the 'sectionList' with the step control service
+      this.sectionList = this.__steps.getList();
+    },
     () => {
+      // initiate the 'sectionList' with the step control service
       this.sectionList = this.__steps.getList();
     });
   }
