@@ -25,7 +25,7 @@ export class StepcontrolService {
    */
   appendSection(){
     const data = {
-      section_name: '',
+      section_name: null,
       steps_list: [],
       description: 'test'
     }
@@ -84,6 +84,40 @@ export class StepcontrolService {
     this.sopSectionList[sectionIndex].steps_list.splice(stepIntex, 1);
   }
 
+  deleteSection(stepIndex: number){
+    this.sopSectionList.splice(stepIndex, 1);
+  }
+
+  // moving steps inside section
+  getPreviousInsertionIdOfStepInSection(sectionIndex: number, stepIndex: number) {
+    // if the 'steps_list' array is empty then return null which indicates that this is the first step in the corresponding section
+    if (this.sopSectionList[sectionIndex].steps_list.length === 1){
+      return null;
+    } else {
+      // return the 'insertion_id' of the previous step in that corresponding section
+      return +this.sopSectionList[sectionIndex].steps_list[stepIndex - 1]['insertion_id'];
+    }
+  }
+
+  getNextInsertionIdOfStepInSection(sectionIndex: number, stepIndex: number) {
+    if (this.sopSectionList[sectionIndex].steps_list.length === 1) {
+      return null;
+    }
+    if (stepIndex === this.sopSectionList[sectionIndex].steps_list.length - 1) {
+      return null;
+    } else {
+      return +this.sopSectionList[sectionIndex].steps_list[stepIndex + 1]['insertion_id'];
+    }
+  }
+
+  // these functions are written keeping future scope in mind, these function enables
+  // the user to move sections if they want, although currently moving section is not
+  // implemented
+  /**
+   * this function returns the insertion_id of the previous section, if the section 
+   * is the first element of the array then the function returns null
+   * @param sectionIndex index of the section where the user wants a section to create
+   */
   getPreviousInsertionIdOfSection(sectionIndex: number) {
     // check if the array contains any element
     if (this.sopSectionList.length === 1) {
