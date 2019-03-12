@@ -64,7 +64,6 @@ export class RightPanelComponent implements OnInit {
 
   onCreateNewSection(){
     this.__steps.appendSection();
-    console.log(this.__steps.getList())
   }
 
   onDeleteStep($event) {
@@ -83,6 +82,10 @@ export class RightPanelComponent implements OnInit {
     return this.__api.get(endpoint);
   }
 
+  /**
+   * this function will be triggered to create steps
+   * @param $event 
+   */
   onOutputChange($event){
     const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/${$event.sectionId}.json`;
     const payload = {
@@ -90,9 +93,10 @@ export class RightPanelComponent implements OnInit {
       next_insertion_id: this.__steps.getNextInsertionIdOfStepInSection($event.sectionIndex, $event.stepIndex),
       section_insertion_id: $event.sectionId,
       step_group_insertion_id: '',
-      propagate: '',
+      propagate: false,
       type: $event.stepType,
-      data: $event.data
+      data: $event.data,
+      screen_id: $event.data.screen
     };
     this.__api.post(endpoint, payload).subscribe(res => {
       this.__steps.updateStepWithResponse($event.sectionIndex, $event.stepIndex, res);
@@ -103,19 +107,32 @@ export class RightPanelComponent implements OnInit {
    * to create a section
    * @param $event contains the section name and section index in frontend
    */
-  onSectionChange($event: Event) {
-    // the required endpoint for creating section
-    const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/create.json`;
-    const payload = {
-      section_name: $event['sectionName']['section_name'],
-      prev_insertion_id: this.__steps.getPreviousInsertionIdOfSection($event['sectionIndex']),
-      next_insertion_id: this.__steps.getNextInsertionIdOfSection($event['sectionIndex']),
-      description: 'test'
-    };
-    // make the call with the payload and body
-    this.__api.post(endpoint, payload).subscribe(res => {
-      this.__steps.updateSection(res, $event['sectionIndex']);
-    });
-    console.log($event, this.__steps.getList(), payload);
+  onSectionChange($event) {
+    if ($event.mode === 'create') {
+      // the required endpoint for creating section
+      const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/create.json`;
+      const payload = {
+        section_name: $event['sectionName']['section_name'],
+        prev_insertion_id: this.__steps.getPreviousInsertionIdOfSection($event['sectionIndex']),
+        next_insertion_id: this.__steps.getNextInsertionIdOfSection($event['sectionIndex']),
+        description: 'test'
+      };
+      // make the call with the payload and body
+      this.__api.post(endpoint, payload).subscribe(res => {
+        this.__steps.setSectionItem(res, $event['sectionIndex']);
+      });
+    } else if ($event.mode === 'edit') {
+      // the required endpoint for creating section
+      const endpoint = `/sop/epics/userstories/sections/${ $event.sectionId }.json`;
+      const payload = {
+        section_name: $event['sectionName']['section_name'],
+        section_id: $event.sectionId,
+        description: 'test'
+      };
+      // make the call with the payload and body
+      this.__api.updatePost(endpoint, payload).subscribe(res => {
+        this.__steps.updateSectionItem(res, $event['sectionIndex']);
+      });
+    }
   }
 }

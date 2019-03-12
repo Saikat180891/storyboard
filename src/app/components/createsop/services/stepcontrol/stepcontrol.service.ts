@@ -58,8 +58,21 @@ export class StepcontrolService {
    * @param sectionIndex is required to find where to modify
    * NOTE: steps are not modified
    */
-  updateSection(responseData: any, sectionIndex: number) {
+  setSectionItem(responseData: any, sectionIndex: number) {
     this.sopSectionList[sectionIndex] = responseData;
+  }
+
+  /**
+   * update the section name or description
+   * @param responseData
+   * @param sectionIndex
+   */
+  updateSectionItem(responseData: any, sectionIndex: number) {
+    for ( const key in responseData) {
+      if (key === 'section_name') {
+        this.sopSectionList[sectionIndex][key] = responseData[key];
+      }
+    }
   }
 
   /**

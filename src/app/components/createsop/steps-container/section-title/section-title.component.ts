@@ -72,7 +72,20 @@ export class SectionTitleComponent implements OnInit, OnChanges {
   onCreateSection() {
     if (this.section.valid) {
       this.isSectionNameEditable = !this.isSectionNameEditable;
-      this.sectionChange.emit({sectionName: this.section.value, sectionIndex: this.sectionIndex});
+      if (this.stepParameters.section_id) {
+        this.sectionChange.emit({
+          sectionName: this.section.value, 
+          sectionIndex: this.sectionIndex, 
+          mode: 'edit', 
+          sectionId: this.stepParameters.section_id
+        });
+      } else {
+        this.sectionChange.emit({
+          sectionName: this.section.value, 
+          sectionIndex: this.sectionIndex, 
+          mode: 'create'
+        });
+      }
     }
   }
 
