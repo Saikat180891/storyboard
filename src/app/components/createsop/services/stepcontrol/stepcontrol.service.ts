@@ -6,7 +6,8 @@ import { SectionListItem } from '../../common-model/section-list-item.model';
 })
 export class StepcontrolService {
 
-  sopStepsList: SectionListItem[] = [];
+  private sopSectionList: SectionListItem[] = [];
+  private sectionIdList = [];
 
   constructor() { }
 
@@ -16,7 +17,7 @@ export class StepcontrolService {
    * @param data
    */
   insertStep(index, data){
-    this.sopStepsList[index].steps_list.push(data);
+    this.sopSectionList[index].steps_list.push(data);
   }
 
   /**
@@ -28,11 +29,11 @@ export class StepcontrolService {
       steps_list: [],
       description: 'test'
     }
-    this.sopStepsList.push(data);
+    this.sopSectionList.push(data);
   }
 
   setSectionList(sectionList: SectionListItem[]){
-    this.sopStepsList = sectionList;
+    this.sopSectionList = sectionList;
   }
 
   /**
@@ -42,7 +43,7 @@ export class StepcontrolService {
    * NOTE: steps are not modified
    */
   updateSection(responseData: any, sectionIndex: number) {
-    this.sopStepsList[sectionIndex] = responseData;
+    this.sopSectionList[sectionIndex] = responseData;
   }
 
   /**
@@ -52,7 +53,7 @@ export class StepcontrolService {
    * @param stepIndex frontend index of steps array
    */
   editStepValues(responseData:any, sectionIndex:number, stepIndex:number){
-    this.sopStepsList[sectionIndex].steps_list[stepIndex] = responseData;
+    this.sopSectionList[sectionIndex].steps_list[stepIndex] = responseData;
   }
 
   insertSectionAt(indexAfter){
@@ -60,51 +61,52 @@ export class StepcontrolService {
       sectionName: 'section name',
       steps:[]
     }
-    // this.sopStepsList.splice(indexAfter, 0, data);
+    // this.sopSectionList.splice(indexAfter, 0, data);
   }
 
   moveItem(newPosition, previousPosition, data){
-    this.sopStepsList.splice(newPosition, 0, data);
+    this.sopSectionList.splice(newPosition, 0, data);
   }
 
   removeSection(sectionIndex: number) {
-    this.sopStepsList.splice(sectionIndex, 1);
+    this.sopSectionList.splice(sectionIndex, 1);
   }
 
   getList() {
-    return this.sopStepsList;
+    return this.sopSectionList;
   }
 
   getListLength() {
-    return this.sopStepsList.length;
+    return this.sopSectionList.length;
   }
 
   deleteStep(sectionIndex, stepIntex) {
-    this.sopStepsList[sectionIndex].steps_list.splice(stepIntex, 1);
+    this.sopSectionList[sectionIndex].steps_list.splice(stepIntex, 1);
   }
 
   getPreviousInsertionIdOfSection(sectionIndex: number) {
     // check if the array contains any element
-    if (this.sopStepsList.length === 1) {
+    if (this.sopSectionList.length === 1) {
       return null;
     } else {
-      // if the user is creating a section at the middle of the 'sopStepsList' then return the 'prev_insertion_id' for the previous element
-      return +this.sopStepsList[sectionIndex - 1]['insertion_id'];
+      // if the user is creating a section at the middle of the 'sopSectionList'
+      // then return the 'prev_insertion_id' for the previous element
+      return +this.sopSectionList[sectionIndex - 1]['insertion_id'];
     }
   }
 
   getNextInsertionIdOfSection(sectionIndex: number) {
     // check if the array contains any element
-    if (this.sopStepsList.length === 1) {
+    if (this.sopSectionList.length === 1) {
       // if no element is there then it is the first element
       return null;
     }
-    // if the user is creating a section at the end of the 'sopStepsList' then return null
-    if (sectionIndex === this.sopStepsList.length - 1) {
+    // if the user is creating a section at the end of the 'sopSectionList' then return null
+    if (sectionIndex === this.sopSectionList.length - 1) {
       return null;
     } else {
-      // if the user is creating a section at the middle of the 'sopStepsList' then return the 'next_insertion_id' for the next element
-      return +this.sopStepsList[sectionIndex + 1]['insertion_id'];
+      // if the user is creating a section at the middle of the 'sopSectionList' then return the 'next_insertion_id' for the next element
+      return +this.sopSectionList[sectionIndex + 1]['insertion_id'];
     }
   }
 }
