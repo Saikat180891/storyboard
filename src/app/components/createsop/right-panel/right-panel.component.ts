@@ -101,7 +101,6 @@ export class RightPanelComponent implements OnInit {
    */
   onOutputChange($event){
     if ( $event.mode === 'create' ) {
-      const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/${$event.sectionId}.json`;
       const payload = {
         prev_insertion_id: this.__steps.getPreviousInsertionIdOfStepInSection($event.sectionIndex, $event.stepIndex),
         next_insertion_id: this.__steps.getNextInsertionIdOfStepInSection($event.sectionIndex, $event.stepIndex),
@@ -112,17 +111,16 @@ export class RightPanelComponent implements OnInit {
         data: $event.data,
         screen_id: typeof $event.data.screen === 'string' ? null : $event.data.screen
       };
-      this.__api.post(endpoint, payload).subscribe(res => {
+      this.__rpService.createStep(this.__page.userStoryId, $event.sectionId, payload).subscribe(res => {
         this.__steps.updateStepWithResponse($event.sectionIndex, $event.stepIndex, res);
       });
     } else if ( $event.mode === 'edit' ) {
-      const endpoint = `/sop/epics/userstories/sections/steps/${$event.stepId}.json`;
       const payload = {
         type: $event.stepType,
         data: $event.data,
         screen_id: typeof $event.data.screen === 'string' ? null : $event.data.screen
       };
-      this.__api.updatePost(endpoint, payload).subscribe((res: Step) => {
+      this.__rpService.updateStep($event.stepId, payload).subscribe((res: Step) => {
         this.__steps.modifyStepOnEdit($event.sectionIndex, $event.stepIndex, res);
       });
     }
