@@ -7,7 +7,6 @@ import {StepcontrolService} from '../../services/stepcontrol/stepcontrol.service
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { SectionListItem } from '../../common-model/section-list-item.model';
-
 @Component({
   selector: 'app-section-title',
   templateUrl: './section-title.component.html',
@@ -33,7 +32,7 @@ export class SectionTitleComponent implements OnInit, OnChanges {
     section_name: new FormControl('', Validators.required)
   });
 
-  constructor(private stepCtrl: StepcontrolService) {}
+  constructor(private __step: StepcontrolService) {}
 
   /**
    * if section name is already present(which happens when the page loads)
@@ -114,14 +113,13 @@ export class SectionTitleComponent implements OnInit, OnChanges {
    * the function will also remove the section if there
    * is not section name
    */
-  onRemoveSection() {
-    const lastSectionName = this.section.value.section_name;
+  onSectionEditClose() {
     if (!this.section.value.section_name && !this.stepParameters.section_id) {
-      if ( this.stepParameters.section_id ) {
-        this.section.value.section_name = lastSectionName;
-      } else {
-        this.stepCtrl.deleteSection(this.sectionIndex);
-      }
+      this.__step.deleteSection(this.sectionIndex);
+    } else if (!this.section.value.section_name && this.stepParameters.section_id) {
+      this.section.patchValue({
+        section_name  : this.stepParameters.section_name
+      });
     }
     this.isSectionNameEditable = true;
   }
@@ -131,6 +129,7 @@ export class SectionTitleComponent implements OnInit, OnChanges {
    * @param event
    */
   drop(event: CdkDragDrop<string[]>) {
+    this.__step.moveStepsInsideSection(this.sectionIndex, event.previousIndex, event.currentIndex);
   }
 
   // convey the delete message to the parent component
