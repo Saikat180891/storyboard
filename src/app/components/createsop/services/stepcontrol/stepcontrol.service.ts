@@ -97,10 +97,6 @@ export class StepcontrolService {
     this.sopSectionList.splice(newPosition, 0, data);
   }
 
-  removeSection(sectionIndex: number) {
-    this.sopSectionList.splice(sectionIndex, 1);
-  }
-
   getList() {
     return this.sopSectionList;
   }

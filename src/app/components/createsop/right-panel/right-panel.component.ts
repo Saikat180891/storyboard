@@ -1,3 +1,7 @@
+/**
+ * Author: Saikat Paul
+ * Designation: Frontend Engineer, Soroco
+ */
 import { Component, OnInit } from '@angular/core';
 import { StepcontrolService } from '../services/stepcontrol/stepcontrol.service';
 import { DataService } from '../../../data.service';
@@ -62,22 +66,40 @@ export class RightPanelComponent implements OnInit {
     this.__steps.insertStep($event.index, $event.data);
   }
 
+  /**
+   * this will create a new section in the memory but will not
+   * make any request yet
+   */
   onCreateNewSection(){
     this.__steps.appendSection();
   }
 
+  /**
+   * this function will delete a step
+   * @param $event 
+   */
   onDeleteStep($event) {
     this.__steps.deleteStep($event.sectionIndex, $event.stepIndex);
   }
 
+  /**
+   * this function will delete a section from the db
+   * @param $event
+   */
   onDeleteSection($event: Event) {
-    const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/destroy/${$event['sectionId']}.json?insertion_id=${$event['insertionId']}`;
-    this.__api.deleteValue(endpoint).subscribe(res => {
-      this.__steps.deleteSection($event['sectionIndex']);
-    });
+    if (confirm('Are you sure you want to delete this section? All the steps related to this section will also be deleted.')) {
+      const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/destroy/${$event['sectionId']}.json?insertion_id=${$event['insertionId']}`;
+      this.__api.deleteValue(endpoint).subscribe(res => {
+        this.__steps.deleteSection($event['sectionIndex']);
+      });
+    }
   }
 
-  getListOfCreatedSectionFromServer(): Observable<SectionListItem[]>{
+  /**
+   * this function is used to get all the previouslycreated function in the
+   * db and it returns an Observable which is subscribed in the ngOnInit()
+   */
+  getListOfCreatedSectionFromServer(): Observable<SectionListItem[]> {
     const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections.json`;
     return this.__api.get(endpoint);
   }
@@ -93,10 +115,10 @@ export class RightPanelComponent implements OnInit {
       next_insertion_id: this.__steps.getNextInsertionIdOfStepInSection($event.sectionIndex, $event.stepIndex),
       section_insertion_id: $event.sectionId,
       step_group_insertion_id: '',
-      propagate: false,
+      propagate: true,
       type: $event.stepType,
       data: $event.data,
-      screen_id: $event.data.screen
+      screen_id: typeof $event.data.screen === 'string' ? null : $event.data.screen
     };
     this.__api.post(endpoint, payload).subscribe(res => {
       this.__steps.updateStepWithResponse($event.sectionIndex, $event.stepIndex, res);
@@ -104,10 +126,14 @@ export class RightPanelComponent implements OnInit {
   }
 
   /**
-   * to create a section
+   * this function can make alternative request to the db to create as well
+   * as to edit a section
    * @param $event contains the section name and section index in frontend
+   * it also contains another flag called mode which is used as a switch to
+   * execute the edit or the create block
    */
   onSectionChange($event) {
+    // to create a section
     if ($event.mode === 'create') {
       // the required endpoint for creating section
       const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/create.json`;
@@ -121,6 +147,7 @@ export class RightPanelComponent implements OnInit {
       this.__api.post(endpoint, payload).subscribe(res => {
         this.__steps.setSectionItem(res, $event['sectionIndex']);
       });
+      // to edit a section
     } else if ($event.mode === 'edit') {
       // the required endpoint for creating section
       const endpoint = `/sop/epics/userstories/sections/${ $event.sectionId }.json`;
