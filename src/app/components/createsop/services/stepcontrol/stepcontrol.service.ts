@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SectionListItem } from '../../common-model/section-list-item.model';
-
+import { StepType } from '../../common-model/step-type.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,18 +12,34 @@ export class StepcontrolService {
   constructor() { }
 
   /**
-   * 
-   * @param index
-   * @param data
+   * this function with insert a step at the end of an array
+   * @param index i'th element in the 'sopSectionList' where the user wants to create a step
+   * @param stepType this is a string which contains the type of step the user want to create
    */
-  insertStep(index, data){
-    this.sopSectionList[index].steps_list.push(data);
+  insertStep(index: number, stepType: string){
+    const stepItem = {
+      type: stepType.toLowerCase(),
+      data : {}
+    };
+    this.sopSectionList[index].steps_list.push(stepItem);
+  }
+  /**
+   * update the existing element in the steps_list of a particular
+   * section with the response received from the backend
+   * @param sectionIndex index of the section
+   * @param stepIndex index of the step
+   * @param data response received from the backend
+   */
+  updateStepWithResponse(sectionIndex: number, stepIndex: number, data: StepType){
+    this.sopSectionList[sectionIndex].steps_list[stepIndex] = {
+      ...data
+    };
   }
 
   /**
    * Creates a new section
    */
-  appendSection(){
+  appendSection() {
     const data = {
       section_name: null,
       steps_list: [],
@@ -42,8 +58,21 @@ export class StepcontrolService {
    * @param sectionIndex is required to find where to modify
    * NOTE: steps are not modified
    */
-  updateSection(responseData: any, sectionIndex: number) {
+  setSectionItem(responseData: any, sectionIndex: number) {
     this.sopSectionList[sectionIndex] = responseData;
+  }
+
+  /**
+   * update the section name or description
+   * @param responseData
+   * @param sectionIndex
+   */
+  updateSectionItem(responseData: any, sectionIndex: number) {
+    for ( const key in responseData) {
+      if (key === 'section_name') {
+        this.sopSectionList[sectionIndex][key] = responseData[key];
+      }
+    }
   }
 
   /**
@@ -66,10 +95,6 @@ export class StepcontrolService {
 
   moveItem(newPosition, previousPosition, data){
     this.sopSectionList.splice(newPosition, 0, data);
-  }
-
-  removeSection(sectionIndex: number) {
-    this.sopSectionList.splice(sectionIndex, 1);
   }
 
   getList() {
@@ -129,6 +154,11 @@ export class StepcontrolService {
     }
   }
 
+  /**
+   * this function returns the insertion_id of the next section, if the section that the user
+   * want to create is at the end then the function returns null
+   * @param sectionIndex index of the section where the user wants a section to create
+   */
   getNextInsertionIdOfSection(sectionIndex: number) {
     // check if the array contains any element
     if (this.sopSectionList.length === 1) {

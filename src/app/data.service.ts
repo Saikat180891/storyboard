@@ -107,6 +107,11 @@ export class DataService implements OnInit {
     {withCredentials: true, headers: httpOptions.headers.set('X-CSRFToken', this.getCSRFToken())});
   }
 
+  updatePost(endpoint: string, body: any){
+    return this.http.put(this.apiUrl + endpoint, body,
+    {withCredentials: true, headers: httpOptions.headers.set('X-CSRFToken', this.getCSRFToken())});
+  }
+
 }
 
 interface CardContents{

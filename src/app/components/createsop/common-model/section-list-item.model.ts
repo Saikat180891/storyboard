@@ -1,3 +1,5 @@
+import { StepType } from "./step-type.model";
+
 export interface SectionListItem {
   id?: number;
   user_story_id?: number;
@@ -5,5 +7,5 @@ export interface SectionListItem {
   insertion_id?: string | number;
   section_name: string;
   description?: string | null;
-  steps_list: Array<any>;
+  steps_list: Array<StepType>;
 }

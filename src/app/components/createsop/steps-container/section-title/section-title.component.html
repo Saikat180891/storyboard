@@ -28,10 +28,10 @@
         </div>
       </ng-container>
       <ng-template #editCreateSection>
-        <div class="common-option divider-right check-btn" (click)="onCreateSection()" [ngClass]="{'check-btn-disabled':!section.valid}">
+        <div class="common-option divider-right check-btn" (click)="onCreateSection()" [ngClass]="{'check-btn-disabled':!section.valid}" [title]="!section.valid ? 'Not valid section name': 'OK'">
           <i class="fas fa-check"></i>
         </div>
-        <div class="common-option cross-btn" (click)="onRemoveSection()">
+        <div class="common-option cross-btn" (click)="onRemoveSection()" title="Cancel">
           <i class="fas fa-times"></i>        
         </div>
       </ng-template>
@@ -40,7 +40,7 @@
   <div class="step-expansion-panel">
     <mat-accordion>
       <mat-expansion-panel [expanded]="!isCollapsed">
-        <div class="section-body" cdkDropList (cdkDropListDropped)="drop($event)" #sectionHeight>
+        <div class="section-body" cdkDropList (cdkDropListDropped)="drop($event)">
           <ng-container *ngFor="let step of stepParameters.steps_list; let i=index">
             <div class="steps-margin-around" cdkDrag>
               <app-steps-container [stepType]="step.type" [stepIndex]="i" [sectionIndex]="sectionIndex" (delete)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId"></app-steps-container>
