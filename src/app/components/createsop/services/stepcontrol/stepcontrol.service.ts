@@ -118,10 +118,9 @@ export class StepcontrolService {
     // if the 'steps_list' array is empty then return null which indicates that this is the first step in the corresponding section
     if (this.sopSectionList[sectionIndex].steps_list.length === 1){
       return null;
-    } else {
-      // return the 'insertion_id' of the previous step in that corresponding section
-      return this.sopSectionList[sectionIndex].steps_list[stepIndex - 1].insertion_id;
     }
+    // return the 'insertion_id' of the previous step in that corresponding section
+    return this.sopSectionList[sectionIndex].steps_list[stepIndex - 1].insertion_id;
   }
 
   getNextInsertionIdOfStepInSection(sectionIndex: number, stepIndex: number) {
@@ -130,9 +129,8 @@ export class StepcontrolService {
     }
     if (stepIndex === this.sopSectionList[sectionIndex].steps_list.length - 1) {
       return null;
-    } else {
-      return this.sopSectionList[sectionIndex].steps_list[stepIndex + 1]['insertion_id'];
     }
+    return this.sopSectionList[sectionIndex].steps_list[stepIndex + 1]['insertion_id'];
   }
 
   // these functions are written keeping future scope in mind, these function enables
@@ -147,11 +145,10 @@ export class StepcontrolService {
     // check if the array contains any element
     if (this.sopSectionList.length === 1) {
       return null;
-    } else {
-      // if the user is creating a section at the middle of the 'sopSectionList'
-      // then return the 'prev_insertion_id' for the previous element
-      return this.sopSectionList[sectionIndex - 1]['insertion_id'];
     }
+    // if the user is creating a section at the middle of the 'sopSectionList'
+    // then return the 'prev_insertion_id' for the previous element
+    return this.sopSectionList[sectionIndex - 1]['insertion_id'];
   }
 
   /**
@@ -168,9 +165,8 @@ export class StepcontrolService {
     // if the user is creating a section at the end of the 'sopSectionList' then return null
     if (sectionIndex === this.sopSectionList.length - 1) {
       return null;
-    } else {
-      // if the user is creating a section at the middle of the 'sopSectionList' then return the 'next_insertion_id' for the next element
-      return this.sopSectionList[sectionIndex + 1]['insertion_id'];
     }
+    // if the user is creating a section at the middle of the 'sopSectionList' then return the 'next_insertion_id' for the next element
+    return this.sopSectionList[sectionIndex + 1]['insertion_id'];
   }
 }
