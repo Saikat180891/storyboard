@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SectionListItem } from '../../common-model/section-list-item.model';
-import { StepType } from '../../common-model/step-type.model';
+import { Step } from '../../common-model/step-type.model';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 @Injectable({
   providedIn: 'root'
 })
@@ -30,13 +31,13 @@ export class StepcontrolService {
    * @param stepIndex index of the step
    * @param data response received from the backend
    */
-  updateStepWithResponse(sectionIndex: number, stepIndex: number, data: StepType){
+  updateStepWithResponse(sectionIndex: number, stepIndex: number, data: Step){
     this.sopSectionList[sectionIndex].steps_list[stepIndex] = {
       ...data
     };
   }
 
-  modifyStepOnEdit(sectionIndex: number, stepIndex: number, data: StepType) {
+  modifyStepOnEdit(sectionIndex: number, stepIndex: number, data: Step) {
     for (const key in data) {
       if (key === 'screenID') {
         this.sopSectionList[sectionIndex].steps_list[stepIndex]['screen_id'] = data[key];
@@ -63,6 +64,16 @@ export class StepcontrolService {
   }
 
   /**
+   * move element inside section
+   * @param sectionIndex 
+   * @param previousIndex 
+   * @param currentIndex 
+   */
+  moveStepsInsideSection(sectionIndex: number, previousIndex: number, currentIndex: number) {
+    moveItemInArray(this.sopSectionList[sectionIndex].steps_list, previousIndex, currentIndex);
+  }
+
+  /**
    * this function is used to modify section properties
    * @param responseData data received from backend will the over write the respected values of section
    * @param sectionIndex is required to find where to modify
@@ -78,8 +89,9 @@ export class StepcontrolService {
    * @param sectionIndex
    */
   updateSectionItem(responseData: any, sectionIndex: number) {
-    for ( const key in responseData) {
-      if (key === 'section_name') {
+    const keys = ['section_name', 'description'];
+    for (const key in keys) {
+      if (key in responseData) {
         this.sopSectionList[sectionIndex][key] = responseData[key];
       }
     }
@@ -93,18 +105,6 @@ export class StepcontrolService {
    */
   editStepValues(responseData:any, sectionIndex:number, stepIndex:number){
     this.sopSectionList[sectionIndex].steps_list[stepIndex] = responseData;
-  }
-
-  insertSectionAt(indexAfter){
-    let data = {
-      sectionName: 'section name',
-      steps:[]
-    }
-    // this.sopSectionList.splice(indexAfter, 0, data);
-  }
-
-  moveItem(newPosition, previousPosition, data){
-    this.sopSectionList.splice(newPosition, 0, data);
   }
 
   getList() {
@@ -128,10 +128,9 @@ export class StepcontrolService {
     // if the 'steps_list' array is empty then return null which indicates that this is the first step in the corresponding section
     if (this.sopSectionList[sectionIndex].steps_list.length === 1){
       return null;
-    } else {
-      // return the 'insertion_id' of the previous step in that corresponding section
-      return +this.sopSectionList[sectionIndex].steps_list[stepIndex - 1]['insertion_id'];
     }
+    // return the 'insertion_id' of the previous step in that corresponding section
+    return this.sopSectionList[sectionIndex].steps_list[stepIndex - 1].insertion_id;
   }
 
   getNextInsertionIdOfStepInSection(sectionIndex: number, stepIndex: number) {
@@ -140,9 +139,8 @@ export class StepcontrolService {
     }
     if (stepIndex === this.sopSectionList[sectionIndex].steps_list.length - 1) {
       return null;
-    } else {
-      return +this.sopSectionList[sectionIndex].steps_list[stepIndex + 1]['insertion_id'];
     }
+    return this.sopSectionList[sectionIndex].steps_list[stepIndex + 1]['insertion_id'];
   }
 
   // these functions are written keeping future scope in mind, these function enables
@@ -157,11 +155,10 @@ export class StepcontrolService {
     // check if the array contains any element
     if (this.sopSectionList.length === 1) {
       return null;
-    } else {
-      // if the user is creating a section at the middle of the 'sopSectionList'
-      // then return the 'prev_insertion_id' for the previous element
-      return +this.sopSectionList[sectionIndex - 1]['insertion_id'];
     }
+    // if the user is creating a section at the middle of the 'sopSectionList'
+    // then return the 'prev_insertion_id' for the previous element
+    return this.sopSectionList[sectionIndex - 1]['insertion_id'];
   }
 
   /**
@@ -178,9 +175,8 @@ export class StepcontrolService {
     // if the user is creating a section at the end of the 'sopSectionList' then return null
     if (sectionIndex === this.sopSectionList.length - 1) {
       return null;
-    } else {
-      // if the user is creating a section at the middle of the 'sopSectionList' then return the 'next_insertion_id' for the next element
-      return +this.sopSectionList[sectionIndex + 1]['insertion_id'];
     }
+    // if the user is creating a section at the middle of the 'sopSectionList' then return the 'next_insertion_id' for the next element
+    return this.sopSectionList[sectionIndex + 1]['insertion_id'];
   }
 }

@@ -31,7 +31,7 @@
         <div class="common-option divider-right check-btn" (click)="onCreateSection()" [ngClass]="{'check-btn-disabled':!section.valid}" [title]="!section.valid ? 'Not valid section name': 'OK'">
           <i class="fas fa-check"></i>
         </div>
-        <div class="common-option cross-btn" (click)="onRemoveSection()" title="Cancel">
+        <div class="common-option cross-btn" (click)="onSectionEditClose()" title="Cancel">
           <i class="fas fa-times"></i>        
         </div>
       </ng-template>

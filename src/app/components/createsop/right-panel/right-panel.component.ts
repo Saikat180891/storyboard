@@ -7,9 +7,8 @@ import { StepcontrolService } from '../services/stepcontrol/stepcontrol.service'
 import { DataService } from '../../../data.service';
 import { PageService } from '../services/page/page.service';
 import { SectionListItem } from '../common-model/section-list-item.model';
-import { Observable } from 'rxjs';
-import { StepType } from '../common-model/step-type.model';
-
+import { Step } from '../common-model/step-type.model';
+import { RightPanelService } from '../services/right-panel/right-panel.service';
 interface StepTypeDropEvent {
   data: string;
   index: number;
@@ -28,7 +27,8 @@ export class RightPanelComponent implements OnInit {
   constructor(
     private __steps:StepcontrolService,
     private __api:DataService,
-    private __page:PageService) {
+    private __page:PageService,
+    private __rpService: RightPanelService) {
    }
 
    /**
@@ -36,7 +36,7 @@ export class RightPanelComponent implements OnInit {
     */
   ngOnInit() {
     // fetch all the previously created section when the component loads
-    this.getListOfCreatedSectionFromServer().subscribe(res => {
+    this.__rpService.getListOfCreatedSectionFromServer(this.__page.userStoryId).subscribe(res => {
       // store the response in the step control service
       this.__steps.setSectionList(res);
     },
@@ -89,20 +89,10 @@ export class RightPanelComponent implements OnInit {
    */
   onDeleteSection($event: Event) {
     if (confirm('Are you sure you want to delete this section? All the steps related to this section will also be deleted.')) {
-      const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/destroy/${$event['sectionId']}.json?insertion_id=${$event['insertionId']}`;
-      this.__api.deleteValue(endpoint).subscribe(res => {
+      this.__rpService.deleteSection(this.__page.userStoryId, $event['sectionId'], $event['insertionId']).subscribe(res => {
         this.__steps.deleteSection($event['sectionIndex']);
       });
     }
-  }
-
-  /**
-   * this function is used to get all the previouslycreated function in the
-   * db and it returns an Observable which is subscribed in the ngOnInit()
-   */
-  getListOfCreatedSectionFromServer(): Observable<SectionListItem[]> {
-    const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections.json`;
-    return this.__api.get(endpoint);
   }
 
   /**
@@ -132,7 +122,7 @@ export class RightPanelComponent implements OnInit {
         data: $event.data,
         screen_id: typeof $event.data.screen === 'string' ? null : $event.data.screen
       };
-      this.__api.updatePost(endpoint, payload).subscribe((res: StepType) => {
+      this.__api.updatePost(endpoint, payload).subscribe((res: Step) => {
         this.__steps.modifyStepOnEdit($event.sectionIndex, $event.stepIndex, res);
       });
     }
@@ -148,8 +138,6 @@ export class RightPanelComponent implements OnInit {
   onSectionChange($event) {
     // to create a section
     if ($event.mode === 'create') {
-      // the required endpoint for creating section
-      const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/create.json`;
       const payload = {
         section_name: $event['sectionName']['section_name'],
         prev_insertion_id: this.__steps.getPreviousInsertionIdOfSection($event['sectionIndex']),
@@ -157,20 +145,18 @@ export class RightPanelComponent implements OnInit {
         description: 'test'
       };
       // make the call with the payload and body
-      this.__api.post(endpoint, payload).subscribe(res => {
+      this.__rpService.createSection(this.__page.userStoryId, payload).subscribe(res => {
         this.__steps.setSectionItem(res, $event['sectionIndex']);
       });
       // to edit a section
     } else if ($event.mode === 'edit') {
-      // the required endpoint for creating section
-      const endpoint = `/sop/epics/userstories/sections/${ $event.sectionId }.json`;
       const payload = {
         section_name: $event['sectionName']['section_name'],
         section_id: $event.sectionId,
         description: 'test'
       };
       // make the call with the payload and body
-      this.__api.updatePost(endpoint, payload).subscribe(res => {
+      this.__rpService.updateSection($event.sectionId, payload).subscribe(res => {
         this.__steps.updateSectionItem(res, $event['sectionIndex']);
       });
     }
