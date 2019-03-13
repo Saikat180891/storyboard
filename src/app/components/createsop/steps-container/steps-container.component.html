@@ -1,9 +1,9 @@
-<div class="steps-container" [ngSwitch]="stepType">
+<div class="steps-container" [ngSwitch]="stepData.type">
   <ng-container *ngSwitchCase="'read'">
-    <app-step-read [stepIndex]="stepIndex" [sectionIndex]="sectionIndex" (deleteStep)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId"></app-step-read>
+    <app-step-read [stepData]="stepData" [stepIndex]="stepIndex" [sectionIndex]="sectionIndex" (deleteStep)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId"></app-step-read>
   </ng-container>
   <ng-container *ngSwitchCase="'type'">
-    <app-step-type [stepIndex]="stepIndex" [sectionIndex]="sectionIndex" (deleteStep)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId"></app-step-type>
+    <app-step-type [stepData]="stepData" [stepIndex]="stepIndex" [sectionIndex]="sectionIndex" (deleteStep)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId"></app-step-type>
   </ng-container>
   <ng-container *ngSwitchCase="'calculation'">
     <app-step-calculation [stepIndex]="stepIndex" [sectionIndex]="sectionIndex" (deleteStep)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId"></app-step-calculation>
