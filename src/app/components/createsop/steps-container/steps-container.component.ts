@@ -16,7 +16,6 @@ export class StepsContainerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.stepType)
   }
 
   onDeleteStep($event:Event){
