@@ -7,6 +7,7 @@ import {StepcontrolService} from '../../services/stepcontrol/stepcontrol.service
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { SectionListItem } from '../../common-model/section-list-item.model';
+import { OperationBarService } from '../../services/operation-bar/operation-bar.service';
 @Component({
   selector: 'app-section-title',
   templateUrl: './section-title.component.html',
@@ -32,7 +33,7 @@ export class SectionTitleComponent implements OnInit, OnChanges {
     section_name: new FormControl('', Validators.required)
   });
 
-  constructor(private __step: StepcontrolService) {}
+  constructor(private __step: StepcontrolService, private __opbService: OperationBarService) {}
 
   /**
    * if section name is already present(which happens when the page loads)
@@ -73,11 +74,15 @@ export class SectionTitleComponent implements OnInit, OnChanges {
    * this function is triggered the user drops a step on the droppable area
    * @param $event 
    */
-  onDropData($event: Event) {
+  onDropData($event: string) {
     this.sectionPayload.emit({
       data: $event,
       index: this.sectionIndex
     });
+    console.log($event)
+    if ($event === 'start-loop' || $event === 'end-loop') {
+      this.__opbService.toggleLoop();
+    }
   }
 
   /**

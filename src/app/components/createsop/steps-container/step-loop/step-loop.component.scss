@@ -20,15 +20,14 @@
     cursor: pointer;
   }
 
-  .comment-box{
+  .comment-box {
     width: 250px;
-    height: 125px;
+    height: 100px;
     padding: 10px;
     display: flex;
-    flex-direction: column;
     position: absolute;
     bottom: 0;
-    transform: translateY(125px);
+    transform: translate(-16px, 95px);
     right: 0;
     box-shadow: 0 3px 4px rgba($color: #000000, $alpha: 0.3);
     border-radius: 2px;
@@ -38,20 +37,38 @@
     justify-content: space-between;
     z-index: 100;
 
-    textarea{
-      width: 100%;
-      border: 1px solid #999999;
+    .text-area {
+      max-width: 200px;
       margin: 2px 0;
       padding: 5px;
+      display: flex;
+      flex-direction: column;
+
+      textarea {
+        width: 100%;
+        border: 1px solid #999999;
+      }
     }
 
-    button{
-      width: 100%;
-      height: 30px;
-      color: #54585A;
-      border: none;
-      background: transparent;
-      cursor: pointer;
+    .controls-btn-group {
+      margin-top: 20px;
+      width: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      & > div {
+        cursor: pointer;
+      }
+
+      div:nth-child(1){
+        color: #6CC24A;
+      }
+      div:nth-child(2){
+        color: #F47074;
+      }
     }
+
   }
 }

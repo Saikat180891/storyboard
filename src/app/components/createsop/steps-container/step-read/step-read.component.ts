@@ -33,7 +33,6 @@ export class StepReadComponent implements OnInit {
       }
       this.canEdit = false;
     }
-    console.log(this.stepIndex, this.sectionIndex, this.stepData)
   }
 
   onClikedOnEdit() {

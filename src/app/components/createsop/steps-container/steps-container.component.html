@@ -6,7 +6,7 @@
     <app-step-type [stepData]="stepData" [stepIndex]="stepIndex" [sectionIndex]="sectionIndex" (deleteStep)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId"></app-step-type>
   </ng-container>
   <ng-container *ngSwitchCase="'calculation'">
-    <app-step-calculation [stepIndex]="stepIndex" [sectionIndex]="sectionIndex" (deleteStep)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId"></app-step-calculation>
+    <app-step-calculation [stepData]="stepData" [stepIndex]="stepIndex" [sectionIndex]="sectionIndex" (deleteStep)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId"></app-step-calculation>
   </ng-container>
   <ng-container *ngSwitchCase="'ui-interaction'">
     <app-step-ui-interaction [stepData]="stepData" [stepIndex]="stepIndex" [sectionIndex]="sectionIndex" (deleteStep)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId"></app-step-ui-interaction>
@@ -15,9 +15,9 @@
     <app-step-condition [stepData]="stepData" [stepIndex]="stepIndex" [sectionIndex]="sectionIndex" (deleteStep)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId"></app-step-condition>
   </ng-container>
   <ng-container *ngSwitchCase="'start-loop'">
-    <app-step-loop [stepIndex]="stepIndex" [sectionId]="sectionId"></app-step-loop>
+    <app-step-loop [stepData]="stepData" [stepIndex]="stepIndex" [sectionIndex]="sectionIndex" (deleteStep)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId"></app-step-loop>
   </ng-container>
   <ng-container *ngSwitchCase="'end-loop'">
-    <app-step-end-loop [stepIndex]="stepIndex" [sectionId]="sectionId"></app-step-end-loop>
+    <app-step-end-loop [stepData]="stepData" [stepIndex]="stepIndex" [sectionIndex]="sectionIndex" (deleteStep)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId"></app-step-end-loop>
   </ng-container>
 </div>
