@@ -20,6 +20,7 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
   warningToDeleteSop:boolean = false;
   sopIdToDelete:number;
   projectData:any;
+  projectRole:any;
   
   constructor(
     private _dataService: DataService, 
@@ -97,6 +98,7 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
 
   onEditProject($event:any, index:number){
     this.projectData = $event.data;
+    this.projectRole = $event.role;
     this.openEditProjectDialogBox = $event.status;
   }
 

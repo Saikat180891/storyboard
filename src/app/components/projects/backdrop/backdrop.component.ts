@@ -31,6 +31,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() cardID;
   @Input('permissions') permissions:any;
   @Input('projectData') projectData:any;
+  @Input('projectRole') projectRole:any;
   @Output('close') close = new EventEmitter<boolean>();
   @ViewChild('dialogBox') dialogBox:ElementRef;
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'left-panel',
@@ -6,7 +6,7 @@ import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
   styleUrls: ['./left-panel.component.scss']
 })
 export class LeftPanelComponent implements OnInit {
-
+  @Output('onenMediaPane') onenMediaPane = new EventEmitter<boolean>();
   currentImage :number=0;
   imageGalleryContent = [];
   constructor() { }
@@ -15,26 +15,30 @@ export class LeftPanelComponent implements OnInit {
 
   }
 
-    //for carousel
-    onCarouselMoveUp(){
-      /**
-       * this function is use to change the image in the carousel 
-       * by using the up button
-       */      
-      if(this.currentImage > 0){
-        this.currentImage = this.currentImage - 1;
-      }
+  //for carousel
+  onCarouselMoveUp(){
+    /**
+     * this function is use to change the image in the carousel 
+     * by using the up button
+     */      
+    if(this.currentImage > 0){
+      this.currentImage = this.currentImage - 1;
     }
-  
-    onCarouselMoveDown(){
-      /**
-       * this function is used to change the image in the carousel
-       * by using the down button
-       */
+  }
 
-      if(this.currentImage < this.imageGalleryContent.length - 1){
-        this.currentImage = this.currentImage + 1;
-      }
+  onCarouselMoveDown(){
+    /**
+     * this function is used to change the image in the carousel
+     * by using the down button
+     */
+
+    if(this.currentImage < this.imageGalleryContent.length - 1){
+      this.currentImage = this.currentImage + 1;
     }
+  }
+  
+  onOpenMediaPane(){
+    this.onenMediaPane.emit(true);
+  }
 
 }

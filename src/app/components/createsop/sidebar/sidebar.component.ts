@@ -10,10 +10,11 @@ import {takeUntil} from 'rxjs/operators';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss', './volume-slider-handle.scss']
+  styleUrls: ['./sidebar.component.scss', './volume-slider-handle.scss', '../../reasoncodes/completed-warning.scss']
 })
 export class SidebarComponent implements OnInit {
   @Output('close') close = new EventEmitter<any>();
+  @Output('exportSelectedImageToSop') exportSelectedImageToSop = new EventEmitter<any>();
   @ViewChild('videoPlayer') videoPlayer:ElementRef;
   @ViewChild('canvas') canvas:ElementRef;
   @ViewChild('volumeController') volumeController:ElementRef;
@@ -37,6 +38,9 @@ export class SidebarComponent implements OnInit {
   videoUpload:any;
   buffered:number;
   videoName:string;
+  imageName:string;
+  warningToDeleteVideo:boolean = false;
+  deleteContent:any;
 
   constructor(
     private __uic:UicontrolService, 
@@ -53,12 +57,12 @@ export class SidebarComponent implements OnInit {
   }
   
 
+  /**
+   * this function will get all the previously uploaded videos
+   * and populate them in the 'videoGalleryContent' array list variable
+   * 
+   */
   fetchAllVideosAlreadyUploaded(){
-    /**
-     * this function will get all the previously uploaded videos
-     * and populate them in the 'videoGalleryContent' array list variable
-     * 
-     */
     this.__sidebarService.getAllUploadedVideo(`/sop/${this.__page.projectId}/video.json`).subscribe(res=>{
       this.videoGalleryContent = res;
       if(this.videoGalleryContent.length > 0){
@@ -72,12 +76,12 @@ export class SidebarComponent implements OnInit {
     );
   }
 
+  /**
+   * this function gets all the images previously uploaded and populate them 
+   * in the 'imageGalleryContent' present in the 'PageService' service, a
+   * service is used so that the variable is sharable between other components
+   */
   fetchAllSnapshotsAlreadyTaken(){
-    /**
-     * this function gets all the images previously uploaded and populate them 
-     * in the 'imageGalleryContent' present in the 'PageService' service, a
-     * service is used so that the variable is sharable between other components
-     */
     this.__sidebarService.getAllThumbnails(`/sop/${this.__page.projectId}/image.json`).subscribe((res:any)=>{
       res.forEach(element => {
         element['thumbnail'] = element['image_url'];
@@ -86,46 +90,47 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+  /**
+   * this function is used to close the mediapane
+   */
   onCloseSideBar(){
-    /**
-     * this function is used to close the mediapane
-     */
     this.close.emit({type:'media', shouldOpen: false});
   }
 
   //for carousel
+  /**
+   * this function is use to change the image in the carousel 
+   * by using the left button
+   */
   onCarouselMoveLeft(){
-    /**
-     * this function is use to change the image in the carousel 
-     * by using the left button
-     */
     if(this.currentImage < this.imageGalleryContent.length - 1){
       this.currentImage = this.currentImage + 1;
     }
   }
 
+  /**
+   * this function is used to change the image in the carousel
+   * by using the right button
+   */
   onCarouselMoveRight(){
-    /**
-     * this function is used to change the image in the carousel
-     * by using the right button
-     */
     if(this.currentImage > 0){
       this.currentImage = this.currentImage - 1;
     }
   }
 
+  /**
+   * this function is called when a particular image is selected
+   */
   onselectRequestedThumbnail($event:any){
-    /**
-     * this function is called when a particular image is selected
-     */
     this.currentImage = $event.index;
+    this.imageName = $event.content.image_name;
   }
 
   //for video player
+  /**
+   * this function is used to play/pause the video
+   */
   onPlayPause(){
-    /**
-     * this function is used to play/pause the video
-     */
     if(this.videoPlayer.nativeElement.paused){
       this.videoPlayer.nativeElement.play();
       this.isPlaying = true;
@@ -135,12 +140,12 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  /**
+   * this function is used to control the volume of the video
+   * it also stores the last position in the localstorage so that when the user returns 
+   * to the app it can get the last volume value
+   */
   onVolumeControl(){
-    /**
-     * this function is used to control the volume of the video
-     * it also stores the last position in the localstorage so that when the user returns 
-     * to the app it can get the last volume value
-     */
     if(!this.isMuted){
       this.videoPlayer.nativeElement.muted = true;
       this.isMuted = true;
@@ -154,10 +159,10 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  /**
+   * this function is used to mute the audio
+   */
   onDragVolumeHandle(value){
-    /**
-     * this function is used to mute the audio
-     */
     this.videoPlayer.nativeElement.volume = (value / 100);
     if(value == 0){
       this.isMuted = true;
@@ -166,33 +171,33 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  /**
+   * this function will fast forward the video by 10 secs
+   */
   onFastForward(){
-    /**
-     * this function will fast forward the video by 10 secs
-     */
     if(this.videoPlayer.nativeElement.currentTime < this.videoPlayer.nativeElement.duration){
       this.videoPlayer.nativeElement.currentTime = this.videoPlayer.nativeElement.currentTime + 10;
     }
   }
 
+  /**
+   * this function will rewind the video by 10secs
+   */
   onRewind(){
-    /**
-     * this function will rewind the video by 10secs
-     */
     if(this.videoPlayer.nativeElement.currentTime > 10){
       this.videoPlayer.nativeElement.currentTime = this.videoPlayer.nativeElement.currentTime - 10;
     }
   }
 
+  /**
+   * this function is used to take snapshot of the video
+   * the video be will pause while taking snapshot, to play the
+   * video press the play button, the funtion will also store the 
+   * frame of the video in a canvas element and will convert it to
+   * file, an option to download the image file is also present but
+   * is removed in the html template
+   */
   onTakeSnapshot(){
-    /**
-     * this function is used to take snapshot of the video
-     * the video be will pause while taking snapshot, to play the
-     * video press the play button, the funtion will also store the 
-     * frame of the video in a canvas element and will convert it to
-     * file, an option to download the image file is also present but
-     * is removed in the html template
-     */
     this.videoPlayer.nativeElement.pause();
     this.isPlaying = false;
 
@@ -244,10 +249,10 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  /**
+   * this funtion is called when the user switches to another video
+   */
   onSelectedVideo($event:any){
-    /**
-     * this funtion is called when the user switches to another video
-     */
     this.videoPlayer.nativeElement.pause();
     this.isPlaying =  false;
     this.playThisVideo = $event.content.video_url;
@@ -259,12 +264,12 @@ export class SidebarComponent implements OnInit {
     this.onPlayPause();
   }
   
+  /**
+   * this function is called when the timeupdate event is triggered
+   * the function will take the currentTime of the video and it will convert
+   * top standard form to display in the UI HH:MM:SS
+   */
   onTimeUpdate($event){
-    /**
-     * this function is called when the timeupdate event is triggered
-     * the function will take the currentTime of the video and it will convert
-     * top standard form to display in the UI HH:MM:SS
-     */
     if(isNaN(this.videoPlayer.nativeElement.duration)){
       this.duration = this.convertSecondsToMinutes(0);
     }else{
@@ -278,11 +283,11 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  /**
+   * this function is used to upload image when a user uploads an image
+   * from the desktop and then it fetches all the previously stored images
+   */
   onImageUpload(file){
-    /**
-     * this function is used to upload image when a user uploads an image
-     * from the desktop and then it fetches all the previously stored images
-     */
     const apiEndpoint = `/sop/${this.__page.projectId}/image.json`;
     let formData = new FormData();
     formData.append('image', file);
@@ -291,11 +296,11 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+  /**
+   * this function is used to convert seconds into HH:MM:SS
+   * @param secs time in seconds
+   */
   convertSecondsToMinutes(time:number){
-    /**
-     * this function is used to convert seconds into HH:MM:SS
-     * @param secs time in seconds
-     */
     var toHHMMSS = (secs) => {
       var sec_num = parseInt(secs, 10)    
       var hours   = Math.floor(sec_num / 3600) % 24
@@ -316,22 +321,22 @@ export class SidebarComponent implements OnInit {
     this.videoPlayer.nativeElement.currentTime = actualTime;
   }
 
+  /**
+   * this funtion is used to get all the images when the user clicks
+   * on the images tab
+   */
   onTabChange(value:number){
-    /**
-     * this funtion is used to get all the images when the user clicks
-     * on the images tab
-     */
     if(value == 1){
       this.fetchAllSnapshotsAlreadyTaken();
     }
   }
 
+  /**
+   * this function is used to upload video from the desktop
+   * it also shows the percentage of video being uploaded in 
+   * real time
+   */
   onVideoUpload($event){
-    /**
-     * this function is used to upload video from the desktop
-     * it also shows the percentage of video being uploaded in 
-     * real time
-     */
     const apiEndpoint = `/sop/${this.__page.projectId}/video.json`;
     let videoData = new FormData();
     videoData.append('video', $event);
@@ -356,36 +361,46 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+  /**
+   * This Function will show the warning Box
+   */
   onDeleteVideo($event){
-    /**
-     * this video is used to delete video
-     */
-    const apiEndpoint = `/sop/video/${$event.content.id}.json`;
+    this.warningToDeleteVideo = true;
+    this.deleteContent = $event;
+  }
+
+  onSelectDeleteVideo(){
+    const apiEndpoint = `/sop/video/${this.deleteContent.content.id}.json`;
     this.__sidebarService.deleteContent(apiEndpoint).subscribe(res=>{
-      this.videoGalleryContent.splice($event.index, 1);
+      this.videoGalleryContent.splice(this.deleteContent.index, 1);
     },
     err=>{
     },
     ()=>{
-      if($event.index - 1 != -1 && $event.index != this.videoGalleryContent.length -1){
-        this.playThisVideo = this.videoGalleryContent[$event.index - 1].video_url;
+      if(this.deleteContent.index - 1 != -1 && this.deleteContent.index != this.videoGalleryContent.length -1){
+        this.playThisVideo = this.videoGalleryContent[this.deleteContent.index - 1].video_url;
       }
     });
+    this.warningToDeleteVideo = false;
   }
 
+  onSelectDoNotDeleteVideo(){
+    this.warningToDeleteVideo = false;
+  }
+
+  /**
+   * this function is called when the user clicks on cancel button 
+   * which appears while any video is being uploaded
+   */
   onCancelVideoUpload(){
-    /**
-     * this function is called when the user clicks on cancel button 
-     * which appears while any video is being uploaded
-     */
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
 
+  /**
+   * this function is used to delete an image from the gallery
+   */
   onDeleteImage($event){
-    /**
-     * this function is used to delete an image from the gallery
-     */
     const apiEndpoint = `/sop/image/${$event.content.id}.json`;
     this.__sidebarService.deleteContent(apiEndpoint).subscribe(res=>{
       if(this.currentImage > 0 && this.currentImage < this.__page.imageGalleryContent.length - 1){
@@ -399,5 +414,10 @@ export class SidebarComponent implements OnInit {
     ()=>{
       this.fetchAllSnapshotsAlreadyTaken();
     })
+  }
+
+  onExportToSop(){
+    this.exportSelectedImageToSop.emit({content:this.imageGalleryContent[this.currentImage]});
+    this.__page.shouldShowExportToSopModal = true;
   }
 }

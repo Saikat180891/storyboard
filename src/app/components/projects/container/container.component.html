@@ -49,7 +49,7 @@
 
 <div class="overlay" [ngClass]="{'overlay-show':openEditProjectDialogBox, 'overlay-hide':!openEditProjectDialogBox}">
   <div class="project-dialog-box" *ngIf="openEditProjectDialogBox">
-    <app-backdrop [permissions]="permissionsGrantedForBackdrop" [projectData]="projectData" 
+    <app-backdrop [permissions]="permissionsGrantedForBackdrop" [projectData]="projectData"  [projectRole]="projectRole"
     (close)="openEditProjectDialogBox=false"></app-backdrop>
   </div>
 </div>

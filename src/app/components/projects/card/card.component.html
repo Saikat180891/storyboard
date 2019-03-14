@@ -1,5 +1,5 @@
 <ng-container>
-  <div (click)="onCreateSOP()" class="container" id="0"  *ngIf="localData.id===0"  appPermissions>
+  <div (click)="onCreateSOP()" class="container" id="0"  *ngIf="localData.id===0" matRipple [matRippleColor]="rippleColor" appPermissions>
     <a class="new-sop">
       <span>
         <i class="far fa-plus-square"></i>
@@ -8,9 +8,9 @@
     </a>
   </div>
 </ng-container>
-<div class="container" *ngIf="localData.id != 0">
+<div class="container" *ngIf="localData.id != 0" matRipple [matRippleColor]="rippleColor">
   <div
-  
+  [routerLink]="['/projects/epics', localData.id]" 
   class="header" 
   [id]="localData ? localData.id : ''"
   >
@@ -43,7 +43,6 @@
         </span>
 
       </mat-toolbar>
-      <mat-divider></mat-divider>
       <div class="codes">
         <h1 [style.color]="localData ? localData.themeColor : ''">{{ localData.number_epics ? localData.number_epics : '0'}}</h1>
         <p [style.color]="localData ? localData.themeColor : ''">Epic</p>
@@ -60,13 +59,9 @@
           </ng-template>
         </div>
       </div>
-      <mat-divider></mat-divider>
       <div class="footer">
-        <div class="left-control-wrapper">
-          <span><i class="far fa-calendar-alt"></i></span>
-          <span>Due Date</span><span>{{ localData ? localData.due_date : ''}}</span>
-        </div>
-        <button class="btn btn-blue btn-position" title="View Dashboard" [routerLink]="['/projects/epics', localData.id]" matRipple [matRippleColor]="rippleColor" [style.background-color]="localData ? localData.themeColor : ''"><i class="far fa-eye"></i> View Dashboard</button>
+        <span><i class="far fa-calendar-alt"></i></span>
+        <span>Due Date</span><span>{{ localData ? localData.due_date : ''}}</span>
       </div>
   </div>
 </div>

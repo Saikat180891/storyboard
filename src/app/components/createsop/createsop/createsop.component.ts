@@ -4,15 +4,21 @@ import {UicontrolService} from '../services/uicontrol.service';
 import {PageService} from '../services/page/page.service';
 import {StepcontrolService} from '../services/stepcontrol/stepcontrol.service';
 import {DataService} from "../../../data.service";
+interface Snapshot {
+  id: number;
+  thumbnail: string;
+}
 @Component({
   selector: 'app-createsop',
   templateUrl: './createsop.component.html',
   styleUrls: ['./createsop.component.scss']
 })
-export class CreatesopComponent implements OnInit, AfterContentChecked {
+export class CreatesopComponent implements OnInit, AfterContentChecked, OnChanges {
   openSidebar:any;
   toggleRecentSnapshot:boolean = false;
   imageGalleryContent = [];
+  showExportToSop:boolean = false;
+  imageDataToExport: Snapshot;
   constructor(
     private routes:ActivatedRoute, 
     private __uic:UicontrolService,
@@ -37,6 +43,9 @@ export class CreatesopComponent implements OnInit, AfterContentChecked {
     this.imageGalleryContent = this.__page.imageGalleryContent;
   }
 
+  ngOnChanges(){
+  }
+
 
   isSideBarOpen($event:Event){
     this.openSidebar = $event;
@@ -57,6 +66,10 @@ export class CreatesopComponent implements OnInit, AfterContentChecked {
     //   this.__steps.sopStepsList.push({sectionName:'section name'});
     //   console.log(this.__steps.sopStepsList);
     // }
+  }
+
+  onSelectedImageToExport($event) {
+    this.imageDataToExport = $event.content;
   }
 
 }

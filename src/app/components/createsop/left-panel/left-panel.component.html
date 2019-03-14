@@ -1,40 +1,49 @@
 <div class="breadcrumb">
   <app-breadcrumb></app-breadcrumb>
 </div>
-<div class="left-panel-display">
-  <div class="slide-show">
-  <app-canvas-crousel [data]="imageGalleryContent" [currentImage]="currentImage"></app-canvas-crousel>
-    <div class="carousel-position carousel-up" (click)="onCarouselMoveUp()">
-      <i class="fas fa-chevron-up"></i>
-    </div>
-    <div class="carousel-position carousel-down" (click)="onCarouselMoveDown()">
-      <i class="fas fa-chevron-down"></i>
-    </div>
-  </div>
+<div class="zero-state">
+  <p>Create a section or export a screen to continue</p>
+  <button class="btn btn-blue" (click)="onOpenMediaPane()">
+    Import A Video
+  </button>
 </div>
-<div class="small-card">
-  <div class="small-card-segments">
-    <div class="small-card-heading">
-      Application name
-    </div>
-    <div class="small-card-content">
-      Lorem ipsum dolor
-    </div>
-  </div>
-  <div class="small-card-segments">
-    <div class="small-card-heading">
-      Application name
-    </div>
-    <div class="small-card-content">
-      Lorem ipsum dolor
+<ng-container *ngIf="false">
+  <div class="left-panel-display">
+    <div class="slide-show">
+    <app-canvas-crousel [data]="imageGalleryContent" [currentImage]="currentImage"></app-canvas-crousel>
+      <div class="carousel-position carousel-up" (click)="onCarouselMoveUp()">
+        <i class="fas fa-chevron-up"></i>
+      </div>
+      <div class="carousel-position carousel-down" (click)="onCarouselMoveDown()">
+        <i class="fas fa-chevron-down"></i>
+      </div>
     </div>
   </div>
-  <div class="small-card-segments">
-    <div class="small-card-heading">
-      Application name
+  <div class="small-card">
+    <div class="small-card-segments">
+      <div class="small-card-heading">
+        Application name
+      </div>
+      <div class="small-card-content">
+        Lorem ipsum dolor
+      </div>
     </div>
-    <div class="small-card-content">
-      Lorem ipsum dolor
+    <div class="small-card-segments">
+      <div class="small-card-heading">
+        Application name
+      </div>
+      <div class="small-card-content">
+        Lorem ipsum dolor
+      </div>
+    </div>
+    <div class="small-card-segments">
+      <div class="small-card-heading">
+        Application name
+      </div>
+      <div class="small-card-content">
+        Lorem ipsum dolor
+      </div>
     </div>
   </div>
-</div>
+</ng-container>
+

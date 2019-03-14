@@ -330,3 +330,9 @@ input[type="text"].warning, input[type="number"].warning{
 .validation-message{
   color: rgb(245, 117, 117);
 }
+
+form.submitted {
+  input.ng-invalid {
+    border:  2px solid #F47074
+  }
+}
