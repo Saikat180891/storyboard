@@ -8,6 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class StepUiInteractionComponent implements OnInit {
   @Input('sectionId') sectionId:number;
   @Input('stepIndex') stepIndex:number;
+  @Input('stepData') stepData: any;
   @Input('sectionIndex') sectionIndex:number;
   @Output('deleteStep') deleteStep = new EventEmitter();
   @Output('outputChange') outputChange = new EventEmitter();
@@ -19,31 +20,54 @@ export class StepUiInteractionComponent implements OnInit {
     notes:'',
     exception_handling:'',
     screen:'',
-    stepNumber:''
+    step_number:''
   }
 
   constructor() { }
 
   ngOnInit() {
-    this.data.stepNumber = (this.sectionIndex + 1) + "." + (this.stepIndex + 1);
-    console.log(this.stepIndex, this.sectionIndex)
+    this.data.step_number = (this.sectionIndex + 1) + "." + (this.stepIndex + 1);
+    if ( this.stepData.step_id || this.stepData.id) {
+      this.data = {
+        ...this.stepData.data
+      };
+      this.canEdit = false;
+    }
   }
 
-  onClikedOnEdit(){
+  onClikedOnEdit() {
     this.canEdit = !this.canEdit;
   }
 
-  onClickOnOk(){
+  onClickOnOk() {
     this.canEdit = false;
-    console.log(this.data);
-    // this.outputChange.emit({data:this.data, sectionIndex:this.sectionIndex, stepIndex:this.stepIndex, stepType: 'ui_interaction', sectionId: this.sectionId});
+    if ( this.stepData.step_id ) {
+      this.outputChange.emit({
+        data: this.data,
+        sectionIndex: this.sectionIndex,
+        stepIndex: this.stepIndex,
+        stepType: 'ui-interaction',
+        sectionId: this.sectionId,
+        stepId: this.stepData.step_id,
+        mode: 'edit'
+      });
+    } else {
+      this.outputChange.emit({
+        data: this.data,
+        sectionIndex: this.sectionIndex,
+        stepIndex: this.stepIndex,
+        stepType: 'ui-interaction',
+        sectionId: this.sectionId,
+        mode: 'create'
+      });
+    }
   }
 
-  onCancelEdit(){
+  onCancelEdit() {
     this.canEdit = false;
   }
 
-  onDeleteStep(){
+  onDeleteStep() {
     this.deleteStep.emit({sectionIndex:this.sectionIndex, stepIndex:this.stepIndex});
   }
 
