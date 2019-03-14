@@ -3,11 +3,7 @@
     <span
       >{{ title }}
       <span *ngIf="extras">-</span>
-      {{
-        projectStatus && projectStatus.current_sprint
-          ? projectStatus.current_sprint
-          : ""
-      }}
+      {{ getCurrentSprint() }}
       <span
         *ngIf="ifButtonRequired"
         (click)="onButtonClick()"
