@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-step-condition',
@@ -8,13 +8,37 @@ import { Component, OnInit, Input } from '@angular/core';
 export class StepConditionComponent implements OnInit {
   @Input('sectionId') sectionId:number;
   @Input('stepIndex') stepIndex:number;
+  @Input('stepData') stepData: any;
+  @Input('sectionIndex') sectionIndex:number;
+  @Output('deleteStep') deleteStep = new EventEmitter();
+  @Output('outputChange') outputChange = new EventEmitter();
+
   canEdit:boolean = false;
-  addAnotherRow:any = [1];
-  conditionSelection
+  addAnotherRow: any = [1];
+  conditions = ['Major', 'Minor'];
+  conditionSelection = 'Major';
+  data = {
+    interaction_type:'',
+    click_option:'',
+    field:'',
+    notes:'',
+    exception_handling:'',
+    screen:'',
+    step_number:''
+  };
+
+  variableOptions = ['Option 1', 'Option 2', 'Option 3'];
 
   constructor() { }
 
   ngOnInit() {
+    this.data.step_number = (this.sectionIndex + 1) + "." + (this.stepIndex + 1);
+    if ( this.stepData.step_id || this.stepData.id) {
+      this.data = {
+        ...this.stepData.data
+      };
+      this.canEdit = false;
+    }
   }
 
   onClikedOnEdit(){
@@ -35,5 +59,9 @@ export class StepConditionComponent implements OnInit {
 
   onChangeSelection($event){
     console.log(this.conditionSelection)
+  }
+
+  onDeleteStep() {
+    this.deleteStep.emit({sectionIndex:this.sectionIndex, stepIndex:this.stepIndex});
   }
 }

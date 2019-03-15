@@ -8,6 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class StepTypeComponent implements OnInit {
   @Input('sectionId') sectionId:number;
   @Input('stepIndex') stepIndex:number;
+  @Input('stepData') stepData: any;
   @Input('sectionIndex') sectionIndex:number;
   @Output('deleteStep') deleteStep = new EventEmitter();
   @Output('outputChange') outputChange = new EventEmitter();
@@ -16,7 +17,7 @@ export class StepTypeComponent implements OnInit {
     field:'',
     value:'',
     notes:'',
-    exceptionHandling:'',
+    exception_handling:'',
     screen:'',
     stepNumber:''
   }
@@ -25,16 +26,40 @@ export class StepTypeComponent implements OnInit {
 
   ngOnInit() {
     this.data.stepNumber = (this.sectionIndex + 1) + "." + (this.stepIndex + 1);
-    console.log(this.stepIndex, this.sectionIndex)
+    if ( this.stepData.step_id || this.stepData.id) {
+      this.data = {
+        ...this.stepData.data
+      }
+      this.canEdit = false;
+    }
   }
 
   onClikedOnEdit(){
     this.canEdit = !this.canEdit;
   }
 
-  onClickOnOk(){
+  onClickOnOk() {
     this.canEdit = false;
-    this.outputChange.emit({data:this.data, sectionIndex:this.sectionIndex, stepIndex:this.stepIndex});
+    if ( this.stepData.step_id ) {
+      this.outputChange.emit({
+        data: this.data,
+        sectionIndex: this.sectionIndex,
+        stepIndex: this.stepIndex,
+        stepType: 'type',
+        sectionId: this.sectionId,
+        stepId: this.stepData.step_id,
+        mode: 'edit'
+      });
+    } else {
+      this.outputChange.emit({
+        data: this.data,
+        sectionIndex: this.sectionIndex,
+        stepIndex: this.stepIndex,
+        stepType: 'type',
+        sectionId: this.sectionId,
+        mode: 'create'
+      });
+    }
   }
 
   onCancelEdit(){

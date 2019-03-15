@@ -1,54 +1,100 @@
 import { Injectable } from '@angular/core';
-interface StepList{
-  sectionName:string;
-  steps:any[];
-  id?:number;
-}
-
+import { SectionListItem } from '../../common-model/section-list-item.model';
+import { Step } from '../../common-model/step-type.model';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 @Injectable({
   providedIn: 'root'
 })
 export class StepcontrolService {
 
-  sopStepsList:StepList[] = [
-    {
-      sectionName: 'section name',
-      steps:[]
-    }
-  ];
+  private sopSectionList: SectionListItem[] = [];
+  private sectionIdList = [];
 
   constructor() { }
 
   /**
-   * 
-   * @param index 
-   * @param data 
+   * this function with insert a step at the end of an array
+   * @param index i'th element in the 'sopSectionList' where the user wants to create a step
+   * @param stepType this is a string which contains the type of step the user want to create
    */
-  insertStep(index, data){
-    this.sopStepsList[index].steps.push(data);
+  insertStep(index: number, stepType: string){
+    const stepItem = {
+      type: stepType.toLowerCase(),
+      data : {}
+    };
+    this.sopSectionList[index].steps_list.push(stepItem);
+  }
+  /**
+   * update the existing element in the steps_list of a particular
+   * section with the response received from the backend
+   * @param sectionIndex index of the section
+   * @param stepIndex index of the step
+   * @param data response received from the backend
+   */
+  updateStepWithResponse(sectionIndex: number, stepIndex: number, data: Step){
+    this.sopSectionList[sectionIndex].steps_list[stepIndex] = {
+      ...data
+    };
+  }
+
+  modifyStepOnEdit(sectionIndex: number, stepIndex: number, data: Step) {
+    for (const key in data) {
+      if (key === 'screenID') {
+        this.sopSectionList[sectionIndex].steps_list[stepIndex]['screen_id'] = data[key];
+      } else if (key in this.sopSectionList[sectionIndex].steps_list[stepIndex]) {
+        this.sopSectionList[sectionIndex].steps_list[stepIndex][key] = data[key];
+      }
+    }
   }
 
   /**
    * Creates a new section
    */
-  appendSection(){
-    let data = {
-      sectionName: '',
-      steps:[],
-      id: -1
+  appendSection() {
+    const data = {
+      section_name: null,
+      steps_list: [],
+      description: 'test'
     }
-    this.sopStepsList.push(data);
+    this.sopSectionList.push(data);
+  }
+
+  setSectionList(sectionList: SectionListItem[]){
+    this.sopSectionList = sectionList;
   }
 
   /**
-   * this function is used to modity section properties
+   * move element inside section
+   * @param sectionIndex 
+   * @param previousIndex 
+   * @param currentIndex 
+   */
+  moveStepsInsideSection(sectionIndex: number, previousIndex: number, currentIndex: number) {
+    moveItemInArray(this.sopSectionList[sectionIndex].steps_list, previousIndex, currentIndex);
+  }
+
+  /**
+   * this function is used to modify section properties
    * @param responseData data received from backend will the over write the respected values of section
    * @param sectionIndex is required to find where to modify
    * NOTE: steps are not modified
    */
-  editSectionDetailsWithResponse(responseData:any, sectionIndex:number){
-    this.sopStepsList[sectionIndex].sectionName = responseData.section_name;
-    this.sopStepsList[sectionIndex].id = responseData.id;
+  setSectionItem(responseData: any, sectionIndex: number) {
+    this.sopSectionList[sectionIndex] = responseData;
+  }
+
+  /**
+   * update the section name or description
+   * @param responseData
+   * @param sectionIndex
+   */
+  updateSectionItem(responseData: any, sectionIndex: number) {
+    const keys = ['section_name', 'description'];
+    for (const key in keys) {
+      if (key in responseData) {
+        this.sopSectionList[sectionIndex][key] = responseData[key];
+      }
+    }
   }
 
   /**
@@ -58,34 +104,79 @@ export class StepcontrolService {
    * @param stepIndex frontend index of steps array
    */
   editStepValues(responseData:any, sectionIndex:number, stepIndex:number){
-    this.sopStepsList[sectionIndex].steps[stepIndex] = responseData;
+    this.sopSectionList[sectionIndex].steps_list[stepIndex] = responseData;
   }
 
-  insertSectionAt(indexAfter){
-    let data = {
-      sectionName: 'section name',
-      steps:[]
+  getList() {
+    return this.sopSectionList;
+  }
+
+  getListLength() {
+    return this.sopSectionList.length;
+  }
+
+  deleteStep(sectionIndex, stepIntex) {
+    this.sopSectionList[sectionIndex].steps_list.splice(stepIntex, 1);
+  }
+
+  deleteSection(stepIndex: number){
+    this.sopSectionList.splice(stepIndex, 1);
+  }
+
+  // moving steps inside section
+  getPreviousInsertionIdOfStepInSection(sectionIndex: number, stepIndex: number) {
+    // if the 'steps_list' array is empty then return null which indicates that this is the first step in the corresponding section
+    if (this.sopSectionList[sectionIndex].steps_list.length === 1){
+      return null;
     }
-    this.sopStepsList.splice(indexAfter, 0, data);
+    // return the 'insertion_id' of the previous step in that corresponding section
+    return this.sopSectionList[sectionIndex].steps_list[stepIndex - 1].insertion_id;
   }
 
-  moveItem(newPosition, previousPosition, data){
-    this.sopStepsList.splice(newPosition, 0, data);
+  getNextInsertionIdOfStepInSection(sectionIndex: number, stepIndex: number) {
+    if (this.sopSectionList[sectionIndex].steps_list.length === 1) {
+      return null;
+    }
+    if (stepIndex === this.sopSectionList[sectionIndex].steps_list.length - 1) {
+      return null;
+    }
+    return this.sopSectionList[sectionIndex].steps_list[stepIndex + 1]['insertion_id'];
   }
 
-  removeSection(sectionIndex:number){
-    this.sopStepsList.splice(sectionIndex, 1);
+  // these functions are written keeping future scope in mind, these function enables
+  // the user to move sections if they want, although currently moving section is not
+  // implemented
+  /**
+   * this function returns the insertion_id of the previous section, if the section 
+   * is the first element of the array then the function returns null
+   * @param sectionIndex index of the section where the user wants a section to create
+   */
+  getPreviousInsertionIdOfSection(sectionIndex: number) {
+    // check if the array contains any element
+    if (this.sopSectionList.length === 1) {
+      return null;
+    }
+    // if the user is creating a section at the middle of the 'sopSectionList'
+    // then return the 'prev_insertion_id' for the previous element
+    return this.sopSectionList[sectionIndex - 1]['insertion_id'];
   }
 
-  getList(){
-    return this.sopStepsList;
-  }
-
-  getListLength(){
-    return this.sopStepsList.length;
-  }
-
-  deleteStep(sectionIndex, stepIntex){
-    this.sopStepsList[sectionIndex].steps.splice(stepIntex, 1);
+  /**
+   * this function returns the insertion_id of the next section, if the section that the user
+   * want to create is at the end then the function returns null
+   * @param sectionIndex index of the section where the user wants a section to create
+   */
+  getNextInsertionIdOfSection(sectionIndex: number) {
+    // check if the array contains any element
+    if (this.sopSectionList.length === 1) {
+      // if no element is there then it is the first element
+      return null;
+    }
+    // if the user is creating a section at the end of the 'sopSectionList' then return null
+    if (sectionIndex === this.sopSectionList.length - 1) {
+      return null;
+    }
+    // if the user is creating a section at the middle of the 'sopSectionList' then return the 'next_insertion_id' for the next element
+    return this.sopSectionList[sectionIndex + 1]['insertion_id'];
   }
 }

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-
 @Component({
   selector: 'app-step-read',
   templateUrl: './step-read.component.html',
@@ -9,6 +8,7 @@ export class StepReadComponent implements OnInit {
   @Input('sectionId') sectionId:number;
   @Input('stepIndex') stepIndex:number;
   @Input('sectionIndex') sectionIndex:number;
+  @Input('stepData') stepData: any;
   @Output('deleteStep') deleteStep = new EventEmitter();
   @Output('outputChange') outputChange = new EventEmitter();
   canEdit:boolean = true;
@@ -20,23 +20,47 @@ export class StepReadComponent implements OnInit {
     notes:'',
     exception_handling:'',
     screen:'',
-    stepNumber:''
+    step_number:''
   }
 
   constructor() { }
 
   ngOnInit() {
-    this.data.stepNumber = (this.sectionIndex + 1) + "." + (this.stepIndex + 1);
-    console.log(this.stepIndex, this.sectionIndex)
+    this.data.step_number = (this.sectionIndex + 1) + "." + (this.stepIndex + 1);
+    if ( this.stepData.step_id || this.stepData.id) {
+      this.data = {
+        ...this.stepData.data
+      }
+      this.canEdit = false;
+    }
   }
 
-  onClikedOnEdit(){
+  onClikedOnEdit() {
     this.canEdit = !this.canEdit;
   }
 
-  onClickOnOk(){
+  onClickOnOk() {
     this.canEdit = false;
-    this.outputChange.emit({data:this.data, sectionIndex:this.sectionIndex, stepIndex:this.stepIndex, stepType: 'read', sectionId: this.sectionId});
+    if ( this.stepData.step_id ) {
+      this.outputChange.emit({
+        data: this.data,
+        sectionIndex: this.sectionIndex,
+        stepIndex: this.stepIndex,
+        stepType: 'read',
+        sectionId: this.sectionId,
+        stepId: this.stepData.step_id,
+        mode: 'edit'
+      });
+    } else {
+      this.outputChange.emit({
+        data: this.data,
+        sectionIndex: this.sectionIndex,
+        stepIndex: this.stepIndex,
+        stepType: 'read',
+        sectionId: this.sectionId,
+        mode: 'create'
+      });
+    }
   }
 
   onCancelEdit(){

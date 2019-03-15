@@ -1,11 +1,35 @@
 <div class="loop-box">
   <div class="loop-box-name">Start Loop</div>
   <div class="loop-box-options">
-    <span (click)="onOpenDialogBox()"><i class="fas fa-ellipsis-h"></i></span>
+    <span (click)="onDisplayOptions()"><i class="fas fa-ellipsis-h"></i></span>
   </div>
-  <div class="comment-box" *ngIf="openDialogBox">
-    <label for="comments">Comments</label>
-    <textarea name="" id="comments" class="textarea"></textarea>
-    <button matRipple [matRippleColor]="rippleColor">Delete Loop</button>
+  <div class="comment-box" *ngIf="displayDialogBox">
+    <div class="text-area">
+      <label for="comments">Comments</label>
+      <ng-container *ngIf="canEdit; else displaySpan">
+        <textarea name="" id="comments" class="textarea" placeholder="Loop params" [(ngModel)]="data.loop_params"></textarea>
+      </ng-container>
+      <ng-template #displaySpan>
+        <span>{{data.loop_params}}</span>
+      </ng-template>
+    </div>
+    <div class="controls-btn-group">
+      <ng-container *ngIf="canEdit; else edit">
+        <div class="check-btn" (click)="onClickOnOk()">
+          <i class="fas fa-check"></i>
+        </div>
+        <div class="uncheck-btn" (click)="onCancelEdit()">
+          <i class="fas fa-times"></i>
+        </div>
+      </ng-container>
+      <ng-template #edit>
+        <div class="edit-btn" (click)="onClikedOnEdit()">
+          <i class="fas fa-pencil-alt"></i>
+        </div>
+        <div class="delete-btn" (click)="onDeleteStep()">
+          <i class="far fa-trash-alt"></i>
+        </div>
+      </ng-template>
+    </div>
   </div>
 </div>

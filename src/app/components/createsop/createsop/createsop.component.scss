@@ -2,14 +2,14 @@
 
 .flex{
   display: flex;
-  width: calc(100vw - 40px);
-  height: calc(100vh - 3.4375rem - 60px);
+  width: calc(100% - 40px);
+  height: calc(100% - 3.4375rem - 60px);
   position: fixed;
   top: 3.4375rem;
   right: 0;
   
   .flex-item{
-    width: calc(50vw - 20px);
+    width: calc(100% - 20px);
   }
   
   .flex-item:first-child{
@@ -24,7 +24,7 @@
 .sidebar{
   position: fixed;
   top: 3.4375rem;
-  height: calc(100vh - 3.4375rem);
+  height: calc(100% - 3.4375rem);
   width: 50vw;
   background-color: #040404;
   // overflow: hidden;
@@ -32,17 +32,6 @@
   transition: transform 0.3s ease;
   z-index: 2000;
 }
-// .sidebar::after{
-//   content: 'X';
-//   position: absolute;
-//   width: 50px;
-//   height: 50px;
-//   top: 0;
-//   right: -50px;
-//   background-color: #eeeeee;
-//   text-align: center;
-//   line-height: 50px;
-// }
 
 .sidebar-open{
   transform: translateX(0);
@@ -52,7 +41,7 @@
 .sidebar-buttons{
   position: fixed;
   top: 3.4375rem;
-  height: calc(100vh - 3.4375rem);
+  height: calc(100% - 3.4375rem);
   width: 40px;
   background-color: $sidebar-background-color;
   overflow: hidden;
@@ -69,11 +58,11 @@
   position: fixed;
   bottom: 0;
   right: 0;
-  width: calc(100vw - 40px);
+  width: calc(100% - 40px);
   box-shadow: $box-shadow-top;
   
   .panel-body{
-    width: calc(50vw - 20px);
+    width: 50%;
     height: 60px;
     transition: all 0.3s ease;
 
