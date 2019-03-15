@@ -138,7 +138,11 @@ export class SectionTitleComponent implements OnInit, OnChanges {
 
   // convey the delete message to the parent component
   onDeleteStep($event: Event){
-    this.deleteStep.emit($event);
+    if ($event['mode'] === 'server') {
+      this.deleteStep.emit(Object.assign({sectionInsertionId:this.stepParameters.insertion_id}, $event));
+    } else {
+      this.deleteStep.emit($event);
+    }
   }
 
   /**

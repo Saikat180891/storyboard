@@ -80,7 +80,13 @@ export class RightPanelComponent implements OnInit {
    * @param $event 
    */
   onDeleteStep($event) {
-    this.__steps.deleteStep($event.sectionIndex, $event.stepIndex);
+    if ($event.mode === 'local') {
+      this.__steps.deleteStep($event.sectionIndex, $event.stepIndex);
+    } else if($event.mode === 'server') {
+      this.__rpService.deleteStep(this.__page.userStoryId, $event.stepId, $event.insertionId, $event.sectionInsertionId).subscribe(res => {
+        this.__steps.deleteStep($event.sectionIndex, $event.stepIndex);
+      });
+    }
   }
 
   /**

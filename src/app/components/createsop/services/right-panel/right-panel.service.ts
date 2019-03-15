@@ -61,4 +61,9 @@ export class RightPanelService {
     const endpoint = `/sop/epics/userstories/sections/steps/${stepId}.json`;
     return this.__api.updatePost(endpoint, payload);
   }
+
+  deleteStep(userStoryId: number, stepNumber: number, insertionId: number, sectionInsertionId: number): Observable<any> {
+    const endpoint = `/sop/epics/userstories/${userStoryId}/sections/steps/destroy/${stepNumber}.json?insertion_id=${insertionId}&&section_insertion_id=${sectionInsertionId}&&propagate=${true}`;
+    return this.__api.deleteValue(endpoint);
+  }
 }
