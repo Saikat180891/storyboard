@@ -66,7 +66,21 @@ export class StepCalculationComponent implements OnInit {
   }
 
   onDeleteStep(){
-    this.deleteStep.emit({sectionIndex:this.sectionIndex, stepIndex:this.stepIndex});
+    if (this.stepData.step_id || this.stepData.id) {
+      this.deleteStep.emit({
+        sectionIndex: this.sectionIndex,
+        stepIndex: this.stepIndex,
+        stepId: this.stepData.step_id ? this.stepData.step_id : this.stepData.id,
+        insertionId: this.stepData.insertion_id,
+        mode: 'server'
+      });
+    } else {
+      this.deleteStep.emit({
+        sectionIndex:this.sectionIndex,
+        stepIndex:this.stepIndex,
+        mode: 'local'
+      });
+    }
   }
 
 }

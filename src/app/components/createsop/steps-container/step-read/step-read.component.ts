@@ -67,8 +67,22 @@ export class StepReadComponent implements OnInit {
     this.canEdit = false;
   }
 
-  onDeleteStep(){
-    this.deleteStep.emit({sectionIndex:this.sectionIndex, stepIndex:this.stepIndex});
+  onDeleteStep() {
+    if (this.stepData.step_id || this.stepData.id) {
+      this.deleteStep.emit({
+        sectionIndex: this.sectionIndex,
+        stepIndex: this.stepIndex,
+        stepId: this.stepData.step_id ? this.stepData.step_id : this.stepData.id,
+        insertionId: this.stepData.insertion_id,
+        mode: 'server'
+      });
+    } else {
+      this.deleteStep.emit({
+        sectionIndex:this.sectionIndex,
+        stepIndex:this.stepIndex,
+        mode: 'local'
+      });
+    }
   }
 
 }
