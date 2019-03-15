@@ -90,7 +90,7 @@
 
       div{
         width: 30px;
-        height: 30px;
+        height: 100%;
         @include flex-middle-center();
         cursor: pointer;
       }
