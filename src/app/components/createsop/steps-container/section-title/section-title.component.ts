@@ -79,7 +79,6 @@ export class SectionTitleComponent implements OnInit, OnChanges {
       data: $event,
       index: this.sectionIndex
     });
-    console.log($event)
     if ($event === 'start-loop' || $event === 'end-loop') {
       this.__opbService.toggleLoop();
     }

@@ -21,6 +21,11 @@ export class StepLoopComponent implements OnInit {
 
   constructor() { }
 
+  /**
+   * check for step id, if step id is present that means 
+   * the step in already created and hence should be 
+   * displayed in non-editable mode 
+   */
   ngOnInit() {
     if ( this.stepData.step_id || this.stepData.id) {
       this.data = {
@@ -35,6 +40,9 @@ export class StepLoopComponent implements OnInit {
     this.canEdit = !this.canEdit;
   }
 
+  /**
+   * to edit and create steps is function is common to all the step components
+   */
   onClickOnOk() {
     this.canEdit = false;
     if ( this.stepData.step_id ) {
@@ -67,6 +75,9 @@ export class StepLoopComponent implements OnInit {
     this.displayDialogBox = !this.displayDialogBox;
   }
 
+  /**
+   * to delete the step
+   */
   onDeleteStep(){
     this.deleteStep.emit({sectionIndex:this.sectionIndex, stepIndex:this.stepIndex});
   }
