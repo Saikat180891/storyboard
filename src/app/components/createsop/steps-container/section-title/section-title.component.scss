@@ -17,20 +17,22 @@
     background-color: #fff;
 
     &-title{
+      display: flex;
+      align-items: center;
 
       input[type="text"]:focus{
         border: 1px solid #2A7DE1;
         border-radius: 2px;
       }
-
+      
       span{
         margin-right: 20px;
       }
-
+      
       .edit-section-name{
         height: 30px;
         width: 150px;
-        margin: 10px 0;
+        margin: 10px 16px 10px 0;
         padding: 7px;
         border: 1px solid #D1D1D1;
       }
@@ -52,6 +54,9 @@
       .check-btn{
         color: #6CC24A;
       }
+      .check-btn-disabled{
+        color: #54585A;
+      }
       .cross-btn{
         color: #F47074;
       }
@@ -64,34 +69,32 @@
       .collapsable-btn{
         position: relative;
       }
-      .collapsable-btn::before{
-        content: '';
-        position: absolute;
-        top: -3px;
-        left: 0;
-        width: 1px;
-        height: 30px;
-        background: #DDDDDD;
-      }
     }
   }
 
   &-body{
     width: 100%;
-    padding-bottom: 20px;
     display: flex;
     flex-direction: column;
+    height: auto;
+    transition: max-height 0.4s ease;
+    overflow: hidden;
 
-    .steps{
-      margin: 5px 10px;
+    .steps-margin-around{
+      margin: 5px;
+    }
+    .steps-margin-around:first-child{
+      margin-top: 5px;
+    }
+    .steps-margin-around:last-child{
+      margin-bottom: 5px;
     }
     .droppable-area{
-      height: 85px;
+      padding: 30px 20px;
       border: 1px dashed #989B9C;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 5px 10px;
       color: #989B9C;
       font-weight: bold;
       font-size: 18px;
@@ -101,10 +104,32 @@
       border: 5px dashed #989B9C;
     }
   }
+
+  .step-expansion-panel {
+    position: relative;
+
+    .disable-expansion-panel {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+
+      span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+        font-size: 18px;
+        font-weight: 500;
+      }
+    }
+  }
 }
 .collapse{
-  height: 30px;
-  overflow: hidden;
+  height: 0;
 }
 
 .cdk-drag-preview {
@@ -125,4 +150,25 @@
 
 .section-body.cdk-drop-list-dragging .steps:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section {
+  ::ng-deep {
+    .mat-expansion-panel-body {
+      padding: 10px;
+    }
+    .mat-expansion-panel{
+      background-color: transparent;
+    }
+  }
 }
