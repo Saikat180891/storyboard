@@ -1,20 +1,27 @@
 <div class="container" #dimensionController>
   <div class="header">
-    <span>{{title}} 
-      <span *ngIf="extras">-</span> 
-      {{projectStatus.current_sprint?projectStatus.current_sprint:''}}
-      <span *ngIf="ifButtonRequired" (click)="onButtonClick()" class="extra-btn"> | View Details <i class="far fa-eye"></i></span>
-    </span> 
-    <span *ngIf="selectedSprint"> ({{selectedSprint}})</span>
+    <span
+      >{{ title }}
+      <span *ngIf="extras">-</span>
+      {{ getCurrentSprint() }}
+      <span
+        *ngIf="ifButtonRequired"
+        (click)="onButtonClick()"
+        class="extra-btn"
+      >
+        | View Details <i class="far fa-eye"></i
+      ></span>
+    </span>
+    <span *ngIf="selectedSprint"> ({{ selectedSprint }})</span>
   </div>
   <div class="option" *ngIf="data.length && projectStatus">
-    <span>{{projectStatus.benefits}}</span>
+    <span>{{ projectStatus.benefits }}</span>
     <span>Benefits</span>
   </div>
   <div class="chart" *ngIf="data.length; else message">
     <nvd3 [options]="options" [data]="data"></nvd3>
     <div class="title" *ngIf="meter && projectStatus">
-      <span>{{projectStatus.days_left}}/{{projectStatus.total_days}}</span>
+      <span>{{ projectStatus.days_left }}/{{ projectStatus.total_days }}</span>
       <small>days left</small>
     </div>
   </div>

@@ -8,29 +8,57 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class StepCalculationComponent implements OnInit {
   @Input('sectionId') sectionId:number;
   @Input('stepIndex') stepIndex:number;
+  @Input('stepData') stepData: any;
   @Input('sectionIndex') sectionIndex:number;
   @Output('deleteStep') deleteStep = new EventEmitter();
   @Output('outputChange') outputChange = new EventEmitter();
+
   canEdit:boolean = true;
+
   data = {
     calc_value:'',
     screen:'',
-    stepNumber:''
+    step_number:''
   }
 
   constructor() { }
 
   ngOnInit() {
-    this.data.stepNumber = (this.sectionIndex + 1) + "." + (this.stepIndex + 1);
+    this.data.step_number = (this.sectionIndex + 1) + "." + (this.stepIndex + 1);
+    if ( this.stepData.step_id || this.stepData.id) {
+      this.data = {
+        ...this.stepData.data
+      };
+      this.canEdit = false;
+    }
   }
 
   onClikedOnEdit(){
     this.canEdit = !this.canEdit;
   }
 
-  onClickOnOk(){
+  onClickOnOk() {
     this.canEdit = false;
-    this.outputChange.emit({data:this.data, sectionIndex:this.sectionIndex, stepIndex:this.stepIndex, stepType: 'calculation', sectionId: this.sectionId});
+    if ( this.stepData.step_id ) {
+      this.outputChange.emit({
+        data: this.data,
+        sectionIndex: this.sectionIndex,
+        stepIndex: this.stepIndex,
+        stepType: 'calculation',
+        sectionId: this.sectionId,
+        stepId: this.stepData.step_id,
+        mode: 'edit'
+      });
+    } else {
+      this.outputChange.emit({
+        data: this.data,
+        sectionIndex: this.sectionIndex,
+        stepIndex: this.stepIndex,
+        stepType: 'calculation',
+        sectionId: this.sectionId,
+        mode: 'create'
+      });
+    }
   }
 
   onCancelEdit(){
@@ -38,7 +66,21 @@ export class StepCalculationComponent implements OnInit {
   }
 
   onDeleteStep(){
-    this.deleteStep.emit({sectionIndex:this.sectionIndex, stepIndex:this.stepIndex});
+    if (this.stepData.step_id || this.stepData.id) {
+      this.deleteStep.emit({
+        sectionIndex: this.sectionIndex,
+        stepIndex: this.stepIndex,
+        stepId: this.stepData.step_id ? this.stepData.step_id : this.stepData.id,
+        insertionId: this.stepData.insertion_id,
+        mode: 'server'
+      });
+    } else {
+      this.deleteStep.emit({
+        sectionIndex:this.sectionIndex,
+        stepIndex:this.stepIndex,
+        mode: 'local'
+      });
+    }
   }
 
 }
