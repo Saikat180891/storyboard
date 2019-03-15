@@ -6,14 +6,13 @@ import { OperationBarService } from '../services/operation-bar/operation-bar.ser
   styleUrls: ['./operations-bar.component.scss']
 })
 export class OperationsBarComponent implements OnInit {
-  isLoopDisplayed: boolean;
+  isStartLoopDisplayed: boolean;
 
   constructor(private __loopStatus: OperationBarService) { }
 
   ngOnInit() {
     this.__loopStatus.getLoopStatus().subscribe(res => {
-      this.isLoopDisplayed = res;
-      console.log(this.isLoopDisplayed)
+      this.isStartLoopDisplayed = res;
     });
   }
 }

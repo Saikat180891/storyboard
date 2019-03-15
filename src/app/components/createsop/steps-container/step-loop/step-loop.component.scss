@@ -62,11 +62,14 @@
         cursor: pointer;
       }
 
-      div:nth-child(1){
+      .check-btn{
         color: #6CC24A;
       }
-      div:nth-child(2){
+      .uncheck-btn{
         color: #F47074;
+      }
+      .edit-btn, .delete-btn{
+        color: #2A7DE1;
       }
     }
 

@@ -15,18 +15,18 @@
     </div>
     <div class="controls-btn-group">
       <ng-container *ngIf="canEdit; else edit">
-        <div (click)="onClickOnOk()">
+        <div class="check-btn" (click)="onClickOnOk()">
           <i class="fas fa-check"></i>
         </div>
-        <div (click)="onCancelEdit()">
+        <div class="uncheck-btn" (click)="onCancelEdit()">
           <i class="fas fa-times"></i>
         </div>
       </ng-container>
       <ng-template #edit>
-        <div (click)="onClikedOnEdit()">
+        <div class="edit-btn" (click)="onClikedOnEdit()">
           <i class="fas fa-pencil-alt"></i>
         </div>
-        <div (click)="onDeleteStep()">
+        <div class="delete-btn" (click)="onDeleteStep()">
           <i class="far fa-trash-alt"></i>
         </div>
       </ng-template>
