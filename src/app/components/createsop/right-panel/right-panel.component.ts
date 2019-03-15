@@ -7,7 +7,7 @@ import { StepcontrolService } from '../services/stepcontrol/stepcontrol.service'
 import { DataService } from '../../../data.service';
 import { PageService } from '../services/page/page.service';
 import { SectionListItem } from '../common-model/section-list-item.model';
-import { Observable } from 'rxjs';
+import { Step } from '../common-model/step-type.model';
 import { RightPanelService } from '../services/right-panel/right-panel.service';
 interface StepTypeDropEvent {
   data: string;
@@ -100,20 +100,30 @@ export class RightPanelComponent implements OnInit {
    * @param $event 
    */
   onOutputChange($event){
-    const endpoint = `/sop/epics/userstories/${this.__page.userStoryId}/sections/${$event.sectionId}.json`;
-    const payload = {
-      prev_insertion_id: this.__steps.getPreviousInsertionIdOfStepInSection($event.sectionIndex, $event.stepIndex),
-      next_insertion_id: this.__steps.getNextInsertionIdOfStepInSection($event.sectionIndex, $event.stepIndex),
-      section_insertion_id: $event.sectionId,
-      step_group_insertion_id: '',
-      propagate: true,
-      type: $event.stepType,
-      data: $event.data,
-      screen_id: typeof $event.data.screen === 'string' ? null : $event.data.screen
-    };
-    this.__api.post(endpoint, payload).subscribe(res => {
-      this.__steps.updateStepWithResponse($event.sectionIndex, $event.stepIndex, res);
-    });
+    if ( $event.mode === 'create' ) {
+      const payload = {
+        prev_insertion_id: this.__steps.getPreviousInsertionIdOfStepInSection($event.sectionIndex, $event.stepIndex),
+        next_insertion_id: this.__steps.getNextInsertionIdOfStepInSection($event.sectionIndex, $event.stepIndex),
+        section_insertion_id: $event.sectionId,
+        step_group_insertion_id: '',
+        propagate: true,
+        type: $event.stepType,
+        data: $event.data,
+        screen_id: typeof $event.data.screen === 'string' ? null : $event.data.screen
+      };
+      this.__rpService.createStep(this.__page.userStoryId, $event.sectionId, payload).subscribe(res => {
+        this.__steps.updateStepWithResponse($event.sectionIndex, $event.stepIndex, res);
+      });
+    } else if ( $event.mode === 'edit' ) {
+      const payload = {
+        type: $event.stepType,
+        data: $event.data,
+        screen_id: typeof $event.data.screen === 'string' ? null : $event.data.screen
+      };
+      this.__rpService.updateStep($event.stepId, payload).subscribe((res: Step) => {
+        this.__steps.modifyStepOnEdit($event.sectionIndex, $event.stepIndex, res);
+      });
+    }
   }
 
   /**

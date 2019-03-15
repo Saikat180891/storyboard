@@ -37,6 +37,16 @@ export class StepcontrolService {
     };
   }
 
+  modifyStepOnEdit(sectionIndex: number, stepIndex: number, data: Step) {
+    for (const key in data) {
+      if (key === 'screenID') {
+        this.sopSectionList[sectionIndex].steps_list[stepIndex]['screen_id'] = data[key];
+      } else if (key in this.sopSectionList[sectionIndex].steps_list[stepIndex]) {
+        this.sopSectionList[sectionIndex].steps_list[stepIndex][key] = data[key];
+      }
+    }
+  }
+
   /**
    * Creates a new section
    */

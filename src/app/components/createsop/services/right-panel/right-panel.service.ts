@@ -51,4 +51,14 @@ export class RightPanelService {
     const endpoint = `/sop/epics/userstories/${userStoryId}/sections/create.json`;
     return this.__api.post(endpoint, payload);
   }
+
+  createStep(userStoryId: number, sectionId: number, payload: any): Observable<any> {
+    const endpoint = `/sop/epics/userstories/${userStoryId}/sections/${sectionId}.json`;
+    return this.__api.post(endpoint, payload);
+  }
+
+  updateStep(stepId: number, payload: any): Observable<any> {
+    const endpoint = `/sop/epics/userstories/sections/steps/${stepId}.json`;
+    return this.__api.updatePost(endpoint, payload);
+  }
 }

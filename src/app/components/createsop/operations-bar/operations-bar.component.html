@@ -18,13 +18,13 @@
   <div class="full-dark-btn" appDraggable data-buttontype="condition" title="Condition">
     Condition
   </div>
-  <ng-container *ngIf="true; else endLoop">
+  <ng-container *ngIf="isStartLoopDisplayed; else displayEndLoop">
     <div class="full-blue-btn" appDraggable data-buttontype="start-loop" title="Loop">
       Loop
     </div>
   </ng-container>
-  <ng-template #endLoop>
-    <div class="full-dark-btn" appDraggable data-buttontype="end-loop" title="End Loop">
+  <ng-template #displayEndLoop>
+    <div class="full-red-btn" appDraggable data-buttontype="end-loop" title="End Loop">
       End Loop
     </div>
   </ng-template>
