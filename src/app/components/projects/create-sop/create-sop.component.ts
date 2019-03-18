@@ -202,7 +202,7 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
    * @param option
    */
   onSelect(option: any) {
-    let temporaryObject = {
+    const temporaryObject = {
       user: option.name ? option.name : option.email,
     };
     this.createdAssignees.unshift(temporaryObject);
@@ -230,7 +230,7 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
    * @param index -- returns index of the array
    */
   onSelectionChange(value: string, index: number) {
-    let temporaryObject = this.createdAssignees[index];
+    const temporaryObject = this.createdAssignees[index];
     temporaryObject.role = value;
     this.createdAssignees[index] = temporaryObject;
   }
@@ -260,7 +260,7 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
   onFileSelected(fileSelected) {
     if (fileSelected.target.files && fileSelected.target.files[0]) {
       this.projectDetails.logo = fileSelected.target.files[0];
-      let reader: any = new FileReader();
+      const reader: any = new FileReader();
       reader.readAsDataURL(fileSelected.target.files[0]);
       reader.onload = fileSelected => {
         this.filePreview = fileSelected.target.result;
@@ -290,9 +290,9 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
    */
 
   validateForm(object: ProjectDetails) {
-    let validationStatus = [];
+    const validationStatus = [];
 
-    for (let key in object) {
+    for (const key in object) {
       if (key == "clientName") {
         object[key] != ""
           ? (this.validateClientName = validationStatus[0] = false)
@@ -324,9 +324,8 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
 
     if (validationStatus.indexOf(true) == -1) {
       return 0;
-    } else {
-      return -1;
     }
+    return -1;
   }
 
   /**
@@ -341,7 +340,7 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   validateAssigneeArrayList(list: Array<AssignUser>) {
-    let validationFailed = [];
+    const validationFailed = [];
     for (let i = 0; i < list.length; i++) {
       if (!list[i].role) {
         validationFailed.push({
@@ -353,32 +352,31 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
 
     if (validationFailed.length) {
       return validationFailed;
-    } else {
-      return true;
     }
+    return true;
   }
 
   indicateUserIfValidationWentWrong(validationStatus: any | boolean) {
     if (validationStatus == true) {
       return true;
-    } else {
-      validationStatus.forEach((ele: any, i: number) => {
-        this.createdAssignees[ele.index].indecatedUserAboutMistakes = true;
-      });
     }
+    validationStatus.forEach((ele: any, i: number) => {
+      this.createdAssignees[ele.index].indecatedUserAboutMistakes = true;
+    });
+
     return false;
   }
 
   onCreateNew() {
-    let validationCheck = this.validateForm(this.projectDetails);
-    let assigneeValidationStatus = this.indicateUserIfValidationWentWrong(
+    const validationCheck = this.validateForm(this.projectDetails);
+    const assigneeValidationStatus = this.indicateUserIfValidationWentWrong(
       this.validateAssigneeArrayList(
         this.resetValidation(this.createdAssignees)
       )
     );
-    if (validationCheck == 0 && assigneeValidationStatus == true) {
+    if (validationCheck == 0 && assigneeValidationStatus) {
       this.spinner.show();
-      let formData = this.JSONtoFormData(this.projectDetails);
+      const formData = this.JSONtoFormData(this.projectDetails);
       let sopId: number;
       this._dataService.postData("/sop.json", formData).subscribe(
         //if response successfull
@@ -413,7 +411,7 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
    * @param year
    */
   formatYear(year) {
-    let digits = year.toString().split("");
+    const digits = year.toString().split("");
     return "" + digits[2] + digits[3];
   }
 
@@ -424,7 +422,7 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
    * @param date
    */
   arrangeDateInCorrectFormat(date) {
-    let newDate = date.toString().split("/");
+    const newDate = date.toString().split("/");
     this.editSelectedDate = new Date();
     this.editSelectedDate.setFullYear(Number(newDate[2]));
     this.editSelectedDate.setMonth(Number(newDate[1]) - 1);
@@ -433,8 +431,8 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   JSONtoFormData(json) {
-    let formData = new FormData();
-    for (let fieldValue in json) {
+    const formData = new FormData();
+    for (const fieldValue in json) {
       formData.append(fieldValue, json[fieldValue]);
     }
     return formData;

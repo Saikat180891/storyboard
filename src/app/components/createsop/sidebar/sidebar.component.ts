@@ -232,7 +232,7 @@ export class SidebarComponent implements OnInit {
     this.isPlaying = false;
 
     function dataURLtoFile(dataurl, filename) {
-      var arr = dataurl.split(","),
+      let arr = dataurl.split(","),
         mime = arr[0].match(/:(.*?);/)[1],
         bstr = atob(arr[1]),
         n = bstr.length,
@@ -243,11 +243,11 @@ export class SidebarComponent implements OnInit {
       return new File([u8arr], filename, { type: mime });
     }
 
-    let canvas = this.canvas.nativeElement;
-    let ctx = canvas.getContext("2d");
+    const canvas = this.canvas.nativeElement;
+    const ctx = canvas.getContext("2d");
 
-    let imageWidth = this.videoPlayer.nativeElement.videoWidth;
-    let imageHeight = this.videoPlayer.nativeElement.videoHeight;
+    const imageWidth = this.videoPlayer.nativeElement.videoWidth;
+    const imageHeight = this.videoPlayer.nativeElement.videoHeight;
     this.canvas.nativeElement.height = imageHeight;
     this.canvas.nativeElement.width = imageWidth;
 
@@ -259,7 +259,7 @@ export class SidebarComponent implements OnInit {
       imageHeight
     );
     let imageData: any, file: any;
-    let img = new Image(imageWidth, imageHeight);
+    const img = new Image(imageWidth, imageHeight);
     try {
       imageData = canvas.toDataURL("image/jpeg");
       img.crossOrigin = "anonymous";
@@ -267,7 +267,7 @@ export class SidebarComponent implements OnInit {
     } catch (err) {
     } finally {
       file = dataURLtoFile(imageData, "image.jpeg");
-      let snapshotData = new FormData();
+      const snapshotData = new FormData();
       snapshotData.append("image", file);
       const apiEndpoint = `/sop/${this.__page.projectId}/image.json?video_id=${
         this.__page.videoId
@@ -347,7 +347,7 @@ export class SidebarComponent implements OnInit {
    */
   onImageUpload(file) {
     const apiEndpoint = `/sop/${this.__page.projectId}/image.json`;
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append("image", file);
     this.__sidebarService.uploadImage(apiEndpoint, formData).subscribe(res => {
       this.fetchAllSnapshotsAlreadyTaken();
@@ -359,11 +359,11 @@ export class SidebarComponent implements OnInit {
    * @param secs time in seconds
    */
   convertSecondsToMinutes(time: number) {
-    var toHHMMSS = secs => {
-      var sec_num = parseInt(secs, 10);
-      var hours = Math.floor(sec_num / 3600) % 24;
-      var minutes = Math.floor(sec_num / 60) % 60;
-      var seconds = sec_num % 60;
+    const toHHMMSS = secs => {
+      const sec_num = parseInt(secs, 10);
+      const hours = Math.floor(sec_num / 3600) % 24;
+      const minutes = Math.floor(sec_num / 60) % 60;
+      const seconds = sec_num % 60;
       return [hours, minutes, seconds]
         .map(v => (v < 10 ? "0" + v : v))
         .filter((v, i) => v !== "00" || i > 0)
@@ -374,8 +374,8 @@ export class SidebarComponent implements OnInit {
   }
 
   onChangeCurrentTime($event) {
-    let actualTime = ($event / 100) * this.videoPlayer.nativeElement.duration;
-    let bufferedStart = this.videoPlayer.nativeElement.buffered.start(0);
+    const actualTime = ($event / 100) * this.videoPlayer.nativeElement.duration;
+    const bufferedStart = this.videoPlayer.nativeElement.buffered.start(0);
     this.videoPlayer.nativeElement.currentTime = actualTime;
   }
 
@@ -396,7 +396,7 @@ export class SidebarComponent implements OnInit {
    */
   onVideoUpload($event) {
     const apiEndpoint = `/sop/${this.__page.projectId}/video.json`;
-    let videoData = new FormData();
+    const videoData = new FormData();
     videoData.append("video", $event);
     this.videoUpload = this.__sidebarService
       .sendVideo(apiEndpoint, videoData)

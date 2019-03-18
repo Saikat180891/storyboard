@@ -52,8 +52,8 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
    */
   getListOfAllProjects() {
     this.__spinner.show();
-    let projectlist: any = [];
-    let permissions = [];
+    const projectlist: any = [];
+    const permissions = [];
     // make an api call to fetch the project list
     this._ContainerService.getListOfAllProjects().subscribe(
       res => {

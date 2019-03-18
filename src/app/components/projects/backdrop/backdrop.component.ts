@@ -274,7 +274,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   onFileSelected(fileSelected) {
     if (fileSelected.target.files && fileSelected.target.files[0]) {
       this.projectDataToEdit.logo = fileSelected.target.files[0];
-      let reader: any = new FileReader();
+      const reader: any = new FileReader();
       reader.readAsDataURL(fileSelected.target.files[0]);
       reader.onload = fileSelected => {
         this.filePreview = fileSelected.target.result;
@@ -309,14 +309,14 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * Create a new SOP on click
    */
   validateForm(object) {
-    let validationStatus = [];
+    const validationStatus = [];
 
-    for (let key in object) {
+    for (const key in object) {
     }
     console.log(validationStatus);
 
     let sum = 0;
-    for (let i of validationStatus) {
+    for (const i of validationStatus) {
       if (i == false) {
         sum = sum + 1;
       }
@@ -330,7 +330,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   onAddUser() {
-    let temporaryObject = {
+    const temporaryObject = {
       inviteEmail: "",
       inviteRole: "",
       inviteFirstName: "",
@@ -348,8 +348,8 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
   onSave() {
     this.spinner.show();
 
-    let formData = new FormData();
-    for (let formFieldValue in this.projectDataToEdit) {
+    const formData = new FormData();
+    for (const formFieldValue in this.projectDataToEdit) {
       formData.append(formFieldValue, this.projectDataToEdit[formFieldValue]);
     }
     if (typeof formData.get("logo") === "string") {
@@ -385,8 +385,8 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
           });
         },
         err => {
-          var keys = Object.keys(err.error);
-          var error = "";
+          let keys = Object.keys(err.error);
+          let error = "";
           keys.forEach(key => {
             error += key + ": " + err.error[key] + "\n";
           });
@@ -408,13 +408,13 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * @param year
    */
   formatYear(year) {
-    let digits = year.toString().split("");
+    const digits = year.toString().split("");
     return "" + digits[2] + digits[3];
   }
 
   JSONtoFormData(json) {
-    let formData = new FormData();
-    for (let fieldValue in json) {
+    const formData = new FormData();
+    for (const fieldValue in json) {
       if (typeof fieldValue === "string") {
         delete json.fieldValue;
       } else {

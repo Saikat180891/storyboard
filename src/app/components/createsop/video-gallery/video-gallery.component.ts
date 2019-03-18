@@ -42,7 +42,7 @@ export class VideoGalleryComponent implements OnInit, OnChanges {
   }
 
   onViewImage(index: number, content: any) {
-    this.optionSelected.emit({ index: index, content: content });
+    this.optionSelected.emit({ index, content });
   }
 
   onFileSelected($event: any) {
@@ -50,10 +50,10 @@ export class VideoGalleryComponent implements OnInit, OnChanges {
   }
 
   onPlayVideo(content: any, index: number) {
-    this.optionSelected.emit({ index: index, content: content });
+    this.optionSelected.emit({ index, content });
   }
 
   onDeleteContent(content, i, type) {
-    this.deleteContent.emit({ content: content, index: i, type: type });
+    this.deleteContent.emit({ content, index: i, type });
   }
 }

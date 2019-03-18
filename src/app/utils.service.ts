@@ -15,7 +15,7 @@ export class UtilsService {
   arrangeDateInCorrectFormat(date) {
     const newDate = date.toString().split("/");
     console.log(newDate);
-    let currentDate = new Date();
+    const currentDate = new Date();
     currentDate.setFullYear(Number(newDate[2]));
     currentDate.setMonth(Number(newDate[0]) - 1);
     currentDate.setDate(Number(newDate[1]));
@@ -27,7 +27,7 @@ export class UtilsService {
    * @param date: Date Object
    */
   datetypeToStringWithTime(date) {
-    let myDate = new Date(date);
+    const myDate = new Date(date);
     return (
       myDate.getFullYear() +
       "-" +
@@ -43,7 +43,7 @@ export class UtilsService {
    * @param date: Date Object
    */
   datetypeToStringWithoutTime(date) {
-    let myDate = new Date(date);
+    const myDate = new Date(date);
     return (
       myDate.getFullYear() +
       "-" +
@@ -58,7 +58,7 @@ export class UtilsService {
    * @param date: Date with YYYY-mm-dd
    */
   formatDateToUS(date) {
-    let myDate = new Date(date);
+    const myDate = new Date(date);
     // console.log(myDate)
     return (
       myDate.getMonth() +

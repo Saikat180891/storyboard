@@ -64,9 +64,8 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
   checkIfPermissiongranted(requiredPermission: string) {
     if (requiredPermission in this.permissions) {
       return !this.permissions[requiredPermission];
-    } else {
-      return true;
     }
+    return true;
   }
 
   toggleRules(event, uid, uss_name) {
@@ -132,7 +131,7 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
   }
 
   onDelete(id) {
-    this.deleteUserStory.emit({ id: id, status: true });
+    this.deleteUserStory.emit({ id, status: true });
   }
 
   restoreUserStories(id) {

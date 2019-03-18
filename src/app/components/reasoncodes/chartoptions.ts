@@ -10,10 +10,10 @@ export const charts = {
         bottom: 10,
         left: 10,
       },
-      x: function(d) {
+      x(d) {
         return d.key;
       },
-      y: function(d) {
+      y(d) {
         return d.y;
       },
       showLabels: false,
@@ -49,14 +49,14 @@ export const charts = {
         bottom: 50,
         left: 55,
       },
-      x: function(d) {
+      x(d) {
         return d.label;
       },
-      y: function(d) {
+      y(d) {
         return d.value;
       },
       showValues: true,
-      valueFormat: function(d) {
+      valueFormat(d) {
         return d3.format(",.1f")(d);
       },
       duration: 500,
@@ -80,10 +80,10 @@ export const charts = {
         bottom: 30,
         left: 40,
       },
-      x: function(d) {
+      x(d) {
         return d[0];
       },
-      y: function(d) {
+      y(d) {
         return d[1];
       },
       useVoronoi: false,
@@ -95,12 +95,12 @@ export const charts = {
       },
       xAxis: {
         showMaxMin: false,
-        tickFormat: function(d) {
+        tickFormat(d) {
           return d3.time.format("%x")(new Date(d));
         },
       },
       yAxis: {
-        tickFormat: function(d) {
+        tickFormat(d) {
           return d3.format(",.2f")(d);
         },
       },

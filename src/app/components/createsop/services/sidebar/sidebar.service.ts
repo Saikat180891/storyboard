@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { HttpClient, HttpRequest, HttpHeaders } from "@angular/common/http";
 import { CookieService } from "ngx-cookie-service";
 
-let httpOptions = new HttpHeaders();
+const httpOptions = new HttpHeaders();
 
 @Injectable({
   providedIn: "root",

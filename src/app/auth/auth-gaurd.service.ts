@@ -37,10 +37,9 @@ export class AuthGaurdService implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
     if (this.getToken()) {
       return this.getToken();
-    } else {
-      this.router.navigate(["/"]);
-      return this.getToken();
     }
+    this.router.navigate(["/"]);
+    return this.getToken();
   }
 
   getToken() {
@@ -59,11 +58,10 @@ export class AuthGaurdService implements CanActivate {
           localStorage.setItem("userName", res["name"]);
         }
         return true;
-      } else {
-        this.router.navigate(["/"]);
-        localStorage.clear();
-        return false;
       }
+      this.router.navigate(["/"]);
+      localStorage.clear();
+      return false;
     });
     return false;
   }

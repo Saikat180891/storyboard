@@ -35,6 +35,6 @@ export class SidebarButtonsComponent implements OnInit {
      */
     this.selected = index;
     this.openMediaPane = !this.openMediaPane;
-    this.open.emit({ type: type, shouldOpen: this.openMediaPane });
+    this.open.emit({ type, shouldOpen: this.openMediaPane });
   }
 }

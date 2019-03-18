@@ -36,8 +36,8 @@ export class ExportDialogBoxComponent implements OnInit {
 
   onExportAuditTrail() {
     if (this.projectTypeSelected == 2 && this.startDate && this.endDate) {
-      let startDate = this.reArrangeDate(this.startDate);
-      let endDate = this.reArrangeDate(this.endDate);
+      const startDate = this.reArrangeDate(this.startDate);
+      const endDate = this.reArrangeDate(this.endDate);
       this.__rcService.downLoadAuditTrailFile(
         this.__rcService.sopId,
         startDate,
@@ -50,9 +50,9 @@ export class ExportDialogBoxComponent implements OnInit {
   }
 
   reArrangeDate(date) {
-    let newDate = new Date(date);
+    const newDate = new Date(date);
 
-    let strDate =
+    const strDate =
       newDate.getFullYear() +
       "-" +
       (newDate.getMonth() + 1) +

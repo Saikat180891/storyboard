@@ -52,7 +52,7 @@ export class ColoredDropdownComponent
   changeColorofDefaultOption() {
     this.options.forEach(element => {
       if (element.status === this.defaultOption) {
-        let pos = this.options.indexOf(element);
+        const pos = this.options.indexOf(element);
         this.selected = this.value = this.options[pos];
         this.applyPadding = true;
       }

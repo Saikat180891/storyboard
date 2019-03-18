@@ -38,7 +38,7 @@ export class SignupService {
     numberOfElements = /[^a-zA-Z0-9]/.test(password)
       ? ++numberOfElements
       : numberOfElements; // Special characters (inc. space)
-    let password_status = {};
+    const password_status = {};
     if (password.length < 8) {
       password_status["strong_password"] = false;
       password_status["passwordMessage"] = "Min 8 characters required";

@@ -76,11 +76,10 @@ export class AppcontrolService {
   }
 
   firstZero(value) {
-    let temp = value.toString().split("");
+    const temp = value.toString().split("");
     if (temp.length > 1) {
       return value;
-    } else {
-      return 0 + "" + value;
     }
+    return 0 + "" + value;
   }
 }

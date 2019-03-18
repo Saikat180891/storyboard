@@ -40,7 +40,7 @@ export class PermissionsDirective implements OnInit {
 
   ngOnInit() {
     //storing the list of permission received from the backend in a local variable
-    let grantedPermissions = this.appCanAccess.permissionList;
+    const grantedPermissions = this.appCanAccess.permissionList;
     //check if action attribute has 'disable' as parameter or not
     if (this.appCanAccess.action == "disable") {
       //check if the required permission is present in the permission list or not

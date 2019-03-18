@@ -54,7 +54,7 @@ export class EditUserStoryService {
         response => {
           this._rcService.userStories.forEach(element => {
             if (element.id === usID) {
-              let pos = this._rcService.userStories.indexOf(element);
+              const pos = this._rcService.userStories.indexOf(element);
               this._rcService.userStories[pos] = response;
             }
           });

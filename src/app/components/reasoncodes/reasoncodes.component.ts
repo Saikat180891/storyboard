@@ -240,7 +240,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
   onOpenAddSprint() {
     this._reasonCode.getSprint(this._reasonCode.sopId);
     this._reasonCode.getReasonCode(this._reasonCode.sopId);
-    let sprints = this._reasonCode.sprintConfig;
+    const sprints = this._reasonCode.sprintConfig;
     this.openAddSprint = !this.openAddSprint;
   }
 
@@ -252,7 +252,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
   createOptionsWithSprintName() {
     this._reasonCode.getSprint(this._reasonCode.sopId);
     this.sprintOptions = [];
-    let sprints = this._reasonCode.sprintConfig;
+    const sprints = this._reasonCode.sprintConfig;
     sprints.forEach(ele => {
       let temp = {};
       temp = Object.assign(
@@ -272,7 +272,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
     this._reasonCode.getReasonCode(this._reasonCode.sopId);
     this.reasonCodeOptions = [];
 
-    let rcCodes = this._reasonCode.reasonCodeData;
+    const rcCodes = this._reasonCode.reasonCodeData;
     rcCodes.forEach(element => {
       let temp = {};
       temp = Object.assign(
@@ -416,7 +416,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
   }
 
   makePath() {
-    let filter = this._reasonCode.convertToStringPath(
+    const filter = this._reasonCode.convertToStringPath(
       this._reasonCode.filterItems
     );
     this._reasonCode.filterPath = filter;
@@ -430,7 +430,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
   }
 
   onRemoveFilter(value: string, index: number) {
-    for (let key in this._reasonCode.filterItems) {
+    for (const key in this._reasonCode.filterItems) {
       if (key.indexOf(value) != -1) {
         delete this._reasonCode.filterItems[key];
         this._reasonCode.filteredValues.splice(index, 1);
@@ -468,8 +468,8 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
    * @param date
    */
   formatDate(date) {
-    let dateStr = new Date(date);
-    let strDate =
+    const dateStr = new Date(date);
+    const strDate =
       "" +
       dateStr.getDate() +
       "/" +
@@ -484,7 +484,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
    * @param year
    */
   formatYear(year) {
-    let digits = year.toString().split("");
+    const digits = year.toString().split("");
     return "" + digits[2] + digits[3];
   }
 }

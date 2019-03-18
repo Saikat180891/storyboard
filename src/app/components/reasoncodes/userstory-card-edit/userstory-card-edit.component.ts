@@ -213,10 +213,10 @@ export class UserstoryCardEditComponent implements OnInit {
       this.userStoryReasonCodeValidator = false;
       this.validationSuccessfull[5] = 1;
     }
-    var value = this.validationSuccessfull.reduce((acc, val) => {
+    let value = this.validationSuccessfull.reduce((acc, val) => {
       return acc + val;
     });
-    var pattern = /^([0-9]*(\.)?)[0-9]*$/;
+    const pattern = /^([0-9]*(\.)?)[0-9]*$/;
     if (
       this.editUSData.ftes != null &&
       this.editUSData.ftes != "-----" &&
@@ -298,7 +298,7 @@ export class UserstoryCardEditComponent implements OnInit {
     this.editUSData.sprint_name = $event.status;
     this.__rcService.sprintConfig.forEach(element => {
       if (element.sprint_name === this.editUSData.sprint_name) {
-        let date = new Date(
+        const date = new Date(
           JSON.parse(
             JSON.stringify(
               element.end_date

@@ -57,7 +57,7 @@ export class UserstoryFilterComponent implements OnInit, AfterContentChecked {
   }
 
   onApplyFilter() {
-    let filter = this.__rcService.convertToStringPath(
+    const filter = this.__rcService.convertToStringPath(
       this.__rcService.filterItems
     );
     this.__rcService.filterPath = filter;

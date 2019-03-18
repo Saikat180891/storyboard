@@ -37,7 +37,7 @@ export class AuthComponent {
    *  Calls a service module for external User Login
    */
   externalUserLogin() {
-    let login_details = { email: this.email, password: this.password };
+    const login_details = { email: this.email, password: this.password };
     console.log("Login Details", login_details);
     this.authService.externalUserLogin(login_details);
   }
@@ -60,7 +60,7 @@ export class AuthComponent {
    *  Function Calls a service to forgotPassword and navigate to the respective page on success or fail
    */
   forgotPassword() {
-    let forgot_password_fields = { email: this.email };
+    const forgot_password_fields = { email: this.email };
     if (this.email) {
       this.errorMessage = "";
       this.authService

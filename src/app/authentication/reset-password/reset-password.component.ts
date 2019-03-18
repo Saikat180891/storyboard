@@ -45,7 +45,7 @@ export class ResetPasswordComponent implements OnInit {
    * Calls a service to check if the password is strong password or not
    */
   checkStrength() {
-    let password_status = this.signUpService.strengthMessage(this.password);
+    const password_status = this.signUpService.strengthMessage(this.password);
     this.strong_password = password_status["strong_password"];
     this.passwordMessage = password_status["passwordMessage"];
   }
@@ -68,7 +68,7 @@ export class ResetPasswordComponent implements OnInit {
    * Calls a resetPassword Service to reset password and navigate to the respective page on success or failure
    */
   resetPassword() {
-    let reset_password_fields = {
+    const reset_password_fields = {
       email: this.email,
       password: this.password,
       reset_password_token: this.passwordResetToken,

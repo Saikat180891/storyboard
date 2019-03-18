@@ -60,7 +60,7 @@ export class SignupusersComponent implements OnInit {
    */
   checkStrength() {
     console.log(this.password);
-    let password_status = this._api.strengthMessage(this.password);
+    const password_status = this._api.strengthMessage(this.password);
     this.strong_password = password_status["strong_password"];
     this.passwordMessage = password_status["passwordMessage"];
   }
@@ -76,7 +76,7 @@ export class SignupusersComponent implements OnInit {
    * Calls SignUp service to externalSignUp
    */
   externalSignup() {
-    let signup_details = {
+    const signup_details = {
       email: this.email,
       password: this.password,
       invitation_id: this.invitation_id,
