@@ -37,7 +37,6 @@ export class CreateUserstoryService {
     const api = `/sop/epics/${
       this.sopId
     }/userstories/${sprintID}/${reasonCodeId}.json`;
-    console.log(api, payload);
     this.__api.postData(api, payload).subscribe(
       response => {
         this.spinner.show();
@@ -51,7 +50,7 @@ export class CreateUserstoryService {
         this.__rcService.getCurrentSprintData(this.sopId);
       },
       err => {
-        console.log("Error while creating user story", err);
+        // TODO: error handling - what should the user see when this fails?
       },
       () => {
         this.spinner.hide();

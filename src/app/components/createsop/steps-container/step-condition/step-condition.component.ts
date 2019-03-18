@@ -57,9 +57,7 @@ export class StepConditionComponent implements OnInit {
     this.addAnotherRow.splice(index, 1);
   }
 
-  onChangeSelection($event) {
-    console.log(this.conditionSelection);
-  }
+  onChangeSelection($event) {}
 
   onDeleteStep() {
     if (this.stepData.step_id || this.stepData.id) {

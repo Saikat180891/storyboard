@@ -14,7 +14,6 @@ export class UtilsService {
    */
   arrangeDateInCorrectFormat(date) {
     const newDate = date.toString().split("/");
-    console.log(newDate);
     const currentDate = new Date();
     currentDate.setFullYear(Number(newDate[2]));
     currentDate.setMonth(Number(newDate[0]) - 1);
@@ -59,7 +58,6 @@ export class UtilsService {
    */
   formatDateToUS(date) {
     const myDate = new Date(date);
-    // console.log(myDate)
     return (
       myDate.getMonth() +
       1 +

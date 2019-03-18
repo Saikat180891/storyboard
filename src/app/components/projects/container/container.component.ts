@@ -59,7 +59,6 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
       res => {
         // rearrange the project list as required for the frontend
         res.forEach(element => {
-          // console.log(element["due_date"] + " "+ this.__utils.formatDateToUS(element["due_date"]));
           projectlist.push({
             themeColor: this.__uic.colorPicker[
               this._ContainerService.getUniqueNumber()

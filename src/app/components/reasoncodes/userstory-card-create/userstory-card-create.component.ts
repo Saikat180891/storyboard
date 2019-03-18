@@ -143,8 +143,6 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
   }
 
   onCreate() {
-    console.log(this.userStoryPayload);
-
     if (this.userStoryPayload.us_number == "") {
       this.userStoryNumberValidator = true;
       this.validationSuccessfull[0] = 0;

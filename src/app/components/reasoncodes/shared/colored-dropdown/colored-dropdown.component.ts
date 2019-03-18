@@ -67,7 +67,6 @@ export class ColoredDropdownComponent
     event.stopPropagation();
     this.selected = this.value = option;
     this.applyPadding = true;
-    console.log(this.applyPadding);
     this.optionSelected.emit(option);
     this.isOpen = false;
   }

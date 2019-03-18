@@ -157,7 +157,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    */
   @HostListener("document:keyup.escape", ["$event"])
   keyEvent(event: KeyboardEvent) {
-    //console.log(event)
     if (event.keyCode === KEY_CODE.ESCAPE) {
       this.onOverlayClose();
     }
@@ -313,7 +312,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
 
     for (const key in object) {
     }
-    console.log(validationStatus);
 
     let sum = 0;
     for (const i of validationStatus) {

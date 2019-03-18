@@ -397,7 +397,6 @@ export class ReasonCodeService {
       temp.push(formatedText[0]);
       splitedElements.push(formatedText);
     }
-    // console.log(temp, splitedElements)
 
     const filterValues = function() {
       const ele = [];
@@ -407,7 +406,6 @@ export class ReasonCodeService {
       return ele;
     };
     this.filteredValues = filterValues();
-    // console.log(this.filteredValues)
 
     function removeDups(names) {
       const unique = {};
@@ -419,7 +417,6 @@ export class ReasonCodeService {
       return Object.keys(unique);
     }
     keysExtracted = removeDups(temp);
-    // console.log(keysExtracted)
 
     keysExtracted.forEach(element => {
       const newArray = [];
@@ -457,7 +454,6 @@ export class ReasonCodeService {
       url = url + "&" + "verified_test_cases=False";
       this.filteredValues.push("Verified Test Cases = False");
     }
-    // console.log(url);
     return url;
   }
 

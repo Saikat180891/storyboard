@@ -38,7 +38,6 @@ export class AuthComponent {
    */
   externalUserLogin() {
     const login_details = { email: this.email, password: this.password };
-    console.log("Login Details", login_details);
     this.authService.externalUserLogin(login_details);
   }
 

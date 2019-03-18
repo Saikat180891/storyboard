@@ -27,9 +27,7 @@ export class VideoGalleryComponent implements OnInit, OnChanges {
     private __page: PageService
   ) {}
 
-  ngOnInit() {
-    // console.log(this.data)
-  }
+  ngOnInit() {}
 
   ngOnChanges() {
     // if(this.type == 'VIDEO'){

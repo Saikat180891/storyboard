@@ -68,7 +68,6 @@ export class CreatesopComponent
   onRequestedSelectType($event) {
     // if($event === 'section'){
     //   this.__steps.sopStepsList.push({sectionName:'section name'});
-    //   console.log(this.__steps.sopStepsList);
     // }
   }
 

@@ -210,9 +210,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
     this.showBenefitsChart = true;
   }
 
-  onAddSprint() {
-    console.log(this.addSprintPayload);
-  }
+  onAddSprint() {}
 
   showNotification() {}
 
@@ -400,8 +398,6 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
       `/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`,
       path
     );
-
-    // console.log(path)
   }
 
   onClearAllFilters() {

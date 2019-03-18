@@ -58,7 +58,6 @@ export class AppcontrolService {
   }
 
   getCardEditValues() {
-    // console.log(this.editCard)
     return this.editCard;
   }
 

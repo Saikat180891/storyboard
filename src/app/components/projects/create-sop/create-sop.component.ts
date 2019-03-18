@@ -158,7 +158,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
    */
   @HostListener("document:keyup.escape", ["$event"])
   keyEvent(event: KeyboardEvent) {
-    //console.log(event)
     if (event.keyCode === KEY_CODE.ESCAPE) {
       this.onOverlayClose();
     }
@@ -169,7 +168,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
    */
   @HostListener("document:keyup.enter", ["$event"])
   keyEventEnter(event: KeyboardEvent) {
-    //console.log(event)
     if (event.keyCode === KEY_CODE.ENTER) {
       this.onCreateNew();
     }
@@ -277,11 +275,9 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   onDueDateChange($event: Date) {
-    console.log($event);
     this.projectDetails.due_date = this.utils.datetypeToStringWithoutTime(
       $event
     );
-    console.log(this.projectDetails.due_date);
     // this.projectDetails.due_date = $event
   }
 

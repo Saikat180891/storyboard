@@ -50,7 +50,6 @@ export class DataService implements OnInit {
    * Get the data from the server to load the cards
    */
   fetchData(param) {
-    // console.log(this.apiUrl + param)
     return this.http.get<any[]>(this.apiUrl + param, { withCredentials: true });
   }
 
