@@ -1,4 +1,4 @@
-.filter-container{
+.filter-container {
   width: 450px;
   // height: 270px;
   padding: 10px;
@@ -8,7 +8,7 @@
   flex-direction: column;
   align-content: space-between;
   border-radius: 5px;
-  .filter-body{
+  .filter-body {
     display: flex;
     flex-direction: column;
     max-height: 300px;
@@ -17,26 +17,26 @@
     box-shadow: inset 0 0 2px rgba($color: #000000, $alpha: 0.1);
     padding: 5px;
 
-    .form-group{
+    .form-group {
       // display: flex;
       // flex-direction: column;
       // margin: 7px 0;
       // padding-bottom: 50px;
       padding: 5px 0;
 
-      .heading{
+      .heading {
         // height: 30px;
         // line-height: 30px;
         color: #999999;
       }
 
-      .checkbox{
+      .checkbox {
         // display: flex;
         // // justify-content: space-evenly;
         // flex-wrap: wrap;
         display: inline-block;
 
-        mat-checkbox{
+        mat-checkbox {
           margin-right: 10px;
         }
 
@@ -44,7 +44,7 @@
           padding-right: 10px;
         }
       }
-      .scrollable-checkboxes{
+      .scrollable-checkboxes {
         // flex-direction: column;
         // flex-wrap: nowrap;
         // max-height: 100px;
@@ -53,23 +53,22 @@
     }
   }
 
-  .filter-footer{
+  .filter-footer {
     padding: 10px 0;
     border-top: 1px solid rgba($color: #000000, $alpha: 0.2);
 
-    .btn-holder{
+    .btn-holder {
       padding-top: 10px;
       display: flex;
       justify-content: center;
 
-      button{
+      button {
         width: 90px;
       }
 
-      button:first-child{
+      button:first-child {
         margin-right: 20px;
       }
     }
   }
 }
-

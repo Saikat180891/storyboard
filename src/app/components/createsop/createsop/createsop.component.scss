@@ -1,27 +1,27 @@
 @import "../global.scss";
 
-.flex{
+.flex {
   display: flex;
   width: calc(100% - 40px);
   height: calc(100% - 3.4375rem - 60px);
   position: fixed;
   top: 3.4375rem;
   right: 0;
-  
-  .flex-item{
+
+  .flex-item {
     width: calc(100% - 20px);
   }
-  
-  .flex-item:first-child{
-    background-color: #F2F2F2;
+
+  .flex-item:first-child {
+    background-color: #f2f2f2;
   }
 
-  .flex-item:last-child{
+  .flex-item:last-child {
     background-color: #ffffff;
   }
 }
 
-.sidebar{
+.sidebar {
   position: fixed;
   top: 3.4375rem;
   height: calc(100% - 3.4375rem);
@@ -33,12 +33,12 @@
   z-index: 2000;
 }
 
-.sidebar-open{
+.sidebar-open {
   transform: translateX(0);
   box-shadow: $box-shadow-sidebar;
 }
 
-.sidebar-buttons{
+.sidebar-buttons {
   position: fixed;
   top: 3.4375rem;
   height: calc(100% - 3.4375rem);
@@ -46,48 +46,48 @@
   background-color: $sidebar-background-color;
   overflow: hidden;
   z-index: 2300;
-  transition: width 0.2s ease
+  transition: width 0.2s ease;
 }
 
-.sidebar-buttons:hover{
+.sidebar-buttons:hover {
   width: 200px;
   box-shadow: $box-shadow-sidebar;
 }
 
-.panel{
+.panel {
   position: fixed;
   bottom: 0;
   right: 0;
   width: calc(100% - 40px);
   box-shadow: $box-shadow-top;
-  
-  .panel-body{
+
+  .panel-body {
     width: 50%;
     height: 60px;
     transition: all 0.3s ease;
 
-    &__left{
+    &__left {
       position: absolute;
       background-color: #686868;
       bottom: 0;
       left: 0;
     }
 
-    &__right{
+    &__right {
       position: absolute;
       bottom: 0;
       right: 0;
-      background-color: #FFFFFF;
+      background-color: #ffffff;
       box-shadow: $box-shadow-top;
     }
 
-    &-active{
+    &-active {
       transform: translateY(-27vh);
     }
   }
 }
 
-.export-to-sop{
+.export-to-sop {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -96,6 +96,6 @@
   border-radius: 5px;
   box-shadow: 0 0 20px rgba($color: #000000, $alpha: 0.3);
 }
-.higher-stack{
+.higher-stack {
   z-index: 3000;
 }

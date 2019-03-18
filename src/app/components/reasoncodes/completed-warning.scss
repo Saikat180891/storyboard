@@ -1,4 +1,4 @@
-.warning{
+.warning {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -7,23 +7,23 @@
   border-radius: 5px;
   padding: 20px;
 
-  p{
+  p {
     text-align: center;
   }
 
-  span{
+  span {
     text-align: center;
   }
 
-  .btn-group{
+  .btn-group {
     height: 30px;
     text-align: center;
 
-    button{
+    button {
       width: 90px;
     }
 
-    button:first-child{
+    button:first-child {
       margin-right: 20px;
     }
   }

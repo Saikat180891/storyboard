@@ -1,11 +1,11 @@
-.carousel-container{
+.carousel-container {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: flex-start;
   overflow: hidden;
 
-  img{
+  img {
     // width: 100%;
     // height: 100%;
     min-width: 100%;
@@ -13,7 +13,7 @@
     transition: transform 0.3s ease;
   }
 
-  .image-content{
+  .image-content {
     // width: 100%;
     // height: 100%;
     min-width: 100%;
