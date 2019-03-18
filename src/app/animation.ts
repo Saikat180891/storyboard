@@ -1,9 +1,9 @@
 import {
-  trigger,
-  transition,
-  style,
   animate,
   state,
+  style,
+  transition,
+  trigger,
 } from "@angular/animations";
 
 export const slideDown = trigger("slideDown", [

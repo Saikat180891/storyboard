@@ -5,8 +5,8 @@
  */
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { ResetPasswordService } from "./reset-password.service";
 import { SignupService } from "../signupusers/signup.service";
+import { ResetPasswordService } from "./reset-password.service";
 
 @Component({
   selector: "app-reset-password",

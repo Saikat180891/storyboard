@@ -1,8 +1,8 @@
+import { HttpClient, HttpHeaders, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { DataService } from "../../../../data.service";
-import { Observable } from "rxjs";
-import { HttpClient, HttpRequest, HttpHeaders } from "@angular/common/http";
 import { CookieService } from "ngx-cookie-service";
+import { Observable } from "rxjs";
+import { DataService } from "../../../../data.service";
 
 const httpOptions = new HttpHeaders();
 

@@ -4,9 +4,9 @@
  * SignUp User Type Script for signing up
  */
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { environment } from "../../../environments/environment";
 import { SignupService } from "./signup.service";
-import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-signupusers",

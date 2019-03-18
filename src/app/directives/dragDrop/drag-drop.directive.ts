@@ -1,4 +1,4 @@
-import { Directive, Input, OnInit, ElementRef, Renderer2 } from "@angular/core";
+import { Directive, ElementRef, Input, OnInit, Renderer2 } from "@angular/core";
 import { fromEvent } from "rxjs";
 import { DragDropService } from "./drag-drop.service";
 

@@ -1,11 +1,11 @@
 import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
   AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
   OnChanges,
+  OnInit,
+  Output,
   SimpleChanges,
 } from "@angular/core";
 import { RouteConfigLoadStart } from "@angular/router";

@@ -1,13 +1,13 @@
 import {
   Component,
-  OnInit,
+  EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
-  EventEmitter,
 } from "@angular/core";
-import { CardService } from "./card.service";
 import { ContainerService } from "../container/container.service";
+import { CardService } from "./card.service";
 
 @Component({
   selector: "app-card",

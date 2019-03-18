@@ -1,9 +1,9 @@
-import { Injectable, EventEmitter } from "@angular/core";
-import { DataService } from "../../data.service";
-import { environment } from "../../../environments/environment";
+import { EventEmitter, Injectable } from "@angular/core";
 // import { EventEmitter } from 'protractor'
 import { MatSnackBar, MatSnackBarConfig } from "@angular/material";
 import { NgxSpinnerService } from "ngx-spinner";
+import { environment } from "../../../environments/environment";
+import { DataService } from "../../data.service";
 import { UtilsService } from "../../utils.service";
 
 @Injectable({

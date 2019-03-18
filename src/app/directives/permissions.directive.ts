@@ -10,10 +10,10 @@
 import {
   Directive,
   ElementRef,
-  OnInit,
-  Renderer2,
   HostBinding,
   Input,
+  OnInit,
+  Renderer2,
 } from "@angular/core";
 import { ContainerService } from "../components/projects/container/container.service";
 import { AuthorizationService } from "../services/authorization/authorization.service";

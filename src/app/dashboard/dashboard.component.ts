@@ -1,19 +1,19 @@
 import {
-  Component,
-  OnInit,
-  ElementRef,
-  ViewChild,
   AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
 } from "@angular/core";
-import { ScrollbarService } from "../services/scrollbarService/scrollbar.service";
-import { fromEvent } from "rxjs";
 import {
-  Router,
-  NavigationStart,
   NavigationCancel,
   NavigationEnd,
+  NavigationStart,
+  Router,
 } from "@angular/router";
+import { fromEvent } from "rxjs";
 import { HeaderService } from "../components/header/header.service";
+import { ScrollbarService } from "../services/scrollbarService/scrollbar.service";
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",

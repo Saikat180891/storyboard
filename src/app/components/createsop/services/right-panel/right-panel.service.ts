@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { SectionListItem } from "../../common-model/section-list-item.model";
-import { DataService } from "../../../../data.service";
 import { map } from "rxjs/operators";
+import { DataService } from "../../../../data.service";
+import { SectionListItem } from "../../common-model/section-list-item.model";
 
 interface EditSectionName {
   section_name: string;

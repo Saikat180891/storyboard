@@ -1,16 +1,16 @@
 import {
-  Component,
-  OnInit,
-  OnChanges,
   AfterContentChecked,
   AfterViewChecked,
+  Component,
+  OnChanges,
+  OnInit,
 } from "@angular/core";
-import { DataService } from "../../../data.service";
-import { AppcontrolService } from "../../../services/controlservice/appcontrol.service";
-import { ContainerService } from "./container.service";
 import { NgxSpinnerService } from "ngx-spinner";
+import { DataService } from "../../../data.service";
 import { AuthorizationService } from "../../../services/authorization/authorization.service";
+import { AppcontrolService } from "../../../services/controlservice/appcontrol.service";
 import { UtilsService } from "../../../utils.service";
+import { ContainerService } from "./container.service";
 
 @Component({
   selector: "app-container",
