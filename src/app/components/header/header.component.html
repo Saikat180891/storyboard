@@ -2,24 +2,26 @@
   <div class="brand" routerLink="/projects">Storyboard</div>
 
   <div class="profile">
-
-    <div class="profile__name">{{userName}}</div>
+    <div class="profile__name">{{ userName }}</div>
 
     <div class="profile__pic">
-      <img src="../../../assets/pics/default.jpg" [alt]="">
+      <img src="../../../assets/pics/default.jpg" [alt]="" />
     </div>
 
     <div class="arrow-menu">
       <button mat-icon-button [matMenuTriggerFor]="menu">
-        <i class="fas fa-angle-down"></i>  
+        <i class="fas fa-angle-down"></i>
       </button>
       <mat-menu #menu="matMenu">
-        <a mat-menu-item  href="{{__api.apiUrl}}/logoutUser" (click)="onLogout()">
+        <a
+          mat-menu-item
+          href="{{ __api.apiUrl }}/logoutUser"
+          (click)="onLogout()"
+        >
           Logout
         </a>
       </mat-menu>
     </div>
-
   </div>
   <ng-container *ngIf="_header.loading">
     <div class="page-loading-progress-bar">

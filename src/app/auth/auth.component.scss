@@ -1,4 +1,4 @@
-.background-overlay{
+.background-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,7 +11,7 @@
   background-position: center;
   background-repeat: no-repeat;
 
-  .login-box{
+  .login-box {
     width: 350px;
     height: 460px;
     background-color: rgba($color: #ffffff, $alpha: 0.8);
@@ -22,7 +22,7 @@
     box-shadow: 0 10px 20px rgba(1, 43, 93, 0.6);
     border-radius: 5px;
 
-    .auth{
+    .auth {
       text-align: center;
       position: absolute;
       top: 50%;
@@ -30,7 +30,7 @@
       transform: translate(-50%, -50%);
       width: 70%;
 
-      .logo{
+      .logo {
         width: 59px;
         height: 60px;
         background-image: url(../../assets/pics/logo.png);
@@ -40,21 +40,21 @@
         margin: 0 auto;
         margin-bottom: 10px;
       }
-      span.app-name{
-        color: #2A7DE1;
+      span.app-name {
+        color: #2a7de1;
         font-size: 20px;
       }
-      p{
-        color: #54585A;
+      p {
+        color: #54585a;
         font-size: 12px;
         width: 230px;
         margin: 0 auto;
         margin-top: 5px;
         margin-bottom: 5px;
       }
-       button{
+      button {
         color: #fff;
-        background-color: #2A7DE1;
+        background-color: #2a7de1;
         border: 0 solid;
         border-radius: 2px;
         text-decoration: none;
@@ -65,37 +65,37 @@
   }
 }
 
-.form{
+.form {
   display: flex;
   flex-direction: column;
 
-  .form-group{
+  .form-group {
     display: flex;
     flex-direction: column;
     text-align: left;
     padding: 5px 0;
 
-    button{
+    button {
       margin: 5px 0;
     }
 
-    .text-box{    
+    .text-box {
       height: 35px;
       border-radius: 2px;
       background-color: white;
       outline: none;
       padding-left: 10px;
       font-size: 14px;
-      border: 1px solid #D1D1D1;
+      border: 1px solid #d1d1d1;
       font-weight: 500;
       position: relative;
       width: 100%;
       height: 30px;
     }
 
-    label{
+    label {
       font-size: 14px;
-      color: #54585A;
+      color: #54585a;
     }
   }
   // .horizontal-flex /deep/ {
@@ -107,7 +107,7 @@
   //       border-radius: 0px;
   //       text-decoration: none;
   //       padding: 0px;
-      
+
   //   .right{
   //     position: absolute;
   //     left: 60%;
@@ -118,58 +118,55 @@
   // }
   .button--login {
     color: #fff;
-    background-color: #2A7DE1;
+    background-color: #2a7de1;
     border: 0 solid;
     border-radius: 2px;
     text-decoration: none;
     padding: 10px;
     font-size: 14px;
     cursor: pointer;
-
   }
-
 }
 
-.horizontal-flex-wrapper{
+.horizontal-flex-wrapper {
   flex-direction: row !important;
   justify-content: space-between;
   align-items: center;
 
-
-  div.content-wrapper{
+  div.content-wrapper {
     width: 50%;
-    div{
+    div {
       cursor: pointer;
     }
-    div:hover{
-      border-bottom: 1px solid #54585A;
+    div:hover {
+      border-bottom: 1px solid #54585a;
     }
   }
-  div.content-wrapper::ng-deep .mat-checkbox-layout .mat-checkbox-label{
+  div.content-wrapper::ng-deep .mat-checkbox-layout .mat-checkbox-label {
     font-size: 12px;
-    color: #54585A;
+    color: #54585a;
   }
 
-  div.content-wrapper:last-child{
+  div.content-wrapper:last-child {
     display: flex;
     justify-content: flex-end;
-    color: #54585A;
+    color: #54585a;
     font-size: 12px;
   }
 }
 
-.form-btn-group{
-  button{
+.form-btn-group {
+  button {
     border-radius: 2px;
     color: #fff;
     font-size: 14px;
   }
 
-  button:first-child{
-    background-color: #0033A1 !important;
+  button:first-child {
+    background-color: #0033a1 !important;
   }
 
-  button:last-child{
-    background-color: #2A7DE1 !important;
+  button:last-child {
+    background-color: #2a7de1 !important;
   }
 }

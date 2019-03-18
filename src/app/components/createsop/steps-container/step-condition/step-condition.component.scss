@@ -1,13 +1,13 @@
-@import '../common-step-style.scss';
+@import "../common-step-style.scss";
 
-.add-another-btn{
+.add-another-btn {
   display: flex;
   justify-content: space-between;
   padding: 10px 10px 10px 0;
 
-  button{
+  button {
     background-color: transparent;
-    color: #2A7DE1;
+    color: #2a7de1;
     font-weight: bold;
     border: none;
     outline: none;
@@ -15,67 +15,73 @@
     margin-top: 1rem;
   }
 
-  .group{
+  .group {
     display: flex;
     flex-direction: column;
     font-size: 14px;
 
-    label{
+    label {
       color: #999999;
       padding-bottom: 5px;
     }
 
-    input[type="text"]{
+    input[type="text"] {
       height: 30px;
-      border: 1px solid #D1D1D1;
+      border: 1px solid #d1d1d1;
       padding: 7px;
     }
   }
 }
 
-.select-with-delete{
+.select-with-delete {
   display: flex;
   justify-content: space-between;
-  .select{
+  .select {
     width: 80%;
   }
-  .delete{
+  .delete {
     width: 20%;
     line-height: 30px;
     text-align: center;
-    color: #2A7DE1;
+    color: #2a7de1;
     cursor: pointer;
   }
 }
-.radio-group{
+.radio-group {
   margin: 0 30px 10px 20px;
   .mat-radio-button ~ .mat-radio-button {
     margin-left: 20px;
   }
 
-  ::ng-deep .mat-radio-label-content{
+  ::ng-deep .mat-radio-label-content {
     font-size: 14px;
   }
 
-  ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle, .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple{
-    background-color: #2A7DE1;
+  ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle,
+  .mat-radio-button.mat-accent
+    .mat-radio-ripple
+    .mat-ripple-element:not(.mat-radio-persistent-ripple),
+  .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+  .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+    background-color: #2a7de1;
   }
 
-  ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
-    border-color: #2A7DE1;
+  ::ng-deep
+    .mat-radio-button.mat-accent.mat-radio-checked
+    .mat-radio-outer-circle {
+    border-color: #2a7de1;
   }
 }
-.select-size{
+.select-size {
   width: 100px;
   margin-top: 11px;
 }
-.select-wrapper{
-  border: 1px solid #D1D1D1;
+.select-wrapper {
+  border: 1px solid #d1d1d1;
   height: 30px;
   line-height: 30px;
   padding: 0 5px;
 }
-.gutter-left{
+.gutter-left {
   padding-left: 20px;
 }
-

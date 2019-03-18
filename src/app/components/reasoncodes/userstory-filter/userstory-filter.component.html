@@ -1,22 +1,31 @@
 <div class="filter-container">
   <div class="filter-body">
-    
     <div class="form-group">
       <div class="heading">
         Priority
       </div>
       <div class="checkbox">
-        <mat-checkbox *ngFor="let priority of priorities" [(ngModel)]="__rcService.filterItems['priority$'+priority]">{{priority}}</mat-checkbox>
+        <mat-checkbox
+          *ngFor="let priority of priorities"
+          [(ngModel)]="__rcService.filterItems['priority$' + priority]"
+          >{{ priority }}</mat-checkbox
+        >
       </div>
     </div>
 
     <div class="form-group">
       <div class="heading">
-        Sprint Name 
+        Sprint Name
         <!-- | <mat-slide-toggle>Hide closed sprints</mat-slide-toggle> -->
       </div>
       <div class="checkbox scrollable-checkboxes" *ngIf="sprints">
-        <mat-checkbox *ngFor="let sprint of sprints; let i = index" [(ngModel)]="__rcService.filterItems['sprintName$'+sprint.sprint_name]">{{sprint.sprint_name}}</mat-checkbox>
+        <mat-checkbox
+          *ngFor="let sprint of sprints; let i = index"
+          [(ngModel)]="
+            __rcService.filterItems['sprintName$' + sprint.sprint_name]
+          "
+          >{{ sprint.sprint_name }}</mat-checkbox
+        >
       </div>
     </div>
     <div class="form-group">
@@ -24,7 +33,11 @@
         Epic
       </div>
       <div class="checkbox scrollable-checkboxes" *ngIf="epics">
-        <mat-checkbox *ngFor="let epic of epics; let i = index" [(ngModel)]="__rcService.filterItems['rcName$'+epic.name]">{{epic.name}}</mat-checkbox>
+        <mat-checkbox
+          *ngFor="let epic of epics; let i = index"
+          [(ngModel)]="__rcService.filterItems['rcName$' + epic.name]"
+          >{{ epic.name }}</mat-checkbox
+        >
       </div>
     </div>
     <div class="form-group">
@@ -33,7 +46,11 @@
       </div>
       <div class="checkbox">
         <mat-radio-group [(ngModel)]="__rcService.rulesApproved">
-          <mat-radio-button [value]="val" *ngFor="let val of others1;let i = index">{{val}}</mat-radio-button>
+          <mat-radio-button
+            [value]="val"
+            *ngFor="let val of others1; let i = index"
+            >{{ val }}</mat-radio-button
+          >
         </mat-radio-group>
       </div>
     </div>
@@ -43,7 +60,11 @@
       </div>
       <div class="checkbox">
         <mat-radio-group [(ngModel)]="__rcService.testCasesVerified">
-          <mat-radio-button [value]="val" *ngFor="let val of others2;let i = index">{{val}}</mat-radio-button>
+          <mat-radio-button
+            [value]="val"
+            *ngFor="let val of others2; let i = index"
+            >{{ val }}</mat-radio-button
+          >
         </mat-radio-group>
       </div>
     </div>
@@ -52,7 +73,11 @@
         Status
       </div>
       <div class="checkbox">
-        <mat-checkbox [(ngModel)]="__rcService.filterItems['status$'+status]" *ngFor="let status of statuss">{{status}}</mat-checkbox>
+        <mat-checkbox
+          [(ngModel)]="__rcService.filterItems['status$' + status]"
+          *ngFor="let status of statuss"
+          >{{ status }}</mat-checkbox
+        >
       </div>
     </div>
   </div>

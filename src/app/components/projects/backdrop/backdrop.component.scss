@@ -1,56 +1,56 @@
-.autocomplete{
-    position: fixed;
-    display: block;
-    max-height: 250px;
-    overflow-y: auto;
-    width: 100%;
-    background-color: #fff;
-    z-index: 1;
-    box-shadow: 0px 5px 10px rgba(0,0,0,.3);
+.autocomplete {
+  position: fixed;
+  display: block;
+  max-height: 250px;
+  overflow-y: auto;
+  width: 100%;
+  background-color: #fff;
+  z-index: 1;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
 }
-.autocomplete-item{
-    display: block;
-    height: 35px;
-    width: 100%;
-    line-height: 35px;
-    background-color: #fff;
-    padding-left: 10px;
+.autocomplete-item {
+  display: block;
+  height: 35px;
+  width: 100%;
+  line-height: 35px;
+  background-color: #fff;
+  padding-left: 10px;
 }
-.autocomplete-item:hover{
-    background-color: #E4E4E4;
-    cursor: pointer;
+.autocomplete-item:hover {
+  background-color: #e4e4e4;
+  cursor: pointer;
 }
-.input-box{
-    width: 100%;
+.input-box {
+  width: 100%;
 }
-.input-box input[type="text"]{
-    height: 35px;
-    width: 100%;
-    border-radius: 2px;
-    background-color: #fff;
-    outline: none;
-    padding-left: 10px;
-    font-size: 14px;
-    border: 1px solid #D1D1D1;
-    font-weight: 500;
-    position: relative;
+.input-box input[type="text"] {
+  height: 35px;
+  width: 100%;
+  border-radius: 2px;
+  background-color: #fff;
+  outline: none;
+  padding-left: 10px;
+  font-size: 14px;
+  border: 1px solid #d1d1d1;
+  font-weight: 500;
+  position: relative;
 }
-.input-box input[type="text"]:focus{
-  border: 1px solid #2A7DE1;
+.input-box input[type="text"]:focus {
+  border: 1px solid #2a7de1;
   box-shadow: inset 0 0 2px rgba($color: #000000, $alpha: 0.5);
 }
 
-.input-box input[type="text"].validators{
-    border: 1px solid rgb(245, 117, 117);
+.input-box input[type="text"].validators {
+  border: 1px solid rgb(245, 117, 117);
 }
-.validation-message{
-    color: rgb(245, 117, 117);
+.validation-message {
+  color: rgb(245, 117, 117);
 }
-#date{
-    width: 47%;
-    padding-left: 50px;
+#date {
+  width: 47%;
+  padding-left: 50px;
 }
-.dialog{
+.dialog {
   display: flex;
   flex-direction: column;
   width: 500px;
@@ -60,14 +60,14 @@
   left: 50%;
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   background-color: #fff;
   z-index: 1200;
-  -webkit-box-shadow: 0px 20px 50px rgba(0,0,0,.5);
-          box-shadow: 0px 20px 50px rgba(0,0,0,.5);
+  -webkit-box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.5);
 }
-.dialog-group{
+.dialog-group {
   display: block;
   width: 100%;
   // height: 45px;
@@ -75,24 +75,24 @@
   border-top-left-radius: 5px;
   overflow: auto;
 }
-.dialog-group-2{
+.dialog-group-2 {
   display: flex;
   justify-content: center;
   width: 100%;
 
-  button{
+  button {
     width: 150px;
-    background-color: #2A7DE1;
+    background-color: #2a7de1;
   }
-  button:nth-child(1){
+  button:nth-child(1) {
     margin-right: 20px;
   }
-  button:nth-child(2){
+  button:nth-child(2) {
     background-color: #ffffff;
-    border: 1px solid #54585A;
+    border: 1px solid #54585a;
   }
 }
-.datepicker{
+.datepicker {
   position: absolute;
   top: 159px;
   left: 16.8rem;
@@ -100,220 +100,219 @@
 .height-max::-webkit-scrollbar {
   // display: none;
 }
-ul{
-    list-style: none;
-    margin: 0;
-    padding: 2px 5px 2px 0;
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 2px 5px 2px 0;
 }
-.color-red{
-    background-color: red;
+.color-red {
+  background-color: red;
 }
 
-li{
-    height: 50px;
-    width: 100%;
-    margin: 2px;
-    box-shadow: 0 0 2px rgba($color: #000000, $alpha: 0.3);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 10px;
-    
-    .horizontal-flex{
-        img{
-            height: 30px;
-            width: 30px;
-        }
-    
-        span{
-            display: block;
-            line-height: 30px;
-            font-size: 14px;
-            color: #707070;
-        }
-    
-        .select-role{
-          width: 150px;
-          height: 30px;
-          line-height: 30px;
-          padding: 0 10px;
-          border: 1px solid #D1D1D1;
-          background-color: #fff;
-        }
-        
-        div.list-close{
-          color: #2A7DE1;
-          cursor: pointer;
-          line-height: 30px;
-        } 
-    } 
+li {
+  height: 50px;
+  width: 100%;
+  margin: 2px;
+  box-shadow: 0 0 2px rgba($color: #000000, $alpha: 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+
+  .horizontal-flex {
+    img {
+      height: 30px;
+      width: 30px;
+    }
+
+    span {
+      display: block;
+      line-height: 30px;
+      font-size: 14px;
+      color: #707070;
+    }
+
+    .select-role {
+      width: 150px;
+      height: 30px;
+      line-height: 30px;
+      padding: 0 10px;
+      border: 1px solid #d1d1d1;
+      background-color: #fff;
+    }
+
+    div.list-close {
+      color: #2a7de1;
+      cursor: pointer;
+      line-height: 30px;
+    }
+  }
 }
-li.list{
+li.list {
   width: 150px;
   height: 30px;
   line-height: 30px;
   padding: 0 10px;
-  border: 1px solid #D1D1D1;
+  border: 1px solid #d1d1d1;
   background-color: #fff;
   border-radius: 15px;
 
-  span{
+  span {
     color: #fff;
   }
 
-  img{
+  img {
     border-radius: 50%;
   }
 
-  .select-role{
+  .select-role {
     border-radius: 15px;
   }
 
-  div.list-close{
+  div.list-close {
     color: #fff;
   }
 }
-.horizontal-flex{
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+.horizontal-flex {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
-.horizontal-flex-2{
+.horizontal-flex-2 {
   display: flex;
   justify-content: space-between;
 }
-.relative{
+.relative {
   position: relative;
 }
-.pointer{
+.pointer {
   cursor: pointer !important;
   overflow: hidden;
   top: 10px;
 }
-.emblem{
+.emblem {
   width: 250px;
   height: 100px;
   overflow: hidden;
   margin-right: 15px;
 }
-.vertical-flex{
+.vertical-flex {
   width: 80%;
 }
-.assignee-container{
+.assignee-container {
   height: 100%;
 }
-.create-container-tabs{
+.create-container-tabs {
   margin-left: 15px;
   margin-right: 17px;
 }
-.assignee-list{
+.assignee-list {
   max-height: 211px;
   overflow: auto;
 }
-.margin-top-10{
-    margin-top: 10px;
+.margin-top-10 {
+  margin-top: 10px;
 }
 
-.select-role-invite{
-    width: 180px;
-    background-color: #fff;
-    min-height: 30px;
-    border: 1px solid #D1D1D1;
-    line-height: 30px;
-    padding: 0 5px;
+.select-role-invite {
+  width: 180px;
+  background-color: #fff;
+  min-height: 30px;
+  border: 1px solid #d1d1d1;
+  line-height: 30px;
+  padding: 0 5px;
 }
-.send-invite{
-    margin-left: 160px;
-    width: 160px
+.send-invite {
+  margin-left: 160px;
+  width: 160px;
 }
-.first-name{
+.first-name {
   width: 215px;
 }
 
-.last-name{
+.last-name {
   width: 215px;
 }
-.invitation-success{
-    padding-top: 40px;
-    color: rgb(141, 169, 173);
-    position: absolute;
-    left: 18%;
-    font-size:20px;
+.invitation-success {
+  padding-top: 40px;
+  color: rgb(141, 169, 173);
+  position: absolute;
+  left: 18%;
+  font-size: 20px;
 }
-.success_container{
-    width: 200px;
-    height: 100px;
+.success_container {
+  width: 200px;
+  height: 100px;
 }
-.invite-text{
-    font-size: 14px;
-    left: 2%;
-    position: relative;
+.invite-text {
+  font-size: 14px;
+  left: 2%;
+  position: relative;
 }
-.delete{
-    color: #2A7DE1;
-    cursor: pointer;
+.delete {
+  color: #2a7de1;
+  cursor: pointer;
+}
+.tab-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 64%;
+  background-color: #eee;
+  bottom: 0;
+  left: 0;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.tab-footer {
+  position: relative;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    margin-bottom: 20px;
   }
-.tab-wrapper{
-    position: absolute;
-    width: 100%;
-    height: 64%;
-    background-color: #eee;
-    bottom: 0;
-    left: 0;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
 }
-.tab-footer{
-    position: relative;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 
-    button{
-        margin-bottom: 20px;
+.header-banner {
+  color: #2a7de1;
+
+  .dialog-header {
+    span:last-child {
+      color: #707070;
     }
+  }
 }
-
-.header-banner{
-    color: #2A7DE1;
-
-    .dialog-header{
-
-        span:last-child{
-            color: #707070;
-        }
-    }
+.top-input-width {
+  width: 350px;
 }
-.top-input-width{
-    width: 350px;
+.upload button {
+  width: 100%;
+  height: 90px;
+  color: #bfbfbf;
+  background-color: #fff;
+  border: 1px solid #d1d1d1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 }
-.upload button{
-    width: 100%;
-    height: 90px;
-    color: #BFBFBF;
-    background-color: #fff;
-    border: 1px solid #D1D1D1;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-}
-.invite-user-through-email{
+.invite-user-through-email {
   width: 250px;
 }
-.add-user{
+.add-user {
   max-height: 250px;
   overflow: auto;
 
-  button{
+  button {
     border: none;
     background-color: transparent;
-    color: #2A7DE1;
+    color: #2a7de1;
     font-weight: bold;
     font-size: 14px;
     outline: none;
@@ -321,32 +320,32 @@ li.list{
     margin: 10px;
   }
 }
-.invite-model{
+.invite-model {
   margin: 2px;
-  border: 1px solid #D1D1D1;
+  border: 1px solid #d1d1d1;
   border-radius: 5px;
   padding: 0 10px;
   position: relative;
 
-  div.delete-list-item{
+  div.delete-list-item {
     position: absolute;
     top: 0;
     left: 20px;
     width: 20px;
     height: 20px;
     color: #fff;
-    background-color: #2A7DE1;
+    background-color: #2a7de1;
     border-radius: 3px;
   }
 }
-.user-details{
+.user-details {
   line-height: 26px;
   font-size: 14px;
   color: #707070;
   width: 200px;
 }
-.datepicker{
-  ::ng-deep path{
-    fill: #F47074;
+.datepicker {
+  ::ng-deep path {
+    fill: #f47074;
   }
 }

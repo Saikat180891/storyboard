@@ -1,13 +1,12 @@
 @import "../global.scss";
 
-
-.operation-button-box{
+.operation-button-box {
   display: flex;
   padding: 15px 25px;
   justify-content: space-between;
   font-size: 12px;
-  
-  div{
+
+  div {
     height: 30px;
     text-align: center;
     line-height: 30px;
@@ -20,14 +19,14 @@
     cursor: pointer;
   }
 
-  div.partial-blue-btn{
+  div.partial-blue-btn {
     background-color: #ffffff;
     color: $main-blue;
     display: flex;
     padding: 0 10px 0 0;
     justify-content: flex-start;
   }
-  div.partial-blue-btn span{
+  div.partial-blue-btn span {
     display: block;
     height: 100%;
     width: 30px;
@@ -35,15 +34,15 @@
     margin-right: 10px;
     color: #fff;
   }
-  div.full-dark-btn{
+  div.full-dark-btn {
     background-color: #686868;
   }
 
   div.full-red-btn {
-    background-color: #F47074;
+    background-color: #f47074;
   }
 }
 
-.hold{
+.hold {
   border: 1px solid red;
 }

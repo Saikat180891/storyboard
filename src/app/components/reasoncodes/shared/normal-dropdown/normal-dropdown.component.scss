@@ -1,4 +1,4 @@
-.select{
+.select {
   width: 100%;
   height: 30px;
   padding: 0 2px;
@@ -7,7 +7,7 @@
   background-color: #ffffff;
   position: relative;
 
-  div.ball{
+  div.ball {
     display: block;
     position: absolute;
     height: 15px;
@@ -19,7 +19,7 @@
     transform: translateY(-50%);
   }
 
-  div{
+  div {
     height: 100%;
     width: 100%;
     position: absolute;
@@ -27,7 +27,7 @@
     left: 0px;
     overflow: hidden;
 
-    input[type="text"]{
+    input[type="text"] {
       height: 27px;
       width: 100%;
       border: 0 solid;
@@ -36,11 +36,9 @@
       top: 0px;
       left: 0px;
     }
-    
   }
-  
 
-  .down-caret{
+  .down-caret {
     position: absolute;
     display: block;
     height: 25px;
@@ -56,7 +54,7 @@
     overflow: hidden;
   }
 
-  .select-dropdown{
+  .select-dropdown {
     position: absolute;
     top: 100%;
     left: -1px;
@@ -74,7 +72,7 @@
     z-index: 10000;
     cursor: pointer;
 
-    span{
+    span {
       display: block;
       width: 100%;
       height: 30px;
@@ -87,12 +85,12 @@
       text-overflow: ellipsis;
       overflow: hidden;
 
-      &:hover{
-        background-color: #D1D1D1;
+      &:hover {
+        background-color: #d1d1d1;
         cursor: pointer;
       }
 
-      .ball{
+      .ball {
         display: block;
         height: 15px;
         width: 15px;
@@ -105,7 +103,7 @@
     }
   }
 
-  .custom-overlay{
+  .custom-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -119,6 +117,6 @@
 //     width: 250px;
 //   }
 // }
-.input-active{
+.input-active {
   padding-left: 17px;
 }

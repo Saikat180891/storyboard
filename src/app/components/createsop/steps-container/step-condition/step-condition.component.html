@@ -7,13 +7,15 @@
       <div class="icon-type">
         Condition
       </div>
-      <div class="step-number">
-        Step No. <span>1.2.2</span>
-      </div>
+      <div class="step-number">Step No. <span>1.2.2</span></div>
       <div class="screen-name">
         <span>Screen</span>
         <div class="select">
-          <mat-select [(value)]="selected" placeholder="None" [disabled]="!canEdit">
+          <mat-select
+            [(value)]="selected"
+            placeholder="None"
+            [disabled]="!canEdit"
+          >
             <mat-option>None</mat-option>
             <mat-option value="option1">Screen 1</mat-option>
             <mat-option value="option2">Screen 2</mat-option>
@@ -43,23 +45,31 @@
         </div>
       </div>
     </ng-template>
-
   </div>
   <div class="step-body">
     <div class="form">
       <div class="radio-group" *ngIf="canEdit">
-        <mat-radio-group [(ngModel)]="conditionSelection" (change)="onChangeSelection($event)">
-          <mat-radio-button [value]="condition" *ngFor="let condition of conditions">{{condition}}</mat-radio-button>
+        <mat-radio-group
+          [(ngModel)]="conditionSelection"
+          (change)="onChangeSelection($event)"
+        >
+          <mat-radio-button
+            [value]="condition"
+            *ngFor="let condition of conditions"
+            >{{ condition }}</mat-radio-button
+          >
         </mat-radio-group>
       </div>
       <div class="form-group">
-        <div class="form-sub-group form-sub-group-3 form-sub-group-40 padding-right">
+        <div
+          class="form-sub-group form-sub-group-3 form-sub-group-40 padding-right"
+        >
           <label for="field" class="gutter-left">Variable</label>
           <div class="if-logic">
             <span class="if-text">If</span>
             <ng-container *ngIf="canEdit; else editField">
               <div class="select">
-                <input type="text">
+                <input type="text" />
               </div>
             </ng-container>
             <ng-template #editField>
@@ -67,25 +77,29 @@
             </ng-template>
           </div>
         </div>
-        <div class="form-sub-group form-sub-group-3 form-sub-group-20 padding-both">
+        <div
+          class="form-sub-group form-sub-group-3 form-sub-group-20 padding-both"
+        >
           <label for="Logic">Logic</label>
           <ng-container *ngIf="canEdit; else editValue">
             <div class="select">
-              <input type="text">
+              <input type="text" />
             </div>
           </ng-container>
           <ng-template #editValue>
             <span>Lorem ipsum dolor</span>
           </ng-template>
         </div>
-        <div class="form-sub-group form-sub-group-3 form-sub-group-40 padding-left">
+        <div
+          class="form-sub-group form-sub-group-3 form-sub-group-40 padding-left"
+        >
           <label for="field">Variable</label>
           <ng-container *ngIf="canEdit; else editValue">
             <div class="select-with-delete">
               <div class="select">
-                <input type="text">
+                <input type="text" />
               </div>
-              <div class="delete" [ngStyle]="{'visibility':'hidden'}">
+              <div class="delete" [ngStyle]="{ visibility: 'hidden' }">
                 <i class="far fa-trash-alt"></i>
               </div>
             </div>
@@ -95,28 +109,32 @@
           </ng-template>
         </div>
       </div>
-      <ng-container *ngFor="let row of addAnotherRow; let i=index">
+      <ng-container *ngFor="let row of addAnotherRow; let i = index">
         <div class="form-group center-element">
-          <div class="select select-size" [ngStyle]="{'margin-top':canEdit?'11px':'0'}">
+          <div
+            class="select select-size"
+            [ngStyle]="{ 'margin-top': canEdit ? '11px' : '0' }"
+          >
             <ng-container *ngIf="canEdit; else editlogic">
               <div class="select-wrapper">
-                <input type="text">
+                <input type="text" />
               </div>
             </ng-container>
             <ng-template #editlogic>
-              <span [ngStyle]="{'font-size':'14px'}">Lorem ipsum</span>
+              <span [ngStyle]="{ 'font-size': '14px' }">Lorem ipsum</span>
             </ng-template>
-            
           </div>
         </div>
         <div class="form-group">
-          <div class="form-sub-group form-sub-group-3 form-sub-group-40 padding-right">
-            <label for="field"  class="gutter-left">Variable</label>
+          <div
+            class="form-sub-group form-sub-group-3 form-sub-group-40 padding-right"
+          >
+            <label for="field" class="gutter-left">Variable</label>
             <div class="if-logic">
               <span class="if-text">If</span>
               <ng-container *ngIf="canEdit; else editField">
                 <div class="select">
-                  <input type="text">
+                  <input type="text" />
                 </div>
               </ng-container>
               <ng-template #editField>
@@ -124,23 +142,27 @@
               </ng-template>
             </div>
           </div>
-          <div class="form-sub-group form-sub-group-3 form-sub-group-20 padding-both">
+          <div
+            class="form-sub-group form-sub-group-3 form-sub-group-20 padding-both"
+          >
             <label for="Logic">Logic</label>
             <ng-container *ngIf="canEdit; else editValue">
               <div class="select">
-                <input type="text">
+                <input type="text" />
               </div>
             </ng-container>
             <ng-template #editValue>
               <span>Lorem ipsum dolor</span>
             </ng-template>
           </div>
-          <div class="form-sub-group form-sub-group-3 form-sub-group-40 padding-left">
+          <div
+            class="form-sub-group form-sub-group-3 form-sub-group-40 padding-left"
+          >
             <label for="field">Variable</label>
             <ng-container *ngIf="canEdit; else editValue">
               <div class="select-with-delete">
                 <div class="select">
-                  <input type="text">
+                  <input type="text" />
                 </div>
                 <div class="delete" (click)="onDeleteNewRow(i)">
                   <i class="far fa-trash-alt"></i>
@@ -153,14 +175,13 @@
           </div>
         </div>
       </ng-container>
-      
 
       <ng-container *ngIf="canEdit">
         <div class="add-another-btn">
           <button (click)="onAddAnotherRow()">Add Row</button>
-          <div class="group"  [ngStyle]="{'width':'calc(100% - 80px)'}">
+          <div class="group" [ngStyle]="{ width: 'calc(100% - 80px)' }">
             <label for="notes">Notes</label>
-            <input type="text" id="notes">
+            <input type="text" id="notes" />
           </div>
         </div>
       </ng-container>

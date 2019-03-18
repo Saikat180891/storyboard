@@ -1,7 +1,7 @@
-.side-container{
+.side-container {
   position: relative;
 
-  .heading{
+  .heading {
     position: absolute;
     top: 0;
     left: 0;
@@ -10,19 +10,19 @@
     line-height: 50px;
     padding: 0 20px;
 
-    span{
+    span {
       font-size: 18px;
     }
-    span:first-child{
-      color: #2A7DE1;
+    span:first-child {
+      color: #2a7de1;
     }
-    span:last-child{
+    span:last-child {
       float: right;
-      color: #C1C1C1;
+      color: #c1c1c1;
       cursor: pointer;
     }
   }
-  div.form{
+  div.form {
     position: absolute;
     top: 50px;
     left: 0;
@@ -30,7 +30,7 @@
     height: 200px;
     // background-color: red;
 
-    .form-group{
+    .form-group {
       min-width: 60px;
       min-height: 80px;
       // background-color: greenyellow;
@@ -39,7 +39,7 @@
       justify-content: flex-start;
       // border-bottom: 1px solid #C1C1C1;
 
-      .input-container{
+      .input-container {
         width: 100%;
         height: auto;
         margin: 10px 20px;
@@ -47,57 +47,58 @@
         flex-direction: column;
         font-size: 14px;
 
-        .title{
-          color: #C1C1C1;
+        .title {
+          color: #c1c1c1;
           margin-bottom: 10px;
         }
-        .warning{
-          color: #F47074;
+        .warning {
+          color: #f47074;
         }
-        .align-center{
+        .align-center {
           text-align: center;
         }
 
-        .editable{
+        .editable {
           width: 100%;
           height: 35px;
           line-height: 35px;
           transition: all 0.1s ease;
           // overflow: hidden;
 
-          .etd-date-picker{
+          .etd-date-picker {
             position: absolute;
             top: -3px;
             left: -3px;
           }
 
-          span{
+          span {
             width: 100%;
             text-align: center;
             display: block;
           }
 
-          .select{
+          .select {
             height: 30px;
             width: 100px;
 
-            .dropdown{
+            .dropdown {
               width: 100%;
               height: 90px;
               background-color: #ffffff;
 
-              span{
+              span {
                 display: block;
                 height: 30px;
               }
             }
           }
 
-          input[type=number]::-webkit-inner-spin-button {
+          input[type="number"]::-webkit-inner-spin-button {
             -webkit-appearance: none;
           }
 
-          input[type="text"], input[type="number"]{
+          input[type="text"],
+          input[type="number"] {
             height: 100%;
             width: 100%;
             border-radius: 5px;
@@ -105,104 +106,102 @@
             // text-align: center;
             transition: all 0.1s ease;
           }
-          .text-center{
+          .text-center {
             text-align: center;
           }
 
-          input[type="text"]:hover, input[type="number"]:hover{
+          input[type="text"]:hover,
+          input[type="number"]:hover {
             background-color: rgb(236, 236, 236);
           }
 
-          input[type="text"]:focus, input[type="number"]:focus{
-            border: 2px solid #2A7DE1;
+          input[type="text"]:focus,
+          input[type="number"]:focus {
+            border: 2px solid #2a7de1;
             background-color: #ffffff;
             color: #000000;
             padding-left: 5px;
             // text-align: left;
           }
 
-          input[type="text"].warning, input[type="number"].warning{
-            border: 2px solid #F47074;
+          input[type="text"].warning,
+          input[type="number"].warning {
+            border: 2px solid #f47074;
           }
 
-          input[type="number"]{
+          input[type="number"] {
             text-align: center;
             padding-left: 0px;
           }
-          input[type="number"].text-left{
+          input[type="number"].text-left {
             text-align: left;
           }
 
-          input[type="text"]:focus.no-style, 
-          input[type="number"]:focus.no-style, 
-          input[type="number"]:hover.no-style, 
-          input[type="text"]:hover.no-style{
+          input[type="text"]:focus.no-style,
+          input[type="number"]:focus.no-style,
+          input[type="number"]:hover.no-style,
+          input[type="text"]:hover.no-style {
             border: none;
             background-color: #ffffff;
             padding-left: 0;
           }
-          
         }
-        .editable:hover{
+        .editable:hover {
           // background-color: #C1C1C1;
           border-radius: 5px;
         }
-        .align-center{
+        .align-center {
           text-align: center;
         }
-        .pad-right{
+        .pad-right {
           padding-right: 25px;
         }
       }
-      .sm{
+      .sm {
         width: 85px;
       }
-      .md{
+      .md {
         width: 125px;
       }
-      .lg{
+      .lg {
         width: 180px;
       }
-      .extra{
+      .extra {
         width: 195px;
       }
-      
     }
-    .btn-group{
+    .btn-group {
       padding: 20px;
       margin-top: 10px;
-      button{
+      button {
         height: 30px;
       }
 
-      button:first-child{
+      button:first-child {
         margin-right: 20px;
       }
 
-      span{
+      span {
         // height: 30px;
         // line-height: 30px;
         border-radius: 5px;
-        background-color: rgba($color: #F47074, $alpha: 0.3);
+        background-color: rgba($color: #f47074, $alpha: 0.3);
         padding: 10px 5px;
         margin-left: 20px;
-        color: #F47074;
+        color: #f47074;
         font-size: 14px;
       }
     }
 
-    .h-space-equally{
+    .h-space-equally {
       justify-content: space-between;
     }
 
-    .h-divider{
+    .h-divider {
       width: 92%;
       height: 1px;
-      background-color: #C1C1C1;
+      background-color: #c1c1c1;
       margin: 0 auto;
     }
-    
-
-    
   }
 }
