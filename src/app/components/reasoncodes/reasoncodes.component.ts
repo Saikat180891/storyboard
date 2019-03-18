@@ -1,28 +1,28 @@
 import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  AfterViewInit,
-  OnChanges,
-  OnDestroy,
-} from "@angular/core";
-import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem,
 } from "@angular/cdk/drag-drop";
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { ReasonCodeService } from "./reason-code.service";
-import { ContainerService } from "../projects/container/container.service";
-import { CreateUserstoryService } from "./userstory-card-create/create-userstory.service";
-import { charts } from "./chartoptions";
+import { NgxSpinnerService } from "ngx-spinner";
 import { fromEvent } from "rxjs";
 import { environment } from "../../../environments/environment";
-import { NgxSpinnerService } from "ngx-spinner";
+import { hideInOut } from "../../animation";
 import { DataService } from "../../data.service";
 import { ScrollbarService } from "../../services/scrollbarService/scrollbar.service";
-import { hideInOut } from "../../animation";
+import { ContainerService } from "../projects/container/container.service";
+import { charts } from "./chartoptions";
+import { ReasonCodeService } from "./reason-code.service";
+import { CreateUserstoryService } from "./userstory-card-create/create-userstory.service";
 export interface UserData {
   id: string;
   name: string;

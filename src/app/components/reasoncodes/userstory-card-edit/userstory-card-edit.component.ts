@@ -1,15 +1,15 @@
 import {
   Component,
+  EventEmitter,
+  HostListener,
+  Input,
   OnInit,
   Output,
-  EventEmitter,
-  Input,
-  HostListener,
 } from "@angular/core";
-import { ReasonCodeService } from "../reason-code.service";
-import { EditUserStoryService } from "./edit-user-story.service";
 import { SharedServicesService } from "../../../services/shared-services/shared-services.service";
 import { UtilsService } from "../../../utils.service";
+import { ReasonCodeService } from "../reason-code.service";
+import { EditUserStoryService } from "./edit-user-story.service";
 
 interface UserStory {
   us_number: string;

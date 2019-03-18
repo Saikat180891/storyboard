@@ -1,19 +1,19 @@
+import { HttpEventType, HttpResponse } from "@angular/common/http";
 import {
   Component,
+  ElementRef,
+  EventEmitter,
+  OnChanges,
   OnInit,
   Output,
-  EventEmitter,
   ViewChild,
-  ElementRef,
-  OnChanges,
 } from "@angular/core";
-import { UicontrolService } from "../services/uicontrol.service";
-import { SidebarService } from "../services/sidebar/sidebar.service";
-import { PageService } from "../services/page/page.service";
-import { HttpEventType, HttpResponse } from "@angular/common/http";
 import { MatSnackBar } from "@angular/material";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { PageService } from "../services/page/page.service";
+import { SidebarService } from "../services/sidebar/sidebar.service";
+import { UicontrolService } from "../services/uicontrol.service";
 
 @Component({
   selector: "app-sidebar",

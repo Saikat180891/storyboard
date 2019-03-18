@@ -1,21 +1,21 @@
 import {
+  AfterViewChecked,
   Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
   OnInit,
   Output,
-  EventEmitter,
-  Input,
   ViewChild,
-  ElementRef,
-  AfterViewChecked,
-  HostListener,
-  OnChanges,
 } from "@angular/core";
-import { ReasonCodeService } from "../reason-code.service";
+import { FormBuilder, Validators } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
 import { fromEvent } from "rxjs";
-import { FormBuilder, Validators } from "@angular/forms";
-import { SharedServicesService } from "../../../services/shared-services/shared-services.service";
 import { UtilsService } from "src/app/utils.service";
+import { SharedServicesService } from "../../../services/shared-services/shared-services.service";
+import { ReasonCodeService } from "../reason-code.service";
 
 interface SprintConfig {
   duration: string;

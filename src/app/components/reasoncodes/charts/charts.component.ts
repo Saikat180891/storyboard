@@ -1,17 +1,17 @@
 import {
-  Component,
-  OnInit,
-  ViewEncapsulation,
-  Input,
-  ViewChild,
-  ElementRef,
   AfterViewChecked,
-  OnChanges,
+  Component,
+  ElementRef,
   EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
   Output,
+  ViewChild,
+  ViewEncapsulation,
 } from "@angular/core";
-import { ReasonCodeService } from "../reason-code.service";
 import { fromEvent } from "rxjs";
+import { ReasonCodeService } from "../reason-code.service";
 
 declare let d3: any;
 

@@ -1,14 +1,14 @@
 import {
-  Component,
-  OnInit,
-  OnChanges,
   AfterContentChecked,
+  Component,
+  OnChanges,
+  OnInit,
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { UicontrolService } from "../services/uicontrol.service";
+import { DataService } from "../../../data.service";
 import { PageService } from "../services/page/page.service";
 import { StepcontrolService } from "../services/stepcontrol/stepcontrol.service";
-import { DataService } from "../../../data.service";
+import { UicontrolService } from "../services/uicontrol.service";
 interface Snapshot {
   id: number;
   thumbnail: string;

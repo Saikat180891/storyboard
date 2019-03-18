@@ -2,19 +2,19 @@
  * Author: Saikat Paul
  * Designation: Frontend Engineer, Soroco
  */
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import {
   Component,
-  OnInit,
+  EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
-  EventEmitter,
 } from "@angular/core";
-import { StepcontrolService } from "../../services/stepcontrol/stepcontrol.service";
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { SectionListItem } from "../../common-model/section-list-item.model";
 import { OperationBarService } from "../../services/operation-bar/operation-bar.service";
+import { StepcontrolService } from "../../services/stepcontrol/stepcontrol.service";
 @Component({
   selector: "app-section-title",
   templateUrl: "./section-title.component.html",

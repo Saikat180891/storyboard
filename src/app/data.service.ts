@@ -1,9 +1,9 @@
+import { HttpClient, HttpHeaders, HttpRequest } from "@angular/common/http";
 import { Injectable, OnInit } from "@angular/core";
-import { HttpClient, HttpRequest, HttpHeaders } from "@angular/common/http";
-import { environment } from "../environments/environment";
 import { ResponseContentType } from "@angular/http";
 import { CookieService } from "ngx-cookie-service";
 import { Observable } from "rxjs";
+import { environment } from "../environments/environment";
 
 export const httpOptions = {
   headers: new HttpHeaders(),

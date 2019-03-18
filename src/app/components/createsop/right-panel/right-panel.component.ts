@@ -3,12 +3,12 @@
  * Designation: Frontend Engineer, Soroco
  */
 import { Component, OnInit } from "@angular/core";
-import { StepcontrolService } from "../services/stepcontrol/stepcontrol.service";
 import { DataService } from "../../../data.service";
-import { PageService } from "../services/page/page.service";
 import { SectionListItem } from "../common-model/section-list-item.model";
 import { Step } from "../common-model/step-type.model";
+import { PageService } from "../services/page/page.service";
 import { RightPanelService } from "../services/right-panel/right-panel.service";
+import { StepcontrolService } from "../services/stepcontrol/stepcontrol.service";
 interface StepTypeDropEvent {
   data: string;
   index: number;

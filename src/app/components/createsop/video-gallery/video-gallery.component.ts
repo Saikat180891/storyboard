@@ -1,13 +1,13 @@
 import {
   Component,
-  OnInit,
-  Input,
-  Output,
   EventEmitter,
+  Input,
   OnChanges,
+  OnInit,
+  Output,
 } from "@angular/core";
-import { SidebarService } from "../services/sidebar/sidebar.service";
 import { PageService } from "../services/page/page.service";
+import { SidebarService } from "../services/sidebar/sidebar.service";
 @Component({
   selector: "app-gallery",
   templateUrl: "./video-gallery.component.html",

@@ -4,14 +4,14 @@
 
 import { Injectable } from "@angular/core";
 import {
-  CanActivate,
   ActivatedRouteSnapshot,
+  CanActivate,
   RouterStateSnapshot,
 } from "@angular/router";
-import { Observable } from "rxjs";
 import { Router } from "@angular/router";
-import { DataService } from "../data.service";
 import { CookieService } from "ngx-cookie-service";
+import { Observable } from "rxjs";
+import { DataService } from "../data.service";
 
 @Injectable({
   providedIn: "root",

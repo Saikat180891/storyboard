@@ -1,11 +1,11 @@
 import {
   Directive,
   ElementRef,
-  Renderer2,
-  OnInit,
-  Output,
   EventEmitter,
   Input,
+  OnInit,
+  Output,
+  Renderer2,
 } from "@angular/core";
 import { fromEvent } from "rxjs";
 import { DragDropService } from "./drag-drop.service";

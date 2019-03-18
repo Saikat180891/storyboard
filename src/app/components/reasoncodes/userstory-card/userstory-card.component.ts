@@ -1,15 +1,16 @@
 import {
   Component,
-  OnInit,
-  Input,
-  Output,
   EventEmitter,
+  Input,
   OnChanges,
+  OnInit,
+  Output,
 } from "@angular/core";
-import { EditUserStoryService } from "../userstory-card-edit/edit-user-story.service";
+import { UtilsService } from "../../../utils.service";
 import { ReasonCodeService } from "../reason-code.service";
 import { ReasoncodesComponent } from "../reasoncodes.component";
-import { UtilsService } from "../../../utils.service";
+import { EditUserStoryService } from "../userstory-card-edit/edit-user-story.service";
+
 @Component({
   selector: "app-userstory-card",
   templateUrl: "./userstory-card.component.html",

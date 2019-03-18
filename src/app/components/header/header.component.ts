@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy, Input } from "@angular/core";
-import { HeaderService } from "./header.service";
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
 import { DataService } from "../../data.service";
+import { HeaderService } from "./header.service";
 
 @Component({
   selector: "app-header",

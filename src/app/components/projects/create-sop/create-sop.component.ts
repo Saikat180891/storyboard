@@ -1,31 +1,31 @@
 import {
+  AfterContentInit,
+  AfterViewInit,
   Component,
-  OnInit,
+  EventEmitter,
+  HostListener,
   Input,
   OnChanges,
-  AfterViewInit,
-  AfterContentInit,
-  HostListener,
+  OnInit,
   Output,
-  EventEmitter,
 } from "@angular/core";
 import {
   FormBuilder,
-  FormGroup,
-  FormControlName,
   FormControl,
+  FormControlName,
+  FormGroup,
   Validators,
 } from "@angular/forms";
-import { slideDown, hideInOut } from "../../../animation";
+import { hideInOut, slideDown } from "../../../animation";
 
-import { AppcontrolService } from "../../../services/controlservice/appcontrol.service";
-import { DataService } from "../../../data.service";
-import { ContainerService } from "../container/container.service";
 import { MatSnackBar } from "@angular/material";
+import { NgxSpinnerService } from "ngx-spinner";
+import { DataService } from "../../../data.service";
+import { AppcontrolService } from "../../../services/controlservice/appcontrol.service";
+import { UtilsService } from "../../../utils.service";
 import { CardService } from "../card/card.service";
 import { ContainerComponent } from "../container/container.component";
-import { NgxSpinnerService } from "ngx-spinner";
-import { UtilsService } from "../../../utils.service";
+import { ContainerService } from "../container/container.service";
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,

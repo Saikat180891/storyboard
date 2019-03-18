@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { DataService } from "../../../data.service";
-import { ReasonCodeService } from "../../reasoncodes/reason-code.service";
 import { NgxSpinnerService } from "ngx-spinner";
+import { DataService } from "../../../data.service";
 import { UtilsService } from "../../../utils.service";
+import { ReasonCodeService } from "../../reasoncodes/reason-code.service";
 
 @Injectable({
   providedIn: "root",

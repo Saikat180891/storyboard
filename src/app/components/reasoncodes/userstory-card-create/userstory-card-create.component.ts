@@ -1,16 +1,16 @@
 import {
   Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
   OnInit,
   Output,
-  EventEmitter,
-  OnChanges,
-  Input,
-  HostListener,
 } from "@angular/core";
-import { ReasonCodeService } from "../reason-code.service";
-import { CreateUserstoryService } from "./create-userstory.service";
 import { fromEvent } from "rxjs";
 import { SharedServicesService } from "../../../services/shared-services/shared-services.service";
+import { ReasonCodeService } from "../reason-code.service";
+import { CreateUserstoryService } from "./create-userstory.service";
 
 interface UserStory {
   us_number: string;

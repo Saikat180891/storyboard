@@ -2,6 +2,13 @@
   "extends": ["tslint-config-airbnb", "tslint-config-prettier"],
   "rules": {
     "radix": false,
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "case-insensitive",
+        "named-imports-order": "case-insensitive"
+      }
+    ],
     "cyclomatic-complexity": [true, 20]
   }
 }
