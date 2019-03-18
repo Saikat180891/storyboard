@@ -34,10 +34,6 @@
           />
           <mat-datepicker-toggle matSuffix [for]="std"></mat-datepicker-toggle>
           <mat-datepicker #std></mat-datepicker>
-          <!-- <div class="datepicker">
-            <mat-datepicker-toggle matSuffix [for]="std"></mat-datepicker-toggle>
-            <mat-datepicker #std></mat-datepicker>
-          </div> -->
         </div>
         <div class="end-date" *ngIf="show_dates">
           <label for="">End Date</label>
@@ -51,14 +47,12 @@
           <mat-datepicker #etd></mat-datepicker>
         </div>
       </div>
-      <!-- <div class="form-group"> -->
       <div class="footer-position">
         <button class="btn btn-blue" (click)="onExportAuditTrail()">
           Export
         </button>
         <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
       </div>
-      <!-- </div> -->
     </div>
   </div>
 </div>

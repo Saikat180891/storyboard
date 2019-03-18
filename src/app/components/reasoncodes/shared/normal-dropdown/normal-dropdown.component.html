@@ -8,11 +8,6 @@
       maxlength="100"
     />
   </div>
-  <!-- <div class="ball" 
-  [ngStyle]="{
-    'background-color': selected?selected.color:'',
-    'background-color': selectedColor
-  }"></div> -->
   <span class="down-caret" (click)="onOpen()"
     ><i class="fas fa-angle-down"></i
   ></span>
@@ -23,7 +18,6 @@
       matTooltip="{{ option.status }}"
       matTooltipPosition="right"
     >
-      <!-- <span class="ball" [ngStyle]="{'background-color': option.color}" *ngIf="option.color!='transparent'"></span> -->
       {{ option.status }}
     </span>
   </div>
