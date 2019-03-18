@@ -36,7 +36,6 @@ export class SelectComponent implements OnInit {
 
   onSelectObj(event, option) {
     event.stopPropagation();
-    // this.selected = this.value = option;
     this.optionSelected.emit(option);
     this.isOpen = false;
   }

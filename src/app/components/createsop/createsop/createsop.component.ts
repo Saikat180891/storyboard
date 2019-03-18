@@ -65,11 +65,7 @@ export class CreatesopComponent
     this.toggleRecentSnapshot = $event;
   }
 
-  onRequestedSelectType($event) {
-    // if($event === 'section'){
-    //   this.__steps.sopStepsList.push({sectionName:'section name'});
-    // }
-  }
+  onRequestedSelectType($event) {}
 
   onSelectedImageToExport($event) {
     this.imageDataToExport = $event.content;

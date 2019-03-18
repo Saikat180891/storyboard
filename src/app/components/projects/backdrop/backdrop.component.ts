@@ -72,7 +72,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
 
   roles: string[] = ["SuperAdmin", "Manager", "Analyst"];
   disableSelect: boolean = false;
-  // role = 'Super Admin';
   /**
    * This variables are used while creating a new card
    */
@@ -290,7 +289,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * @param assigneeListItem
    */
   onRemove(id: number) {
-    // if(this._ContainerService.permissions[0]["permissions"]["Can delete assignee"]){
     this._dataService.delete(`/sop/assignee`, `${id}.json`).subscribe(res => {
       this.alreadyCreatedUsers.forEach(element => {
         if (element.id == id) {
@@ -301,7 +299,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
         }
       });
     });
-    // }
   }
 
   /**
@@ -336,9 +333,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     };
     this.invitationList.push(temporaryObject);
   }
-
-  // onSave(){
-  // }
 
   /**
    * Save an editted card
@@ -398,7 +392,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
           this.spinner.hide();
         }
       );
-    // }
   }
 
   /**

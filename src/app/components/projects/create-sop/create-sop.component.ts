@@ -78,7 +78,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
 
   roles: string[] = ["SuperAdmin", "Manager", "Analyst"];
   disableSelect: boolean = false;
-  // role = 'Super Admin';
   /**
    * This variables are used while creating a new card
    */
@@ -192,7 +191,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
         },
         err => {}
       );
-    // }
   }
 
   /**
@@ -278,7 +276,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
     this.projectDetails.due_date = this.utils.datetypeToStringWithoutTime(
       $event
     );
-    // this.projectDetails.due_date = $event
   }
 
   /**

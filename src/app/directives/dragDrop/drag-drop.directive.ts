@@ -19,8 +19,6 @@ export class DragDropDirective implements OnInit {
       this.dragDrop.setPayload(res.target.getAttribute("data-buttonType"));
     });
 
-    fromEvent(this.el.nativeElement, "drag").subscribe(res => {
-      // this.render.addClass(this.el.nativeElement, 'hold');
-    });
+    fromEvent(this.el.nativeElement, "drag").subscribe(res => {});
   }
 }

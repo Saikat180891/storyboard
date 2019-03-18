@@ -29,11 +29,7 @@ export class VideoGalleryComponent implements OnInit, OnChanges {
 
   ngOnInit() {}
 
-  ngOnChanges() {
-    // if(this.type == 'VIDEO'){
-    //   this.optionSelected.emit({index:0, content:this.data[0]});
-    // }
-  }
+  ngOnChanges() {}
 
   onThumbnailSelect(index: number, content: any) {
     this.selected = index;

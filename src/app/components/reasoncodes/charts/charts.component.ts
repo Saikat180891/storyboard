@@ -19,7 +19,6 @@ declare let d3: any;
   selector: "app-charts",
   templateUrl: "./charts.component.html",
   styleUrls: ["./charts.component.scss"],
-  // encapsulation: ViewEncapsulation.None
 })
 export class ChartsComponent implements OnInit, AfterViewChecked, OnChanges {
   @Input("options") options;

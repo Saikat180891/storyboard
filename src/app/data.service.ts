@@ -1,6 +1,5 @@
 import { Injectable, OnInit } from "@angular/core";
 import { HttpClient, HttpRequest, HttpHeaders } from "@angular/common/http";
-// import { Observable, of } from 'rxjs';
 import { environment } from "../environments/environment";
 import { ResponseContentType } from "@angular/http";
 import { CookieService } from "ngx-cookie-service";

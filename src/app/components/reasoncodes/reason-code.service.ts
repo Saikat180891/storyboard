@@ -1,7 +1,6 @@
 import { Injectable, EventEmitter } from "@angular/core";
 import { DataService } from "../../data.service";
 import { environment } from "../../../environments/environment";
-// import { EventEmitter } from 'protractor'
 import { MatSnackBar, MatSnackBarConfig } from "@angular/material";
 import { NgxSpinnerService } from "ngx-spinner";
 import { UtilsService } from "../../utils.service";
@@ -14,7 +13,6 @@ export class ReasonCodeService {
   sprintConfig = [];
   currentSprintData = [];
   totalSprintData = [];
-  // currentSprintData = [];
   currentProject = {};
   userStories = [];
   movemodal: boolean = false;

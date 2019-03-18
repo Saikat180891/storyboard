@@ -33,7 +33,6 @@ export class SidebarService {
       headers: httpOptions.set("X-CSRFToken", this.cookie.get("csrftoken")),
     });
     return this.http.request(req);
-    // return this.http.post(this.__api.apiUrl + endpoint, payload, {withCredentials: true, headers: httpOptions.set('X-CSRFToken', this.cookie.get("csrftoken"))});
   }
 
   /**

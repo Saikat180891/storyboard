@@ -10,7 +10,6 @@ import { EditUserStoryService } from "../userstory-card-edit/edit-user-story.ser
 import { ReasonCodeService } from "../reason-code.service";
 import { ReasoncodesComponent } from "../reasoncodes.component";
 import { UtilsService } from "../../../utils.service";
-// import {EditUserStoryService} from '../userstory-card-edit/edit-user-story.service';
 @Component({
   selector: "app-userstory-card",
   templateUrl: "./userstory-card.component.html",
