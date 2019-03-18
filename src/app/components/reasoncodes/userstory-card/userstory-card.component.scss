@@ -1,17 +1,11 @@
 .card-box {
-  // width: 96vw;
-  // height: 150px;
   background-color: #ffffff;
   border-radius: 5px;
-  // margin-left: 2vw;
-  // margin-top: 18px;
-  // margin-bottom: 18px;
   margin: 15px 30px;
   border-radius: 5px;
   box-shadow: 1px 1px 4px rgba($color: #000000, $alpha: 0.1);
   position: relative;
   display: flex;
-  // overflow: hidden;
 
   .created-date {
     position: absolute;
@@ -29,7 +23,6 @@
   .options-btn {
     width: 35px;
     height: 20px;
-    // background-color: red;
     position: absolute;
     top: 5px;
     right: 20px;
@@ -48,14 +41,12 @@
     display: flex;
   }
   .row {
-    // height: 100%;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
     position: relative;
     overflow: hidden;
   }
   .r1 {
     width: 27vw;
-    // height: 100%;
   }
   .r2 {
     width: 15vw;
@@ -67,18 +58,12 @@
     width: calc(100% - 54vw);
   }
   .col {
-    // height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    // position: absolute;
-    // top: 0;
-    // left: 0;
-    // background-color: #cccccc;
     padding: 20px;
 
     > span {
-      // margin-bottom: 15px;
       display: block;
       margin: 7px 0;
       font-size: 14px;
@@ -91,9 +76,6 @@
     span:nth-child(odd) {
       color: #999999;
     }
-  }
-  .reduce-padding {
-    // padding: 20px 10px 10px 20px;
   }
   .c1 {
     width: 150px;
@@ -119,8 +101,6 @@
     width: 30%;
     left: 70%;
     right: 0;
-    // padding: 45px 0 20px 0;
-    // background-color: red;
     .btn-box {
       position: absolute;
       top: 90px;
@@ -159,14 +139,6 @@
   display: block;
   height: 15px;
   line-height: 15px;
-  // max-width: 100px;
-
-  span.priority-text {
-    // position: absolute;
-    // top: 0;
-    // left: 60%;
-    // transform: translateX(-50%);
-  }
 
   span {
     display: inline-block;
@@ -177,16 +149,11 @@
   }
   span:last-child {
     float: left;
-    // text-align: left;
   }
   .circle {
     width: 15px;
     height: 15px;
     border-radius: 50%;
-    // position: absolute;
-    // top: 0;
-    // left: 25%;
-    // transform: translateX(-50%);
   }
 
   .high {

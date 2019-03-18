@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i");
-// html, body { height: 100vh; }
 * {
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
@@ -202,7 +201,6 @@ ul {
   background-color: #2a7de1;
 }
 #add-assign .input-box input[type="text"] {
-  // width: calc(100% - 53px);
   width: 100%;
 }
 #add-assign .input-box button {
@@ -262,7 +260,6 @@ ul {
 }
 
 .rotate-90 {
-  // display: block;
   transform-origin: 50% 50%;
   transform: rotate(90deg);
 }

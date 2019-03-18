@@ -7,23 +7,14 @@
   position: relative;
 
   .header {
-    // padding-left: 20px;
     color: #ffffff;
-    // height: 40px;
-    // line-height: 40px;
-    // width: 100%;
     font-size: 18px;
-    // border-bottom: 1px solid #D1D1D1;
     position: absolute;
     top: 20px;
     left: 20px;
   }
   .chart {
     position: absolute;
-    // background-color: red;
-    // height: calc(100% - 40px);
-    // width: 100%;
-    // bottom: 0;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -40%);
@@ -57,11 +48,9 @@
     align-items: center;
     span {
       font-size: 30px;
-      // display: block;
     }
     span:last-child {
       font-size: 12px;
-      // text-align: center;
     }
   }
 }
@@ -103,9 +92,7 @@
 /deep/ .nvd3 .nv-axis path {
   stroke: #2a7de1;
 }
-// /deep/ .nvd3 .nv-discretebar .nv-groups rect, .nvd3 .nv-multibar .nv-groups rect, .nvd3 .nv-multibarHorizontal .nv-groups rect{
-//   width: 30px;
-// }
+
 /deep/ .nvd3.nv-pie path {
   fill-opacity: 1;
 }

@@ -23,7 +23,6 @@
       display: block;
     }
     span:last-child {
-      // float: right;
       color: #c1c1c1;
       cursor: pointer;
     }
@@ -34,16 +33,13 @@
     left: 0;
     width: 100%;
     height: 200px;
-    // background-color: red;
 
     .form-group {
       min-width: 60px;
       min-height: 80px;
-      // background-color: greenyellow;
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
-      // border-bottom: 1px solid #C1C1C1;
 
       .input-container {
         width: 100%;
@@ -67,7 +63,6 @@
           height: 35px;
           line-height: 35px;
           transition: all 0.1s ease;
-          // overflow: hidden;
 
           .etd-date-picker {
             position: absolute;
@@ -107,7 +102,6 @@
             width: 100%;
             border-radius: 5px;
             border: none;
-            // text-align: center;
             transition: all 0.1s ease;
           }
           .text-center {
@@ -125,11 +119,9 @@
             background-color: #ffffff;
             color: #000000;
             padding-left: 5px;
-            // text-align: left;
           }
         }
         .editable:hover {
-          // background-color: #C1C1C1;
           border-radius: 5px;
         }
         .align-center {
@@ -164,8 +156,6 @@
       }
 
       span {
-        // height: 30px;
-        // line-height: 30px;
         border-radius: 5px;
         background-color: rgba($color: #f47074, $alpha: 0.3);
         padding: 10px 5px;

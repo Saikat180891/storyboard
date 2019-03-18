@@ -2,7 +2,6 @@
   width: 100%;
   height: 30px;
   padding: 0 2px;
-  // border: 1px solid #D1D1D1;
   border-radius: 2px;
   background-color: #ffffff;
   position: relative;
@@ -65,9 +64,6 @@
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
     background-color: #ffffff;
-    // border-bottom: 1px solid #D1D1D1;
-    // border-left: 1px solid #D1D1D1;
-    // border-right: 1px solid #D1D1D1;
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
     z-index: 10000;
     cursor: pointer;
@@ -110,11 +106,6 @@
   }
 }
 
-// @media (min-width: 1368px) {
-//   .select{
-//     width: 250px;
-//   }
-// }
 .input-active {
   padding-left: 17px;
 }

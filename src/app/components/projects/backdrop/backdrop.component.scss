@@ -70,7 +70,6 @@
 .dialog-group {
   display: block;
   width: 100%;
-  // height: 45px;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
   overflow: auto;
@@ -96,9 +95,6 @@
   position: absolute;
   top: 159px;
   left: 16.8rem;
-}
-.height-max::-webkit-scrollbar {
-  // display: none;
 }
 ul {
   list-style: none;
