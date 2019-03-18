@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import {Observable, BehaviorSubject} from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Observable, BehaviorSubject } from "rxjs";
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class OperationBarService {
-  isLoopButtonPresent =  new BehaviorSubject<boolean>(true);
+  isLoopButtonPresent = new BehaviorSubject<boolean>(true);
   toggleFlag: boolean = true;
 
-  constructor() { }
+  constructor() {}
 
   toggleLoop() {
     this.toggleFlag = !this.toggleFlag;

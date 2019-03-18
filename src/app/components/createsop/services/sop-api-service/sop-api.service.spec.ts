@@ -1,11 +1,11 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { SopApiService } from './sop-api.service';
+import { SopApiService } from "./sop-api.service";
 
-describe('SopApiService', () => {
+describe("SopApiService", () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
-  it('should be created', () => {
+  it("should be created", () => {
     const service: SopApiService = TestBed.get(SopApiService);
     expect(service).toBeTruthy();
   });

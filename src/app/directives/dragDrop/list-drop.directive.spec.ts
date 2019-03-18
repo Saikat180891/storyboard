@@ -1,7 +1,7 @@
-import { ListDropDirective } from './list-drop.directive';
+import { ListDropDirective } from "./list-drop.directive";
 
-describe('ListDropDirective', () => {
-  it('should create an instance', () => {
+describe("ListDropDirective", () => {
+  it("should create an instance", () => {
     const directive = new ListDropDirective();
     expect(directive).toBeTruthy();
   });

@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { StepTypeComponent } from './step-type.component';
+import { StepTypeComponent } from "./step-type.component";
 
-describe('StepTypeComponent', () => {
+describe("StepTypeComponent", () => {
   let component: StepTypeComponent;
   let fixture: ComponentFixture<StepTypeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StepTypeComponent ]
-    })
-    .compileComponents();
+      declarations: [StepTypeComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('StepTypeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

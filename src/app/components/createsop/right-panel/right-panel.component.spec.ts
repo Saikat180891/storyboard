@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { RightPanelComponent } from './right-panel.component';
+import { RightPanelComponent } from "./right-panel.component";
 
-describe('RightPanelComponent', () => {
+describe("RightPanelComponent", () => {
   let component: RightPanelComponent;
   let fixture: ComponentFixture<RightPanelComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RightPanelComponent ]
-    })
-    .compileComponents();
+      declarations: [RightPanelComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('RightPanelComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

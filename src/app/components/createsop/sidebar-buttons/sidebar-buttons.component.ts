@@ -1,45 +1,40 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 
 @Component({
-  selector: 'app-sidebar-buttons',
-  templateUrl: './sidebar-buttons.component.html',
-  styleUrls: ['./sidebar-buttons.component.scss']
+  selector: "app-sidebar-buttons",
+  templateUrl: "./sidebar-buttons.component.html",
+  styleUrls: ["./sidebar-buttons.component.scss"],
 })
 export class SidebarButtonsComponent implements OnInit {
+  @Output("open") open = new EventEmitter<any>();
 
-  @Output('open') open = new EventEmitter<any>();
+  openMediaPane: boolean = false;
 
-  openMediaPane:boolean = false;
-
-  selected:number = -1;
+  selected: number = -1;
 
   sidebarLinks = [
     {
-      logo: '',
-      linkCaption: 'Media',
-      function: 'media'
+      logo: "",
+      linkCaption: "Media",
+      function: "media",
     },
     // {
     //   logo: '',
     //   linkCaption: 'Media',
     //   function: 'media'
     // }
-  ]
+  ];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  onOpenMediaPane(type:string, index:number){
+  onOpenMediaPane(type: string, index: number) {
     /**
      * this function is used to open the media pane
      */
     this.selected = index;
     this.openMediaPane = !this.openMediaPane;
-    this.open.emit({type:type, shouldOpen: this.openMediaPane});
+    this.open.emit({ type: type, shouldOpen: this.openMediaPane });
   }
-
-
-
 }

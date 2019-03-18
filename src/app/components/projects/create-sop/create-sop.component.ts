@@ -1,68 +1,83 @@
-import { Component, OnInit, Input, OnChanges, AfterViewInit, AfterContentInit, HostListener, Output, EventEmitter } from '@angular/core';
-import {FormBuilder, FormGroup, FormControlName, FormControl, Validators} from '@angular/forms';
-import {slideDown, hideInOut} from '../../../animation';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  AfterViewInit,
+  AfterContentInit,
+  HostListener,
+  Output,
+  EventEmitter,
+} from "@angular/core";
+import {
+  FormBuilder,
+  FormGroup,
+  FormControlName,
+  FormControl,
+  Validators,
+} from "@angular/forms";
+import { slideDown, hideInOut } from "../../../animation";
 
-import {AppcontrolService} from '../../../services/controlservice/appcontrol.service';
-import {DataService} from '../../../data.service';
-import {ContainerService} from '../container/container.service';
-import {MatSnackBar} from '@angular/material';
-import {CardService} from '../card/card.service';
-import {ContainerComponent} from '../container/container.component';
-import { NgxSpinnerService } from 'ngx-spinner';
-import {UtilsService} from '../../../utils.service'
+import { AppcontrolService } from "../../../services/controlservice/appcontrol.service";
+import { DataService } from "../../../data.service";
+import { ContainerService } from "../container/container.service";
+import { MatSnackBar } from "@angular/material";
+import { CardService } from "../card/card.service";
+import { ContainerComponent } from "../container/container.component";
+import { NgxSpinnerService } from "ngx-spinner";
+import { UtilsService } from "../../../utils.service";
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
   LEFT_ARROW = 37,
   ESCAPE = 27,
-  ENTER = 13
+  ENTER = 13,
 }
 
-interface AssignUser{
-  user?:string;
-  email?:string;
-  role?:string;
-  indecatedUserAboutMistakes?:boolean;
+interface AssignUser {
+  user?: string;
+  email?: string;
+  role?: string;
+  indecatedUserAboutMistakes?: boolean;
 }
 
-interface ProjectDetails{
-  clientName:string;
-  title:string;
-  chargeCode:string;
-  due_date:string;
-  logo:any;
-  rCodes:any;
+interface ProjectDetails {
+  clientName: string;
+  title: string;
+  chargeCode: string;
+  due_date: string;
+  logo: any;
+  rCodes: any;
 }
 
 @Component({
-  selector: 'app-create-sop',
-  templateUrl: './create-sop.component.html',
-  styleUrls: ['./create-sop.component.scss'],
-  animations: [slideDown, hideInOut]
+  selector: "app-create-sop",
+  templateUrl: "./create-sop.component.html",
+  styleUrls: ["./create-sop.component.scss"],
+  animations: [slideDown, hideInOut],
 })
-export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
+export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() cardID;
-  @Input('permissions') permissions:any;
-  @Output('close') close = new EventEmitter<boolean>();
-  imagePath:string = '';
+  @Input("permissions") permissions: any;
+  @Output("close") close = new EventEmitter<boolean>();
+  imagePath: string = "";
   userDatas;
-  assigneeName:string = '';
+  assigneeName: string = "";
 
   createSOP = "Create New Project";
   editSOP = "Edit Project";
 
-  projectDetails:ProjectDetails = {
-    clientName:'',
-    title:'',
-    chargeCode:'',
-    due_date:'',
-    logo:'',
-    rCodes:''
+  projectDetails: ProjectDetails = {
+    clientName: "",
+    title: "",
+    chargeCode: "",
+    due_date: "",
+    logo: "",
+    rCodes: "",
   };
 
-
-  roles: string[] = ['SuperAdmin', 'Manager', 'Analyst'];
-  disableSelect:boolean = false;
+  roles: string[] = ["SuperAdmin", "Manager", "Analyst"];
+  disableSelect: boolean = false;
   // role = 'Super Admin';
   /**
    * This variables are used while creating a new card
@@ -73,16 +88,16 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
   inviteEmail = "";
   inviteFirstName = "";
   inviteLastName = "";
-  inviteRole="";
-  inviteMessage="";
+  inviteRole = "";
+  inviteMessage = "";
 
   /**
    * Validate SOP form
    */
-  validateAutomationSystemName:boolean = false;
-  validateClientName:boolean = false;
-  validateChargeCode:boolean = false;
-  validateSelectedDate:boolean = false;
+  validateAutomationSystemName: boolean = false;
+  validateClientName: boolean = false;
+  validateChargeCode: boolean = false;
+  validateSelectedDate: boolean = false;
 
   /**
    * Validate Invite New User Form
@@ -100,93 +115,95 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
    * These variables are used to display messages using string interpolation technique
    * The "border" variable is used to change the border color of the due date box
    */
-  validateClientNameMessage:string = "*Client name cannot be blank or contain numbers";
-  validateAutomationSystemNameMessage:string = "*Automation system name cannot be blank";
-  validateChargeCodeMessage:string = "*Please enter a valid charge code or due date";
+  validateClientNameMessage: string =
+    "*Client name cannot be blank or contain numbers";
+  validateAutomationSystemNameMessage: string =
+    "*Automation system name cannot be blank";
+  validateChargeCodeMessage: string =
+    "*Please enter a valid charge code or due date";
 
   border = "1px solid #D1D1D1";
 
-  users:string[] = ['SuperAdmin', 'Manager', 'Analyst'];
-  user:string;
+  users: string[] = ["SuperAdmin", "Manager", "Analyst"];
+  user: string;
 
   /**
    * This variables are used while rearranging the date
    */
   editSelectedDate;
 
-  options:AssignUser[] = [];
+  options: AssignUser[] = [];
 
   ID;
 
-  permissionGranted:any;
-  newlyCreatedAssignees:any = [];
-  createdAssignees:any = [];
+  permissionGranted: any;
+  newlyCreatedAssignees: any = [];
+  createdAssignees: any = [];
 
-  constructor(private _UIControllerService:AppcontrolService,
-              private _dataService:DataService,
-              private _ContainerService:ContainerService,
-              private formBuilder: FormBuilder,
-              private _cardService: CardService,
-              private snackBar: MatSnackBar,
-              private spinner: NgxSpinnerService,
-              private __containerComponent: ContainerComponent,
-              private utils: UtilsService
-              ) {}
+  constructor(
+    private _UIControllerService: AppcontrolService,
+    private _dataService: DataService,
+    private _ContainerService: ContainerService,
+    private formBuilder: FormBuilder,
+    private _cardService: CardService,
+    private snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService,
+    private __containerComponent: ContainerComponent,
+    private utils: UtilsService
+  ) {}
 
   /**
    * Hide backdrop when escape is pressed
-   * @param event 
+   * @param event
    */
-  @HostListener('document:keyup.escape', ['$event'])
+  @HostListener("document:keyup.escape", ["$event"])
   keyEvent(event: KeyboardEvent) {
     //console.log(event)
     if (event.keyCode === KEY_CODE.ESCAPE) {
       this.onOverlayClose();
-    } 
+    }
   }
   /**
    * Create new Sop on enter press
    * @param event
    */
-  @HostListener('document:keyup.enter', ['$event'])
+  @HostListener("document:keyup.enter", ["$event"])
   keyEventEnter(event: KeyboardEvent) {
     //console.log(event)
     if (event.keyCode === KEY_CODE.ENTER) {
       this.onCreateNew();
-    } 
+    }
   }
 
-  ngOnInit() {
-  }
-  
-  
-  ngOnChanges(){
-  }
-  
-  ngAfterViewInit(){
-  }
+  ngOnInit() {}
+
+  ngOnChanges() {}
+
+  ngAfterViewInit() {}
 
   /**
    * Function to Search for name and add them to the assignee list
-   * @param event 
+   * @param event
    */
-  onKeyPress(event){
-    this._dataService.fetchData(`/users.json?startsWith=${event.target.value}`)
-      .subscribe(res=>{
-        this.options = res;
-      },
-      err=>{
-      });
+  onKeyPress(event) {
+    this._dataService
+      .fetchData(`/users.json?startsWith=${event.target.value}`)
+      .subscribe(
+        res => {
+          this.options = res;
+        },
+        err => {}
+      );
     // }
   }
 
   /**
    * Select a name on click and display it in the assignee to input box
-   * @param option 
+   * @param option
    */
-  onSelect(option:any){
+  onSelect(option: any) {
     let temporaryObject = {
-      user: option.name ? option.name : option.email
+      user: option.name ? option.name : option.email,
     };
     this.createdAssignees.unshift(temporaryObject);
     this.options = [];
@@ -195,7 +212,7 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
   /**
    * Close the overlay and reset all fields
    */
-  onOverlayClose(){
+  onOverlayClose() {
     this.close.emit(false);
   }
 
@@ -203,7 +220,7 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
    * Prevent click bubbling to the parent element
    * @param clickEvent - capture click event
    */
-  preventPropagation(clickEvent){
+  preventPropagation(clickEvent) {
     clickEvent.stopPropagation();
   }
 
@@ -212,7 +229,7 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
    * @param value -- returns string Manager, SuperAdmin, Analyst
    * @param index -- returns index of the array
    */
-  onSelectionChange(value:string, index:number){
+  onSelectionChange(value: string, index: number) {
     let temporaryObject = this.createdAssignees[index];
     temporaryObject.role = value;
     this.createdAssignees[index] = temporaryObject;
@@ -221,18 +238,18 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
   /**
    * To close the backdrop dialog-box
    */
-  onClose(){
-    this.imagePath = '';
+  onClose() {
+    this.imagePath = "";
     this.createAssignees = [];
     this.validateAutomationSystemName = false;
     this.validateClientName = false;
     this.validateChargeCode = false;
     this.validateSelectedDate = false;
     this.border = "1px solid #D1D1D1";
-    this.assigneeName = '';
-    this.filePreview = '';
+    this.assigneeName = "";
+    this.filePreview = "";
     this.options = [];
-    this.onOverlayClose()
+    this.onOverlayClose();
   }
 
   filePreview;
@@ -240,14 +257,14 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
    * To select and preview image for logo
    * @param fileSelected
    */
-  onFileSelected(fileSelected){
+  onFileSelected(fileSelected) {
     if (fileSelected.target.files && fileSelected.target.files[0]) {
       this.projectDetails.logo = fileSelected.target.files[0];
-      let reader:any = new FileReader();
+      let reader: any = new FileReader();
       reader.readAsDataURL(fileSelected.target.files[0]);
-      reader.onload = (fileSelected) => {
+      reader.onload = fileSelected => {
         this.filePreview = fileSelected.target.result;
-      }
+      };
     }
   }
 
@@ -255,13 +272,15 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
    * To remove an assignee from the 'Assign To' list
    * @param assigneeListItem
    */
-  onRemove(id:number){
+  onRemove(id: number) {
     this.createdAssignees.splice(id, 1);
   }
 
-  onDueDateChange($event:Date){
+  onDueDateChange($event: Date) {
     console.log($event);
-    this.projectDetails.due_date = this.utils.datetypeToStringWithoutTime($event);
+    this.projectDetails.due_date = this.utils.datetypeToStringWithoutTime(
+      $event
+    );
     console.log(this.projectDetails.due_date);
     // this.projectDetails.due_date = $event
   }
@@ -270,106 +289,118 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
    * Create a new SOP on click
    */
 
-
-   validateForm(object:ProjectDetails){
+  validateForm(object: ProjectDetails) {
     let validationStatus = [];
 
     for (let key in object) {
-      if(key == 'clientName'){
-        object[key] != '' ? this.validateClientName = validationStatus[0] = false : this.validateClientName = validationStatus[0] = true;
+      if (key == "clientName") {
+        object[key] != ""
+          ? (this.validateClientName = validationStatus[0] = false)
+          : (this.validateClientName = validationStatus[0] = true);
       }
 
-      if(key == 'title'){
-        object[key] != '' ? this.validateAutomationSystemName = validationStatus[1] = false : this.validateAutomationSystemName = validationStatus[1] = true;
+      if (key == "title") {
+        object[key] != ""
+          ? (this.validateAutomationSystemName = validationStatus[1] = false)
+          : (this.validateAutomationSystemName = validationStatus[1] = true);
       }
 
-      if(key == 'chargeCode'){
-        object[key] != '' ? this.validateChargeCode = validationStatus[2] = false : this.validateChargeCode = validationStatus[2] = true;
+      if (key == "chargeCode") {
+        object[key] != ""
+          ? (this.validateChargeCode = validationStatus[2] = false)
+          : (this.validateChargeCode = validationStatus[2] = true);
       }
 
-      if(key == 'due_date'){
-        if(object[key] != ''){
+      if (key == "due_date") {
+        if (object[key] != "") {
           this.validateSelectedDate = validationStatus[3] = false;
           this.border = "1px solid #D1D1D1";
-        }else{
+        } else {
           this.validateSelectedDate = validationStatus[3] = true;
           this.border = "1px solid rgb(245, 117, 117)";
-        } 
+        }
       }
     }
 
-    if(validationStatus.indexOf(true) == -1){
+    if (validationStatus.indexOf(true) == -1) {
       return 0;
-    }else{
+    } else {
       return -1;
     }
-   }
+  }
 
-   /**
-    * 
-    * @param list validation for creating assignees
-    */
-   resetValidation(list:Array<AssignUser>){
-    for(let i = 0; i < list.length; i++){
+  /**
+   *
+   * @param list validation for creating assignees
+   */
+  resetValidation(list: Array<AssignUser>) {
+    for (let i = 0; i < list.length; i++) {
       list[i].indecatedUserAboutMistakes = false;
     }
     return list;
-   }
+  }
 
-   validateAssigneeArrayList(list:Array<AssignUser>){
-     let validationFailed = [];
-    for(let i = 0; i < list.length; i++){
-      if(!list[i].role){
+  validateAssigneeArrayList(list: Array<AssignUser>) {
+    let validationFailed = [];
+    for (let i = 0; i < list.length; i++) {
+      if (!list[i].role) {
         validationFailed.push({
           status: false,
-          index: i
+          index: i,
         });
       }
     }
 
-    if(validationFailed.length){
+    if (validationFailed.length) {
       return validationFailed;
-    }else{
+    } else {
       return true;
     }
-   }
+  }
 
-   indicateUserIfValidationWentWrong(validationStatus:any | boolean){
-    if(validationStatus == true){
+  indicateUserIfValidationWentWrong(validationStatus: any | boolean) {
+    if (validationStatus == true) {
       return true;
-    }else{
-      validationStatus.forEach((ele:any, i:number)=>{
+    } else {
+      validationStatus.forEach((ele: any, i: number) => {
         this.createdAssignees[ele.index].indecatedUserAboutMistakes = true;
       });
     }
     return false;
-   }
+  }
 
-  onCreateNew(){
+  onCreateNew() {
     let validationCheck = this.validateForm(this.projectDetails);
-    let assigneeValidationStatus = this.indicateUserIfValidationWentWrong(this.validateAssigneeArrayList(this.resetValidation(this.createdAssignees)));
-    if(validationCheck == 0 && assigneeValidationStatus == true){
+    let assigneeValidationStatus = this.indicateUserIfValidationWentWrong(
+      this.validateAssigneeArrayList(
+        this.resetValidation(this.createdAssignees)
+      )
+    );
+    if (validationCheck == 0 && assigneeValidationStatus == true) {
       this.spinner.show();
       let formData = this.JSONtoFormData(this.projectDetails);
-      let sopId:number;
-      this._dataService.postData('/sop.json',  formData).subscribe(
+      let sopId: number;
+      this._dataService.postData("/sop.json", formData).subscribe(
         //if response successfull
-        (response)=> {
-          if(this.createdAssignees.length > 0){
-            this.createdAssignees.forEach((ele, index, array)=>{
+        response => {
+          if (this.createdAssignees.length > 0) {
+            this.createdAssignees.forEach((ele, index, array) => {
               delete ele.indecatedUserAboutMistakes;
-                this._dataService.postData(`/sop/${response.id}/assignee.json`, ele)
-                  .subscribe(res=>{});
+              this._dataService
+                .postData(`/sop/${response.id}/assignee.json`, ele)
+                .subscribe(res => {});
             });
           }
         },
         //if response not successfull
-        (err)=> {
+        err => {
           this.spinner.hide();
         },
-        ()=>{
+        () => {
           this.__containerComponent.getListOfAllProjects();
-          this.snackBar.open("Project has been created", "Success", {duration: 2000});
+          this.snackBar.open("Project has been created", "Success", {
+            duration: 2000,
+          });
           this.spinner.hide();
           this.onOverlayClose();
         }
@@ -377,36 +408,35 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit  {
     }
   }
 
-  
   /**
    * Format the year as 00YY
-   * @param year 
+   * @param year
    */
-  formatYear(year){
+  formatYear(year) {
     let digits = year.toString().split("");
-    return ""+ digits[2] + digits[3];
+    return "" + digits[2] + digits[3];
   }
 
   /**
-   * Get the date as a string and then split the string using 
-   * the "/" then using the date, month and year 
+   * Get the date as a string and then split the string using
+   * the "/" then using the date, month and year
    * set the due date in the editSelectedDate property
-   * @param date 
+   * @param date
    */
-  arrangeDateInCorrectFormat(date){
+  arrangeDateInCorrectFormat(date) {
     let newDate = date.toString().split("/");
     this.editSelectedDate = new Date();
     this.editSelectedDate.setFullYear(Number(newDate[2]));
-    this.editSelectedDate.setMonth(Number(newDate[1])-1);
+    this.editSelectedDate.setMonth(Number(newDate[1]) - 1);
     this.editSelectedDate.setDate(Number(newDate[0]));
     return this.editSelectedDate;
   }
 
-  JSONtoFormData(json){
+  JSONtoFormData(json) {
     let formData = new FormData();
-      for(let fieldValue in json){
-        formData.append(fieldValue, json[fieldValue])
-      }
-      return formData;
+    for (let fieldValue in json) {
+      formData.append(fieldValue, json[fieldValue]);
+    }
+    return formData;
   }
 }

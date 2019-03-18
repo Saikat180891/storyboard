@@ -1,31 +1,31 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 
 @Component({
-  selector: 'app-step-end-loop',
-  templateUrl: './step-end-loop.component.html',
-  styleUrls: ['./step-end-loop.component.scss']
+  selector: "app-step-end-loop",
+  templateUrl: "./step-end-loop.component.html",
+  styleUrls: ["./step-end-loop.component.scss"],
 })
 export class StepEndLoopComponent implements OnInit {
-  @Input('sectionId') sectionId:number;
-  @Input('stepIndex') stepIndex:number;
-  @Input('sectionIndex') sectionIndex:number;
-  @Input('stepData') stepData: any;
-  @Output('deleteStep') deleteStep = new EventEmitter();
-  @Output('outputChange') outputChange = new EventEmitter();
-  canEdit:boolean = true;
+  @Input("sectionId") sectionId: number;
+  @Input("stepIndex") stepIndex: number;
+  @Input("sectionIndex") sectionIndex: number;
+  @Input("stepData") stepData: any;
+  @Output("deleteStep") deleteStep = new EventEmitter();
+  @Output("outputChange") outputChange = new EventEmitter();
+  canEdit: boolean = true;
   displayDialogBox: boolean = true;
   data = {
-    loop_params:'',
-    screen:''
-  }
+    loop_params: "",
+    screen: "",
+  };
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-    if ( this.stepData.step_id || this.stepData.id) {
+    if (this.stepData.step_id || this.stepData.id) {
       this.data = {
-        ...this.stepData.data
-      }
+        ...this.stepData.data,
+      };
       this.canEdit = false;
       this.displayDialogBox = false;
     }
@@ -37,29 +37,29 @@ export class StepEndLoopComponent implements OnInit {
 
   onClickOnOk() {
     this.canEdit = false;
-    if ( this.stepData.step_id ) {
+    if (this.stepData.step_id) {
       this.outputChange.emit({
         data: this.data,
         sectionIndex: this.sectionIndex,
         stepIndex: this.stepIndex,
-        stepType: 'end-loop',
+        stepType: "end-loop",
         sectionId: this.sectionId,
         stepId: this.stepData.step_id,
-        mode: 'edit'
+        mode: "edit",
       });
     } else {
       this.outputChange.emit({
         data: this.data,
         sectionIndex: this.sectionIndex,
         stepIndex: this.stepIndex,
-        stepType: 'end-loop',
+        stepType: "end-loop",
         sectionId: this.sectionId,
-        mode: 'create'
+        mode: "create",
       });
     }
   }
 
-  onCancelEdit(){
+  onCancelEdit() {
     this.canEdit = false;
   }
 
@@ -67,20 +67,22 @@ export class StepEndLoopComponent implements OnInit {
     this.displayDialogBox = !this.displayDialogBox;
   }
 
-  onDeleteStep(){
+  onDeleteStep() {
     if (this.stepData.step_id || this.stepData.id) {
       this.deleteStep.emit({
         sectionIndex: this.sectionIndex,
         stepIndex: this.stepIndex,
-        stepId: this.stepData.step_id ? this.stepData.step_id : this.stepData.id,
+        stepId: this.stepData.step_id
+          ? this.stepData.step_id
+          : this.stepData.id,
         insertionId: this.stepData.insertion_id,
-        mode: 'server'
+        mode: "server",
       });
     } else {
       this.deleteStep.emit({
-        sectionIndex:this.sectionIndex,
-        stepIndex:this.stepIndex,
-        mode: 'local'
+        sectionIndex: this.sectionIndex,
+        stepIndex: this.stepIndex,
+        mode: "local",
       });
     }
   }

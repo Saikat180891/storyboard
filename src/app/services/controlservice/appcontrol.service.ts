@@ -1,80 +1,86 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Injectable, EventEmitter } from "@angular/core";
+import { Observable, of } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AppcontrolService {
-  private overlayStatus:boolean = false;
+  private overlayStatus: boolean = false;
   currentState;
   private editCard = [];
 
-  lastNumber:number = 0;
-  ID:number = 0;
-  colorPicker:string[] =["#0033A1", "#2A7DE1", "#40C0C4", "#54585A", "#8677C4", "#94BEF0"];
+  lastNumber: number = 0;
+  ID: number = 0;
+  colorPicker: string[] = [
+    "#0033A1",
+    "#2A7DE1",
+    "#40C0C4",
+    "#54585A",
+    "#8677C4",
+    "#94BEF0",
+  ];
 
   reloadSatus = true;
 
   data = new EventEmitter<any>();
 
-  constructor() { }
+  constructor() {}
 
   /**
    * Open/close backdrop
-   * @param status 
+   * @param status
    */
-  setOverlay(status){
+  setOverlay(status) {
     this.overlayStatus = status;
   }
 
   /**
    * Check if backdrop is open or not
    */
-  getOverlay(){
+  getOverlay() {
     return this.overlayStatus;
   }
 
   /**
    * Write dialog box header
-   * @param value 
+   * @param value
    */
-  overlayHeaderAssigner(value){
+  overlayHeaderAssigner(value) {
     this.currentState = value;
   }
 
-  getOverlayHeader(){
+  getOverlayHeader() {
     return this.currentState;
   }
 
-  setCardEdit(cardToEdit){
+  setCardEdit(cardToEdit) {
     this.editCard[0] = cardToEdit;
   }
 
-  getCardEditValues(){
+  getCardEditValues() {
     // console.log(this.editCard)
     return this.editCard;
   }
 
-  getUniqueNumber(){
+  getUniqueNumber() {
     this.lastNumber += 1;
-    if(this.lastNumber == 5){
+    if (this.lastNumber == 5) {
       this.lastNumber = 0;
     }
     return this.lastNumber;
   }
 
-  getID(){
+  getID() {
     this.ID += 1;
-    return this.ID; 
+    return this.ID;
   }
 
-  firstZero(value){
+  firstZero(value) {
     let temp = value.toString().split("");
-    if(temp.length>1){
+    if (temp.length > 1) {
       return value;
-    }else{
+    } else {
       return 0 + "" + value;
     }
   }
-
 }

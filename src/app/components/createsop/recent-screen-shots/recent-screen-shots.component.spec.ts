@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { RecentScreenShotsComponent } from './recent-screen-shots.component';
+import { RecentScreenShotsComponent } from "./recent-screen-shots.component";
 
-describe('RecentScreenShotsComponent', () => {
+describe("RecentScreenShotsComponent", () => {
   let component: RecentScreenShotsComponent;
   let fixture: ComponentFixture<RecentScreenShotsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RecentScreenShotsComponent ]
-    })
-    .compileComponents();
+      declarations: [RecentScreenShotsComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('RecentScreenShotsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

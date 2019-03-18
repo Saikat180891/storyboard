@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { SidebarButtonsComponent } from './sidebar-buttons.component';
+import { SidebarButtonsComponent } from "./sidebar-buttons.component";
 
-describe('SidebarButtonsComponent', () => {
+describe("SidebarButtonsComponent", () => {
   let component: SidebarButtonsComponent;
   let fixture: ComponentFixture<SidebarButtonsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SidebarButtonsComponent ]
-    })
-    .compileComponents();
+      declarations: [SidebarButtonsComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('SidebarButtonsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

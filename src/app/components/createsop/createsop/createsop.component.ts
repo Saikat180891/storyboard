@@ -1,31 +1,37 @@
-import { Component, OnInit, OnChanges, AfterContentChecked } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import {UicontrolService} from '../services/uicontrol.service';
-import {PageService} from '../services/page/page.service';
-import {StepcontrolService} from '../services/stepcontrol/stepcontrol.service';
-import {DataService} from "../../../data.service";
+import {
+  Component,
+  OnInit,
+  OnChanges,
+  AfterContentChecked,
+} from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { UicontrolService } from "../services/uicontrol.service";
+import { PageService } from "../services/page/page.service";
+import { StepcontrolService } from "../services/stepcontrol/stepcontrol.service";
+import { DataService } from "../../../data.service";
 interface Snapshot {
   id: number;
   thumbnail: string;
 }
 @Component({
-  selector: 'app-createsop',
-  templateUrl: './createsop.component.html',
-  styleUrls: ['./createsop.component.scss']
+  selector: "app-createsop",
+  templateUrl: "./createsop.component.html",
+  styleUrls: ["./createsop.component.scss"],
 })
-export class CreatesopComponent implements OnInit, AfterContentChecked, OnChanges {
-  openSidebar:any;
-  toggleRecentSnapshot:boolean = false;
+export class CreatesopComponent
+  implements OnInit, AfterContentChecked, OnChanges {
+  openSidebar: any;
+  toggleRecentSnapshot: boolean = false;
   imageGalleryContent = [];
-  showExportToSop:boolean = false;
+  showExportToSop: boolean = false;
   imageDataToExport: Snapshot;
   constructor(
-    private routes:ActivatedRoute, 
-    private __uic:UicontrolService,
-    private __page:PageService,
-    private __steps:StepcontrolService,
-    private __api:DataService
-    ) { }
+    private routes: ActivatedRoute,
+    private __uic: UicontrolService,
+    private __page: PageService,
+    private __steps: StepcontrolService,
+    private __api: DataService
+  ) {}
 
   ngOnInit() {
     /**
@@ -33,35 +39,33 @@ export class CreatesopComponent implements OnInit, AfterContentChecked, OnChange
      * the the project id and userstory id is extracted and stored in
      * the PageService service
      */
-    this.routes.params.subscribe(res=>{
+    this.routes.params.subscribe(res => {
       this.__page.projectId = res.id;
       this.__page.userStoryId = res.userStoryId;
     });
   }
-  
-  ngAfterContentChecked(){
+
+  ngAfterContentChecked() {
     this.imageGalleryContent = this.__page.imageGalleryContent;
   }
 
-  ngOnChanges(){
-  }
+  ngOnChanges() {}
 
-
-  isSideBarOpen($event:Event){
+  isSideBarOpen($event: Event) {
     this.openSidebar = $event;
   }
 
-  onOpenSidebar($event:Event){
-    if($event.type == 'media'){
+  onOpenSidebar($event: Event) {
+    if ($event.type == "media") {
       this.openSidebar = $event["shouldOpen"];
     }
   }
 
-  onOpenRecentScreenshot($event:boolean){
+  onOpenRecentScreenshot($event: boolean) {
     this.toggleRecentSnapshot = $event;
   }
 
-  onRequestedSelectType($event){
+  onRequestedSelectType($event) {
     // if($event === 'section'){
     //   this.__steps.sopStepsList.push({sectionName:'section name'});
     //   console.log(this.__steps.sopStepsList);
@@ -71,5 +75,4 @@ export class CreatesopComponent implements OnInit, AfterContentChecked, OnChange
   onSelectedImageToExport($event) {
     this.imageDataToExport = $event.content;
   }
-
 }

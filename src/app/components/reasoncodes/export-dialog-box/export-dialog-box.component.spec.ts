@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ExportDialogBoxComponent } from './export-dialog-box.component';
+import { ExportDialogBoxComponent } from "./export-dialog-box.component";
 
-describe('ExportDialogBoxComponent', () => {
+describe("ExportDialogBoxComponent", () => {
   let component: ExportDialogBoxComponent;
   let fixture: ComponentFixture<ExportDialogBoxComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExportDialogBoxComponent ]
-    })
-    .compileComponents();
+      declarations: [ExportDialogBoxComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('ExportDialogBoxComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
