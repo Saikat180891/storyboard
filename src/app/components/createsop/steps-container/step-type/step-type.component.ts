@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { StepCommonHelperService } from "../step-common-helper.service";
 
 @Component({
   selector: "app-step-type",
@@ -22,7 +23,7 @@ export class StepTypeComponent implements OnInit {
     stepNumber: "",
   };
 
-  constructor() {}
+  constructor(private __helper: StepCommonHelperService) {}
 
   ngOnInit() {
     this.data.stepNumber = this.sectionIndex + 1 + "." + (this.stepIndex + 1);
@@ -64,6 +65,10 @@ export class StepTypeComponent implements OnInit {
 
   onCancelEdit() {
     this.canEdit = false;
+  }
+
+  getStepNumber() {
+    return this.__helper.getStepNumber(this.sectionIndex, this.stepIndex);
   }
 
   onDeleteStep() {

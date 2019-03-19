@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { StepCommonHelperService } from "../step-common-helper.service";
 
 @Component({
   selector: "app-step-condition",
@@ -29,7 +30,7 @@ export class StepConditionComponent implements OnInit {
 
   variableOptions = ["Option 1", "Option 2", "Option 3"];
 
-  constructor() {}
+  constructor(private __helper: StepCommonHelperService) {}
 
   ngOnInit() {
     this.data.step_number = this.sectionIndex + 1 + "." + (this.stepIndex + 1);
@@ -58,6 +59,10 @@ export class StepConditionComponent implements OnInit {
   }
 
   onChangeSelection($event) {}
+
+  getStepNumber() {
+    return this.__helper.getStepNumber(this.sectionIndex, this.stepIndex);
+  }
 
   onDeleteStep() {
     if (this.stepData.step_id || this.stepData.id) {
