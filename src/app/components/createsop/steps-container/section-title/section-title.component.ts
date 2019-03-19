@@ -10,11 +10,14 @@ import {
   OnChanges,
   OnInit,
   Output,
+  QueryList,
+  ViewChildren,
 } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { SectionListItem } from "../../common-model/section-list-item.model";
 import { OperationBarService } from "../../services/operation-bar/operation-bar.service";
 import { StepcontrolService } from "../../services/stepcontrol/stepcontrol.service";
+import { StepsContainerComponent } from "../steps-container.component";
 @Component({
   selector: "app-section-title",
   templateUrl: "./section-title.component.html",
@@ -29,6 +32,10 @@ export class SectionTitleComponent implements OnInit, OnChanges {
   @Output("outputChange") outputChange = new EventEmitter();
   @Output("sectionChange") sectionChange = new EventEmitter();
   @Output("deleteSection") deleteSection = new EventEmitter();
+
+  @ViewChildren("stepContainerToken") containerChildren: QueryList<
+    StepsContainerComponent
+  >;
 
   // to make section name editable
   isSectionNameEditable: boolean = true;
@@ -84,6 +91,7 @@ export class SectionTitleComponent implements OnInit, OnChanges {
    * @param $event
    */
   onDropData($event: string) {
+    this.saveAndCloseAllChildren();
     this.sectionPayload.emit({
       data: $event,
       index: this.sectionIndex,
@@ -177,5 +185,18 @@ export class SectionTitleComponent implements OnInit, OnChanges {
   // toggle section name editable
   onEditSectionName() {
     this.isSectionNameEditable = !this.isSectionNameEditable;
+  }
+
+  /**
+   * This function finds all StepComponents that are in edit mode,
+   * saves them, and exits out of edit mode.
+   */
+  saveAndCloseAllChildren() {
+    this.containerChildren.forEach(container => {
+      const stepChild = container.stepChild;
+      if (stepChild.canEdit) {
+        stepChild.onClickOnOk();
+      }
+    });
   }
 }

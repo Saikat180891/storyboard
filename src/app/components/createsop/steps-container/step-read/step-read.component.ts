@@ -1,4 +1,4 @@
-import { Component, forwardRef } from "@angular/core";
+import { Component } from "@angular/core";
 import { StepBaseComponent } from "../step-base/step-base.component";
 @Component({
   selector: "app-step-read",

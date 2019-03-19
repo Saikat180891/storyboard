@@ -82,6 +82,7 @@
           >
             <div class="steps-margin-around" cdkDrag>
               <app-steps-container
+                #stepContainerToken
                 [stepIndex]="i"
                 [sectionIndex]="sectionIndex"
                 (delete)="onDeleteStep($event)"

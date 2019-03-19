@@ -1,6 +1,7 @@
 <div class="steps-container" [ngSwitch]="stepData.type">
   <ng-container *ngSwitchCase="'read'">
     <app-step-read
+      #stepBaseToken
       [stepData]="stepData"
       [stepIndex]="stepIndex"
       [sectionIndex]="sectionIndex"
@@ -11,6 +12,7 @@
   </ng-container>
   <ng-container *ngSwitchCase="'type'">
     <app-step-type
+      #stepBaseToken
       [stepData]="stepData"
       [stepIndex]="stepIndex"
       [sectionIndex]="sectionIndex"
@@ -21,6 +23,7 @@
   </ng-container>
   <ng-container *ngSwitchCase="'calculation'">
     <app-step-calculation
+      #stepBaseToken
       [stepData]="stepData"
       [stepIndex]="stepIndex"
       [sectionIndex]="sectionIndex"
@@ -31,6 +34,7 @@
   </ng-container>
   <ng-container *ngSwitchCase="'ui-interaction'">
     <app-step-ui-interaction
+      #stepBaseToken
       [stepData]="stepData"
       [stepIndex]="stepIndex"
       [sectionIndex]="sectionIndex"
@@ -41,6 +45,7 @@
   </ng-container>
   <ng-container *ngSwitchCase="'condition'">
     <app-step-condition
+      #stepBaseToken
       [stepData]="stepData"
       [stepIndex]="stepIndex"
       [sectionIndex]="sectionIndex"
@@ -51,6 +56,7 @@
   </ng-container>
   <ng-container *ngSwitchCase="'start-loop'">
     <app-step-loop
+      #stepBaseToken
       [stepData]="stepData"
       [stepIndex]="stepIndex"
       [sectionIndex]="sectionIndex"
@@ -61,6 +67,7 @@
   </ng-container>
   <ng-container *ngSwitchCase="'end-loop'">
     <app-step-end-loop
+      #stepBaseToken
       [stepData]="stepData"
       [stepIndex]="stepIndex"
       [sectionIndex]="sectionIndex"
