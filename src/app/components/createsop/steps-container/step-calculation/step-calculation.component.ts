@@ -14,6 +14,5 @@ export class StepCalculationComponent extends StepBaseComponent {
   data = {
     calc_value: "",
     screen: "",
-    step_number: "",
   };
 }

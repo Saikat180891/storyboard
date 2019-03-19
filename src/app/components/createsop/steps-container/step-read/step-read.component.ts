@@ -16,6 +16,5 @@ export class StepReadComponent extends StepBaseComponent {
     notes: "",
     exception_handling: "",
     screen: "",
-    step_number: "",
   };
 }

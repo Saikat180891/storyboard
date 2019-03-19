@@ -20,7 +20,6 @@ export class StepBaseComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.data.step_number = this.sectionIndex + 1 + "." + (this.stepIndex + 1);
     if (this.stepData.step_id || this.stepData.id) {
       this.data = {
         ...this.stepData.data,

@@ -19,13 +19,11 @@ export class StepConditionComponent extends StepBaseComponent {
     notes: "",
     exception_handling: "",
     screen: "",
-    step_number: "",
   };
 
   variableOptions = ["Option 1", "Option 2", "Option 3"];
 
   ngOnInit() {
-    this.data.step_number = this.sectionIndex + 1 + "." + (this.stepIndex + 1);
     if (this.stepData.step_id || this.stepData.id) {
       this.data = {
         ...this.stepData.data,
