@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ExportToSopComponent } from './export-to-sop.component';
+import { ExportToSopComponent } from "./export-to-sop.component";
 
-describe('ExportToSopComponent', () => {
+describe("ExportToSopComponent", () => {
   let component: ExportToSopComponent;
   let fixture: ComponentFixture<ExportToSopComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExportToSopComponent ]
-    })
-    .compileComponents();
+      declarations: [ExportToSopComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('ExportToSopComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

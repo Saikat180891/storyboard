@@ -1,15 +1,12 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter } from "@angular/core";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: "root",
 })
-
-export class CardService{
+export class CardService {
   cardContent;
 
-  sopId:number;
-  
-  constructor(){ }
+  sopId: number;
 
-   
+  constructor() {}
 }

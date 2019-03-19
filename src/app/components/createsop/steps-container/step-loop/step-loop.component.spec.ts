@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { StepLoopComponent } from './step-loop.component';
+import { StepLoopComponent } from "./step-loop.component";
 
-describe('StepLoopComponent', () => {
+describe("StepLoopComponent", () => {
   let component: StepLoopComponent;
   let fixture: ComponentFixture<StepLoopComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StepLoopComponent ]
-    })
-    .compileComponents();
+      declarations: [StepLoopComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('StepLoopComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

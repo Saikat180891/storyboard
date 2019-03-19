@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { CanvasCrouselComponent } from './canvas-crousel.component';
+import { CanvasCrouselComponent } from "./canvas-crousel.component";
 
-describe('CanvasCrouselComponent', () => {
+describe("CanvasCrouselComponent", () => {
   let component: CanvasCrouselComponent;
   let fixture: ComponentFixture<CanvasCrouselComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CanvasCrouselComponent ]
-    })
-    .compileComponents();
+      declarations: [CanvasCrouselComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('CanvasCrouselComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

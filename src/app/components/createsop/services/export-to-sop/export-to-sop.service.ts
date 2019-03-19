@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 interface Screen {
   id: number;
   image_id: number;
@@ -7,12 +7,12 @@ interface Screen {
   tab_name: string;
 }
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ExportToSopService {
   private screenList: Screen[] = [];
 
-  constructor() { }
+  constructor() {}
 
   appendScreen(data: Screen) {
     this.screenList.push(data);
@@ -27,6 +27,6 @@ export class ExportToSopService {
   }
 
   insertScreen(index: number, data: Screen) {
-    this.screenList.splice(index , 0, data);
+    this.screenList.splice(index, 0, data);
   }
 }

@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { UserstoryFilterComponent } from './userstory-filter.component';
+import { UserstoryFilterComponent } from "./userstory-filter.component";
 
-describe('UserstoryFilterComponent', () => {
+describe("UserstoryFilterComponent", () => {
   let component: UserstoryFilterComponent;
   let fixture: ComponentFixture<UserstoryFilterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserstoryFilterComponent ]
-    })
-    .compileComponents();
+      declarations: [UserstoryFilterComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('UserstoryFilterComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

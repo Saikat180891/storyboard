@@ -109,7 +109,7 @@ export class ReasonCodeService {
         element["sprintNumber"] = index + 1;
       });
       this.sprintConfig = response.reverse();
-      for (let sprint of this.sprintConfig) {
+      for (const sprint of this.sprintConfig) {
         sprint.end_date = this.__utils.formatDateToUS(sprint.end_date);
       }
     });
@@ -315,7 +315,7 @@ export class ReasonCodeService {
       this._api.update(`/sop/epics`, `${id}.json`, body).subscribe(response => {
         this.reasonCodeData.forEach(element => {
           if (element.id == id) {
-            let pos = this.reasonCodeData.indexOf(element);
+            const pos = this.reasonCodeData.indexOf(element);
             this.reasonCodeData[pos] = response;
           }
         });
@@ -381,7 +381,7 @@ export class ReasonCodeService {
   }
 
   convertToStringPath(object) {
-    for (let x in object) {
+    for (const x in object) {
       if (object[x] === false) {
         delete object[x];
       }
@@ -392,16 +392,16 @@ export class ReasonCodeService {
       temp = [],
       newArrayX = [],
       keysExtracted;
-    for (let element of keys) {
-      let formatedText = element.split("$");
+    for (const element of keys) {
+      const formatedText = element.split("$");
       temp.push(formatedText[0]);
       splitedElements.push(formatedText);
     }
     // console.log(temp, splitedElements)
 
-    let filterValues = function() {
-      let ele = [];
-      for (let x of splitedElements) {
+    const filterValues = function() {
+      const ele = [];
+      for (const x of splitedElements) {
         ele.push(x[1]);
       }
       return ele;
@@ -410,7 +410,7 @@ export class ReasonCodeService {
     // console.log(this.filteredValues)
 
     function removeDups(names) {
-      let unique = {};
+      const unique = {};
       names.forEach(function(i) {
         if (!unique[i]) {
           unique[i] = true;
@@ -422,10 +422,10 @@ export class ReasonCodeService {
     // console.log(keysExtracted)
 
     keysExtracted.forEach(element => {
-      let newArray = [];
+      const newArray = [];
       newArray.push(element);
       newArray.push("=");
-      for (let ele of splitedElements) {
+      for (const ele of splitedElements) {
         if (ele[0] === element) {
           newArray.push(ele[1]);
           if (ele.indexOf(element) != -1) {
@@ -435,8 +435,8 @@ export class ReasonCodeService {
       }
       newArrayX.push(newArray);
     });
-    let path = [];
-    for (let ele of newArrayX) {
+    const path = [];
+    for (const ele of newArrayX) {
       ele.pop();
       path.push(ele.join(""));
     }

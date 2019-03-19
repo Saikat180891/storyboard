@@ -1,10 +1,8 @@
-import { Directive } from '@angular/core';
+import { Directive } from "@angular/core";
 
 @Directive({
-  selector: '[appListDrag]'
+  selector: "[appListDrag]",
 })
 export class ListDragDirective {
-
-  constructor() { }
-
+  constructor() {}
 }

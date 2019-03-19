@@ -1,45 +1,43 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from "@angular/core";
 
 @Component({
-  selector: 'app-select',
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss']
+  selector: "app-select",
+  templateUrl: "./select.component.html",
+  styleUrls: ["./select.component.scss"],
 })
 export class SelectComponent implements OnInit {
   isOpen: boolean = false;
-  selected:string = '';
+  selected: string = "";
 
   @Output() optionSelected = new EventEmitter<string>();
 
-  @Input('options') options;
+  @Input("options") options;
 
-  @Input('placeholder') placeholder;
+  @Input("placeholder") placeholder;
 
-  @Input('value') value;
+  @Input("value") value;
 
-  @Input('objectOptions') objectOptions;
+  @Input("objectOptions") objectOptions;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  onOpen(){
+  onOpen() {
     this.isOpen = !this.isOpen;
   }
 
-  onSelect(event, option){
+  onSelect(event, option) {
     event.stopPropagation();
     this.selected = this.value = option;
     this.optionSelected.emit(option);
     this.isOpen = false;
   }
 
-  onSelectObj(event, option){
+  onSelectObj(event, option) {
     event.stopPropagation();
     // this.selected = this.value = option;
     this.optionSelected.emit(option);
     this.isOpen = false;
   }
-
 }

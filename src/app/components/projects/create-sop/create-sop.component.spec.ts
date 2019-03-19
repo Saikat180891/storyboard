@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { CreateSopComponent } from './create-sop.component';
+import { CreateSopComponent } from "./create-sop.component";
 
-describe('CreateSopComponent', () => {
+describe("CreateSopComponent", () => {
   let component: CreateSopComponent;
   let fixture: ComponentFixture<CreateSopComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateSopComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateSopComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('CreateSopComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

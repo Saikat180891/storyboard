@@ -1,17 +1,16 @@
-import { Injectable } from '@angular/core';
-import {Observable, BehaviorSubject} from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Observable, BehaviorSubject } from "rxjs";
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ScrollbarService {
   private scrollbarPosition = new BehaviorSubject<number>(0);
 
   broadCastScrollPosition = this.scrollbarPosition.asObservable();
 
-  constructor() { }
+  constructor() {}
 
-  setScrollPosition(position:number){
+  setScrollPosition(position: number) {
     this.scrollbarPosition.next(position);
   }
-
 }

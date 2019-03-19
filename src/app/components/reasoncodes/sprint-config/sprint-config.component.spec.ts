@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { SprintConfigComponent } from './sprint-config.component';
+import { SprintConfigComponent } from "./sprint-config.component";
 
-describe('SprintConfigComponent', () => {
+describe("SprintConfigComponent", () => {
   let component: SprintConfigComponent;
   let fixture: ComponentFixture<SprintConfigComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SprintConfigComponent ]
-    })
-    .compileComponents();
+      declarations: [SprintConfigComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('SprintConfigComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

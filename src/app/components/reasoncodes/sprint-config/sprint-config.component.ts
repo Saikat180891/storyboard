@@ -148,7 +148,7 @@ export class SprintConfigComponent
   }
 
   onAddSprints(element) {
-    let temObj = {
+    const temObj = {
       duration: "",
       end_date: "",
       sprint_name: "Sprint X",
@@ -170,7 +170,7 @@ export class SprintConfigComponent
     }
     if (this.changedDetected) {
       this.changedDetected.forEach((element, index) => {
-        if (element === true) {
+        if (element) {
           this.__rcService.editSprint(
             this.sprintConfigData[index].id,
             this.sprintConfigData[index]
@@ -205,7 +205,7 @@ export class SprintConfigComponent
   }
 
   onAddRC() {
-    let temObj = {
+    const temObj = {
       name: "Epic X",
     };
     this.addNewRowForReasonCode.push(temObj);
@@ -225,7 +225,7 @@ export class SprintConfigComponent
     } else if (this.addNewRowForReasonCode.length > 0) {
       this.addNewRowForReasonCode.forEach((element, index) => {
         if (element.name === "") {
-          let pos = this.addNewRowForReasonCode.indexOf(element);
+          const pos = this.addNewRowForReasonCode.indexOf(element);
           this.addNewRowForReasonCode.splice(pos, 1);
         }
       });
@@ -240,7 +240,7 @@ export class SprintConfigComponent
     ) {
       this.addNewRowForReasonCode.forEach((element, index) => {
         if (element.name === "") {
-          let pos = this.addNewRowForReasonCode.indexOf(element);
+          const pos = this.addNewRowForReasonCode.indexOf(element);
           this.addNewRowForReasonCode.splice(pos, 1);
         }
         this.__rcService.createReasonCode(
@@ -280,7 +280,7 @@ export class SprintConfigComponent
   onDateSelected($event) {}
 
   createEndDate(startDate, index, operation, weeks) {
-    let someDate = startDate;
+    const someDate = startDate;
     switch (operation) {
       case "add":
         someDate.setDate(someDate.getDate() + weeks * 7 - 1);
@@ -295,9 +295,9 @@ export class SprintConfigComponent
       default:
         break;
     }
-    let dd = someDate.getDate();
-    let mm = someDate.getMonth() + 1;
-    let y = someDate.getFullYear();
+    const dd = someDate.getDate();
+    const mm = someDate.getMonth() + 1;
+    const y = someDate.getFullYear();
     this.addNewRow[index].end_date = mm + "/" + dd + "/" + y;
   }
 
@@ -311,9 +311,9 @@ export class SprintConfigComponent
     }
 
     if (this.addNewRow[index].duration) {
-      let durationSplitted = this.addNewRow[index].duration.split("");
-      let period = durationSplitted.pop();
-      let weeks = durationSplitted.join("");
+      const durationSplitted = this.addNewRow[index].duration.split("");
+      const period = durationSplitted.pop();
+      const weeks = durationSplitted.join("");
       this.dateCounter = parseInt(weeks);
       this.addNewRow[index].duration = (this.dateCounter += 1) + "W";
     } else if (this.addNewRow[index].start_date) {
@@ -321,7 +321,7 @@ export class SprintConfigComponent
     }
 
     if (this.addNewRow[index].start_date) {
-      let startDate = new Date(
+      const startDate = new Date(
         JSON.parse(JSON.stringify(this.addNewRow[index])).start_date
       );
       this.createEndDate(startDate, index, "add", this.dateCounter);
@@ -338,9 +338,9 @@ export class SprintConfigComponent
     }
 
     if (this.addNewRow[index].duration) {
-      let durationSplitted = this.addNewRow[index].duration.split("");
-      let period = durationSplitted.pop();
-      let weeks = durationSplitted.join("");
+      const durationSplitted = this.addNewRow[index].duration.split("");
+      const period = durationSplitted.pop();
+      const weeks = durationSplitted.join("");
       this.dateCounter = parseInt(weeks);
       if (this.dateCounter < 1) {
         this.dateCounter = 0;
@@ -355,7 +355,7 @@ export class SprintConfigComponent
     }
 
     if (this.addNewRow[index].start_date) {
-      let startDate = new Date(
+      const startDate = new Date(
         JSON.parse(JSON.stringify(this.addNewRow[index])).start_date
       );
       this.createEndDate(startDate, index, "substract", this.dateCounter);
@@ -371,15 +371,15 @@ export class SprintConfigComponent
    */
   onDatePickerClose($event, index) {
     this.sprintConfigData[index].start_date = $event.value;
-    let date = new Date(JSON.parse(JSON.stringify($event.value)));
+    const date = new Date(JSON.parse(JSON.stringify($event.value)));
     let weeks = this.sprintConfigData[index].duration.split("");
-    let period = weeks.pop();
+    const period = weeks.pop();
     weeks = weeks.join("");
-    let days = parseInt(weeks) * 7;
-    let newDate = new Date(date.setDate(date.getDate() + days));
-    let dd = newDate.getDate();
-    let mm = newDate.getMonth() + 1;
-    let y = newDate.getFullYear();
+    const days = parseInt(weeks) * 7;
+    const newDate = new Date(date.setDate(date.getDate() + days));
+    const dd = newDate.getDate();
+    const mm = newDate.getMonth() + 1;
+    const y = newDate.getFullYear();
     this.sprintConfigData[index].end_date = mm + "/" + dd + "/" + y;
     this.changedDetected[index] = true;
   }
@@ -389,7 +389,7 @@ export class SprintConfigComponent
   }
 
   updateEndDate(startDate, index, operation, weeks) {
-    let someDate = startDate;
+    const someDate = startDate;
     switch (operation) {
       case "add":
         someDate.setDate(someDate.getDate() + weeks * 7 - 1);
@@ -404,9 +404,9 @@ export class SprintConfigComponent
       default:
         break;
     }
-    let dd = someDate.getDate();
-    let mm = someDate.getMonth() + 1;
-    let y = someDate.getFullYear();
+    const dd = someDate.getDate();
+    const mm = someDate.getMonth() + 1;
+    const y = someDate.getFullYear();
     this.sprintConfigData[index].end_date = mm + "/" + dd + "/" + y;
   }
 
@@ -414,12 +414,12 @@ export class SprintConfigComponent
 
   onArrowUpforAlreadyCreated(index) {
     let durationSplitted = this.sprintConfigData[index].duration.split("");
-    let period = durationSplitted.pop();
+    const period = durationSplitted.pop();
     durationSplitted = durationSplitted.join("");
     this.weekCounter = parseInt(durationSplitted);
 
     this.sprintConfigData[index].duration = (this.weekCounter += 1) + "W";
-    let startDate = new Date(
+    const startDate = new Date(
       JSON.parse(JSON.stringify(this.sprintConfigData[index])).start_date
     );
     this.updateEndDate(startDate, index, "add", this.weekCounter);
@@ -428,14 +428,14 @@ export class SprintConfigComponent
 
   onArrowDownforAlreadyCreated(index) {
     let durationSplitted = this.sprintConfigData[index].duration.split("");
-    let period = durationSplitted.pop();
+    const period = durationSplitted.pop();
     durationSplitted = durationSplitted.join("");
     this.weekCounter = parseInt(durationSplitted);
     if (this.weekCounter < 1) {
       this.weekCounter = 0;
     } else {
       this.sprintConfigData[index].duration = (this.weekCounter -= 1) + "W";
-      let startDate = new Date(
+      const startDate = new Date(
         JSON.parse(JSON.stringify(this.sprintConfigData[index])).start_date
       );
       this.updateEndDate(startDate, index, "substract", this.weekCounter);
@@ -452,31 +452,30 @@ export class SprintConfigComponent
   }
 
   validateFile(file) {
-    var file_extension = "";
+    let file_extension = "";
     if (file) {
       file_extension = file.name.split(".").pop();
     }
     if (file_extension == "xlsx") {
       this.validateFileExtension = false;
       return true;
-    } else {
-      this.validateFileExtension = true;
-      return false;
     }
+    this.validateFileExtension = true;
+    return false;
   }
 
   validateUploadForm() {
     if (this.uploadForm.value["confirm_template_checkbox"]) {
       this.validateCheckBox = false;
       return this.validateFile(this.uploadForm.value["upload_file"]);
-    } else {
-      this.validateCheckBox = true;
     }
+    this.validateCheckBox = true;
+
     return false;
   }
 
   onUpload() {
-    let validation = this.validateUploadForm();
+    const validation = this.validateUploadForm();
     let message: string = "";
     let status: string = "";
     if (validation) {

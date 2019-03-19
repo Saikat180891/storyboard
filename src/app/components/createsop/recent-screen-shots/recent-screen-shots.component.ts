@@ -1,21 +1,23 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 
 @Component({
-  selector: 'recent-screen-shots',
-  templateUrl: './recent-screen-shots.component.html',
-  styleUrls: ['./recent-screen-shots.component.scss', '../video-gallery/video-gallery.component.scss']
+  selector: "recent-screen-shots",
+  templateUrl: "./recent-screen-shots.component.html",
+  styleUrls: [
+    "./recent-screen-shots.component.scss",
+    "../video-gallery/video-gallery.component.scss",
+  ],
 })
 export class RecentScreenShotsComponent implements OnInit {
-  toggleExpansionPanel:boolean = false;
-  @Output('open') open = new EventEmitter<boolean>()
-  @Input('data') data:any;
-  selected:number = -1;
-  constructor() { }
+  toggleExpansionPanel: boolean = false;
+  @Output("open") open = new EventEmitter<boolean>();
+  @Input("data") data: any;
+  selected: number = -1;
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  onExpandPanel(){
+  onExpandPanel() {
     /**
      * this function is used to open and close the recents tabs panel
      */
@@ -23,8 +25,7 @@ export class RecentScreenShotsComponent implements OnInit {
     this.open.emit(this.toggleExpansionPanel);
   }
 
-  onThumbnailSelect(index:number, content:any){
+  onThumbnailSelect(index: number, content: any) {
     this.selected = index;
   }
-
 }
