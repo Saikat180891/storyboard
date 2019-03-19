@@ -13,7 +13,7 @@ export class StepBaseComponent implements OnInit {
   @Output("outputChange") outputChange = new EventEmitter();
 
   stepType: string = "base";
-  canEdit: boolean = true;
+  canEdit: boolean = false;
 
   data: any = {};
 
@@ -21,11 +21,21 @@ export class StepBaseComponent implements OnInit {
 
   ngOnInit() {
     if (this.stepData.step_id || this.stepData.id) {
-      this.data = {
-        ...this.stepData.data,
-      };
-      this.canEdit = false;
+      this.setExistingStepState();
+    } else {
+      this.setNewStepState();
     }
+  }
+
+  setNewStepState() {
+    this.canEdit = true;
+  }
+
+  setExistingStepState() {
+    this.data = {
+      ...this.stepData.data,
+    };
+    this.canEdit = false;
   }
 
   onClikedOnEdit() {

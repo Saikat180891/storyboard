@@ -8,12 +8,25 @@ import { StepBaseComponent } from "../step-base/step-base.component";
 })
 export class StepLoopComponent extends StepBaseComponent {
   stepType = "start-loop";
-  canEdit: boolean = true;
-  displayDialogBox: boolean = true;
+  canEdit: boolean = false;
+  displayDialogBox: boolean = false;
   data = {
     loop_params: "",
     screen: "",
   };
+
+  setNewStepState() {
+    this.canEdit = true;
+    this.displayDialogBox = true;
+  }
+
+  setExistingStepState() {
+    this.data = {
+      ...this.stepData.data,
+    };
+    this.canEdit = false;
+    this.displayDialogBox = false;
+  }
 
   onDisplayOptions() {
     this.displayDialogBox = !this.displayDialogBox;
