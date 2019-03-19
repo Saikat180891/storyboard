@@ -1,28 +1,28 @@
-.dialog-export{
+.dialog-export {
   padding: 20px;
   display: flex;
   flex-direction: column;
 
-  .dialog-header{
+  .dialog-header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
 
-    .dialog-name{
-      color: #2A7DE1;
+    .dialog-name {
+      color: #2a7de1;
     }
 
-    .dialog-close{
-      color: #C1C1C1;
+    .dialog-close {
+      color: #c1c1c1;
       cursor: pointer;
     }
   }
 
-  .form{
+  .form {
     display: flex;
     flex-direction: column;
 
-    .image-frame{
+    .image-frame {
       height: 300px;
       width: 100%;
       display: flex;
@@ -31,58 +31,58 @@
       margin-bottom: 20px;
       background-color: #000;
 
-      img{
+      img {
         max-height: 100%;
         max-width: 100%;
       }
     }
-    .form-footer{
+    .form-footer {
       display: flex;
       flex-direction: column;
       position: relative;
 
-      span{
-        color: #2A7DE1;
+      span {
+        color: #2a7de1;
       }
 
-      .invalid-validation{
+      .invalid-validation {
         font-size: 12px;
-        color: #F47074;
+        color: #f47074;
         position: absolute;
         top: 2px;
         right: 0;
       }
 
-      .form-controls{
+      .form-controls {
         display: flex;
         justify-content: space-between;
         margin-top: 20px;
 
-        input{
+        input {
           height: 30px;
           padding: 7px;
-          border: 1px solid #D1D1D1;
+          border: 1px solid #d1d1d1;
         }
-        input:focus{
-          border: 1px solid #2A7DE1;
-          box-shadow: inset 0 0 5px rgba($color: #2A7DE1, $alpha: 0.5);
-        }
-
-        input.validate-failed{
-          border: 1px solid #F47074;
-          box-shadow: inset 0 0 5px rgba($color: #F47074, $alpha: 0.5);
+        input:focus {
+          border: 1px solid #2a7de1;
+          box-shadow: inset 0 0 5px rgba($color: #2a7de1, $alpha: 0.5);
         }
 
-        input:nth-child(2){
+        input.validate-failed {
+          border: 1px solid #f47074;
+          box-shadow: inset 0 0 5px rgba($color: #f47074, $alpha: 0.5);
+        }
+
+        input:nth-child(2) {
           margin: 0 20px;
         }
       }
-      .form-button{
+      .form-button {
         margin: 20px;
         display: flex;
         justify-content: space-around;
 
-        button{
+        button {
           height: 30px;
           min-width: 200px;
           border: none;
@@ -91,8 +91,8 @@
           box-shadow: 0 0 5px rgba($color: #000000, $alpha: 0.3);
         }
 
-        button.disabled{
-          background-color: #C1C1C1;
+        button.disabled {
+          background-color: #c1c1c1;
           color: #999999;
         }
       }

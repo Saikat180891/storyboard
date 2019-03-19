@@ -1,17 +1,17 @@
 import {
-  Component,
-  OnInit,
-  ViewEncapsulation,
-  Input,
-  ViewChild,
-  ElementRef,
   AfterViewChecked,
-  OnChanges,
+  Component,
+  ElementRef,
   EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
   Output,
+  ViewChild,
+  ViewEncapsulation,
 } from "@angular/core";
-import { ReasonCodeService } from "../reason-code.service";
 import { fromEvent } from "rxjs";
+import { ReasonCodeService } from "../reason-code.service";
 
 declare let d3: any;
 
@@ -19,7 +19,6 @@ declare let d3: any;
   selector: "app-charts",
   templateUrl: "./charts.component.html",
   styleUrls: ["./charts.component.scss"],
-  // encapsulation: ViewEncapsulation.None
 })
 export class ChartsComponent implements OnInit, AfterViewChecked, OnChanges {
   @Input("options") options;

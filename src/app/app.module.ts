@@ -1,33 +1,33 @@
-import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
-import { RouterModule } from "@angular/router";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HttpClientXsrfModule } from "@angular/common/http";
+import { NgModule } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { RouterModule } from "@angular/router";
+import "d3";
 import { NvD3Module } from "ng2-nvd3";
 import { NgxSpinnerModule } from "ngx-spinner";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { ScrollbarService } from "./services/scrollbarService/scrollbar.service";
-import "d3";
 import "nvd3";
+import { ScrollbarService } from "./services/scrollbarService/scrollbar.service";
 
 import { DateAdapter } from "@angular/material";
 import { AuthGaurdService } from "./auth/auth-gaurd.service";
+import { ContainerService } from "./components/projects/container/container.service";
 import { DataService } from "./data.service";
 import { AppcontrolService } from "./services/controlservice/appcontrol.service";
-import { ContainerService } from "./components/projects/container/container.service";
 
-import { AppComponent } from "./app.component";
-import { HeaderComponent } from "./components/header/header.component";
-import { AuthComponent } from "./auth/auth.component";
-import { SelectComponent } from "./components/shared/select/select.component";
-import { CookieService } from "ngx-cookie-service";
-import { PermissionsDirective } from "./directives/permissions.directive";
-import { AuthorizationService } from "./services/authorization/authorization.service";
-import { DashboardComponent } from "./dashboard/dashboard.component";
-import { SignupusersComponent } from "./authentication/signupusers/signupusers.component";
 import { PasswordStrengthMeterModule } from "angular-password-strength-meter";
+import { CookieService } from "ngx-cookie-service";
+import { AppComponent } from "./app.component";
+import { AuthComponent } from "./auth/auth.component";
 import { ResetPasswordComponent } from "./authentication/reset-password/reset-password.component";
+import { SignupusersComponent } from "./authentication/signupusers/signupusers.component";
+import { HeaderComponent } from "./components/header/header.component";
+import { SelectComponent } from "./components/shared/select/select.component";
+import { DashboardComponent } from "./dashboard/dashboard.component";
+import { PermissionsDirective } from "./directives/permissions.directive";
 import { GlobalmoduleModule } from "./module/globalmodule/globalmodule.module";
+import { AuthorizationService } from "./services/authorization/authorization.service";
 
 const routes = [
   {

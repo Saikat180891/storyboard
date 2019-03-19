@@ -1,14 +1,13 @@
 import {
-  trigger,
-  transition,
-  style,
   animate,
   state,
+  style,
+  transition,
+  trigger,
 } from "@angular/animations";
 
 export const slideDown = trigger("slideDown", [
   state("void", style({ opacity: 0, top: "-100%" })),
-  // state('*', style({opacity:1, right:'0'})),
   transition("void <=> *", [animate("200ms ease-in")]),
 ]);
 
@@ -22,7 +21,6 @@ export const hideInOut = trigger("hideInOut", [
 
 export const popupInOut = trigger("popupInOut", [
   state("void", style({ opacity: 0 })),
-  // state('*', style({opacity:1, right:'0'})),
   transition("void <=> *", [animate("0.1s ease-in")]),
 ]);
 
@@ -45,7 +43,6 @@ export const openClose = trigger("openClose", [
 
 export const hideAccordian = trigger("hide", [
   state("void", style({ height: "0px" })),
-  // state('*', style({opacity:1, right:'0'})),
   transition("void <=> *", [animate("0.1s ease-in")]),
 ]);
 

@@ -1,10 +1,10 @@
 import {
+  AfterContentChecked,
+  AfterContentInit,
   Component,
+  EventEmitter,
   OnInit,
   Output,
-  EventEmitter,
-  AfterContentInit,
-  AfterContentChecked,
 } from "@angular/core";
 import { ReasonCodeService } from "../reason-code.service";
 
@@ -73,6 +73,5 @@ export class UserstoryFilterComponent implements OnInit, AfterContentChecked {
     );
     this.__rcService.filtersAppliedFlag = true;
     this.closeFilter.emit(false);
-    // console.log(path); //this is required while testing
   }
 }

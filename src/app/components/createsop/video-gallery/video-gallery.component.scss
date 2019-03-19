@@ -1,67 +1,67 @@
 @import "../global.scss";
 
-.gallery{
+.gallery {
   position: relative;
   overflow: auto;
   padding: 20px;
   height: 100%;
 
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     width: 7px;
   }
   &::-webkit-scrollbar-track {
-    background: rgb(105, 105, 105); 
+    background: rgb(105, 105, 105);
   }
   &::-webkit-scrollbar-thumb {
     background: rgba($color: $main-blue, $alpha: 0.3);
   }
   &::-webkit-scrollbar-thumb:hover {
-    background: rgba($color: $main-blue, $alpha: 1.0);
+    background: rgba($color: $main-blue, $alpha: 1);
   }
 }
 
 mat-grid-tile {
   background: transparent;
 }
-mat-grid-tile.selected{
+mat-grid-tile.selected {
   border: 3px solid $main-blue;
   border-radius: 1px;
   box-shadow: 0 0 10px rgba($color: $main-blue, $alpha: 0.5);
 }
-mat-grid-tile .grid-content-next{
+mat-grid-tile .grid-content-next {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
 
-  .picture{
+  .picture {
     width: 100%;
     height: calc(100% - 30px);
     overflow: hidden;
     position: relative;
 
-    img{
+    img {
       width: 100%;
       height: 100%;
     }
-    .picture-overlay{
+    .picture-overlay {
       position: absolute;
       width: 100%;
       height: 100%;
       top: 100%;
       left: 0;
-      background-color: rgba($color: #2A7DE1, $alpha: 0.7);
+      background-color: rgba($color: #2a7de1, $alpha: 0.7);
       transition: top 0.1s ease;
       padding: 0 20px;
 
-      &-btns{
+      &-btns {
         width: 100%;
         height: 100%;
         display: flex;
         justify-content: space-around;
         align-items: center;
 
-        button{
+        button {
           height: 80px;
           width: 80px;
           color: #ffffff;
@@ -70,17 +70,17 @@ mat-grid-tile .grid-content-next{
           justify-content: space-around;
           align-items: center;
 
-          i{
+          i {
             font-size: 30px;
           }
         }
       }
     }
   }
-  .picture:hover .picture-overlay{
+  .picture:hover .picture-overlay {
     top: 0;
   }
-  .picture-title{
+  .picture-title {
     height: 30px;
     width: 100%;
     display: flex;
@@ -88,8 +88,8 @@ mat-grid-tile .grid-content-next{
     align-items: center;
     padding: 0 5px;
     color: #878787;
-    
-    span:first-child{
+
+    span:first-child {
       max-width: 50%;
       height: 30px;
       line-height: 30px;
@@ -98,12 +98,11 @@ mat-grid-tile .grid-content-next{
     }
   }
 }
-// for the first and event listener
-mat-grid-tile .add-video{
+mat-grid-tile .add-video {
   height: 100%;
   width: 100%;
-  
-  .grid-content{
+
+  .grid-content {
     width: 100%;
     height: calc(100% - 30px);
     background-color: #040404;
@@ -115,15 +114,14 @@ mat-grid-tile .add-video{
     position: relative;
   }
 
-  .file-loader{
+  .file-loader {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    // background-color: red;
 
-    input[type="file"]{
+    input[type="file"] {
       appearance: none;
       width: 100%;
       height: 100%;
@@ -132,8 +130,7 @@ mat-grid-tile .add-video{
   }
 }
 
-
-button{
+button {
   background: none;
   border: none;
   outline: none;

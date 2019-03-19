@@ -10,11 +10,17 @@
 <ng-container *ngIf="false">
   <div class="left-panel-display">
     <div class="slide-show">
-    <app-canvas-crousel [data]="imageGalleryContent" [currentImage]="currentImage"></app-canvas-crousel>
+      <app-canvas-crousel
+        [data]="imageGalleryContent"
+        [currentImage]="currentImage"
+      ></app-canvas-crousel>
       <div class="carousel-position carousel-up" (click)="onCarouselMoveUp()">
         <i class="fas fa-chevron-up"></i>
       </div>
-      <div class="carousel-position carousel-down" (click)="onCarouselMoveDown()">
+      <div
+        class="carousel-position carousel-down"
+        (click)="onCarouselMoveDown()"
+      >
         <i class="fas fa-chevron-down"></i>
       </div>
     </div>
@@ -46,4 +52,3 @@
     </div>
   </div>
 </ng-container>
-

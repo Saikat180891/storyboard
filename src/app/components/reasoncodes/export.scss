@@ -1,15 +1,14 @@
-.export{
-    position: absolute;
-    top: 56px;
-    // background-color: #ffffff;
-    z-index: 100;
-    right: 30px;
-    display: none;
+.export {
+  position: absolute;
+  top: 56px;
+  z-index: 100;
+  right: 30px;
+  display: none;
 }
-.export-active{
-    display: block;
+.export-active {
+  display: block;
 }
-.btn-export-active{
-    color: rgb(42, 125, 225);
-    background: #ffffff;
+.btn-export-active {
+  color: rgb(42, 125, 225);
+  background: #ffffff;
 }

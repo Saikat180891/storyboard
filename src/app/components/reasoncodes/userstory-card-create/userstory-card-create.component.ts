@@ -1,16 +1,16 @@
 import {
   Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
   OnInit,
   Output,
-  EventEmitter,
-  OnChanges,
-  Input,
-  HostListener,
 } from "@angular/core";
-import { ReasonCodeService } from "../reason-code.service";
-import { CreateUserstoryService } from "./create-userstory.service";
 import { fromEvent } from "rxjs";
 import { SharedServicesService } from "../../../services/shared-services/shared-services.service";
+import { ReasonCodeService } from "../reason-code.service";
+import { CreateUserstoryService } from "./create-userstory.service";
 
 interface UserStory {
   us_number: string;
@@ -106,8 +106,6 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
     notes: "",
     status: "",
     sprint_name: "",
-    // planned_delivery: '',
-    // revised_delivery: '',
     rc_name: "",
   };
   productivity;
@@ -143,8 +141,6 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
   }
 
   onCreate() {
-    console.log(this.userStoryPayload);
-
     if (this.userStoryPayload.us_number == "") {
       this.userStoryNumberValidator = true;
       this.validationSuccessfull[0] = 0;

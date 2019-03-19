@@ -1,21 +1,17 @@
-.carousel-container{
+.carousel-container {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: flex-start;
   overflow: hidden;
 
-  img{
-    // width: 100%;
-    // height: 100%;
+  img {
     min-width: 100%;
     min-height: 100%;
     transition: transform 0.3s ease;
   }
 
-  .image-content{
-    // width: 100%;
-    // height: 100%;
+  .image-content {
     min-width: 100%;
     background-size: cover;
   }

@@ -4,9 +4,9 @@
  * SignUp User Type Script for signing up
  */
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { environment } from "../../../environments/environment";
 import { SignupService } from "./signup.service";
-import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-signupusers",
@@ -59,7 +59,6 @@ export class SignupusersComponent implements OnInit {
    * Calls SignUp Service to check strength of password
    */
   checkStrength() {
-    console.log(this.password);
     const password_status = this._api.strengthMessage(this.password);
     this.strong_password = password_status["strong_password"];
     this.passwordMessage = password_status["passwordMessage"];

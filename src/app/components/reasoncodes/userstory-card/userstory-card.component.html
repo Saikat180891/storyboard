@@ -1,139 +1,220 @@
-<div class="card-box" 
-[ngClass]="{'border-high' : userStory.priority === 'High', 'border-medium' : userStory.priority === 'Medium', 'border-low' : userStory.priority === 'Low', 'card-selected':__editUS.selected === userStory.id}">
+<div
+  class="card-box"
+  [ngClass]="{
+    'border-high': userStory.priority === 'High',
+    'border-medium': userStory.priority === 'Medium',
+    'border-low': userStory.priority === 'Low',
+    'card-selected': __editUS.selected === userStory.id
+  }"
+>
   <div class="box row r1">
     <div class="col c1">
       <span>U/S#</span>
-      <span>{{userStory.us_number}}</span>
+      <span>{{ userStory.us_number }}</span>
       <span>Epic</span>
-      <span>{{userStory.rc_name?userStory.rc_name:'Unassigned'}}</span>
+      <span>{{ userStory.rc_name ? userStory.rc_name : "Unassigned" }}</span>
     </div>
     <div class="col c12">
       <span>User Story Name</span>
-      <span class="wrap-content" matTooltip="{{userStory.us_name}}" matTooltipPosition="right" *ngIf="userStory.us_name.length > 20; else smallUsName">{{userStory.us_name}}</span>
+      <span
+        class="wrap-content"
+        matTooltip="{{ userStory.us_name }}"
+        matTooltipPosition="right"
+        *ngIf="userStory.us_name.length > 20; else smallUsName"
+        >{{ userStory.us_name }}</span
+      >
       <ng-template #smallUsName>
-        <span class="wrap-content">{{userStory.us_name}}</span>
+        <span class="wrap-content">{{ userStory.us_name }}</span>
       </ng-template>
       <span>Sprint Name</span>
-      <span>{{userStory.sprint_name?userStory.sprint_name:'Unassigned'}}</span>
+      <span>{{
+        userStory.sprint_name ? userStory.sprint_name : "Unassigned"
+      }}</span>
     </div>
   </div>
   <div class="box row r2">
     <div class="col c2 reduce-padding">
       <span class="h-center">Priority</span>
-      <span class="priority" [ngStyle]="{'margin':'7px auto'}">
-        <span class="circle" 
-        [ngClass]="{'high' : userStory.priority === 'High', 'medium' : userStory.priority === 'Medium', 'low' : userStory.priority === 'Low'}"></span>
-        <span class="priority-text" 
-        [ngClass]="{'text-high' : userStory.priority === 'High', 'text-medium' : userStory.priority === 'Medium', 'text-low' : userStory.priority === 'Low'}">
-          {{userStory.priority}}
+      <span class="priority" [ngStyle]="{ margin: '7px auto' }">
+        <span
+          class="circle"
+          [ngClass]="{
+            high: userStory.priority === 'High',
+            medium: userStory.priority === 'Medium',
+            low: userStory.priority === 'Low'
+          }"
+        ></span>
+        <span
+          class="priority-text"
+          [ngClass]="{
+            'text-high': userStory.priority === 'High',
+            'text-medium': userStory.priority === 'Medium',
+            'text-low': userStory.priority === 'Low'
+          }"
+        >
+          {{ userStory.priority }}
         </span>
       </span>
       <span class="h-center">Dev Hrs</span>
-      <span class="h-center">{{userStory.dev_hrs}}</span>
+      <span class="h-center">{{ userStory.dev_hrs }}</span>
     </div>
     <div class="col c22">
       <span class="h-center">Productivity</span>
-      <span class="h-center">{{userStory.productivity}}</span>
+      <span class="h-center">{{ userStory.productivity }}</span>
       <span class="h-center">Benefits</span>
-      <span class="h-center">{{userStory.ftes}}</span>
+      <span class="h-center">{{ userStory.ftes }}</span>
     </div>
   </div>
   <div class="box row r3">
     <div class="col c3">
       <span class="h-center reduce-margin">Rules Approved</span>
       <span class="block">
-        <mat-slide-toggle 
-        class="rules-approved" 
-        [checked]="userStory.rules_approved" 
-        (change)="toggleRules($event, userStory.id, userStory.sprint_name)" 
-        [disabled]="checkIfPermissiongranted('Can change user stories')"
+        <mat-slide-toggle
+          class="rules-approved"
+          [checked]="userStory.rules_approved"
+          (change)="toggleRules($event, userStory.id, userStory.sprint_name)"
+          [disabled]="checkIfPermissiongranted('Can change user stories')"
         ></mat-slide-toggle>
       </span>
       <span class="h-center reduce-margin">Test Case Verified</span>
       <span class="block">
-        <mat-slide-toggle 
-        [checked]="userStory.verified_test_cases" 
-        (change)="toggleTVC($event, userStory.id, userStory.sprint_name)"
-        [disabled]="checkIfPermissiongranted('Can change user stories')"></mat-slide-toggle>
+        <mat-slide-toggle
+          [checked]="userStory.verified_test_cases"
+          (change)="toggleTVC($event, userStory.id, userStory.sprint_name)"
+          [disabled]="checkIfPermissiongranted('Can change user stories')"
+        ></mat-slide-toggle>
       </span>
     </div>
   </div>
   <div class="box row r4">
-    <div class="col c4" [ngStyle]="{'border-right': '1px solid rgba(0, 0, 0, 0.1)'}">
+    <div
+      class="col c4"
+      [ngStyle]="{ 'border-right': '1px solid rgba(0, 0, 0, 0.1)' }"
+    >
       <span>Status</span>
       <span class="priority h-center">
-        <span *ngIf="userStory.status === 'Backlog'" class="circle" [ngStyle]="{ 'background-color' : '#2A7DE1' }"> </span>
-        <span *ngIf="userStory.status === 'Rules'" class="circle" [ngStyle]="{ 'background-color' : '#F47074' }"> </span>
-        <span *ngIf="userStory.status === 'Intl Testing'" class="circle" [ngStyle]="{ 'background-color' : '#0033A1' }"> </span>
-        <span *ngIf="userStory.status === 'Ext Testing'" class="circle" [ngStyle]="{ 'background-color' : '#FDD468' }"> </span>
-        <span *ngIf="userStory.status === 'Done'" class="circle" [ngStyle]="{ 'background-color' : '#40C0C4' }"> </span>
-        <span *ngIf="userStory.status === 'Development'" class="circle" [ngStyle]="{ 'background-color' : '#69D100' }"> </span>
-        <span class="priority-text float-l">{{userStory.status}}</span>
+        <span
+          *ngIf="userStory.status === 'Backlog'"
+          class="circle"
+          [ngStyle]="{ 'background-color': '#2A7DE1' }"
+        >
+        </span>
+        <span
+          *ngIf="userStory.status === 'Rules'"
+          class="circle"
+          [ngStyle]="{ 'background-color': '#F47074' }"
+        >
+        </span>
+        <span
+          *ngIf="userStory.status === 'Intl Testing'"
+          class="circle"
+          [ngStyle]="{ 'background-color': '#0033A1' }"
+        >
+        </span>
+        <span
+          *ngIf="userStory.status === 'Ext Testing'"
+          class="circle"
+          [ngStyle]="{ 'background-color': '#FDD468' }"
+        >
+        </span>
+        <span
+          *ngIf="userStory.status === 'Done'"
+          class="circle"
+          [ngStyle]="{ 'background-color': '#40C0C4' }"
+        >
+        </span>
+        <span
+          *ngIf="userStory.status === 'Development'"
+          class="circle"
+          [ngStyle]="{ 'background-color': '#69D100' }"
+        >
+        </span>
+        <span class="priority-text float-l">{{ userStory.status }}</span>
       </span>
       <span>Description</span>
-      <span class="wrap-content" matTooltip="{{userStory.notes}}" matTooltipPosition="right" *ngIf="userStory.notes.length > 20; else smallNotes">{{userStory.notes}}</span>
+      <span
+        class="wrap-content"
+        matTooltip="{{ userStory.notes }}"
+        matTooltipPosition="right"
+        *ngIf="userStory.notes.length > 20; else smallNotes"
+        >{{ userStory.notes }}</span
+      >
       <ng-template #smallNotes>
-        <span class="wrap-content">{{userStory.notes}}</span>      
+        <span class="wrap-content">{{ userStory.notes }}</span>
       </ng-template>
     </div>
     <div class="col c4">
       <span>Planned Delivery</span>
       <span class="priority h-center">
- 
-        <span class="priority-text float-l">{{userStory.planned_delivery?userStory.planned_delivery:'-----'}}</span>
+        <span class="priority-text float-l">{{
+          userStory.planned_delivery ? userStory.planned_delivery : "-----"
+        }}</span>
       </span>
       <span>Revised Delivery</span>
-      <span>{{userStory.revised_delivery?userStory.revised_delivery:'-----'}}</span>
+      <span>{{
+        userStory.revised_delivery ? userStory.revised_delivery : "-----"
+      }}</span>
     </div>
     <div class="col c42">
-
       <div class="btn-box">
-        <button 
-        class="btn btn-flat-ash" 
-        matRipple 
-        (click)="onEdit(userStory.id)" 
-        [ngClass]="{'hide':restore}"
-        [appCanAccess]="{
-          role:__rcService.role, 
-          permissionRequired:'Can add epics',
-          permissionList: __rcService.grantedPermission
-        }">
+        <button
+          class="btn btn-flat-ash"
+          matRipple
+          (click)="onEdit(userStory.id)"
+          [ngClass]="{ hide: restore }"
+          [appCanAccess]="{
+            role: __rcService.role,
+            permissionRequired: 'Can add epics',
+            permissionList: __rcService.grantedPermission
+          }"
+        >
           <i class="fas fa-pencil-alt"></i>
         </button>
-        <button 
-        class="btn btn-blue" 
-        matRipple 
-        [matRippleColor]="rippleColor" 
-        *ngIf="!restore; else restoreContent" 
-        [ngStyle]="{'visibility':'visible'}" 
-        routerLink="/projects/epics/{{__rcService.sopId}}/sop/{{userStory.id}}">View SOP</button>
+        <button
+          class="btn btn-blue"
+          matRipple
+          [matRippleColor]="rippleColor"
+          *ngIf="!restore; else restoreContent"
+          [ngStyle]="{ visibility: 'visible' }"
+          routerLink="/projects/epics/{{ __rcService.sopId }}/sop/{{
+            userStory.id
+          }}"
+        >
+          View SOP
+        </button>
         <ng-template #restoreContent>
-            <button class="btn btn-blue" matRipple [matRippleColor]="rippleColor" (click)="restoreUserStories(userStory.id)">Restore</button>
+          <button
+            class="btn btn-blue"
+            matRipple
+            [matRippleColor]="rippleColor"
+            (click)="restoreUserStories(userStory.id)"
+          >
+            Restore
+          </button>
         </ng-template>
       </div>
-
     </div>
   </div>
-<ng-container>
-  <div 
-  class="options-btn" 
-  [matMenuTriggerFor]="options" 
-  *ngIf="!restore && disableDeleteBtn"
-  [appCanAccess]="{
-    role:role, 
-    permissionRequired:'Can delete user stories',
-    permissionList: permissions
-  }"
-  >
-    <i class="fas fa-ellipsis-h"></i>
-    <mat-menu #options="matMenu">
-      <button mat-menu-item (click)="onDelete(userStory.id)">Delete</button>
-    </mat-menu>
-  </div>
-</ng-container>
+  <ng-container>
+    <div
+      class="options-btn"
+      [matMenuTriggerFor]="options"
+      *ngIf="!restore && disableDeleteBtn"
+      [appCanAccess]="{
+        role: role,
+        permissionRequired: 'Can delete user stories',
+        permissionList: permissions
+      }"
+    >
+      <i class="fas fa-ellipsis-h"></i>
+      <mat-menu #options="matMenu">
+        <button mat-menu-item (click)="onDelete(userStory.id)">Delete</button>
+      </mat-menu>
+    </div>
+  </ng-container>
 
   <div class="created-date">
-    <span>Created On</span><br>
-    <span>{{userStory.created}}</span>
+    <span>Created On</span><br />
+    <span>{{ userStory.created }}</span>
   </div>
 </div>

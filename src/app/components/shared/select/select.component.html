@@ -1,11 +1,27 @@
 <div class="select">
-  <div><input type="text" [placeholder]="placeholder" readonly [value]="value?value:selected"></div>
-  <span class="down-caret" (click)="onOpen()"><i class="fas fa-angle-down"></i></span>
+  <div>
+    <input
+      type="text"
+      [placeholder]="placeholder"
+      readonly
+      [value]="value ? value : selected"
+    />
+  </div>
+  <span class="down-caret" (click)="onOpen()"
+    ><i class="fas fa-angle-down"></i
+  ></span>
   <div *ngIf="isOpen && options" class="select-dropdown">
-    <span *ngFor="let option of options" (click)="onSelect($event, option)">{{option}}</span>
+    <span *ngFor="let option of options" (click)="onSelect($event, option)">{{
+      option
+    }}</span>
   </div>
   <div *ngIf="isOpen && objectOptions" class="select-dropdown">
-    <span *ngFor="let option of objectOptions" (click)="onSelect($event, option.id)" [id]="option.id">{{option.id}}</span>
+    <span
+      *ngFor="let option of objectOptions"
+      (click)="onSelect($event, option.id)"
+      [id]="option.id"
+      >{{ option.id }}</span
+    >
   </div>
   <div *ngIf="isOpen" class="overlay custom-overlay" (click)="onOpen()"></div>
 </div>

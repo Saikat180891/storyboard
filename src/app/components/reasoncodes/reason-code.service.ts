@@ -1,9 +1,8 @@
-import { Injectable, EventEmitter } from "@angular/core";
-import { DataService } from "../../data.service";
-import { environment } from "../../../environments/environment";
-// import { EventEmitter } from 'protractor'
+import { EventEmitter, Injectable } from "@angular/core";
 import { MatSnackBar, MatSnackBarConfig } from "@angular/material";
 import { NgxSpinnerService } from "ngx-spinner";
+import { environment } from "../../../environments/environment";
+import { DataService } from "../../data.service";
 import { UtilsService } from "../../utils.service";
 
 @Injectable({
@@ -14,7 +13,6 @@ export class ReasonCodeService {
   sprintConfig = [];
   currentSprintData = [];
   totalSprintData = [];
-  // currentSprintData = [];
   currentProject = {};
   userStories = [];
   movemodal: boolean = false;
@@ -397,7 +395,6 @@ export class ReasonCodeService {
       temp.push(formatedText[0]);
       splitedElements.push(formatedText);
     }
-    // console.log(temp, splitedElements)
 
     const filterValues = function() {
       const ele = [];
@@ -407,7 +404,6 @@ export class ReasonCodeService {
       return ele;
     };
     this.filteredValues = filterValues();
-    // console.log(this.filteredValues)
 
     function removeDups(names) {
       const unique = {};
@@ -419,7 +415,6 @@ export class ReasonCodeService {
       return Object.keys(unique);
     }
     keysExtracted = removeDups(temp);
-    // console.log(keysExtracted)
 
     keysExtracted.forEach(element => {
       const newArray = [];
@@ -457,7 +452,6 @@ export class ReasonCodeService {
       url = url + "&" + "verified_test_cases=False";
       this.filteredValues.push("Verified Test Cases = False");
     }
-    // console.log(url);
     return url;
   }
 

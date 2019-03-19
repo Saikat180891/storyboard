@@ -1,20 +1,20 @@
-.breadcrumb{
+.breadcrumb {
   width: 100%;
   padding: 20px;
 }
-.left-panel-display{
+.left-panel-display {
   width: 100%;
   height: 45vh;
   padding: 0 20px;
 }
-.small-card{
+.small-card {
   width: 100%;
   padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  .small-card-segments{
+  .small-card-segments {
     width: calc(100% / 3);
     height: 5vh;
     display: flex;
@@ -23,28 +23,27 @@
     justify-content: space-between;
     font-size: 14px;
 
-    .small-card-heading{
+    .small-card-heading {
       color: #999999;
       padding-bottom: 10px;
     }
 
-    .small-card-content{
+    .small-card-content {
       color: #333333;
     }
   }
 }
 
-.slide-show{
+.slide-show {
   margin: 20px 20px 5px 20px;
   background-color: #000000;
   width: calc(100% - 40px);
   height: 45vh;
   position: relative;
-  
 
-  .carousel-position{
+  .carousel-position {
     position: absolute;
-    top:  -100%;;
+    top: -100%;
     transform: translateY(-50%);
     width: 35px;
     height: 35px;
@@ -58,27 +57,27 @@
     cursor: pointer;
   }
 
-  .carousel-up{    
+  .carousel-up {
     position: relative;
     left: 50%;
   }
 
-  .carousel-down{
+  .carousel-down {
     top: -35px;
     left: 50%;
     position: relative;
   }
 }
 
-.zero-state{
+.zero-state {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 100px;
-  color: #989B9C;
-  p{
-    border: 1px dashed #989B9C;
+  color: #989b9c;
+  p {
+    border: 1px dashed #989b9c;
     padding: 30px;
   }
 }

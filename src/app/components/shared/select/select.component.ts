@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
 @Component({
   selector: "app-select",
@@ -36,7 +36,6 @@ export class SelectComponent implements OnInit {
 
   onSelectObj(event, option) {
     event.stopPropagation();
-    // this.selected = this.value = option;
     this.optionSelected.emit(option);
     this.isOpen = false;
   }

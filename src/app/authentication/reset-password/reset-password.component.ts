@@ -5,8 +5,8 @@
  */
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { ResetPasswordService } from "./reset-password.service";
 import { SignupService } from "../signupusers/signup.service";
+import { ResetPasswordService } from "./reset-password.service";
 
 @Component({
   selector: "app-reset-password",
@@ -35,7 +35,6 @@ export class ResetPasswordComponent implements OnInit {
    * Get Query Parameters as email-id and passwordResetToken
    */
   ngOnInit() {
-    console.log(this.password);
     this.route.queryParams.subscribe(res => {
       this.email = res.email;
       this.passwordResetToken = res.reset_password_token;

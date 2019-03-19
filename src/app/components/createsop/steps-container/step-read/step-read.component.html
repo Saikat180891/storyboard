@@ -8,12 +8,16 @@
         Read
       </div>
       <div class="step-number">
-        Step No. <span>{{data.step_number}}</span>
+        Step No. <span>{{ data.step_number }}</span>
       </div>
       <div class="screen-name">
         <span>Screen</span>
         <div class="select">
-          <mat-select [(value)]="data.screen" placeholder="None" [disabled]="!canEdit">
+          <mat-select
+            [(value)]="data.screen"
+            placeholder="None"
+            [disabled]="!canEdit"
+          >
             <mat-option>None</mat-option>
             <mat-option value="option1">Screen 1</mat-option>
             <mat-option value="option2">Screen 2</mat-option>
@@ -43,7 +47,6 @@
         </div>
       </div>
     </ng-template>
-
   </div>
   <div class="step-body">
     <div class="form">
@@ -51,19 +54,19 @@
         <div class="form-sub-group padding-right">
           <label for="field">Field</label>
           <ng-container *ngIf="canEdit; else editField">
-            <input type="text" id="field" [(ngModel)]="data.field">
+            <input type="text" id="field" [(ngModel)]="data.field" />
           </ng-container>
           <ng-template #editField>
-            <span>{{data.field}}</span>
+            <span>{{ data.field }}</span>
           </ng-template>
         </div>
         <div class="form-sub-group padding-left">
           <label for="field">Value</label>
           <ng-container *ngIf="canEdit; else editValue">
-            <input type="text" id="Value" [(ngModel)]="data.value">
+            <input type="text" id="Value" [(ngModel)]="data.value" />
           </ng-container>
           <ng-template #editValue>
-            <span>{{data.value}}</span>
+            <span>{{ data.value }}</span>
           </ng-template>
         </div>
       </div>
@@ -71,19 +74,23 @@
         <div class="form-sub-group padding-right">
           <label for="data-type">Data Type</label>
           <ng-container *ngIf="canEdit; else editDataType">
-            <input type="text" id="data-type" [(ngModel)]="data.data_type">
+            <input type="text" id="data-type" [(ngModel)]="data.data_type" />
           </ng-container>
           <ng-template #editDataType>
-            <span>{{data.data_type}}</span>
+            <span>{{ data.data_type }}</span>
           </ng-template>
         </div>
         <div class="form-sub-group padding-left">
           <label for="data-value">Data Value Constraints</label>
           <ng-container *ngIf="canEdit; else editDataValue">
-            <input type="text" id="data-value" [(ngModel)]="data.data_value_constraint">
+            <input
+              type="text"
+              id="data-value"
+              [(ngModel)]="data.data_value_constraint"
+            />
           </ng-container>
           <ng-template #editDataValue>
-            <span>{{data.data_value_constraint}}</span>
+            <span>{{ data.data_value_constraint }}</span>
           </ng-template>
         </div>
       </div>
@@ -94,16 +101,20 @@
             <textarea name="" id="notes" [(ngModel)]="data.notes"></textarea>
           </ng-container>
           <ng-template #editNotes>
-            <span>{{data.notes}}</span>
+            <span>{{ data.notes }}</span>
           </ng-template>
         </div>
         <div class="form-sub-group padding-left">
           <label for="exception-handling">Exception Handling</label>
           <ng-container *ngIf="canEdit; else editException">
-            <textarea name="" id="exception-handling" [(ngModel)]="data.exception_handling"></textarea>
+            <textarea
+              name=""
+              id="exception-handling"
+              [(ngModel)]="data.exception_handling"
+            ></textarea>
           </ng-container>
           <ng-template #editException>
-            <span>{{data.exception_handling}}</span>
+            <span>{{ data.exception_handling }}</span>
           </ng-template>
         </div>
       </div>

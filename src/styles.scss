@@ -1,52 +1,51 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i');
-// html, body { height: 100vh; }
-*{
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i");
+* {
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 body {
-    margin: 0;
-    overflow-x: hidden;
-    background-color: #eee;
+  margin: 0;
+  overflow-x: hidden;
+  background-color: #eee;
 }
-.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar{
-    background-color: #2A7DE1;
+.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: #2a7de1;
 }
-.mat-tab-label-active{
-    color: #2A7DE1;
+.mat-tab-label-active {
+  color: #2a7de1;
 }
-mat-ink-bar.mat-ink-bar{
-    height: 5px;
+mat-ink-bar.mat-ink-bar {
+  height: 5px;
 }
-::ng-deep .black-overlay{
-    position: fixed !important;
+::ng-deep .black-overlay {
+  position: fixed !important;
 }
 
 /*
 backdrop css
 */
-*::-webkit-scrollbar{
+*::-webkit-scrollbar {
   width: 7px;
 }
 *::-webkit-scrollbar-track {
-  background: #ECECEC; 
+  background: #ececec;
 }
 *::-webkit-scrollbar-thumb {
-  background: rgb(105, 105, 105); 
+  background: rgb(105, 105, 105);
 }
 *::-webkit-scrollbar-thumb:hover {
   background: #555;
-
 }
-.overlay{
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba($color: #38496D, $alpha: 0.8);
+  background-color: rgba($color: #38496d, $alpha: 0.8);
   z-index: 1000;
   transform-origin: 50% 50%;
   opacity: 0;
@@ -54,173 +53,172 @@ backdrop css
   visibility: hidden;
   transition: all 0.3s ease;
 }
-.overlay-hide{
+.overlay-hide {
   opacity: 0;
   transform: scale(0);
   visibility: hidden;
 }
-.overlay-show{
+.overlay-show {
   opacity: 1;
   transform: scale(1);
   visibility: visible;
 }
-.overlay-left{
+.overlay-left {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba($color: #38496D, $alpha: 0.8);
+  background-color: rgba($color: #38496d, $alpha: 0.8);
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
 }
-.overlay-left-active{
+.overlay-left-active {
   opacity: 1;
   visibility: visible;
 }
-.new-sop{
+.new-sop {
   cursor: pointer;
   font-size: 20px;
 }
 
-
-.border{
-    border-bottom: 1px solid rgba(153, 153, 153,0.3);
+.border {
+  border-bottom: 1px solid rgba(153, 153, 153, 0.3);
 }
-.padding-all{
-    padding: 10px 15px;
+.padding-all {
+  padding: 10px 15px;
 }
-.dialog-element{
-    display: block;
-    width: 100%;
-    font-size: 18px;
-    line-height: 22px;
-    color: #fff;
+.dialog-element {
+  display: block;
+  width: 100%;
+  font-size: 18px;
+  line-height: 22px;
+  color: #fff;
 }
-.close{
-    float: right;
-    color: #fff;
-    cursor: pointer;
+.close {
+  float: right;
+  color: #fff;
+  cursor: pointer;
 }
-.ASN-box{
-    width: 100%;
+.ASN-box {
+  width: 100%;
 }
-textarea:focus, input:focus{
-    outline: none;
-    color: #707070;
+textarea:focus,
+input:focus {
+  outline: none;
+  color: #707070;
 }
-.margin-top-10{
-    margin-top: 10px;
+.margin-top-10 {
+  margin-top: 10px;
 }
-.margin-bottom-10{
-    margin-bottom: 10px;
+.margin-bottom-10 {
+  margin-bottom: 10px;
 }
-#charge-code{
-    width: 47%;
-    margin-right: 6%;
+#charge-code {
+  width: 47%;
+  margin-right: 6%;
 }
-.relative{
-    position: relative;
+.relative {
+  position: relative;
 }
 input[type="file"] {
-    font-size: 100px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-    cursor: pointer !important;
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer !important;
 }
-.pointer{
-    cursor: pointer !important;
-    overflow: hidden;
-}
-
-.input-box label{
-    font-size: 14px;
-    display: block;
-    width: 100%;
-    margin-bottom: 10px;
-    color: #707070;
-    line-height: 17px;
-}
-.padding-top-0{
-    padding-top: 0;
-}
-input::placeholder{
-    color: #BFBFBF;
-    font-weight: 500;
-}
-.height-auto{
-    height: auto;
-}
-.prelative{
-    position: relative;
-}
-.center{
-    text-align: center;
-}
-.fixed-bottom{
-    position: absolute;
-    bottom: 0;
-}
-ul{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-.color-red{
-    background-color: red;
-}
-.height-max{
-    max-height: 70px;
-    overflow: auto;
-}
-.mat-raised-button:not([class*=mat-elevation-z]){
-    box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12);
-}
-.image-profile-pic{
-    margin-right: 5px;
+.pointer {
+  cursor: pointer !important;
+  overflow: hidden;
 }
 
-.preview-logo{
-    width: 100%;
-    height: 100%;
+.input-box label {
+  font-size: 14px;
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  color: #707070;
+  line-height: 17px;
 }
-.upload button span{
-    display: block;
+.padding-top-0 {
+  padding-top: 0;
 }
-.upload button span:last-child{
-    color: #2A7DE1;
+input::placeholder {
+  color: #bfbfbf;
+  font-weight: 500;
 }
-.upload button .client-logo{
-    margin-bottom: 0px;
-    
+.height-auto {
+  height: auto;
 }
-.color-main-blue{
-    background-color: #2A7DE1;
+.prelative {
+  position: relative;
 }
-#add-assign .input-box input[type="text"]{
-    // width: calc(100% - 53px);
-    width: 100%;
+.center {
+  text-align: center;
 }
-#add-assign .input-box button{
-    width: 53px;
-    height: 35px;
-    text-align: center;
-    outline: none;
-    border: none;
-    background-color: #54585A;
-    color: #fff;
-    cursor: pointer;
-    float: right;
+.fixed-bottom {
+  position: absolute;
+  bottom: 0;
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.color-red {
+  background-color: red;
+}
+.height-max {
+  max-height: 70px;
+  overflow: auto;
+}
+.mat-raised-button:not([class*="mat-elevation-z"]) {
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 0 0 0 rgba(0, 0, 0, 0.14),
+    0 0 0 0 rgba(0, 0, 0, 0.12);
+}
+.image-profile-pic {
+  margin-right: 5px;
+}
+
+.preview-logo {
+  width: 100%;
+  height: 100%;
+}
+.upload button span {
+  display: block;
+}
+.upload button span:last-child {
+  color: #2a7de1;
+}
+.upload button .client-logo {
+  margin-bottom: 0px;
+}
+.color-main-blue {
+  background-color: #2a7de1;
+}
+#add-assign .input-box input[type="text"] {
+  width: 100%;
+}
+#add-assign .input-box button {
+  width: 53px;
+  height: 35px;
+  text-align: center;
+  outline: none;
+  border: none;
+  background-color: #54585a;
+  color: #fff;
+  cursor: pointer;
+  float: right;
 }
 
 /**
   newly added
 */
-.btn{
+.btn {
   min-width: 30px;
   min-height: 30px;
   background-color: #fff;
@@ -229,56 +227,54 @@ ul{
   outline: none;
   cursor: pointer;
 }
-.btn-flat-blue{
+.btn-flat-blue {
   background-color: #fff;
-  border: 1px solid #2A7DE1;
-  color: #2A7DE1;
+  border: 1px solid #2a7de1;
+  color: #2a7de1;
   font-weight: 700;
 }
-.btn-flat-grey{
+.btn-flat-grey {
   background-color: #fff;
-  border: 1px solid #54585A;
-  color: #54585A;
+  border: 1px solid #54585a;
+  color: #54585a;
 }
-.btn-blue{
-  background: #2A7DE1;
+.btn-blue {
+  background: #2a7de1;
   color: #fff;
   border: none;
   font-weight: 700;
 }
-.btn-active:active{
+.btn-active:active {
   box-shadow: 0px 0px 0px rgba($color: #000000, $alpha: 0.3);
 }
-.btn-shadow{
+.btn-shadow {
   box-shadow: 1px 1px 4px rgba($color: #000000, $alpha: 0.3);
 }
-.btn-primary{
+.btn-primary {
   width: 90px;
 }
-.btn-flat-ash{
-  background-color: #EFEFEF;
+.btn-flat-ash {
+  background-color: #efefef;
   border: 0 solid;
-  color: #54585A;
+  color: #54585a;
 }
 
-.rotate-90{
-  // display: block;
+.rotate-90 {
   transform-origin: 50% 50%;
   transform: rotate(90deg);
 }
 
-
-::ng-deep .mat-tab-label{
+::ng-deep .mat-tab-label {
   opacity: 1;
 }
 
-.myspinner /deep/ .black-overlay{
+.myspinner /deep/ .black-overlay {
   position: fixed !important;
 }
 
-.validate-failed{
-  border: 1px solid #F47074 !important;
-  box-shadow: inset 0 0 5px rgba($color: #F47074, $alpha: 0.5) !important;
+.validate-failed {
+  border: 1px solid #f47074 !important;
+  box-shadow: inset 0 0 5px rgba($color: #f47074, $alpha: 0.5) !important;
 }
 
 textarea {

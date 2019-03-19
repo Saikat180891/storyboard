@@ -1,35 +1,35 @@
 import {
+  AfterContentInit,
+  AfterViewInit,
   Component,
-  OnInit,
+  ElementRef,
+  EventEmitter,
+  HostListener,
   Input,
   OnChanges,
-  AfterViewInit,
-  AfterContentInit,
-  HostListener,
+  OnInit,
   Output,
-  EventEmitter,
   ViewChild,
-  ElementRef,
 } from "@angular/core";
 import {
   FormBuilder,
-  FormGroup,
-  FormControlName,
   FormControl,
+  FormControlName,
+  FormGroup,
   Validators,
 } from "@angular/forms";
-import { slideDown, hideInOut } from "../../../animation";
 import { fromEvent } from "rxjs";
+import { hideInOut, slideDown } from "../../../animation";
 
-import { AppcontrolService } from "../../../services/controlservice/appcontrol.service";
-import { DataService } from "../../../data.service";
-import { ContainerService } from "../container/container.service";
 import { MatSnackBar } from "@angular/material";
+import { NgxSpinnerService } from "ngx-spinner";
+import { DataService } from "../../../data.service";
+import { AppcontrolService } from "../../../services/controlservice/appcontrol.service";
+import { UtilsService } from "../../../utils.service";
 import { CardService } from "../card/card.service";
 import { ContainerComponent } from "../container/container.component";
-import { NgxSpinnerService } from "ngx-spinner";
+import { ContainerService } from "../container/container.service";
 import { EditProject } from "../model/edit-project.model";
-import { UtilsService } from "../../../utils.service";
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -72,7 +72,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
 
   roles: string[] = ["SuperAdmin", "Manager", "Analyst"];
   disableSelect: boolean = false;
-  // role = 'Super Admin';
   /**
    * This variables are used while creating a new card
    */
@@ -157,7 +156,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    */
   @HostListener("document:keyup.escape", ["$event"])
   keyEvent(event: KeyboardEvent) {
-    //console.log(event)
     if (event.keyCode === KEY_CODE.ESCAPE) {
       this.onOverlayClose();
     }
@@ -291,7 +289,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
    * @param assigneeListItem
    */
   onRemove(id: number) {
-    // if(this._ContainerService.permissions[0]["permissions"]["Can delete assignee"]){
     this._dataService.delete(`/sop/assignee`, `${id}.json`).subscribe(res => {
       this.alreadyCreatedUsers.forEach(element => {
         if (element.id == id) {
@@ -302,7 +299,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
         }
       });
     });
-    // }
   }
 
   /**
@@ -313,7 +309,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
 
     for (const key in object) {
     }
-    console.log(validationStatus);
 
     let sum = 0;
     for (const i of validationStatus) {
@@ -338,9 +333,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
     };
     this.invitationList.push(temporaryObject);
   }
-
-  // onSave(){
-  // }
 
   /**
    * Save an editted card
@@ -385,7 +377,7 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
           });
         },
         err => {
-          let keys = Object.keys(err.error);
+          const keys = Object.keys(err.error);
           let error = "";
           keys.forEach(key => {
             error += key + ": " + err.error[key] + "\n";
@@ -400,7 +392,6 @@ export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
           this.spinner.hide();
         }
       );
-    // }
   }
 
   /**

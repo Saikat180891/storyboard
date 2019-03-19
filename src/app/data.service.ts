@@ -1,10 +1,9 @@
+import { HttpClient, HttpHeaders, HttpRequest } from "@angular/common/http";
 import { Injectable, OnInit } from "@angular/core";
-import { HttpClient, HttpRequest, HttpHeaders } from "@angular/common/http";
-// import { Observable, of } from 'rxjs';
-import { environment } from "../environments/environment";
 import { ResponseContentType } from "@angular/http";
 import { CookieService } from "ngx-cookie-service";
 import { Observable } from "rxjs";
+import { environment } from "../environments/environment";
 
 export const httpOptions = {
   headers: new HttpHeaders(),
@@ -50,7 +49,6 @@ export class DataService implements OnInit {
    * Get the data from the server to load the cards
    */
   fetchData(param) {
-    // console.log(this.apiUrl + param)
     return this.http.get<any[]>(this.apiUrl + param, { withCredentials: true });
   }
 

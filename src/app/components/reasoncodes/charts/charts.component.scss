@@ -1,34 +1,25 @@
-.container{
+.container {
   width: 100%;
   height: 100%;
   background-color: transparent;
-  border: 1px solid #2A7DE1;
+  border: 1px solid #2a7de1;
   border-radius: 5px;
   position: relative;
 
-  .header{
-    // padding-left: 20px;
+  .header {
     color: #ffffff;
-    // height: 40px;
-    // line-height: 40px;
-    // width: 100%;
     font-size: 18px;
-    // border-bottom: 1px solid #D1D1D1;
     position: absolute;
     top: 20px;
     left: 20px;
   }
-  .chart{
+  .chart {
     position: absolute;
-    // background-color: red;
-    // height: calc(100% - 40px);
-    // width: 100%;
-    // bottom: 0;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -40%);
 
-    .title{
+    .title {
       position: absolute;
       display: flex;
       flex-direction: column;
@@ -38,15 +29,15 @@
       transform: translate(-50%, -25%);
       color: #ffffff;
 
-      span{
+      span {
         font-size: 26px;
       }
-      small{
+      small {
         text-align: center;
       }
     }
   }
-  .option{
+  .option {
     position: absolute;
     top: 0;
     right: 0;
@@ -55,65 +46,66 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    span{
+    span {
       font-size: 30px;
-      // display: block;
     }
-    span:last-child{
+    span:last-child {
       font-size: 12px;
-      // text-align: center;
     }
   }
 }
 
-::ng-deep .container[_ngcontent-c7] .option[_ngcontent-c7] button[_ngcontent-c7]{
+::ng-deep
+  .container[_ngcontent-c7]
+  .option[_ngcontent-c7]
+  button[_ngcontent-c7] {
   border-left: none;
 }
 
-::ng-deep .mat-menu-content:not(:empty){
+::ng-deep .mat-menu-content:not(:empty) {
   max-height: 150px;
   overflow: auto;
 }
 
-/deep/ .nvd3.nv-pie path{
+/deep/ .nvd3.nv-pie path {
   stroke: transparent;
 }
 
-/deep/ .nvd3 .nv-axis .zero line, .nvd3 .nv-axis line.zero{
+/deep/ .nvd3 .nv-axis .zero line,
+.nvd3 .nv-axis line.zero {
   stroke-opacity: 0;
 }
 
-/deep/ .nvd3 .nv-axis line{
-  stroke: #2A7DE1;
+/deep/ .nvd3 .nv-axis line {
+  stroke: #2a7de1;
 }
 
-/deep/ .nvd3 text{
+/deep/ .nvd3 text {
   fill: #ffffff;
 }
 
-/deep/ .nvd3 .nv-discretebar .nv-groups text, .nvd3 .nv-multibarHorizontal .nv-groups text{
+/deep/ .nvd3 .nv-discretebar .nv-groups text,
+.nvd3 .nv-multibarHorizontal .nv-groups text {
   fill: #ffffff;
 }
 
-/deep/ .nvd3 .nv-axis path{
-  stroke: #2A7DE1;
+/deep/ .nvd3 .nv-axis path {
+  stroke: #2a7de1;
 }
-// /deep/ .nvd3 .nv-discretebar .nv-groups rect, .nvd3 .nv-multibar .nv-groups rect, .nvd3 .nv-multibarHorizontal .nv-groups rect{
-//   width: 30px;
-// }
-/deep/ .nvd3.nv-pie path{
+
+/deep/ .nvd3.nv-pie path {
   fill-opacity: 1;
 }
 
-/deep/ g.nv-group{
+/deep/ g.nv-group {
   fill-opacity: 1 !important;
 }
-.message{
+.message {
   width: 100%;
   height: 100%;
   position: relative;
 
-  span{
+  span {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -122,6 +114,6 @@
     color: #ffffff;
   }
 }
-.extra-btn{
+.extra-btn {
   cursor: pointer;
 }

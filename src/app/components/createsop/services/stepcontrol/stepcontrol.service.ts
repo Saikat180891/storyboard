@@ -1,7 +1,7 @@
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { Injectable } from "@angular/core";
 import { SectionListItem } from "../../common-model/section-list-item.model";
 import { Step } from "../../common-model/step-type.model";
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 @Injectable({
   providedIn: "root",
 })

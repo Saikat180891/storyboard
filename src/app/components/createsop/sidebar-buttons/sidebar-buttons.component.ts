@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 
 @Component({
   selector: "app-sidebar-buttons",
@@ -18,11 +18,6 @@ export class SidebarButtonsComponent implements OnInit {
       linkCaption: "Media",
       function: "media",
     },
-    // {
-    //   logo: '',
-    //   linkCaption: 'Media',
-    //   function: 'media'
-    // }
   ];
 
   constructor() {}

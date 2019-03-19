@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from "@angular/core";
+import { EventEmitter, Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 
 @Injectable({
@@ -58,7 +58,6 @@ export class AppcontrolService {
   }
 
   getCardEditValues() {
-    // console.log(this.editCard)
     return this.editCard;
   }
 

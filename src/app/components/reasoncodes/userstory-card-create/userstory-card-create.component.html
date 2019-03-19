@@ -4,33 +4,65 @@
     <span (click)="onClose()" class="close"><i class="fas fa-times"></i></span>
   </div>
   <div class="form">
-
     <div class="form-group">
       <div class="input-container md">
-        <div class="title" [ngClass]="{'warning':userStoryNumberValidator}">U/S#</div>
+        <div class="title" [ngClass]="{ warning: userStoryNumberValidator }">
+          U/S#
+        </div>
         <div class="editable">
-          <input class="text-left" type="number" placeholder="Ex: 1" [(ngModel)]="userStoryPayload.us_number">
+          <input
+            class="text-left"
+            type="number"
+            placeholder="Ex: 1"
+            [(ngModel)]="userStoryPayload.us_number"
+          />
         </div>
       </div>
       <div class="input-container md">
-        <div class="title" [ngClass]="{'warning':userStoryNameValidator}" >User Story Name</div>
+        <div class="title" [ngClass]="{ warning: userStoryNameValidator }">
+          User Story Name
+        </div>
         <div class="editable">
-          <input type="text" placeholder="Ex: User Story 1" [(ngModel)]="userStoryPayload.us_name" [ngStyle]="{'width':'250px'}" maxlength="100">
+          <input
+            type="text"
+            placeholder="Ex: User Story 1"
+            [(ngModel)]="userStoryPayload.us_name"
+            [ngStyle]="{ width: '250px' }"
+            maxlength="100"
+          />
         </div>
       </div>
     </div>
 
     <div class="form-group">
       <div class="input-container md">
-        <div class="title" [ngClass]="{'warning':userStoryReasonCodeValidator}">Epic</div>
+        <div
+          class="title"
+          [ngClass]="{ warning: userStoryReasonCodeValidator }"
+        >
+          Epic
+        </div>
         <div class="editable">
-          <normal-dropdown (optionSelected)="userStoryPayload.rc_name=$event.status" [options]="reasonCodeOptions" [defaultOption]="'Select'"></normal-dropdown>
+          <normal-dropdown
+            (optionSelected)="userStoryPayload.rc_name = $event.status"
+            [options]="reasonCodeOptions"
+            [defaultOption]="'Select'"
+          ></normal-dropdown>
         </div>
       </div>
       <div class="input-container md">
-        <div class="title" [ngClass]="{'warning':userStorySprintNameValidator}">Sprint Name</div>
+        <div
+          class="title"
+          [ngClass]="{ warning: userStorySprintNameValidator }"
+        >
+          Sprint Name
+        </div>
         <div class="editable">
-          <normal-dropdown (optionSelected)="onSprintSelect($event)" [options]="sprintOptions" [defaultOption]="'Select'"></normal-dropdown>
+          <normal-dropdown
+            (optionSelected)="onSprintSelect($event)"
+            [options]="sprintOptions"
+            [defaultOption]="'Select'"
+          ></normal-dropdown>
         </div>
       </div>
     </div>
@@ -38,28 +70,59 @@
 
     <div class="form-group h-space-equally">
       <div class="input-container sm extra">
-        <div class="title" [ngClass]="{'warning':userStoryPriorityValidator}">Priority</div>
+        <div class="title" [ngClass]="{ warning: userStoryPriorityValidator }">
+          Priority
+        </div>
         <div class="editable">
-          <colored-dropdown (optionSelected)="userStoryPayload.priority=$event.status" [options]="priorityOptions" [defaultOption]="'Select'"></colored-dropdown>
+          <colored-dropdown
+            (optionSelected)="userStoryPayload.priority = $event.status"
+            [options]="priorityOptions"
+            [defaultOption]="'Select'"
+          ></colored-dropdown>
         </div>
       </div>
       <div class="input-container sm">
         <div class="title align-center">Productivity</div>
         <div class="editable">
-          <input class="text-center no-style" type="number" placeholder="------" readonly [(ngModel)]="productivity">
-          <!-- <span class="text-center">{{userStoryPayload.dev_hrs / userStoryPayload.ftes != Infinity ? (userStoryPayload.dev_hrs / userStoryPayload.ftes).toFixed(1):'------'}}</span> -->
+          <input
+            class="text-center no-style"
+            type="number"
+            placeholder="------"
+            readonly
+            [(ngModel)]="productivity"
+          />
         </div>
       </div>
       <div class="input-container sm">
-        <div class="title align-center" [ngClass]="{'warning':userStoryDevHrsValidator}">Dev Hrs</div>
+        <div
+          class="title align-center"
+          [ngClass]="{ warning: userStoryDevHrsValidator }"
+        >
+          Dev Hrs
+        </div>
         <div class="editable">
-          <input type="text" placeholder="Ex: 23"  [(ngModel)]="userStoryPayload.dev_hrs" (keyup)="onUpdateProductivity()">
+          <input
+            type="text"
+            placeholder="Ex: 23"
+            [(ngModel)]="userStoryPayload.dev_hrs"
+            (keyup)="onUpdateProductivity()"
+          />
         </div>
       </div>
       <div class="input-container sm">
-        <div class="title align-center" [ngClass]="{'warning':userStoryBenefitValidator}">Benefits</div>
+        <div
+          class="title align-center"
+          [ngClass]="{ warning: userStoryBenefitValidator }"
+        >
+          Benefits
+        </div>
         <div class="editable">
-          <input type="text" placeholder="Ex: 3" [(ngModel)]="userStoryPayload.ftes" (keyup)="onUpdateProductivity()">
+          <input
+            type="text"
+            placeholder="Ex: 3"
+            [(ngModel)]="userStoryPayload.ftes"
+            (keyup)="onUpdateProductivity()"
+          />
         </div>
       </div>
     </div>
@@ -69,81 +132,118 @@
       <div class="input-container md">
         <div class="title">Rules Approved</div>
         <div class="editable align-center pad-right">
-          <mat-slide-toggle (change)="userStoryPayload.rules_approved=$event.checked"></mat-slide-toggle>
+          <mat-slide-toggle
+            (change)="userStoryPayload.rules_approved = $event.checked"
+          ></mat-slide-toggle>
         </div>
       </div>
       <div class="input-container md">
         <div class="title">Test Cases Verified</div>
         <div class="editable align-center">
-          <mat-slide-toggle (change)="userStoryPayload.verified_test_cases=$event.checked"></mat-slide-toggle>
+          <mat-slide-toggle
+            (change)="userStoryPayload.verified_test_cases = $event.checked"
+          ></mat-slide-toggle>
         </div>
       </div>
     </div>
     <div class="h-divider"></div>
 
     <div class="form-group">
-      <div class="input-container lg" [ngStyle]="{'width': '212px'}">
-        <div class="title" [ngClass]="{'warning':userStoryStatusValidator}">Status</div>
+      <div class="input-container lg" [ngStyle]="{ width: '212px' }">
+        <div class="title" [ngClass]="{ warning: userStoryStatusValidator }">
+          Status
+        </div>
         <div class="editable">
-          <colored-dropdown (optionSelected)="userStoryPayload.status=$event.status" [options]="statusOptions" [defaultOption]="'Select'"></colored-dropdown>
+          <colored-dropdown
+            (optionSelected)="userStoryPayload.status = $event.status"
+            [options]="statusOptions"
+            [defaultOption]="'Select'"
+          ></colored-dropdown>
         </div>
       </div>
       <div class="input-container">
         <div class="title">Description</div>
         <div class="editable">
-          <input type="text" placeholder="Add description here" maxlength="100" [(ngModel)]="userStoryPayload.notes">
+          <input
+            type="text"
+            placeholder="Add description here"
+            maxlength="100"
+            [(ngModel)]="userStoryPayload.notes"
+          />
         </div>
       </div>
     </div>
     <div class="h-divider"></div>
     <div class="form-group">
-      <div class="input-container md" [ngStyle]="{'margin-top':'17px'}">
+      <div class="input-container md" [ngStyle]="{ 'margin-top': '17px' }">
         <div class="title">Planned Delivery</div>
         <div class="editable relative">
-          <input matInput type="text" placeholder="Start Date" [matDatepicker]="etd" (dateChange)="onDatePickerClosePD($event)" [value]="userStoryPayload.planned_delivery" [ngStyle]="{'padding-left': '30px'}" readonly>
+          <input
+            matInput
+            type="text"
+            placeholder="Start Date"
+            [matDatepicker]="etd"
+            (dateChange)="onDatePickerClosePD($event)"
+            [value]="userStoryPayload.planned_delivery"
+            [ngStyle]="{ 'padding-left': '30px' }"
+            readonly
+          />
           <div class="etd-date-picker">
-            <mat-datepicker-toggle matSuffix [for]="etd"></mat-datepicker-toggle>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="etd"
+            ></mat-datepicker-toggle>
             <mat-datepicker #etd></mat-datepicker>
           </div>
         </div>
       </div>
       <div class="input-container md">
-        <div class="title"><mat-checkbox (change)="onRDChecked($event.checked)"> Revised Delivery</mat-checkbox></div>
-        <div class="editable relative" *ngIf="activateRevisedDelivery; else activateRD">
-          <input type="text" placeholder="None" (dateChange)="onDatePickerCloseRD($event)" [value]="userStoryPayload.revised_delivery" [matDatepicker]="petd" [ngStyle]="{'padding-left': '30px'}" readonly>
+        <div class="title">
+          <mat-checkbox (change)="onRDChecked($event.checked)">
+            Revised Delivery</mat-checkbox
+          >
+        </div>
+        <div
+          class="editable relative"
+          *ngIf="activateRevisedDelivery; else activateRD"
+        >
+          <input
+            type="text"
+            placeholder="None"
+            (dateChange)="onDatePickerCloseRD($event)"
+            [value]="userStoryPayload.revised_delivery"
+            [matDatepicker]="petd"
+            [ngStyle]="{ 'padding-left': '30px' }"
+            readonly
+          />
           <div class="etd-date-picker">
-            <mat-datepicker-toggle matSuffix [for]="petd"></mat-datepicker-toggle>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="petd"
+            ></mat-datepicker-toggle>
             <mat-datepicker #petd></mat-datepicker>
           </div>
         </div>
-        <ng-template #activateRD>
-
-        </ng-template>
+        <ng-template #activateRD> </ng-template>
       </div>
     </div>
-
-    <!--<div class="form-group">-->
-    <!--  <div class="input-container lg">-->
-    <!--    <div class="title" [ngClass]="{'warning':userStoryStatusValidator}">ETD</div>-->
-    <!--    <div class="editable">-->
-    <!--      <input type="text" placeholder="Start Date" [(ngModel)]="userStoryPayload.notes">-->
-    <!--    </div>-->
-        
-    <!--  </div>-->
-    <!--  <div class="input-container">-->
-    <!--    <div class="title" [ngClass]="{'warning':userStoryDescValidator}">Revised ETD</div>-->
-    <!--    <div class="editable">-->
-    <!--      <input type="text" placeholder="None" [(ngModel)]="userStoryPayload.notes">-->
-    <!--    </div>-->
-    <!--  </div>-->
-    <!--</div>-->
-    <!--<div class="h-divider"></div>-->
 
     <div class="form-group btn-group">
       <button class="btn btn-blue" (click)="onCreate()">Save Changes</button>
       <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
 
-      <span class="message" *ngIf="userStoryNumberValidator || userStoryNameValidator || userStoryPriorityValidator || userStorySprintNameValidator || userStoryStatusValidator || userStroryReasonCodeValidator">Please enter the mandatory fields</span>
+      <span
+        class="message"
+        *ngIf="
+          userStoryNumberValidator ||
+          userStoryNameValidator ||
+          userStoryPriorityValidator ||
+          userStorySprintNameValidator ||
+          userStoryStatusValidator ||
+          userStroryReasonCodeValidator
+        "
+        >Please enter the mandatory fields</span
+      >
     </div>
   </div>
 </div>

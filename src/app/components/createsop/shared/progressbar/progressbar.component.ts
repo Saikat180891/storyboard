@@ -1,10 +1,10 @@
 import {
   Component,
-  OnInit,
-  Input,
-  Output,
   EventEmitter,
+  Input,
   OnChanges,
+  OnInit,
+  Output,
 } from "@angular/core";
 import { UicontrolService } from "../../services/uicontrol.service";
 @Component({
@@ -30,7 +30,6 @@ export class ProgressbarComponent implements OnInit, OnChanges {
     } else {
       this.progressValue = this.progressChange;
     }
-    // console.log(this.progressValue)
   }
 
   onDragHandle($event) {
@@ -40,6 +39,5 @@ export class ProgressbarComponent implements OnInit, OnChanges {
 
   onClickHandle(value) {
     this.changeCurrentTime.emit(value);
-    // console.log(value)
   }
 }

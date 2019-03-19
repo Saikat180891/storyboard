@@ -1,12 +1,31 @@
 <div class="section">
   <form class="section-header" title="Section name" [formGroup]="section">
     <div class="section-header-title">
-      <div *ngIf="isSectionNameEditable; else editTextBox">{{section.value.section_name}}</div>
+      <div *ngIf="isSectionNameEditable; else editTextBox">
+        {{ section.value.section_name }}
+      </div>
       <ng-template #editTextBox>
-        <input type="text" class="edit-section-name" placeholder="Section Name" formControlName="section_name" [ngClass]="{'validate-failed': section.get('section_name').touched && section.get('section_name').invalid}">
+        <input
+          type="text"
+          class="edit-section-name"
+          placeholder="Section Name"
+          formControlName="section_name"
+          [ngClass]="{
+            'validate-failed':
+              section.get('section_name').touched &&
+              section.get('section_name').invalid
+          }"
+        />
       </ng-template>
-      <div *ngIf="section.get('section_name').touched && section.get('section_name').invalid">
-        <small [ngStyle]="{'color':'#F47074'}">*Please enter a section name to continue</small>
+      <div
+        *ngIf="
+          section.get('section_name').touched &&
+          section.get('section_name').invalid
+        "
+      >
+        <small [ngStyle]="{ color: '#F47074' }"
+          >*Please enter a section name to continue</small
+        >
       </div>
     </div>
     <div class="section-header-options">
@@ -15,8 +34,12 @@
           <i class="fas fa-ellipsis-h"></i>
         </div>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="onEditSectionName()">Edit section name</button>
-          <button mat-menu-item (click)="onDeleteSection()">Delete section</button>
+          <button mat-menu-item (click)="onEditSectionName()">
+            Edit section name
+          </button>
+          <button mat-menu-item (click)="onDeleteSection()">
+            Delete section
+          </button>
         </mat-menu>
         <div class="common-option collapsable-btn" (click)="onCollapse()">
           <ng-container *ngIf="!isCollapsed; else down">
@@ -28,11 +51,20 @@
         </div>
       </ng-container>
       <ng-template #editCreateSection>
-        <div class="common-option divider-right check-btn" (click)="onCreateSection()" [ngClass]="{'check-btn-disabled':!section.valid}" [title]="!section.valid ? 'Not valid section name': 'OK'">
+        <div
+          class="common-option divider-right check-btn"
+          (click)="onCreateSection()"
+          [ngClass]="{ 'check-btn-disabled': !section.valid }"
+          [title]="!section.valid ? 'Not valid section name' : 'OK'"
+        >
           <i class="fas fa-check"></i>
         </div>
-        <div class="common-option cross-btn" (click)="onSectionEditClose()" title="Cancel">
-          <i class="fas fa-times"></i>        
+        <div
+          class="common-option cross-btn"
+          (click)="onSectionEditClose()"
+          title="Cancel"
+        >
+          <i class="fas fa-times"></i>
         </div>
       </ng-template>
     </div>
@@ -40,19 +72,40 @@
   <div class="step-expansion-panel">
     <mat-accordion>
       <mat-expansion-panel [expanded]="!isCollapsed">
-        <div class="section-body" cdkDropList (cdkDropListDropped)="drop($event)">
-          <ng-container *ngFor="let step of stepParameters.steps_list; let i=index">
+        <div
+          class="section-body"
+          cdkDropList
+          (cdkDropListDropped)="drop($event)"
+        >
+          <ng-container
+            *ngFor="let step of stepParameters.steps_list; let i = index"
+          >
             <div class="steps-margin-around" cdkDrag>
-              <app-steps-container [stepIndex]="i" [sectionIndex]="sectionIndex" (delete)="onDeleteStep($event)" (outputChange)="onOutputChange($event)" [sectionId]="sectionId" [stepData]="step"></app-steps-container>
+              <app-steps-container
+                [stepIndex]="i"
+                [sectionIndex]="sectionIndex"
+                (delete)="onDeleteStep($event)"
+                (outputChange)="onOutputChange($event)"
+                [sectionId]="sectionId"
+                [stepData]="step"
+              ></app-steps-container>
             </div>
           </ng-container>
-          <div class="droppable-area steps-margin-around" appDroppable (transferedData)="onDropData($event)" (dragover)="allowDrop($event)">
+          <div
+            class="droppable-area steps-margin-around"
+            appDroppable
+            (transferedData)="onDropData($event)"
+            (dragover)="allowDrop($event)"
+          >
             Drag & drop steps here
           </div>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
-    <div class="disable-expansion-panel" *ngIf="!isSectionNameEditable && !isCollapsed">
+    <div
+      class="disable-expansion-panel"
+      *ngIf="!isSectionNameEditable && !isCollapsed"
+    >
       <span>Section name is required</span>
     </div>
   </div>

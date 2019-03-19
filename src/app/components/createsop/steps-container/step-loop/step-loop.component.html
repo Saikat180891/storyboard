@@ -7,10 +7,16 @@
     <div class="text-area">
       <label for="comments">Comments</label>
       <ng-container *ngIf="canEdit; else displaySpan">
-        <textarea name="" id="comments" class="textarea" placeholder="Loop params" [(ngModel)]="data.loop_params"></textarea>
+        <textarea
+          name=""
+          id="comments"
+          class="textarea"
+          placeholder="Loop params"
+          [(ngModel)]="data.loop_params"
+        ></textarea>
       </ng-container>
       <ng-template #displaySpan>
-        <span>{{data.loop_params}}</span>
+        <span>{{ data.loop_params }}</span>
       </ng-template>
     </div>
     <div class="controls-btn-group">

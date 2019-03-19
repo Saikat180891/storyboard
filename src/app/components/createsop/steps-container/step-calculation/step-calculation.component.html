@@ -8,12 +8,16 @@
         Calc
       </div>
       <div class="step-number">
-        Step No. <span>{{data.step_number}}</span>
+        Step No. <span>{{ data.step_number }}</span>
       </div>
       <div class="screen-name">
         <span>Screen</span>
         <div class="select">
-          <mat-select [(value)]="data.screen" placeholder="None" [disabled]="!canEdit">
+          <mat-select
+            [(value)]="data.screen"
+            placeholder="None"
+            [disabled]="!canEdit"
+          >
             <mat-option>None</mat-option>
             <mat-option value="option1">Screen 1</mat-option>
             <mat-option value="option2">Screen 2</mat-option>
@@ -43,17 +47,21 @@
         </div>
       </div>
     </ng-template>
-
   </div>
   <div class="step-body">
     <div class="form">
       <div class="form-group">
         <div class="form-sub-group full-width">
           <ng-container *ngIf="canEdit; else editField">
-            <textarea name="" id="" placeholder="Enter formula or equations or expressions" [(ngModel)]="data.calc_value"></textarea>
+            <textarea
+              name=""
+              id=""
+              placeholder="Enter formula or equations or expressions"
+              [(ngModel)]="data.calc_value"
+            ></textarea>
           </ng-container>
           <ng-template #editField>
-            <span>{{data.calc_value}}</span>
+            <span>{{ data.calc_value }}</span>
           </ng-template>
         </div>
       </div>

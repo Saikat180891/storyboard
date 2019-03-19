@@ -8,23 +8,35 @@
   </div>
   <div class="expanded">
     <mat-grid-list cols="3" rowHeight="2:1.5" gutterSize="20px">
-        <mat-grid-tile *ngFor="let content of data; let i=index" (click)="onThumbnailSelect(i, content)" [ngClass]="{'selected':selected==i}">
-          <div class="grid-content-next">
-            <div class="picture">
-              <img [src]="content.thumbnail" alt="">
-              <div class="picture-overlay">
-                <div class="picture-overlay-btns">
-                  <button (click)="onExportImage(i, content)"><i class="fas fa-file-export" style="margin-right:10px"></i><span>Export</span></button>
-                  <button><i class="far fa-trash-alt" (click)="onDeleteContent(content, i)"></i><span>Delete</span></button>
-                </div>
+      <mat-grid-tile
+        *ngFor="let content of data; let i = index"
+        (click)="onThumbnailSelect(i, content)"
+        [ngClass]="{ selected: selected == i }"
+      >
+        <div class="grid-content-next">
+          <div class="picture">
+            <img [src]="content.thumbnail" alt="" />
+            <div class="picture-overlay">
+              <div class="picture-overlay-btns">
+                <button (click)="onExportImage(i, content)">
+                  <i class="fas fa-file-export" style="margin-right:10px"></i
+                  ><span>Export</span>
+                </button>
+                <button>
+                  <i
+                    class="far fa-trash-alt"
+                    (click)="onDeleteContent(content, i)"
+                  ></i
+                  ><span>Delete</span>
+                </button>
               </div>
             </div>
-            <div class="picture-title">
-              <span [title]="content.image_name">{{content.image_name}}</span>
-              <!-- <span>12:22</span> -->
-            </div>
           </div>
-        </mat-grid-tile>
+          <div class="picture-title">
+            <span [title]="content.image_name">{{ content.image_name }}</span>
+          </div>
+        </div>
+      </mat-grid-tile>
     </mat-grid-list>
   </div>
 </div>

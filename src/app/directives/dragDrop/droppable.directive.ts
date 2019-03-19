@@ -1,11 +1,11 @@
 import {
   Directive,
   ElementRef,
-  Renderer2,
-  OnInit,
-  Output,
   EventEmitter,
   Input,
+  OnInit,
+  Output,
+  Renderer2,
 } from "@angular/core";
 import { fromEvent } from "rxjs";
 import { DragDropService } from "./drag-drop.service";
@@ -25,7 +25,6 @@ export class DroppableDirective implements OnInit {
 
   ngOnInit() {
     fromEvent(this.el.nativeElement, "dragover").subscribe(res => {
-      // console.log("dragover", res);
       if (this.renderStyles) {
         this.render.setStyle(
           this.el.nativeElement,
@@ -36,12 +35,10 @@ export class DroppableDirective implements OnInit {
     });
 
     fromEvent(this.el.nativeElement, "dragenter").subscribe(res => {
-      // console.log("dragenter", res);
       this.renderStyles = true;
     });
 
     fromEvent(this.el.nativeElement, "dragleave").subscribe(res => {
-      // console.log("dragleave", res);
       this.renderStyles = false;
       if (!this.renderStyles) {
         this.render.setStyle(
@@ -53,7 +50,6 @@ export class DroppableDirective implements OnInit {
     });
 
     fromEvent(this.el.nativeElement, "drop").subscribe(res => {
-      // console.log("drop", res);
       this.renderStyles = false;
       if (!this.renderStyles) {
         this.render.setStyle(

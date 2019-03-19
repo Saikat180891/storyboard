@@ -1,16 +1,16 @@
 import {
-  Component,
-  OnInit,
-  OnChanges,
   AfterContentChecked,
   AfterViewChecked,
+  Component,
+  OnChanges,
+  OnInit,
 } from "@angular/core";
-import { DataService } from "../../../data.service";
-import { AppcontrolService } from "../../../services/controlservice/appcontrol.service";
-import { ContainerService } from "./container.service";
 import { NgxSpinnerService } from "ngx-spinner";
+import { DataService } from "../../../data.service";
 import { AuthorizationService } from "../../../services/authorization/authorization.service";
+import { AppcontrolService } from "../../../services/controlservice/appcontrol.service";
 import { UtilsService } from "../../../utils.service";
+import { ContainerService } from "./container.service";
 
 @Component({
   selector: "app-container",
@@ -59,7 +59,6 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
       res => {
         // rearrange the project list as required for the frontend
         res.forEach(element => {
-          // console.log(element["due_date"] + " "+ this.__utils.formatDateToUS(element["due_date"]));
           projectlist.push({
             themeColor: this.__uic.colorPicker[
               this._ContainerService.getUniqueNumber()

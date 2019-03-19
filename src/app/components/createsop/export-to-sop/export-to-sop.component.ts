@@ -1,8 +1,8 @@
-import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { DataService } from "../../../data.service";
-import { PageService } from "../services/page/page.service";
 import { ExportToSopService } from "../services/export-to-sop/export-to-sop.service";
+import { PageService } from "../services/page/page.service";
 interface Snapshot {
   id: number;
   thumbnail: string;

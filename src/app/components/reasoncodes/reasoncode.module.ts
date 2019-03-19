@@ -1,19 +1,19 @@
-import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { ChartsComponent } from "./charts/charts.component";
+import { ExportDialogBoxComponent } from "./export-dialog-box/export-dialog-box.component";
 import { ReasoncodesComponent } from "./reasoncodes.component";
-import { UserstoryCardComponent } from "./userstory-card/userstory-card.component";
+import { ColoredDropdownComponent } from "./shared/colored-dropdown/colored-dropdown.component";
+import { NormalDropdownComponent } from "./shared/normal-dropdown/normal-dropdown.component";
 import { SprintConfigComponent } from "./sprint-config/sprint-config.component";
 import { UserstoryCardCreateComponent } from "./userstory-card-create/userstory-card-create.component";
 import { UserstoryCardEditComponent } from "./userstory-card-edit/userstory-card-edit.component";
+import { UserstoryCardComponent } from "./userstory-card/userstory-card.component";
 import { UserstoryFilterComponent } from "./userstory-filter/userstory-filter.component";
-import { ExportDialogBoxComponent } from "./export-dialog-box/export-dialog-box.component";
-import { ChartsComponent } from "./charts/charts.component";
-import { ColoredDropdownComponent } from "./shared/colored-dropdown/colored-dropdown.component";
-import { NormalDropdownComponent } from "./shared/normal-dropdown/normal-dropdown.component";
 
 // import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Routes } from "@angular/router";
 import { NvD3Module } from "ng2-nvd3";
-import { Routes, RouterModule } from "@angular/router";
 
 // import {MatTabsModule} from '@angular/material/tabs';
 // import {MatDatepickerModule} from '@angular/material/datepicker';

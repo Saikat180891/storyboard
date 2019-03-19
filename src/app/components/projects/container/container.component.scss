@@ -1,35 +1,33 @@
-.container{
-    width: 100%;
-    height: auto;
-    // z-index: -1;
-    position: relative;
-    // top: 3.4375rem;
+.container {
+  width: 100%;
+  height: auto;
+  position: relative;
 }
-.file-list{
-    display: block;
-    height: auto;
-    width: 94%;
-    margin-left: 3%;
-    position: relative;
+.file-list {
+  display: block;
+  height: auto;
+  width: 94%;
+  margin-left: 3%;
+  position: relative;
 }
-.top-padding{
-    padding-top: 2rem;
+.top-padding {
+  padding-top: 2rem;
 }
-.row{
-    width: 100%;
-    display: inline-grid;
-    grid-template-columns: repeat(auto-fill,minmax(25rem,1fr));
+.row {
+  width: 100%;
+  display: inline-grid;
+  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
 }
-.grid-item{
-    margin: 0 20px 20px 0;
+.grid-item {
+  margin: 0 20px 20px 0;
 }
-.filter{
-    position: absolute;
-    top: 4.5%;
-    right: 3%;
-    z-index: 100;
+.filter {
+  position: absolute;
+  top: 4.5%;
+  right: 3%;
+  z-index: 100;
 }
-.project-dialog-box{
+.project-dialog-box {
   height: 570px;
   width: 500px;
   overflow: hidden;

@@ -1,11 +1,11 @@
 import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
   AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
   OnChanges,
+  OnInit,
+  Output,
   SimpleChanges,
 } from "@angular/core";
 import { RouteConfigLoadStart } from "@angular/router";
@@ -67,7 +67,6 @@ export class ColoredDropdownComponent
     event.stopPropagation();
     this.selected = this.value = option;
     this.applyPadding = true;
-    console.log(this.applyPadding);
     this.optionSelected.emit(option);
     this.isOpen = false;
   }

@@ -21,7 +21,6 @@ export const charts = {
       donutRatio: 0.65,
       donut: true,
       legendPosition: "right",
-      // title: 'Hello',
       labelThreshold: 0.07,
       labelSunbeamLayout: true,
       legend: {
@@ -60,9 +59,6 @@ export const charts = {
         return d3.format(",.1f")(d);
       },
       duration: 500,
-      // xAxis: {
-      //     axisLabel: 'X Axis'
-      // },
       yAxis: {
         axisLabel: "Benefits",
         axisLabelDistance: -10,

@@ -1,31 +1,31 @@
 import {
+  AfterContentInit,
+  AfterViewInit,
   Component,
-  OnInit,
+  EventEmitter,
+  HostListener,
   Input,
   OnChanges,
-  AfterViewInit,
-  AfterContentInit,
-  HostListener,
+  OnInit,
   Output,
-  EventEmitter,
 } from "@angular/core";
 import {
   FormBuilder,
-  FormGroup,
-  FormControlName,
   FormControl,
+  FormControlName,
+  FormGroup,
   Validators,
 } from "@angular/forms";
-import { slideDown, hideInOut } from "../../../animation";
+import { hideInOut, slideDown } from "../../../animation";
 
-import { AppcontrolService } from "../../../services/controlservice/appcontrol.service";
-import { DataService } from "../../../data.service";
-import { ContainerService } from "../container/container.service";
 import { MatSnackBar } from "@angular/material";
+import { NgxSpinnerService } from "ngx-spinner";
+import { DataService } from "../../../data.service";
+import { AppcontrolService } from "../../../services/controlservice/appcontrol.service";
+import { UtilsService } from "../../../utils.service";
 import { CardService } from "../card/card.service";
 import { ContainerComponent } from "../container/container.component";
-import { NgxSpinnerService } from "ngx-spinner";
-import { UtilsService } from "../../../utils.service";
+import { ContainerService } from "../container/container.service";
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -78,7 +78,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
 
   roles: string[] = ["SuperAdmin", "Manager", "Analyst"];
   disableSelect: boolean = false;
-  // role = 'Super Admin';
   /**
    * This variables are used while creating a new card
    */
@@ -158,7 +157,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
    */
   @HostListener("document:keyup.escape", ["$event"])
   keyEvent(event: KeyboardEvent) {
-    //console.log(event)
     if (event.keyCode === KEY_CODE.ESCAPE) {
       this.onOverlayClose();
     }
@@ -169,7 +167,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
    */
   @HostListener("document:keyup.enter", ["$event"])
   keyEventEnter(event: KeyboardEvent) {
-    //console.log(event)
     if (event.keyCode === KEY_CODE.ENTER) {
       this.onCreateNew();
     }
@@ -194,7 +191,6 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
         },
         err => {}
       );
-    // }
   }
 
   /**
@@ -277,12 +273,9 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   onDueDateChange($event: Date) {
-    console.log($event);
     this.projectDetails.due_date = this.utils.datetypeToStringWithoutTime(
       $event
     );
-    console.log(this.projectDetails.due_date);
-    // this.projectDetails.due_date = $event
   }
 
   /**

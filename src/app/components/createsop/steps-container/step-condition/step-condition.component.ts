@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
 @Component({
   selector: "app-step-condition",
@@ -57,9 +57,7 @@ export class StepConditionComponent implements OnInit {
     this.addAnotherRow.splice(index, 1);
   }
 
-  onChangeSelection($event) {
-    console.log(this.conditionSelection);
-  }
+  onChangeSelection($event) {}
 
   onDeleteStep() {
     if (this.stepData.step_id || this.stepData.id) {

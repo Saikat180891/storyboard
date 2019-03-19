@@ -1,8 +1,8 @@
+import { HttpClient, HttpHeaders, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { DataService } from "../../../../data.service";
-import { Observable } from "rxjs";
-import { HttpClient, HttpRequest, HttpHeaders } from "@angular/common/http";
 import { CookieService } from "ngx-cookie-service";
+import { Observable } from "rxjs";
+import { DataService } from "../../../../data.service";
 
 const httpOptions = new HttpHeaders();
 
@@ -33,7 +33,6 @@ export class SidebarService {
       headers: httpOptions.set("X-CSRFToken", this.cookie.get("csrftoken")),
     });
     return this.http.request(req);
-    // return this.http.post(this.__api.apiUrl + endpoint, payload, {withCredentials: true, headers: httpOptions.set('X-CSRFToken', this.cookie.get("csrftoken"))});
   }
 
   /**

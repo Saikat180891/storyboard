@@ -1,35 +1,28 @@
-.card-box{
-  // width: 96vw;
-  // height: 150px;
+.card-box {
   background-color: #ffffff;
   border-radius: 5px;
-  // margin-left: 2vw;
-  // margin-top: 18px;
-  // margin-bottom: 18px;
   margin: 15px 30px;
   border-radius: 5px;
   box-shadow: 1px 1px 4px rgba($color: #000000, $alpha: 0.1);
   position: relative;
   display: flex;
-  // overflow: hidden;
 
-  .created-date{
+  .created-date {
     position: absolute;
     top: 46px;
     right: 30px;
     font-size: 12px;
     color: #c1c1c1;
 
-    span:last-child{
+    span:last-child {
       font-size: 14px;
       color: #333333;
     }
   }
 
-  .options-btn{
+  .options-btn {
     width: 35px;
     height: 20px;
-    // background-color: red;
     position: absolute;
     top: 5px;
     right: 20px;
@@ -40,227 +33,197 @@
     cursor: pointer;
   }
 
-  .options-btn:hover{
+  .options-btn:hover {
     background-color: rgb(236, 236, 236);
   }
 
-  .box{
+  .box {
     display: flex;
   }
-  .row{
-    // height: 100%;
+  .row {
     border-right: 1px solid rgba(0, 0, 0, 0.1);
     position: relative;
     overflow: hidden;
   }
-  .r1{
+  .r1 {
     width: 27vw;
-    // height: 100%;
   }
-  .r2{
+  .r2 {
     width: 15vw;
   }
-  .r3{
+  .r3 {
     width: 12vw;
   }
-  .r4{
+  .r4 {
     width: calc(100% - 54vw);
   }
-  .col{
-    // height: 100%;
+  .col {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    // position: absolute;
-    // top: 0;
-    // left: 0;
-    // background-color: #cccccc;
-    padding: 20px; 
+    padding: 20px;
 
-    > span{
-      // margin-bottom: 15px;
+    > span {
       display: block;
       margin: 7px 0;
       font-size: 14px;
       max-height: 17px;
     }
-    span.reduce-margin{
+    span.reduce-margin {
       margin-bottom: 10px;
     }
-    
-    span:nth-child(odd){
+
+    span:nth-child(odd) {
       color: #999999;
     }
   }
-  .reduce-padding{
-    // padding: 20px 10px 10px 20px;
-  
-  }
-  .c1{
+  .c1 {
     width: 150px;
   }
-  .c12{
+  .c12 {
     width: calc(100% - 100px);
     left: 100px;
   }
-  .c2{
+  .c2 {
     width: 50%;
   }
-  .c22{
+  .c22 {
     width: 50%;
     left: 50%;
   }
-  .c3{
+  .c3 {
     width: 100%;
   }
-  .c4{
+  .c4 {
     width: 35%;
   }
-  .c42{
+  .c42 {
     width: 30%;
     left: 70%;
     right: 0;
-    // padding: 45px 0 20px 0;
-    // background-color: red;
-    .btn-box{
+    .btn-box {
       position: absolute;
       top: 90px;
       right: 25px;
 
-      button{
+      button {
         width: 130px;
       }
-      button.hide{
+      button.hide {
         visibility: hidden;
       }
-  
-      button:first-child{
+
+      button:first-child {
         width: 30px;
         height: 30px;
         position: absolute;
         top: -44px;
-
       }
     }
-    
   }
 }
-.card-selected{
-  background-color: #E8F1FB;
+.card-selected {
+  background-color: #e8f1fb;
 }
-.block{
+.block {
   display: block;
   height: auto;
   width: auto;
   text-align: center;
 }
-.h-center{
+.h-center {
   text-align: center;
 }
 
-.priority{
+.priority {
   display: block;
   height: 15px;
   line-height: 15px;
-  // max-width: 100px;
 
-  span.priority-text{
-    // position: absolute;
-    // top: 0;
-    // left: 60%;
-    // transform: translateX(-50%);
-  }
-
-  span{
+  span {
     display: inline-block;
   }
-  span:first-child{
+  span:first-child {
     float: left;
     margin-right: 5px;
   }
-  span:last-child{
+  span:last-child {
     float: left;
-    // text-align: left;
   }
-  .circle{
+  .circle {
     width: 15px;
     height: 15px;
     border-radius: 50%;
-    // position: absolute;
-    // top: 0;
-    // left: 25%;
-    // transform: translateX(-50%);
   }
 
-  .high{
-    background-color: #FF3B3B;
+  .high {
+    background-color: #ff3b3b;
   }
-  .text-high{
-    color: #FF3B3B;
+  .text-high {
+    color: #ff3b3b;
   }
-  .medium{
-    background-color: #FF902E;
+  .medium {
+    background-color: #ff902e;
   }
-  .text-medium{
-    color: #FF902E;
+  .text-medium {
+    color: #ff902e;
   }
-  .low{
-    background-color: #EFC965;
+  .low {
+    background-color: #efc965;
   }
-  .text-low{
-    color: #EFC965;
-  }
-
-  .backlog{
-    background-color: #2A7DE1 !important;
-  }
-  .development{
-    background-color: #69D100 !important;
-  }
-  .rules{
-    background-color: #F47074 !important;
-  }
-  .ext-testing{
-    background-color: #0033A1 !important;
-  }
-  .intl-texting{
-    background-color: #FDD468 !important;
-  }
-  .done{
-    background-color: #40C0C4 !important;
+  .text-low {
+    color: #efc965;
   }
 
+  .backlog {
+    background-color: #2a7de1 !important;
+  }
+  .development {
+    background-color: #69d100 !important;
+  }
+  .rules {
+    background-color: #f47074 !important;
+  }
+  .ext-testing {
+    background-color: #0033a1 !important;
+  }
+  .intl-texting {
+    background-color: #fdd468 !important;
+  }
+  .done {
+    background-color: #40c0c4 !important;
+  }
 }
-.no-padding{
+.no-padding {
   padding: 0;
 }
-.r4 .c4 .priority span:last-child{
+.r4 .c4 .priority span:last-child {
   color: #000000;
 }
 ::ng-deep {
-  .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar{
-    background-color: rgba($color: #6CC24A, $alpha: 0.6);
+  .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+    background-color: rgba($color: #6cc24a, $alpha: 0.6);
   }
-  .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb{
-    background-color: #6CC24A;
+  .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: #6cc24a;
   }
 }
 
-::ng-deep .mat-slide-toggle .mat-slide-toggle-ripple{
+::ng-deep .mat-slide-toggle .mat-slide-toggle-ripple {
   height: 0px !important;
   width: 0px !important;
   visibility: hidden !important;
 }
-.border-high{
-  border-left: 5px solid #FF3B3B;
+.border-high {
+  border-left: 5px solid #ff3b3b;
 }
-.border-medium{
-  border-left: 5px solid #FF902E;
+.border-medium {
+  border-left: 5px solid #ff902e;
 }
-.border-low{
-  border-left: 5px solid #EFC965;
+.border-low {
+  border-left: 5px solid #efc965;
 }
-.wrap-content{
+.wrap-content {
   text-overflow: ellipsis;
   max-width: 100px;
   overflow: hidden;

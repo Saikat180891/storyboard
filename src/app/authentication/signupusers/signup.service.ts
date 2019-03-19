@@ -4,8 +4,8 @@
  * SignUp Service file for external user sign up
  */
 import { Injectable } from "@angular/core";
-import { DataService } from "../../data.service";
 import { Router } from "@angular/router";
+import { DataService } from "../../data.service";
 @Injectable({
   providedIn: "root",
 })
