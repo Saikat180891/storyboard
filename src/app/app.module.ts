@@ -11,7 +11,7 @@ import "nvd3";
 import { ScrollbarService } from "./services/scrollbarService/scrollbar.service";
 
 import { DateAdapter } from "@angular/material";
-import { AuthGaurdService } from "./auth/auth-gaurd.service";
+import { AuthGuardService } from "./auth/auth-guard.service";
 import { ContainerService } from "./components/projects/container/container.service";
 import { DataService } from "./data.service";
 import { AppcontrolService } from "./services/controlservice/appcontrol.service";
@@ -20,6 +20,8 @@ import { PasswordStrengthMeterModule } from "angular-password-strength-meter";
 import { CookieService } from "ngx-cookie-service";
 import { AppComponent } from "./app.component";
 import { AuthComponent } from "./auth/auth.component";
+import { ForgotPasswordComponent } from "./auth/forgot-password/forgot-password.component";
+import { LoginComponent } from "./auth/login/login.component";
 import { ResetPasswordComponent } from "./authentication/reset-password/reset-password.component";
 import { SignupusersComponent } from "./authentication/signupusers/signupusers.component";
 import { HeaderComponent } from "./components/header/header.component";
@@ -50,7 +52,7 @@ const routes = [
       {
         path: "projects",
         component: DashboardComponent,
-        canActivate: [AuthGaurdService],
+        canActivate: [AuthGuardService],
         children: [
           {
             path: "",
@@ -83,6 +85,8 @@ const routes = [
     DashboardComponent,
     SignupusersComponent,
     ResetPasswordComponent,
+    LoginComponent,
+    ForgotPasswordComponent,
   ],
 
   imports: [
@@ -106,7 +110,7 @@ const routes = [
     AppcontrolService,
     ContainerService,
     CookieService,
-    AuthGaurdService,
+    AuthGuardService,
     AuthorizationService,
     ScrollbarService,
   ],

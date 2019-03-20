@@ -6,9 +6,9 @@ import { Injectable } from "@angular/core";
 import {
   ActivatedRouteSnapshot,
   CanActivate,
+  Router,
   RouterStateSnapshot,
 } from "@angular/router";
-import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
 import { Observable } from "rxjs";
 import { DataService } from "../data.service";
@@ -16,13 +16,13 @@ import { DataService } from "../data.service";
 @Injectable({
   providedIn: "root",
 })
-export class AuthGaurdService implements CanActivate {
+export class AuthGuardService implements CanActivate {
   userLoggedIn: boolean = false;
   externalLoggedIn: boolean;
 
   constructor(
     private router: Router,
-    private _api: DataService,
+    private dataService: DataService,
     private cookieService: CookieService
   ) {}
 
@@ -50,7 +50,7 @@ export class AuthGaurdService implements CanActivate {
    * Get Api call to Backend to check if user is logged in
    */
   isUserLoggedIn() {
-    this._api.fetchData("/checkLogin").subscribe(res => {
+    this.dataService.fetchData("/checkLogin").subscribe(res => {
       if (res["user_logged_in"] === true) {
         this.router.navigate(["/projects"]);
         sessionStorage.setItem("status", "loggedIn");
@@ -68,13 +68,13 @@ export class AuthGaurdService implements CanActivate {
 
   /**
    * Post Api call to backend for external User Login
-   * @param login_details : Json containing email and password for external user login
+   * @param loginDetails : Json containing email and password for external user login
    */
-  externalUserLogin(login_details) {
-    this._api
-      .postLogin("/external_user_login/", login_details)
+  externalUserLogin(loginDetails) {
+    this.dataService
+      .postLogin("/external_user_login/", loginDetails)
       .subscribe(res => {
-        if (res == "Login successful") {
+        if (res === "Login successful") {
           this.isUserLoggedIn();
         } else {
           alert(res);
@@ -84,9 +84,9 @@ export class AuthGaurdService implements CanActivate {
 
   /**
    * Api call to backend to reset password
-   * @param forgot_password_fields : Forgot Password Reset Field containing json containing email-d
+   * @param forgotPasswordFields : Forgot Password Reset Field containing json containing email-d
    */
-  forgotPasswordUser(forgot_password_fields) {
-    return this._api.postLogin("/reset_password/", forgot_password_fields);
+  forgotPasswordUser(forgotPasswordFields) {
+    return this.dataService.postLogin("/reset_password/", forgotPasswordFields);
   }
 }

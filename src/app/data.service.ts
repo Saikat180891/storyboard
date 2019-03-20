@@ -37,6 +37,10 @@ export class DataService implements OnInit {
     this.headers = httpOptions.headers.set("X-CSRFToken", this.getCSRFToken());
   }
 
+  getBaseURL() {
+    return this.apiUrl;
+  }
+
   /**
    * Get CSRF token from the cookie by using the cookie service class
    */
