@@ -51,12 +51,13 @@ interface ProjectDetails {
 }
 
 @Component({
-  selector: "app-create-sop",
-  templateUrl: "./create-sop.component.html",
-  styleUrls: ["./create-sop.component.scss"],
+  selector: "app-create-project",
+  templateUrl: "./create-project.component.html",
+  styleUrls: ["./create-project.component.scss"],
   animations: [slideDown, hideInOut],
 })
-export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
+export class CreateProjectComponent
+  implements OnInit, OnChanges, AfterViewInit {
   @Input() cardID;
   @Input("permissions") permissions: any;
   @Output("close") close = new EventEmitter<boolean>();

@@ -13,7 +13,7 @@ import { AppcontrolService } from "../../services/controlservice/appcontrol.serv
 import { CardComponent } from "./card/card.component";
 import { ContainerComponent } from "./container/container.component";
 import { ContainerService } from "./container/container.service";
-import { CreateSopComponent } from "./create-sop/create-sop.component";
+import { CreateProjectComponent } from "./create-project/create-project.component";
 import { EditProjectComponent } from "./edit-project/edit-project.component";
 
 const routes: Routes = [{ path: "", component: ContainerComponent }];
@@ -23,7 +23,7 @@ const routes: Routes = [{ path: "", component: ContainerComponent }];
     ContainerComponent,
     CardComponent,
     EditProjectComponent,
-    CreateSopComponent,
+    CreateProjectComponent,
   ],
   imports: [CommonModule, GlobalmoduleModule, RouterModule.forChild(routes)],
   providers: [ContainerService, AppcontrolService],
