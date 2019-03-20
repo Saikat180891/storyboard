@@ -23,7 +23,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { DataService } from "../../../data.service";
 import { AppcontrolService } from "../../../services/controlservice/appcontrol.service";
 import { UtilsService } from "../../../utils.service";
-import { CardService } from "../card/card.service";
+import { ProjectCardService } from "../project-card/project-card.service";
 import { ProjectsPageComponent } from "../projects-page/projects-page.component";
 import { ProjectsPageService } from "../projects-page/projects-page.service";
 
@@ -145,7 +145,7 @@ export class CreateProjectComponent
     private _dataService: DataService,
     private _projectsPageService: ProjectsPageService,
     private formBuilder: FormBuilder,
-    private _cardService: CardService,
+    private _cardService: ProjectCardService,
     private snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
     private _projectsPageComponent: ProjectsPageComponent,

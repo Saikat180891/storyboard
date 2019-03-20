@@ -7,14 +7,14 @@ import {
   Output,
 } from "@angular/core";
 import { ProjectsPageService } from "../projects-page/projects-page.service";
-import { CardService } from "./card.service";
+import { ProjectCardService } from "./project-card.service";
 
 @Component({
-  selector: "app-card",
-  templateUrl: "./card.component.html",
-  styleUrls: ["./card.component.scss"],
+  selector: "app-project-card",
+  templateUrl: "./project-card.component.html",
+  styleUrls: ["./project-card.component.scss"],
 })
-export class CardComponent implements OnInit, OnChanges {
+export class ProjectCardComponent implements OnInit, OnChanges {
   sopPermissions: any = [];
   @Input() cardData: any;
   @Output("deleteSop") deleteSop = new EventEmitter();
@@ -28,7 +28,7 @@ export class CardComponent implements OnInit, OnChanges {
   id = "0";
 
   constructor(
-    private _cardService: CardService,
+    private _cardService: ProjectCardService,
     private _projectsPageService: ProjectsPageService
   ) {}
 

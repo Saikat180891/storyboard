@@ -10,9 +10,9 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { GlobalmoduleModule } from "../../module/globalmodule/globalmodule.module";
 import { AppcontrolService } from "../../services/controlservice/appcontrol.service";
-import { CardComponent } from "./card/card.component";
 import { CreateProjectComponent } from "./create-project/create-project.component";
 import { EditProjectComponent } from "./edit-project/edit-project.component";
+import { ProjectCardComponent } from "./project-card/project-card.component";
 import { ProjectsPageComponent } from "./projects-page/projects-page.component";
 import { ProjectsPageService } from "./projects-page/projects-page.service";
 
@@ -21,7 +21,7 @@ const routes: Routes = [{ path: "", component: ProjectsPageComponent }];
 @NgModule({
   declarations: [
     ProjectsPageComponent,
-    CardComponent,
+    ProjectCardComponent,
     EditProjectComponent,
     CreateProjectComponent,
   ],
