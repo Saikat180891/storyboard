@@ -19,7 +19,7 @@ import { environment } from "../../../environments/environment";
 import { hideInOut } from "../../animation";
 import { DataService } from "../../data.service";
 import { ScrollbarService } from "../../services/scrollbarService/scrollbar.service";
-import { ContainerService } from "../projects/container/container.service";
+import { ProjectsPageService } from "../projects/projects-page/projects-page.service";
 import { charts } from "./chartoptions";
 import { ReasonCodeService } from "./reason-code.service";
 import { CreateUserstoryService } from "./userstory-card-create/create-userstory.service";
@@ -130,7 +130,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private _reasonCode: ReasonCodeService,
-    private _containerService: ContainerService,
+    private _projectsPageService: ProjectsPageService,
     private _createUserStory: CreateUserstoryService,
     public spinner: NgxSpinnerService,
     private __api: DataService,
@@ -143,7 +143,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
         params.id
       );
       this.getPermissionForEpicsPage(2, this._reasonCode.sopId);
-      this._containerService.cardContents.forEach(element => {
+      this._projectsPageService.cardContents.forEach(element => {
         if (element.id == this._reasonCode.sopId) {
           this.currentProject = element;
         }

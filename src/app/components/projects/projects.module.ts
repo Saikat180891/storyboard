@@ -11,21 +11,21 @@ import { RouterModule, Routes } from "@angular/router";
 import { GlobalmoduleModule } from "../../module/globalmodule/globalmodule.module";
 import { AppcontrolService } from "../../services/controlservice/appcontrol.service";
 import { CardComponent } from "./card/card.component";
-import { ContainerComponent } from "./container/container.component";
-import { ContainerService } from "./container/container.service";
 import { CreateProjectComponent } from "./create-project/create-project.component";
 import { EditProjectComponent } from "./edit-project/edit-project.component";
+import { ProjectsPageComponent } from "./projects-page/projects-page.component";
+import { ProjectsPageService } from "./projects-page/projects-page.service";
 
-const routes: Routes = [{ path: "", component: ContainerComponent }];
+const routes: Routes = [{ path: "", component: ProjectsPageComponent }];
 
 @NgModule({
   declarations: [
-    ContainerComponent,
+    ProjectsPageComponent,
     CardComponent,
     EditProjectComponent,
     CreateProjectComponent,
   ],
   imports: [CommonModule, GlobalmoduleModule, RouterModule.forChild(routes)],
-  providers: [ContainerService, AppcontrolService],
+  providers: [ProjectsPageService, AppcontrolService],
 })
 export class ProjectsModule {}

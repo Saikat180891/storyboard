@@ -15,7 +15,7 @@ import {
   OnInit,
   Renderer2,
 } from "@angular/core";
-import { ContainerService } from "../components/projects/container/container.service";
+import { ProjectsPageService } from "../components/projects/projects-page/projects-page.service";
 import { AuthorizationService } from "../services/authorization/authorization.service";
 
 interface Permission {
@@ -34,7 +34,7 @@ export class PermissionsDirective implements OnInit {
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
-    private _cs: ContainerService,
+    private _projectsPageService: ProjectsPageService,
     private __authorization: AuthorizationService
   ) {}
 

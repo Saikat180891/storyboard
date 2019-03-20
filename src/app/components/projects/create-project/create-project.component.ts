@@ -24,8 +24,8 @@ import { DataService } from "../../../data.service";
 import { AppcontrolService } from "../../../services/controlservice/appcontrol.service";
 import { UtilsService } from "../../../utils.service";
 import { CardService } from "../card/card.service";
-import { ContainerComponent } from "../container/container.component";
-import { ContainerService } from "../container/container.service";
+import { ProjectsPageComponent } from "../projects-page/projects-page.component";
+import { ProjectsPageService } from "../projects-page/projects-page.service";
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -143,12 +143,12 @@ export class CreateProjectComponent
   constructor(
     private _UIControllerService: AppcontrolService,
     private _dataService: DataService,
-    private _ContainerService: ContainerService,
+    private _projectsPageService: ProjectsPageService,
     private formBuilder: FormBuilder,
     private _cardService: CardService,
     private snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
-    private __containerComponent: ContainerComponent,
+    private _projectsPageComponent: ProjectsPageComponent,
     private utils: UtilsService
   ) {}
 
@@ -389,7 +389,7 @@ export class CreateProjectComponent
           this.spinner.hide();
         },
         () => {
-          this.__containerComponent.getListOfAllProjects();
+          this._projectsPageComponent.getListOfAllProjects();
           this.snackBar.open("Project has been created", "Success", {
             duration: 2000,
           });

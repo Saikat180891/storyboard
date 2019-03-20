@@ -1,13 +1,13 @@
 import { EventEmitter, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { CommondbService } from "../../../commondb.service";
+import { DataService } from "../../../data.service";
 import { AppcontrolService } from "../../../services/controlservice/appcontrol.service";
-import { DataService } from ".././../../data.service";
 
 @Injectable({
   providedIn: "root",
 })
-export class ContainerService {
+export class ProjectsPageService {
   permissions = [];
   constructor(
     private _dataService: DataService,

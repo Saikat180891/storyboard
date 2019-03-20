@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from "@angular/core";
-import { ContainerService } from "../container/container.service";
+import { ProjectsPageService } from "../projects-page/projects-page.service";
 import { CardService } from "./card.service";
 
 @Component({
@@ -29,7 +29,7 @@ export class CardComponent implements OnInit, OnChanges {
 
   constructor(
     private _cardService: CardService,
-    private _containerService: ContainerService
+    private _projectsPageService: ProjectsPageService
   ) {}
 
   /**
@@ -41,7 +41,7 @@ export class CardComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.localData = this.cardData;
     this._cardService.cardContent = this.cardData;
-    this.sopPermissions = this._containerService.permissions;
+    this.sopPermissions = this._projectsPageService.permissions;
   }
 
   ngOnChanges() {

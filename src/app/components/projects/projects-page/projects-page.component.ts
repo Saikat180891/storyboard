@@ -10,17 +10,17 @@ import { DataService } from "../../../data.service";
 import { AuthorizationService } from "../../../services/authorization/authorization.service";
 import { AppcontrolService } from "../../../services/controlservice/appcontrol.service";
 import { UtilsService } from "../../../utils.service";
-import { ContainerService } from "./container.service";
+import { ProjectsPageService } from "./projects-page.service";
 
 @Component({
-  selector: "app-container",
-  templateUrl: "./container.component.html",
+  selector: "app-projects-page",
+  templateUrl: "./projects-page.component.html",
   styleUrls: [
-    "./container.component.scss",
+    "./projects-page.component.scss",
     "../../reasoncodes/completed-warning.scss",
   ],
 })
-export class ContainerComponent implements OnInit, AfterViewChecked {
+export class ProjectsPageComponent implements OnInit, AfterViewChecked {
   userPermissions = [];
   openCreateProjectDialogBox: boolean = false;
   openEditProjectDialogBox: boolean = false;
@@ -33,7 +33,7 @@ export class ContainerComponent implements OnInit, AfterViewChecked {
   constructor(
     private _dataService: DataService,
     private __uic: AppcontrolService,
-    private _ContainerService: ContainerService,
+    private _ContainerService: ProjectsPageService,
     private __spinner: NgxSpinnerService,
     private __authorization: AuthorizationService,
     private __utils: UtilsService

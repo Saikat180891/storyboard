@@ -27,9 +27,9 @@ import { DataService } from "../../../data.service";
 import { AppcontrolService } from "../../../services/controlservice/appcontrol.service";
 import { UtilsService } from "../../../utils.service";
 import { CardService } from "../card/card.service";
-import { ContainerComponent } from "../container/container.component";
-import { ContainerService } from "../container/container.service";
 import { EditProject } from "../model/edit-project.model";
+import { ProjectsPageComponent } from "../projects-page/projects-page.component";
+import { ProjectsPageService } from "../projects-page/projects-page.service";
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -141,12 +141,12 @@ export class EditProjectComponent implements OnInit, OnChanges, AfterViewInit {
   constructor(
     private _UIControllerService: AppcontrolService,
     private _dataService: DataService,
-    private _ContainerService: ContainerService,
+    private _projectsPageService: ProjectsPageService,
     private formBuilder: FormBuilder,
     private _cardService: CardService,
     private snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
-    private __containerComponent: ContainerComponent,
+    private _projectsPageComponent: ProjectsPageComponent,
     private _utils: UtilsService
   ) {}
 
@@ -387,7 +387,7 @@ export class EditProjectComponent implements OnInit, OnChanges, AfterViewInit {
           this.snackBar.open(error, "Failed", { duration: 2000 });
         },
         () => {
-          this.__containerComponent.getListOfAllProjects();
+          this._projectsPageComponent.getListOfAllProjects();
           this.onClose();
           this.spinner.hide();
         }
