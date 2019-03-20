@@ -72,12 +72,12 @@
   }"
 >
   <div class="project-dialog-box" *ngIf="openEditProjectDialogBox">
-    <app-backdrop
+    <app-edit-project
       [permissions]="permissionsGrantedForBackdrop"
       [projectData]="projectData"
       [projectRole]="projectRole"
       (close)="openEditProjectDialogBox = false"
-    ></app-backdrop>
+    ></app-edit-project>
   </div>
 </div>
 

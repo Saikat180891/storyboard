@@ -39,12 +39,12 @@ export enum KEY_CODE {
 }
 
 @Component({
-  selector: "app-backdrop",
-  templateUrl: "./backdrop.component.html",
-  styleUrls: ["./backdrop.component.scss"],
+  selector: "app-edit-project",
+  templateUrl: "./edit-project.component.html",
+  styleUrls: ["./edit-project.component.scss"],
   animations: [slideDown, hideInOut],
 })
-export class BackdropComponent implements OnInit, OnChanges, AfterViewInit {
+export class EditProjectComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() cardID;
   @Input("permissions") permissions: any;
   @Input("projectData") projectData: any;

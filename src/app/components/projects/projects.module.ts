@@ -10,11 +10,11 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { GlobalmoduleModule } from "../../module/globalmodule/globalmodule.module";
 import { AppcontrolService } from "../../services/controlservice/appcontrol.service";
-import { BackdropComponent } from "./backdrop/backdrop.component";
 import { CardComponent } from "./card/card.component";
 import { ContainerComponent } from "./container/container.component";
 import { ContainerService } from "./container/container.service";
 import { CreateSopComponent } from "./create-sop/create-sop.component";
+import { EditProjectComponent } from "./edit-project/edit-project.component";
 
 const routes: Routes = [{ path: "", component: ContainerComponent }];
 
@@ -22,7 +22,7 @@ const routes: Routes = [{ path: "", component: ContainerComponent }];
   declarations: [
     ContainerComponent,
     CardComponent,
-    BackdropComponent,
+    EditProjectComponent,
     CreateSopComponent,
   ],
   imports: [CommonModule, GlobalmoduleModule, RouterModule.forChild(routes)],
