@@ -1,18 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component } from "@angular/core";
+import { StepBaseComponent } from "../step-base/step-base.component";
 
 @Component({
   selector: "app-step-condition",
   templateUrl: "./step-condition.component.html",
   styleUrls: ["./step-condition.component.scss"],
 })
-export class StepConditionComponent implements OnInit {
-  @Input("sectionId") sectionId: number;
-  @Input("stepIndex") stepIndex: number;
-  @Input("stepData") stepData: any;
-  @Input("sectionIndex") sectionIndex: number;
-  @Output("deleteStep") deleteStep = new EventEmitter();
-  @Output("outputChange") outputChange = new EventEmitter();
-
+export class StepConditionComponent extends StepBaseComponent {
+  stepType = "condition";
   canEdit: boolean = false;
   addAnotherRow: any = [1];
   conditions = ["Major", "Minor"];
@@ -24,15 +19,11 @@ export class StepConditionComponent implements OnInit {
     notes: "",
     exception_handling: "",
     screen: "",
-    step_number: "",
   };
 
   variableOptions = ["Option 1", "Option 2", "Option 3"];
 
-  constructor() {}
-
   ngOnInit() {
-    this.data.step_number = this.sectionIndex + 1 + "." + (this.stepIndex + 1);
     if (this.stepData.step_id || this.stepData.id) {
       this.data = {
         ...this.stepData.data,
@@ -58,24 +49,4 @@ export class StepConditionComponent implements OnInit {
   }
 
   onChangeSelection($event) {}
-
-  onDeleteStep() {
-    if (this.stepData.step_id || this.stepData.id) {
-      this.deleteStep.emit({
-        sectionIndex: this.sectionIndex,
-        stepIndex: this.stepIndex,
-        stepId: this.stepData.step_id
-          ? this.stepData.step_id
-          : this.stepData.id,
-        insertionId: this.stepData.insertion_id,
-        mode: "server",
-      });
-    } else {
-      this.deleteStep.emit({
-        sectionIndex: this.sectionIndex,
-        stepIndex: this.stepIndex,
-        mode: "local",
-      });
-    }
-  }
 }
