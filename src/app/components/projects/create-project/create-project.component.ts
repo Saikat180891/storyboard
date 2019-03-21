@@ -23,9 +23,9 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { DataService } from "../../../data.service";
 import { AppcontrolService } from "../../../services/controlservice/appcontrol.service";
 import { UtilsService } from "../../../utils.service";
-import { CardService } from "../card/card.service";
-import { ContainerComponent } from "../container/container.component";
-import { ContainerService } from "../container/container.service";
+import { ProjectCardService } from "../project-card/project-card.service";
+import { ProjectsPageComponent } from "../projects-page/projects-page.component";
+import { ProjectsPageService } from "../projects-page/projects-page.service";
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -51,12 +51,13 @@ interface ProjectDetails {
 }
 
 @Component({
-  selector: "app-create-sop",
-  templateUrl: "./create-sop.component.html",
-  styleUrls: ["./create-sop.component.scss"],
+  selector: "app-create-project",
+  templateUrl: "./create-project.component.html",
+  styleUrls: ["./create-project.component.scss"],
   animations: [slideDown, hideInOut],
 })
-export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
+export class CreateProjectComponent
+  implements OnInit, OnChanges, AfterViewInit {
   @Input() cardID;
   @Input("permissions") permissions: any;
   @Output("close") close = new EventEmitter<boolean>();
@@ -142,12 +143,12 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
   constructor(
     private _UIControllerService: AppcontrolService,
     private _dataService: DataService,
-    private _ContainerService: ContainerService,
+    private _projectsPageService: ProjectsPageService,
     private formBuilder: FormBuilder,
-    private _cardService: CardService,
+    private _cardService: ProjectCardService,
     private snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
-    private __containerComponent: ContainerComponent,
+    private _projectsPageComponent: ProjectsPageComponent,
     private utils: UtilsService
   ) {}
 
@@ -388,7 +389,7 @@ export class CreateSopComponent implements OnInit, OnChanges, AfterViewInit {
           this.spinner.hide();
         },
         () => {
-          this.__containerComponent.getListOfAllProjects();
+          this._projectsPageComponent.getListOfAllProjects();
           this.snackBar.open("Project has been created", "Success", {
             duration: 2000,
           });

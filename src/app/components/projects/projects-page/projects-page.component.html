@@ -6,10 +6,10 @@
           <div class="row">
             <ng-container>
               <div class="grid-item">
-                <app-card
+                <app-project-card
                   [cardData]="{ id: 0 }"
                   (openCreateProject)="onCreateProject($event)"
-                ></app-card>
+                ></app-project-card>
               </div>
             </ng-container>
             <div
@@ -19,13 +19,13 @@
                 let i = index
               "
             >
-              <app-card
+              <app-project-card
                 [cardData]="cardData"
                 (deleteSop)="onDeleteSop($event)"
                 (grantedPermissions)="givenPermissions($event)"
                 (openEditProject)="onEditProject($event, i)"
               >
-              </app-card>
+              </app-project-card>
             </div>
           </div>
         </div>
@@ -72,12 +72,12 @@
   }"
 >
   <div class="project-dialog-box" *ngIf="openEditProjectDialogBox">
-    <app-backdrop
+    <app-edit-project
       [permissions]="permissionsGrantedForBackdrop"
       [projectData]="projectData"
       [projectRole]="projectRole"
       (close)="openEditProjectDialogBox = false"
-    ></app-backdrop>
+    ></app-edit-project>
   </div>
 </div>
 
@@ -89,8 +89,8 @@
   }"
 >
   <div class="project-dialog-box" *ngIf="openCreateProjectDialogBox">
-    <app-create-sop
+    <app-create-project
       (close)="openCreateProjectDialogBox = false"
-    ></app-create-sop>
+    ></app-create-project>
   </div>
 </div>

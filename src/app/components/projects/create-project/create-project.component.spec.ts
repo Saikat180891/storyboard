@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { CreateSopComponent } from "./create-sop.component";
+import { CreateProjectComponent } from "./create-project.component";
 
 describe("CreateSopComponent", () => {
-  let component: CreateSopComponent;
-  let fixture: ComponentFixture<CreateSopComponent>;
+  let component: CreateProjectComponent;
+  let fixture: ComponentFixture<CreateProjectComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateSopComponent],
+      declarations: [CreateProjectComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CreateSopComponent);
+    fixture = TestBed.createComponent(CreateProjectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

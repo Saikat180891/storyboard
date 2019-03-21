@@ -12,7 +12,7 @@ import { ScrollbarService } from "./services/scrollbarService/scrollbar.service"
 
 import { DateAdapter } from "@angular/material";
 import { AuthGuardService } from "./auth/auth-guard.service";
-import { ContainerService } from "./components/projects/container/container.service";
+import { ProjectsPageService } from "./components/projects/projects-page/projects-page.service";
 import { DataService } from "./data.service";
 import { AppcontrolService } from "./services/controlservice/appcontrol.service";
 
@@ -108,7 +108,7 @@ const routes = [
   providers: [
     DataService,
     AppcontrolService,
-    ContainerService,
+    ProjectsPageService,
     CookieService,
     AuthGuardService,
     AuthorizationService,

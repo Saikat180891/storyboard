@@ -1,4 +1,4 @@
-export interface EditProject {
+export interface Project {
   id: number;
   clientName: string;
   title: string;
