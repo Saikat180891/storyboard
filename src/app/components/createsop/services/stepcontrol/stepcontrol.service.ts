@@ -2,6 +2,8 @@ import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { Injectable } from "@angular/core";
 import { SectionListItem } from "../../common-model/section-list-item.model";
 import { Step } from "../../common-model/step-type.model";
+import { PageService } from "../page/page.service";
+import { RightPanelService } from "../right-panel/right-panel.service";
 @Injectable({
   providedIn: "root",
 })
@@ -9,7 +11,10 @@ export class StepcontrolService {
   private sopSectionList: SectionListItem[] = [];
   private sectionIdList = [];
 
-  constructor() {}
+  constructor(
+    private rightPanelService: RightPanelService,
+    private pageService: PageService
+  ) {}
 
   /**
    * this function with insert a step at the end of an array
@@ -66,6 +71,20 @@ export class StepcontrolService {
     this.sopSectionList = sectionList;
   }
 
+  getStepId(sectionIndex: number, stepIndex: number) {
+    const section = this.sopSectionList[sectionIndex];
+    if (!section) {
+      return null;
+    }
+
+    const step = section.steps_list[stepIndex];
+    if (!step) {
+      return null;
+    }
+
+    return step.step_id;
+  }
+
   /**
    * move element inside section
    * @param sectionIndex
@@ -82,6 +101,12 @@ export class StepcontrolService {
       previousIndex,
       currentIndex
     );
+    const stepId = this.getStepId(sectionIndex, currentIndex);
+    const stepBeforeId = this.getStepId(sectionIndex, currentIndex - 1);
+    const stepAfterId = this.getStepId(sectionIndex, currentIndex + 1);
+    this.rightPanelService
+      .moveStep(this.pageService.userStoryId, stepId, stepBeforeId, stepAfterId)
+      .subscribe();
   }
 
   /**
