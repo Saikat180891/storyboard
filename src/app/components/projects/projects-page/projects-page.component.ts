@@ -33,7 +33,7 @@ export class ProjectsPageComponent implements OnInit, AfterViewChecked {
   constructor(
     private _dataService: DataService,
     private __uic: AppcontrolService,
-    private _ContainerService: ProjectsPageService,
+    private _projectsPageService: ProjectsPageService,
     private __spinner: NgxSpinnerService,
     private __authorization: AuthorizationService,
     private __utils: UtilsService
@@ -55,13 +55,13 @@ export class ProjectsPageComponent implements OnInit, AfterViewChecked {
     const projectlist: any = [];
     const permissions = [];
     // make an api call to fetch the project list
-    this._ContainerService.getListOfAllProjects().subscribe(
+    this._projectsPageService.getListOfAllProjects().subscribe(
       res => {
         // rearrange the project list as required for the frontend
         res.forEach(element => {
           projectlist.push({
             themeColor: this.__uic.colorPicker[
-              this._ContainerService.getUniqueNumber()
+              this._projectsPageService.getUniqueNumber()
             ],
             reasonCodes: this.__uic.firstZero(Number(element["number_epics"])),
             ...element,
@@ -104,7 +104,7 @@ export class ProjectsPageComponent implements OnInit, AfterViewChecked {
                 }
               });
             });
-            this._ContainerService.cardContents = projectlist;
+            this._projectsPageService.cardContents = projectlist;
             this.__spinner.hide();
           }
         );
@@ -116,6 +116,12 @@ export class ProjectsPageComponent implements OnInit, AfterViewChecked {
     this.projectData = $event.data;
     this.projectRole = $event.role;
     this.openEditProjectDialogBox = $event.status;
+  }
+
+  onEditProjectClose() {
+    this.openEditProjectDialogBox = false;
+    this.openCreateProjectDialogBox = false;
+    this.getListOfAllProjects();
   }
 
   onDeleteSop($event) {
@@ -133,9 +139,9 @@ export class ProjectsPageComponent implements OnInit, AfterViewChecked {
     this._dataService
       .delete("/sop", this.sopIdToDelete + ".json")
       .subscribe(response => {
-        this._ContainerService.cardContents.forEach((element, index) => {
+        this._projectsPageService.cardContents.forEach((element, index) => {
           if (element.id == this.sopIdToDelete) {
-            this._ContainerService.cardContents.splice(index, 1);
+            this._projectsPageService.cardContents.splice(index, 1);
             this.warningToDeleteSop = false;
           }
         });

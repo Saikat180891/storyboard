@@ -19,7 +19,6 @@ export class ProjectCardComponent implements OnInit, OnChanges {
   @Input() cardData: any;
   @Output("deleteSop") deleteSop = new EventEmitter();
   @Output("grantedPermissions") grantedPermissions = new EventEmitter();
-  @Output("openCreateProject") openCreateProject = new EventEmitter();
   @Output("openEditProject") openEditProject = new EventEmitter();
 
   //this is the color required by the material directive to give the ripple effect
@@ -46,14 +45,6 @@ export class ProjectCardComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.localData = this.cardData;
-  }
-
-  /**
-   * this function open the create project dialog box when
-   * the user clicks on the create project card
-   */
-  onCreateSOP() {
-    this.openCreateProject.emit(true);
   }
 
   onPrevent(event: any) {

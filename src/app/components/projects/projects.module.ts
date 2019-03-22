@@ -10,8 +10,9 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { GlobalmoduleModule } from "../../module/globalmodule/globalmodule.module";
 import { AppcontrolService } from "../../services/controlservice/appcontrol.service";
-import { CreateProjectComponent } from "./create-project/create-project.component";
-import { EditProjectComponent } from "./edit-project/edit-project.component";
+import { CreateProjectCardComponent } from "./create-project-card/create-project-card.component";
+import { AssigneeCardComponent } from "./edit-project-dialog/assignee-card/assignee-card.component";
+import { EditProjectDialogComponent } from "./edit-project-dialog/edit-project-dialog.component";
 import { ProjectCardComponent } from "./project-card/project-card.component";
 import { ProjectsPageComponent } from "./projects-page/projects-page.component";
 import { ProjectsPageService } from "./projects-page/projects-page.service";
@@ -22,8 +23,9 @@ const routes: Routes = [{ path: "", component: ProjectsPageComponent }];
   declarations: [
     ProjectsPageComponent,
     ProjectCardComponent,
-    EditProjectComponent,
-    CreateProjectComponent,
+    CreateProjectCardComponent,
+    EditProjectDialogComponent,
+    AssigneeCardComponent,
   ],
   imports: [CommonModule, GlobalmoduleModule, RouterModule.forChild(routes)],
   providers: [ProjectsPageService, AppcontrolService],

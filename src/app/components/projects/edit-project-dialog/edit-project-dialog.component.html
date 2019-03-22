@@ -5,9 +5,9 @@
 >
   <div class="dialog-group padding-all header-banner">
     <div class="dialog-header">
-      <span>
+      <span class="heading">
         <b>
-          {{ editSOP }}
+          {{ dialogHeaderText }}
         </b>
       </span>
       <span class="close" (click)="onClose()"
@@ -15,6 +15,7 @@
       ></span>
     </div>
   </div>
+  <!-- TODO extract into form component -->
   <div class="horizontal-flex">
     <div class="vertical-flex">
       <div class="dialog-group padding-all top-input-width">
@@ -24,11 +25,12 @@
             type="text"
             [ngClass]="{
               'ASN-box': true,
-              validators: validateClientName === true
+              validators:
+                formValidationFailed && !projectInfoValidators.clientName
             }"
             placeholder="Client Name"
             required
-            [(ngModel)]="projectDataToEdit.clientName"
+            [(ngModel)]="project.clientName"
           />
         </div>
       </div>
@@ -38,16 +40,17 @@
             type="text"
             [ngClass]="{
               'ASN-box': true,
-              validators: validateAutomationSystemName === true
+              validators: formValidationFailed && !projectInfoValidators.title
             }"
             placeholder="Automation System Name"
             required
             maxlength="50"
-            [(ngModel)]="projectDataToEdit.title"
+            [(ngModel)]="project.title"
           />
         </div>
       </div>
     </div>
+
     <div class="dialog-group upload emblem">
       <div class="relative pointer">
         <button>
@@ -57,11 +60,22 @@
             [src]="filePreview"
             [alt]="filePreview"
           />
+          <span class="client-logo" *ngIf="!filePreview"
+            >Upload Client Logo</span
+          >
+          <span *ngIf="!filePreview"
+            ><small>(Max Size 200px-200px)</small></span
+          >
+          <span *ngIf="!filePreview"
+            ><i class="fas fa-download"></i>CHOOSE FILE</span
+          >
         </button>
+
         <input type="file" (change)="onFileSelected($event)" />
       </div>
     </div>
   </div>
+
   <div class="dialog-group padding-all margin-bottom-10">
     <div class="input-box">
       <input
@@ -69,8 +83,11 @@
         id="charge-code"
         placeholder="Charge Code"
         required
-        [ngClass]="{ validators: validateChargeCode === true }"
-        [(ngModel)]="projectDataToEdit.chargeCode"
+        [ngClass]="{
+          validators: formValidationFailed && !projectInfoValidators.chargeCode
+        }"
+        maxlength="50"
+        [(ngModel)]="project.chargeCode"
       />
       <ng-container>
         <input
@@ -81,10 +98,12 @@
           [matDatepicker]="picker"
           required
           readonly
-          [ngClass]="{ validators: validateChargeCode === true }"
-          [ngStyle]="{ border: validateChargeCode ? border : false }"
+          [ngClass]="{
+            validators: formValidationFailed && !projectInfoValidators.due_date
+          }"
+          [ngStyle]="{ border: border }"
           [value]="dueDate"
-          (dateInput)="onSelectedDateChange($event.value)"
+          (dateInput)="onDueDateChange($event.value)"
         />
         <div class="datepicker">
           <mat-datepicker-toggle
@@ -96,6 +115,8 @@
       </ng-container>
     </div>
   </div>
+  <!-- TODO extract into form component -->
+
   <div class="tab-wrapper">
     <mat-tab-group
       class="create-container-tabs"
@@ -109,6 +130,7 @@
           id="add-assign"
         >
           <div class="input-box margin-top-10">
+            <!-- TODO this could be user-search-box.component -->
             <ng-container>
               <input
                 type="text"
@@ -123,74 +145,41 @@
                 </ng-container>
               </div>
             </ng-container>
+            <!-- TODO this could be user-search-box.component -->
           </div>
         </div>
-        <div class="dialog-group assignee-list">
+        <div class="dialog-group height-auto margin-bottom-10 assignee-list">
           <ul>
-            <li *ngFor="let userData of alreadyCreatedUsers; let i = index">
-              <div class="horizontal-flex">
-                <img [src]="" [alt]="" />
-                <div class="user-details">
-                  <b>
-                    <span *ngIf="userData.user">{{ userData.user }}</span>
-                    <span *ngIf="userData.email">{{ userData.email }}</span>
-                  </b>
-                </div>
-                <div class="select-role">
-                  <mat-select
-                    placeholder="Assign role"
-                    [value]="userData.role"
-                    disabled
-                  >
-                    <mat-option *ngFor="let role of roles" [value]="role">
-                      {{ role }}
-                    </mat-option>
-                  </mat-select>
-                </div>
-                <div
-                  class="list-close"
-                  (click)="onRemove(userData.id)"
-                  *ngIf="projectRole == 'SuperAdmin'"
-                >
-                  <i class="far fa-trash-alt"></i>
-                </div>
-              </div>
-            </li>
-            <li *ngFor="let userData of newlyCreatedAssignees; let i = index">
-              <div class="horizontal-flex">
-                <img [src]="" [alt]="" />
-                <div class="user-details">
-                  <b>
-                    <span>{{
-                      userData.name ? userData.name : userData.email
-                    }}</span>
-                  </b>
-                </div>
-                <div class="select-role">
-                  <mat-select
-                    placeholder="Assign role"
-                    (selectionChange)="userData.role = $event.value"
-                  >
-                    <mat-option *ngFor="let role of roles" [value]="role">
-                      {{ role }}
-                    </mat-option>
-                  </mat-select>
-                </div>
-                <div class="list-close" (click)="onRemoveListItem(i)">
-                  <i class="far fa-trash-alt"></i>
-                </div>
-              </div>
-            </li>
+            <app-assignee-card
+              *ngFor="let user of alreadyCreatedAssignees; let i = index"
+              [invalid]="formValidationFailed && !validateAssignee(user)"
+              [assignee]="user"
+              [changeRoleDisabled]="true"
+              [canRemoveAssignees]="canRemoveAssignees"
+              (removeAssignee)="onRemove(user.id)"
+            >
+            </app-assignee-card>
+            <app-assignee-card
+              *ngFor="let user of newlyCreatedAssignees; let i = index"
+              [invalid]="formValidationFailed && !validateAssignee(user)"
+              [assignee]="user"
+              [changeRoleDisabled]="false"
+              [canRemoveAssignees]="canRemoveAssignees"
+              (roleChanged)="onSelectionChange($event.role, i)"
+              (removeAssignee)="onRemoveListItem(i)"
+            >
+            </app-assignee-card>
           </ul>
         </div>
       </mat-tab>
-      <mat-tab label="Invite New User">
+      <mat-tab label="Invite New User" [disabled]="createMode">
         <div class="add-user">
           <div
             class="horizontal-flex-2 invite-model"
             *ngFor="let invites of invitationList"
           >
             <div class="dialog-group margin-bottom-10">
+              <!-- TODO could be invite-user.component -->
               <div class="input-box margin-top-10 horizontal-flex">
                 <div class="invite-user-through-email">
                   <input
@@ -229,6 +218,7 @@
                   />
                 </div>
               </div>
+              <!-- TODO could be invite-user.component -->
             </div>
           </div>
           <button (click)="onAddUser()">Add New</button>
@@ -241,7 +231,9 @@
     [ngSwitch]="selectedTabIndex"
   >
     <div class="button-box" *ngSwitchCase="0">
-      <button mat-raised-button color="primary" (click)="onSave()">SAVE</button>
+      <button mat-raised-button color="primary" (click)="onSubmit()">
+        {{ submitButtonText }}
+      </button>
       <button mat-raised-button (click)="onClose()">CANCEL</button>
     </div>
     <div class="button-box" *ngSwitchCase="1">
