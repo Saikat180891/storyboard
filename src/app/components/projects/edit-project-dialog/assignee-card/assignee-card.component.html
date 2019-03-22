@@ -1,0 +1,26 @@
+<li [ngClass]="{ invalid: invalid }">
+  <div class="horizontal-flex user-card">
+    <img [src]="" [alt]="" />
+    <div class="user-details">
+      <b>
+        <span *ngIf="assignee.user">{{ assignee.user }}</span>
+        <span *ngIf="assignee.email">{{ assignee.email }}</span>
+      </b>
+    </div>
+    <div class="select-role">
+      <mat-select
+        placeholder="Assign role"
+        [value]="assignee.role"
+        (selectionChange)="onRoleChange($event.value)"
+        [disabled]="changeRoleDisabled"
+      >
+        <mat-option *ngFor="let role of roles" [value]="role">
+          {{ role }}
+        </mat-option>
+      </mat-select>
+    </div>
+    <div class="list-close" (click)="onRemove()" *ngIf="canRemoveAssignees">
+      <i class="far fa-trash-alt"></i>
+    </div>
+  </div>
+</li>

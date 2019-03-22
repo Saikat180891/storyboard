@@ -1,3 +1,5 @@
+import { Assignee } from "./assignee.model";
+
 export interface Project {
   id: number;
   clientName: string;
@@ -6,4 +8,5 @@ export interface Project {
   due_date: string;
   logo: any;
   rCodes: any;
+  assignee: Assignee[];
 }
