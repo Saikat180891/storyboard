@@ -1,16 +1,28 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnChanges } from '@angular/core';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import { ActivatedRoute } from '@angular/router';
-import {ReasonCodeService} from './reason-code.service';
-import {ContainerService} from '../projects/container/container.service';
-import {CreateUserstoryService} from './userstory-card-create/create-userstory.service';
-import {charts} from './chartoptions';
-import {fromEvent} from 'rxjs';
-import {environment} from '../../../environments/environment';
-import { NgxSpinnerService } from 'ngx-spinner';
-import {DataService} from '../../data.service';
-import {ScrollbarService} from '../../services/scrollbarService/scrollbar.service';
-import {hideInOut} from '../../animation';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from "@angular/cdk/drag-drop";
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { NgxSpinnerService } from "ngx-spinner";
+import { fromEvent } from "rxjs";
+import { environment } from "../../../environments/environment";
+import { hideInOut } from "../../animation";
+import { DataService } from "../../data.service";
+import { ScrollbarService } from "../../services/scrollbarService/scrollbar.service";
+import { ProjectsPageService } from "../projects/projects-page/projects-page.service";
+import { charts } from "./chartoptions";
+import { ReasonCodeService } from "./reason-code.service";
+import { CreateUserstoryService } from "./userstory-card-create/create-userstory.service";
 export interface UserData {
   id: string;
   name: string;
@@ -36,102 +48,108 @@ export interface Userstories {
   btn: string;
 }
 
-export interface SprintConfig{
+export interface SprintConfig {
   sprint_name: string;
   start_date: string;
   duration: string;
   end_date: string;
 }
 
-export interface ReceivedSprintConfig{
-  id:number;
+export interface ReceivedSprintConfig {
+  id: number;
   sprint_name: string;
   start_date: string;
   duration: string;
   end_date: string;
 }
-
-
 
 @Component({
-  selector: 'app-reasoncodes',
-  templateUrl: './reasoncodes.component.html',
-  styleUrls: ['./reasoncodes.component.scss', './move-user-story.scss','./draggable.scss', './completed-warning.scss', './export.scss'],
-  animations: [hideInOut]
+  selector: "app-reasoncodes",
+  templateUrl: "./reasoncodes.component.html",
+  styleUrls: [
+    "./reasoncodes.component.scss",
+    "./move-user-story.scss",
+    "./draggable.scss",
+    "./completed-warning.scss",
+    "./export.scss",
+  ],
+  animations: [hideInOut],
 })
-export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
-  @ViewChild('totalPage') totalPage:ElementRef;
-  @ViewChild('userStoryContainer') userStoryContainer:ElementRef;
+export class ReasoncodesComponent implements OnInit, OnDestroy {
+  @ViewChild("totalPage") totalPage: ElementRef;
+  @ViewChild("userStoryContainer") userStoryContainer: ElementRef;
+  openAddSprint: boolean = false;
   panelOpenState = false;
-  options = [1,2,3];
+  options = [1, 2, 3];
   pieChartOptions = {};
   barChartOptions = {};
-  openAddSprint = false;
-  sopId:number;
-  dateCounter:number = 0;
+  sopId: number;
+  dateCounter: number = 0;
   userStories = [];
-  openEditSideBar:boolean = false;    //toggler to open or close the right side bar to edit
-  openCreateSideBar:boolean = false;    //toggler to open or close the right side bar to create
+  openEditSideBar: boolean = false; //toggler to open or close the right side bar to edit
+  openCreateSideBar: boolean = false; //toggler to open or close the right side bar to create
   sprintOptions = [];
   reasonCodeOptions = [];
-  fixToTop:boolean = false;
-  filter:boolean = false;
-  sortBy:boolean = false;
+  fixToTop: boolean = false;
+  filter: boolean = false;
+  sortBy: boolean = false;
   warning: boolean = false;
-  warningToDeleteUserStory:boolean = false;
-  clearAllFilter:boolean = true;
-  openExport:boolean = false;
-  showBenefitsChart:boolean = false;
-  rippleColor = 'rbga(0,0,0,0.2)';
-  selectedTabIndex:number = 0;
-  activateStickybar:boolean = false;
-  activateVirtualFilter:boolean = false;
-  role:string;
-  permissions:any;
-  enableView:boolean = true;
+  warningToDeleteUserStory: boolean = false;
+  clearAllFilter: boolean = true;
+  openExport: boolean = false;
+  showBenefitsChart: boolean = false;
+  rippleColor = "rbga(0,0,0,0.2)";
+  selectedTabIndex: number = 0;
+  activateStickybar: boolean = false;
+  activateVirtualFilter: boolean = false;
+  role: string;
+  permissions: any;
+  enableView: boolean = true;
 
-  addSprintPayload:SprintConfig = {
-    sprint_name: '',
-    start_date: '',
-    duration: '',
-    end_date: ''
+  addSprintPayload: SprintConfig = {
+    sprint_name: "",
+    start_date: "",
+    duration: "",
+    end_date: "",
   };
 
   validateSprintConfig = {
     start_date: true,
     duration: true,
-    end_date: true
-  }
+    end_date: true,
+  };
 
   currentSprintData;
 
   currentProject;
 
-  receivedSprintConfig:ReceivedSprintConfig;
+  receivedSprintConfig: ReceivedSprintConfig;
 
   addSprint = [this.addSprintPayload];
 
-  constructor(private route: ActivatedRoute,
-              private _reasonCode: ReasonCodeService,
-              private _containerService: ContainerService,
-              private _createUserStory: CreateUserstoryService,
-              public spinner: NgxSpinnerService,
-              private __api:DataService,
-              private __scrollbar:ScrollbarService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private _reasonCode: ReasonCodeService,
+    private _projectsPageService: ProjectsPageService,
+    private _createUserStory: CreateUserstoryService,
+    public spinner: NgxSpinnerService,
+    private __api: DataService,
+    private __scrollbar: ScrollbarService
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this._reasonCode.sopId = this._createUserStory.sopId = parseInt(params.id);
+      this._reasonCode.sopId = this._createUserStory.sopId = parseInt(
+        params.id
+      );
       this.getPermissionForEpicsPage(2, this._reasonCode.sopId);
-      this._containerService.cardContents.forEach(element => {
-        if(element.id == this._reasonCode.sopId){
+      this._projectsPageService.cardContents.forEach(element => {
+        if (element.id == this._reasonCode.sopId) {
           this.currentProject = element;
         }
       });
     });
-    
-    
-   
+
     /**
      * assign chart options
      */
@@ -141,309 +159,328 @@ export class ReasoncodesComponent implements OnInit, AfterViewInit, OnChanges {
     /**
      * to make the tab navbar fixed
      */
-    this.__scrollbar.broadCastScrollPosition.subscribe(res=>{
-      if(res > 401){
+    this.__scrollbar.broadCastScrollPosition.subscribe(res => {
+      if (res > 401) {
         this.activateStickybar = true;
         this.activateVirtualFilter = true;
-      }else{
+      } else {
         this.activateStickybar = false;
         this.activateVirtualFilter = false;
       }
     });
-
   }
 
-  ngOnChanges(){
-    
-  }
-  
-  ngAfterViewInit(){
+  ngOnDestroy() {
+    this._reasonCode.destroyAllService();
   }
 
-  onSelectDeletedUS(){
-  }
+  onSelectDeletedUS() {}
 
-  getPermissionForEpicsPage(pageNumber:number, projectId:number){
-    this._reasonCode.getPermission(pageNumber, projectId).subscribe(res=>{
-      this._reasonCode.role = this.role = res[0].name;
-      this._reasonCode.grantedPermission = this.permissions = res[0].permissions;
-      if('Can add user stories' in  this.permissions){
-        this.enableView = this.permissions['Can add user stories'];
+  getPermissionForEpicsPage(pageNumber: number, projectId: number) {
+    this._reasonCode.getPermission(pageNumber, projectId).subscribe(
+      res => {
+        this._reasonCode.role = this.role = res[0].name;
+        this._reasonCode.grantedPermission = this.permissions =
+          res[0].permissions;
+        if ("Can add user stories" in this.permissions) {
+          this.enableView = this.permissions["Can add user stories"];
+        }
+      },
+      err => {},
+      () => {
+        this._reasonCode.refresh(this._reasonCode.sopId);
       }
-    },
-    err=>{
-    },
-    ()=>{
-      this._reasonCode.refresh(this._reasonCode.sopId);
-    });
+    );
   }
 
-  getChart(){
+  getChart() {
     this._reasonCode.getChartData(35);
   }
 
-  onCloseBenefits(){
+  onCloseBenefits() {
     this.showBenefitsChart = false;
   }
 
-  benefitChartImage:string;
+  benefitChartImage: string;
 
-  onShowBenefits(event){
-    this.benefitChartImage = `${this.__api.apiUrl}/sop/epics/charts/${this._reasonCode.sopId}/benefits_realization.png?q=${new Date().getTime()}`;
+  onShowBenefits(event) {
+    this.benefitChartImage = `${this.__api.apiUrl}/sop/epics/charts/${
+      this._reasonCode.sopId
+    }/benefits_realization.png?q=${new Date().getTime()}`;
     this.showBenefitsChart = true;
   }
 
-  onAddSprint(){
-    console.log(this.addSprintPayload)
-  }
+  onAddSprint() {}
 
-  showNotification(){
-    
-  }
+  showNotification() {}
 
-  
-
-  clearAllSort(){
+  clearAllSort() {
     this._reasonCode.getUserStories(this._reasonCode.sopId);
   }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     } else {
-      transferArrayItem(event.previousContainer.data,
-                        event.container.data,
-                        event.previousIndex,
-                        event.currentIndex);
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     }
   }
 
-  onOpenAddSprint(){
+  onOpenAddSprint() {
     this._reasonCode.getSprint(this._reasonCode.sopId);
     this._reasonCode.getReasonCode(this._reasonCode.sopId);
-    let sprints = this._reasonCode.sprintConfig;
+    const sprints = this._reasonCode.sprintConfig;
     this.openAddSprint = !this.openAddSprint;
-    
-    
   }
 
-  openFilter(){
+  openFilter() {
     this.clearAllFilter = true;
     this.filter = !this.filter;
   }
 
-  createOptionsWithSprintName(){
+  createOptionsWithSprintName() {
     this._reasonCode.getSprint(this._reasonCode.sopId);
     this.sprintOptions = [];
-    let sprints = this._reasonCode.sprintConfig;
-    sprints.forEach(ele=>{
+    const sprints = this._reasonCode.sprintConfig;
+    sprints.forEach(ele => {
       let temp = {};
-      temp = Object.assign({
-        status:ele['sprint_name'],
-        color:'transparent'
-      }
-        , temp);
+      temp = Object.assign(
+        {
+          status: ele["sprint_name"],
+          color: "transparent",
+        },
+        temp
+      );
       this.sprintOptions.push(temp);
     });
 
     this.createOptionsWithReasonCodeName();
   }
 
-
-  createOptionsWithReasonCodeName(){
+  createOptionsWithReasonCodeName() {
     this._reasonCode.getReasonCode(this._reasonCode.sopId);
     this.reasonCodeOptions = [];
 
-    let rcCodes = this._reasonCode.reasonCodeData;
-    rcCodes.forEach(element=>{
+    const rcCodes = this._reasonCode.reasonCodeData;
+    rcCodes.forEach(element => {
       let temp = {};
-      temp = Object.assign({
-        status:element['name'],
-        color:'transparent'
-      }
-        , temp);
+      temp = Object.assign(
+        {
+          status: element["name"],
+          color: "transparent",
+        },
+        temp
+      );
       this.reasonCodeOptions.push(temp);
-    })
+    });
   }
 
-  onCloseAddSprint(){
+  onCloseAddSprint() {
     this.openAddSprint = false;
   }
 
-  onCancel(){
+  onCancel() {
     this._reasonCode.movemodal = false;
   }
 
-  onCreate(){
+  onCreate() {
     this.openCreateSideBar = !this.openCreateSideBar;
     this.createOptionsWithSprintName();
   }
 
-
   userStoryData;
 
-  onOpenUserStorySidebar(event, userStory){
+  onOpenUserStorySidebar(event, userStory) {
     this.openEditSideBar = event;
     this.userStoryData = userStory;
   }
 
-  onCloseEditUserStories(event){
+  onCloseEditUserStories(event) {
     this.openEditSideBar = event;
   }
 
-  onCloseCreateUserStories(event){
+  onCloseCreateUserStories(event) {
     this.openCreateSideBar = event;
   }
 
-  onDoneWarning($event){
+  onDoneWarning($event) {
     this.warning = $event;
   }
 
-  onOpenExport(){
+  onOpenExport() {
     this.openExport = !this.openExport;
   }
 
-  onSelectNo(){
+  onSelectNo() {
     this.warning = false;
     this._reasonCode.doneSelectStatus.emit(false);
   }
 
-  onSelectYes(){
+  onSelectYes() {
     this.warning = false;
     this._reasonCode.doneSelectStatus.emit(true);
   }
 
-  onVirtualTabClicked(value:number){
-    let scrollPositionOfPage:number;
-    this.__scrollbar.broadCastScrollPosition.subscribe(res=>{
+  onVirtualTabClicked(value: number) {
+    let scrollPositionOfPage: number;
+    this.__scrollbar.broadCastScrollPosition.subscribe(res => {
       scrollPositionOfPage = Number(res);
     });
-    if(value == 0){
+    if (value == 0) {
       this.selectedTabIndex = value;
       this._reasonCode.getUserStories(this._reasonCode.sopId);
-    }else if(value == 1){
+    } else if (value == 1) {
       this.selectedTabIndex = value;
       this._reasonCode.getCompletedUserStories(this._reasonCode.sopId);
-    }else if(value == 2){
+    } else if (value == 2) {
       this.selectedTabIndex = value;
       this._reasonCode.getDeletedUserStories(this._reasonCode.sopId);
       window.scrollTo({
         top: scrollPositionOfPage,
-        left: 0
-      })
+        left: 0,
+      });
     }
   }
 
-  onTabChange($event){
-    if($event.index == 0){
+  onTabChange($event) {
+    if ($event.index == 0) {
       this.selectedTabIndex = 0;
       this._reasonCode.getUserStories(this._reasonCode.sopId);
-    }else if($event.index == 1){
+    } else if ($event.index == 1) {
       this.selectedTabIndex = 1;
       this._reasonCode.getCompletedUserStories(this._reasonCode.sopId);
-    }else if($event.index == 2){
+    } else if ($event.index == 2) {
       this.selectedTabIndex = 2;
       this._reasonCode.getDeletedUserStories(this._reasonCode.sopId);
     }
   }
 
-  openVirtualFilter(){
+  openVirtualFilter() {
     this.activateVirtualFilter = !this.activateVirtualFilter;
     this.openFilter();
   }
 
-  idOfUserStoryToDelete:number;
+  idOfUserStoryToDelete: number;
 
-  onDeleteUserStory($event){
+  onDeleteUserStory($event) {
     this.warningToDeleteUserStory = $event.status;
     this.idOfUserStoryToDelete = $event.id;
   }
-  
-  onSelectDoNotDeleteUserStory(){
+
+  onSelectDoNotDeleteUserStory() {
     this.warningToDeleteUserStory = false;
   }
-  
-  onSelectDeleteUserStory(){
+
+  onSelectDeleteUserStory() {
     this._reasonCode.deleteUserStory(this.idOfUserStoryToDelete);
     this.warningToDeleteUserStory = false;
   }
 
-  onSortBy(args:string){
+  onSortBy(args: string) {
     this._reasonCode.sortBy = args;
     this.sortBy = true;
-    let path = '';
-    if(this._reasonCode.filterPath != ''){
+    let path = "";
+    if (this._reasonCode.filterPath != "") {
       path = "?" + this._reasonCode.filterPath + "&" + this._reasonCode.sortBy;
-    }else{
+    } else {
       path = "?" + this._reasonCode.sortBy;
     }
-    this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, path);
-
-    // console.log(path)
+    this._reasonCode.filterUserStories(
+      `/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`,
+      path
+    );
   }
 
-  onClearAllFilters(){
+  onClearAllFilters() {
     this._reasonCode.filterItems = {};
-    this._reasonCode.rulesApproved = '';
-    this._reasonCode.testCasesVerified = '';
+    this._reasonCode.rulesApproved = "";
+    this._reasonCode.testCasesVerified = "";
     this._reasonCode.filteredValues = [];
-    this._reasonCode.filterPath = '';
+    this._reasonCode.filterPath = "";
     this._reasonCode.getUserStories(this._reasonCode.sopId);
     this.clearAllFilter = false;
     this._reasonCode.filtersAppliedFlag = false;
-
   }
 
-  makePath(){
-    let filter = this._reasonCode.convertToStringPath(this._reasonCode.filterItems);
+  makePath() {
+    const filter = this._reasonCode.convertToStringPath(
+      this._reasonCode.filterItems
+    );
     this._reasonCode.filterPath = filter;
-    let path = '';
-    if(this._reasonCode.sortBy != ''){
+    let path = "";
+    if (this._reasonCode.sortBy != "") {
       path = "?" + this._reasonCode.filterPath + "&" + this._reasonCode.sortBy;
-    }else{
+    } else {
       path = "?" + this._reasonCode.filterPath;
     }
     return path;
   }
 
-  onRemoveFilter(value:string, index:number){
-    for(let key in this._reasonCode.filterItems){
-      if(key.indexOf(value) != -1){
+  onRemoveFilter(value: string, index: number) {
+    for (const key in this._reasonCode.filterItems) {
+      if (key.indexOf(value) != -1) {
         delete this._reasonCode.filterItems[key];
         this._reasonCode.filteredValues.splice(index, 1);
-        this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, this.makePath());
+        this._reasonCode.filterUserStories(
+          `/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`,
+          this.makePath()
+        );
       }
     }
-    if(value === "Verified Test Cases = True" || value === "Verified Test Cases = False"){
-      this._reasonCode.testCasesVerified = '';
-      this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, this.makePath());
+    if (
+      value === "Verified Test Cases = True" ||
+      value === "Verified Test Cases = False"
+    ) {
+      this._reasonCode.testCasesVerified = "";
+      this._reasonCode.filterUserStories(
+        `/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`,
+        this.makePath()
+      );
     }
 
-    if(value === "Rules Approved = True" || value === "Rules Approved = False"){
-      this._reasonCode.rulesApproved = '';  
-      this._reasonCode.filterUserStories(`/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`, this.makePath());
+    if (
+      value === "Rules Approved = True" ||
+      value === "Rules Approved = False"
+    ) {
+      this._reasonCode.rulesApproved = "";
+      this._reasonCode.filterUserStories(
+        `/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`,
+        this.makePath()
+      );
     }
   }
-
 
   /**
    * Rearrange the date in the following format DD/MM/YYYY
-   * @param date 
+   * @param date
    */
-  formatDate(date){
-    let dateStr = new Date(date)
-    let strDate =  "" + dateStr.getDate() + "/" + (dateStr.getMonth()+1) + "/" + dateStr.getFullYear();
+  formatDate(date) {
+    const dateStr = new Date(date);
+    const strDate =
+      "" +
+      dateStr.getDate() +
+      "/" +
+      (dateStr.getMonth() + 1) +
+      "/" +
+      dateStr.getFullYear();
     return strDate;
   }
-  
+
   /**
    * Format the year as 00YY
-   * @param year 
+   * @param year
    */
-  formatYear(year){
-    let digits = year.toString().split("");
-    return ""+ digits[2] + digits[3];
+  formatYear(year) {
+    const digits = year.toString().split("");
+    return "" + digits[2] + digits[3];
   }
-
-
 }

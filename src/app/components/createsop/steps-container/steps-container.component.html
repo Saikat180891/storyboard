@@ -1,17 +1,79 @@
-<div class="steps-container" [ngSwitch]="stepType">
-  <ng-container *ngSwitchCase="'Read'">
-    <app-step-read></app-step-read>
+<div class="steps-container" [ngSwitch]="stepData.type">
+  <ng-container *ngSwitchCase="'read'">
+    <app-step-read
+      #stepBaseToken
+      [stepData]="stepData"
+      [stepIndex]="stepIndex"
+      [sectionIndex]="sectionIndex"
+      (deleteStep)="onDeleteStep($event)"
+      (outputChange)="onOutputChange($event)"
+      [sectionId]="sectionId"
+    ></app-step-read>
   </ng-container>
-  <ng-container *ngSwitchCase="'Type'">
-    <app-step-type></app-step-type>
+  <ng-container *ngSwitchCase="'type'">
+    <app-step-type
+      #stepBaseToken
+      [stepData]="stepData"
+      [stepIndex]="stepIndex"
+      [sectionIndex]="sectionIndex"
+      (deleteStep)="onDeleteStep($event)"
+      (outputChange)="onOutputChange($event)"
+      [sectionId]="sectionId"
+    ></app-step-type>
   </ng-container>
-  <ng-container *ngSwitchCase="'Calculation'">
-    <app-step-calculation></app-step-calculation>
+  <ng-container *ngSwitchCase="'calculation'">
+    <app-step-calculation
+      #stepBaseToken
+      [stepData]="stepData"
+      [stepIndex]="stepIndex"
+      [sectionIndex]="sectionIndex"
+      (deleteStep)="onDeleteStep($event)"
+      (outputChange)="onOutputChange($event)"
+      [sectionId]="sectionId"
+    ></app-step-calculation>
   </ng-container>
-  <ng-container *ngSwitchCase="'UI Interaction'">
-    <app-step-ui-interaction></app-step-ui-interaction>
+  <ng-container *ngSwitchCase="'ui-interaction'">
+    <app-step-ui-interaction
+      #stepBaseToken
+      [stepData]="stepData"
+      [stepIndex]="stepIndex"
+      [sectionIndex]="sectionIndex"
+      (deleteStep)="onDeleteStep($event)"
+      (outputChange)="onOutputChange($event)"
+      [sectionId]="sectionId"
+    ></app-step-ui-interaction>
   </ng-container>
-  <ng-container *ngSwitchCase="'Condition'">
-    <app-step-condition></app-step-condition>
+  <ng-container *ngSwitchCase="'condition'">
+    <app-step-condition
+      #stepBaseToken
+      [stepData]="stepData"
+      [stepIndex]="stepIndex"
+      [sectionIndex]="sectionIndex"
+      (deleteStep)="onDeleteStep($event)"
+      (outputChange)="onOutputChange($event)"
+      [sectionId]="sectionId"
+    ></app-step-condition>
+  </ng-container>
+  <ng-container *ngSwitchCase="'start-loop'">
+    <app-step-loop
+      #stepBaseToken
+      [stepData]="stepData"
+      [stepIndex]="stepIndex"
+      [sectionIndex]="sectionIndex"
+      (deleteStep)="onDeleteStep($event)"
+      (outputChange)="onOutputChange($event)"
+      [sectionId]="sectionId"
+    ></app-step-loop>
+  </ng-container>
+  <ng-container *ngSwitchCase="'end-loop'">
+    <app-step-end-loop
+      #stepBaseToken
+      [stepData]="stepData"
+      [stepIndex]="stepIndex"
+      [sectionIndex]="sectionIndex"
+      (deleteStep)="onDeleteStep($event)"
+      (outputChange)="onOutputChange($event)"
+      [sectionId]="sectionId"
+    ></app-step-end-loop>
   </ng-container>
 </div>

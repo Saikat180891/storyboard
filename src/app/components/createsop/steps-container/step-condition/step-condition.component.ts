@@ -1,32 +1,52 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from "@angular/core";
+import { StepBaseComponent } from "../step-base/step-base.component";
 
 @Component({
-  selector: 'app-step-condition',
-  templateUrl: './step-condition.component.html',
-  styleUrls: ['./step-condition.component.scss']
+  selector: "app-step-condition",
+  templateUrl: "./step-condition.component.html",
+  styleUrls: ["./step-condition.component.scss"],
 })
-export class StepConditionComponent implements OnInit {
-  canEdit:boolean = false;
-  addAnotherRow:any = [1];
+export class StepConditionComponent extends StepBaseComponent {
+  stepType = "condition";
+  canEdit: boolean = false;
+  addAnotherRow: any = [1];
+  conditions = ["Major", "Minor"];
+  conditionSelection = "Major";
+  data = {
+    interaction_type: "",
+    click_option: "",
+    field: "",
+    notes: "",
+    exception_handling: "",
+    screen: "",
+  };
 
-  constructor() { }
+  variableOptions = ["Option 1", "Option 2", "Option 3"];
 
   ngOnInit() {
+    if (this.stepData.step_id || this.stepData.id) {
+      this.data = {
+        ...this.stepData.data,
+      };
+      this.canEdit = false;
+    }
   }
 
-  onClikedOnEdit(){
+  onClikedOnEdit() {
     this.canEdit = false;
   }
 
-  onClickOnOk(){
+  onClickOnOk() {
     this.canEdit = true;
   }
 
-  onAddAnotherRow(){
+  onAddAnotherRow() {
     this.addAnotherRow.push(1);
   }
 
-  onDeleteNewRow(index:number){
+  onDeleteNewRow(index: number) {
     this.addAnotherRow.splice(index, 1);
   }
+
+  onChangeSelection($event) {}
 }

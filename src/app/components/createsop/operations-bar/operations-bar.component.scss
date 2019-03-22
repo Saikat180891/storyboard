@@ -1,39 +1,48 @@
 @import "../global.scss";
 
-
-.operation-button-box{
+.operation-button-box {
   display: flex;
   padding: 15px 25px;
   justify-content: space-between;
-  
-  
-  div{
+  font-size: 12px;
+
+  div {
     height: 30px;
     text-align: center;
     line-height: 30px;
     padding: 0 10px;
     background-color: $main-blue;
     color: #ffffff;
-    box-shadow: 0 0 5px rgba($color: #000000, $alpha: 0.15);
-    border-radius: 2px;
+    box-shadow: 0 0 5px rgba($color: #000000, $alpha: 0.3);
+    border-radius: 5px;
+    overflow: hidden;
     cursor: pointer;
   }
 
-  div.partial-blue-btn{
+  div.partial-blue-btn {
     background-color: #ffffff;
     color: $main-blue;
     display: flex;
     padding: 0 10px 0 0;
     justify-content: flex-start;
   }
-  div.partial-blue-btn span{
+  div.partial-blue-btn span {
     display: block;
     height: 100%;
     width: 30px;
     background-color: $main-blue;
     margin-right: 10px;
+    color: #fff;
   }
-  div.full-dark-btn{
+  div.full-dark-btn {
     background-color: #686868;
   }
+
+  div.full-red-btn {
+    background-color: #f47074;
+  }
+}
+
+.hold {
+  border: 1px solid red;
 }

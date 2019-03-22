@@ -1,7 +1,1 @@
-
-
-export const API = (true)?{
-
-}:{
-  
-}
+export const API = true ? {} : {};

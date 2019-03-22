@@ -1,24 +1,66 @@
 <div class="operation-button-box">
-  <div class="full-blue-btn" (click)="onInsertNewSection()" appDraggable>
-    Section Title
-  </div>
-  <div class="partial-blue-btn" appDraggable>
-    <span></span>
+  <div
+    class="partial-blue-btn"
+    appDraggable
+    data-buttontype="Read"
+    title="Read"
+  >
+    <span><i class="fas fa-book-reader"></i></span>
     Read
   </div>
-  <div class="partial-blue-btn" appDraggable>
-    <span></span>
+  <div
+    class="partial-blue-btn"
+    appDraggable
+    data-buttontype="Type"
+    title="Type"
+  >
+    <span><i class="fas fa-book-reader"></i></span>
     Type
   </div>
-  <div class="partial-blue-btn" appDraggable>
-    <span></span>
+  <div
+    class="partial-blue-btn"
+    appDraggable
+    data-buttontype="ui-interaction"
+    title="UI Interaction"
+  >
+    <span><i class="fas fa-book-reader"></i></span>
     UI Interaction
   </div>
-  <div class="partial-blue-btn" appDraggable>
-    <span></span>
+  <div
+    class="partial-blue-btn"
+    appDraggable
+    data-buttontype="calculation"
+    title="Calculation"
+  >
+    <span><i class="fas fa-book-reader"></i></span>
     Calculation
   </div>
-  <div class="full-dark-btn" appDraggable>
+  <div
+    class="full-dark-btn"
+    appDraggable
+    data-buttontype="condition"
+    title="Condition"
+  >
     Condition
   </div>
+  <ng-container *ngIf="isStartLoopDisplayed; else displayEndLoop">
+    <div
+      class="full-blue-btn"
+      appDraggable
+      data-buttontype="start-loop"
+      title="Loop"
+    >
+      Loop
+    </div>
+  </ng-container>
+  <ng-template #displayEndLoop>
+    <div
+      class="full-red-btn"
+      appDraggable
+      data-buttontype="end-loop"
+      title="End Loop"
+    >
+      End Loop
+    </div>
+  </ng-template>
 </div>

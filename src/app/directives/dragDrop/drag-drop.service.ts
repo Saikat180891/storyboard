@@ -1,18 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class DragDropService {
-  private payload:any;
+  private payload: any;
 
-  constructor() { }
+  constructor() {}
 
-  getPayload(){
+  getPayload() {
     return this.payload;
   }
 
-  setPayload(value:any){
+  setPayload(value: any) {
     this.payload = value;
   }
 }

@@ -1,80 +1,80 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http'; 
-import { NvD3Module } from 'ng2-nvd3';
-import { NgxSpinnerModule } from 'ngx-spinner';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {ScrollbarService} from './services/scrollbarService/scrollbar.service';
-import 'd3';
-import 'nvd3';
+import { HttpClientModule, HttpClientXsrfModule } from "@angular/common/http";
+import { NgModule } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { RouterModule } from "@angular/router";
+import "d3";
+import { NvD3Module } from "ng2-nvd3";
+import { NgxSpinnerModule } from "ngx-spinner";
+import "nvd3";
+import { ScrollbarService } from "./services/scrollbarService/scrollbar.service";
 
-import {DragDropModule} from '@angular/cdk/drag-drop';
+import { DateAdapter } from "@angular/material";
+import { AuthGuardService } from "./auth/auth-guard.service";
+import { ProjectsPageService } from "./components/projects/projects-page/projects-page.service";
+import { DataService } from "./data.service";
+import { AppcontrolService } from "./services/controlservice/appcontrol.service";
 
-import {DateAdapter} from '@angular/material';
-import {AuthGaurdService} from './auth/auth-gaurd.service';
-import {DataService} from './data.service';
-import {AppcontrolService} from './services/controlservice/appcontrol.service';
-import {ContainerService} from './components/projects/container/container.service';
-
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
-import { AuthComponent } from './auth/auth.component';
-import { SelectComponent } from './components/shared/select/select.component';
-import { CookieService } from 'ngx-cookie-service';
-import { PermissionsDirective } from './directives/permissions.directive';
-import { AuthorizationService } from './services/authorization/authorization.service';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { SignupusersComponent } from './authentication/signupusers/signupusers.component';
-import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
-import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
-import { GlobalmoduleModule } from './module/globalmodule/globalmodule.module';
+import { PasswordStrengthMeterModule } from "angular-password-strength-meter";
+import { CookieService } from "ngx-cookie-service";
+import { AppComponent } from "./app.component";
+import { AuthComponent } from "./auth/auth.component";
+import { ForgotPasswordComponent } from "./auth/forgot-password/forgot-password.component";
+import { LoginComponent } from "./auth/login/login.component";
+import { ResetPasswordComponent } from "./authentication/reset-password/reset-password.component";
+import { SignupusersComponent } from "./authentication/signupusers/signupusers.component";
+import { HeaderComponent } from "./components/header/header.component";
+import { SelectComponent } from "./components/shared/select/select.component";
+import { DashboardComponent } from "./dashboard/dashboard.component";
+import { PermissionsDirective } from "./directives/permissions.directive";
+import { GlobalmoduleModule } from "./module/globalmodule/globalmodule.module";
+import { AuthorizationService } from "./services/authorization/authorization.service";
 
 const routes = [
   {
-    path: '', 
-    component: AppComponent, 
+    path: "",
+    component: AppComponent,
     children: [
       {
-        path: '', 
-        component: AuthComponent, 
-        pathMatch: 'full'
+        path: "",
+        component: AuthComponent,
+        pathMatch: "full",
       },
       {
-        path: 'signup',
-        component: SignupusersComponent
+        path: "signup",
+        component: SignupusersComponent,
       },
       {
-        path: 'resetPassword',
-        component: ResetPasswordComponent
+        path: "resetPassword",
+        component: ResetPasswordComponent,
       },
       {
-        path: 'projects', 
+        path: "projects",
         component: DashboardComponent,
-        canActivate: [AuthGaurdService],
+        canActivate: [AuthGuardService],
         children: [
           {
-            path: '', 
-            loadChildren: './components/projects/projects.module#ProjectsModule'
+            path: "",
+            loadChildren:
+              "./components/projects/projects.module#ProjectsModule",
           },
           {
-            path: 'epics/:id', 
-            loadChildren: './components/reasoncodes/reasoncode.module#ReasoncodeModule'
-
+            path: "epics/:id",
+            loadChildren:
+              "./components/reasoncodes/reasoncode.module#ReasoncodeModule",
           },
           {
-            path: 'epics/:id/sop/:userStoryId', 
-            loadChildren: './components/createsop/createsop.module#CreatesopModule'
+            path: "epics/:id/sop/:userStoryId",
+            loadChildren:
+              "./components/createsop/createsop.module#CreatesopModule",
           },
-        ]
-      }
-    ]
+        ],
+      },
+    ],
   },
-  {path: '**', redirectTo: '/'}
+  { path: "**", redirectTo: "/" },
 ];
-
-// export const routing: ModuleWithProviders = RouterModule.forChild(routes);
 
 @NgModule({
   declarations: [
@@ -85,6 +85,8 @@ const routes = [
     DashboardComponent,
     SignupusersComponent,
     ResetPasswordComponent,
+    LoginComponent,
+    ForgotPasswordComponent,
   ],
 
   imports: [
@@ -92,47 +94,35 @@ const routes = [
     NvD3Module,
     FormsModule,
     BrowserAnimationsModule,
-    DragDropModule,
     ReactiveFormsModule,
     HttpClientModule,
     GlobalmoduleModule,
     HttpClientXsrfModule.withOptions({
-      cookieName: 'csrftoken',
-      headerName: 'X-CSRFToken'
+      cookieName: "csrftoken",
+      headerName: "X-CSRFToken",
     }),
     NgxSpinnerModule,
     RouterModule.forRoot(routes),
-    // MsAdalAngular6Module.forRoot({
-    //   tenant: '217024cc-23bf-42d2-a7cf-d270166db3e2',
-    //   clientId: 'd2b68bba-05ea-4053-811d-6f62047adf21',
-    //   // redirectUri: envProd.production ? envProd.azure.redirectUri : envDev.azure.redirectUri,
-    //   redirectUri: window.location.origin,
-    //   endpoints: { },
-    //   navigateToLoginRequestUrl: true,
-    //   cacheLocation: 'localStorage'
-    // }),
     PasswordStrengthMeterModule,
   ],
   providers: [
-    DataService, 
-    AppcontrolService, 
-    ContainerService, 
+    DataService,
+    AppcontrolService,
+    ProjectsPageService,
     CookieService,
-    AuthGaurdService,
+    AuthGuardService,
     AuthorizationService,
-    ScrollbarService
+    ScrollbarService,
   ],
   bootstrap: [AppComponent],
-  exports: [
-    PermissionsDirective
-  ]
+  exports: [PermissionsDirective],
 })
 
 /**
  * To set date as DD/MM/YYYY
  */
 export class AppModule {
-  constructor(private dateAdapter:DateAdapter<Date>) {
-		dateAdapter.setLocale('en-in'); // DD/MM/YYYY
-	}
- }
+  constructor(private dateAdapter: DateAdapter<Date>) {
+    dateAdapter.setLocale("en-us"); // DD/MM/YYYY
+  }
+}

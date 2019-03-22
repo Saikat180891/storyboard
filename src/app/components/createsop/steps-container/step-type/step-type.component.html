@@ -1,93 +1,100 @@
 <div class="step-banner">
-    <div class="step-header">
-      <div class="left-controls">
-        <div class="step-icon">
-          <i class="fas fa-book-reader"></i>
-        </div>
-        <div class="icon-type">
-          Type
-        </div>
-        <div class="step-number">
-          Step No. <span>1.2.2</span>
-        </div>
-        <div class="screen-name">
-          <span>Screen</span>
-          <div class="select">
-            <mat-select [(value)]="selected" placeholder="None">
-              <mat-option>None</mat-option>
-              <mat-option value="option1">Option 1</mat-option>
-              <mat-option value="option2">Option 2</mat-option>
-              <mat-option value="option3">Option 3</mat-option>
-            </mat-select>
-          </div>
+  <div class="step-header">
+    <div class="left-controls">
+      <div class="step-icon">
+        <i class="fas fa-book-reader"></i>
+      </div>
+      <div class="icon-type">
+        Type
+      </div>
+      <div class="step-number">
+        Step No. <span>{{ getStepNumber() }}</span>
+      </div>
+      <div class="screen-name">
+        <span>Screen</span>
+        <div class="select">
+          <mat-select
+            [(value)]="selected"
+            placeholder="None"
+            [disabled]="!canEdit"
+          >
+            <mat-option>None</mat-option>
+            <mat-option value="option1">Screen 1</mat-option>
+            <mat-option value="option2">Screen 2</mat-option>
+            <mat-option value="option3">Screen 3</mat-option>
+          </mat-select>
         </div>
       </div>
-  
-      <ng-container *ngIf="canEdit; else edit">
-        <div class="right-controls">
-          <div class="step-edit color-green" (click)="onClikedOnEdit()">
-            <i class="fas fa-check"></i>
-          </div>
-          <div class="step-delete color-light-red">
-            <i class="fas fa-times"></i>
-          </div>
-        </div>
-      </ng-container>
-      <ng-template #edit>
-        <div class="right-controls">
-          <div class="step-edit" (click)="onClickOnOk()">
-            <i class="fas fa-pencil-alt"></i>
-          </div>
-          <div class="step-delete">
-            <i class="far fa-trash-alt"></i>
-          </div>
-        </div>
-      </ng-template>
-  
     </div>
-    <div class="step-body">
-      <div class="form">
-        <div class="form-group">
-          <div class="form-sub-group padding-right">
-            <label for="field">Field</label>
-            <ng-container *ngIf="canEdit; else editField">
-              <input type="text" id="field">
-            </ng-container>
-            <ng-template #editField>
-              <span>Lorem ipsum dolor</span>
-            </ng-template>
-          </div>
-          <div class="form-sub-group padding-left">
-            <label for="field">Value</label>
-            <ng-container *ngIf="canEdit; else editValue">
-              <input type="text" id="Value">
-            </ng-container>
-            <ng-template #editValue>
-              <span>Lorem ipsum dolor</span>
-            </ng-template>
-          </div>
-        </div>
 
-        <div class="form-group">
-          <div class="form-sub-group padding-right">
-            <label for="notes">Notes</label>
-            <ng-container *ngIf="canEdit; else editNotes">
-              <textarea name="" id="notes"></textarea>
-            </ng-container>
-            <ng-template #editNotes>
-              <span>Lorem ipsum dolor</span>
-            </ng-template>
-          </div>
-          <div class="form-sub-group padding-left">
-            <label for="exception-handling">Exception Handling</label>
-            <ng-container *ngIf="canEdit; else editException">
-              <textarea name="" id="exception-handling"></textarea>
-            </ng-container>
-            <ng-template #editException>
-              <span>Lorem ipsum dolor</span>
-            </ng-template>
-          </div>
+    <ng-container *ngIf="canEdit; else edit">
+      <div class="right-controls">
+        <div class="step-edit color-green" (click)="onClickOnOk()">
+          <i class="fas fa-check"></i>
+        </div>
+        <div class="step-delete color-light-red" (click)="onCancelEdit()">
+          <i class="fas fa-times"></i>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #edit>
+      <div class="right-controls">
+        <div class="step-edit" (click)="onClikedOnEdit()">
+          <i class="fas fa-pencil-alt"></i>
+        </div>
+        <div class="step-delete" (click)="onDeleteStep()">
+          <i class="far fa-trash-alt"></i>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <div class="step-body">
+    <div class="form">
+      <div class="form-group">
+        <div class="form-sub-group padding-right">
+          <label for="field">Field</label>
+          <ng-container *ngIf="canEdit; else editField">
+            <input type="text" id="field" [(ngModel)]="data.field" />
+          </ng-container>
+          <ng-template #editField>
+            <span>{{ data.field }}</span>
+          </ng-template>
+        </div>
+        <div class="form-sub-group padding-left">
+          <label for="field">Value</label>
+          <ng-container *ngIf="canEdit; else editValue">
+            <input type="text" id="Value" [(ngModel)]="data.value" />
+          </ng-container>
+          <ng-template #editValue>
+            <span>{{ data.value }}</span>
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="form-sub-group padding-right">
+          <label for="notes">Notes</label>
+          <ng-container *ngIf="canEdit; else editNotes">
+            <textarea name="" id="notes" [(ngModel)]="data.notes"></textarea>
+          </ng-container>
+          <ng-template #editNotes>
+            <span>{{ data.notes }}</span>
+          </ng-template>
+        </div>
+        <div class="form-sub-group padding-left">
+          <label for="exception-handling">Exception Handling</label>
+          <ng-container *ngIf="canEdit; else editException">
+            <textarea
+              name=""
+              id="exception-handling"
+              [(ngModel)]="data.exception_handling"
+            ></textarea>
+          </ng-container>
+          <ng-template #editException>
+            <span>{{ data.exception_handling }}</span>
+          </ng-template>
         </div>
       </div>
     </div>
   </div>
+</div>

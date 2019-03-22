@@ -1,11 +1,11 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { UicontrolService } from './uicontrol.service';
+import { UicontrolService } from "./uicontrol.service";
 
-describe('UicontrolService', () => {
+describe("UicontrolService", () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
-  it('should be created', () => {
+  it("should be created", () => {
     const service: UicontrolService = TestBed.get(UicontrolService);
     expect(service).toBeTruthy();
   });

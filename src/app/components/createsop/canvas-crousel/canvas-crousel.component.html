@@ -1,0 +1,9 @@
+<div class="carousel-container">
+  <div
+    class="canvas"
+    *ngFor="let content of data; let i = index"
+    [ngStyle]="{ transform: 'translateY(-' + currentImage * 100 + '%)' }"
+  >
+    <img [src]="content" alt="" />
+  </div>
+</div>

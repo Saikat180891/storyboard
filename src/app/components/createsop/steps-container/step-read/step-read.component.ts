@@ -1,24 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component } from "@angular/core";
+import { StepBaseComponent } from "../step-base/step-base.component";
 @Component({
-  selector: 'app-step-read',
-  templateUrl: './step-read.component.html',
-  styleUrls: ['./step-read.component.scss']
+  selector: "app-step-read",
+  templateUrl: "./step-read.component.html",
+  styleUrls: ["./step-read.component.scss"],
 })
-export class StepReadComponent implements OnInit {
-  canEdit:boolean = false;
+export class StepReadComponent extends StepBaseComponent {
+  stepType = "read";
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-  onClikedOnEdit(){
-    this.canEdit = false;
-  }
-
-  onClickOnOk(){
-    this.canEdit = true;
-  }
-
+  data = {
+    field: "",
+    value: "",
+    data_type: "",
+    data_value_constraint: "",
+    notes: "",
+    exception_handling: "",
+    screen: "",
+  };
 }

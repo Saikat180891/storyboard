@@ -1,25 +1,18 @@
-import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import {StepcontrolService} from '../services/stepcontrol/stepcontrol.service';
-import {fromEvent} from 'rxjs';
-import {DragDropService} from '../services/draganddrop/drag-drop.service';
+import { Component, OnInit } from "@angular/core";
+import { OperationBarService } from "../services/operation-bar/operation-bar.service";
 @Component({
-  selector: 'operations-bar',
-  templateUrl: './operations-bar.component.html',
-  styleUrls: ['./operations-bar.component.scss']
+  selector: "operations-bar",
+  templateUrl: "./operations-bar.component.html",
+  styleUrls: ["./operations-bar.component.scss"],
 })
 export class OperationsBarComponent implements OnInit {
-  @Output('selectedType') selectedType:any = new EventEmitter();
-  @ViewChild('calc') calc:ElementRef;
-  isMouseDown:boolean = false;
+  isStartLoopDisplayed: boolean;
 
-  constructor(
-    private __steps:StepcontrolService,
-    private __dragDrop:DragDropService) { }
+  constructor(private __loopStatus: OperationBarService) {}
 
   ngOnInit() {
-  }
-
-  onInsertNewSection(){
-    // this.selectedType.emit('section');
+    this.__loopStatus.getLoopStatus().subscribe(res => {
+      this.isStartLoopDisplayed = res;
+    });
   }
 }

@@ -1,18 +1,24 @@
 <div class="select">
   <div>
-    <input type="text" [placeholder]="'placeholder'" readonly [value]="value?value.status:defaultOption" maxlength="100">
+    <input
+      type="text"
+      [placeholder]="'placeholder'"
+      readonly
+      [value]="value ? value.status : defaultOption"
+      maxlength="100"
+    />
   </div>
-  <!-- <div class="ball" 
-  [ngStyle]="{
-    'background-color': selected?selected.color:'',
-    'background-color': selectedColor
-  }"></div> -->
-  <span class="down-caret" (click)="onOpen()"><i class="fas fa-angle-down"></i></span>
+  <span class="down-caret" (click)="onOpen()"
+    ><i class="fas fa-angle-down"></i
+  ></span>
   <div *ngIf="isOpen && options" class="select-dropdown">
-    
-    <span *ngFor="let option of options" (click)="onSelect($event, option)"  matTooltip="{{option.status}}" matTooltipPosition="right">
-      <!-- <span class="ball" [ngStyle]="{'background-color': option.color}" *ngIf="option.color!='transparent'"></span> -->
-      {{option.status}}
+    <span
+      *ngFor="let option of options"
+      (click)="onSelect($event, option)"
+      matTooltip="{{ option.status }}"
+      matTooltipPosition="right"
+    >
+      {{ option.status }}
     </span>
   </div>
   <div *ngIf="isOpen" class="overlay custom-overlay" (click)="onOpen()"></div>

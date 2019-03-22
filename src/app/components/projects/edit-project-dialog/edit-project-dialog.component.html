@@ -1,0 +1,245 @@
+<div
+  class="dialog"
+  (keydown.esc)="onEscape($event)"
+  (click)="preventPropagation($event)"
+>
+  <div class="dialog-group padding-all header-banner">
+    <div class="dialog-header">
+      <span class="heading">
+        <b>
+          {{ dialogHeaderText }}
+        </b>
+      </span>
+      <span class="close" (click)="onClose()"
+        ><i class="fas fa-times"></i
+      ></span>
+    </div>
+  </div>
+  <!-- TODO extract into form component -->
+  <div class="horizontal-flex">
+    <div class="vertical-flex">
+      <div class="dialog-group padding-all top-input-width">
+        <div class="input-box">
+          <input
+            id="clientName"
+            type="text"
+            [ngClass]="{
+              'ASN-box': true,
+              validators:
+                formValidationFailed && !projectInfoValidators.clientName
+            }"
+            placeholder="Client Name"
+            required
+            [(ngModel)]="project.clientName"
+          />
+        </div>
+      </div>
+      <div class="dialog-group padding-all top-input-width">
+        <div class="input-box">
+          <input
+            type="text"
+            [ngClass]="{
+              'ASN-box': true,
+              validators: formValidationFailed && !projectInfoValidators.title
+            }"
+            placeholder="Automation System Name"
+            required
+            maxlength="50"
+            [(ngModel)]="project.title"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog-group upload emblem">
+      <div class="relative pointer">
+        <button>
+          <img
+            class="preview-logo"
+            *ngIf="filePreview"
+            [src]="filePreview"
+            [alt]="filePreview"
+          />
+          <span class="client-logo" *ngIf="!filePreview"
+            >Upload Client Logo</span
+          >
+          <span *ngIf="!filePreview"
+            ><small>(Max Size 200px-200px)</small></span
+          >
+          <span *ngIf="!filePreview"
+            ><i class="fas fa-download"></i>CHOOSE FILE</span
+          >
+        </button>
+
+        <input type="file" (change)="onFileSelected($event)" />
+      </div>
+    </div>
+  </div>
+
+  <div class="dialog-group padding-all margin-bottom-10">
+    <div class="input-box">
+      <input
+        type="text"
+        id="charge-code"
+        placeholder="Charge Code"
+        required
+        [ngClass]="{
+          validators: formValidationFailed && !projectInfoValidators.chargeCode
+        }"
+        maxlength="50"
+        [(ngModel)]="project.chargeCode"
+      />
+      <ng-container>
+        <input
+          id="date"
+          placeholder="Due Date(MM/DD/YYYY)"
+          type="text"
+          matInput
+          [matDatepicker]="picker"
+          required
+          readonly
+          [ngClass]="{
+            validators: formValidationFailed && !projectInfoValidators.due_date
+          }"
+          [ngStyle]="{ border: border }"
+          [value]="dueDate"
+          (dateInput)="onDueDateChange($event.value)"
+        />
+        <div class="datepicker">
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <!-- TODO extract into form component -->
+
+  <div class="tab-wrapper">
+    <mat-tab-group
+      class="create-container-tabs"
+      (selectedTabChange)="onTabChange($event)"
+      selectedIndex="selectedTabIndex"
+      animationDuration="0"
+    >
+      <mat-tab label="Assign User">
+        <div
+          class="dialog-group height-auto padding-top-0 grey-background"
+          id="add-assign"
+        >
+          <div class="input-box margin-top-10">
+            <!-- TODO this could be user-search-box.component -->
+            <ng-container>
+              <input
+                type="text"
+                placeholder="Type name or email address"
+                (keyup)="onKeyPress($event)"
+              />
+              <div class="autocomplete" *ngIf="options; else load">
+                <ng-container *ngFor="let option of options; let i = index">
+                  <span class="autocomplete-item" (click)="onSelect(option)">{{
+                    option.name ? option.name : option.email
+                  }}</span>
+                </ng-container>
+              </div>
+            </ng-container>
+            <!-- TODO this could be user-search-box.component -->
+          </div>
+        </div>
+        <div class="dialog-group height-auto margin-bottom-10 assignee-list">
+          <ul>
+            <app-assignee-card
+              *ngFor="let user of alreadyCreatedAssignees; let i = index"
+              [invalid]="formValidationFailed && !validateAssignee(user)"
+              [assignee]="user"
+              [changeRoleDisabled]="true"
+              [canRemoveAssignees]="canRemoveAssignees"
+              (removeAssignee)="onRemove(user.id)"
+            >
+            </app-assignee-card>
+            <app-assignee-card
+              *ngFor="let user of newlyCreatedAssignees; let i = index"
+              [invalid]="formValidationFailed && !validateAssignee(user)"
+              [assignee]="user"
+              [changeRoleDisabled]="false"
+              [canRemoveAssignees]="canRemoveAssignees"
+              (roleChanged)="onSelectionChange($event.role, i)"
+              (removeAssignee)="onRemoveListItem(i)"
+            >
+            </app-assignee-card>
+          </ul>
+        </div>
+      </mat-tab>
+      <mat-tab label="Invite New User" [disabled]="createMode">
+        <div class="add-user">
+          <div
+            class="horizontal-flex-2 invite-model"
+            *ngFor="let invites of invitationList"
+          >
+            <div class="dialog-group margin-bottom-10">
+              <!-- TODO could be invite-user.component -->
+              <div class="input-box margin-top-10 horizontal-flex">
+                <div class="invite-user-through-email">
+                  <input
+                    type="text"
+                    id="inviteEmail"
+                    placeholder="Email Address"
+                    [(ngModel)]="invites.inviteEmail"
+                  />
+                </div>
+                <div class="select-role-invite">
+                  <mat-select
+                    placeholder="Assign role"
+                    (selectionChange)="invites.inviteRole = $event.value"
+                  >
+                    <mat-option *ngFor="let role of roles" [value]="role">
+                      {{ role }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+              <div class="input-box margin-top-10 horizontal-flex">
+                <div class="first-name">
+                  <input
+                    type="text"
+                    id="first_name"
+                    placeholder="First Name"
+                    [(ngModel)]="invites.inviteFirstName"
+                  />
+                </div>
+                <div class="last-name">
+                  <input
+                    type="text"
+                    id="last_name"
+                    placeholder="Last Name"
+                    [(ngModel)]="invites.inviteLastName"
+                  />
+                </div>
+              </div>
+              <!-- TODO could be invite-user.component -->
+            </div>
+          </div>
+          <button (click)="onAddUser()">Add New</button>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <div
+    class="dialog-group-2 padding-all fixed-bottom height-auto margin-bottom-10"
+    [ngSwitch]="selectedTabIndex"
+  >
+    <div class="button-box" *ngSwitchCase="0">
+      <button mat-raised-button color="primary" (click)="onSubmit()">
+        {{ submitButtonText }}
+      </button>
+      <button mat-raised-button (click)="onClose()">CANCEL</button>
+    </div>
+    <div class="button-box" *ngSwitchCase="1">
+      <button mat-raised-button color="primary" (click)="onSendInvitation()">
+        Send Invitation
+      </button>
+    </div>
+  </div>
+</div>

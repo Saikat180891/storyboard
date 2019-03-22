@@ -1,6 +1,6 @@
 <div class="flex">
   <div class="flex-item">
-    <left-panel></left-panel>
+    <left-panel (onenMediaPane)="openSidebar = $event"></left-panel>
   </div>
   <div class="flex-item">
     <right-panel></right-panel>
@@ -8,21 +8,47 @@
 </div>
 
 <div class="panel">
-  <div class="panel-body panel-body__left" [ngClass]="{'panel-body-active':toggleRecentSnapshot}">
-    <recent-screen-shots (open)="onOpenRecentScreenshot($event)" [data]="imageGalleryContent"></recent-screen-shots>
+  <div
+    class="panel-body panel-body__left"
+    [ngClass]="{ 'panel-body-active': toggleRecentSnapshot }"
+  >
+    <recent-screen-shots
+      (open)="onOpenRecentScreenshot($event)"
+      [data]="imageGalleryContent"
+    ></recent-screen-shots>
   </div>
   <div class="panel-body panel-body__right">
-    <operations-bar (selectedType)="onRequestedSelectType($event)"></operations-bar>
+    <operations-bar></operations-bar>
   </div>
 </div>
 
-
-<div class="overlay" *ngIf="openSidebar">
-</div>
-<div class="sidebar" [ngClass]="{'sidebar-open':openSidebar}">
-  <app-sidebar (close)="onOpenSidebar($event)"></app-sidebar>
+<div
+  class="overlay-left"
+  [ngClass]="{ 'overlay-left-active': openSidebar }"
+></div>
+<div class="sidebar" [ngClass]="{ 'sidebar-open': openSidebar }">
+  <app-sidebar
+    (close)="onOpenSidebar($event)"
+    (exportSelectedImageToSop)="onSelectedImageToExport($event)"
+  ></app-sidebar>
 </div>
 
 <div class="sidebar-buttons">
   <app-sidebar-buttons (open)="onOpenSidebar($event)"></app-sidebar-buttons>
+</div>
+
+<div
+  class="overlay higher-stack"
+  [ngClass]="{
+    'overlay-show': __page.shouldShowExportToSopModal,
+    'overlay-hide': !__page.shouldShowExportToSopModal
+  }"
+>
+  <div class="export-to-sop" *ngIf="__page.shouldShowExportToSopModal">
+    <app-export-to-sop
+      (close)="__page.shouldShowExportToSopModal = $event"
+      [data]="imageDataToExport"
+      [isComponentActive]="__page.shouldShowExportToSopModal"
+    ></app-export-to-sop>
+  </div>
 </div>

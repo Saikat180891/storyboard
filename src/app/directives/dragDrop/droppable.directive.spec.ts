@@ -1,7 +1,7 @@
-import { DroppableDirective } from './droppable.directive';
+import { DroppableDirective } from "./droppable.directive";
 
-describe('DroppableDirective', () => {
-  it('should create an instance', () => {
+describe("DroppableDirective", () => {
+  it("should create an instance", () => {
     const directive = new DroppableDirective();
     expect(directive).toBeTruthy();
   });

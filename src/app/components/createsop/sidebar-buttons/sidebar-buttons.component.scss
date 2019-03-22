@@ -1,33 +1,31 @@
 @import "../global.scss";
 
-.buttons-menu{
+.buttons-menu {
   display: flex;
   flex-direction: column;
   align-content: space-between;
   align-items: left;
 }
 
-.menu-buttons{
+.menu-buttons {
   color: #ffffff;
   cursor: pointer;
-  // padding: 10px 0;
   margin: 5px 0;
-  // background-color: #cccccc;
   display: flex;
 
-  .image-pane{
+  .image-pane {
     min-width: 40px;
     min-height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    img{
+    img {
       min-width: 80%;
     }
   }
 
-  span{
+  span {
     display: block;
     height: 40px;
     line-height: 40px;
@@ -39,11 +37,11 @@
     font-size: 14px;
   }
 }
-.menu-buttons:hover{
+.menu-buttons:hover {
   background-color: #a7a7a7;
   color: $sidebar-background-color;
 }
-.menu-buttons-highlight{
+.menu-buttons-highlight {
   border-top: 1px solid $main-blue;
   border-bottom: 1px solid $main-blue;
   box-shadow: inset 0 0 10px rgba($color: $main-blue, $alpha: 0.3);

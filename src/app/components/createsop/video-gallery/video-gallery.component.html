@@ -20,32 +20,75 @@
             </div>
           </ng-container>
           <div class="file-loader">
-            <input type="file" name="" id="" (change)="onFileSelected($event)">
+            <ng-container *ngIf="type === 'VIDEO'; else selectImg">
+              <input
+                type="file"
+                name=""
+                id=""
+                (change)="onFileSelected($event)"
+                accept="video/mp4,video/x-m4v,video/*"
+              />
+            </ng-container>
+            <ng-template #selectImg>
+              <input
+                type="file"
+                name=""
+                id=""
+                (change)="onFileSelected($event)"
+                accept="image/png, image/jpeg"
+              />
+            </ng-template>
           </div>
         </div>
       </div>
     </mat-grid-tile>
 
     <ng-container>
-      <mat-grid-tile *ngFor="let content of data; let i=index" (click)="onThumbnailSelect(i, content)" [ngClass]="{'selected':selected==i}">
+      <mat-grid-tile
+        *ngFor="let content of data; let i = index"
+        (click)="onThumbnailSelect(i, content)"
+        [ngClass]="{ selected: selected == i }"
+      >
         <div class="grid-content-next">
           <div class="picture">
-            <img [src]="content.thumbnail" alt="">
+            <img [src]="content.thumbnail" alt="" />
             <div class="picture-overlay">
               <div class="picture-overlay-btns" [ngSwitch]="type">
-                <button *ngSwitchCase="'VIDEO'" (click)="onPlayVideo(content, i)"><i class="fas fa-play"></i><span>Play</span></button>
-                <button *ngSwitchCase="'IMAGE'" (click)="onViewImage(i, content)"><i class="fas fa-play"></i><span>View</span></button>
-                <button><i class="far fa-trash-alt" (click)="onDeleteContent(content, i, type)"></i><span>Delete</span></button>
+                <button
+                  *ngSwitchCase="'VIDEO'"
+                  (click)="onPlayVideo(content, i)"
+                >
+                  <i class="fas fa-play"></i><span>Play</span>
+                </button>
+                <button
+                  *ngSwitchCase="'IMAGE'"
+                  (click)="onViewImage(i, content)"
+                >
+                  <i class="far fa-eye"></i><span>View</span>
+                </button>
+                <button>
+                  <i
+                    class="far fa-trash-alt"
+                    (click)="onDeleteContent(content, i, type)"
+                  ></i
+                  ><span>Delete</span>
+                </button>
               </div>
             </div>
           </div>
           <div class="picture-title">
-            <span>{{content.video_name?content.video_name:content.image_name}}</span>
-            <span>{{content.video_length?content.video_length:''}}</span>
+            <span
+              [title]="
+                content.video_name ? content.video_name : content.image_name
+              "
+              >{{
+                content.video_name ? content.video_name : content.image_name
+              }}</span
+            >
+            <span>{{ content.video_length ? content.video_length : "" }}</span>
           </div>
         </div>
       </mat-grid-tile>
     </ng-container>
-
   </mat-grid-list>
 </div>

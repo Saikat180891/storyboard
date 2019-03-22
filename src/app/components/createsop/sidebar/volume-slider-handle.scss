@@ -1,13 +1,13 @@
 @import "../global.scss";
 
-.volume-slider{
-  input[type="range"].volume-slider-handle{
+.volume-slider {
+  input[type="range"].volume-slider-handle {
     height: 5px;
     appearance: none;
     background-color: $main-blue;
   }
-  
-  input[type="range"].volume-slider-handle::-webkit-slider-thumb{
+
+  input[type="range"].volume-slider-handle::-webkit-slider-thumb {
     appearance: none;
     height: 15px;
     width: 15px;

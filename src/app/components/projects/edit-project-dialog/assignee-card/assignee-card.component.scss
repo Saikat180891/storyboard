@@ -1,0 +1,56 @@
+.horizontal-flex {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.invalid {
+  border: 1px solid red;
+}
+
+li {
+  height: 50px;
+  width: 100%;
+  margin: 2px;
+  box-shadow: 0 0 2px rgba($color: #000000, $alpha: 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+
+  .horizontal-flex {
+    img {
+      height: 30px;
+      width: 30px;
+    }
+
+    span {
+      display: block;
+      line-height: 30px;
+      font-size: 14px;
+      color: #707070;
+    }
+
+    .user-details {
+      line-height: 26px;
+      font-size: 14px;
+      color: #707070;
+      width: 200px;
+    }
+
+    .select-role {
+      width: 150px;
+      height: 30px;
+      line-height: 30px;
+      padding: 0 10px;
+      border: 1px solid #d1d1d1;
+      background-color: #fff;
+    }
+
+    div.list-close {
+      color: #2a7de1;
+      cursor: pointer;
+      line-height: 30px;
+    }
+  }
+}

@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class PageService {
-  projectId:number;
-  userStoryId:number;
-  videoId:number;
+  projectId: number;
+  userStoryId: number;
+  videoId: number;
   imageGalleryContent = [];
-  constructor() { }
+  shouldShowExportToSopModal: boolean = false;
+  constructor() {}
 }

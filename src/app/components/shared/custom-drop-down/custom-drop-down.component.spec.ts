@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { CustomDropDownComponent } from './custom-drop-down.component';
+import { CustomDropDownComponent } from "./custom-drop-down.component";
 
-describe('CustomDropDownComponent', () => {
+describe("CustomDropDownComponent", () => {
   let component: CustomDropDownComponent;
   let fixture: ComponentFixture<CustomDropDownComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CustomDropDownComponent ]
-    })
-    .compileComponents();
+      declarations: [CustomDropDownComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('CustomDropDownComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

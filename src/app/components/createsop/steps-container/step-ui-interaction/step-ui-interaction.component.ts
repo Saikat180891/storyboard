@@ -1,24 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from "@angular/core";
+import { StepBaseComponent } from "../step-base/step-base.component";
 
 @Component({
-  selector: 'app-step-ui-interaction',
-  templateUrl: './step-ui-interaction.component.html',
-  styleUrls: ['./step-ui-interaction.component.scss']
+  selector: "app-step-ui-interaction",
+  templateUrl: "./step-ui-interaction.component.html",
+  styleUrls: ["./step-ui-interaction.component.scss"],
 })
-export class StepUiInteractionComponent implements OnInit {
-  canEdit:boolean = false;
+export class StepUiInteractionComponent extends StepBaseComponent {
+  stepType = "ui-interaction";
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-  onClikedOnEdit(){
-    this.canEdit = false;
-  }
-
-  onClickOnOk(){
-    this.canEdit = true;
-  }
-
+  data = {
+    interaction_type: "",
+    click_option: "",
+    field: "",
+    notes: "",
+    exception_handling: "",
+    screen: "",
+  };
 }

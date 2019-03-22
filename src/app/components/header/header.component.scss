@@ -1,62 +1,61 @@
-.navbar{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 3.4375rem;
-    position: fixed;
-    background-color: #0339A6;
-    box-shadow: 0 3px 6px rgba($color: #000000, $alpha: 0.16);
-    z-index: 10000;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 3.4375rem;
+  position: fixed;
+  background-color: #0339a6;
+  box-shadow: 0 3px 6px rgba($color: #000000, $alpha: 0.16);
+  z-index: 10000;
 }
-.brand{
-    max-width: 200px;
-    font-size: 1.5rem;
-    color: #fff;
-    font-weight: 400;
-    margin-left: 30px;
-    cursor: pointer;
+.brand {
+  max-width: 200px;
+  font-size: 1.5rem;
+  color: #fff;
+  font-weight: 400;
+  margin-left: 30px;
+  cursor: pointer;
 }
-.profile{
+.profile {
+  color: #fff;
+  font-size: 15px;
+  max-width: 350px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  &__name {
+    margin-right: 20px;
+  }
+  &__pic {
     color: #fff;
-    font-size: 15px;
-    max-width: 250px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-
-
-    &__name{
-      margin-right: 20px;
+    width: 35px;
+    height: 35px;
+    margin-right: 7px;
   }
-    &__pic{
-      color: #fff;
-      width: 35px;
-      height: 35px;
-      margin-right: 7px;
-  }
-    img{
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
+  img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
   }
 
-  .arrow-menu{
+  .arrow-menu {
     margin-right: 20px;
   }
 }
-.page-loading-progress-bar{
+.page-loading-progress-bar {
   position: fixed;
   width: 100%;
   height: 10px;
   top: 0;
   left: 0;
 
-  ::ng-deep .mat-progress-bar-fill::after{
+  ::ng-deep .mat-progress-bar-fill::after {
     background-color: rgb(42, 125, 225);
   }
 
-  ::ng-deep .mat-progress-bar-buffer{
+  ::ng-deep .mat-progress-bar-buffer {
     background-color: rgb(152, 181, 216);
   }
 }
