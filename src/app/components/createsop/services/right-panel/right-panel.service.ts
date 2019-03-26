@@ -76,6 +76,19 @@ export class RightPanelService {
     return this.__api.updatePost(endpoint, payload);
   }
 
+  moveStep(
+    userStory: number,
+    stepId: number,
+    prevStepId: number,
+    nextStepId: number
+  ) {
+    const endpoint = `/sop/epics/userstories/${userStory}/sections/steps/move/${stepId}/?move=intra_section`;
+    return this.__api.updatePost(endpoint, {
+      prev_step_id: prevStepId,
+      next_step_id: nextStepId,
+    });
+  }
+
   deleteStep(
     userStoryId: number,
     stepNumber: number,
