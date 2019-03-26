@@ -68,5 +68,16 @@
     "tslint-config-airbnb": "^5.11.1",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "~3.1.6"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "run-s lint:fix format:fix"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "tslint --fix --force",
+      "git add"
+    ]
   }
 }
