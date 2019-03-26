@@ -1,4 +1,11 @@
+import { HttpClientModule } from "@angular/common/http";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { CookieService } from "ngx-cookie-service";
+
+import { GlobalmoduleModule } from "../../module/globalmodule/globalmodule.module";
+import { ForgotPasswordComponent } from "../forgot-password/forgot-password.component";
 
 import { LoginComponent } from "./login.component";
 
@@ -8,7 +15,14 @@ describe("LoginComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoginComponent],
+      declarations: [LoginComponent, ForgotPasswordComponent],
+      imports: [
+        FormsModule,
+        GlobalmoduleModule,
+        RouterTestingModule,
+        HttpClientModule,
+      ],
+      providers: [CookieService],
     }).compileComponents();
   }));
 
