@@ -32,11 +32,11 @@ export class AssigneeCardComponent {
 
   ngOnInit() {}
 
-  onRoleChange(value: Role) {
+  onRoleChange(value: Role): void {
     this.roleChanged.emit({ role: value });
   }
 
-  onRemove() {
+  onRemove(): void {
     this.removeAssignee.emit({ assignee: this.assignee });
   }
 }

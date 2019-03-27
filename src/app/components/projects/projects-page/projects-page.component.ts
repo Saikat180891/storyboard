@@ -1,16 +1,8 @@
-import {
-  AfterContentChecked,
-  AfterViewChecked,
-  Component,
-  OnChanges,
-  OnInit,
-} from "@angular/core";
+import { AfterViewChecked, Component, OnInit } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
 import { DataService } from "../../../data.service";
-import { AuthorizationService } from "../../../services/authorization/authorization.service";
-import { AppcontrolService } from "../../../services/controlservice/appcontrol.service";
-import { UtilsService } from "../../../utils.service";
-import { ProjectsPageService } from "./projects-page.service";
+import { ProjectDisplay } from "../models/project.model";
+import { ProjectsService } from "../projects.service";
 
 @Component({
   selector: "app-projects-page",
@@ -31,12 +23,8 @@ export class ProjectsPageComponent implements OnInit, AfterViewChecked {
   projectRole: any;
 
   constructor(
-    private _dataService: DataService,
-    private __uic: AppcontrolService,
-    private _projectsPageService: ProjectsPageService,
-    private __spinner: NgxSpinnerService,
-    private __authorization: AuthorizationService,
-    private __utils: UtilsService
+    private projectsService: ProjectsService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit() {
@@ -50,109 +38,52 @@ export class ProjectsPageComponent implements OnInit, AfterViewChecked {
   /**
    * fetch all projects and permission and combine both of them
    */
-  getListOfAllProjects() {
-    this.__spinner.show();
-    const projectlist: any = [];
-    const permissions = [];
-    // make an api call to fetch the project list
-    this._projectsPageService.getListOfAllProjects().subscribe(
-      res => {
-        // rearrange the project list as required for the frontend
-        res.forEach(element => {
-          projectlist.push({
-            themeColor: this.__uic.colorPicker[
-              this._projectsPageService.getUniqueNumber()
-            ],
-            reasonCodes: this.__uic.firstZero(Number(element["number_epics"])),
-            ...element,
-            logo: element["logo_url"],
-            due_date: this.__utils.formatDateToUS(element["due_date"]),
-          });
-        });
+  getListOfAllProjects(): void {
+    this.spinner.show();
+    this.projectsService.getProjectsDisplayList().subscribe(
+      (res: ProjectDisplay[]) => {
+        this.projectsService.cardContents = res;
+        this.spinner.hide();
       },
       err => {
-        this.__spinner.hide();
-      },
-      () => {
-        // once the above call the completed make another call to get the permissions dictionary
-        this._dataService.getPermission(1).subscribe(
-          res => {
-            //rearrange as required for the frontend
-            res.forEach(ele => {
-              permissions.push({
-                projectId: ele["proj_id"],
-                role: ele["name"],
-                permissions: ele["permissions"],
-              });
-            });
-          },
-          err => {
-            this.__spinner.hide();
-          },
-          () => {
-            // combine the list of projects and the list of permission with respect to their respective ids
-            projectlist.forEach((project, projectIndex) => {
-              permissions.forEach((projectPermission, permissionIndex) => {
-                if (project.id == projectPermission.projectId) {
-                  project["currentUserPermission"] =
-                    projectPermission["permissions"];
-                  project[
-                    "permissionsGranted"
-                  ] = this.__authorization.createPermissionAsPerUserRole(
-                    projectPermission["role"]
-                  );
-                }
-              });
-            });
-            this._projectsPageService.cardContents = projectlist;
-            this.__spinner.hide();
-          }
-        );
+        this.spinner.hide();
       }
     );
   }
 
-  onEditProject($event: any, index: number) {
+  onEditProject($event: any, index: number): void {
     this.projectData = $event.data;
     this.projectRole = $event.role;
     this.openEditProjectDialogBox = $event.status;
   }
 
-  onEditProjectClose() {
+  onEditProjectClose(): void {
     this.openEditProjectDialogBox = false;
     this.openCreateProjectDialogBox = false;
     this.getListOfAllProjects();
   }
 
-  onDeleteSop($event) {
+  onDeleteSop($event): void {
     this.warningToDeleteSop = $event.status;
     this.sopIdToDelete = $event.id;
   }
 
-  onSelectDoNotDeleteSop() {
+  onSelectDoNotDeleteSop(): void {
     this.warningToDeleteSop = false;
   }
   /**
    * Delete project
    */
-  onSelectDeleteSop() {
-    this._dataService
-      .delete("/sop", this.sopIdToDelete + ".json")
-      .subscribe(response => {
-        this._projectsPageService.cardContents.forEach((element, index) => {
-          if (element.id == this.sopIdToDelete) {
-            this._projectsPageService.cardContents.splice(index, 1);
-            this.warningToDeleteSop = false;
-          }
-        });
-      });
+  onSelectDeleteSop(): void {
+    this.warningToDeleteSop = false;
+    this.projectsService.deleteProject(this.sopIdToDelete);
   }
 
-  givenPermissions(permissions) {
+  givenPermissions(permissions): void {
     this.permissionsGrantedForBackdrop = permissions;
   }
 
-  onCreateProject($event) {
+  onCreateProject($event): void {
     this.openCreateProjectDialogBox = true;
   }
 }

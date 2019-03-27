@@ -15,8 +15,6 @@ import {
   OnInit,
   Renderer2,
 } from "@angular/core";
-import { ProjectsPageService } from "../components/projects/projects-page/projects-page.service";
-import { AuthorizationService } from "../services/authorization/authorization.service";
 
 interface Permission {
   role?: string;
@@ -31,12 +29,7 @@ interface Permission {
 export class PermissionsDirective implements OnInit {
   @Input("appCanAccess") appCanAccess: any | Permission;
 
-  constructor(
-    private el: ElementRef,
-    private renderer: Renderer2,
-    private _projectsPageService: ProjectsPageService,
-    private __authorization: AuthorizationService
-  ) {}
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
 
   ngOnInit() {
     //storing the list of permission received from the backend in a local variable

@@ -3,7 +3,7 @@ import { MatSnackBar, MatSnackBarConfig } from "@angular/material";
 import { NgxSpinnerService } from "ngx-spinner";
 import { environment } from "../../../environments/environment";
 import { DataService } from "../../data.service";
-import { UtilsService } from "../../utils.service";
+import { DateUtils } from "../shared/date-utils";
 
 @Injectable({
   providedIn: "root",
@@ -37,11 +37,7 @@ export class ReasonCodeService {
   grantedPermission: any;
   role: string;
 
-  constructor(
-    private _api: DataService,
-    public snackbar: MatSnackBar,
-    private __utils: UtilsService
-  ) {}
+  constructor(private _api: DataService, public snackbar: MatSnackBar) {}
 
   destroyAllService() {
     this.currentSprintDuration = [];
@@ -73,10 +69,10 @@ export class ReasonCodeService {
    */
   createSprint(payload) {
     payload.forEach(element => {
-      element.start_date = this.__utils.datetypeToStringWithoutTime(
+      element.start_date = DateUtils.datetypeToStringWithoutTime(
         element.start_date
       );
-      element.end_date = this.__utils.datetypeToStringWithoutTime(
+      element.end_date = DateUtils.datetypeToStringWithoutTime(
         element.end_date
       );
       if (element.duration) {
@@ -108,7 +104,7 @@ export class ReasonCodeService {
       });
       this.sprintConfig = response.reverse();
       for (const sprint of this.sprintConfig) {
-        sprint.end_date = this.__utils.formatDateToUS(sprint.end_date);
+        sprint.end_date = DateUtils.formatDateToUS(sprint.end_date);
       }
     });
   }
@@ -124,12 +120,10 @@ export class ReasonCodeService {
   }
 
   editSprint(id, data) {
-    data["start_date"] = this.__utils.datetypeToStringWithoutTime(
+    data["start_date"] = DateUtils.datetypeToStringWithoutTime(
       data["start_date"]
     );
-    data["end_date"] = this.__utils.datetypeToStringWithoutTime(
-      data["end_date"]
-    );
+    data["end_date"] = DateUtils.datetypeToStringWithoutTime(data["end_date"]);
     this._api.update(`/sop/sprint`, `${id}.json`, data).subscribe(response => {
       this.getSprint(this.sopId);
     });
@@ -146,12 +140,12 @@ export class ReasonCodeService {
           element["productivity"] = isFinite(element["productivity"])
             ? element["productivity"]
             : "----";
-          element["planned_delivery"] = this.__utils.formatDateToUS(
+          element["planned_delivery"] = DateUtils.formatDateToUS(
             element["planned_delivery"]
           );
           element["revised_delivery"] =
             element["revised_delivery"] != null
-              ? this.__utils.formatDateToUS(element["revised_delivery"])
+              ? DateUtils.formatDateToUS(element["revised_delivery"])
               : "-----";
         });
         this.deletedUserStories = response;
@@ -176,12 +170,12 @@ export class ReasonCodeService {
         element["productivity"] = isFinite(element["productivity"])
           ? element["productivity"]
           : "-----";
-        element["planned_delivery"] = this.__utils.formatDateToUS(
+        element["planned_delivery"] = DateUtils.formatDateToUS(
           element["planned_delivery"]
         );
         element["revised_delivery"] =
           element["revised_delivery"] != null
-            ? this.__utils.formatDateToUS(element["revised_delivery"])
+            ? DateUtils.formatDateToUS(element["revised_delivery"])
             : "-----";
       });
 
@@ -210,12 +204,12 @@ export class ReasonCodeService {
           element["productivity"] = isFinite(element["productivity"])
             ? element["productivity"]
             : "----";
-          element["planned_delivery"] = this.__utils.formatDateToUS(
+          element["planned_delivery"] = DateUtils.formatDateToUS(
             element["planned_delivery"]
           );
           element["revised_delivery"] =
             element["revised_delivery"] != null
-              ? this.__utils.formatDateToUS(element["revised_delivery"])
+              ? DateUtils.formatDateToUS(element["revised_delivery"])
               : "-----";
         });
         this.completeUserStories = response;
@@ -366,12 +360,12 @@ export class ReasonCodeService {
         element["productivity"] = isFinite(element["productivity"])
           ? element["productivity"]
           : "-----";
-        element["planned_delivery"] = this.__utils.formatDateToUS(
+        element["planned_delivery"] = DateUtils.formatDateToUS(
           element["planned_delivery"]
         );
         element["revised_delivery"] =
           element["revised_delivery"] != null
-            ? this.__utils.formatDateToUS(element["revised_delivery"])
+            ? DateUtils.formatDateToUS(element["revised_delivery"])
             : "-----";
       });
       this.userStories = response;

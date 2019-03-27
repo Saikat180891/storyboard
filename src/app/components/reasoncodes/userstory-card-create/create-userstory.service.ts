@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
 import { DataService } from "../../../data.service";
-import { UtilsService } from "../../../utils.service";
 import { ReasonCodeService } from "../../reasoncodes/reason-code.service";
+import { DateUtils } from "../../shared/date-utils";
 
 @Injectable({
   providedIn: "root",
@@ -13,8 +13,7 @@ export class CreateUserstoryService {
   constructor(
     private __api: DataService,
     private __rcService: ReasonCodeService,
-    private spinner: NgxSpinnerService,
-    private __utils: UtilsService
+    private spinner: NgxSpinnerService
   ) {}
 
   createUserStory(sprintID, reasonCodeId, payload) {
@@ -26,12 +25,12 @@ export class CreateUserstoryService {
     } else {
       reasonCodeId = 0;
     }
-    payload.planned_delivery = this.__utils.datetypeToStringWithoutTime(
+    payload.planned_delivery = DateUtils.datetypeToStringWithoutTime(
       payload.planned_delivery
     );
     payload.revised_delivery == null
       ? delete payload.revised_delivery
-      : (payload.revised_delivery = this.__utils.datetypeToStringWithoutTime(
+      : (payload.revised_delivery = DateUtils.datetypeToStringWithoutTime(
           payload.revised_delivery
         ));
     const api = `/sop/epics/${

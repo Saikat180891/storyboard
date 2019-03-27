@@ -157,7 +157,7 @@ interface CardDate {
   title: string;
   themeColor: string;
   dueDate: string;
-  reasonCodes: number;
+  numberEpics: number;
   chargeCode: string;
   clientName: string;
   logo: string;

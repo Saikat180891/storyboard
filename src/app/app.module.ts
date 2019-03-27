@@ -12,7 +12,7 @@ import { ScrollbarService } from "./services/scrollbarService/scrollbar.service"
 
 import { DateAdapter } from "@angular/material";
 import { AuthGuardService } from "./auth/auth-guard.service";
-import { ProjectsPageService } from "./components/projects/projects-page/projects-page.service";
+import { ProjectsService } from "./components/projects/projects.service";
 import { DataService } from "./data.service";
 import { AppcontrolService } from "./services/controlservice/appcontrol.service";
 
@@ -29,7 +29,6 @@ import { SelectComponent } from "./components/shared/select/select.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { PermissionsDirective } from "./directives/permissions.directive";
 import { GlobalmoduleModule } from "./module/globalmodule/globalmodule.module";
-import { AuthorizationService } from "./services/authorization/authorization.service";
 
 const routes = [
   {
@@ -108,10 +107,9 @@ const routes = [
   providers: [
     DataService,
     AppcontrolService,
-    ProjectsPageService,
+    ProjectsService,
     CookieService,
     AuthGuardService,
-    AuthorizationService,
     ScrollbarService,
   ],
   bootstrap: [AppComponent],

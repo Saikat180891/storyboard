@@ -11,14 +11,6 @@ export class AppcontrolService {
 
   lastNumber: number = 0;
   ID: number = 0;
-  colorPicker: string[] = [
-    "#0033A1",
-    "#2A7DE1",
-    "#40C0C4",
-    "#54585A",
-    "#8677C4",
-    "#94BEF0",
-  ];
 
   reloadSatus = true;
 

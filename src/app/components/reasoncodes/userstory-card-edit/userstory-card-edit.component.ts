@@ -7,7 +7,7 @@ import {
   Output,
 } from "@angular/core";
 import { SharedServicesService } from "../../../services/shared-services/shared-services.service";
-import { UtilsService } from "../../../utils.service";
+import { DateUtils } from "../../shared/date-utils";
 import { ReasonCodeService } from "../reason-code.service";
 import { EditUserStoryService } from "./edit-user-story.service";
 
@@ -105,14 +105,13 @@ export class UserstoryCardEditComponent implements OnInit {
   constructor(
     private __rcService: ReasonCodeService,
     private __editUS: EditUserStoryService,
-    private __sharedService: SharedServicesService,
-    private __utils: UtilsService
+    private __sharedService: SharedServicesService
   ) {}
 
   ngOnInit() {
     this.onUpdateProductivity();
     this.editUSData = JSON.parse(JSON.stringify(this.editUSData));
-    this.editUSData.planned_delivery = this.__utils.arrangeDateInCorrectFormat(
+    this.editUSData.planned_delivery = DateUtils.arrangeDateInCorrectFormat(
       this.editUSData.planned_delivery
     );
     if (this.editUSData.revised_delivery != "-----") {
@@ -125,7 +124,7 @@ export class UserstoryCardEditComponent implements OnInit {
     if (this.editUSData.ftes == "-----") {
       this.editUSData.ftes = "";
     }
-    this.editUSData.revised_delivery = this.__utils.arrangeDateInCorrectFormat(
+    this.editUSData.revised_delivery = DateUtils.arrangeDateInCorrectFormat(
       this.editUSData.revised_delivery
     );
     this.editUSDatas = this.editUSData;
@@ -161,13 +160,13 @@ export class UserstoryCardEditComponent implements OnInit {
   validationSuccessfull = [];
 
   onSaveAll() {
-    this.editUSData.planned_delivery = this.__utils.datetypeToStringWithoutTime(
+    this.editUSData.planned_delivery = DateUtils.datetypeToStringWithoutTime(
       this.editUSData.planned_delivery
     );
     isNaN(this.editUSData.revised_delivery) ||
     this.editUSData.revised_delivery == null
       ? (this.editUSData.revised_delivery = null)
-      : (this.editUSData.revised_delivery = this.__utils.datetypeToStringWithoutTime(
+      : (this.editUSData.revised_delivery = DateUtils.datetypeToStringWithoutTime(
           this.editUSData.revised_delivery
         ));
 

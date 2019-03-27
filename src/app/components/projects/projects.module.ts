@@ -15,7 +15,7 @@ import { AssigneeCardComponent } from "./edit-project-dialog/assignee-card/assig
 import { EditProjectDialogComponent } from "./edit-project-dialog/edit-project-dialog.component";
 import { ProjectCardComponent } from "./project-card/project-card.component";
 import { ProjectsPageComponent } from "./projects-page/projects-page.component";
-import { ProjectsPageService } from "./projects-page/projects-page.service";
+import { ProjectsService } from "./projects.service";
 
 const routes: Routes = [{ path: "", component: ProjectsPageComponent }];
 
@@ -28,6 +28,6 @@ const routes: Routes = [{ path: "", component: ProjectsPageComponent }];
     AssigneeCardComponent,
   ],
   imports: [CommonModule, GlobalmoduleModule, RouterModule.forChild(routes)],
-  providers: [ProjectsPageService, AppcontrolService],
+  providers: [ProjectsService, AppcontrolService],
 })
 export class ProjectsModule {}

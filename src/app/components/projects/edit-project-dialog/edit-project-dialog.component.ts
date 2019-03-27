@@ -13,11 +13,13 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { fromEvent } from "rxjs";
 import { hideInOut, slideDown } from "../../../animation";
 import { DataService } from "../../../data.service";
-import { UtilsService } from "../../../utils.service";
+import { DateUtils } from "../../shared/date-utils";
 import { Assignee, userToAssigneeAdapter } from "../models/assignee.model";
 import { KEY_CODE, Role } from "../models/enums";
+import { InviteUser } from "../models/invite-user.model";
 import { Project } from "../models/project.model";
 import { User } from "../models/user.model";
+import { ProjectsService } from "../projects.service";
 
 @Component({
   selector: "app-edit-project-dialog",
@@ -44,7 +46,7 @@ export class EditProjectDialogComponent
 
   roles: Role[] = [Role.SUPER_ADMIN, Role.MANAGER, Role.ANALYST];
 
-  invitationList = [
+  invitationList: InviteUser[] = [
     {
       inviteEmail: "",
       inviteRole: "",
@@ -88,9 +90,9 @@ export class EditProjectDialogComponent
 
   constructor(
     private dataService: DataService,
+    private projectsService: ProjectsService,
     private snackBar: MatSnackBar,
-    private spinner: NgxSpinnerService,
-    private utils: UtilsService
+    private spinner: NgxSpinnerService
   ) {}
 
   /**
@@ -120,10 +122,10 @@ export class EditProjectDialogComponent
 
     // format dates properly
     if (this.project.due_date !== "") {
-      this.dueDate = this.utils.arrangeDateInCorrectFormat(
+      this.dueDate = DateUtils.arrangeDateInCorrectFormat(
         this.project.due_date
       );
-      this.project.due_date = this.utils.datetypeToStringWithoutTime(
+      this.project.due_date = DateUtils.datetypeToStringWithoutTime(
         this.project.due_date
       );
     }
@@ -136,7 +138,7 @@ export class EditProjectDialogComponent
     this.canRemoveAssignees = this.projectRole === Role.SUPER_ADMIN;
   }
 
-  setProject() {
+  setProject(): void {
     if (this.project) {
       this.project = { ...this.project }; // clone this.project
     } else {
@@ -145,7 +147,7 @@ export class EditProjectDialogComponent
         clientName: "",
         title: "",
         chargeCode: "",
-        rCodes: "",
+        numberEpics: 0,
         logo: "",
         due_date: "",
         assignee: [],
@@ -155,7 +157,7 @@ export class EditProjectDialogComponent
     this.alreadyCreatedAssignees = this.project.assignee.concat(); // clone this.project.assignee
   }
 
-  setDialogText() {
+  setDialogText(): void {
     // set dialog text + submit button text
     if (this.createMode) {
       this.dialogHeaderText = this.newProjectHeaderText;
@@ -172,9 +174,12 @@ export class EditProjectDialogComponent
 
   /**
    * Function to Search for name and add them to the assignee list
-   * @param event
+   * @param event - KeyboardEvent
    */
-  onKeyPress(event) {
+  onKeyPress(event: any): void {
+    // Must explicitly declare event as any to access target.value
+    // TODO this API call and the component that calls this function should
+    // be separated out
     this.dataService
       .fetchData(`/users.json?startsWith=${event.target.value}`)
       .subscribe(
@@ -189,7 +194,7 @@ export class EditProjectDialogComponent
    * Select a name on click and display it in the assignee to input box
    * @param option
    */
-  onSelect(option: User) {
+  onSelect(option: User): void {
     this.newlyCreatedAssignees.push(userToAssigneeAdapter(option));
     this.options = [];
   }
@@ -198,7 +203,7 @@ export class EditProjectDialogComponent
    * Prevent click bubbling to the parent element
    * @param clickEvent - capture click event
    */
-  preventPropagation(clickEvent) {
+  preventPropagation(clickEvent: Event): void {
     clickEvent.stopPropagation();
   }
 
@@ -207,15 +212,15 @@ export class EditProjectDialogComponent
    * @param value -- returns string Manager, SuperAdmin, Analyst
    * @param index -- returns index of the array
    */
-  onSelectionChange(value: Role, index: number) {
+  onSelectionChange(value: Role, index: number): void {
     this.newlyCreatedAssignees[index].role = value;
   }
 
-  onTabChange($event) {
+  onTabChange($event): void {
     this.selectedTabIndex = $event.index;
   }
 
-  onAddUser() {
+  onAddUser(): void {
     const emptyInvitee = {
       inviteEmail: "",
       inviteRole: "",
@@ -228,7 +233,7 @@ export class EditProjectDialogComponent
   /**
    * To close the backdrop dialog-box
    */
-  onClose() {
+  onClose(): void {
     this.projectInfoValidators = this.defaultProjectInfoValidators;
     this.border = "1px solid #D1D1D1";
     this.filePreview = "";
@@ -238,9 +243,9 @@ export class EditProjectDialogComponent
 
   /**
    * To select and preview image for logo
-   * @param fileSelected
+   * @param fileSelected - a file select Event
    */
-  onFileSelected(fileSelected: any) {
+  onFileSelected(fileSelected: any): void {
     // explicit any typing required to access target.event
     const target = fileSelected.target;
     if (!(target.files || target.files[0])) {
@@ -257,7 +262,7 @@ export class EditProjectDialogComponent
     };
   }
 
-  onRemoveListItem(index: number) {
+  onRemoveListItem(index: number): void {
     this.newlyCreatedAssignees.splice(index, 1);
   }
 
@@ -265,7 +270,7 @@ export class EditProjectDialogComponent
    * To remove an assignee from the 'Assign To' list
    * @param assigneeListItem
    */
-  onRemove(id: number) {
+  onRemove(id: number): void {
     this.assigneeIdsToRemove.push(id);
     const removeIndex = this.alreadyCreatedAssignees.findIndex(
       assignee => assignee.id === id
@@ -273,31 +278,28 @@ export class EditProjectDialogComponent
     this.alreadyCreatedAssignees.splice(removeIndex, 1);
   }
 
-  removeAssignees() {
+  removeAssignees(): void {
     this.assigneeIdsToRemove.forEach(id => {
-      this.dataService.delete(`/sop/assignee`, `${id}.json`).subscribe();
+      this.projectsService.deleteAssignee(id).subscribe();
     });
     this.assigneeIdsToRemove = [];
   }
 
-  createAssignees() {
+  createAssignees(): void {
     this.newlyCreatedAssignees.forEach(assignee => {
-      this.dataService
-        .postData(`/sop/${this.project.id}/assignee.json`, {
-          user: assignee.user,
-          role: assignee.role,
-        })
+      this.projectsService
+        .createAssignee(this.project.id, assignee)
         .subscribe();
     });
     this.newlyCreatedAssignees = [];
   }
 
-  onDueDateChange(date: Date) {
-    this.project.due_date = this.utils.datetypeToStringWithoutTime(date);
+  onDueDateChange(date: Date): void {
+    this.project.due_date = DateUtils.datetypeToStringWithoutTime(date);
     this.dueDate = date;
   }
 
-  validateForm(project: Project) {
+  validateForm(project: Project): boolean {
     for (const key in this.projectInfoValidators) {
       this.projectInfoValidators[key] = project[key] !== "";
     }
@@ -315,7 +317,7 @@ export class EditProjectDialogComponent
     return this.alreadyCreatedAssignees.every(this.validateAssignee);
   }
 
-  onCreateNew() {
+  onCreateNew(): void {
     const validationCheck =
       this.validateForm(this.project) && this.validateAssignees();
     if (!validationCheck) {
@@ -323,16 +325,14 @@ export class EditProjectDialogComponent
       return;
     }
     this.spinner.show();
-    const formData = this.JSONtoFormData(this.project);
-    this.dataService.postData("/sop.json", formData).subscribe(
+    const formData = this.getProjectFormData();
+    // TODO logic in this nested call could be simplified + extracted into projects.service
+    this.projectsService.createProject(formData).subscribe(
       response => {
-        if (this.alreadyCreatedAssignees.length === 0) {
-          return;
-        }
         this.alreadyCreatedAssignees.forEach(assignee => {
-          this.dataService
-            .postData(`/sop/${response.id}/assignee.json`, assignee)
-            .subscribe(res => {});
+          this.projectsService
+            .createAssignee(response.id, assignee)
+            .subscribe();
         });
       },
       err => {
@@ -348,111 +348,75 @@ export class EditProjectDialogComponent
     );
   }
 
-  onSave() {
+  onSave(): void {
     this.spinner.show();
 
-    const formData = new FormData();
-    for (const formFieldValue in this.project) {
-      formData.append(formFieldValue, this.project[formFieldValue]);
-    }
+    const formData = this.getProjectFormData();
     if (typeof formData.get("logo") === "string") {
       formData.set("logo", "");
     }
     formData.set("rCodes", "");
 
-    this.dataService
-      .update("/sop", this.project.id + ".json", formData)
-      .subscribe(
-        response => {
-          if (this.assigneeIdsToRemove.length > 0) {
-            this.removeAssignees();
-          }
-          if (this.newlyCreatedAssignees.length > 0) {
-            this.createAssignees();
-          }
-          this.snackBar.open("Project has been modified", "Success", {
-            duration: 2000,
-          });
-        },
-        err => {
-          const keys = Object.keys(err.error);
-          let error = "";
-          keys.forEach(key => {
-            error += key + ": " + err.error[key] + "\n";
-          });
-          this.spinner.hide();
-
-          this.snackBar.open(error, "Failed", { duration: 2000 });
-        },
-        () => {
-          this.onClose();
-          this.spinner.hide();
+    this.projectsService.updateProject(this.project.id, formData).subscribe(
+      response => {
+        if (this.assigneeIdsToRemove.length > 0) {
+          this.removeAssignees();
         }
-      );
+        if (this.newlyCreatedAssignees.length > 0) {
+          this.createAssignees();
+        }
+        this.snackBar.open("Project has been modified", "Success", {
+          duration: 2000,
+        });
+      },
+      err => {
+        // TODO this error handling should probably happen for most requests
+        // we should extract it and generalize it
+        const keys = Object.keys(err.error);
+        let error = "";
+        keys.forEach(key => {
+          error += `${key}: ${err.error[key]}\n`;
+        });
+        this.spinner.hide();
+        this.snackBar.open(error, "Failed", { duration: 2000 });
+      },
+      () => {
+        this.onClose();
+        this.spinner.hide();
+      }
+    );
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.createMode ? this.onCreateNew() : this.onSave();
   }
 
-  /**
-   * Format the year as 00YY
-   * @param year
-   */
-  formatYear(year) {
-    const digits = year.toString().split("");
-    return "" + digits[2] + digits[3];
-  }
-
-  /**
-   * Get the date as a string and then split the string using
-   * the "/" then using the date, month and year
-   * set the due date in the editSelectedDate property
-   * @param date
-   */
-  arrangeDateInCorrectFormat(date) {
-    const newDate = date.toString().split("/");
-    this.editSelectedDate = new Date();
-    this.editSelectedDate.setFullYear(Number(newDate[2]));
-    this.editSelectedDate.setMonth(Number(newDate[1]) - 1);
-    this.editSelectedDate.setDate(Number(newDate[0]));
-    return this.editSelectedDate;
-  }
-
-  JSONtoFormData(json) {
+  getProjectFormData(): FormData {
     const formData = new FormData();
-    for (const fieldValue in json) {
-      formData.append(fieldValue, json[fieldValue]);
+    for (const fieldValue in this.project) {
+      formData.append(fieldValue, this.project[fieldValue]);
     }
     return formData;
   }
 
-  onSendInvitation() {
+  onSendInvitation(): void {
     this.invitationList.forEach(invitee => {
-      this.dataService
-        .postData("/invite_users/", {
-          first_name: invitee.inviteFirstName,
-          email: invitee.inviteEmail,
-          last_name: invitee.inviteLastName,
-          role: invitee.inviteRole,
-          sop: this.project.id,
-        })
-        .subscribe(
-          res => {
-            this.snackBar.open(
-              `Invitation mail has been sent to ${invitee.inviteEmail}`,
-              "Success",
-              { duration: 3000 }
-            );
-          },
-          err => {
-            this.snackBar.open(
-              `Can not send invitation to ${invitee.inviteEmail}`,
-              "Failed",
-              { duration: 3000 }
-            );
-          }
-        );
+      this.projectsService.inviteUser(this.project.id, invitee).subscribe(
+        res => {
+          this.snackBar.open(
+            `Invitation mail has been sent to ${invitee.inviteEmail}`,
+            "Success",
+            { duration: 3000 }
+          );
+        },
+        err => {
+          this.snackBar.open(
+            `Can not send invitation to ${invitee.inviteEmail}`,
+            "Failed",
+            { duration: 3000 }
+          );
+        }
+      );
     });
   }
 }

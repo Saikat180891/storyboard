@@ -6,7 +6,8 @@ import {
   OnInit,
   Output,
 } from "@angular/core";
-import { ProjectsPageService } from "../projects-page/projects-page.service";
+import { ProjectDisplay } from "../models/project.model";
+import { ProjectsService } from "../projects.service";
 import { ProjectCardService } from "./project-card.service";
 
 @Component({
@@ -16,19 +17,19 @@ import { ProjectCardService } from "./project-card.service";
 })
 export class ProjectCardComponent implements OnInit, OnChanges {
   sopPermissions: any = [];
-  @Input() cardData: any;
+  @Input() cardData: ProjectDisplay;
   @Output("deleteSop") deleteSop = new EventEmitter();
   @Output("grantedPermissions") grantedPermissions = new EventEmitter();
   @Output("openEditProject") openEditProject = new EventEmitter();
 
-  //this is the color required by the material directive to give the ripple effect
+  // this is the color required by the material directive to give the ripple effect
   rippleColor = "rbga(0,0,0,0.2)";
-  localData: any;
+  localData: ProjectDisplay;
   id = "0";
 
   constructor(
-    private _cardService: ProjectCardService,
-    private _projectsPageService: ProjectsPageService
+    private cardService: ProjectCardService,
+    private projectsService: ProjectsService
   ) {}
 
   /**
@@ -39,15 +40,15 @@ export class ProjectCardComponent implements OnInit, OnChanges {
    */
   ngOnInit() {
     this.localData = this.cardData;
-    this._cardService.cardContent = this.cardData;
-    this.sopPermissions = this._projectsPageService.permissions;
+    this.cardService.cardContent = this.cardData;
+    this.sopPermissions = this.projectsService.permissions;
   }
 
   ngOnChanges() {
     this.localData = this.cardData;
   }
 
-  onPrevent(event: any) {
+  onPrevent(event: Event): void {
     event.stopPropagation();
   }
 
@@ -55,7 +56,7 @@ export class ProjectCardComponent implements OnInit, OnChanges {
    * this function is used to open the edit dialog box with the data
    * of the projects and the permission required for authorization
    */
-  onEdit(cardData: any) {
+  onEdit(cardData: ProjectDisplay): void {
     this.openEditProject.emit({
       data: cardData,
       role: cardData.assignee[0].role,
@@ -67,7 +68,7 @@ export class ProjectCardComponent implements OnInit, OnChanges {
   /**
    * this function is used to open the confirm deletion of projects
    */
-  onDelete(localData) {
+  onDelete(localData: ProjectDisplay): void {
     this.deleteSop.emit({ id: localData.id, status: true });
   }
 }

@@ -13,7 +13,6 @@ import {
 import { FormBuilder, Validators } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
 import { fromEvent } from "rxjs";
-import { UtilsService } from "src/app/utils.service";
 import { SharedServicesService } from "../../../services/shared-services/shared-services.service";
 import { ReasonCodeService } from "../reason-code.service";
 
@@ -104,8 +103,7 @@ export class SprintConfigComponent
     private __rcService: ReasonCodeService,
     private spinner: NgxSpinnerService,
     private formBuilder: FormBuilder,
-    private __sharedService: SharedServicesService,
-    private __utils: UtilsService
+    private __sharedService: SharedServicesService
   ) {}
 
   @HostListener("document:keyup.escape", ["$event"])

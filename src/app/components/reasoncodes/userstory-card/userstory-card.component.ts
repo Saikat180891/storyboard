@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from "@angular/core";
-import { UtilsService } from "../../../utils.service";
+import { DateUtils } from "../../shared/date-utils";
 import { ReasonCodeService } from "../reason-code.service";
 import { ReasoncodesComponent } from "../reasoncodes.component";
 import { EditUserStoryService } from "../userstory-card-edit/edit-user-story.service";
@@ -39,15 +39,12 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
   constructor(
     private __editUS: EditUserStoryService,
     private __rcService: ReasonCodeService,
-    private rcComponent: ReasoncodesComponent,
-    private __utils: UtilsService
+    private rcComponent: ReasoncodesComponent
   ) {}
 
   ngOnInit() {
     this.userStory = JSON.parse(JSON.stringify(this.inputUserStory));
-    this.userStory.created = this.__utils.formatDateToUS(
-      this.userStory.created
-    );
+    this.userStory.created = DateUtils.formatDateToUS(this.userStory.created);
   }
 
   ngOnChanges() {
@@ -83,16 +80,16 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
         rc_id = element.id;
       }
     });
-    this.userStory.planned_delivery = this.__utils.datetypeToStringWithoutTime(
+    this.userStory.planned_delivery = DateUtils.datetypeToStringWithoutTime(
       this.userStory.planned_delivery
     );
 
     this.userStory.revised_delivery == "-----"
       ? (this.userStory.revised_delivery = null)
-      : (this.userStory.revised_delivery = this.__utils.datetypeToStringWithoutTime(
+      : (this.userStory.revised_delivery = DateUtils.datetypeToStringWithoutTime(
           this.userStory.revised_delivery
         ));
-    this.userStory.created = this.__utils.datetypeToStringWithTime(
+    this.userStory.created = DateUtils.datetypeToStringWithTime(
       this.userStory.created
     );
 
@@ -114,16 +111,16 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
         rc_id = element.id;
       }
     });
-    this.userStory.planned_delivery = this.__utils.datetypeToStringWithoutTime(
+    this.userStory.planned_delivery = DateUtils.datetypeToStringWithoutTime(
       this.userStory.planned_delivery
     );
 
     this.userStory.revised_delivery == "-----"
       ? (this.userStory.revised_delivery = null)
-      : (this.userStory.revised_delivery = this.__utils.datetypeToStringWithoutTime(
+      : (this.userStory.revised_delivery = DateUtils.datetypeToStringWithoutTime(
           this.userStory.revised_delivery
         ));
-    this.userStory.created = this.__utils.datetypeToStringWithTime(
+    this.userStory.created = DateUtils.datetypeToStringWithTime(
       this.userStory.created
     );
 
