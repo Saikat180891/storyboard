@@ -71,7 +71,6 @@ export class ExportToSopComponent implements OnInit {
         this.onCloseExportModal();
       },
       () => {
-        console.log(this.__export.getScreens())
         this.onCloseExportModal();
       }
     );

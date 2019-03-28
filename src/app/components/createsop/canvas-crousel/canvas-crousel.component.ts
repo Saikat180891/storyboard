@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, ElementRef, OnChanges } from "@angular/core";
+import { Component, Input, OnChanges, OnInit } from "@angular/core";
 
 @Component({
   selector: "app-canvas-crousel",
@@ -8,23 +8,20 @@ import { Component, Input, OnInit, ViewChild, ElementRef, OnChanges } from "@ang
 export class CanvasCrouselComponent implements OnInit, OnChanges {
   @Input("data") data: any;
   @Input("currentScreen") currentScreen: number;
-  @ViewChild("carouselWrapper") carouselWrapper: ElementRef;
+  goto: number;
   constructor() {}
 
-  ngOnInit() {
-  }
-  
-  ngOnChanges(){
-    console.log(this.currentScreen)
+  ngOnInit() {}
+
+  ngOnChanges() {
     this.scrollTo(this.currentScreen);
   }
 
-  scrollTo(screenId: number){
-    for(let i = 0; i < this.carouselWrapper.nativeElement.children.length; i++){
-      if(this.carouselWrapper.nativeElement.children[i].id === `screen-${screenId}`){
-        this.carouselWrapper.nativeElement.children[i].scrollIntoView();
+  scrollTo(screenId: number) {
+    this.data.forEach((element, index: number) => {
+      if (element.screenId === screenId) {
+        this.goto = index;
       }
-    }
-    // document.getElementById(`screen-${screenId}`).scrollIntoView();
+    });
   }
 }

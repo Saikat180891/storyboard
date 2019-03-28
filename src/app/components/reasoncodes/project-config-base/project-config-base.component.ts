@@ -1,15 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { ConfirmModalService } from "../../../components/shared/confirm-modal/confirm-modal.service";
 import { Epics } from "../models/Epics.model";
 import { Sprint } from "../models/Sprint.model";
 import { ReasonCodeService } from "../reason-code.service";
 import { ApiService } from "../services/api.service";
 import { ProjectConfigureService } from "../services/project-configure.service";
-import { ConfirmModalService } from "../../../components/shared/confirm-modal/confirm-modal.service";
 
 import {
   arrangeEndDateForBackend,
   convertStartDateforBackend,
-} from "../../../utils.service";
+} from "../../shared/date-utils";
 
 @Component({
   selector: "app-project-config-base",
@@ -32,20 +32,21 @@ export class ProjectConfigBaseComponent implements OnInit {
     private confirm: ConfirmModalService
   ) {}
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
 
   onAddMoreSprints() {
     this.addMoreSprints.push({});
   }
 
   onPreexistingSprint($event: number, sprintIndex: number) {
-    this.confirm.confirmDelete('Are you sure you want to delete this sprint?', ()=>{
-      this.apiEnpointService.deleteSprint($event).subscribe(res => {
-        this.projectConfigureService.deleteSprint(sprintIndex);
-      });
-    });
+    this.confirm.confirmDelete(
+      "Are you sure you want to delete this sprint?",
+      () => {
+        this.apiEnpointService.deleteSprint($event).subscribe(res => {
+          this.projectConfigureService.deleteSprint(sprintIndex);
+        });
+      }
+    );
   }
 
   onClose() {
@@ -130,10 +131,13 @@ export class ProjectConfigBaseComponent implements OnInit {
   }
 
   onDeleteCreatedEpic(id: number) {
-    this.confirm.confirmDelete('Are you sure you want to delete this epic?', ()=>{
-      this.reasonCodeService.deleteReasonCode(id);
-      this.reasonCodeService.refresh(this.reasonCodeService.sopId);
-    });
+    this.confirm.confirmDelete(
+      "Are you sure you want to delete this epic?",
+      () => {
+        this.reasonCodeService.deleteReasonCode(id);
+        this.reasonCodeService.refresh(this.reasonCodeService.sopId);
+      }
+    );
   }
 
   onPreviouslyCreatedEpicsChanged(index: number) {

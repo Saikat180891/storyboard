@@ -9,7 +9,6 @@ import {
   Output,
 } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
-import { UtilsService } from "src/app/utils.service";
 import { SharedServicesService } from "../../../services/shared-services/shared-services.service";
 import { Sprint } from "../models/Sprint.model";
 import { ReasonCodeService } from "../reason-code.service";
@@ -34,7 +33,6 @@ export class ProjectConfigComponent implements OnInit {
     private reasoncodeService: ReasonCodeService,
     private spinner: NgxSpinnerService,
     private __sharedService: SharedServicesService,
-    private __utils: UtilsService,
     private apiEnpointService: ApiService,
     private projectConfigureService: ProjectConfigureService
   ) {}

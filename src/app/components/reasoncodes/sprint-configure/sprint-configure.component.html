@@ -24,7 +24,7 @@
       <ng-container *ngFor="let sprint of addMoreSprints; let i = index">
         <div
           class="sprint-padding"
-          [ngClass]="{ 'sprint-background-color-error': true }"
+          [ngClass]="{ 'sprint-background-color-error': false }"
         >
           <app-sprint-input-row
             [value]="sprint"
@@ -37,11 +37,11 @@
     </div>
     <div class="add-sprints-section">
       <stb-button
-      btnStyle="stroked"
-      (click)="onAddMoreSprints()"
-      btnName="Add Sprints"
-      btnColor="primary"
-    ></stb-button>
+        btnStyle="stroked"
+        (click)="onAddMoreSprints()"
+        btnName="Add Sprints"
+        btnColor="primary"
+      ></stb-button>
     </div>
   </div>
 

@@ -1,7 +1,7 @@
 import {
   changeHypenToBackSlashFormatOfDate,
   formatToUSDate,
-} from "../../../utils.service";
+} from "../../shared/date-utils";
 
 export interface Sprint {
   currentSprintFlag?: boolean;

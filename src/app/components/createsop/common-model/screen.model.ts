@@ -4,4 +4,5 @@ export interface Screen {
   tabName: string;
   imageUrl: string;
   imageId?: number;
+  screenId?: number;
 }

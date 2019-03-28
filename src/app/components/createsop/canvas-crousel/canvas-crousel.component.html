@@ -1,9 +1,9 @@
 <div class="crousel-wrapper">
-  <div class="crousel-cover" #carouselWrapper>
+  <div class="crousel-cover">
     <div
       class="screen-background-area"
       *ngFor="let content of data; let i = index"
-      id="screen-{{ content.screenId }}"
+      [ngStyle]="{ transform: 'translateY(-' + goto * 100 + '%)' }"
     >
       <img [src]="content.imageUrl" alt="image" />
     </div>
