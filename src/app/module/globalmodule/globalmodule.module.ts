@@ -9,9 +9,12 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { RouterModule } from "@angular/router";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ButtonComponent } from "../../components/shared/button/button.component";
+import { ConfirmModalComponent } from "../../components/shared/confirm-modal/confirm-modal.component";
+import { ConfirmModalService } from "../../components/shared/confirm-modal/confirm-modal.service";
 import { DataService } from "../../data.service";
 import { DragDropDirective } from "../../directives/dragDrop/drag-drop.directive";
 import { DroppableDirective } from "../../directives/dragDrop/droppable.directive";
@@ -21,9 +24,6 @@ import { PermissionsDirective } from "../../directives/permissions.directive";
 import { StepDistDirective } from "../../directives/stepDist/step-dist.directive";
 import { DownloadLinkComponent } from "../download-link/download-link.component";
 import { UploadAreaComponent } from "../upload-area/upload-area.component";
-import { ConfirmModalComponent } from "../../components/shared/confirm-modal/confirm-modal.component";
-import { ConfirmModalService } from "../../components/shared/confirm-modal/confirm-modal.service";
-import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 
 import {
   MatAutocompleteModule,
@@ -65,7 +65,7 @@ import {
     UploadAreaComponent,
     DownloadLinkComponent,
     ButtonComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
   ],
   imports: [
     CommonModule,
@@ -144,11 +144,14 @@ import {
     UploadAreaComponent,
     DownloadLinkComponent,
     ButtonComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
   ],
-  providers: [MatSnackBarModule, DataService, ConfirmModalService, {provide: MatDialogRef, useValue: {}}],
-  entryComponents: [
-    ConfirmModalComponent
-	]
+  providers: [
+    MatSnackBarModule,
+    DataService,
+    ConfirmModalService,
+    { provide: MatDialogRef, useValue: {} },
+  ],
+  entryComponents: [ConfirmModalComponent],
 })
 export class GlobalmoduleModule {}

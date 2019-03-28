@@ -26,8 +26,8 @@ export class StepDistDirective implements OnInit {
   ngOnInit() {
     this.checkIfStepIsVisibleInViewport();
   }
-  
-  checkIfStepIsVisibleInViewport(){
+
+  checkIfStepIsVisibleInViewport() {
     this.__rpService.getScrollPosition().subscribe(res => {
       const clientReactBounds = this.el.nativeElement.getBoundingClientRect();
       if (
@@ -35,8 +35,13 @@ export class StepDistDirective implements OnInit {
         clientReactBounds.bottom <=
           (window.innerHeight || document.documentElement.clientHeight) / 2
       ) {
-        this.__stepLink.addStepsInViewPort(this.StepDist.step_id, this.StepDist.screen_id);
-        this.__rpService.setHighlighter(this.__stepLink.getFirstStepId(this.checkScrollDirection(res)));
+        this.__stepLink.addStepsInViewPort(
+          this.StepDist.step_id,
+          this.StepDist.screen_id
+        );
+        this.__rpService.setHighlighter(
+          this.__stepLink.getFirstStepId(this.checkScrollDirection(res))
+        );
       } else {
         this.__stepLink.removeStepsNotInViewport(this.StepDist.step_id);
       }

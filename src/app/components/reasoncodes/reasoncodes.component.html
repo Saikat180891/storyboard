@@ -3,7 +3,9 @@
     <div class="container" [ngClass]="{ 'container-hide': fixToTop }">
       <div class="header">
         <div class="heading-left-component" *ngIf="_reasonCode.currentProject">
-          <app-project-header-title [projectTitle]="_reasonCode"></app-project-header-title>
+          <app-project-header-title
+            [projectTitle]="_reasonCode"
+          ></app-project-header-title>
         </div>
         <div class="heading-right-component">
           <div class="controls-wrapper">

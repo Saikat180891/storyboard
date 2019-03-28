@@ -7,23 +7,26 @@ export class StepLinkServiceService {
   private stepsInsideViewPort: number[] = [];
   constructor() {}
 
-  private stepInViewport = {}
+  private stepInViewport = {};
 
   addStepsInViewPort(stepId: number, screenId: number) {
     if (this.stepsInsideViewPort.indexOf(stepId) === -1) {
       this.stepsInsideViewPort.push(stepId);
     }
-    if(!(stepId in this.stepInViewport)){
-      this.stepInViewport[stepId] = {screenId, stepId};
+    if (!(stepId in this.stepInViewport)) {
+      this.stepInViewport[stepId] = { screenId, stepId };
     }
   }
 
   removeStepsNotInViewport(stepId: number) {
     if (this.stepsInsideViewPort.indexOf(stepId) !== -1) {
-      this.stepsInsideViewPort.splice(this.stepsInsideViewPort.indexOf(stepId), 1);
+      this.stepsInsideViewPort.splice(
+        this.stepsInsideViewPort.indexOf(stepId),
+        1
+      );
     }
 
-    if(stepId in this.stepInViewport){
+    if (stepId in this.stepInViewport) {
       delete this.stepInViewport[stepId];
     }
   }
@@ -34,9 +37,10 @@ export class StepLinkServiceService {
 
   getFirstStepId(scrollDirection: string) {
     if (scrollDirection === "up") {
-      return this.stepInViewport[this.stepsInsideViewPort[this.stepsInsideViewPort.length - 1]];
+      return this.stepInViewport[
+        this.stepsInsideViewPort[this.stepsInsideViewPort.length - 1]
+      ];
     }
     return this.stepInViewport[this.stepsInsideViewPort[0]];
   }
-
 }

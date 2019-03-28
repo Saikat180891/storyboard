@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
+import { BehaviorSubject, Observable } from "rxjs";
 import { Screen } from "../../models/Screen.model";
-import { Observable, BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -26,11 +26,11 @@ export class ExportToSopService {
     this.screenList.splice(index, 0, data);
   }
 
-  getScreens(){
+  getScreens() {
     return this.screenList;
   }
 
-  storeScreens(screenList: Screen[]){
+  storeScreens(screenList: Screen[]) {
     this.screenList = screenList;
   }
 
@@ -41,8 +41,7 @@ export class ExportToSopService {
     return true;
   }
 
-  getScreensAsObservable():Observable<Screen[]>{
+  getScreensAsObservable(): Observable<Screen[]> {
     return new BehaviorSubject(this.screenList);
   }
-
 }

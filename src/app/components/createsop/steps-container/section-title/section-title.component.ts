@@ -14,11 +14,11 @@ import {
 } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { SectionListItem } from "../../common-model/section-list-item.model";
+import { LeftPanelService } from "../../services/left-panel/left-panel.service";
 import { OperationBarService } from "../../services/operation-bar/operation-bar.service";
 import { RightPanelService } from "../../services/right-panel/right-panel.service";
 import { StepcontrolService } from "../../services/stepcontrol/stepcontrol.service";
 import { StepsContainerComponent } from "../steps-container.component";
-import { LeftPanelService } from "../../services/left-panel/left-panel.service";
 
 @Component({
   selector: "app-section-title",
@@ -77,7 +77,7 @@ export class SectionTitleComponent implements OnInit {
   }
 
   onSelectStep(stepId: number, screenId: number) {
-    this.__rpService.setHighlighter({stepId, screenId});
+    this.__rpService.setHighlighter({ stepId, screenId });
   }
 
   // to collapse the accordion

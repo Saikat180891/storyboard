@@ -23,9 +23,9 @@ import { SprintInputRowComponent } from "./sprint-input-row/sprint-input-row.com
 
 import { EpicComponent } from "./epic/epic.component";
 import { ProjectConfigBaseComponent } from "./project-config-base/project-config-base.component";
+import { ProjectHeaderTitleComponent } from "./project-header-title/project-header-title.component";
 import { ProjectConfigureService } from "./services/project-configure.service";
 import { SortComponent } from "./sort/sort.component";
-import { ProjectHeaderTitleComponent } from './project-header-title/project-header-title.component';
 
 const routes: Routes = [{ path: "", component: ReasoncodesComponent }];
 

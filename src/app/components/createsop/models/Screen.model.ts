@@ -1,4 +1,4 @@
-export interface Screen{
+export interface Screen {
   applicationName: string;
   screenName: string;
   tabName: string;
@@ -7,7 +7,7 @@ export interface Screen{
   screenId?: number;
 }
 
-export class ScreenItem{
+export class ScreenItem {
   applicationName: string;
   screenName: string;
   tabName: string;
@@ -15,7 +15,7 @@ export class ScreenItem{
   imageId: number;
   screenId?: number;
 
-  constructor(screen: any){
+  constructor(screen: any) {
     this.applicationName = screen.application_name;
     this.screenName = screen.screen_name;
     this.tabName = screen.tab_name;
@@ -24,14 +24,14 @@ export class ScreenItem{
     this.screenId = screen.id;
   }
 
-  receiveScreenItem(){
+  receiveScreenItem() {
     return {
       applicationName: this.applicationName,
       screenName: this.screenName,
       tabName: this.tabName,
       imageUrl: this.imageUrl,
       screenId: this.screenId,
-      imageId: this.imageId
-    }
+      imageId: this.imageId,
+    };
   }
 }

@@ -15,6 +15,6 @@ export class ButtonComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.btnNameWithIcon = `${this.htmlIcon} ${this.btnName}`
+    this.btnNameWithIcon = `${this.htmlIcon} ${this.btnName}`;
   }
 }

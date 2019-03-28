@@ -19,7 +19,11 @@
             [disabled]="!canEdit"
           >
             <mat-option>None</mat-option>
-            <mat-option [value]="screen.screenId" *ngFor="let screen of screenList">{{screen.screenName}}</mat-option>
+            <mat-option
+              [value]="screen.screenId"
+              *ngFor="let screen of screenList"
+              >{{ screen.screenName }}</mat-option
+            >
           </mat-select>
         </div>
       </div>

@@ -20,11 +20,10 @@ export class StepBaseComponent implements OnInit {
   constructor(private exportService: ExportToSopService) {}
 
   ngOnInit() {
-
     this.init();
   }
 
-  init(){
+  init() {
     if (this.stepData.step_id || this.stepData.id) {
       this.setExistingStepState();
     } else {
@@ -32,7 +31,7 @@ export class StepBaseComponent implements OnInit {
     }
     this.exportService.getScreensAsObservable().subscribe(screen => {
       this.screenList = screen;
-    })
+    });
   }
 
   setNewStepState() {

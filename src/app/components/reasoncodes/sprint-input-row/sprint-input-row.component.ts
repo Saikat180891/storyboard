@@ -26,8 +26,8 @@ export class SprintInputRowComponent implements OnInit {
   ngOnInit() {
     this.checkifCreateCompWithPlaceholderOrReceivedData();
   }
-  
-  checkifCreateCompWithPlaceholderOrReceivedData(){
+
+  checkifCreateCompWithPlaceholderOrReceivedData() {
     if (this.value.sprintName === undefined) {
       this.formValues = {
         sprintName: "Sprint X",

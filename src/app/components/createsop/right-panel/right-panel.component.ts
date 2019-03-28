@@ -11,13 +11,13 @@ import {
   ViewChild,
 } from "@angular/core";
 import { DataService } from "../../../data.service";
+import { ConfirmModalService } from "../../shared/confirm-modal/confirm-modal.service";
 import { SectionListItem } from "../common-model/section-list-item.model";
 import { Step } from "../common-model/step-type.model";
+import { ExportToSopService } from "../services/export-to-sop/export-to-sop.service";
 import { PageService } from "../services/page/page.service";
 import { RightPanelService } from "../services/right-panel/right-panel.service";
 import { StepcontrolService } from "../services/stepcontrol/stepcontrol.service";
-import { ConfirmModalService } from "../../shared/confirm-modal/confirm-modal.service";
-import { ExportToSopService } from "../services/export-to-sop/export-to-sop.service";
 interface StepTypeDropEvent {
   data: string;
   index: number;
@@ -40,7 +40,7 @@ export class RightPanelComponent implements OnInit {
     private __api: DataService,
     private __page: PageService,
     private __rpService: RightPanelService,
-    private confirm: ConfirmModalService,
+    private confirm: ConfirmModalService
   ) {}
 
   /**
@@ -50,7 +50,7 @@ export class RightPanelComponent implements OnInit {
     this.init();
   }
 
-  init(){
+  init() {
     // fetch all the previously created section when the component loads
     this.__rpService
       .getListOfCreatedSectionFromServer(this.__page.userStoryId)
@@ -127,17 +127,20 @@ export class RightPanelComponent implements OnInit {
    * @param $event
    */
   onDeleteSection($event: Event) {
-    this.confirm.confirmDelete("Are you sure you want to delete this section? All the steps related to this section will also be deleted.", ()=>{
-      this.__rpService
-        .deleteSection(
-          this.__page.userStoryId,
-          $event["sectionId"],
-          $event["insertionId"]
-        )
-        .subscribe(res => {
-          this.__steps.deleteSection($event["sectionIndex"]);
-        });
-    })
+    this.confirm.confirmDelete(
+      "Are you sure you want to delete this section? All the steps related to this section will also be deleted.",
+      () => {
+        this.__rpService
+          .deleteSection(
+            this.__page.userStoryId,
+            $event["sectionId"],
+            $event["insertionId"]
+          )
+          .subscribe(res => {
+            this.__steps.deleteSection($event["sectionIndex"]);
+          });
+      }
+    );
   }
 
   /**

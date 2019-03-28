@@ -23,10 +23,7 @@
   </div>
   <div class="file-validations">
     <form class="form" [formGroup]="uploadForm">
-      <mat-checkbox
-        color="primary"
-        formControlName="isSorocoTemplateUsed"
-      >
+      <mat-checkbox color="primary" formControlName="isSorocoTemplateUsed">
         Yes, I used Soroco Excel Template
       </mat-checkbox>
       <ng-container *ngIf="!uploadForm.value.isSorocoTemplateUsed">
