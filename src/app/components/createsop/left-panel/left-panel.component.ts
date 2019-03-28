@@ -11,7 +11,7 @@ import { SopApiService } from "../services/sop-api-service/sop-api.service";
 })
 export class LeftPanelComponent implements OnInit {
   @Output("openMediaPane") openMediaPane = new EventEmitter<boolean>();
-  isAppInZeroState: boolean = false;
+  isAppInZeroState: boolean = true;
   screens: Screen[] = [];
   screenSelected: Screen;
   currentScreen: number;
@@ -30,11 +30,15 @@ export class LeftPanelComponent implements OnInit {
   init() {
     this.sopApiService.getScreenList(this.pageService.projectId).subscribe(
       screens => {
+        if (screens.length > 0) {
+          this.isAppInZeroState = !this.isAppInZeroState;
+        }
         this.exportService.storeScreens(screens);
       },
       err => {},
       () => {
         this.screens = this.exportService.getScreens();
+
         this.screenSelected = this.screens[1];
       }
     );
