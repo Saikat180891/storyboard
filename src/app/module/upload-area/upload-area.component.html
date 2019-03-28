@@ -1,0 +1,36 @@
+<div class="file-upload-wrapper" #fileUploadWrapper>
+  <ng-container *ngIf="!previewFile">
+    <div
+      class="input-condition"
+      [ngClass]="{ 'gutter-top-bottom': !previewFile }"
+    >
+      <span *ngIf="!isFileChosen">{{ uploaderName }}</span>
+      <span *ngIf="!isFileChosen"
+        ><small>(Max Size {{ maxLimitText }})</small></span
+      >
+      <ng-container *ngIf="!previewFile">
+        <span *ngIf="displayFileName">{{ displayFileName }}</span>
+      </ng-container>
+      <span *ngIf="!isFileChosen" class="choose-file"
+        ><i class="fas fa-upload"></i>CHOOSE FILE</span
+      >
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="previewFile">
+    <div class="image-background">
+      <img
+        [src]="previewFile"
+        alt="preview file"
+        [ngStyle]="{ height: height + 'px' }"
+      />
+    </div>
+  </ng-container>
+
+  <input
+    type="file"
+    (change)="onFileSelected($event)"
+    [accept]="fileType"
+    [disabled]="disabled"
+  />
+</div>

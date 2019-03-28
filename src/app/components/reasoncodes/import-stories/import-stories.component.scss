@@ -1,0 +1,44 @@
+@import "../project-config/project-config.component.scss";
+
+.import-stories-body {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  font-size: 14px;
+  height: 350px;
+
+  .import-stories-message {
+    color: #999999;
+  }
+
+  .download-file-wrapper {
+  }
+
+  .upload-file-wrapper {
+    span {
+      font-weight: bold;
+      display: block;
+    }
+    .upload-area-wrapper {
+      height: 6rem;
+    }
+  }
+
+  .file-validations {
+    display: flex;
+    flex-direction: column;
+
+    .form {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .gutter-bottom {
+    margin-bottom: 0.5rem;
+  }
+}
+.gutter-vertical {
+  height: 50px;
+  padding-top: 0.65rem;
+}

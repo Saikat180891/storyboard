@@ -68,8 +68,6 @@ export interface ReceivedSprintConfig {
   templateUrl: "./reasoncodes.component.html",
   styleUrls: [
     "./reasoncodes.component.scss",
-    "./move-user-story.scss",
-    "./draggable.scss",
     "./completed-warning.scss",
     "./export.scss",
   ],
@@ -105,6 +103,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
   role: string;
   permissions: any;
   enableView: boolean = true;
+  currentProjectTitle: any;
 
   addSprintPayload: SprintConfig = {
     sprint_name: "",
@@ -138,6 +137,10 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.init();
+  }
+
+  init() {
     this.route.params.subscribe(params => {
       this._reasonCode.sopId = this._createUserStory.sopId = parseInt(
         params.id
@@ -174,8 +177,6 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
     this._reasonCode.destroyAllService();
   }
 
-  onSelectDeletedUS() {}
-
   getPermissionForEpicsPage(pageNumber: number, projectId: number) {
     this._reasonCode.getPermission(pageNumber, projectId).subscribe(
       res => {
@@ -209,10 +210,6 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
     }/benefits_realization.png?q=${new Date().getTime()}`;
     this.showBenefitsChart = true;
   }
-
-  onAddSprint() {}
-
-  showNotification() {}
 
   clearAllSort() {
     this._reasonCode.getUserStories(this._reasonCode.sopId);
@@ -383,21 +380,6 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
   onSelectDeleteUserStory() {
     this._reasonCode.deleteUserStory(this.idOfUserStoryToDelete);
     this.warningToDeleteUserStory = false;
-  }
-
-  onSortBy(args: string) {
-    this._reasonCode.sortBy = args;
-    this.sortBy = true;
-    let path = "";
-    if (this._reasonCode.filterPath != "") {
-      path = "?" + this._reasonCode.filterPath + "&" + this._reasonCode.sortBy;
-    } else {
-      path = "?" + this._reasonCode.sortBy;
-    }
-    this._reasonCode.filterUserStories(
-      `/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`,
-      path
-    );
   }
 
   onClearAllFilters() {

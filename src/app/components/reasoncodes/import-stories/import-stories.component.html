@@ -1,0 +1,42 @@
+<div class="import-stories-body">
+  <div class="import-stories-message gutter-bottom">
+    Please download Excel template and populate the following Excel file to
+    import sprints, epics and stories for this project.
+  </div>
+  <div class="download-file-wrapper gutter-bottom">
+    <app-download-link
+      downloadLinkName="Existing project as Excel template"
+      (onSelected)="exportToExcel()"
+    ></app-download-link>
+  </div>
+  <div class="upload-file-wrapper gutter-bottom">
+    <span class="gutter-bottom">Upload</span>
+    <div class="upload-area-wrapper">
+      <app-upload-area
+        fileType=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+        (fileChange)="onFileSelected($event)"
+        [disabled]="false"
+        uploaderName="Upload Excel File"
+        maxLimitText="200MB"
+      ></app-upload-area>
+    </div>
+  </div>
+  <div class="file-validations">
+    <form class="form" [formGroup]="uploadForm">
+      <mat-checkbox
+        color="primary"
+        formControlName="isSorocoTemplateUsed"
+      >
+        Yes, I used Soroco Excel Template
+      </mat-checkbox>
+      <ng-container *ngIf="!uploadForm.value.isSorocoTemplateUsed">
+        <small class="validation-message">
+          <em>* Please accept by checking the checkbox.</em>
+        </small>
+      </ng-container>
+    </form>
+  </div>
+</div>
+<div class="gutter-vertical">
+  <app-modal-footer (selectedIndex)="onOptionChosen($event)"></app-modal-footer>
+</div>

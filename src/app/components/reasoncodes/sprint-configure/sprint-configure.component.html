@@ -1,0 +1,62 @@
+<form name="sprints-form">
+  <div class="modal-body modal-side-padding">
+    <div class="sprint-header">
+      <span>Name</span>
+      <span>Start date</span>
+      <span>Duration</span>
+      <span>End date</span>
+      <span></span>
+    </div>
+    <div class="content-body">
+      <ng-container *ngFor="let sprint of sprintConfigData; let i = index">
+        <div
+          class="sprint-padding"
+          [ngClass]="{ 'sprint-background-color': sprint.currentSprintFlag }"
+        >
+          <app-sprint-input-row
+            [value]="sprint"
+            (valueChange)="preExistingSprintModified[i] = $event"
+            [index]="sprint.id"
+            (deleteSprint)="onPreexistingSprint(sprint.id, i)"
+          ></app-sprint-input-row>
+        </div>
+      </ng-container>
+      <ng-container *ngFor="let sprint of addMoreSprints; let i = index">
+        <div
+          class="sprint-padding"
+          [ngClass]="{ 'sprint-background-color-error': true }"
+        >
+          <app-sprint-input-row
+            [value]="sprint"
+            (valueChange)="addMoreSprints[i] = $event"
+            [index]="i"
+            (deleteSprint)="ondeleteSprint($event)"
+          ></app-sprint-input-row>
+        </div>
+      </ng-container>
+    </div>
+    <div class="add-sprints-section">
+      <stb-button
+      btnStyle="stroked"
+      (click)="onAddMoreSprints()"
+      btnName="Add Sprints"
+      btnColor="primary"
+    ></stb-button>
+    </div>
+  </div>
+
+  <div class="modal-controls">
+    <stb-button
+      btnStyle="raised"
+      (click)="onSave()"
+      btnName="Save"
+      btnColor="primary"
+    ></stb-button>
+    <stb-button
+      btnStyle="raised"
+      (click)="onClose()"
+      btnName="Cancel"
+      btnColor="accent"
+    ></stb-button>
+  </div>
+</form>

@@ -1,0 +1,78 @@
+<div class="modal-body">
+  <div class="grid-list">
+    <mat-grid-list cols="12" rowHeight="25px">
+      <mat-grid-tile><span class="heading">Epic#</span></mat-grid-tile>
+      <mat-grid-tile [colspan]="4"
+        ><span class="heading">Name</span></mat-grid-tile
+      >
+      <mat-grid-tile></mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+  <div class="content-body">
+    <div
+      [id]="epic.id"
+      class="grid-list"
+      *ngFor="let epic of previouslySavedEpics; let i = index"
+    >
+      <mat-grid-list cols="12" rowHeight="70px" gutterSize="10px">
+        <mat-grid-tile>{{ i + 1 }}</mat-grid-tile>
+        <mat-grid-tile [colspan]="4">
+          <input
+            maxlength="100"
+            type="text"
+            [(ngModel)]="epic.name"
+            (keyup)="onPreviouslyCreatedEpicsChanged(i)"
+          />
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="delete" (click)="onDeleteCreatedEpic(epic.id)">
+            <i class="far fa-trash-alt"></i>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+
+    <div
+      class="grid-list"
+      *ngFor="let addNewEpic of addNewEpics; let i = index"
+    >
+      <mat-grid-list cols="12" rowHeight="70px" gutterSize="10px">
+        <mat-grid-tile>{{ previouslySavedEpics.length + i + 1 }}</mat-grid-tile>
+        <mat-grid-tile [colspan]="4">
+          <input type="text" [(ngModel)]="addNewEpic.name" />
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="delete" (click)="onDeleteEpics(i)">
+            <i class="far fa-trash-alt"></i>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+
+    <div class="grid-list-footer">
+      <div class="add-btn-size">
+        <stb-button
+          btnStyle="stroked"
+          (click)="onAddNewEpics()"
+          btnName="Add Sprints"
+          btnColor="primary"
+        ></stb-button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-controls">
+    <stb-button
+    btnStyle="raised"
+    (click)="onSave()"
+    btnName="Save"
+    btnColor="primary"
+  ></stb-button>
+  <stb-button
+    btnStyle="raised"
+    (click)="onClose()"
+    btnName="Cancel"
+    btnColor="accent"
+  ></stb-button>
+</div>

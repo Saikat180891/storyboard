@@ -2,12 +2,11 @@
  * Author: Saikat Paul
  * Designation: Frontend Engineer, Soroco
  */
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { CdkDragDrop } from "@angular/cdk/drag-drop";
 import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnInit,
   Output,
   QueryList,
@@ -16,14 +15,17 @@ import {
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { SectionListItem } from "../../common-model/section-list-item.model";
 import { OperationBarService } from "../../services/operation-bar/operation-bar.service";
+import { RightPanelService } from "../../services/right-panel/right-panel.service";
 import { StepcontrolService } from "../../services/stepcontrol/stepcontrol.service";
 import { StepsContainerComponent } from "../steps-container.component";
+import { LeftPanelService } from "../../services/left-panel/left-panel.service";
+
 @Component({
   selector: "app-section-title",
   templateUrl: "./section-title.component.html",
   styleUrls: ["./section-title.component.scss"],
 })
-export class SectionTitleComponent implements OnInit, OnChanges {
+export class SectionTitleComponent implements OnInit {
   @Input("sectionId") sectionId: number;
   @Input("stepParameters") stepParameters: SectionListItem;
   @Input("sectionIndex") sectionIndex: number;
@@ -41,6 +43,7 @@ export class SectionTitleComponent implements OnInit, OnChanges {
   isSectionNameEditable: boolean = true;
   // to collapse the accordion
   isCollapsed: boolean = false;
+  hightLightStep: number = -1;
 
   // form to store section name
   section = new FormGroup({
@@ -49,7 +52,9 @@ export class SectionTitleComponent implements OnInit, OnChanges {
 
   constructor(
     private __step: StepcontrolService,
-    private __opbService: OperationBarService
+    private __opbService: OperationBarService,
+    private __rpService: RightPanelService,
+    private leftPanelService: LeftPanelService
   ) {}
 
   /**
@@ -64,9 +69,16 @@ export class SectionTitleComponent implements OnInit, OnChanges {
     } else {
       this.isSectionNameEditable = false;
     }
+
+    this.__rpService.getHighlighterStepId().subscribe(res => {
+      this.hightLightStep = res.stepId;
+      this.leftPanelService.setCurrentScreen(res.screenId);
+    });
   }
 
-  ngOnChanges() {}
+  onSelectStep(stepId: number, screenId: number) {
+    this.__rpService.setHighlighter({stepId, screenId});
+  }
 
   // to collapse the accordion
   onCollapse() {

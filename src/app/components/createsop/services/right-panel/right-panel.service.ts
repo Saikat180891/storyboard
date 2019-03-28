@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { ElementRef, Injectable } from "@angular/core";
+import { BehaviorSubject, fromEvent, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { DataService } from "../../../../data.service";
 import { SectionListItem } from "../../common-model/section-list-item.model";
@@ -17,11 +17,42 @@ interface CreateSection {
   description: string;
 }
 
+interface HighlightStep {
+  screenId: number;
+  stepId: number;
+}
+
 @Injectable({
   providedIn: "root",
 })
 export class RightPanelService {
+  private scrollbarPosition = new BehaviorSubject<number>(0);
+  private stepId = new BehaviorSubject<HighlightStep>({
+    screenId: null,
+    stepId: null,
+  });
+
   constructor(private __api: DataService) {}
+
+  infiniteScrollHandler(element: ElementRef): Observable<any> {
+    return fromEvent(element.nativeElement, "scroll");
+  }
+
+  setScrollPosition(position: number) {
+    this.scrollbarPosition.next(position);
+  }
+
+  getScrollPosition(): Observable<number> {
+    return this.scrollbarPosition;
+  }
+
+  setHighlighter(stepId: HighlightStep) {
+    this.stepId.next(stepId);
+  }
+
+  getHighlighterStepId(): Observable<HighlightStep> {
+    return this.stepId;
+  }
 
   /**
    * this function is used to get all the previouslycreated function in the
@@ -40,20 +71,36 @@ export class RightPanelService {
     );
   }
 
+  /**
+   * to delete a section
+   * @param userStoryId
+   * @param sectionId
+   * @param insertionId
+   */
   deleteSection(
     userStoryId: number,
     sectionId: number,
     insertionId: number
   ): Observable<any> {
-    const endpoint = `/sop/epics/userstories/${userStoryId}/sections/destroy/${sectionId}.json?insertion_id=${insertionId}`;
+    const endpoint = `/sop/epics/userstories/${userStoryId}/sections/destroy/${sectionId}.json?action=${"delete_all"}&insertion_id=${insertionId}`;
     return this.__api.deleteValue(endpoint);
   }
 
+  /**
+   * to update a section
+   * @param sectionId
+   * @param payload
+   */
   updateSection(sectionId: number, payload: EditSectionName): Observable<any> {
     const endpoint = `/sop/epics/userstories/sections/${sectionId}.json`;
     return this.__api.updatePost(endpoint, payload);
   }
 
+  /**
+   * to create a section
+   * @param userStoryId
+   * @param payload
+   */
   createSection(
     userStoryId: number,
     payload: CreateSection
@@ -62,6 +109,12 @@ export class RightPanelService {
     return this.__api.post(endpoint, payload);
   }
 
+  /**
+   * to create a step
+   * @param userStoryId
+   * @param sectionId
+   * @param payload
+   */
   createStep(
     userStoryId: number,
     sectionId: number,
@@ -71,6 +124,11 @@ export class RightPanelService {
     return this.__api.post(endpoint, payload);
   }
 
+  /**
+   * to update a step
+   * @param stepId
+   * @param payload
+   */
   updateStep(stepId: number, payload: any): Observable<any> {
     const endpoint = `/sop/epics/userstories/sections/steps/${stepId}.json`;
     return this.__api.updatePost(endpoint, payload);

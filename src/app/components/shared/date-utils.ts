@@ -44,3 +44,31 @@ export abstract class DateUtils {
       1}/${myDate.getDate()}/${myDate.getFullYear()}`;
   }
 }
+
+export function changeBackSlashToHypenFormatOfDate(date: string) {
+  return date.split("/").join("-");
+}
+
+export function changeHypenToBackSlashFormatOfDate(date: string) {
+  return date.split("-").join("/");
+}
+
+export function formatToUSDate(date: string, splitBy: string = "/") {
+  const dateArray = date.split(splitBy);
+  return `${dateArray[1]}/${dateArray[2]}/${dateArray[0]}`;
+}
+
+export function arrangeEndDateForBackend(date: string) {
+  const endDate = date.split("/");
+  const yyyy = endDate[2];
+  const mm = endDate[0];
+  const dd = endDate[1];
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+export function convertStartDateforBackend(date: Date) {
+  const yyyy = date.getFullYear();
+  const mm = date.getMonth() + 1;
+  const dd = date.getDate();
+  return `${yyyy}-${mm}-${dd}`;
+}

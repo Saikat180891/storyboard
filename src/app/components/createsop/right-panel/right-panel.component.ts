@@ -2,13 +2,22 @@
  * Author: Saikat Paul
  * Designation: Frontend Engineer, Soroco
  */
-import { Component, OnInit } from "@angular/core";
+import {
+  AfterContentChecked,
+  Component,
+  ElementRef,
+  OnInit,
+  QueryList,
+  ViewChild,
+} from "@angular/core";
 import { DataService } from "../../../data.service";
 import { SectionListItem } from "../common-model/section-list-item.model";
 import { Step } from "../common-model/step-type.model";
 import { PageService } from "../services/page/page.service";
 import { RightPanelService } from "../services/right-panel/right-panel.service";
 import { StepcontrolService } from "../services/stepcontrol/stepcontrol.service";
+import { ConfirmModalService } from "../../shared/confirm-modal/confirm-modal.service";
+import { ExportToSopService } from "../services/export-to-sop/export-to-sop.service";
 interface StepTypeDropEvent {
   data: string;
   index: number;
@@ -23,18 +32,25 @@ export class RightPanelComponent implements OnInit {
    * 'sectionList' is the main array and it has collection of objects
    */
   sectionList: SectionListItem[] = [];
+  @ViewChild("rightPanelInfiniteScroll") rightPanelInfiniteScroll: ElementRef;
+  @ViewChild("section") section: QueryList<ElementRef>;
 
   constructor(
     private __steps: StepcontrolService,
     private __api: DataService,
     private __page: PageService,
-    private __rpService: RightPanelService
+    private __rpService: RightPanelService,
+    private confirm: ConfirmModalService,
   ) {}
 
   /**
    * get the section list and render it in the browser
    */
   ngOnInit() {
+    this.init();
+  }
+
+  init(){
     // fetch all the previously created section when the component loads
     this.__rpService
       .getListOfCreatedSectionFromServer(this.__page.userStoryId)
@@ -52,6 +68,12 @@ export class RightPanelComponent implements OnInit {
           this.sectionList = this.__steps.getList();
         }
       );
+
+    this.__rpService
+      .infiniteScrollHandler(this.rightPanelInfiniteScroll)
+      .subscribe(res => {
+        this.__rpService.setScrollPosition(res.target.scrollTop);
+      });
   }
 
   /**
@@ -105,11 +127,7 @@ export class RightPanelComponent implements OnInit {
    * @param $event
    */
   onDeleteSection($event: Event) {
-    if (
-      confirm(
-        "Are you sure you want to delete this section? All the steps related to this section will also be deleted."
-      )
-    ) {
+    this.confirm.confirmDelete("Are you sure you want to delete this section? All the steps related to this section will also be deleted.", ()=>{
       this.__rpService
         .deleteSection(
           this.__page.userStoryId,
@@ -119,7 +137,7 @@ export class RightPanelComponent implements OnInit {
         .subscribe(res => {
           this.__steps.deleteSection($event["sectionIndex"]);
         });
-    }
+    })
   }
 
   /**

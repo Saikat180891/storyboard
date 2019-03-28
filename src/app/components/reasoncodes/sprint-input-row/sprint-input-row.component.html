@@ -1,0 +1,64 @@
+<div class="grid-wrapper">
+  <div class="name-input-box-wrapper input-style-type col-size-lg">
+    <input
+      type="text"
+      maxlength="100"
+      required
+      (keyup)="onSprintChange($event)"
+      [(ngModel)]="formValues.sprintName"
+      placeholder="Sprint name"
+    />
+  </div>
+
+  <div class="start-date-wrapper col-size-lg">
+    <div class="date-picker-wrapper">
+      <mat-datepicker-toggle matSuffix [for]="picker"> </mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </div>
+    <div class="start-date-input-wrapper input-style-type">
+      <input
+        matInput
+        type="text"
+        class="extra-padding"
+        (dateChange)="onDatePickerClose($event)"
+        [matDatepicker]="picker"
+        readonly
+        required
+        [(ngModel)]="formValues.startDate"
+        placeholder="Start date"
+      />
+    </div>
+  </div>
+
+  <div class="duration-box input-style-type col-size-lg">
+    <input
+      type="text"
+      readonly
+      required
+      [(ngModel)]="formValues.duration"
+      placeholder="#weeks"
+    />
+    <div class="arrows-navigate">
+      <div class="arrow-button bottom-divider" (click)="onArrowUp()">
+        <i class="fas fa-caret-up"></i>
+      </div>
+      <div class="arrow-button" (click)="onArrowDown()">
+        <i class="fas fa-caret-down"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="end-date-wrapper input-style-type col-size-lg">
+    <input
+      type="text"
+      readonly
+      required
+      [(ngModel)]="formValues.endDate"
+      placeholder="End date"
+    />
+  </div>
+
+  <div class="delete-button col-size-sm" (click)="onDeleteSprint()">
+    <i class="far fa-trash-alt"></i>
+  </div>
+</div>

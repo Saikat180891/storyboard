@@ -1,11 +1,7 @@
 import { Injectable } from "@angular/core";
-interface Screen {
-  id: number;
-  image_id: number;
-  screen_name: string;
-  application_name: string;
-  tab_name: string;
-}
+import { Screen } from "../../models/Screen.model";
+import { Observable, BehaviorSubject } from "rxjs";
+
 @Injectable({
   providedIn: "root",
 })
@@ -29,4 +25,24 @@ export class ExportToSopService {
   insertScreen(index: number, data: Screen) {
     this.screenList.splice(index, 0, data);
   }
+
+  getScreens(){
+    return this.screenList;
+  }
+
+  storeScreens(screenList: Screen[]){
+    this.screenList = screenList;
+  }
+
+  isScreenListEmpty(): boolean {
+    if (this.screenList.length > 0) {
+      return false;
+    }
+    return true;
+  }
+
+  getScreensAsObservable():Observable<Screen[]>{
+    return new BehaviorSubject(this.screenList);
+  }
+
 }

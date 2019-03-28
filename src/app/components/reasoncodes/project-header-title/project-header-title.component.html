@@ -1,0 +1,5 @@
+<div class="heading">
+  <span class="heading-name">{{projectTitle.currentProject ? projectTitle.currentProject.clientName: ""}}</span>
+  <span class="heading-divider" *ngIf="projectTitle.currentProject.clientName">|</span>
+  <span class="heading-project-name">{{projectTitle.currentProject ? projectTitle.currentProject.title : ""}}</span>
+</div>

@@ -1,0 +1,76 @@
+<div class="sort-menu-list">
+  <ul class="sort-list">
+    <li class="sort-list-item">Clear sort</li>
+    <li class="sort-list-item">
+      <span>U/S Name</span>
+      <div class="sub-menu">
+        <ul>
+          <li (click)="onSortBy('sort=us_name,A_to_Z')">A to Z</li>
+          <li (click)="onSortBy('sort=us_name,Z_to_A')">Z to A</li>
+        </ul>
+      </div>
+    </li>
+    <li class="sort-list-item">
+      <span>Sprint Name</span>
+      <div class="sub-menu">
+        <ul>
+          <li (click)="onSortBy('sort=sprintName,A_to_Z')">A to Z</li>
+          <li (click)="onSortBy('sort=sprintName,Z_to_A')">Z to A</li>
+        </ul>
+      </div>
+    </li>
+    <li class="sort-list-item">
+      <span>Priority</span>
+      <div class="sub-menu">
+        <ul>
+          <li (click)="onSortBy('sort=priority,High_to_Low')">High to Low</li>
+          <li (click)="onSortBy('sort=priority,Low_to_High')">Low to High</li>
+        </ul>
+      </div>
+    </li>
+    <li class="sort-list-item">
+      <span>Epics</span>
+      <div class="sub-menu">
+        <ul>
+          <li (click)="onSortBy('sort=reasonCode,A_to_Z')">A to Z</li>
+          <li (click)="onSortBy('sort=reasonCode,Z_to_A')">Z to A</li>
+        </ul>
+      </div>
+    </li>
+    <li class="sort-list-item">
+      <span>Productivity</span>
+      <div class="sub-menu">
+        <ul>
+          <li (click)="onSortBy('sort=productivity,High_to_Low')">A to Z</li>
+          <li (click)="onSortBy('sort=productivity,Low_to_High')">Z to A</li>
+        </ul>
+      </div>
+    </li>
+    <li class="sort-list-item">
+      <span>Planned Delivery</span>
+      <div class="sub-menu">
+        <ul>
+          <li (click)="onSortBy('sort=planned_delivery,Earliest_to_Latest')">
+            Earliest to Latest
+          </li>
+          <li (click)="onSortBy('sort=planned_delivery,Latest_to_Earliest')">
+            Latest to Earliest
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li class="sort-list-item">
+      <span>Revised Delivery</span>
+      <div class="sub-menu">
+        <ul>
+          <li (click)="onSortBy('sort=revised_delivery,Earliest_to_Latest')">
+            Earliest to Latest
+          </li>
+          <li (click)="onSortBy('sort=revised_delivery,Latest_to_Earliest')">
+            Latest to Earliest
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>

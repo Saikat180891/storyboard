@@ -55,10 +55,10 @@ export class ReasonCodeService {
     this.currentProject = {};
   }
 
-  /**
-   *
-   * get permission
-   */
+  getCurrentProject() {
+    return this.currentProject;
+  }
+
   getPermission(pageNumber: number, projectId: number) {
     return this._api.getPermission(pageNumber, projectId);
   }
@@ -81,7 +81,7 @@ export class ReasonCodeService {
           .subscribe(response => {});
       }
     });
-    this.getSprint(this.sopId);
+    // this.getSprint(this.sopId);
   }
 
   /**
@@ -97,27 +97,17 @@ export class ReasonCodeService {
   /**
    * This api is used to get details of all the sprints
    */
-  getSprint(id) {
-    this._api.fetchData(`/sop/${id}/sprint.json`).subscribe(response => {
-      response.forEach((element, index) => {
-        element["sprintNumber"] = index + 1;
-      });
-      this.sprintConfig = response.reverse();
-      for (const sprint of this.sprintConfig) {
-        sprint.end_date = DateUtils.formatDateToUS(sprint.end_date);
-      }
-    });
-  }
+  getSprint(id) {}
 
   /**
    * this api is used to delete a sprint by it id
    * @param id - id of the sprint
    */
-  deleteSprint(id) {
-    this._api.delete("/sop/sprint", `${id}.json`).subscribe(response => {
-      this.refresh(this.sopId);
-    });
-  }
+  // deleteSprint(id) {
+  //   this._api.delete("/sop/sprint", `${id}.json`).subscribe(response => {
+  //     this.refresh(this.sopId);
+  //   });
+  // }
 
   editSprint(id, data) {
     data["start_date"] = DateUtils.datetypeToStringWithoutTime(
@@ -125,7 +115,7 @@ export class ReasonCodeService {
     );
     data["end_date"] = DateUtils.datetypeToStringWithoutTime(data["end_date"]);
     this._api.update(`/sop/sprint`, `${id}.json`, data).subscribe(response => {
-      this.getSprint(this.sopId);
+      // this.getSprint(this.sopId);
     });
   }
 
@@ -276,14 +266,16 @@ export class ReasonCodeService {
     });
   }
 
-  createReasonCode(id, body) {
-    body.forEach(element => {
-      this._api
-        .postData(`/sop/${id}/epics.json`, element)
-        .subscribe(response => {
-          this.reasonCodeData.push(response);
-        });
-    });
+  createReasonCode(id: number, body: any) {
+    const endpoint = `/sop/${id}/epics.json`;
+    this._api.post(endpoint, body).subscribe(
+      response => {
+        this.snackbar.open("Created a new Epic", "Success", { duration: 5000 });
+        this.reasonCodeData.push(response);
+      },
+      err =>
+        this.snackbar.open("Failed to create epic", "Error", { duration: 5000 })
+    );
   }
 
   getReasonCode(id) {
@@ -292,7 +284,7 @@ export class ReasonCodeService {
     });
   }
 
-  deleteReasonCode(id) {
+  deleteReasonCode(id: number) {
     this._api.delete(`/sop/epics`, `${id}.json`).subscribe(response => {
       this.reasonCodeData.forEach((element, index) => {
         if (element.id == id) {
@@ -302,16 +294,28 @@ export class ReasonCodeService {
     });
   }
 
-  editReasonCode(id, body) {
+  editEpic(id: number, body: any) {
+    const endpoint = `/sop/epics/${id}.json`;
     if (body.name != "") {
-      this._api.update(`/sop/epics`, `${id}.json`, body).subscribe(response => {
-        this.reasonCodeData.forEach(element => {
-          if (element.id == id) {
-            const pos = this.reasonCodeData.indexOf(element);
-            this.reasonCodeData[pos] = response;
-          }
-        });
-      });
+      this._api.updatePost(endpoint, body).subscribe(
+        response => {
+          this.snackbar.open(
+            "Epic name has been updated successfully",
+            "Success",
+            { duration: 5000 }
+          );
+          this.reasonCodeData.forEach(element => {
+            if (element.id === id) {
+              const pos = this.reasonCodeData.indexOf(element);
+              this.reasonCodeData[pos] = response;
+            }
+          });
+        },
+        err =>
+          this.snackbar.open("Failed to update epic", "Error", {
+            duration: 5000,
+          })
+      );
     }
   }
 
@@ -326,22 +330,22 @@ export class ReasonCodeService {
     this.getCompletedUserStories(sopID);
     this.getDeletedUserStories(sopID);
     this.getReasonCode(sopID);
-    this.getSprint(sopID);
+    // this.getSprint(sopID);
   }
 
   importStories(file) {
     return this._api.postData(`/sop/${this.sopId}/import.json`, file);
   }
 
-  downloadFile() {
-    window.location.href = this._api.apiUrl + `/sop/${this.sopId}/export.json`;
+  downloadFile(sopId: number) {
+    const endPoint = `${this._api.apiUrl}/sop/${sopId}/export.json`;
+    window.location.href = endPoint;
   }
 
-  downloadProject = () => {
-    window.location.href = `${this._api.apiUrl}/projects/${
-      this.sopId
-    }/generate_sop.json`;
-  };
+  downloadProject(sopId: number) {
+    const endPoint = `${this._api.apiUrl}/projects/${sopId}/generate_sop.json`;
+    window.location.href = endPoint;
+  }
 
   filterUserStories(endpointUrl: string, queryParameter: string) {
     this._api.fetchData(endpointUrl + queryParameter).subscribe(response => {

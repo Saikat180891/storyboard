@@ -19,9 +19,7 @@
             [disabled]="!canEdit"
           >
             <mat-option>None</mat-option>
-            <mat-option value="option1">Screen 1</mat-option>
-            <mat-option value="option2">Screen 2</mat-option>
-            <mat-option value="option3">Screen 3</mat-option>
+            <mat-option [value]="screen.screenId" *ngFor="let screen of screenList">{{screen.screenName}}</mat-option>
           </mat-select>
         </div>
       </div>
@@ -55,7 +53,11 @@
           <label for="interaction">Interaction Type</label>
           <ng-container *ngIf="canEdit; else editInteractionType">
             <div class="select">
-              <mat-select [(value)]="data.interaction_type" placeholder="None">
+              <mat-select
+                [(value)]="data.interaction_type"
+                placeholder="None"
+                (selectionChange)="onSelectionChange($event)"
+              >
                 <mat-option>None</mat-option>
                 <mat-option value="Click">Click</mat-option>
                 <mat-option value="Select">Select</mat-option>
@@ -71,7 +73,11 @@
           <label for="click">Click Option</label>
           <ng-container *ngIf="canEdit; else editClick">
             <div class="select">
-              <mat-select [(value)]="data.click_option" placeholder="None">
+              <mat-select
+                [(value)]="data.click_option"
+                placeholder="None"
+                [disabled]="disableClickOption"
+              >
                 <mat-option>None</mat-option>
                 <mat-option value="Single Click">Single click</mat-option>
                 <mat-option value="Double Click">Double click</mat-option>
@@ -87,7 +93,12 @@
         <div class="form-sub-group form-sub-group-3 padding-left">
           <label for="field">Field</label>
           <ng-container *ngIf="canEdit; else editField">
-            <input type="text" id="field" [(ngModel)]="data.field" />
+            <input
+              type="text"
+              id="field"
+              [(ngModel)]="data.field"
+              maxlength="50"
+            />
           </ng-container>
           <ng-template #editField>
             <span>{{ data.field }}</span>
@@ -99,7 +110,12 @@
         <div class="form-sub-group padding-right">
           <label for="notes">Notes</label>
           <ng-container *ngIf="canEdit; else editNotes">
-            <textarea name="" id="notes" [(ngModel)]="data.notes"></textarea>
+            <textarea
+              name=""
+              id="notes"
+              [(ngModel)]="data.notes"
+              maxlength="150"
+            ></textarea>
           </ng-container>
           <ng-template #editNotes>
             <span>{{ data.notes }}</span>
@@ -112,6 +128,7 @@
               name=""
               id="exception-handling"
               [(ngModel)]="data.exception_handling"
+              maxlength="150"
             ></textarea>
           </ng-container>
           <ng-template #editException>

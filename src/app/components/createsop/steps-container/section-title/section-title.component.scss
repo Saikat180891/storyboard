@@ -89,6 +89,10 @@
     .steps-margin-around:last-child {
       margin-bottom: 5px;
     }
+    .highlight-border {
+      border: 3px solid #2a7de1;
+      box-shadow: 0 0 10px rgba($color: #2a7de1, $alpha: 0.3);
+    }
     .droppable-area {
       padding: 30px 20px;
       border: 1px dashed #989b9c;

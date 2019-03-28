@@ -1,0 +1,37 @@
+@import "../project-config/project-config.component.scss";
+
+.add-sprints-section {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 1rem;
+  margin-left: 20px;
+}
+
+.sprint-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #999999;
+  padding: 0 20px;
+
+  span {
+    width: calc(calc(100% - 2rem) / 4.5);
+  }
+
+  span:last-child {
+    width: 2rem;
+  }
+}
+
+.sprint-background-color {
+  background-color: #dde5ed;
+}
+
+.sprint-padding {
+  padding: 0 20px;
+  margin: 1rem 0;
+}
+
+.sprint-background-color-error {
+  background-color: rgba($color: #f47074, $alpha: 0.5);
+}

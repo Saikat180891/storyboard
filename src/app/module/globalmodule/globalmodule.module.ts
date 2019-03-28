@@ -9,18 +9,21 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import {
-  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-  MatMomentDateModule,
-} from "@angular/material-moment-adapter";
 import { RouterModule } from "@angular/router";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { ButtonComponent } from "../../components/shared/button/button.component";
 import { DataService } from "../../data.service";
 import { DragDropDirective } from "../../directives/dragDrop/drag-drop.directive";
 import { DroppableDirective } from "../../directives/dragDrop/droppable.directive";
 import { ListDragDirective } from "../../directives/dragDrop/list-drag.directive";
 import { ListDropDirective } from "../../directives/dragDrop/list-drop.directive";
 import { PermissionsDirective } from "../../directives/permissions.directive";
+import { StepDistDirective } from "../../directives/stepDist/step-dist.directive";
+import { DownloadLinkComponent } from "../download-link/download-link.component";
+import { UploadAreaComponent } from "../upload-area/upload-area.component";
+import { ConfirmModalComponent } from "../../components/shared/confirm-modal/confirm-modal.component";
+import { ConfirmModalService } from "../../components/shared/confirm-modal/confirm-modal.service";
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 
 import {
   MatAutocompleteModule,
@@ -29,7 +32,6 @@ import {
   MatCheckboxModule,
   MatChipsModule,
   MatDatepickerModule,
-  MatDialogModule,
   MatDividerModule,
   MatExpansionModule,
   MatFormFieldModule,
@@ -59,6 +61,11 @@ import {
     DroppableDirective,
     ListDragDirective,
     ListDropDirective,
+    StepDistDirective,
+    UploadAreaComponent,
+    DownloadLinkComponent,
+    ButtonComponent,
+    ConfirmModalComponent
   ],
   imports: [
     CommonModule,
@@ -94,10 +101,10 @@ import {
     NgxSpinnerModule,
     RouterModule,
     DragDropModule,
-    MatMomentDateModule,
   ],
   exports: [
     PermissionsDirective,
+    StepDistDirective,
     DragDropDirective,
     DroppableDirective,
     ListDragDirective,
@@ -134,12 +141,14 @@ import {
     NgxSpinnerModule,
     RouterModule,
     DragDropModule,
-    MatMomentDateModule,
+    UploadAreaComponent,
+    DownloadLinkComponent,
+    ButtonComponent,
+    ConfirmModalComponent
   ],
-  providers: [
-    MatSnackBarModule,
-    DataService,
-    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
-  ],
+  providers: [MatSnackBarModule, DataService, ConfirmModalService, {provide: MatDialogRef, useValue: {}}],
+  entryComponents: [
+    ConfirmModalComponent
+	]
 })
 export class GlobalmoduleModule {}

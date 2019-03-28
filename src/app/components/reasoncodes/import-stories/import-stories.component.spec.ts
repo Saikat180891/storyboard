@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { SprintConfigComponent } from "./sprint-config.component";
+import { ImportStoriesComponent } from "./import-stories.component";
 
-describe("SprintConfigComponent", () => {
-  let component: SprintConfigComponent;
-  let fixture: ComponentFixture<SprintConfigComponent>;
+describe("ImportStoriesComponent", () => {
+  let component: ImportStoriesComponent;
+  let fixture: ComponentFixture<ImportStoriesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SprintConfigComponent],
+      declarations: [ImportStoriesComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SprintConfigComponent);
+    fixture = TestBed.createComponent(ImportStoriesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

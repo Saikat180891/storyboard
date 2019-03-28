@@ -1,0 +1,27 @@
+<div class="modal">
+  <mat-tab-group animationDuration="0">
+    <mat-tab label="Import Stories">
+      <div class="tab-content">
+        <app-import-stories (close)="onClose()"></app-import-stories>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Epics">
+      <div class="tab-content">
+        <app-epics
+          [previouslySavedEpics]="previouslySavedEpics"
+          (close)="onClose()"
+        ></app-epics>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Sprints">
+      <div class="tab-content">
+        <app-sprint-configure
+          [sprintConfigData]="sprintConfigData"
+          (close)="onClose()"
+        ></app-sprint-configure>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -2,32 +2,30 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { ChartsComponent } from "./charts/charts.component";
 import { ExportDialogBoxComponent } from "./export-dialog-box/export-dialog-box.component";
+import { ProjectConfigComponent } from "./project-config/project-config.component";
 import { ReasoncodesComponent } from "./reasoncodes.component";
 import { ColoredDropdownComponent } from "./shared/colored-dropdown/colored-dropdown.component";
 import { NormalDropdownComponent } from "./shared/normal-dropdown/normal-dropdown.component";
-import { SprintConfigComponent } from "./sprint-config/sprint-config.component";
 import { UserstoryCardCreateComponent } from "./userstory-card-create/userstory-card-create.component";
 import { UserstoryCardEditComponent } from "./userstory-card-edit/userstory-card-edit.component";
 import { UserstoryCardComponent } from "./userstory-card/userstory-card.component";
 import { UserstoryFilterComponent } from "./userstory-filter/userstory-filter.component";
 
-// import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from "@angular/router";
 import { NvD3Module } from "ng2-nvd3";
 
-// import {MatTabsModule} from '@angular/material/tabs';
-// import {MatDatepickerModule} from '@angular/material/datepicker';
-// import {MatSnackBarModule} from '@angular/material/snack-bar';
-// import {MatTooltipModule} from '@angular/material/tooltip';
-// import {MatChipsModule} from '@angular/material/chips';
-// import {MatMenuModule} from '@angular/material/menu';
-// import {MatRippleModule} from '@angular/material/core';
-// import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-// import {MatGridListModule} from '@angular/material/grid-list';
-// import {MatCheckboxModule} from '@angular/material/checkbox';
-// import {MatRadioModule} from '@angular/material/radio';
-
 import { GlobalmoduleModule } from "../../module/globalmodule/globalmodule.module";
+import { EpicsComponent } from "./epics/epics.component";
+import { ImportStoriesComponent } from "./import-stories/import-stories.component";
+import { ModalFooterComponent } from "./modal-footer/modal-footer.component";
+import { SprintConfigureComponent } from "./sprint-configure/sprint-configure.component";
+import { SprintInputRowComponent } from "./sprint-input-row/sprint-input-row.component";
+
+import { EpicComponent } from "./epic/epic.component";
+import { ProjectConfigBaseComponent } from "./project-config-base/project-config-base.component";
+import { ProjectConfigureService } from "./services/project-configure.service";
+import { SortComponent } from "./sort/sort.component";
+import { ProjectHeaderTitleComponent } from './project-header-title/project-header-title.component';
 
 const routes: Routes = [{ path: "", component: ReasoncodesComponent }];
 
@@ -35,7 +33,7 @@ const routes: Routes = [{ path: "", component: ReasoncodesComponent }];
   declarations: [
     ReasoncodesComponent,
     UserstoryCardComponent,
-    SprintConfigComponent,
+    ProjectConfigComponent,
     UserstoryCardCreateComponent,
     UserstoryCardEditComponent,
     UserstoryFilterComponent,
@@ -43,6 +41,15 @@ const routes: Routes = [{ path: "", component: ReasoncodesComponent }];
     ChartsComponent,
     ColoredDropdownComponent,
     NormalDropdownComponent,
+    ImportStoriesComponent,
+    ModalFooterComponent,
+    EpicsComponent,
+    SprintConfigureComponent,
+    SprintInputRowComponent,
+    ProjectConfigBaseComponent,
+    EpicComponent,
+    SortComponent,
+    ProjectHeaderTitleComponent,
   ],
   imports: [
     CommonModule,
@@ -50,5 +57,6 @@ const routes: Routes = [{ path: "", component: ReasoncodesComponent }];
     NvD3Module,
     RouterModule.forChild(routes),
   ],
+  providers: [ProjectConfigureService],
 })
 export class ReasoncodeModule {}

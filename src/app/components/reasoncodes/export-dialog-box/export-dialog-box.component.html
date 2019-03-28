@@ -12,7 +12,7 @@
   </div>
 
   <div class="main-body" [ngSwitch]="linkSelected">
-    <div>
+    <ng-container *ngSwitchCase="0">
       <div class="form-group">
         <mat-radio-group [(ngModel)]="projectTypeSelected">
           <mat-radio-button value="1" (click)="onEntireProject()"
@@ -53,6 +53,15 @@
         </button>
         <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
       </div>
-    </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="1">
+      <div class="section-tab-wrapper">
+        <app-download-link
+          downloadLinkName="Download project"
+          (onSelected)="onDownloadFile()"
+        ></app-download-link>
+      </div>
+    </ng-container>
   </div>
 </div>

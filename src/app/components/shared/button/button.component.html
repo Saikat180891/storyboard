@@ -1,0 +1,22 @@
+<div [ngSwitch]="btnStyle">
+  <div *ngSwitchCase="'raised'" class="btn-raised">
+    <div class="common-btn" [ngClass]="{'primary':btnColor==='primary', 'accent':btnColor==='accent'}">
+      <button mat-raised-button>{{ btnName }}</button>
+    </div>
+  </div>
+  <div *ngSwitchCase="'stroked'" class="btn-stroked">
+    <div class="common-btn" [ngClass]="{'primary':btnColor==='primary', 'accent':btnColor==='accent'}">
+      <button mat-stroked-button>{{ btnName }}</button>
+    </div>
+  </div>
+  <div *ngSwitchCase="'flat'">
+    <div class="common-btn btn-flat">
+      <button mat-flat-button>{{ btnName }}</button>
+    </div>
+  </div>
+  <div *ngSwitchCase="'icon'" class="btn-icon">
+    <div class="common-btn" [ngClass]="{'primary':btnColor==='primary', 'accent':btnColor==='accent'}">
+      <button mat-raised-button [innerHtml]="btnNameWithIcon"></button>
+    </div>
+  </div>
+</div>

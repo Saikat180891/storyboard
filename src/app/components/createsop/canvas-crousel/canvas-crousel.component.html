@@ -1,9 +1,12 @@
-<div class="carousel-container">
-  <div
-    class="canvas"
-    *ngFor="let content of data; let i = index"
-    [ngStyle]="{ transform: 'translateY(-' + currentImage * 100 + '%)' }"
-  >
-    <img [src]="content" alt="" />
+<div class="crousel-wrapper">
+  <div class="crousel-cover" #carouselWrapper>
+    <div
+      class="screen-background-area"
+      *ngFor="let content of data; let i = index"
+      id="screen-{{ content.screenId }}"
+    >
+      <img [src]="content.imageUrl" alt="image" />
+    </div>
   </div>
+  <div class="crousel-overlay"></div>
 </div>

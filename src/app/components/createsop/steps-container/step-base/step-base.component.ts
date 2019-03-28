@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-
+import { ExportToSopService } from "../../services/export-to-sop/export-to-sop.service";
 @Component({
   selector: "app-step-base",
   template: "",
@@ -14,17 +14,25 @@ export class StepBaseComponent implements OnInit {
 
   stepType: string = "base";
   canEdit: boolean = false;
-
+  screenList = [];
   data: any = {};
 
-  constructor() {}
+  constructor(private exportService: ExportToSopService) {}
 
   ngOnInit() {
+
+    this.init();
+  }
+
+  init(){
     if (this.stepData.step_id || this.stepData.id) {
       this.setExistingStepState();
     } else {
       this.setNewStepState();
     }
+    this.exportService.getScreensAsObservable().subscribe(screen => {
+      this.screenList = screen;
+    })
   }
 
   setNewStepState() {

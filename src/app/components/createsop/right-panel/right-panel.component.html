@@ -1,9 +1,10 @@
-<div class="infinite-scroll">
+<div class="infinite-scroll" #rightPanelInfiniteScroll id="scrollable-panel">
   <div
     class="section"
     *ngFor="let sectionListItem of sectionList; let i = index"
   >
     <app-section-title
+      #section
       [stepParameters]="sectionListItem"
       [sectionIndex]="i"
       (sectionPayload)="onButtonDragged($event, i)"

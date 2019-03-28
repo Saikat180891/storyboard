@@ -80,8 +80,16 @@
           <ng-container
             *ngFor="let step of stepParameters.steps_list; let i = index"
           >
-            <div class="steps-margin-around" cdkDrag>
+            <div
+              class="steps-margin-around"
+              cdkDrag
+              [ngClass]="{
+                'highlight-border': hightLightStep === step.step_id
+              }"
+              (click)="onSelectStep(step.step_id, step.screen_id)"
+            >
               <app-steps-container
+                [StepDist]="step"
                 #stepContainerToken
                 [stepIndex]="i"
                 [sectionIndex]="sectionIndex"

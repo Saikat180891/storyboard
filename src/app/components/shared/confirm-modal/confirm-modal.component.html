@@ -1,0 +1,22 @@
+<div class="modal-content">
+  <h2>Confirm</h2>
+
+  <div class="content-message">
+    <p>{{data.message}}</p>
+  </div>
+
+  <div class="confirm-message">
+    <stb-button
+      btnStyle="raised"
+      (click)="onButtonSelected(true)"
+      btnName="Yes"
+      btnColor="primary"
+    ></stb-button>
+    <stb-button
+      btnStyle="raised"
+      (click)="onButtonSelected(false)"
+      btnName="No"
+      btnColor="accent"
+    ></stb-button>
+  </div>
+</div>

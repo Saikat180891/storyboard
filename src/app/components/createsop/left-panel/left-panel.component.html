@@ -1,54 +1,44 @@
 <div class="breadcrumb">
   <app-breadcrumb></app-breadcrumb>
 </div>
-<div class="zero-state">
-  <p>Create a section or export a screen to continue</p>
-  <button class="btn btn-blue" (click)="onOpenMediaPane()">
-    Import A Video
-  </button>
-</div>
-<ng-container *ngIf="false">
+
+<ng-container *ngIf="isAppInZeroState; else appInSopBuildingState">
+  <div class="zero-state">
+    <p>Create a section or export a screen to continue</p>
+    <button class="btn btn-blue" (click)="onOpenMediaPane()">
+      Import A Video
+    </button>
+  </div>
+</ng-container>
+
+<ng-template #appInSopBuildingState>
   <div class="left-panel-display">
     <div class="slide-show">
       <app-canvas-crousel
-        [data]="imageGalleryContent"
-        [currentImage]="currentImage"
+        [data]="screens"
+        [currentScreen]="currentScreen"
       ></app-canvas-crousel>
-      <div class="carousel-position carousel-up" (click)="onCarouselMoveUp()">
-        <i class="fas fa-chevron-up"></i>
-      </div>
-      <div
-        class="carousel-position carousel-down"
-        (click)="onCarouselMoveDown()"
-      >
-        <i class="fas fa-chevron-down"></i>
-      </div>
     </div>
   </div>
-  <div class="small-card">
-    <div class="small-card-segments">
-      <div class="small-card-heading">
-        Application name
-      </div>
-      <div class="small-card-content">
-        Lorem ipsum dolor
-      </div>
+
+  <div class="small-card" *ngIf="screens.length > 0">
+    <div class="small-card-wrapper">
+      <app-small-card
+        header="Application name"
+        [body]="screenSelected.applicationName"
+      ></app-small-card>
     </div>
-    <div class="small-card-segments">
-      <div class="small-card-heading">
-        Application name
-      </div>
-      <div class="small-card-content">
-        Lorem ipsum dolor
-      </div>
+    <div class="small-card-wrapper">
+      <app-small-card
+        header="Screen name"
+        [body]="screenSelected.screenName"
+      ></app-small-card>
     </div>
-    <div class="small-card-segments">
-      <div class="small-card-heading">
-        Application name
-      </div>
-      <div class="small-card-content">
-        Lorem ipsum dolor
-      </div>
+    <div class="small-card-wrapper">
+      <app-small-card
+        header="Tab name"
+        [body]="screenSelected.tabName"
+      ></app-small-card>
     </div>
   </div>
-</ng-container>
+</ng-template>

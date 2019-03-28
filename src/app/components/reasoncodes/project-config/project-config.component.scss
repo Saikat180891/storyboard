@@ -20,9 +20,13 @@
   background-color: #dde5ed;
 }
 .modal-body {
-  height: 300px;
+  height: 350px;
   overflow: auto;
   padding: 20px;
+  border-bottom: 1px solid #cccccc;
+}
+.modal-side-padding {
+  padding: 20px 0;
 }
 .delete {
   color: #2a7de1;
@@ -61,50 +65,7 @@
   position: fixed;
   bottom: 35px;
 }
-.warning {
-  width: 400px;
-  height: 220px;
-  background: #ffffff;
-  box-shadow: 0 0 20px rgba($color: #000000, $alpha: 0.3);
-  position: absolute;
-  border-radius: 5px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 
-  p {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-  }
-  p:first-child {
-    top: 20px;
-    font-size: 12px;
-    color: #999999;
-    width: 330px;
-  }
-  .warning-message-2 {
-    top: 80px;
-    font-size: 14px;
-    color: #000000;
-    width: 195px;
-  }
-  div {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    width: 200px;
-    justify-content: space-between;
-
-    button {
-      width: 90px;
-      height: 30px;
-    }
-  }
-}
 .date-picker {
   position: absolute;
   top: -5px;
@@ -127,41 +88,6 @@
   font-weight: bold;
 }
 
-.arrow {
-  position: absolute;
-  height: 30px;
-  width: 35px;
-  border: 1px solid #d1d1d1;
-  border-radius: 2px;
-  top: 0;
-  right: 0;
-
-  button {
-    display: block;
-    outline: none;
-    border: none !important;
-    color: #2a7de1 !important;
-    cursor: pointer !important;
-    position: absolute;
-    width: 100% !important;
-    height: 50% !important;
-    right: 0 !important;
-    text-align: center !important;
-    transition: all 0.1s ease !important;
-    background-color: transparent !important;
-  }
-
-  button:first-child {
-    top: 0 !important;
-  }
-  button:last-child {
-    bottom: 0 !important;
-  }
-
-  button:hover {
-    background: #cccccc !important;
-  }
-}
 .p-relative {
   position: relative;
 }
@@ -194,20 +120,17 @@ form.submitted {
   }
 }
 
-.paddingTop2px {
-  padding-top: 2px;
-}
+// new style
 
-.overflowHidden {
-  overflow: hidden;
+.tab-content {
+  display: flex;
+  flex-direction: column;
+  height: 400px;
 }
-
-.displayInline {
-  display: inline;
-}
-
-.downloadLink {
-  color: #2a7de1;
-  padding-left: 2px;
-  cursor: pointer;
+.modal-controls {
+  display: flex;
+  height: 50px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12rem;
 }

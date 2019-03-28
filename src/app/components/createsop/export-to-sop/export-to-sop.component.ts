@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { DataService } from "../../../data.service";
 import { ExportToSopService } from "../services/export-to-sop/export-to-sop.service";
 import { PageService } from "../services/page/page.service";
+import { SopApiService } from "../services/sop-api-service/sop-api.service";
 interface Snapshot {
   id: number;
   thumbnail: string;
@@ -36,9 +36,9 @@ export class ExportToSopComponent implements OnInit {
    *  the 'ExportToSopService' class(service) is used to manage the state of the screens in the frontend
    */
   constructor(
-    private __api: DataService,
     private __page: PageService,
-    private __export: ExportToSopService
+    private __export: ExportToSopService,
+    private sopApiService: SopApiService
   ) {}
 
   ngOnInit() {}
@@ -62,11 +62,7 @@ export class ExportToSopComponent implements OnInit {
       image_id: id,
       ...this.exportToSop.value,
     };
-    // the call is executed at the below endpoint
-    const endpoint = `/sop/${
-      this.__page.projectId
-    }/epics/userstories/sections/screens.json`;
-    this.__api.post(endpoint, payload).subscribe(
+    this.sopApiService.createScreen(this.__page.projectId, payload).subscribe(
       res => {
         // response is pushed to the 'screenlist' array in the 'ExportToSopService'
         this.__export.appendScreen(res);
@@ -75,6 +71,7 @@ export class ExportToSopComponent implements OnInit {
         this.onCloseExportModal();
       },
       () => {
+        console.log(this.__export.getScreens())
         this.onCloseExportModal();
       }
     );

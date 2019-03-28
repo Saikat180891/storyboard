@@ -12,12 +12,25 @@
 }
 .header {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   height: 60px;
   width: 100%;
-  background-color: transparent;
-  line-height: 60px;
   font-size: 14px;
-  position: relative;
+
+  .heading-left-component{
+    margin-left: 30px;
+  }
+
+  .heading-right-component{
+    display: flex;
+    justify-content: space-between;
+    margin-right: 30px;
+
+    .controls-wrapper{
+      margin-right: 1rem;
+    }
+  }
 }
 .edit {
   margin-left: 30px;
@@ -32,37 +45,6 @@
 .info_text {
   margin: 20px;
   color: #858585;
-}
-.heading {
-  color: #ffffff;
-  font-size: 18px;
-  font-weight: 500;
-  position: absolute;
-  top: 50%;
-  left: 25px;
-  transform: translateY(-50%);
-  padding: 5px;
-
-  &__name {
-  }
-  &__id {
-  }
-  &__divider {
-    color: #ffffff;
-  }
-  &__assignees {
-    color: #ffffff;
-    margin-left: 40px;
-  }
-  &__date {
-    margin-left: 170px;
-    color: #ffffff;
-
-    &__icon {
-      color: #f47074;
-      font-size: 15px;
-    }
-  }
 }
 .assignee-box {
   position: absolute;
@@ -132,11 +114,11 @@
 }
 .chart-section {
   margin: 0 30px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 2rem;
 
   .chart {
-    width: 30%;
     height: 250px;
   }
 }
@@ -423,10 +405,6 @@
     }
   }
 }
-::ng-deep .mat-datepicker-content .mat-calendar {
-  width: 250px;
-  height: 300px;
-}
 
 ::ng-deep .mat-calendar-body-selected {
   background-color: #2a7de1;
@@ -487,6 +465,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 .filter {
   position: absolute;
@@ -605,4 +584,9 @@
 }
 .stickybar-active {
   top: 3.4375rem;
+}
+
+.sort-menu-group {
+  position: absolute;
+  top: 2rem;
 }

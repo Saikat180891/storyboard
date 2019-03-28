@@ -2,38 +2,28 @@
   <ng-container>
     <div class="container" [ngClass]="{ 'container-hide': fixToTop }">
       <div class="header">
-        <div class="heading">
-          <span class="heading__name">{{
-            _reasonCode.currentProject
-              ? _reasonCode.currentProject.clientName
-              : ""
-          }}</span>
-          <span
-            class="heading__divider"
-            *ngIf="_reasonCode.currentProject.clientName"
-          >
-            |
-          </span>
-          <span class="heading__id">{{
-            _reasonCode.currentProject ? _reasonCode.currentProject.title : ""
-          }}</span>
+        <div class="heading-left-component" *ngIf="_reasonCode.currentProject">
+          <app-project-header-title [projectTitle]="_reasonCode"></app-project-header-title>
         </div>
-        <div class="middle header__btn">
-          <button
-            [ngStyle]="{ width: '150px' }"
-            class="btn btn-blue btn-lg btn-shadow btn-active clearfill"
-            (click)="onOpenAddSprint()"
-          >
-            <i class="fas fa-cog"></i> Config Project
-          </button>
-          <button
-            [ngStyle]="{ width: '100px', 'margin-left': '20px' }"
-            [ngClass]="{ 'btn-export-active': openExport }"
-            class="btn btn-blue btn-lg btn-shadow btn-active clearfill"
-            (click)="onOpenExport()"
-          >
-            <i class="fas fa-file-export"></i> Export
-          </button>
+        <div class="heading-right-component">
+          <div class="controls-wrapper">
+            <stb-button
+              btnStyle="icon"
+              (click)="onOpenAddSprint()"
+              btnName="Config Project"
+              btnColor="primary"
+              htmlIcon="<i class='fas fa-cog'></i>"
+            ></stb-button>
+          </div>
+          <div class="controls-wrapper">
+            <stb-button
+              btnStyle="icon"
+              (click)="onOpenExport()"
+              btnName="Export"
+              btnColor="primary"
+              htmlIcon="<i class='fas fa-file-export'></i>"
+            ></stb-button>
+          </div>
         </div>
       </div>
       <div class="chart-section">
@@ -215,11 +205,11 @@
         </div>
       </mat-tab>
     </mat-tab-group>
+
     <div class="menu-btn-group">
       <button
         class="sort-btn btn btn-flat-grey"
         [ngClass]="{ 'filter-btn-active': sortBy }"
-        [matMenuTriggerFor]="sortby"
         (click)="sortBy = !sortBy"
       >
         <i class="fas fa-sort-amount-down"></i> Sort By
@@ -245,100 +235,11 @@
         />
         Create New U/S
       </button>
-      <div class="material-menu">
-        <mat-menu #sortby="matMenu" (closed)="sortBy = false">
-          <button mat-menu-item (click)="clearAllSort()">Clear sort</button>
-          <button mat-menu-item [matMenuTriggerFor]="usName">U/S Name</button>
-          <button mat-menu-item [matMenuTriggerFor]="sprintName">
-            Sprint Name
-          </button>
-          <button mat-menu-item [matMenuTriggerFor]="priority">Priority</button>
-          <button mat-menu-item [matMenuTriggerFor]="reasonCode">Epics</button>
-          <button mat-menu-item [matMenuTriggerFor]="productivity">
-            Productivity
-          </button>
-          <button mat-menu-item [matMenuTriggerFor]="plannedDelivery">
-            Planned Delivery
-          </button>
-          <button mat-menu-item [matMenuTriggerFor]="revisedDelivery">
-            Revised Delivery
-          </button>
-        </mat-menu>
+
+      <div class="sort-menu-group" *ngIf="sortBy">
+        <app-sort (close)="sortBy = !sortBy"></app-sort>
       </div>
-      <mat-menu #usName="matMenu">
-        <button mat-menu-item (click)="onSortBy('sort=us_name,A_to_Z')">
-          A to Z
-        </button>
-        <button mat-menu-item (click)="onSortBy('sort=us_name,Z_to_A')">
-          Z to A
-        </button>
-      </mat-menu>
-      <mat-menu #sprintName="matMenu">
-        <button mat-menu-item (click)="onSortBy('sort=sprintName,A_to_Z')">
-          A to Z
-        </button>
-        <button mat-menu-item (click)="onSortBy('sort=sprintName,Z_to_A')">
-          Z to A
-        </button>
-      </mat-menu>
-      <mat-menu #priority="matMenu">
-        <button mat-menu-item (click)="onSortBy('sort=priority,High_to_Low')">
-          High to Low
-        </button>
-        <button mat-menu-item (click)="onSortBy('sort=priority,Low_to_High')">
-          Low to High
-        </button>
-      </mat-menu>
-      <mat-menu #productivity="matMenu">
-        <button
-          mat-menu-item
-          (click)="onSortBy('sort=productivity,High_to_Low')"
-        >
-          High to Low
-        </button>
-        <button
-          mat-menu-item
-          (click)="onSortBy('sort=productivity,Low_to_High')"
-        >
-          Low to High
-        </button>
-      </mat-menu>
-      <mat-menu #reasonCode="matMenu">
-        <button mat-menu-item (click)="onSortBy('sort=reasonCode,A_to_Z')">
-          A to Z
-        </button>
-        <button mat-menu-item (click)="onSortBy('sort=reasonCode,Z_to_A')">
-          Z to A
-        </button>
-      </mat-menu>
-      <mat-menu #plannedDelivery="matMenu">
-        <button
-          mat-menu-item
-          (click)="onSortBy('sort=planned_delivery,Earliest_to_Latest')"
-        >
-          Earliest to Latest
-        </button>
-        <button
-          mat-menu-item
-          (click)="onSortBy('sort=planned_delivery,Latest_to_Earliest')"
-        >
-          Latest to Earliest
-        </button>
-      </mat-menu>
-      <mat-menu #revisedDelivery="matMenu">
-        <button
-          mat-menu-item
-          (click)="onSortBy('sort=revised_delivery,Earliest_to_Latest')"
-        >
-          Earliest to Latest
-        </button>
-        <button
-          mat-menu-item
-          (click)="onSortBy('sort=revised_delivery,Latest_to_Earliest')"
-        >
-          Latest to Earliest
-        </button>
-      </mat-menu>
+
       <div
         class="filter"
         [ngClass]="{
@@ -405,11 +306,10 @@
   [ngClass]="{ 'overlay-show': openAddSprint, 'overlay-hide': !openAddSprint }"
 >
   <div class="sprint-config-modal" *ngIf="openAddSprint">
-    <sprint-config
+    <project-config
       [reasonCodeConfigData]="_reasonCode.reasonCodeData"
-      [sprintConfigData]="_reasonCode.sprintConfig"
       (closeSprints)="openAddSprint = $event; onClearAllFilters()"
-    ></sprint-config>
+    ></project-config>
   </div>
 </div>
 <div
@@ -487,7 +387,6 @@
     <button
       class="sort-btn btn btn-flat-grey"
       [ngClass]="{ 'filter-btn-active': false }"
-      [matMenuTriggerFor]="sortby"
       (click)="sortBy = !sortBy"
     >
       <i class="fas fa-sort-amount-down"></i> Sort By

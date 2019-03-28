@@ -9,7 +9,7 @@ import { ReasonCodeService } from "../reason-code.service";
 })
 export class ExportDialogBoxComponent implements OnInit {
   @Output("close") close = new EventEmitter<boolean>();
-  sidebarLinks = ["Audit Trail"];
+  sidebarLinks = ["Audit Trail", "Download SOP"];
   linkSelected: number = 0;
   show_dates: boolean = false;
   startDate = "";
@@ -18,7 +18,7 @@ export class ExportDialogBoxComponent implements OnInit {
   startDateValidator: boolean = false;
   endDateValidator: boolean = false;
 
-  constructor(private __rcService: ReasonCodeService) {}
+  constructor(private reasonCodeService: ReasonCodeService) {}
 
   ngOnInit() {}
 
@@ -38,13 +38,15 @@ export class ExportDialogBoxComponent implements OnInit {
     if (this.projectTypeSelected == 2 && this.startDate && this.endDate) {
       const startDate = this.reArrangeDate(this.startDate);
       const endDate = this.reArrangeDate(this.endDate);
-      this.__rcService.downLoadAuditTrailFile(
-        this.__rcService.sopId,
+      this.reasonCodeService.downLoadAuditTrailFile(
+        this.reasonCodeService.sopId,
         startDate,
         endDate
       );
     } else {
-      this.__rcService.downLoadAuditTrailFile(this.__rcService.sopId);
+      this.reasonCodeService.downLoadAuditTrailFile(
+        this.reasonCodeService.sopId
+      );
     }
     this.onClose();
   }
@@ -64,5 +66,9 @@ export class ExportDialogBoxComponent implements OnInit {
 
   onClose() {
     this.close.emit(false);
+  }
+
+  onDownloadFile() {
+    this.reasonCodeService.downloadProject(this.reasonCodeService.sopId);
   }
 }

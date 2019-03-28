@@ -19,9 +19,7 @@
             [disabled]="!canEdit"
           >
             <mat-option>None</mat-option>
-            <mat-option value="option1">Screen 1</mat-option>
-            <mat-option value="option2">Screen 2</mat-option>
-            <mat-option value="option3">Screen 3</mat-option>
+            <mat-option [value]="screen.screenId" *ngFor="let screen of screenList">{{screen.screenName}}</mat-option>
           </mat-select>
         </div>
       </div>
@@ -54,7 +52,12 @@
         <div class="form-sub-group padding-right">
           <label for="field">Field</label>
           <ng-container *ngIf="canEdit; else editField">
-            <input type="text" id="field" [(ngModel)]="data.field" />
+            <input
+              type="text"
+              id="field"
+              [(ngModel)]="data.field"
+              maxlength="50"
+            />
           </ng-container>
           <ng-template #editField>
             <span>{{ data.field }}</span>
@@ -63,7 +66,12 @@
         <div class="form-sub-group padding-left">
           <label for="field">Value</label>
           <ng-container *ngIf="canEdit; else editValue">
-            <input type="text" id="Value" [(ngModel)]="data.value" />
+            <input
+              type="text"
+              id="Value"
+              [(ngModel)]="data.value"
+              maxlength="50"
+            />
           </ng-container>
           <ng-template #editValue>
             <span>{{ data.value }}</span>
@@ -74,7 +82,20 @@
         <div class="form-sub-group padding-right">
           <label for="data-type">Data Type</label>
           <ng-container *ngIf="canEdit; else editDataType">
-            <input type="text" id="data-type" [(ngModel)]="data.data_type" />
+            <div class="select">
+              <mat-select
+                [(value)]="data.data_type"
+                placeholder="None"
+                [disabled]="!canEdit"
+              >
+                <mat-option>None</mat-option>
+                <mat-option
+                  [value]="dataTypeOption.value"
+                  *ngFor="let dataTypeOption of dataTypeOptions"
+                  >{{ dataTypeOption.viewValue }}</mat-option
+                >
+              </mat-select>
+            </div>
           </ng-container>
           <ng-template #editDataType>
             <span>{{ data.data_type }}</span>
@@ -87,6 +108,7 @@
               type="text"
               id="data-value"
               [(ngModel)]="data.data_value_constraint"
+              maxlength="100"
             />
           </ng-container>
           <ng-template #editDataValue>
@@ -98,7 +120,11 @@
         <div class="form-sub-group padding-right">
           <label for="notes">Notes</label>
           <ng-container *ngIf="canEdit; else editNotes">
-            <textarea name="" id="notes" [(ngModel)]="data.notes"></textarea>
+            <textarea
+              id="notes"
+              [(ngModel)]="data.notes"
+              maxlength="100"
+            ></textarea>
           </ng-container>
           <ng-template #editNotes>
             <span>{{ data.notes }}</span>
@@ -108,9 +134,9 @@
           <label for="exception-handling">Exception Handling</label>
           <ng-container *ngIf="canEdit; else editException">
             <textarea
-              name=""
               id="exception-handling"
               [(ngModel)]="data.exception_handling"
+              maxlength="50"
             ></textarea>
           </ng-container>
           <ng-template #editException>

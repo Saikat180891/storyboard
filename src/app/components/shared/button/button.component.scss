@@ -1,0 +1,56 @@
+.common-btn {
+  .mat-raised-button, .mat-stroked-button {
+    min-width: 90px;
+    max-height: 30px;
+  }
+}
+::ng-deep{
+  .mat-raised-button, .mat-stroked-button{
+    line-height: 30px;
+  }
+}
+
+.btn-raised{
+  .primary{
+    button{
+      background-color: #2a7de1;
+      color: #ffffff;
+    }
+  }
+  .accent{
+    button{
+      background-color: #efefef;
+      color: #54585a;
+    }
+  }
+}
+
+.btn-stroked{
+  .primary{
+    button{
+      border: 1px solid #2a7de1;
+      color: #2a7de1;
+    }
+  }
+  .accent{
+    button{
+      border: 1px solid #54585a;
+      color: #54585a;
+    }
+  }
+}
+
+.btn-icon{
+  .primary{
+    button{
+      background-color: #2a7de1;
+      color: #ffffff;
+    }
+  }
+  .accent{
+    button{
+      background-color: #efefef;
+      color: #54585a;
+    }
+  }
+}
