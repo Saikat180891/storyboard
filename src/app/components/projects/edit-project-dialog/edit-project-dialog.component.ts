@@ -36,9 +36,6 @@ export class EditProjectDialogComponent
   @Input("create") createMode: boolean;
   @Output("close") close = new EventEmitter<boolean>();
 
-  dialogHeaderText: string = "";
-  submitButtonText: string = "";
-
   newProjectHeaderText: string = "Create New Project";
   newProjectSubmitButtonText: string = "Create New";
   editProjectHeaderText: string = "Edit Project";
@@ -118,7 +115,6 @@ export class EditProjectDialogComponent
 
   ngOnInit() {
     this.setProject();
-    this.setDialogText();
 
     // format dates properly
     if (this.project.due_date !== "") {
@@ -157,15 +153,16 @@ export class EditProjectDialogComponent
     this.alreadyCreatedAssignees = this.project.assignee.concat(); // clone this.project.assignee
   }
 
-  setDialogText(): void {
-    // set dialog text + submit button text
-    if (this.createMode) {
-      this.dialogHeaderText = this.newProjectHeaderText;
-      this.submitButtonText = this.newProjectSubmitButtonText;
-    } else {
-      this.dialogHeaderText = this.editProjectHeaderText;
-      this.submitButtonText = this.editProjectSubmitButtonText;
-    }
+  getHeaderText(): string {
+    return this.createMode
+      ? this.newProjectHeaderText
+      : this.editProjectHeaderText;
+  }
+
+  getSubmitButtonText(): string {
+    return this.createMode
+      ? this.newProjectSubmitButtonText
+      : this.editProjectSubmitButtonText;
   }
 
   ngOnChanges() {}

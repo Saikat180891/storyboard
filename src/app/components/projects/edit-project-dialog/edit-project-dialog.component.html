@@ -7,7 +7,7 @@
     <div class="dialog-header">
       <span class="heading">
         <b>
-          {{ dialogHeaderText }}
+          {{ getHeaderText() }}
         </b>
       </span>
       <span class="close" (click)="onClose()"
@@ -232,7 +232,7 @@
   >
     <div class="button-box" *ngSwitchCase="0">
       <button mat-raised-button color="primary" (click)="onSubmit()">
-        {{ submitButtonText }}
+        {{ getSubmitButtonText() }}
       </button>
       <button mat-raised-button (click)="onClose()">CANCEL</button>
     </div>

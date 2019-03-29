@@ -16,10 +16,14 @@ interface RemoveAssigneeEvent {
   styleUrls: ["./assignee-card.component.scss"],
 })
 export class AssigneeCardComponent {
-  @Input("assignee") assignee: Assignee;
-  @Input("invalid") invalid: boolean;
-  @Input("changeRoleDisabled") changeRoleDisabled: boolean;
-  @Input("canRemoveAssignees") canRemoveAssignees: boolean;
+  @Input("assignee") assignee: Assignee = {
+    user: "",
+    email: "",
+    role: null,
+  };
+  @Input("invalid") invalid: boolean = false;
+  @Input("changeRoleDisabled") changeRoleDisabled: boolean = true;
+  @Input("canRemoveAssignees") canRemoveAssignees: boolean = false;
 
   @Output() roleChanged: EventEmitter<RoleChangedEvent> = new EventEmitter();
   @Output() removeAssignee: EventEmitter<

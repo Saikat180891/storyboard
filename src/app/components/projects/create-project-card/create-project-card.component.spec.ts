@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { GlobalmoduleModule } from "src/app/module/globalmodule/globalmodule.module";
 import { CreateProjectCardComponent } from "./create-project-card.component";
 
 describe("CreateProjectCardComponent", () => {
@@ -9,6 +10,7 @@ describe("CreateProjectCardComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CreateProjectCardComponent],
+      imports: [GlobalmoduleModule],
     }).compileComponents();
   }));
 
