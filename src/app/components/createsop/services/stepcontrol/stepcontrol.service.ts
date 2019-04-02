@@ -1,7 +1,8 @@
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 import { SectionListItem } from "../../common-model/section-list-item.model";
-import { Step } from "../../common-model/step-type.model";
+import { Step, StepType } from "../../common-model/step-type.model";
 import { PageService } from "../page/page.service";
 import { RightPanelService } from "../right-panel/right-panel.service";
 @Injectable({
@@ -11,10 +12,91 @@ export class StepcontrolService {
   private sopSectionList: SectionListItem[] = [];
   private sectionIdList = [];
 
+  private startLoopCount: number = 0;
+  private endLoopCount: number = 0;
+  public detectUnpairedStartLoop = new BehaviorSubject<boolean>(false);
+
   constructor(
     private rightPanelService: RightPanelService,
     private pageService: PageService
   ) {}
+
+  updateUnpairedStartLoop() {
+    this.detectUnpairedStartLoop.next(this.unpairedStartLoopExists());
+  }
+
+  /**
+   * Returns a boolean indicating whether or not there is a start loop that does
+   * not have a corresponding end loop
+   */
+  unpairedStartLoopExists(): boolean {
+    return this.startLoopCount - this.endLoopCount > 0;
+  }
+
+  /**
+   * Utility method for determining if a step is a start loop or end loop.
+   * @param stepType - string
+   */
+  isStepLoop(stepType: string): boolean {
+    return stepType === StepType.START_LOOP || stepType === StepType.END_LOOP;
+  }
+
+  /**
+   * Increments the appropriate loop counter for the given step type by 1.
+   * If the stepType is not a start loop or end loop, do nothing.
+   * @param stepType - string
+   */
+  incrementLoopCounter(stepType: string) {
+    if (!this.isStepLoop(stepType)) {
+      return;
+    }
+    if (stepType === StepType.START_LOOP) {
+      this.startLoopCount += 1;
+    } else {
+      this.endLoopCount += 1;
+    }
+    this.updateUnpairedStartLoop();
+  }
+
+  /**
+   * Decrements the appropriate loop counter for the given step type by 1.
+   * If the stepType is not a start loop or end loop, do nothing.
+   * @param stepType - string
+   */
+  decrementLoopCounter(stepType: string) {
+    if (!this.isStepLoop(stepType)) {
+      return;
+    }
+    if (stepType === StepType.START_LOOP) {
+      this.startLoopCount -= 1;
+    } else {
+      this.endLoopCount -= 1;
+    }
+    this.updateUnpairedStartLoop();
+  }
+
+  /**
+   * Iterates over all sections and steps to determine the number of
+   * start loop and end loop steps.
+   */
+  recalculateLoopCounters(): void {
+    this.startLoopCount = 0;
+    this.endLoopCount = 0;
+    this.sopSectionList.forEach(section => {
+      const stepsList = section.steps_list;
+      if (!stepsList) {
+        return;
+      }
+      const startLoops = stepsList.filter(
+        step => step.type === StepType.START_LOOP
+      ).length;
+      this.startLoopCount += startLoops;
+      const endLoops = stepsList.filter(step => step.type === StepType.END_LOOP)
+        .length;
+      this.endLoopCount += endLoops;
+    });
+    this.updateUnpairedStartLoop();
+  }
 
   /**
    * this function with insert a step at the end of an array
@@ -27,7 +109,9 @@ export class StepcontrolService {
       data: {},
     };
     this.sopSectionList[index].steps_list.push(stepItem);
+    this.incrementLoopCounter(stepType);
   }
+
   /**
    * update the existing element in the steps_list of a particular
    * section with the response received from the backend
@@ -69,6 +153,7 @@ export class StepcontrolService {
 
   setSectionList(sectionList: SectionListItem[]) {
     this.sopSectionList = sectionList;
+    this.recalculateLoopCounters();
   }
 
   getStepId(sectionIndex: number, stepIndex: number) {
@@ -151,12 +236,17 @@ export class StepcontrolService {
     return this.sopSectionList.length;
   }
 
-  deleteStep(sectionIndex, stepIntex) {
-    this.sopSectionList[sectionIndex].steps_list.splice(stepIntex, 1);
+  deleteStep(sectionIndex, stepIndex) {
+    const step = this.sopSectionList[sectionIndex].steps_list.splice(
+      stepIndex,
+      1
+    )[0];
+    this.decrementLoopCounter(step.type);
   }
 
   deleteSection(stepIndex: number) {
     this.sopSectionList.splice(stepIndex, 1);
+    this.recalculateLoopCounters();
   }
 
   // moving steps inside section

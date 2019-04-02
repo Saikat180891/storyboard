@@ -15,7 +15,6 @@ import {
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { SectionListItem } from "../../common-model/section-list-item.model";
 import { LeftPanelService } from "../../services/left-panel/left-panel.service";
-import { OperationBarService } from "../../services/operation-bar/operation-bar.service";
 import { RightPanelService } from "../../services/right-panel/right-panel.service";
 import { StepcontrolService } from "../../services/stepcontrol/stepcontrol.service";
 import { StepsContainerComponent } from "../steps-container.component";
@@ -52,7 +51,6 @@ export class SectionTitleComponent implements OnInit {
 
   constructor(
     private __step: StepcontrolService,
-    private __opbService: OperationBarService,
     private __rpService: RightPanelService,
     private leftPanelService: LeftPanelService
   ) {}
@@ -108,9 +106,6 @@ export class SectionTitleComponent implements OnInit {
       data: $event,
       index: this.sectionIndex,
     });
-    if ($event === "start-loop" || $event === "end-loop") {
-      this.__opbService.toggleLoop();
-    }
   }
 
   /**

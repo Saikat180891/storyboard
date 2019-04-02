@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { OperationBarService } from "../services/operation-bar/operation-bar.service";
+import { StepcontrolService } from "../services/stepcontrol/stepcontrol.service";
 @Component({
   selector: "operations-bar",
   templateUrl: "./operations-bar.component.html",
@@ -8,11 +8,11 @@ import { OperationBarService } from "../services/operation-bar/operation-bar.ser
 export class OperationsBarComponent implements OnInit {
   isStartLoopDisplayed: boolean;
 
-  constructor(private __loopStatus: OperationBarService) {}
+  constructor(private stepcontrolService: StepcontrolService) {}
 
   ngOnInit() {
-    this.__loopStatus.getLoopStatus().subscribe(res => {
-      this.isStartLoopDisplayed = res;
+    this.stepcontrolService.detectUnpairedStartLoop.subscribe(res => {
+      this.isStartLoopDisplayed = !res; // don't show Start Loop if there exists an unpaired start loop step
     });
   }
 }
