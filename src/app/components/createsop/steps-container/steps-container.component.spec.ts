@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { CreatesopModule } from "../createsop.module";
 import { StepsContainerComponent } from "./steps-container.component";
 
 describe("StepsContainerComponent", () => {
@@ -8,7 +9,7 @@ describe("StepsContainerComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [StepsContainerComponent],
+      imports: [CreatesopModule],
     }).compileComponents();
   }));
 

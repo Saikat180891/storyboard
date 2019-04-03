@@ -1,5 +1,9 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { RouterTestingModule } from "@angular/router/testing";
+import { CookieService } from "ngx-cookie-service";
+import { CreatesopModule } from "../createsop.module";
 import { CreatesopComponent } from "./createsop.component";
 
 describe("CreatesopComponent", () => {
@@ -8,7 +12,8 @@ describe("CreatesopComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreatesopComponent],
+      imports: [CreatesopModule, RouterTestingModule, BrowserAnimationsModule],
+      providers: [CookieService],
     }).compileComponents();
   }));
 

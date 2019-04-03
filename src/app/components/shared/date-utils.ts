@@ -6,6 +6,9 @@ export abstract class DateUtils {
    * @param date
    */
   public static arrangeDateInCorrectFormat(date) {
+    if (date === null || date === undefined) {
+      return null;
+    }
     const newDate = date.toString().split("/");
     const currentDate = new Date();
     currentDate.setFullYear(Number(newDate[2]));

@@ -18,7 +18,7 @@ export class StepsContainerComponent implements OnInit {
   @Input("stepType") stepType: string = "Read";
   @Input("stepIndex") stepIndex: number;
   @Input("sectionIndex") sectionIndex: number;
-  @Input("stepData") stepData: any;
+  @Input("stepData") stepData: any = {};
   @Output("delete") delete = new EventEmitter();
   @Output("outputChange") outputChange = new EventEmitter();
 

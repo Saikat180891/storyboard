@@ -37,11 +37,13 @@ export class UserstoryCardEditComponent implements OnInit {
 
   @Output("warning") warning = new EventEmitter();
 
-  @Input("editUSData") editUSData;
+  @Input("editUSData") editUSData: any = {
+    us_name: "",
+  };
 
-  @Input("sprintOptions") sprintOptions;
+  @Input("sprintOptions") sprintOptions: any[] = [];
 
-  @Input("reasonCodeOptions") reasonCodeOptions;
+  @Input("reasonCodeOptions") reasonCodeOptions: any[] = [];
 
   status = "";
   editUSDatas;

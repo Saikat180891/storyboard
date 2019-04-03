@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { FormsModule } from "@angular/forms";
 import { StepLoopComponent } from "./step-loop.component";
 
 describe("StepLoopComponent", () => {
@@ -8,6 +9,7 @@ describe("StepLoopComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [FormsModule],
       declarations: [StepLoopComponent],
     }).compileComponents();
   }));

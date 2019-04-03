@@ -1,5 +1,8 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { ReactiveFormsModule } from "@angular/forms";
+import { CookieService } from "ngx-cookie-service";
 import { ExportToSopComponent } from "./export-to-sop.component";
 
 describe("ExportToSopComponent", () => {
@@ -9,6 +12,8 @@ describe("ExportToSopComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ExportToSopComponent],
+      imports: [ReactiveFormsModule, HttpClientTestingModule],
+      providers: [CookieService],
     }).compileComponents();
   }));
 

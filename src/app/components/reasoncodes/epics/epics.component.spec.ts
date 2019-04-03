@@ -1,5 +1,8 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { CookieService } from "ngx-cookie-service";
+import { ReasoncodeModule } from "../reasoncode.module";
 import { EpicsComponent } from "./epics.component";
 
 describe("EpicsComponent", () => {
@@ -8,7 +11,8 @@ describe("EpicsComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EpicsComponent],
+      imports: [ReasoncodeModule, HttpClientTestingModule],
+      providers: [CookieService],
     }).compileComponents();
   }));
 

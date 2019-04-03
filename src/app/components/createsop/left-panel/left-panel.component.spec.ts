@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { CookieService } from "ngx-cookie-service";
+import { CreatesopModule } from "../createsop.module";
 import { LeftPanelComponent } from "./left-panel.component";
 
 describe("LeftPanelComponent", () => {
@@ -8,7 +10,8 @@ describe("LeftPanelComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LeftPanelComponent],
+      imports: [CreatesopModule],
+      providers: [CookieService],
     }).compileComponents();
   }));
 

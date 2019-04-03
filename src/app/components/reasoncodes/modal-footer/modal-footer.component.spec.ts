@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { ReasoncodeModule } from "../reasoncode.module";
 import { ModalFooterComponent } from "./modal-footer.component";
 
 describe("ModalFooterComponent", () => {
@@ -8,7 +9,7 @@ describe("ModalFooterComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ModalFooterComponent],
+      imports: [ReasoncodeModule],
     }).compileComponents();
   }));
 

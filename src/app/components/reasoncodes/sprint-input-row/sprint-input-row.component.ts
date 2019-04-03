@@ -14,7 +14,12 @@ interface SprintRowValue {
 })
 export class SprintInputRowComponent implements OnInit {
   @Input("index") index: number;
-  @Input("value") value: SprintRowValue;
+  @Input("value") value: SprintRowValue = {
+    sprintName: null,
+    startDate: null,
+    duration: null,
+    endDate: null,
+  };
   @Output("valueChange") valueChange = new EventEmitter<SprintRowValue>();
   @Output("deleteSprint") deleteSprint = new EventEmitter<number>();
   private weeks = 0;

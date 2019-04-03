@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { GlobalmoduleModule } from "src/app/module/globalmodule/globalmodule.module";
+import { ButtonComponent } from "../button/button.component";
 import { ConfirmModalComponent } from "./confirm-modal.component";
 
 describe("ConfirmModalComponent", () => {
@@ -8,7 +10,7 @@ describe("ConfirmModalComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ConfirmModalComponent],
+      imports: [GlobalmoduleModule],
     }).compileComponents();
   }));
 

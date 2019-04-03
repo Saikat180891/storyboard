@@ -1,5 +1,8 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { CookieService } from "ngx-cookie-service";
+import { ReasoncodeModule } from "../reasoncode.module";
 import { ProjectConfigBaseComponent } from "./project-config-base.component";
 
 describe("ProjectConfigBaseComponent", () => {
@@ -8,7 +11,8 @@ describe("ProjectConfigBaseComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ProjectConfigBaseComponent],
+      imports: [ReasoncodeModule, HttpClientTestingModule],
+      providers: [CookieService],
     }).compileComponents();
   }));
 

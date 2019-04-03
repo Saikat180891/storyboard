@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { CookieService } from "ngx-cookie-service";
+import { CreatesopModule } from "../createsop.module";
 import { RecentScreenShotsComponent } from "./recent-screen-shots.component";
 
 describe("RecentScreenShotsComponent", () => {
@@ -8,7 +10,7 @@ describe("RecentScreenShotsComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RecentScreenShotsComponent],
+      imports: [CreatesopModule],
     }).compileComponents();
   }));
 

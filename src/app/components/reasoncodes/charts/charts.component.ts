@@ -21,8 +21,10 @@ declare let d3: any;
   styleUrls: ["./charts.component.scss"],
 })
 export class ChartsComponent implements OnInit, AfterViewChecked, OnChanges {
-  @Input("options") options;
-  @Input("data") data;
+  @Input("options") options: any = {
+    chart: {},
+  };
+  @Input("data") data: any[] = [];
   @Input("title") title;
   @Input("selectOptions") selectOptions;
   @Input("meter") meter: boolean;

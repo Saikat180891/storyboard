@@ -6,7 +6,9 @@ import { Component, Input, OnInit } from "@angular/core";
   styleUrls: ["./project-header-title.component.scss"],
 })
 export class ProjectHeaderTitleComponent implements OnInit {
-  @Input("projectTitle") projectTitle: any;
+  @Input("projectTitle") projectTitle: any = {
+    currentProject: {},
+  };
 
   constructor() {}
 

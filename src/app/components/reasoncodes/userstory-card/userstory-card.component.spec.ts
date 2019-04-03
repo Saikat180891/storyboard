@@ -1,5 +1,8 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { CookieService } from "ngx-cookie-service";
+import { ReasoncodeModule } from "../reasoncode.module";
 import { UserstoryCardComponent } from "./userstory-card.component";
 
 describe("UserstoryCardComponent", () => {
@@ -8,7 +11,8 @@ describe("UserstoryCardComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UserstoryCardComponent],
+      imports: [ReasoncodeModule, HttpClientTestingModule],
+      providers: [CookieService],
     }).compileComponents();
   }));
 

@@ -7,7 +7,7 @@ import { ExportToSopService } from "../../services/export-to-sop/export-to-sop.s
 export class StepBaseComponent implements OnInit {
   @Input("sectionId") sectionId: number;
   @Input("stepIndex") stepIndex: number;
-  @Input("stepData") stepData: any;
+  @Input("stepData") stepData: any = {};
   @Input("sectionIndex") sectionIndex: number;
   @Output("deleteStep") deleteStep = new EventEmitter();
   @Output("outputChange") outputChange = new EventEmitter();

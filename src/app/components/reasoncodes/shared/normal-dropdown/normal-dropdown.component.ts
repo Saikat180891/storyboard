@@ -28,7 +28,7 @@ export class NormalDropdownComponent
 
   @Output() optionSelected = new EventEmitter<string>();
 
-  @Input("options") options: Option[];
+  @Input("options") options: Option[] = [];
 
   @Input("placeholder") placeholder;
 

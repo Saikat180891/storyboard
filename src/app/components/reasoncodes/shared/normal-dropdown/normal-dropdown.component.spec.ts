@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { ReasoncodeModule } from "../../reasoncode.module";
 import { NormalDropdownComponent } from "./normal-dropdown.component";
 
 describe("NormalDropdownComponent", () => {
@@ -8,7 +9,7 @@ describe("NormalDropdownComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [NormalDropdownComponent],
+      imports: [ReasoncodeModule],
     }).compileComponents();
   }));
 

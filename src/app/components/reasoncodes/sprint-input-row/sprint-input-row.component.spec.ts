@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { ReasoncodeModule } from "../reasoncode.module";
 import { SprintInputRowComponent } from "./sprint-input-row.component";
 
 describe("SprintInputRowComponent", () => {
@@ -8,7 +9,7 @@ describe("SprintInputRowComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SprintInputRowComponent],
+      imports: [ReasoncodeModule],
     }).compileComponents();
   }));
 

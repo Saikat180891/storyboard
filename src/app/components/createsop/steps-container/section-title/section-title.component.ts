@@ -26,7 +26,10 @@ import { StepsContainerComponent } from "../steps-container.component";
 })
 export class SectionTitleComponent implements OnInit {
   @Input("sectionId") sectionId: number;
-  @Input("stepParameters") stepParameters: SectionListItem;
+  @Input("stepParameters") stepParameters: SectionListItem = {
+    section_name: null,
+    steps_list: [],
+  };
   @Input("sectionIndex") sectionIndex: number;
   @Output("sectionPayload") sectionPayload = new EventEmitter<any>();
   @Output("deleteStep") deleteStep = new EventEmitter();

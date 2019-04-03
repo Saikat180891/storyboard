@@ -37,9 +37,9 @@ interface UserStory {
 export class UserstoryCardCreateComponent implements OnInit, OnChanges {
   @Output("close") close = new EventEmitter<boolean>();
 
-  @Input("sprintOptions") sprintOptions;
+  @Input("sprintOptions") sprintOptions: any[] = [];
 
-  @Input("reasonCodeOptions") reasonCodeOptions;
+  @Input("reasonCodeOptions") reasonCodeOptions: any[] = [];
 
   priorityOptions = [
     {
