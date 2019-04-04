@@ -28,20 +28,23 @@ export class LeftPanelComponent implements OnInit {
   }
 
   init() {
-    this.sopApiService.getScreenList(this.pageService.projectId).subscribe(
-      screens => {
-        if (screens.length > 0) {
-          this.isAppInZeroState = !this.isAppInZeroState;
-        }
+    this.sopApiService
+      .getScreenList(this.pageService.projectId)
+      .subscribe(screens => {
         this.exportService.storeScreens(screens);
-      },
-      err => {},
-      () => {
-        this.screens = this.exportService.getScreens();
+        this.getScreensFromExportService();
+      });
+  }
 
-        this.screenSelected = this.screens[1];
+  getScreensFromExportService() {
+    this.exportService.getScreensAsObservable().subscribe(screens => {
+      this.screens = screens;
+      if (this.screens.length > 0) {
+        this.isAppInZeroState = !this.isAppInZeroState;
       }
-    );
+      this.screenSelected = this.screens[0];
+      this.getScreenToDisplay();
+    });
   }
 
   getScreenToDisplay() {
