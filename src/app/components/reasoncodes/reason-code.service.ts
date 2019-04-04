@@ -34,7 +34,7 @@ export class ReasonCodeService {
   sortBy = "";
   filterPath = "";
 
-  grantedPermission: any;
+  grantedPermission: any = {};
   role: string;
 
   constructor(private _api: DataService, public snackbar: MatSnackBar) {}

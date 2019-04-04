@@ -19,7 +19,10 @@ import { EditUserStoryService } from "../userstory-card-edit/edit-user-story.ser
 export class UserstoryCardComponent implements OnInit, OnChanges {
   @Output("editUserStory") editUserStory = new EventEmitter();
 
-  @Input("userStory") inputUserStory;
+  @Input("userStory") inputUserStory: any = {
+    notes: "",
+    us_name: "",
+  };
 
   @Input("restore") restore: boolean;
 
@@ -33,7 +36,7 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
 
   rippleColor = "rbga(0,0,0,0.2)";
   color = "primary";
-  permissions: any;
+  permissions: any = {};
   role: string;
 
   constructor(
