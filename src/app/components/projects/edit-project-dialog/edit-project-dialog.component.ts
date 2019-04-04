@@ -17,7 +17,8 @@ import { DateUtils } from "../../shared/date-utils";
 import { Assignee, userToAssigneeAdapter } from "../models/assignee.model";
 import { KEY_CODE, Role } from "../models/enums";
 import { InviteUser } from "../models/invite-user.model";
-import { Project } from "../models/project.model";
+import { ServerPermission } from "../models/permissions.model";
+import { Project, ProjectDisplay } from "../models/project.model";
 import { User } from "../models/user.model";
 import { ProjectsService } from "../projects.service";
 
@@ -31,7 +32,7 @@ export class EditProjectDialogComponent
   implements OnInit, OnChanges, AfterViewInit {
   @Input() cardID;
   @Input("permissions") permissions: any;
-  @Input("project") project: Project;
+  @Input("project") project: ProjectDisplay;
   @Input("projectRole") projectRole: Role;
   @Input("create") createMode: boolean;
   @Output("close") close = new EventEmitter<boolean>();
@@ -131,7 +132,11 @@ export class EditProjectDialogComponent
     });
 
     // TODO this should actually pull from this.permissions
-    this.canRemoveAssignees = this.projectRole === Role.SUPER_ADMIN;
+    // TODO: Manish: Need to refactor the entire permissions logic to a permission's service
+    this.canRemoveAssignees =
+      this.project && this.project.currentUserPermission
+        ? this.project.currentUserPermission[ServerPermission.DELETE_ASSIGNEE]
+        : false;
   }
 
   setProject(): void {
@@ -265,7 +270,7 @@ export class EditProjectDialogComponent
 
   /**
    * To remove an assignee from the 'Assign To' list
-   * @param assigneeListItem
+   * @param id
    */
   onRemove(id: number): void {
     this.assigneeIdsToRemove.push(id);

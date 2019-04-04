@@ -27,9 +27,9 @@ export interface Project {
 
 // TODO: refactor out currentUserPermission - it is exactly permissions.permission
 export interface ProjectDisplay extends Project {
-  themeColor: string;
-  permissions: ProjectPermissions;
-  currentUserPermission: Map<ServerPermission, boolean>;
+  themeColor?: string;
+  permissions?: ProjectPermissions;
+  currentUserPermission?: Map<ServerPermission, boolean>;
 }
 
 export function projectAdapter(project: ServerProject): Project {

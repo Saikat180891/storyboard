@@ -97,10 +97,8 @@ export class ProjectsService {
   }
 
   createAssignee(projectId: number, assignee: Assignee): Observable<any> {
-    // We could technically just post the assignee itself, but
-    // let's keep this explicit in case the API changes.
     return this.dataService.postData(`/sop/${projectId}/assignee.json`, {
-      user: assignee.user,
+      user_id: assignee.id,
       role: assignee.role,
     });
   }
