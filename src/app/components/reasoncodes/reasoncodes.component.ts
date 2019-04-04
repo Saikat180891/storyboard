@@ -465,4 +465,9 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
     const digits = year.toString().split("");
     return "" + digits[2] + digits[3];
   }
+
+  onCloseProjectConfig($event) {
+    this.openAddSprint = $event;
+    this.onClearAllFilters();
+  }
 }

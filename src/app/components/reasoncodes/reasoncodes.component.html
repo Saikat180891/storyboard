@@ -310,7 +310,7 @@
   <div class="sprint-config-modal" *ngIf="openAddSprint">
     <project-config
       [reasonCodeConfigData]="_reasonCode.reasonCodeData"
-      (closeSprints)="openAddSprint = $event; onClearAllFilters()"
+      (closeSprints)="onCloseProjectConfig($event)"
     ></project-config>
   </div>
 </div>

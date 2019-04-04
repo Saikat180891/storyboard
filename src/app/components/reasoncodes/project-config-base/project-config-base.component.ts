@@ -113,6 +113,7 @@ export class ProjectConfigBaseComponent implements OnInit {
   onSave() {
     this.saveSprints();
     this.saveEpics();
+    this.onClose();
   }
 
   ondeleteSprint($event) {
