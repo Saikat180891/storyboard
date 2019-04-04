@@ -97,7 +97,17 @@ export class ReasonCodeService {
   /**
    * This api is used to get details of all the sprints
    */
-  getSprint(id) {}
+  getSprint(id) {
+    this._api.fetchData(`/sop/${id}/sprint.json`).subscribe(response => {
+      response.forEach((element, index) => {
+        element["sprintNumber"] = index + 1;
+      });
+      this.sprintConfig = response.reverse();
+      for (const sprint of this.sprintConfig) {
+        sprint.end_date = DateUtils.formatDateToUS(sprint.end_date);
+      }
+    });
+  }
 
   /**
    * this api is used to delete a sprint by it id
@@ -330,7 +340,7 @@ export class ReasonCodeService {
     this.getCompletedUserStories(sopID);
     this.getDeletedUserStories(sopID);
     this.getReasonCode(sopID);
-    // this.getSprint(sopID);
+    this.getSprint(sopID);
   }
 
   importStories(file) {
