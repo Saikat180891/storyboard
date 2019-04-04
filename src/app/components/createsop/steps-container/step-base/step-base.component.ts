@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ExportToSopService } from "../../services/export-to-sop/export-to-sop.service";
+
 @Component({
   selector: "app-step-base",
   template: "",
@@ -16,6 +17,7 @@ export class StepBaseComponent implements OnInit {
   canEdit: boolean = false;
   screenList = [];
   data: any = {};
+  conditions = ["Minor", "Major"];
 
   constructor(private exportService: ExportToSopService) {}
 
