@@ -39,7 +39,11 @@ export class ImportStoriesComponent implements OnInit {
             res => this.reasonCodeService.snackbar.open(res),
             err => this.reasonCodeService.snackbar.open(err),
             () => {
-              this.reasonCodeService.snackbar.open("Uploaded Successfully");
+              this.reasonCodeService.snackbar.open(
+                "Uploaded Successfully",
+                "Success",
+                { duration: 5000 }
+              );
               this.reasonCodeService.refresh(this.reasonCodeService.sopId);
             }
           );
