@@ -18,7 +18,7 @@
             placeholder="None"
             [disabled]="!canEdit"
           >
-            <mat-option>None</mat-option>
+            <mat-option [value]="null">None</mat-option>
             <mat-option
               [value]="screen.screenId"
               *ngFor="let screen of screenList"
