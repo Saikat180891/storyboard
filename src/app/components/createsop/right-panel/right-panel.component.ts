@@ -1,9 +1,4 @@
-/**
- * Author: Saikat Paul
- * Designation: Frontend Engineer, Soroco
- */
 import {
-  AfterContentChecked,
   Component,
   ElementRef,
   OnInit,
@@ -14,10 +9,11 @@ import { DataService } from "../../../data.service";
 import { ConfirmModalService } from "../../shared/confirm-modal/confirm-modal.service";
 import { SectionListItem } from "../common-model/section-list-item.model";
 import { Step } from "../common-model/step-type.model";
-import { ExportToSopService } from "../services/export-to-sop/export-to-sop.service";
+import { LeftPanelService } from "../services/left-panel/left-panel.service";
 import { PageService } from "../services/page/page.service";
 import { RightPanelService } from "../services/right-panel/right-panel.service";
 import { StepcontrolService } from "../services/stepcontrol/stepcontrol.service";
+
 interface StepTypeDropEvent {
   data: string;
   index: number;
@@ -36,11 +32,12 @@ export class RightPanelComponent implements OnInit {
   @ViewChild("section") section: QueryList<ElementRef>;
 
   constructor(
-    private __steps: StepcontrolService,
-    private __api: DataService,
-    private __page: PageService,
-    private __rpService: RightPanelService,
-    private confirm: ConfirmModalService
+    private stepcontrolService: StepcontrolService,
+    private dataService: DataService,
+    private pageService: PageService,
+    private rightPanelService: RightPanelService,
+    private confirm: ConfirmModalService,
+    private leftPanelService: LeftPanelService
   ) {}
 
   /**
@@ -52,27 +49,27 @@ export class RightPanelComponent implements OnInit {
 
   init() {
     // fetch all the previously created section when the component loads
-    this.__rpService
-      .getListOfCreatedSectionFromServer(this.__page.userStoryId)
+    this.rightPanelService
+      .getListOfCreatedSectionFromServer(this.pageService.userStoryId)
       .subscribe(
         res => {
           // store the response in the step control service
-          this.__steps.setSectionList(res);
+          this.stepcontrolService.setSectionList(res);
         },
         err => {
           // initiate the 'sectionList' with the step control service
-          this.sectionList = this.__steps.getList();
+          this.sectionList = this.stepcontrolService.getList();
         },
         () => {
           // initiate the 'sectionList' with the step control service
-          this.sectionList = this.__steps.getList();
+          this.sectionList = this.stepcontrolService.getList();
         }
       );
 
-    this.__rpService
+    this.rightPanelService
       .infiniteScrollHandler(this.rightPanelInfiniteScroll)
       .subscribe(res => {
-        this.__rpService.setScrollPosition(res.target.scrollTop);
+        this.rightPanelService.setScrollPosition(res.target.scrollTop);
       });
   }
 
@@ -90,7 +87,7 @@ export class RightPanelComponent implements OnInit {
    * 'sopStepsList' array present in the stepcontrol.service.ts file
    */
   onButtonDragged($event: StepTypeDropEvent, index: number) {
-    this.__steps.insertStep($event.index, $event.data);
+    this.stepcontrolService.insertStep($event.index, $event.data);
   }
 
   /**
@@ -98,7 +95,7 @@ export class RightPanelComponent implements OnInit {
    * make any request yet
    */
   onCreateNewSection() {
-    this.__steps.appendSection();
+    this.stepcontrolService.appendSection();
   }
 
   /**
@@ -107,17 +104,20 @@ export class RightPanelComponent implements OnInit {
    */
   onDeleteStep($event) {
     if ($event.mode === "local") {
-      this.__steps.deleteStep($event.sectionIndex, $event.stepIndex);
+      this.stepcontrolService.deleteStep($event.sectionIndex, $event.stepIndex);
     } else if ($event.mode === "server") {
-      this.__rpService
+      this.rightPanelService
         .deleteStep(
-          this.__page.userStoryId,
+          this.pageService.userStoryId,
           $event.stepId,
           $event.insertionId,
           $event.sectionInsertionId
         )
         .subscribe(res => {
-          this.__steps.deleteStep($event.sectionIndex, $event.stepIndex);
+          this.stepcontrolService.deleteStep(
+            $event.sectionIndex,
+            $event.stepIndex
+          );
         });
     }
   }
@@ -130,14 +130,14 @@ export class RightPanelComponent implements OnInit {
     this.confirm.confirmDelete(
       "Are you sure you want to delete this section? All the steps related to this section will also be deleted.",
       () => {
-        this.__rpService
+        this.rightPanelService
           .deleteSection(
-            this.__page.userStoryId,
+            this.pageService.userStoryId,
             $event["sectionId"],
             $event["insertionId"]
           )
           .subscribe(res => {
-            this.__steps.deleteSection($event["sectionIndex"]);
+            this.stepcontrolService.deleteSection($event["sectionIndex"]);
           });
       }
     );
@@ -150,11 +150,11 @@ export class RightPanelComponent implements OnInit {
   onOutputChange($event) {
     if ($event.mode === "create") {
       const payload = {
-        prev_insertion_id: this.__steps.getPreviousInsertionIdOfStepInSection(
+        prev_insertion_id: this.stepcontrolService.getPreviousInsertionIdOfStepInSection(
           $event.sectionIndex,
           $event.stepIndex
         ),
-        next_insertion_id: this.__steps.getNextInsertionIdOfStepInSection(
+        next_insertion_id: this.stepcontrolService.getNextInsertionIdOfStepInSection(
           $event.sectionIndex,
           $event.stepIndex
         ),
@@ -166,10 +166,10 @@ export class RightPanelComponent implements OnInit {
         screen_id:
           typeof $event.data.screen === "string" ? null : $event.data.screen,
       };
-      this.__rpService
-        .createStep(this.__page.userStoryId, $event.sectionId, payload)
+      this.rightPanelService
+        .createStep(this.pageService.userStoryId, $event.sectionId, payload)
         .subscribe(res => {
-          this.__steps.updateStepWithResponse(
+          this.stepcontrolService.updateStepWithResponse(
             $event.sectionIndex,
             $event.stepIndex,
             res
@@ -182,10 +182,11 @@ export class RightPanelComponent implements OnInit {
         screen_id:
           typeof $event.data.screen === "string" ? null : $event.data.screen,
       };
-      this.__rpService
+      this.rightPanelService
         .updateStep($event.stepId, payload)
         .subscribe((res: Step) => {
-          this.__steps.modifyStepOnEdit(
+          this.leftPanelService.setCurrentScreen($event.data.screen);
+          this.stepcontrolService.modifyStepOnEdit(
             $event.sectionIndex,
             $event.stepIndex,
             res
@@ -206,19 +207,19 @@ export class RightPanelComponent implements OnInit {
     if ($event.mode === "create") {
       const payload = {
         section_name: $event["sectionName"]["section_name"],
-        prev_insertion_id: this.__steps.getPreviousInsertionIdOfSection(
+        prev_insertion_id: this.stepcontrolService.getPreviousInsertionIdOfSection(
           $event["sectionIndex"]
         ),
-        next_insertion_id: this.__steps.getNextInsertionIdOfSection(
+        next_insertion_id: this.stepcontrolService.getNextInsertionIdOfSection(
           $event["sectionIndex"]
         ),
         description: "test",
       };
       // make the call with the payload and body
-      this.__rpService
-        .createSection(this.__page.userStoryId, payload)
+      this.rightPanelService
+        .createSection(this.pageService.userStoryId, payload)
         .subscribe(res => {
-          this.__steps.setSectionItem(res, $event["sectionIndex"]);
+          this.stepcontrolService.setSectionItem(res, $event["sectionIndex"]);
         });
       // to edit a section
     } else if ($event.mode === "edit") {
@@ -228,10 +229,13 @@ export class RightPanelComponent implements OnInit {
         description: "test",
       };
       // make the call with the payload and body
-      this.__rpService
+      this.rightPanelService
         .updateSection($event.sectionId, payload)
         .subscribe(res => {
-          this.__steps.updateSectionItem(res, $event["sectionIndex"]);
+          this.stepcontrolService.updateSectionItem(
+            res,
+            $event["sectionIndex"]
+          );
         });
     }
   }
