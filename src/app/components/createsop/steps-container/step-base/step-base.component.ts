@@ -77,6 +77,9 @@ export class StepBaseComponent implements OnInit {
 
   onCancelEdit() {
     this.canEdit = false;
+    this.data = {
+      ...this.stepData.data,
+    };
   }
 
   getStepNumber() {

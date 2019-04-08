@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
-import { NgModule, OnInit } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { GlobalmoduleModule } from "../../module/globalmodule/globalmodule.module";
 import { BreadcrumbComponent } from "./breadcrumb/breadcrumb.component";
@@ -17,6 +17,7 @@ import { SidebarButtonsComponent } from "./sidebar-buttons/sidebar-buttons.compo
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { SmallCardComponent } from "./small-card/small-card.component";
 import { SectionTitleComponent } from "./steps-container/section-title/section-title.component";
+import { StepBaseComponent } from "./steps-container/step-base/step-base.component";
 import { StepCalculationComponent } from "./steps-container/step-calculation/step-calculation.component";
 import { StepConditionComponent } from "./steps-container/step-condition/step-condition.component";
 import { StepEndLoopComponent } from "./steps-container/step-end-loop/step-end-loop.component";
@@ -53,6 +54,7 @@ const routes: Routes = [{ path: "", component: CreatesopComponent }];
     StepEndLoopComponent,
     ExportToSopComponent,
     SmallCardComponent,
+    StepBaseComponent,
   ],
   imports: [
     CommonModule,
