@@ -52,22 +52,6 @@ describe("AssigneeCardComponent", () => {
         testAssignee.user
       );
     });
-
-    it("should display email and user name", () => {
-      const testAssignee: Assignee = {
-        user: "Test User",
-        email: "testuser@test.com",
-        role: null,
-      };
-      component.assignee = testAssignee;
-      fixture.detectChanges();
-      expect(element.querySelector(".user-details").innerHTML).toContain(
-        testAssignee.user
-      );
-      expect(element.querySelector(".user-details").innerHTML).toContain(
-        testAssignee.email
-      );
-    });
   });
 
   describe("dropdown functionality", () => {
