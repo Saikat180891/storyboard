@@ -31,9 +31,8 @@ export class StepDistDirective implements OnInit {
     this.__rpService.getScrollPosition().subscribe(res => {
       const clientReactBounds = this.el.nativeElement.getBoundingClientRect();
       if (
-        clientReactBounds.top >= 0 &&
-        clientReactBounds.bottom <=
-          (window.innerHeight || document.documentElement.clientHeight) / 2
+        clientReactBounds.top >= 100 &&
+        clientReactBounds.bottom <= window.innerHeight
       ) {
         this.__stepLink.addStepsInViewPort(
           this.StepDist.step_id,
