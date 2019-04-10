@@ -53,7 +53,7 @@
   <div class="step-body">
     <div class="form">
       <div class="radio-group" *ngIf="canEdit">
-        <mat-radio-group [(ngModel)]="data.conditionSelected">
+        <mat-radio-group [(ngModel)]="data.condition_selected">
           <mat-radio-button
             [value]="condition"
             *ngFor="let condition of conditions"
@@ -71,11 +71,11 @@
               <span class="if-text">If</span>
               <ng-container *ngIf="canEdit; else editField">
                 <div class="select">
-                  <input type="text" [(ngModel)]="data.firstVariable" />
+                  <input type="text" [(ngModel)]="data.first_variable" />
                 </div>
               </ng-container>
               <ng-template #editField>
-                <span>{{ data.firstVariable }}</span>
+                <span>{{ data.first_variable }}</span>
               </ng-template>
             </div>
           </div>
@@ -99,7 +99,7 @@
             <ng-container *ngIf="canEdit; else editValue">
               <div class="select-with-delete">
                 <div class="select">
-                  <input type="text" [(ngModel)]="data.lastVariable" />
+                  <input type="text" [(ngModel)]="data.last_variable" />
                 </div>
                 <div class="delete" [ngStyle]="{ visibility: 'hidden' }">
                   <i class="far fa-trash-alt"></i>
@@ -107,13 +107,13 @@
               </div>
             </ng-container>
             <ng-template #editValue>
-              <span>{{ data.lastVariable }}</span>
+              <span>{{ data.last_variable }}</span>
             </ng-template>
           </div>
         </div>
       </ng-container>
 
-      <ng-container *ngIf="data.conditionSelected === 'Major'">
+      <ng-container *ngIf="data.condition_selected === 'Major'">
         <ng-container *ngFor="let row of data.majors; let i = index">
           <div class="form-group center-element">
             <div
@@ -122,12 +122,12 @@
             >
               <ng-container *ngIf="canEdit; else editlogic">
                 <div class="select-wrapper">
-                  <input type="text" [(ngModel)]="row.majorCondition" />
+                  <input type="text" [(ngModel)]="row.major_condition" />
                 </div>
               </ng-container>
               <ng-template #editlogic>
                 <span [ngStyle]="{ 'font-size': '14px' }">{{
-                  row.majorCondition
+                  row.major_condition
                 }}</span>
               </ng-template>
             </div>
@@ -141,11 +141,11 @@
                 <span class="if-text">If</span>
                 <ng-container *ngIf="canEdit; else editField">
                   <div class="select">
-                    <input type="text" [(ngModel)]="row.firstVariable" />
+                    <input type="text" [(ngModel)]="row.first_variable" />
                   </div>
                 </ng-container>
                 <ng-template #editField>
-                  <span>{{ row.firstVariable }}</span>
+                  <span>{{ row.first_variable }}</span>
                 </ng-template>
               </div>
             </div>
@@ -169,7 +169,7 @@
               <ng-container *ngIf="canEdit; else editValue">
                 <div class="select-with-delete">
                   <div class="select">
-                    <input type="text" [(ngModel)]="row.lastVariable" />
+                    <input type="text" [(ngModel)]="row.last_variable" />
                   </div>
                   <div class="delete" (click)="onDeleteNewRow(i)">
                     <i class="far fa-trash-alt"></i>
@@ -177,7 +177,7 @@
                 </div>
               </ng-container>
               <ng-template #editValue>
-                <span>{{ row.lastVariable }}</span>
+                <span>{{ row.last_variable }}</span>
               </ng-template>
             </div>
           </div>

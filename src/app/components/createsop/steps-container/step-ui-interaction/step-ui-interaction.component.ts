@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { UiInteractionStepData } from "../../common-model/step-type.model";
 import { StepBaseComponent } from "../step-base/step-base.component";
 
 @Component({
@@ -9,7 +10,7 @@ import { StepBaseComponent } from "../step-base/step-base.component";
 export class StepUiInteractionComponent extends StepBaseComponent {
   stepType = "ui-interaction";
 
-  data = {
+  data: UiInteractionStepData = {
     interaction_type: "",
     click_option: "",
     field: "",

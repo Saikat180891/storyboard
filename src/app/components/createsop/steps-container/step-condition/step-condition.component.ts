@@ -1,4 +1,8 @@
 import { Component } from "@angular/core";
+import {
+  ConditionStepData,
+  StepConditionType,
+} from "../../common-model/step-type.model";
 import { StepBaseComponent } from "../step-base/step-base.component";
 
 @Component({
@@ -8,11 +12,11 @@ import { StepBaseComponent } from "../step-base/step-base.component";
 })
 export class StepConditionComponent extends StepBaseComponent {
   stepType = "condition";
-  data = {
-    conditionSelected: "Minor",
-    firstVariable: "",
+  data: ConditionStepData = {
+    condition_selected: StepConditionType.MINOR,
+    first_variable: "",
     logic: "",
-    lastVariable: "",
+    last_variable: "",
     majors: [{}],
     screen: "",
   };

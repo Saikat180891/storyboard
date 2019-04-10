@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { TypeStepData } from "../../common-model/step-type.model";
 import { StepBaseComponent } from "../step-base/step-base.component";
 
 @Component({
@@ -9,7 +10,7 @@ import { StepBaseComponent } from "../step-base/step-base.component";
 export class StepTypeComponent extends StepBaseComponent {
   stepType = "type";
 
-  data = {
+  data: TypeStepData = {
     field: "",
     value: "",
     notes: "",

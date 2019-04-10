@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { CalculationStepData } from "../../common-model/step-type.model";
 import { StepBaseComponent } from "../step-base/step-base.component";
 
 @Component({
@@ -11,7 +12,7 @@ export class StepCalculationComponent extends StepBaseComponent {
 
   canEdit: boolean = true;
 
-  data = {
+  data: CalculationStepData = {
     calc_value: "",
     screen: "",
   };

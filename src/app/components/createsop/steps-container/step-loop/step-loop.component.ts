@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { LoopStepData } from "../../common-model/step-type.model";
 import { StepBaseComponent } from "../step-base/step-base.component";
 
 @Component({
@@ -10,8 +11,8 @@ export class StepLoopComponent extends StepBaseComponent {
   stepType = "start-loop";
   canEdit: boolean = false;
   displayDialogBox: boolean = false;
-  data = {
-    loop_params: "",
+  data: LoopStepData = {
+    loop_parameters: "",
     screen: "",
   };
 
