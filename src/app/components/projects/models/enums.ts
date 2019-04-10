@@ -10,3 +10,5 @@ export enum Role {
   MANAGER = "Manager",
   ANALYST = "Analyst",
 }
+
+export const allRoles: Role[] = [Role.SUPER_ADMIN, Role.MANAGER, Role.ANALYST];

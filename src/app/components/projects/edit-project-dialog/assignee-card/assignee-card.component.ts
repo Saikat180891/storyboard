@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { Assignee } from "../../models/assignee.model";
-import { Role } from "../../models/enums";
+import { allRoles, Role } from "../../models/enums";
 
 interface RoleChangedEvent {
   role: Role;
@@ -30,7 +30,7 @@ export class AssigneeCardComponent {
     RemoveAssigneeEvent
   > = new EventEmitter();
 
-  roles: Role[] = [Role.SUPER_ADMIN, Role.MANAGER, Role.ANALYST];
+  roles: Role[] = allRoles;
 
   constructor() {}
 

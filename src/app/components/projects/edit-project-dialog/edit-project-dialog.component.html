@@ -179,46 +179,7 @@
             *ngFor="let invites of invitationList"
           >
             <div class="dialog-group margin-bottom-10">
-              <!-- TODO could be invite-user.component -->
-              <div class="input-box margin-top-10 horizontal-flex">
-                <div class="invite-user-through-email">
-                  <input
-                    type="text"
-                    id="inviteEmail"
-                    placeholder="Email Address"
-                    [(ngModel)]="invites.inviteEmail"
-                  />
-                </div>
-                <div class="select-role-invite">
-                  <mat-select
-                    placeholder="Assign role"
-                    (selectionChange)="invites.inviteRole = $event.value"
-                  >
-                    <mat-option *ngFor="let role of roles" [value]="role">
-                      {{ role }}
-                    </mat-option>
-                  </mat-select>
-                </div>
-              </div>
-              <div class="input-box margin-top-10 horizontal-flex">
-                <div class="first-name">
-                  <input
-                    type="text"
-                    id="first_name"
-                    placeholder="First Name"
-                    [(ngModel)]="invites.inviteFirstName"
-                  />
-                </div>
-                <div class="last-name">
-                  <input
-                    type="text"
-                    id="last_name"
-                    placeholder="Last Name"
-                    [(ngModel)]="invites.inviteLastName"
-                  />
-                </div>
-              </div>
-              <!-- TODO could be invite-user.component -->
+              <app-invite-user-field #inviteUserToken> </app-invite-user-field>
             </div>
           </div>
           <button (click)="onAddUser()">Add New</button>

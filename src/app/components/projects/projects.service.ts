@@ -110,10 +110,10 @@ export class ProjectsService {
   inviteUser(projectId: number, invitee: InviteUser): Observable<any> {
     // TODO probably want an adapter for model -> request as well
     return this.dataService.postData("/invite_users/", {
-      first_name: invitee.inviteFirstName,
-      email: invitee.inviteEmail,
-      last_name: invitee.inviteLastName,
-      role: invitee.inviteRole,
+      first_name: invitee.firstName,
+      email: invitee.email,
+      last_name: invitee.lastName,
+      role: invitee.role,
       sop: projectId,
     });
   }

@@ -7,6 +7,8 @@ import {
   OnChanges,
   OnInit,
   Output,
+  QueryList,
+  ViewChildren,
 } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
 import { NgxSpinnerService } from "ngx-spinner";
@@ -14,6 +16,7 @@ import { fromEvent } from "rxjs";
 import { hideInOut, slideDown } from "../../../animation";
 import { DataService } from "../../../data.service";
 import { DateUtils } from "../../shared/date-utils";
+import { InviteUserFieldComponent } from "../invite-user-field/invite-user-field.component";
 import { Assignee, userToAssigneeAdapter } from "../models/assignee.model";
 import { KEY_CODE, Role } from "../models/enums";
 import { InviteUser } from "../models/invite-user.model";
@@ -42,16 +45,18 @@ export class EditProjectDialogComponent
   editProjectHeaderText: string = "Edit Project";
   editProjectSubmitButtonText: string = "Save";
 
-  roles: Role[] = [Role.SUPER_ADMIN, Role.MANAGER, Role.ANALYST];
-
   invitationList: InviteUser[] = [
     {
-      inviteEmail: "",
-      inviteRole: "",
-      inviteFirstName: "",
-      inviteLastName: "",
+      email: "",
+      role: "",
+      firstName: "",
+      lastName: "",
     },
   ];
+
+  @ViewChildren("inviteUserToken") inviteUserFields: QueryList<
+    InviteUserFieldComponent
+  >;
 
   /**
    * Validate SOP form
@@ -224,10 +229,10 @@ export class EditProjectDialogComponent
 
   onAddUser(): void {
     const emptyInvitee = {
-      inviteEmail: "",
-      inviteRole: "",
-      inviteFirstName: "",
-      inviteLastName: "",
+      email: "",
+      role: "",
+      firstName: "",
+      lastName: "",
     };
     this.invitationList.push(emptyInvitee);
   }
@@ -402,18 +407,24 @@ export class EditProjectDialogComponent
   }
 
   onSendInvitation(): void {
-    this.invitationList.forEach(invitee => {
+    this.inviteUserFields.forEach(field => {
+      field.setSubmitted();
+      // If field is not valid, don't bother sending an API request
+      if (!field.isValid()) {
+        return;
+      }
+      const invitee: InviteUser = field.getData();
       this.projectsService.inviteUser(this.project.id, invitee).subscribe(
         res => {
           this.snackBar.open(
-            `Invitation mail has been sent to ${invitee.inviteEmail}`,
+            `Invitation mail has been sent to ${invitee.email}`,
             "Success",
             { duration: 3000 }
           );
         },
         err => {
           this.snackBar.open(
-            `Can not send invitation to ${invitee.inviteEmail}`,
+            `Can not send invitation to ${invitee.email}`,
             "Failed",
             { duration: 3000 }
           );

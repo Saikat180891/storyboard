@@ -9,8 +9,8 @@ export interface InviteUserRequest {
 }
 
 export interface InviteUser {
-  inviteFirstName: string;
-  inviteEmail: string;
-  inviteLastName: string;
-  inviteRole: string;
+  firstName: string;
+  email: string;
+  lastName: string;
+  role: string;
 }

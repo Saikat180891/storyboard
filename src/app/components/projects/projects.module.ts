@@ -13,6 +13,7 @@ import { AppcontrolService } from "../../services/controlservice/appcontrol.serv
 import { CreateProjectCardComponent } from "./create-project-card/create-project-card.component";
 import { AssigneeCardComponent } from "./edit-project-dialog/assignee-card/assignee-card.component";
 import { EditProjectDialogComponent } from "./edit-project-dialog/edit-project-dialog.component";
+import { InviteUserFieldComponent } from "./invite-user-field/invite-user-field.component";
 import { ProjectCardComponent } from "./project-card/project-card.component";
 import { ProjectsPageComponent } from "./projects-page/projects-page.component";
 import { ProjectsService } from "./projects.service";
@@ -26,6 +27,7 @@ const routes: Routes = [{ path: "", component: ProjectsPageComponent }];
     CreateProjectCardComponent,
     EditProjectDialogComponent,
     AssigneeCardComponent,
+    InviteUserFieldComponent,
   ],
   imports: [CommonModule, GlobalmoduleModule, RouterModule.forChild(routes)],
   providers: [ProjectsService, AppcontrolService],
