@@ -169,6 +169,7 @@ export class RightPanelComponent implements OnInit {
       this.rightPanelService
         .createStep(this.pageService.userStoryId, $event.sectionId, payload)
         .subscribe(res => {
+          this.leftPanelService.setCurrentScreen($event.data.screen);
           this.stepcontrolService.updateStepWithResponse(
             $event.sectionIndex,
             $event.stepIndex,
