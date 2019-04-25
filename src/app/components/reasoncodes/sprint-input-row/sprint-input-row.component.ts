@@ -4,7 +4,7 @@ interface SprintRowValue {
   sprintName: string;
   startDate: Date;
   duration: string;
-  endDate: string;
+  endDate: Date;
 }
 
 @Component({
@@ -38,10 +38,15 @@ export class SprintInputRowComponent implements OnInit {
         sprintName: "Sprint X",
         startDate: new Date(),
         duration: `${this.weeks}W`,
-        endDate: "",
+        endDate: null,
       };
     } else {
       this.formValues = this.value;
+      this.weeks = parseInt(
+        this.formValues &&
+          this.formValues.duration &&
+          this.formValues.duration.split("W")[0]
+      );
     }
   }
 
@@ -91,7 +96,6 @@ export class SprintInputRowComponent implements OnInit {
     const date = new Date(this.formValues.startDate);
     date.setDate(date.getDate() + days);
     const endDate = new Date(date);
-    this.formValues.endDate = `${endDate.getMonth() +
-      1}/${endDate.getDate()}/${endDate.getFullYear()}`;
+    this.formValues.endDate = endDate;
   }
 }

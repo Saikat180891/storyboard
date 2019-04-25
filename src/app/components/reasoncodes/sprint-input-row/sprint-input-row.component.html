@@ -49,10 +49,15 @@
   </div>
 
   <div class="end-date-wrapper input-style-type col-size-lg">
+    <div class="date-picker-wrapper" [ngStyle]="{ display: 'none' }">
+      <mat-datepicker-toggle matSuffix [for]="endDate"> </mat-datepicker-toggle>
+      <mat-datepicker #endDate></mat-datepicker>
+    </div>
     <input
       type="text"
       readonly
       required
+      [matDatepicker]="endDate"
       [(ngModel)]="formValues.endDate"
       placeholder="End date"
     />

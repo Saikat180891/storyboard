@@ -30,9 +30,7 @@ export class SprintAdapter {
   constructor(res: any) {
     this.sprintName = res.sprint_name;
     this.currentSprintFlag = res.current_sprint_flag;
-    this.endDate = formatToUSDate(
-      changeHypenToBackSlashFormatOfDate(res.end_date)
-    );
+    this.endDate = res.end_date;
     this.duration = res.duration;
     this.startDate = res.start_date;
     this.id = res.id;

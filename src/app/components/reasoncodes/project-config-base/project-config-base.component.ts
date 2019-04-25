@@ -59,7 +59,7 @@ export class ProjectConfigBaseComponent implements OnInit {
       const sprints = this.addMoreSprints.map((element: Sprint) => {
         return {
           duration: element.duration,
-          end_date: arrangeEndDateForBackend(element.endDate),
+          end_date: convertStartDateforBackend(new Date(element.endDate)),
           sprint_name: element.sprintName,
           start_date: convertStartDateforBackend(new Date(element.startDate)),
         };
@@ -85,7 +85,7 @@ export class ProjectConfigBaseComponent implements OnInit {
           id: sprint.id,
           values: {
             duration: sprint.duration,
-            end_date: arrangeEndDateForBackend(sprint.endDate),
+            end_date: convertStartDateforBackend(new Date(sprint.endDate)),
             sprint_name: sprint.sprintName,
             start_date:
               typeof sprint.startDate === "string"
