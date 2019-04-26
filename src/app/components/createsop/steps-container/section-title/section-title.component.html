@@ -97,6 +97,8 @@
                 (outputChange)="onOutputChange($event)"
                 [sectionId]="sectionId"
                 [stepData]="step"
+                (attachmentDownload)="onAttachmentDownload($event)"
+                (attachmentDelete)="onAttachmentDelete($event)"
               ></app-steps-container>
             </div>
           </ng-container>

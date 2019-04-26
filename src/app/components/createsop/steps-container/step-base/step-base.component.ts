@@ -1,6 +1,29 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from "@angular/core";
+import { FileAttachmentService } from "../../../shared/file-attachment/file-attachment.service";
 import { StepData } from "../../common-model/step-type.model";
 import { ExportToSopService } from "../../services/export-to-sop/export-to-sop.service";
+
+interface AttachmentDownloadEvent {
+  url: string;
+  fileName: string;
+}
+interface StepEditEvent {
+  data: StepData;
+  sectionIndex: number;
+  stepIndex: number;
+  stepType: string;
+  sectionId: number;
+  stepId: number;
+  mode: string;
+  attachmentDelete: boolean;
+}
 
 @Component({
   selector: "app-step-base",
@@ -13,6 +36,12 @@ export class StepBaseComponent implements OnInit {
   @Input("sectionIndex") sectionIndex: number;
   @Output("deleteStep") deleteStep = new EventEmitter();
   @Output("outputChange") outputChange = new EventEmitter();
+  @Output("attachmentDownload") attachmentDownload: EventEmitter<
+    AttachmentDownloadEvent
+  > = new EventEmitter<AttachmentDownloadEvent>();
+  @Output("attachmentDelete") attachmentDelete: EventEmitter<
+    StepEditEvent
+  > = new EventEmitter<StepEditEvent>();
 
   stepType: string = "base";
   canEdit: boolean = false;
@@ -20,7 +49,10 @@ export class StepBaseComponent implements OnInit {
   data: StepData = {};
   conditions = ["Minor", "Major"];
 
-  constructor(private exportService: ExportToSopService) {}
+  constructor(
+    private exportService: ExportToSopService,
+    private fileAttachmentService: FileAttachmentService
+  ) {}
 
   ngOnInit() {
     this.init();
@@ -105,5 +137,47 @@ export class StepBaseComponent implements OnInit {
         mode: "local",
       });
     }
+  }
+
+  onAttachIconClick($event) {
+    this.fileAttachmentService
+      .openFileAttachmentDialog(`Attach file to step - ${this.getStepNumber()}`)
+      .subscribe((res: File) => {
+        if (res) {
+          if (this.stepData.step_id) {
+            this.outputChange.emit({
+              data: this.data,
+              sectionIndex: this.sectionIndex,
+              stepIndex: this.stepIndex,
+              stepType: this.stepType,
+              sectionId: this.sectionId,
+              stepId: this.stepData.step_id,
+              mode: "edit",
+              attachment: res,
+            });
+          }
+        }
+      });
+  }
+
+  onAttachmentDownload() {
+    this.attachmentDownload.emit({
+      url: this.stepData.attachment_url,
+      fileName: this.stepData.attachment_name,
+    });
+  }
+
+  onAttachmentDelete() {
+    const event = {
+      data: this.data,
+      sectionIndex: this.sectionIndex,
+      stepIndex: this.stepIndex,
+      stepType: this.stepType,
+      sectionId: this.sectionId,
+      stepId: this.stepData.step_id,
+      mode: "edit",
+      attachmentDelete: true,
+    };
+    this.attachmentDelete.emit(event);
   }
 }

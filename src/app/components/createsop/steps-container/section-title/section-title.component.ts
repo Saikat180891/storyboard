@@ -36,6 +36,8 @@ export class SectionTitleComponent implements OnInit {
   @Output("outputChange") outputChange = new EventEmitter();
   @Output("sectionChange") sectionChange = new EventEmitter();
   @Output("deleteSection") deleteSection = new EventEmitter();
+  @Output("downloadAttachment") downloadAttachment = new EventEmitter();
+  @Output("attachmentDelete") attachmentDelete = new EventEmitter();
 
   @ViewChildren("stepContainerToken") containerChildren: QueryList<
     StepsContainerComponent
@@ -208,5 +210,12 @@ export class SectionTitleComponent implements OnInit {
         stepChild.onClickOnOk();
       }
     });
+  }
+
+  onAttachmentDelete($event) {
+    this.attachmentDelete.emit($event);
+  }
+  onAttachmentDownload($event) {
+    this.downloadAttachment.emit($event);
   }
 }

@@ -29,6 +29,7 @@
     "@angular/router": "^7.0.3",
     "angular-password-strength-meter": "0.0.4",
     "core-js": "^2.5.4",
+    "file-saver": "^2.0.1",
     "microsoft-adal-angular6": "^1.0.0",
     "moment": "^2.24.0",
     "ng2-nvd3": "^2.0.0",

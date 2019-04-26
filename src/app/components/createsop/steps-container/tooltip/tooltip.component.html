@@ -1,0 +1,15 @@
+<span class="tooltip" *ngIf="toolTipContent" (click)="$event.stopPropagation()">
+  <span class="tooltip-attachment">{{ toolTipContent }}</span>
+  <div class="right-part">
+    <div
+      class="icon-back"
+      style="margin-right:1px"
+      (click)="onDeleteClick($event)"
+    >
+      <i class="fas fa-trash-alt"></i>
+    </div>
+    <div class="icon-back" (click)="onDownloadClick($event)">
+      <i class="fas fa-download"></i>
+    </div>
+  </div>
+</span>

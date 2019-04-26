@@ -21,6 +21,8 @@ export class StepsContainerComponent implements OnInit {
   @Input("stepData") stepData: any = {};
   @Output("delete") delete = new EventEmitter();
   @Output("outputChange") outputChange = new EventEmitter();
+  @Output("attachmentDownload") attachmentDownload = new EventEmitter();
+  @Output("attachmentDelete") attachmentDelete = new EventEmitter();
 
   @ViewChild("stepBaseToken") stepChild: StepBaseComponent;
 
@@ -34,5 +36,12 @@ export class StepsContainerComponent implements OnInit {
 
   onOutputChange($event: Event) {
     this.outputChange.emit($event);
+  }
+
+  onAttachmentDownload($event: Event) {
+    this.attachmentDownload.emit($event);
+  }
+  onAttachmentDelete($event) {
+    this.attachmentDelete.emit($event);
   }
 }

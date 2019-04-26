@@ -31,20 +31,38 @@
 
     <ng-container *ngIf="canEdit; else edit">
       <div class="right-controls">
-        <div class="step-edit color-green" (click)="onClickOnOk()">
+        <div class="ctrl-btn step-edit color-green" (click)="onClickOnOk()">
           <i class="fas fa-check"></i>
         </div>
-        <div class="step-delete color-light-red" (click)="onCancelEdit()">
+        <div
+          class="ctrl-btn step-delete color-light-red"
+          (click)="onCancelEdit()"
+        >
           <i class="fas fa-times"></i>
         </div>
       </div>
     </ng-container>
     <ng-template #edit>
       <div class="right-controls">
-        <div class="step-edit" (click)="onClikedOnEdit()">
+        <div class="ctrl-btn step-attach" (click)="onAttachIconClick($event)">
+          <ng-container *ngIf="stepData.attachment_name; else noAttachment">
+            <img src="../../../../../assets/pics/attachment.svg" />
+          </ng-container>
+          <ng-template #noAttachment>
+            <img src="../../../../../assets/pics/no_attachment.svg" />
+          </ng-template>
+          <div class="step-tooltip">
+            <app-tooltip
+              [toolTipContent]="stepData.attachment_name"
+              (toolTipDownload)="onAttachmentDownload($event)"
+              (toolTipDelete)="onAttachmentDelete()"
+            ></app-tooltip>
+          </div>
+        </div>
+        <div class="ctrl-btn step-edit" (click)="onClikedOnEdit()">
           <i class="fas fa-pencil-alt"></i>
         </div>
-        <div class="step-delete" (click)="onDeleteStep()">
+        <div class="ctrl-btn step-delete" (click)="onDeleteStep()">
           <i class="far fa-trash-alt"></i>
         </div>
       </div>

@@ -26,6 +26,7 @@ import { StepReadComponent } from "./steps-container/step-read/step-read.compone
 import { StepTypeComponent } from "./steps-container/step-type/step-type.component";
 import { StepUiInteractionComponent } from "./steps-container/step-ui-interaction/step-ui-interaction.component";
 import { StepsContainerComponent } from "./steps-container/steps-container.component";
+import { TooltipComponent } from "./steps-container/tooltip/tooltip.component";
 import { VideoGalleryComponent } from "./video-gallery/video-gallery.component";
 
 const routes: Routes = [{ path: "", component: CreatesopComponent }];
@@ -54,6 +55,7 @@ const routes: Routes = [{ path: "", component: CreatesopComponent }];
     StepEndLoopComponent,
     ExportToSopComponent,
     SmallCardComponent,
+    TooltipComponent,
     StepBaseComponent,
   ],
   imports: [

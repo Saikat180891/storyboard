@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { RouterModule } from "@angular/router";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { FileAttachmentComponent } from "src/app/components/shared/file-attachment/file-attachment.component";
 import { ButtonComponent } from "../../components/shared/button/button.component";
 import { ConfirmModalComponent } from "../../components/shared/confirm-modal/confirm-modal.component";
 import { ConfirmModalService } from "../../components/shared/confirm-modal/confirm-modal.service";
@@ -53,6 +54,7 @@ import {
   MatToolbarModule,
   MatTooltipModule,
 } from "@angular/material";
+import { FileAttachmentService } from "src/app/components/shared/file-attachment/file-attachment.service";
 
 @NgModule({
   declarations: [
@@ -66,6 +68,7 @@ import {
     DownloadLinkComponent,
     ButtonComponent,
     ConfirmModalComponent,
+    FileAttachmentComponent,
   ],
   imports: [
     CommonModule,
@@ -145,13 +148,15 @@ import {
     DownloadLinkComponent,
     ButtonComponent,
     ConfirmModalComponent,
+    FileAttachmentComponent,
   ],
   providers: [
     MatSnackBarModule,
     DataService,
     ConfirmModalService,
+    FileAttachmentService,
     { provide: MatDialogRef, useValue: {} },
   ],
-  entryComponents: [ConfirmModalComponent],
+  entryComponents: [ConfirmModalComponent, FileAttachmentComponent],
 })
 export class GlobalmoduleModule {}

@@ -140,6 +140,14 @@ export class DataService implements OnInit {
     });
   }
 
+  downloadFile(endpoint: string): Observable<any> {
+    return this.http.get(endpoint, {
+      withCredentials: true,
+      headers: httpOptions.headers.set("X-CSRFToken", this.getCSRFToken()),
+      responseType: "blob",
+    });
+  }
+
   updatePost(endpoint: string, body: any) {
     return this.http.put(this.apiUrl + endpoint, body, {
       withCredentials: true,

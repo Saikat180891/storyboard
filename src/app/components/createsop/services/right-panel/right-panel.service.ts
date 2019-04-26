@@ -156,4 +156,8 @@ export class RightPanelService {
     const endpoint = `/sop/epics/userstories/${userStoryId}/sections/steps/destroy/${stepNumber}.json?insertion_id=${insertionId}&&section_insertion_id=${sectionInsertionId}&&propagate=${true}`;
     return this.__api.deleteValue(endpoint);
   }
+
+  downloadAttachment($event): Observable<any> {
+    return this.__api.downloadFile($event);
+  }
 }

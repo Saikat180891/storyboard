@@ -5,6 +5,9 @@ import {
   QueryList,
   ViewChild,
 } from "@angular/core";
+import { MatSnackBar } from "@angular/material";
+import { saveAs } from "file-saver";
+import { stringify } from "querystring";
 import { DataService } from "../../../data.service";
 import { ConfirmModalService } from "../../shared/confirm-modal/confirm-modal.service";
 import { SectionListItem } from "../common-model/section-list-item.model";
@@ -37,7 +40,8 @@ export class RightPanelComponent implements OnInit {
     private pageService: PageService,
     private rightPanelService: RightPanelService,
     private confirm: ConfirmModalService,
-    private leftPanelService: LeftPanelService
+    private leftPanelService: LeftPanelService,
+    private snackBar: MatSnackBar
   ) {}
 
   /**
@@ -163,6 +167,7 @@ export class RightPanelComponent implements OnInit {
         propagate: true,
         type: $event.stepType,
         data: $event.data,
+        attachment: null,
         screen_id:
           typeof $event.data.screen === "string" ? null : $event.data.screen,
       };
@@ -177,22 +182,44 @@ export class RightPanelComponent implements OnInit {
           );
         });
     } else if ($event.mode === "edit") {
-      const payload = {
-        type: $event.stepType,
-        data: $event.data,
-        screen_id:
-          typeof $event.data.screen === "string" ? null : $event.data.screen,
-      };
-      this.rightPanelService
-        .updateStep($event.stepId, payload)
-        .subscribe((res: Step) => {
+      const formData = new FormData();
+      formData.append("type", $event.stepType);
+      formData.append("data", JSON.stringify($event.data));
+
+      if ($event.attachment instanceof File) {
+        formData.append("attachment", $event.attachment);
+      } else {
+        formData.append("attachment", "");
+      }
+      formData.append(
+        "attachment_delete",
+        $event.attachmentDelete ? $event.attachmentDelete : false
+      );
+      formData.append(
+        "screen_id",
+        typeof $event.data.screen === "number" ? $event.data.screen : ""
+      );
+
+      this.rightPanelService.updateStep($event.stepId, formData).subscribe(
+        res => {
           this.leftPanelService.setCurrentScreen($event.data.screen);
           this.stepcontrolService.modifyStepOnEdit(
             $event.sectionIndex,
             $event.stepIndex,
             res
           );
-        });
+          if ($event.attachment instanceof File) {
+            this.snackBar.open("Attachment added successfully", "Success", {
+              duration: 3000,
+            });
+          }
+        },
+        err => {
+          this.snackBar.open(JSON.stringify(err.error["detail"]), "Fail", {
+            duration: 3000,
+          });
+        }
+      );
     }
   }
 
@@ -239,5 +266,20 @@ export class RightPanelComponent implements OnInit {
           );
         });
     }
+  }
+
+  onDownloadAttachment($event) {
+    this.rightPanelService
+      .downloadAttachment($event.url)
+      .subscribe((data: Blob) => saveAs(data, $event.fileName));
+  }
+
+  onAttachmentDelete($event) {
+    this.confirm.confirmDelete(
+      "Are you sure you want to delete this attachment?",
+      () => {
+        this.onOutputChange($event);
+      }
+    );
   }
 }

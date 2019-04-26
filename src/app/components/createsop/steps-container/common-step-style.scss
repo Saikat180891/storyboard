@@ -88,13 +88,27 @@
       display: flex;
       justify-content: flex-start;
 
-      div {
+      div.step-attach {
+        position: relative;
+        div.step-tooltip {
+          display: none;
+        }
+      }
+
+      div.step-attach:hover {
+        div.step-tooltip {
+          display: block;
+          position: absolute;
+          bottom: -2.8rem;
+        }
+      }
+      div.ctrl-btn {
         width: 30px;
         height: 100%;
         @include flex-middle-center();
         cursor: pointer;
       }
-      div:nth-child(1) {
+      div.ctrl-btn:nth-child(1) {
         border-right: 1px solid #d1d1d1;
       }
       .color-light-red {

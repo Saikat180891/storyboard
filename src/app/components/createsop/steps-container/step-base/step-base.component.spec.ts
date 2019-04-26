@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { GlobalmoduleModule } from "../../../../module/globalmodule/globalmodule.module";
 import { StepBaseComponent } from "./step-base.component";
 
 describe("StepBaseComponent", () => {
@@ -9,6 +10,7 @@ describe("StepBaseComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [StepBaseComponent],
+      imports: [GlobalmoduleModule],
     }).compileComponents();
   }));
 

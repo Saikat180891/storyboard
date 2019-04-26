@@ -13,6 +13,8 @@
       (sectionChange)="onSectionChange($event)"
       [sectionId]="sectionListItem.section_id"
       (deleteSection)="onDeleteSection($event)"
+      (downloadAttachment)="onDownloadAttachment($event)"
+      (attachmentDelete)="onAttachmentDelete($event)"
     ></app-section-title>
   </div>
   <div class="add-section" (click)="onCreateNewSection()">
