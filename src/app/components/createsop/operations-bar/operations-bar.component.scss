@@ -25,6 +25,11 @@
     display: flex;
     padding: 0 10px 0 0;
     justify-content: flex-start;
+
+    .icon-align {
+      display: flex;
+      justify-content: center;
+    }
   }
   div.partial-blue-btn span {
     display: block;
