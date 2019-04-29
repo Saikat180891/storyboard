@@ -15,6 +15,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { fromEvent } from "rxjs";
 import { hideInOut, slideDown } from "../../../animation";
 import { DataService } from "../../../data.service";
+import { SharedService } from "../../../services/shared-services/shared.service";
 import { DateUtils } from "../../shared/date-utils";
 import { InviteUserFieldComponent } from "../invite-user-field/invite-user-field.component";
 import { Assignee, userToAssigneeAdapter } from "../models/assignee.model";
@@ -95,7 +96,8 @@ export class EditProjectDialogComponent
     private dataService: DataService,
     private projectsService: ProjectsService,
     private snackBar: MatSnackBar,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private sharedService: SharedService
   ) {}
 
   /**
@@ -423,11 +425,7 @@ export class EditProjectDialogComponent
           );
         },
         err => {
-          this.snackBar.open(
-            `Can not send invitation to ${invitee.email}`,
-            "Failed",
-            { duration: 3000 }
-          );
+          this.sharedService.raiseError(err);
         }
       );
     });

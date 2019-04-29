@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from "@angular/core";
-import { SharedServicesService } from "../../../services/shared-services/shared-services.service";
+import { SharedService } from "../../../services/shared-services/shared.service";
 import { DateUtils } from "../../shared/date-utils";
 import { ReasonCodeService } from "../reason-code.service";
 import { EditUserStoryService } from "./edit-user-story.service";
@@ -107,7 +107,7 @@ export class UserstoryCardEditComponent implements OnInit {
   constructor(
     private __rcService: ReasonCodeService,
     private __editUS: EditUserStoryService,
-    private __sharedService: SharedServicesService
+    private __sharedService: SharedService
   ) {}
 
   ngOnInit() {

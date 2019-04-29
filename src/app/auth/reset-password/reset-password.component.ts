@@ -5,6 +5,7 @@
  */
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { SharedService } from "../../services/shared-services/shared.service";
 import { SignupService } from "../signupusers/signup.service";
 import { ResetPasswordService } from "./reset-password.service";
 
@@ -17,7 +18,8 @@ export class ResetPasswordComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private _api: ResetPasswordService,
-    private signUpService: SignupService
+    private signUpService: SignupService,
+    private sharedService: SharedService
   ) {}
 
   email: string;
@@ -73,13 +75,18 @@ export class ResetPasswordComponent implements OnInit {
       reset_password_token: this.passwordResetToken,
     };
     if (this.strong_password && this.password == this.confirmPassword) {
-      this._api.resetPasswordUser(reset_password_fields).subscribe(res => {
-        if (res == "Success") {
-          this.reset_password_form = 2;
-        } else {
-          this.reset_password_form = 3;
+      this._api.resetPasswordUser(reset_password_fields).subscribe(
+        res => {
+          if (res == "Success") {
+            this.reset_password_form = 2;
+          } else {
+            this.reset_password_form = 3;
+          }
+        },
+        err => {
+          this.sharedService.raiseError(err);
         }
-      });
+      );
     }
   }
 }

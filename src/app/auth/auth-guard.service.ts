@@ -12,6 +12,7 @@ import {
 import { CookieService } from "ngx-cookie-service";
 import { Observable } from "rxjs";
 import { DataService } from "../data.service";
+import { SharedService } from "../services/shared-services/shared.service";
 
 @Injectable({
   providedIn: "root",
@@ -23,7 +24,8 @@ export class AuthGuardService implements CanActivate {
   constructor(
     private router: Router,
     private dataService: DataService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private sharedService: SharedService
   ) {}
 
   /**
@@ -71,15 +73,18 @@ export class AuthGuardService implements CanActivate {
    * @param loginDetails : Json containing email and password for external user login
    */
   externalUserLogin(loginDetails) {
-    this.dataService
-      .postLogin("/external_user_login/", loginDetails)
-      .subscribe(res => {
+    this.dataService.postLogin("/external_user_login/", loginDetails).subscribe(
+      res => {
         if (res === "Login successful") {
           this.isUserLoggedIn();
         } else {
           alert(res);
         }
-      });
+      },
+      err => {
+        this.sharedService.raiseError(err);
+      }
+    );
   }
 
   /**

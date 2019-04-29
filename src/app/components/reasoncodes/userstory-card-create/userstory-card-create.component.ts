@@ -8,7 +8,7 @@ import {
   Output,
 } from "@angular/core";
 import { fromEvent } from "rxjs";
-import { SharedServicesService } from "../../../services/shared-services/shared-services.service";
+import { SharedService } from "../../../services/shared-services/shared.service";
 import { ReasonCodeService } from "../reason-code.service";
 import { CreateUserstoryService } from "./create-userstory.service";
 
@@ -113,7 +113,7 @@ export class UserstoryCardCreateComponent implements OnInit, OnChanges {
   constructor(
     private __rcService: ReasonCodeService,
     private __createUserStory: CreateUserstoryService,
-    private __sharedService: SharedServicesService
+    private __sharedService: SharedService
   ) {}
 
   ngOnInit() {}

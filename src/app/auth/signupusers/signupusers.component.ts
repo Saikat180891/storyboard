@@ -1,11 +1,7 @@
-/**
- * Author: Anmol Dhingra
- *
- * SignUp User Type Script for signing up
- */
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { environment } from "../../../environments/environment";
+import { SharedService } from "../../services/shared-services/shared.service";
 import { SignupService } from "./signup.service";
 
 @Component({
@@ -20,7 +16,8 @@ export class SignupusersComponent implements OnInit {
   constructor(
     private _api: SignupService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private sharedService: SharedService
   ) {}
   password_mismatch = false;
   signup_form = 1;
@@ -85,13 +82,18 @@ export class SignupusersComponent implements OnInit {
     if (this.strong_password) {
       if (this.password == this.confirmPassword) {
         this.password_mismatch = false;
-        this._api.signUpUser(signup_details).subscribe(res => {
-          if (res == "Success") {
-            this.signup_form = 2;
-          } else {
-            this.signup_form = 3;
+        this._api.signUpUser(signup_details).subscribe(
+          res => {
+            if (res == "Success") {
+              this.signup_form = 2;
+            } else {
+              this.signup_form = 3;
+            }
+          },
+          err => {
+            this.sharedService.raiseError(err);
           }
-        });
+        );
       } else {
         this.passwordMessage = "Password Mismatch";
       }

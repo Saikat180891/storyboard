@@ -9,6 +9,7 @@ import { MatSnackBar } from "@angular/material";
 import { saveAs } from "file-saver";
 import { NgxSpinnerService } from "ngx-spinner";
 import { DataService } from "../../../data.service";
+import { SharedService } from "../../../services/shared-services/shared.service";
 import { ConfirmModalService } from "../../shared/confirm-modal/confirm-modal.service";
 import { SectionListItem } from "../common-model/section-list-item.model";
 import { LeftPanelService } from "../services/left-panel/left-panel.service";
@@ -42,7 +43,8 @@ export class RightPanelComponent implements OnInit {
     private confirm: ConfirmModalService,
     private leftPanelService: LeftPanelService,
     private snackBar: MatSnackBar,
-    private ngxSpinnerService: NgxSpinnerService
+    private ngxSpinnerService: NgxSpinnerService,
+    private sharedService: SharedService
   ) {}
 
   /**
@@ -217,9 +219,7 @@ export class RightPanelComponent implements OnInit {
           }
         },
         err => {
-          this.snackBar.open(JSON.stringify(err.error["detail"]), "Fail", {
-            duration: 3000,
-          });
+          this.sharedService.raiseError(err);
         }
       );
     }
