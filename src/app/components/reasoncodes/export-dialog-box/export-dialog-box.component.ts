@@ -1,7 +1,16 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { MatRadioChange } from "@angular/material/radio";
+import { DownloadFileType } from "../export-to-word-modal/export-to-word-modal.component";
 import { ReasonCodeService } from "../reason-code.service";
-
+export enum DownloadAuditType {
+  SINCE_CREATED = 0,
+  TIME_FRAME = 1,
+}
+export interface Audit {
+  type: string;
+  startDate?: string;
+  endDate?: string;
+}
 @Component({
   selector: "export-dialog-box",
   templateUrl: "./export-dialog-box.component.html",
@@ -9,66 +18,39 @@ import { ReasonCodeService } from "../reason-code.service";
 })
 export class ExportDialogBoxComponent implements OnInit {
   @Output("close") close = new EventEmitter<boolean>();
-  sidebarLinks = ["Audit Trail", "Download SOP"];
-  linkSelected: number = 0;
-  show_dates: boolean = false;
-  startDate = "";
-  endDate = "";
-  projectTypeSelected;
-  startDateValidator: boolean = false;
-  endDateValidator: boolean = false;
+  @Output("audit") audit = new EventEmitter<Audit>();
+  auditTypes = ["Since Created", "Time Frame"];
+  projectTypeSelected = 0;
+  disableDatePicker: boolean = true;
+  startDate: string = null;
+  endDate: string = null;
 
   constructor(private reasonCodeService: ReasonCodeService) {}
 
   ngOnInit() {}
 
-  onSelect(i) {
-    this.linkSelected = i;
-  }
-
-  onTimedProject() {
-    this.show_dates = true;
-  }
-
-  onEntireProject() {
-    this.show_dates = false;
-  }
-
-  onExportAuditTrail() {
-    if (this.projectTypeSelected == 2 && this.startDate && this.endDate) {
-      const startDate = this.reArrangeDate(this.startDate);
-      const endDate = this.reArrangeDate(this.endDate);
-      this.reasonCodeService.downLoadAuditTrailFile(
-        this.reasonCodeService.sopId,
-        startDate,
-        endDate
-      );
+  onSelectionChange($event: MatRadioChange): void {
+    if ($event.value === DownloadAuditType.TIME_FRAME) {
+      this.disableDatePicker = false;
     } else {
-      this.reasonCodeService.downLoadAuditTrailFile(
-        this.reasonCodeService.sopId
-      );
+      this.disableDatePicker = true;
+      this.startDate = this.endDate = null;
     }
-    this.onClose();
   }
 
-  reArrangeDate(date) {
-    const newDate = new Date(date);
-
-    const strDate =
-      newDate.getFullYear() +
-      "-" +
-      (newDate.getMonth() + 1) +
-      "-" +
-      newDate.getDate();
-
-    return strDate;
+  onExport(): void {
+    this.audit.emit({
+      type: DownloadFileType.AUDIT,
+      startDate: this.startDate ? this.startDate : null,
+      endDate: this.endDate ? this.endDate : null,
+    });
   }
 
-  onClose() {
+  onClose(): void {
     this.close.emit(false);
   }
 
-  onDownloadFile() {
+  onDownloadFile(): void {
     this.reasonCodeService.downloadProject(this.reasonCodeService.sopId);
   }
 }

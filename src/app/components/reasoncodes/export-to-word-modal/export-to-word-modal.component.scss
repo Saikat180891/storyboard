@@ -1,0 +1,18 @@
+.export-wrapper {
+  .dialog-name {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 10px 10px 20px;
+    width: 100%;
+    span.name {
+      color: #2a7de1;
+      font-size: 18px;
+    }
+    span.dialog-close {
+      color: #54585a;
+      cursor: pointer;
+    }
+  }
+  .mat-tab-custom {
+  }
+}

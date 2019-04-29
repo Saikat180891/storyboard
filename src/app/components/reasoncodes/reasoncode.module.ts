@@ -22,6 +22,9 @@ import { SprintConfigureComponent } from "./sprint-configure/sprint-configure.co
 import { SprintInputRowComponent } from "./sprint-input-row/sprint-input-row.component";
 
 import { EpicComponent } from "./epic/epic.component";
+import { ExportSopAsWordComponent } from "./export-sop-as-word/export-sop-as-word.component";
+import { ExportToWordModalComponent } from "./export-to-word-modal/export-to-word-modal.component";
+import { ExportToWordModalService } from "./export-to-word-modal/export-to-word-modal.service";
 import { ProjectConfigBaseComponent } from "./project-config-base/project-config-base.component";
 import { ProjectHeaderTitleComponent } from "./project-header-title/project-header-title.component";
 import { ProjectConfigureService } from "./services/project-configure.service";
@@ -50,6 +53,8 @@ const routes: Routes = [{ path: "", component: ReasoncodesComponent }];
     EpicComponent,
     SortComponent,
     ProjectHeaderTitleComponent,
+    ExportToWordModalComponent,
+    ExportSopAsWordComponent,
   ],
   imports: [
     CommonModule,
@@ -57,6 +62,7 @@ const routes: Routes = [{ path: "", component: ReasoncodesComponent }];
     NvD3Module,
     RouterModule.forChild(routes),
   ],
-  providers: [ProjectConfigureService],
+  providers: [ProjectConfigureService, ExportToWordModalService],
+  entryComponents: [ExportToWordModalComponent],
 })
 export class ReasoncodeModule {}

@@ -277,3 +277,35 @@ ul {
 textarea {
   resize: none;
 }
+
+mat-dialog-container.mat-dialog-container {
+  padding: 0 !important;
+}
+.mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: #2a7de1;
+}
+
+::ng-deep {
+  .mat-checkbox-frame {
+    border-color: #858585;
+    border-width: 1px;
+  }
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle,
+.mat-radio-button.mat-accent
+  .mat-radio-ripple
+  .mat-ripple-element:not(.mat-radio-persistent-ripple),
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+.mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+  background-color: #2a7de1;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #2a7de1;
+}
+
+.mat-radio-label-content {
+  font-size: 14px;
+}

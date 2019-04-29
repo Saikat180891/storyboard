@@ -37,7 +37,13 @@ export class ImportStoriesComponent implements OnInit {
         ) {
           this.reasonCodeService.importStories(this.excelFile).subscribe(
             res => this.reasonCodeService.snackbar.open(res),
-            err => this.reasonCodeService.snackbar.open(err),
+            err => {
+              this.reasonCodeService.snackbar.open(
+                err.error["detail"],
+                "Fail",
+                { duration: 3000 }
+              );
+            },
             () => {
               this.reasonCodeService.snackbar.open(
                 "Uploaded Successfully",
@@ -45,6 +51,7 @@ export class ImportStoriesComponent implements OnInit {
                 { duration: 5000 }
               );
               this.reasonCodeService.refresh(this.reasonCodeService.sopId);
+              this.close.emit(false);
             }
           );
         }

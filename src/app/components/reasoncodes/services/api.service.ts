@@ -45,4 +45,15 @@ export class ApiService {
       })
     );
   }
+
+  downloadExportToSop(
+    projectId: number,
+    listOfEpics: string,
+    listOfUserstories: string
+  ): Observable<any> {
+    const endpoint = `${
+      this.api.apiUrl
+    }/projects/${projectId}/generate_sop.json?epic_id=${listOfEpics}&us_id=${listOfUserstories}`;
+    return this.api.downloadFile(endpoint);
+  }
 }

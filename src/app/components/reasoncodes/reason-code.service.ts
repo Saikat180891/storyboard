@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
+import { saveAs } from "file-saver";
 import { BehaviorSubject } from "rxjs";
 import { DataService } from "../../data.service";
 import { DateUtils } from "../shared/date-utils";
@@ -487,7 +488,9 @@ export class ReasonCodeService {
     } else {
       api = `/audit_trails/${projectId}/`;
     }
-    window.location.href = this._api.apiUrl + api;
+    this._api.downloadFile(this._api.apiUrl + api).subscribe((data: Blob) => {
+      saveAs(data);
+    });
   }
 
   getBenefiftChart(projectId: number) {

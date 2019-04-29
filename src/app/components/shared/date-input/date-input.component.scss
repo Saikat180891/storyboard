@@ -1,0 +1,35 @@
+.date-picker-input-box {
+  .input-text-box {
+    display: flex;
+    flex-direction: column;
+    color: #999999;
+    font-size: 14px;
+
+    label[for="date-input"] {
+      margin-bottom: 7px;
+    }
+
+    .date-picker-container {
+      display: flex;
+      border: 1px solid #999999;
+      border-radius: 5px;
+      overflow: hidden;
+
+      input {
+        height: 1.8rem;
+        padding: 7px;
+        width: calc(100% - 1.8rem);
+        border: 0px solid #999999;
+        margin-top: 1px;
+      }
+
+      .datepicker {
+        height: 1.8rem;
+        width: 1.8rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}

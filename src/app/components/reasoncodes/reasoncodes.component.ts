@@ -13,6 +13,7 @@ import {
   ViewChild,
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { saveAs } from "file-saver";
 import { NgxSpinnerService } from "ngx-spinner";
 import { fromEvent } from "rxjs";
 import { environment } from "../../../environments/environment";
@@ -21,7 +22,16 @@ import { DataService } from "../../data.service";
 import { ScrollbarService } from "../../services/scrollbarService/scrollbar.service";
 import { ProjectsService } from "../projects/projects.service";
 import { charts } from "./chartoptions";
+import {
+  Audit,
+  DownloadAuditType,
+} from "./export-dialog-box/export-dialog-box.component";
+import { Export } from "./export-sop-as-word/export-sop-as-word.component";
+import { createDownloadableEpicsAndUserstories } from "./export-sop-as-word/export-sop-as-word.helpers";
+import { DownloadFileType } from "./export-to-word-modal/export-to-word-modal.component";
+import { ExportToWordModalService } from "./export-to-word-modal/export-to-word-modal.service";
 import { ReasonCodeService } from "./reason-code.service";
+import { ApiService } from "./services/api.service";
 import { CreateUserstoryService } from "./userstory-card-create/create-userstory.service";
 export interface UserData {
   id: string;
@@ -133,7 +143,9 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
     private _createUserStory: CreateUserstoryService,
     public spinner: NgxSpinnerService,
     private __api: DataService,
-    private __scrollbar: ScrollbarService
+    private __scrollbar: ScrollbarService,
+    private exportToModal: ExportToWordModalService,
+    private apiService: ApiService
   ) {}
 
   ngOnInit() {
@@ -314,7 +326,32 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
   }
 
   onOpenExport() {
-    this.openExport = !this.openExport;
+    this.exportToModal
+      .openDialog(
+        createDownloadableEpicsAndUserstories(
+          this._reasonCode.reasonCodeData,
+          this._reasonCode.userStories
+        )
+      )
+      .subscribe((res: any | Export | Audit) => {
+        if (res && res.type && res.type === DownloadFileType.AUDIT) {
+          this._reasonCode.downLoadAuditTrailFile(
+            this._reasonCode.sopId,
+            res.startDate,
+            res.endDate
+          );
+        } else if (res && res.type && res.type === DownloadFileType.EXPORT) {
+          this.apiService
+            .downloadExportToSop(
+              this._reasonCode.sopId,
+              res.epics,
+              res.userstories
+            )
+            .subscribe((data: Blob) => {
+              saveAs(data, "export");
+            });
+        }
+      });
   }
 
   onSelectNo() {

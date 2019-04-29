@@ -1,0 +1,58 @@
+div.form-wrapper {
+  font-size: 14px;
+  .form {
+    .form-group.select-all {
+      display: flex;
+      align-items: center;
+      background-color: #f5f5f5;
+      height: 50px;
+      width: 100%;
+      padding-left: 40px;
+    }
+    .form-group.scrollable-content {
+      padding-top: 1rem;
+      height: 14rem;
+      overflow: auto;
+      .epic-title {
+        padding-left: 40px;
+        margin-bottom: 15px;
+
+        .mat-checkbox-custom.chapter {
+          ::ng-deep {
+            .mat-checkbox-layout .mat-checkbox-label {
+              font-weight: 500;
+            }
+          }
+        }
+
+        .userstory-title {
+          padding-left: 25px;
+          margin: 2.5px 0;
+        }
+      }
+    }
+    .form-footer {
+      border-top: 1px solid #d1d1d1;
+
+      .include-attachments {
+        margin-top: 0.5rem;
+        padding-left: 40px;
+      }
+
+      .form-controls {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 9rem;
+        margin-top: 1.2rem;
+      }
+
+      .form-message {
+        font-size: 12px;
+        color: #333333;
+        display: block;
+        text-align: center;
+        margin-top: 0.8rem;
+      }
+    }
+  }
+}

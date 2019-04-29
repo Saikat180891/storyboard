@@ -1,0 +1,23 @@
+<div class="date-picker-input-box">
+  <div class="input-text-box">
+    <label for="date-input">{{ label }}</label>
+    <div class="date-picker-container">
+      <div class="datepicker">
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="datePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #datePicker [disabled]="disabled"></mat-datepicker>
+      </div>
+      <input
+        matInput
+        id="date-input"
+        [matDatepicker]="datePicker"
+        placeholder="Choose Date"
+        readonly
+        (dateChange)="onDateChange($event)"
+        [disabled]="disabled"
+      />
+    </div>
+  </div>
+</div>

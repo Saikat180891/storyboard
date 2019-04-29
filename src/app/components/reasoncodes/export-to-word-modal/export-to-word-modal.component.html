@@ -1,0 +1,29 @@
+<div class="export-wrapper">
+  <div class="dialog-name">
+    <span class="name">
+      Export
+    </span>
+    <span class="dialog-close" (click)="onNoClick()">
+      <i class="fas fa-times"></i>
+    </span>
+  </div>
+  <mat-tab-group dynamicHeight animationDuration="0" disableRipple>
+    <mat-tab label="SOP">
+      <div class="mat-tab-custom" *ngIf="data && data.chapters">
+        <app-export-sop-as-word
+          (close)="onNoClick()"
+          [chapters]="data.chapters"
+          (export)="onReceivePayload($event)"
+        ></app-export-sop-as-word>
+      </div>
+    </mat-tab>
+    <mat-tab label="Audit trail">
+      <div class="mat-tab-custom">
+        <export-dialog-box
+          (close)="onNoClick()"
+          (audit)="onReceivePayload($event)"
+        ></export-dialog-box>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

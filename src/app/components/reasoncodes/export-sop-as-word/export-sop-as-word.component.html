@@ -1,0 +1,74 @@
+<div class="form-wrapper">
+  <form class="form">
+    <div class="form-group select-all">
+      <div class="mat-checkbox-custom">
+        <mat-checkbox
+          disableRipple
+          (change)="onSelectAllChange($event)"
+          [checked]="selectAll"
+          >Select All</mat-checkbox
+        >
+      </div>
+    </div>
+
+    <div
+      class="form-group scrollable-content"
+      *ngIf="downloadableEpics && downloadableEpics.length"
+    >
+      <div
+        class="epic-title"
+        *ngFor="let epic of downloadableEpics; let i = index"
+      >
+        <div class="mat-checkbox-custom chapter">
+          <mat-checkbox
+            disableRipple
+            (change)="onEpicsSelectionChange($event, i)"
+            [checked]="epic.selected"
+            >{{ epic.epicName }}</mat-checkbox
+          >
+        </div>
+        <ng-container *ngIf="epic.userstories.length">
+          <div
+            class="userstory-title"
+            *ngFor="let userstory of epic.userstories; let j = index"
+          >
+            <div class="mat-checkbox-custom topic">
+              <mat-checkbox
+                disableRipple
+                (change)="onUserstorySelectionChange($event, i, j)"
+                [checked]="userstory.selected"
+                >{{ userstory.userstoryName }}</mat-checkbox
+              >
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="form-footer">
+      <div class="include-attachments">
+        <div class="mat-checkbox-custom">
+          <mat-checkbox disableRipple="true">Include Attachments</mat-checkbox>
+        </div>
+      </div>
+      <div class="form-controls">
+        <stb-button
+          btnStyle="raised"
+          (click)="onExport()"
+          btnName="Export"
+          btnColor="primary"
+        ></stb-button>
+        <stb-button
+          btnStyle="raised"
+          (click)="onClose()"
+          btnName="Cancel"
+          btnColor="accent"
+        ></stb-button>
+      </div>
+      <span class="form-message"
+        >All epics/US will be exported as MS Word doc, and will contain links of
+        all attachments</span
+      >
+    </div>
+  </form>
+</div>
