@@ -1,68 +1,71 @@
-.modal-body-content {
-  overflow: hidden;
-  margin-bottom: 1.5rem;
+.attachment-modal-wrapper {
+  padding: 20px;
+  .modal-body-content {
+    overflow: hidden;
+    margin-bottom: 1.5rem;
 
-  .upload-file {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    margin-bottom: 0.5rem;
-    width: 100%;
-
-    label {
-      width: 7rem;
-    }
-
-    .choose-file {
-      width: calc(100% - 7rem);
-    }
-
-    .upload-input-box {
-      border: 1px solid #cccccc;
+    .upload-file {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       position: relative;
-      height: 2rem;
+      margin-bottom: 0.5rem;
+      width: 100%;
 
-      input[type="file"] {
-        position: absolute;
-        top: 0;
-        right: 0;
-        font-size: 18px;
+      label {
+        width: 7rem;
       }
 
-      input[type="text"] {
-        height: 100%;
-        border: none;
-        padding: 5px;
+      .choose-file {
         width: calc(100% - 7rem);
       }
 
-      button {
-        height: 100%;
-        background-color: #54585a;
-        color: #ffffff;
-        border: none;
-        cursor: pointer;
-        width: 7rem;
+      .upload-input-box {
+        border: 1px solid #cccccc;
+        position: relative;
+        height: 2rem;
+
+        input[type="file"] {
+          position: absolute;
+          top: 0;
+          right: 0;
+          font-size: 18px;
+        }
+
+        input[type="text"] {
+          height: 100%;
+          border: none;
+          padding: 5px;
+          width: calc(100% - 7rem);
+        }
+
+        button {
+          height: 100%;
+          background-color: #54585a;
+          color: #ffffff;
+          border: none;
+          cursor: pointer;
+          width: 7rem;
+        }
+      }
+    }
+    .size-limit {
+      display: flex;
+      justify-content: flex-start;
+      padding: 0 0 10px 7rem;
+      span.file-icon {
+        margin-right: 0.6rem;
+      }
+
+      span.message {
+        font-size: 10px;
+        color: #999999;
       }
     }
   }
-  .size-limit {
+
+  .modal-footer-option {
     display: flex;
-    justify-content: flex-start;
-    padding: 0 0 10px 7rem;
-    span.file-icon {
-      margin-right: 0.6rem;
-    }
-
-    span.message {
-      font-size: 10px;
-      color: #999999;
-    }
+    justify-content: space-evenly;
   }
-}
-
-.modal-footer-option {
-  display: flex;
-  justify-content: space-evenly;
 }

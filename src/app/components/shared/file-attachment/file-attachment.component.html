@@ -1,53 +1,55 @@
-<h1 mat-dialog-title>{{ data.message }}</h1>
-<div class="modal-body-content">
-  <div class="upload-file">
-    <label class="upload-label" for="label">Upload a File:</label>
-    <div class="choose-file">
-      <div class="upload-input-box">
-        <input
-          id="upload"
-          type="text"
-          placeholder="Choose a file"
-          [value]="fileNameSelected"
-          readonly
-        />
-        <input
-          placeholder="Choose a File"
-          accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-          application/pdf, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          type="file"
-          (change)="onFileSelected($event)"
-        />
-        <button>Choose a File</button>
+<div class="attachment-modal-wrapper">
+  <h1 mat-dialog-title>{{ data.message }}</h1>
+  <div class="modal-body-content">
+    <div class="upload-file">
+      <label class="upload-label" for="label">Upload a File:</label>
+      <div class="choose-file">
+        <div class="upload-input-box">
+          <input
+            id="upload"
+            type="text"
+            placeholder="Choose a file"
+            [value]="fileNameSelected"
+            readonly
+          />
+          <input
+            placeholder="Choose a File"
+            accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+            application/pdf, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            type="file"
+            (change)="onFileSelected($event)"
+          />
+          <button>Choose a File</button>
+        </div>
       </div>
     </div>
+    <div class="size-limit">
+      <span class="file-icon" *ngIf="fileIconType">
+        <img
+          src="../../../../assets/pics/{{ fileIconType }}"
+          alt="No icon to display"
+          wdith="30px"
+          height="30px"
+        />
+      </span>
+      <span class="message">
+        Limited to one attachment per step <br />
+        (Max size 25MB)</span
+      >
+    </div>
   </div>
-  <div class="size-limit">
-    <span class="file-icon" *ngIf="fileIconType">
-      <img
-        src="../../../../assets/pics/{{ fileIconType }}"
-        alt="No icon to display"
-        wdith="30px"
-        height="30px"
-      />
-    </span>
-    <span class="message">
-      Limited to one attachment per step <br />
-      (Max size 25MB)</span
-    >
+  <div class="modal-footer-option">
+    <stb-button
+      btnStyle="raised"
+      (click)="onAttach()"
+      btnName="Attach"
+      btnColor="primary"
+    ></stb-button>
+    <stb-button
+      btnStyle="raised"
+      (click)="onCancel()"
+      btnName="Cancel"
+      btnColor="accent"
+    ></stb-button>
   </div>
-</div>
-<div class="modal-footer-option">
-  <stb-button
-    btnStyle="raised"
-    (click)="onAttach()"
-    btnName="Attach"
-    btnColor="primary"
-  ></stb-button>
-  <stb-button
-    btnStyle="raised"
-    (click)="onCancel()"
-    btnName="Cancel"
-    btnColor="accent"
-  ></stb-button>
 </div>
