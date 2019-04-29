@@ -1,1 +1,26 @@
-<p></p>
+<div class="breadcrumb">
+  <div class="padding-right-10Px" routerLink="/projects">All Projects</div>
+  <div class="padding-right-10Px">></div>
+  <div
+    class="padding-right-10Px"
+    [routerLink]="['/projects/epics', getProjectId()]"
+  >
+    {{ getProjectTitle() }}
+  </div>
+  <div class="padding-right-10Px">></div>
+  <div class="padding-right-10Px breadcrumb-dropdown">
+    <mat-select
+      style="color: red"
+      disableOptionCentering
+      [(value)]="selectedUserStory"
+      (selectionChange)="onChange($event)"
+    >
+      <mat-option
+        [value]="userStory.id"
+        *ngFor="let userStory of listOfUserStories"
+      >
+        {{ userStory.us_name }}
+      </mat-option>
+    </mat-select>
+  </div>
+</div>

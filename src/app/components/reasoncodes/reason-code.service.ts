@@ -1,7 +1,6 @@
 import { EventEmitter, Injectable } from "@angular/core";
-import { MatSnackBar, MatSnackBarConfig } from "@angular/material";
-import { NgxSpinnerService } from "ngx-spinner";
-import { environment } from "../../../environments/environment";
+import { MatSnackBar } from "@angular/material";
+import { BehaviorSubject } from "rxjs";
 import { DataService } from "../../data.service";
 import { DateUtils } from "../shared/date-utils";
 
@@ -38,6 +37,12 @@ export class ReasonCodeService {
   role: string;
 
   constructor(private _api: DataService, public snackbar: MatSnackBar) {}
+
+  selectedProject: any = new BehaviorSubject<any>("");
+  userStoriesList: any = new BehaviorSubject<any>([]);
+
+  selectedProjectObservable = this.selectedProject.asObservable();
+  userStoriesListObservable = this.userStoriesList.asObservable();
 
   destroyAllService() {
     this.currentSprintDuration = [];
@@ -91,6 +96,7 @@ export class ReasonCodeService {
   getSopByID(id: number) {
     this._api.fetchData(`/sop/${id}.json`).subscribe(response => {
       this.currentProject = response;
+      this.selectedProject.next(response);
     });
   }
 
@@ -180,8 +186,9 @@ export class ReasonCodeService {
       });
 
       this.userStories = response.reverse();
-      this.getProjectStatusChartData(this.sopId); //check
-      this.getChartData(this.sopId); //check
+      this.userStoriesList.next(this.userStories);
+      this.getProjectStatusChartData(this.sopId); // check
+      this.getChartData(this.sopId); // check
     });
   }
 

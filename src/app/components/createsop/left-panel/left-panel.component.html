@@ -1,5 +1,8 @@
 <div class="breadcrumb">
-  <app-breadcrumb></app-breadcrumb>
+  <app-breadcrumb
+    [project]="project"
+    [listOfUserStories]="listOfUserStories"
+  ></app-breadcrumb>
 </div>
 
 <ng-container *ngIf="isAppInZeroState; else appInSopBuildingState">

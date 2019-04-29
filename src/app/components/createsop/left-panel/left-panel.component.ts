@@ -1,4 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Project } from "../../projects/models/project.model";
+import { ReasonCodeService } from "../../reasoncodes/reason-code.service";
 import { dummyBlankScreen, Screen } from "../common-model/screen.model";
 import { ExportToSopService } from "../services/export-to-sop/export-to-sop.service";
 import { LeftPanelService } from "../services/left-panel/left-panel.service";
@@ -17,19 +19,40 @@ export class LeftPanelComponent implements OnInit {
 
   screenSelected: Screen;
   currentScreen: number;
+  listOfUserStories: [];
+  project: Project;
+
   constructor(
     private sopApiService: SopApiService,
     private pageService: PageService,
     private exportService: ExportToSopService,
-    private leftPanelService: LeftPanelService
+    private leftPanelService: LeftPanelService,
+    private reasonCodeService: ReasonCodeService
   ) {}
 
   ngOnInit() {
     this.init();
     this.getScreenToDisplay();
+    this.prepareBreadCrumbData();
+  }
+
+  prepareBreadCrumbData() {
+    this.reasonCodeService.selectedProjectObservable.subscribe(res => {
+      this.project = res;
+    });
+
+    this.reasonCodeService.userStoriesListObservable.subscribe(res => {
+      this.listOfUserStories = res;
+    });
   }
 
   init() {
+    // if user refreshes the sop page we need to fetch user stories and current project details for breadcrumb
+    if (Object.keys(this.reasonCodeService.currentProject).length === 0) {
+      this.reasonCodeService.getUserStories(this.pageService.projectId);
+      this.reasonCodeService.getSopByID(this.pageService.projectId);
+    }
+
     this.sopApiService
       .getScreenList(this.pageService.projectId)
       .subscribe((screens: Screen[]) => {

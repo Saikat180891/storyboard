@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<testsuite name="Chrome 73.0.3683 (Windows 10.0.0)" package="" timestamp="2019-04-29T04:45:49" id="0" hostname="LTSRCBLR19232" tests="105" errors="0" failures="0" time="33.499">
+  <properties>
+    <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"/>
+  </properties>
+  <testcase name="AppComponent should create the app" time="0.099" classname="Chrome_73_0_3683_(Windows_10_0_0).AppComponent"/>
+  <testcase name="AuthGuardService should be created" time="0.019" classname="Chrome_73_0_3683_(Windows_10_0_0).AuthGuardService"/>
+  <testcase name="AuthComponent should create" time="0.693" classname="Chrome_73_0_3683_(Windows_10_0_0).AuthComponent"/>
+  <testcase name="ForgotPasswordComponent should create" time="0.55" classname="Chrome_73_0_3683_(Windows_10_0_0).ForgotPasswordComponent"/>
+  <testcase name="LoginComponent should create" time="0.541" classname="Chrome_73_0_3683_(Windows_10_0_0).LoginComponent"/>
+  <testcase name="ResetPasswordComponent should create" time="0.068" classname="Chrome_73_0_3683_(Windows_10_0_0).ResetPasswordComponent"/>
+  <testcase name="ResetPasswordService should be created" time="0.009" classname="Chrome_73_0_3683_(Windows_10_0_0).ResetPasswordService"/>
+  <testcase name="SignupService should be created" time="0.011" classname="Chrome_73_0_3683_(Windows_10_0_0).SignupService"/>
+  <testcase name="SignupusersComponent should create" time="0.074" classname="Chrome_73_0_3683_(Windows_10_0_0).SignupusersComponent"/>
+  <testcase name="CommondbService should be created" time="0.007" classname="Chrome_73_0_3683_(Windows_10_0_0).CommondbService"/>
+  <testcase name="BreadcrumbComponent should create" time="0.422" classname="Chrome_73_0_3683_(Windows_10_0_0).BreadcrumbComponent"/>
+  <testcase name="CanvasCrouselComponent should create" time="0.02" classname="Chrome_73_0_3683_(Windows_10_0_0).CanvasCrouselComponent"/>
+  <testcase name="CarouselComponent should create" time="0.013" classname="Chrome_73_0_3683_(Windows_10_0_0).CarouselComponent"/>
+  <testcase name="CreatesopComponent should create" time="1.104" classname="Chrome_73_0_3683_(Windows_10_0_0).CreatesopComponent"/>
+  <testcase name="ExportToSopComponent should create" time="0.067" classname="Chrome_73_0_3683_(Windows_10_0_0).ExportToSopComponent"/>
+  <testcase name="LeftPanelComponent should create" time="0.941" classname="Chrome_73_0_3683_(Windows_10_0_0).LeftPanelComponent"/>
+  <testcase name="OperationsBarComponent should create" time="0.026" classname="Chrome_73_0_3683_(Windows_10_0_0).OperationsBarComponent"/>
+  <testcase name="RecentScreenShotsComponent should create" time="0.714" classname="Chrome_73_0_3683_(Windows_10_0_0).RecentScreenShotsComponent"/>
+  <testcase name="RightPanelComponent should create" time="0.752" classname="Chrome_73_0_3683_(Windows_10_0_0).RightPanelComponent"/>
+  <testcase name="DragDropService should be created" time="0.004" classname="Chrome_73_0_3683_(Windows_10_0_0).DragDropService"/>
+  <testcase name="ExportToSopService should be created" time="0.004" classname="Chrome_73_0_3683_(Windows_10_0_0).ExportToSopService"/>
+  <testcase name="LeftPanelService should be created" time="0.007" classname="Chrome_73_0_3683_(Windows_10_0_0).LeftPanelService"/>
+  <testcase name="PageService should be created" time="0.004" classname="Chrome_73_0_3683_(Windows_10_0_0).PageService"/>
+  <testcase name="RightPanelService should be created" time="0.006" classname="Chrome_73_0_3683_(Windows_10_0_0).RightPanelService"/>
+  <testcase name="SidebarService should be created" time="0.005" classname="Chrome_73_0_3683_(Windows_10_0_0).SidebarService"/>
+  <testcase name="SopApiService should be created" time="0.006" classname="Chrome_73_0_3683_(Windows_10_0_0).SopApiService"/>
+  <testcase name="StepcontrolService should be created" time="0.005" classname="Chrome_73_0_3683_(Windows_10_0_0).StepcontrolService"/>
+  <testcase name="UicontrolService should be created" time="0.004" classname="Chrome_73_0_3683_(Windows_10_0_0).UicontrolService"/>
+  <testcase name="ProgressbarComponent should create" time="0.012" classname="Chrome_73_0_3683_(Windows_10_0_0).ProgressbarComponent"/>
+  <testcase name="SidebarButtonsComponent should create" time="0.017" classname="Chrome_73_0_3683_(Windows_10_0_0).SidebarButtonsComponent"/>
+  <testcase name="SidebarComponent should create" time="0.74" classname="Chrome_73_0_3683_(Windows_10_0_0).SidebarComponent"/>
+  <testcase name="SmallCardComponent should create" time="0.017" classname="Chrome_73_0_3683_(Windows_10_0_0).SmallCardComponent"/>
+  <testcase name="SectionTitleComponent should create" time="0.796" classname="Chrome_73_0_3683_(Windows_10_0_0).SectionTitleComponent"/>
+  <testcase name="StepBaseComponent should create" time="0.317" classname="Chrome_73_0_3683_(Windows_10_0_0).StepBaseComponent"/>
+  <testcase name="StepCalculationComponent should create" time="0.706" classname="Chrome_73_0_3683_(Windows_10_0_0).StepCalculationComponent"/>
+  <testcase name="StepConditionComponent should create" time="0.659" classname="Chrome_73_0_3683_(Windows_10_0_0).StepConditionComponent"/>
+  <testcase name="StepEndLoopComponent should create" time="0.293" classname="Chrome_73_0_3683_(Windows_10_0_0).StepEndLoopComponent"/>
+  <testcase name="StepLoopComponent should create" time="0.283" classname="Chrome_73_0_3683_(Windows_10_0_0).StepLoopComponent"/>
+  <testcase name="StepReadComponent should create" time="0.658" classname="Chrome_73_0_3683_(Windows_10_0_0).StepReadComponent"/>
+  <testcase name="StepTypeComponent should create" time="0.685" classname="Chrome_73_0_3683_(Windows_10_0_0).StepTypeComponent"/>
+  <testcase name="StepUiInteractionComponent should create" time="0.642" classname="Chrome_73_0_3683_(Windows_10_0_0).StepUiInteractionComponent"/>
+  <testcase name="StepValidationService should be created" time="0.008" classname="Chrome_73_0_3683_(Windows_10_0_0).StepValidationService"/>
+  <testcase name="StepsContainerComponent should create" time="0.651" classname="Chrome_73_0_3683_(Windows_10_0_0).StepsContainerComponent"/>
+  <testcase name="TooltipComponent should create" time="0.015" classname="Chrome_73_0_3683_(Windows_10_0_0).TooltipComponent"/>
+  <testcase name="VideoGalleryComponent should create" time="0.624" classname="Chrome_73_0_3683_(Windows_10_0_0).VideoGalleryComponent"/>
+  <testcase name="HeaderService should be created" time="0.004" classname="Chrome_73_0_3683_(Windows_10_0_0).HeaderService"/>
+  <testcase name="CreateProjectCardComponent should create" time="0.254" classname="Chrome_73_0_3683_(Windows_10_0_0).CreateProjectCardComponent"/>
+  <testcase name="AssigneeCardComponent should create" time="0.378" classname="Chrome_73_0_3683_(Windows_10_0_0).AssigneeCardComponent"/>
+  <testcase name="AssigneeCardComponent assignee details should display user name" time="0.38" classname="Chrome_73_0_3683_(Windows_10_0_0).AssigneeCardComponent"/>
+  <testcase name="AssigneeCardComponent dropdown functionality should disable dropdown when changeRoleDisabled is true" time="0.354" classname="Chrome_73_0_3683_(Windows_10_0_0).AssigneeCardComponent"/>
+  <testcase name="AssigneeCardComponent dropdown functionality should not disable dropdown when changeRoleDisabled is false" time="0.381" classname="Chrome_73_0_3683_(Windows_10_0_0).AssigneeCardComponent"/>
+  <testcase name="AssigneeCardComponent dropdown functionality should display assignee's role" time="0.374" classname="Chrome_73_0_3683_(Windows_10_0_0).AssigneeCardComponent"/>
+  <testcase name="AssigneeCardComponent delete functionality should display delete button when canRemoveAssignees is true" time="0.36" classname="Chrome_73_0_3683_(Windows_10_0_0).AssigneeCardComponent"/>
+  <testcase name="AssigneeCardComponent delete functionality should emit removeAssignee on delete button click" time="0.356" classname="Chrome_73_0_3683_(Windows_10_0_0).AssigneeCardComponent"/>
+  <testcase name="AssigneeCardComponent delete functionality should not display delete button when canRemoveAssignees is false" time="0.379" classname="Chrome_73_0_3683_(Windows_10_0_0).AssigneeCardComponent"/>
+  <testcase name="EditProjectDialogComponent should create" time="0.397" classname="Chrome_73_0_3683_(Windows_10_0_0).EditProjectDialogComponent"/>
+  <testcase name="EditProjectDialogComponent dialog text in create mode has correct header text" time="0.413" classname="Chrome_73_0_3683_(Windows_10_0_0).EditProjectDialogComponent"/>
+  <testcase name="EditProjectDialogComponent dialog text in create mode has correct submit button text" time="0.416" classname="Chrome_73_0_3683_(Windows_10_0_0).EditProjectDialogComponent"/>
+  <testcase name="EditProjectDialogComponent dialog text in edit mode has correct header text" time="0.405" classname="Chrome_73_0_3683_(Windows_10_0_0).EditProjectDialogComponent"/>
+  <testcase name="EditProjectDialogComponent dialog text in edit mode has correct submit button text" time="0.391" classname="Chrome_73_0_3683_(Windows_10_0_0).EditProjectDialogComponent"/>
+  <testcase name="InviteUserFieldComponent should create" time="0.273" classname="Chrome_73_0_3683_(Windows_10_0_0).InviteUserFieldComponent"/>
+  <testcase name="ProjectsPageComponent should create" time="0.406" classname="Chrome_73_0_3683_(Windows_10_0_0).ProjectsPageComponent"/>
+  <testcase name="ChartsComponent should create" time="0.631" classname="Chrome_73_0_3683_(Windows_10_0_0).ChartsComponent"/>
+  <testcase name="EpicComponent should create" time="0.009" classname="Chrome_73_0_3683_(Windows_10_0_0).EpicComponent"/>
+  <testcase name="EpicsComponent should create" time="0.677" classname="Chrome_73_0_3683_(Windows_10_0_0).EpicsComponent"/>
+  <testcase name="ExportDialogBoxComponent should create" time="0.651" classname="Chrome_73_0_3683_(Windows_10_0_0).ExportDialogBoxComponent"/>
+  <testcase name="ImportStoriesComponent should create" time="0.879" classname="Chrome_73_0_3683_(Windows_10_0_0).ImportStoriesComponent"/>
+  <testcase name="ModalFooterComponent should create" time="0.729" classname="Chrome_73_0_3683_(Windows_10_0_0).ModalFooterComponent"/>
+  <testcase name="ProjectConfigBaseComponent should create" time="0.714" classname="Chrome_73_0_3683_(Windows_10_0_0).ProjectConfigBaseComponent"/>
+  <testcase name="ProjectConfigComponent should create" time="0.717" classname="Chrome_73_0_3683_(Windows_10_0_0).ProjectConfigComponent"/>
+  <testcase name="ProjectHeaderTitleComponent should create" time="0.018" classname="Chrome_73_0_3683_(Windows_10_0_0).ProjectHeaderTitleComponent"/>
+  <testcase name="ReasonCodeService should be created" time="0.673" classname="Chrome_73_0_3683_(Windows_10_0_0).ReasonCodeService"/>
+  <testcase name="ApiService should be created" time="0.007" classname="Chrome_73_0_3683_(Windows_10_0_0).ApiService"/>
+  <testcase name="ProjectConfigureService should be created" time="0.005" classname="Chrome_73_0_3683_(Windows_10_0_0).ProjectConfigureService"/>
+  <testcase name="ColoredDropdownComponent should create" time="0.019" classname="Chrome_73_0_3683_(Windows_10_0_0).ColoredDropdownComponent"/>
+  <testcase name="NormalDropdownComponent should create" time="0.65" classname="Chrome_73_0_3683_(Windows_10_0_0).NormalDropdownComponent"/>
+  <testcase name="SortComponent should create" time="0.662" classname="Chrome_73_0_3683_(Windows_10_0_0).SortComponent"/>
+  <testcase name="SprintConfigureComponent should create" time="0.634" classname="Chrome_73_0_3683_(Windows_10_0_0).SprintConfigureComponent"/>
+  <testcase name="SprintInputRowComponent should create" time="0.735" classname="Chrome_73_0_3683_(Windows_10_0_0).SprintInputRowComponent"/>
+  <testcase name="CreateUserstoryService should be created" time="0.703" classname="Chrome_73_0_3683_(Windows_10_0_0).CreateUserstoryService"/>
+  <testcase name="UserstoryCardCreateComponent should create" time="0.69" classname="Chrome_73_0_3683_(Windows_10_0_0).UserstoryCardCreateComponent"/>
+  <testcase name="EditUserStoryService should be created" time="0.755" classname="Chrome_73_0_3683_(Windows_10_0_0).EditUserStoryService"/>
+  <testcase name="UserstoryCardEditComponent should create" time="0.733" classname="Chrome_73_0_3683_(Windows_10_0_0).UserstoryCardEditComponent"/>
+  <testcase name="UserstoryCardComponent should create" time="0.729" classname="Chrome_73_0_3683_(Windows_10_0_0).UserstoryCardComponent"/>
+  <testcase name="UserstoryFilterComponent should create" time="0.801" classname="Chrome_73_0_3683_(Windows_10_0_0).UserstoryFilterComponent"/>
+  <testcase name="ButtonComponent should create" time="0.025" classname="Chrome_73_0_3683_(Windows_10_0_0).ButtonComponent"/>
+  <testcase name="ConfirmModalComponent should create" time="0.285" classname="Chrome_73_0_3683_(Windows_10_0_0).ConfirmModalComponent"/>
+  <testcase name="ConfirmModalService should be created" time="0.27" classname="Chrome_73_0_3683_(Windows_10_0_0).ConfirmModalService"/>
+  <testcase name="CustomDropDownComponent should create" time="0.01" classname="Chrome_73_0_3683_(Windows_10_0_0).CustomDropDownComponent"/>
+  <testcase name="FileAttachmentComponent should create" time="0.267" classname="Chrome_73_0_3683_(Windows_10_0_0).FileAttachmentComponent"/>
+  <testcase name="FileAttachmentService should be created" time="0.243" classname="Chrome_73_0_3683_(Windows_10_0_0).FileAttachmentService"/>
+  <testcase name="SelectComponent should create" time="0.024" classname="Chrome_73_0_3683_(Windows_10_0_0).SelectComponent"/>
+  <testcase name="DashboardComponent should create" time="0.268" classname="Chrome_73_0_3683_(Windows_10_0_0).DashboardComponent"/>
+  <testcase name="DataService should be created" time="0.006" classname="Chrome_73_0_3683_(Windows_10_0_0).DataService"/>
+  <testcase name="DragDropDirective should create an instance" time="0.001" classname="Chrome_73_0_3683_(Windows_10_0_0).DragDropDirective"/>
+  <testcase name="DragDropService should be created" time="0.003" classname="Chrome_73_0_3683_(Windows_10_0_0).DragDropService"/>
+  <testcase name="ListDragDirective should create an instance" time="0" classname="Chrome_73_0_3683_(Windows_10_0_0).ListDragDirective"/>
+  <testcase name="ListDropDirective should create an instance" time="0.006" classname="Chrome_73_0_3683_(Windows_10_0_0).ListDropDirective"/>
+  <testcase name="PermissionsDirective should create an instance" time="0.001" classname="Chrome_73_0_3683_(Windows_10_0_0).PermissionsDirective"/>
+  <testcase name="StepDistDirective should create an instance" time="0" classname="Chrome_73_0_3683_(Windows_10_0_0).StepDistDirective"/>
+  <testcase name="StepLinkServiceService should be created" time="0.005" classname="Chrome_73_0_3683_(Windows_10_0_0).StepLinkServiceService"/>
+  <testcase name="DownloadLinkComponent should create" time="0.011" classname="Chrome_73_0_3683_(Windows_10_0_0).DownloadLinkComponent"/>
+  <testcase name="UploadAreaComponent should create" time="0.028" classname="Chrome_73_0_3683_(Windows_10_0_0).UploadAreaComponent"/>
+  <testcase name="ScrollbarService should be created" time="0.003" classname="Chrome_73_0_3683_(Windows_10_0_0).ScrollbarService"/>
+  <testcase name="SharedServicesService should be created" time="0.003" classname="Chrome_73_0_3683_(Windows_10_0_0).SharedServicesService"/>
+  <system-out>
+    <![CDATA[Chrome 73.0.3683 (Windows 10.0.0) WARN: 'The "slidestart" event cannot be bound because Hammer.JS is not loaded and no custom loader has been specified.'
+,Chrome 73.0.3683 (Windows 10.0.0) WARN: 'The "slide" event cannot be bound because Hammer.JS is not loaded and no custom loader has been specified.'
+,Chrome 73.0.3683 (Windows 10.0.0) WARN: 'The "slideend" event cannot be bound because Hammer.JS is not loaded and no custom loader has been specified.'
+,Chrome 73.0.3683 (Windows 10.0.0) WARN: 'The "slidestart" event cannot be bound because Hammer.JS is not loaded and no custom loader has been specified.'
+,Chrome 73.0.3683 (Windows 10.0.0) WARN: 'The "slide" event cannot be bound because Hammer.JS is not loaded and no custom loader has been specified.'
+,Chrome 73.0.3683 (Windows 10.0.0) WARN: 'The "slideend" event cannot be bound because Hammer.JS is not loaded and no custom loader has been specified.'
+,Chrome 73.0.3683 (Windows 10.0.0) WARN: 'The "slidestart" event cannot be bound because Hammer.JS is not loaded and no custom loader has been specified.'
+,Chrome 73.0.3683 (Windows 10.0.0) WARN: 'The "slide" event cannot be bound because Hammer.JS is not loaded and no custom loader has been specified.'
+,Chrome 73.0.3683 (Windows 10.0.0) WARN: 'The "slideend" event cannot be bound because Hammer.JS is not loaded and no custom loader has been specified.'
+
+]]>
+  </system-out>
+  <system-err/>
+</testsuite>

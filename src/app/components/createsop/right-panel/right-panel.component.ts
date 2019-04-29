@@ -7,11 +7,10 @@ import {
 } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
 import { saveAs } from "file-saver";
-import { stringify } from "querystring";
+import { NgxSpinnerService } from "ngx-spinner";
 import { DataService } from "../../../data.service";
 import { ConfirmModalService } from "../../shared/confirm-modal/confirm-modal.service";
 import { SectionListItem } from "../common-model/section-list-item.model";
-import { Step } from "../common-model/step-type.model";
 import { LeftPanelService } from "../services/left-panel/left-panel.service";
 import { PageService } from "../services/page/page.service";
 import { RightPanelService } from "../services/right-panel/right-panel.service";
@@ -33,6 +32,7 @@ export class RightPanelComponent implements OnInit {
   sectionList: SectionListItem[] = [];
   @ViewChild("rightPanelInfiniteScroll") rightPanelInfiniteScroll: ElementRef;
   @ViewChild("section") section: QueryList<ElementRef>;
+  isSectionApiRunning: boolean = false;
 
   constructor(
     private stepcontrolService: StepcontrolService,
@@ -41,7 +41,8 @@ export class RightPanelComponent implements OnInit {
     private rightPanelService: RightPanelService,
     private confirm: ConfirmModalService,
     private leftPanelService: LeftPanelService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private ngxSpinnerService: NgxSpinnerService
   ) {}
 
   /**
@@ -67,6 +68,7 @@ export class RightPanelComponent implements OnInit {
         () => {
           // initiate the 'sectionList' with the step control service
           this.sectionList = this.stepcontrolService.getList();
+          this.ngxSpinnerService.hide();
         }
       );
 

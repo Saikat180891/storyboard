@@ -1,0 +1,18 @@
+.breadcrumb {
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0;
+  color: #2a7de1;
+  cursor: pointer;
+}
+
+.padding-right-10Px {
+  padding-right: 10px;
+}
+
+.breadcrumb-dropdown {
+  width: 160px;
+  ::ng-deep .mat-select-value-text {
+    color: #2a7de1;
+  }
+}

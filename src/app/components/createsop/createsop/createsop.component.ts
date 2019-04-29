@@ -4,7 +4,8 @@ import {
   OnChanges,
   OnInit,
 } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+import { NgxSpinnerService } from "ngx-spinner";
 import { DataService } from "../../../data.service";
 import { PageService } from "../services/page/page.service";
 import { StepcontrolService } from "../services/stepcontrol/stepcontrol.service";
@@ -30,18 +31,20 @@ export class CreatesopComponent
     private __uic: UicontrolService,
     private __page: PageService,
     private __steps: StepcontrolService,
-    private __api: DataService
+    private __api: DataService,
+    private router: Router,
+    private ngxSpinnerService: NgxSpinnerService
   ) {}
 
   ngOnInit() {
-    /**
-     * in the ngOnInit function the windows.location is checked and
-     * the the project id and userstory id is extracted and stored in
-     * the PageService service
-     */
+    this.ngxSpinnerService.show();
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+    };
+
     this.routes.params.subscribe(res => {
       this.__page.projectId = res.id;
-      this.__page.userStoryId = res.userStoryId;
+      this.__page.userStoryId = parseInt(res.userStoryId);
     });
   }
 
