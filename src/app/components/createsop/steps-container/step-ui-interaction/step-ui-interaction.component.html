@@ -17,6 +17,7 @@
             [(value)]="data.screen"
             placeholder="None"
             [disabled]="!canEdit"
+            disableOptionCentering
           >
             <mat-option [value]="null">None</mat-option>
             <mat-option
@@ -79,6 +80,7 @@
                 [(value)]="data.interaction_type"
                 placeholder="None"
                 (selectionChange)="onSelectionChange($event)"
+                disableOptionCentering
               >
                 <mat-option>None</mat-option>
                 <mat-option value="Click">Click</mat-option>
@@ -99,6 +101,7 @@
                 [(value)]="data.click_option"
                 placeholder="None"
                 [disabled]="disableClickOption"
+                disableOptionCentering
               >
                 <mat-option>None</mat-option>
                 <mat-option value="Single Click">Single click</mat-option>

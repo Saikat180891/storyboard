@@ -17,6 +17,7 @@
             [(value)]="data.screen"
             placeholder="None"
             [disabled]="!canEdit"
+            disableOptionCentering
           >
             <mat-option [value]="null">None</mat-option>
             <mat-option
@@ -110,6 +111,7 @@
                 [(value)]="data.data_type"
                 placeholder="None"
                 [disabled]="!canEdit"
+                disableOptionCentering
               >
                 <mat-option>None</mat-option>
                 <mat-option
