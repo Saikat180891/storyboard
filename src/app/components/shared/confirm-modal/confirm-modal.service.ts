@@ -17,9 +17,14 @@ export class ConfirmModalService {
     return dialogRef.afterClosed();
   }
 
-  confirmDelete(message: string, callback: any) {
+  //added a new callback method
+  confirmDelete(message: string, onSuccess: Function, onFailure?: Function) {
     this.openDialog(message).subscribe(result => {
-      if (result) callback();
+      if (result) {
+        onSuccess();
+      } else {
+        onFailure();
+      }
     });
   }
 }
