@@ -15,11 +15,10 @@
         <div class="select">
           <mat-select
             [(value)]="data.screen"
-            placeholder="None"
+            placeholder="No Screen"
             [disabled]="!canEdit"
             disableOptionCentering
           >
-            <mat-option [value]="null">None</mat-option>
             <mat-option
               [value]="screen.screenId"
               *ngFor="let screen of screenList"
@@ -109,11 +108,11 @@
             <div class="select">
               <mat-select
                 [(value)]="data.data_type"
-                placeholder="None"
+                placeholder="Any"
                 [disabled]="!canEdit"
                 disableOptionCentering
               >
-                <mat-option>None</mat-option>
+                <mat-option>Any</mat-option>
                 <mat-option
                   [value]="dataTypeOption.value"
                   *ngFor="let dataTypeOption of dataTypeOptions"

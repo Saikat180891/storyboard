@@ -15,11 +15,10 @@
         <div class="select">
           <mat-select
             [(value)]="data.screen"
-            placeholder="None"
+            placeholder="No Screen"
             [disabled]="!canEdit"
             disableOptionCentering
           >
-            <mat-option [value]="null">None</mat-option>
             <mat-option
               [value]="screen.screenId"
               *ngFor="let screen of screenList"

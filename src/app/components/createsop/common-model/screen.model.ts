@@ -9,7 +9,7 @@ export interface Screen {
 
 export const dummyBlankScreen: Screen = {
   applicationName: "No Application name",
-  screenName: "No Screen name",
+  screenName: "No Screen",
   tabName: "No Tab name",
   imageUrl: "../../../../assets/pics/no image.svg",
   imageId: null,
