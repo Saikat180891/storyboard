@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders, HttpRequest } from "@angular/common/http";
 import { Injectable, OnInit } from "@angular/core";
-import { ResponseContentType } from "@angular/http";
 import { CookieService } from "ngx-cookie-service";
 import { Observable } from "rxjs";
 import { environment } from "../environments/environment";
@@ -86,6 +85,13 @@ export class DataService implements OnInit {
 
   delete(param, id) {
     return this.http.delete(this.apiUrl + param + "/" + id, {
+      withCredentials: true,
+      headers: httpOptions.headers.set("X-CSRFToken", this.getCSRFToken()),
+    });
+  }
+
+  deleteList(param, ids) {
+    return this.http.delete(this.apiUrl + param + ids, {
       withCredentials: true,
       headers: httpOptions.headers.set("X-CSRFToken", this.getCSRFToken()),
     });

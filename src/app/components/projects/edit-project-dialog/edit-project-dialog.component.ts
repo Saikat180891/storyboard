@@ -287,19 +287,17 @@ export class EditProjectDialogComponent
     this.alreadyCreatedAssignees.splice(removeIndex, 1);
   }
 
-  removeAssignees(): void {
-    this.assigneeIdsToRemove.forEach(id => {
-      this.projectsService.deleteAssignee(id).subscribe();
-    });
+  removeAssignees(projectId): void {
+    this.projectsService
+      .deleteAssignee(projectId, this.assigneeIdsToRemove)
+      .subscribe();
     this.assigneeIdsToRemove = [];
   }
 
   createAssignees(): void {
-    this.newlyCreatedAssignees.forEach(assignee => {
-      this.projectsService
-        .createAssignee(this.project.id, assignee)
-        .subscribe();
-    });
+    this.projectsService
+      .createAssignee(this.project.id, this.newlyCreatedAssignees)
+      .subscribe();
     this.newlyCreatedAssignees = [];
   }
 
@@ -338,11 +336,9 @@ export class EditProjectDialogComponent
     // TODO logic in this nested call could be simplified + extracted into projects.service
     this.projectsService.createProject(formData).subscribe(
       response => {
-        this.alreadyCreatedAssignees.forEach(assignee => {
-          this.projectsService
-            .createAssignee(response.id, assignee)
-            .subscribe();
-        });
+        this.projectsService
+          .createAssignee(response.id, this.alreadyCreatedAssignees)
+          .subscribe();
       },
       err => {
         this.spinner.hide();
@@ -369,7 +365,7 @@ export class EditProjectDialogComponent
     this.projectsService.updateProject(this.project.id, formData).subscribe(
       response => {
         if (this.assigneeIdsToRemove.length > 0) {
-          this.removeAssignees();
+          this.removeAssignees(this.project.id);
         }
         if (this.newlyCreatedAssignees.length > 0) {
           this.createAssignees();

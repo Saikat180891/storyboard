@@ -96,15 +96,26 @@ export class ProjectsService {
     });
   }
 
-  createAssignee(projectId: number, assignee: Assignee): Observable<any> {
-    return this.dataService.postData(`/sop/${projectId}/assignee.json`, {
-      user_id: assignee.id,
-      role: assignee.role,
+  createAssignee(projectId: number, assigneeList: Assignee[]): Observable<any> {
+    const assigneePayLoad = assigneeList.map(assignee => {
+      return {
+        user_id: assignee.id,
+        role: assignee.role,
+      };
     });
+
+    return this.dataService.postData(
+      `/projects/${projectId}/assignees.json`,
+      assigneePayLoad
+    );
   }
 
-  deleteAssignee(id: number): Observable<any> {
-    return this.dataService.delete(`/sop/assignee`, `${id}.json`);
+  deleteAssignee(projectId: number, idList: number[]): Observable<any> {
+    const ids = idList.join(",");
+    return this.dataService.deleteList(
+      `/projects/${projectId}/assignees.json?ids=`,
+      ids
+    );
   }
 
   inviteUser(projectId: number, invitee: InviteUser): Observable<any> {
