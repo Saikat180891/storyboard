@@ -147,14 +147,13 @@ export class SectionTitleComponent implements OnInit {
    * is not section name
    */
   onSectionEditClose() {
-    if (!this.section.value.section_name && !this.stepParameters.section_id) {
+    if (!this.stepParameters.section_id) {
       this.__step.deleteSection(this.sectionIndex);
-    } else if (
-      !this.section.value.section_name &&
-      this.stepParameters.section_id
-    ) {
+    } else {
       this.section.patchValue({
-        section_name: this.stepParameters.section_name,
+        section_name: this.__step.getSopSectionList()[this.sectionIndex][
+          "section_name"
+        ],
       });
     }
     this.isSectionNameEditable = true;

@@ -156,6 +156,10 @@ export class StepcontrolService {
     this.recalculateLoopCounters();
   }
 
+  getSopSectionList() {
+    return this.sopSectionList;
+  }
+
   getStepId(sectionIndex: number, stepIndex: number) {
     const section = this.sopSectionList[sectionIndex];
     if (!section) {
@@ -211,9 +215,9 @@ export class StepcontrolService {
    */
   updateSectionItem(responseData: any, sectionIndex: number) {
     const keys = ["section_name", "description"];
-    for (const key in keys) {
-      if (key in responseData) {
-        this.sopSectionList[sectionIndex][key] = responseData[key];
+    for (const i in keys) {
+      if (keys[i] in responseData) {
+        this.sopSectionList[sectionIndex][keys[i]] = responseData[keys[i]];
       }
     }
   }
