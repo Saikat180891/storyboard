@@ -195,7 +195,11 @@ export class StepcontrolService {
     const stepAfterId = this.getStepId(sectionIndex, currentIndex + 1);
     this.rightPanelService
       .moveStep(this.pageService.userStoryId, stepId, stepBeforeId, stepAfterId)
-      .subscribe();
+      .subscribe(res => {
+        this.sopSectionList[sectionIndex].steps_list[
+          currentIndex
+        ].insertion_id = res["insertion_id"];
+      });
   }
 
   /**
