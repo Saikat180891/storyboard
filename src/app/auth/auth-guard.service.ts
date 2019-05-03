@@ -75,7 +75,7 @@ export class AuthGuardService implements CanActivate {
   externalUserLogin(loginDetails) {
     this.dataService.postLogin("/external_user_login/", loginDetails).subscribe(
       res => {
-        if (res === "Login successful") {
+        if (res && res.detail === "Login successful") {
           this.isUserLoggedIn();
         } else {
           alert(res);
