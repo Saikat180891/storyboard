@@ -101,12 +101,12 @@
             class="form-sub-group form-sub-group-3 form-sub-group-20 padding-both"
           >
             <label for="Logic">Logic</label>
-            <ng-container *ngIf="canEdit; else editValue">
+            <ng-container *ngIf="canEdit; else editLogic">
               <div class="select">
                 <input type="text" [(ngModel)]="data.logic" />
               </div>
             </ng-container>
-            <ng-template #editValue>
+            <ng-template #editLogic>
               <span>{{ data.logic }}</span>
             </ng-template>
           </div>
@@ -171,12 +171,12 @@
               class="form-sub-group form-sub-group-3 form-sub-group-20 padding-both"
             >
               <label for="Logic">Logic</label>
-              <ng-container *ngIf="canEdit; else editValue">
+              <ng-container *ngIf="canEdit; else editLogic">
                 <div class="select">
                   <input type="text" [(ngModel)]="row.logic" />
                 </div>
               </ng-container>
-              <ng-template #editValue>
+              <ng-template #editLogic>
                 <span>{{ row.logic }}</span>
               </ng-template>
             </div>
