@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { forkJoin } from "rxjs/observable/forkJoin";
 import { map } from "rxjs/operators";
 import { DataService } from "../../data.service";
@@ -35,6 +35,16 @@ export class ProjectsService {
     "#8677C4",
     "#94BEF0",
   ];
+
+  private projectRefresh = new BehaviorSubject<boolean>(false);
+
+  setProjectPageNeedsRefresh(value: boolean) {
+    this.projectRefresh.next(value);
+  }
+
+  getProjectPageNeedsRefresh() {
+    return this.projectRefresh;
+  }
 
   getProjectsList(): Observable<Project[]> {
     return this.dataService.fetchData(`/sop.json`).pipe(

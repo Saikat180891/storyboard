@@ -337,8 +337,10 @@ export class EditProjectDialogComponent
     this.projectsService.createProject(formData).subscribe(
       response => {
         this.projectsService
-          .createAssignee(response.id, this.alreadyCreatedAssignees)
-          .subscribe();
+          .createAssignee(response.id, this.newlyCreatedAssignees)
+          .subscribe(() => {
+            this.projectsService.setProjectPageNeedsRefresh(true);
+          });
       },
       err => {
         this.spinner.hide();

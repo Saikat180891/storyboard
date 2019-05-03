@@ -1,6 +1,5 @@
 import { AfterViewChecked, Component, OnInit } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
-import { DataService } from "../../../data.service";
 import { ProjectDisplay } from "../models/project.model";
 import { ProjectsService } from "../projects.service";
 
@@ -32,9 +31,18 @@ export class ProjectsPageComponent implements OnInit, AfterViewChecked {
      * Fetch data to load the cards
      */
     this.getListOfAllProjects();
+    this.refreshProjectsList();
   }
 
   ngAfterViewChecked() {}
+
+  refreshProjectsList() {
+    this.projectsService.getProjectPageNeedsRefresh().subscribe(res => {
+      if (res) {
+        this.getListOfAllProjects();
+      }
+    });
+  }
   /**
    * fetch all projects and permission and combine both of them
    */
