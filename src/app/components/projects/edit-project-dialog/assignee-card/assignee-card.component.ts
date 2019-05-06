@@ -19,7 +19,7 @@ export class AssigneeCardComponent {
   @Input("assignee") assignee: Assignee = {
     user: "",
     email: "",
-    role: null,
+    role: Role.ANALYST,
   };
   @Input("invalid") invalid: boolean = false;
   @Input("changeRoleDisabled") changeRoleDisabled: boolean = true;

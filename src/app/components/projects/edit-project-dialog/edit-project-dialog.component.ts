@@ -12,7 +12,7 @@ import {
 } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
 import { NgxSpinnerService } from "ngx-spinner";
-import { fromEvent } from "rxjs";
+import { forkJoin, fromEvent, Observable } from "rxjs";
 import { hideInOut, slideDown } from "../../../animation";
 import { DataService } from "../../../data.service";
 import { SharedService } from "../../../services/shared-services/shared.service";
@@ -287,20 +287,6 @@ export class EditProjectDialogComponent
     this.alreadyCreatedAssignees.splice(removeIndex, 1);
   }
 
-  removeAssignees(projectId): void {
-    this.projectsService
-      .deleteAssignee(projectId, this.assigneeIdsToRemove)
-      .subscribe();
-    this.assigneeIdsToRemove = [];
-  }
-
-  createAssignees(): void {
-    this.projectsService
-      .createAssignee(this.project.id, this.newlyCreatedAssignees)
-      .subscribe();
-    this.newlyCreatedAssignees = [];
-  }
-
   onDueDateChange(date: Date): void {
     this.project.due_date = DateUtils.datetypeToStringWithoutTime(date);
     this.dueDate = date;
@@ -363,33 +349,39 @@ export class EditProjectDialogComponent
       formData.set("logo", "");
     }
     formData.set("rCodes", "");
+    const deleteAssignee: Observable<any> = this.projectsService.deleteAssignee(
+      this.project.id,
+      this.assigneeIdsToRemove
+    );
+    const createAssignee: Observable<any> = this.projectsService.createAssignee(
+      this.project.id,
+      this.newlyCreatedAssignees
+    );
+    const updateProject: Observable<any> = this.projectsService.updateProject(
+      this.project.id,
+      formData
+    );
+    const forkJoinArray = [updateProject];
 
-    this.projectsService.updateProject(this.project.id, formData).subscribe(
-      response => {
-        if (this.assigneeIdsToRemove.length > 0) {
-          this.removeAssignees(this.project.id);
-        }
-        if (this.newlyCreatedAssignees.length > 0) {
-          this.createAssignees();
-        }
+    if (this.assigneeIdsToRemove.length > 0) {
+      forkJoinArray.push(deleteAssignee);
+    }
+    if (this.newlyCreatedAssignees.length > 0) {
+      forkJoinArray.push(createAssignee);
+    }
+
+    forkJoin(forkJoinArray).subscribe(
+      ([]) => {},
+      err => {
+        this.spinner.hide();
+        this.sharedService.raiseError(err);
+      },
+      () => {
+        this.spinner.hide();
+        this.onClose();
         this.snackBar.open("Project has been modified", "Success", {
           duration: 2000,
         });
-      },
-      err => {
-        // TODO this error handling should probably happen for most requests
-        // we should extract it and generalize it
-        const keys = Object.keys(err.error);
-        let error = "";
-        keys.forEach(key => {
-          error += `${key}: ${err.error[key]}\n`;
-        });
-        this.spinner.hide();
-        this.snackBar.open(error, "Failed", { duration: 2000 });
-      },
-      () => {
-        this.onClose();
-        this.spinner.hide();
       }
     );
   }

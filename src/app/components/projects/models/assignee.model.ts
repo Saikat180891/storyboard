@@ -13,6 +13,6 @@ export function userToAssigneeAdapter(user: User): Assignee {
     user: user.name,
     email: user.email,
     id: user.id,
-    role: null,
+    role: Role.ANALYST,
   };
 }
