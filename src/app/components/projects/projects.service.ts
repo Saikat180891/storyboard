@@ -120,6 +120,13 @@ export class ProjectsService {
     );
   }
 
+  updateAssignee(projectId: number, assigneeList: Assignee[]): Observable<any> {
+    return this.dataService.updatePost(
+      `/projects/${projectId}/assignees.json`,
+      assigneeList
+    );
+  }
+
   deleteAssignee(projectId: number, idList: number[]): Observable<any> {
     const ids = idList.join(",");
     return this.dataService.deleteList(

@@ -86,8 +86,10 @@ export class EditProjectDialogComponent
 
   permissionGranted: any;
   canRemoveAssignees: boolean;
+  canChangeRole: boolean;
   assigneeIdsToRemove: number[] = [];
   alreadyCreatedAssignees: Assignee[] = [];
+  editAssigneesArray: Assignee[] = [];
   newlyCreatedAssignees: Assignee[] = [];
   dueDate: Date;
   formValidationFailed: boolean;
@@ -143,6 +145,10 @@ export class EditProjectDialogComponent
     this.canRemoveAssignees =
       this.project && this.project.currentUserPermission
         ? this.project.currentUserPermission[ServerPermission.DELETE_ASSIGNEE]
+        : false;
+    this.canChangeRole =
+      this.project && this.project.currentUserPermission
+        ? this.project.currentUserPermission[ServerPermission.CHANGE_ASSIGNEE]
         : false;
   }
 
@@ -287,6 +293,11 @@ export class EditProjectDialogComponent
     this.alreadyCreatedAssignees.splice(removeIndex, 1);
   }
 
+  onRoleChange(role, i) {
+    this.alreadyCreatedAssignees[i].role = role;
+    this.editAssigneesArray.push(this.alreadyCreatedAssignees[i]);
+  }
+
   onDueDateChange(date: Date): void {
     this.project.due_date = DateUtils.datetypeToStringWithoutTime(date);
     this.dueDate = date;
@@ -361,6 +372,10 @@ export class EditProjectDialogComponent
       this.project.id,
       formData
     );
+    const updateRole: Observable<any> = this.projectsService.updateAssignee(
+      this.project.id,
+      this.editAssigneesArray
+    );
     const forkJoinArray = [updateProject];
 
     if (this.assigneeIdsToRemove.length > 0) {
@@ -368,6 +383,9 @@ export class EditProjectDialogComponent
     }
     if (this.newlyCreatedAssignees.length > 0) {
       forkJoinArray.push(createAssignee);
+    }
+    if (this.editAssigneesArray.length > 0) {
+      forkJoinArray.push(updateRole);
     }
 
     forkJoin(forkJoinArray).subscribe(
@@ -382,6 +400,9 @@ export class EditProjectDialogComponent
         this.snackBar.open("Project has been modified", "Success", {
           duration: 2000,
         });
+        this.assigneeIdsToRemove = [];
+        this.newlyCreatedAssignees = [];
+        this.editAssigneesArray = [];
       }
     );
   }

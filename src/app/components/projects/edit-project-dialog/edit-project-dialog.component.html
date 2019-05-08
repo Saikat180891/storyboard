@@ -154,16 +154,17 @@
               *ngFor="let user of alreadyCreatedAssignees; let i = index"
               [invalid]="formValidationFailed && !validateAssignee(user)"
               [assignee]="user"
-              [changeRoleDisabled]="true"
+              [changeRoleDisabled]="!canChangeRole"
               [canRemoveAssignees]="canRemoveAssignees"
               (removeAssignee)="onRemove(user.id)"
+              (roleChanged)="onRoleChange($event.role, i)"
             >
             </app-assignee-card>
             <app-assignee-card
               *ngFor="let user of newlyCreatedAssignees; let i = index"
               [invalid]="formValidationFailed && !validateAssignee(user)"
               [assignee]="user"
-              [changeRoleDisabled]="false"
+              [changeRoleDisabled]="!canChangeRole"
               [canRemoveAssignees]="canRemoveAssignees"
               (roleChanged)="onSelectionChange($event.role, i)"
               (removeAssignee)="onRemoveListItem(i)"

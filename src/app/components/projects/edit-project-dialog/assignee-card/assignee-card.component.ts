@@ -22,7 +22,7 @@ export class AssigneeCardComponent {
     role: Role.ANALYST,
   };
   @Input("invalid") invalid: boolean = false;
-  @Input("changeRoleDisabled") changeRoleDisabled: boolean = true;
+  @Input("changeRoleDisabled") changeRoleDisabled: boolean = false;
   @Input("canRemoveAssignees") canRemoveAssignees: boolean = false;
 
   @Output() roleChanged: EventEmitter<RoleChangedEvent> = new EventEmitter();
