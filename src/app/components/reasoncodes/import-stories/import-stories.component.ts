@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { SharedService } from "src/app/services/shared-services/shared.service";
 import { ReasonCodeService } from "../reason-code.service";
 @Component({
   selector: "app-import-stories",
@@ -16,7 +17,10 @@ export class ImportStoriesComponent implements OnInit {
     isSorocoTemplateUsed: new FormControl("", Validators.required),
   });
 
-  constructor(private reasonCodeService: ReasonCodeService) {}
+  constructor(
+    private reasonCodeService: ReasonCodeService,
+    private sharedService: SharedService
+  ) {}
 
   ngOnInit() {}
 
@@ -38,11 +42,7 @@ export class ImportStoriesComponent implements OnInit {
           this.reasonCodeService.importStories(this.excelFile).subscribe(
             res => this.reasonCodeService.snackbar.open(res),
             err => {
-              this.reasonCodeService.snackbar.open(
-                err.error["detail"],
-                "Fail",
-                { duration: 3000 }
-              );
+              this.sharedService.raiseError(err);
             },
             () => {
               this.reasonCodeService.snackbar.open(
