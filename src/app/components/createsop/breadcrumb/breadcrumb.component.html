@@ -1,10 +1,7 @@
 <div class="breadcrumb">
   <div class="padding-right-10Px" routerLink="/projects">All Projects</div>
   <div class="padding-right-10Px">></div>
-  <div
-    class="padding-right-10Px"
-    [routerLink]="['/projects/epics', getProjectId()]"
-  >
+  <div class="padding-right-10Px" [routerLink]="['/projects', getProjectId()]">
     {{ getProjectTitle() }}
   </div>
   <div class="padding-right-10Px">></div>

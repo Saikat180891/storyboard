@@ -59,12 +59,12 @@ const routes = [
               "./components/projects/projects.module#ProjectsModule",
           },
           {
-            path: "epics/:id",
+            path: ":id",
             loadChildren:
               "./components/reasoncodes/reasoncode.module#ReasoncodeModule",
           },
           {
-            path: "epics/:id/sop/:userStoryId",
+            path: ":id/userstory/:userStoryId",
             loadChildren:
               "./components/createsop/createsop.module#CreatesopModule",
           },

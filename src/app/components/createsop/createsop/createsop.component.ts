@@ -43,8 +43,13 @@ export class CreatesopComponent
     };
 
     this.routes.params.subscribe(res => {
-      this.__page.projectId = res.id;
-      this.__page.userStoryId = parseInt(res.userStoryId);
+      if (res && res.id) {
+        this.__page.projectId = res.id;
+      }
+
+      if (res && res.userStoryId) {
+        this.__page.userStoryId = parseInt(res.userStoryId);
+      }
     });
   }
 

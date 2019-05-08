@@ -28,9 +28,9 @@ export class BreadcrumbComponent implements OnInit {
 
   onChange(event: MatSelectChange) {
     this.selectedUserStory = event.value;
-    const navigateToChangedUserStroy = `/projects/epics/${
+    const navigateToChangedUserStroy = `/projects/${
       this.pageService.projectId
-    }/sop/${event.value}`;
+    }/userstory/${event.value}`;
     this.router.navigate([navigateToChangedUserStroy]);
   }
 

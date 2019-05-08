@@ -176,7 +176,7 @@
           [matRippleColor]="rippleColor"
           *ngIf="!restore; else restoreContent"
           [ngStyle]="{ visibility: 'visible' }"
-          routerLink="/projects/epics/{{ __rcService.sopId }}/sop/{{
+          routerLink="/projects/{{ __rcService.sopId }}/userstory/{{
             userStory.id
           }}"
         >
