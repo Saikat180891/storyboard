@@ -16,6 +16,8 @@ export class StepcontrolService {
   private endLoopCount: number = 0;
   public detectUnpairedStartLoop = new BehaviorSubject<boolean>(false);
 
+  private shouldChildrenBeSaved = new BehaviorSubject<boolean>(false);
+
   constructor(
     private rightPanelService: RightPanelService,
     private pageService: PageService
@@ -318,5 +320,13 @@ export class StepcontrolService {
     }
     // if the user is creating a section at the middle of the 'sopSectionList' then return the 'next_insertion_id' for the next element
     return this.sopSectionList[sectionIndex + 1]["insertion_id"];
+  }
+
+  setShouldChildrenBeSaved(value: boolean) {
+    this.shouldChildrenBeSaved.next(value);
+  }
+
+  getShouldChildrenBeSaved() {
+    return this.shouldChildrenBeSaved;
   }
 }

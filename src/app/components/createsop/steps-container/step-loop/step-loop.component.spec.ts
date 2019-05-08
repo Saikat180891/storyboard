@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { FormsModule } from "@angular/forms";
+import { CookieService } from "ngx-cookie-service";
 import { GlobalmoduleModule } from "../../../../module/globalmodule/globalmodule.module";
 import { StepLoopComponent } from "./step-loop.component";
 
@@ -10,8 +12,9 @@ describe("StepLoopComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, GlobalmoduleModule],
+      imports: [FormsModule, GlobalmoduleModule, HttpClientTestingModule],
       declarations: [StepLoopComponent],
+      providers: [CookieService],
     }).compileComponents();
   }));
 

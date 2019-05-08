@@ -9,6 +9,7 @@ import {
 import { FileAttachmentService } from "../../../shared/file-attachment/file-attachment.service";
 import { StepData } from "../../common-model/step-type.model";
 import { ExportToSopService } from "../../services/export-to-sop/export-to-sop.service";
+import { StepcontrolService } from "../../services/stepcontrol/stepcontrol.service";
 
 interface AttachmentDownloadEvent {
   url: string;
@@ -51,7 +52,8 @@ export class StepBaseComponent implements OnInit {
 
   constructor(
     private exportService: ExportToSopService,
-    private fileAttachmentService: FileAttachmentService
+    private fileAttachmentService: FileAttachmentService,
+    private stepControlService: StepcontrolService
   ) {}
 
   ngOnInit() {
@@ -81,6 +83,7 @@ export class StepBaseComponent implements OnInit {
   }
 
   onClikedOnEdit() {
+    this.stepControlService.setShouldChildrenBeSaved(true);
     this.canEdit = !this.canEdit;
   }
 

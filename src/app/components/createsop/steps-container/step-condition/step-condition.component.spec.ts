@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { CookieService } from "ngx-cookie-service";
 import { CreatesopModule } from "../../createsop.module";
 import { StepConditionComponent } from "./step-condition.component";
 
@@ -10,6 +11,7 @@ describe("StepConditionComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [CreatesopModule],
+      providers: [CookieService],
     }).compileComponents();
   }));
 

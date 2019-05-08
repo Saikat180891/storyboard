@@ -13,6 +13,7 @@ import {
   ViewChildren,
 } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { BehaviorSubject, Observable } from "rxjs";
 import { SectionListItem } from "../../common-model/section-list-item.model";
 import { LeftPanelService } from "../../services/left-panel/left-panel.service";
 import { RightPanelService } from "../../services/right-panel/right-panel.service";
@@ -77,6 +78,8 @@ export class SectionTitleComponent implements OnInit {
       this.hightLightStep = res.stepId;
       this.leftPanelService.setCurrentScreen(res.screenId);
     });
+
+    this.saveAllChildren();
   }
 
   onSelectStep(stepId: number, screenId: number) {
@@ -196,6 +199,14 @@ export class SectionTitleComponent implements OnInit {
   // toggle section name editable
   onEditSectionName() {
     this.isSectionNameEditable = !this.isSectionNameEditable;
+  }
+
+  saveAllChildren() {
+    this.__step.getShouldChildrenBeSaved().subscribe(res => {
+      if (res) {
+        this.saveAndCloseAllChildren();
+      }
+    });
   }
 
   /**

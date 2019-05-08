@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { CookieService } from "ngx-cookie-service";
 import { GlobalmoduleModule } from "../../../../module/globalmodule/globalmodule.module";
 import { StepBaseComponent } from "./step-base.component";
 
@@ -10,7 +12,8 @@ describe("StepBaseComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [StepBaseComponent],
-      imports: [GlobalmoduleModule],
+      imports: [GlobalmoduleModule, HttpClientTestingModule],
+      providers: [CookieService],
     }).compileComponents();
   }));
 
