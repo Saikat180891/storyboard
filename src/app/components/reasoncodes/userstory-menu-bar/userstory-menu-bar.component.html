@@ -1,0 +1,46 @@
+<div class="userstory-menu-bar">
+  <div class="userstory-menu-bar-left-controls">
+    <ul>
+      <li
+        *ngFor="let tab of tabs; let i = index"
+        [ngClass]="{ active: selectedTab === i }"
+        (click)="onTabSelectionChange(i)"
+      >
+        {{ tab }}
+      </li>
+    </ul>
+  </div>
+  <div class="userstory-menu-bar-right-controls">
+    <div class="sort-btn">
+      <stb-button
+        (click)="onControlSelect(0)"
+        htmlIcon="<i class='fas fa-sort-amount-down'></i>"
+        btnName="Sort By"
+        btnStyle="toggle"
+        btnColor="primary"
+      ></stb-button>
+    </div>
+    <div class="filter-btn">
+      <stb-button
+        (click)="onControlSelect(1)"
+        htmlIcon="<i class='fas fa-filter'></i>"
+        btnName="Filter"
+        btnStyle="toggle"
+        btnColor="primary"
+      ></stb-button>
+    </div>
+    <div class="filter-btn">
+      <stb-button
+        (click)="onControlSelect(2)"
+        btnName="Create New U/S"
+        htmlIcon="<img
+      width='10px'
+      height='10px'
+      src='../../../assets/pics/plus.svg'
+    />"
+        btnStyle="icon"
+        btnColor="accent"
+      ></stb-button>
+    </div>
+  </div>
+</div>

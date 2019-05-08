@@ -33,6 +33,7 @@ import { ExportToWordModalService } from "./export-to-word-modal/export-to-word-
 import { ReasonCodeService } from "./reason-code.service";
 import { ApiService } from "./services/api.service";
 import { CreateUserstoryService } from "./userstory-card-create/create-userstory.service";
+import { UserstoryControls } from "./userstory-menu-bar/userstory-menu-bar.component";
 export interface UserData {
   id: string;
   name: string;
@@ -114,6 +115,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
   permissions: any;
   enableView: boolean = true;
   currentProjectTitle: any;
+  selectedTab: number = 0;
 
   addSprintPayload: SprintConfig = {
     sprint_name: "",
@@ -170,19 +172,20 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
      */
     this.pieChartOptions = charts.pieChart;
     this.barChartOptions = charts.barChart;
+  }
 
-    /**
-     * to make the tab navbar fixed
-     */
-    this.__scrollbar.broadCastScrollPosition.subscribe(res => {
-      if (res > 401) {
-        this.activateStickybar = true;
-        this.activateVirtualFilter = true;
-      } else {
-        this.activateStickybar = false;
-        this.activateVirtualFilter = false;
-      }
-    });
+  onControlChange(controlSelected: number): void {
+    switch (controlSelected) {
+      case UserstoryControls.SORT:
+        this.sortBy = !this.sortBy;
+        return;
+      case UserstoryControls.FILTER:
+        this.filter = !this.filter;
+        return;
+      case UserstoryControls.CREATEUS:
+        this.openCreateSideBar = !this.openCreateSideBar;
+        return;
+    }
   }
 
   ngOnDestroy() {

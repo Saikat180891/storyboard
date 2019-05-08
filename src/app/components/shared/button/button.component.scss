@@ -51,6 +51,26 @@
   }
   .accent {
     button {
+      background-color: #ffffff;
+      color: #2a7de1;
+    }
+  }
+}
+
+.btn-icon-toggle {
+  .primary {
+    button {
+      background-color: transparent;
+      color: #2a7de1;
+      box-shadow: none;
+    }
+    button.active {
+      background-color: #c1c1c1;
+      color: #ffffff;
+    }
+  }
+  .accent {
+    button {
       background-color: #efefef;
       color: #54585a;
     }

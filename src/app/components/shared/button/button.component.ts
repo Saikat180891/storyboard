@@ -12,6 +12,7 @@ export class ButtonComponent implements OnInit {
   @Input("htmlIcon") htmlIcon: string;
 
   btnNameWithIcon: string;
+  active: boolean = false;
   constructor() {}
 
   ngOnInit() {

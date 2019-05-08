@@ -1,85 +1,87 @@
-<div class="universal" #totalPage>
-  <ng-container>
-    <div class="container" [ngClass]="{ 'container-hide': fixToTop }">
-      <div class="header">
-        <div class="heading-left-component" *ngIf="_reasonCode.currentProject">
-          <app-project-header-title
-            [projectTitle]="_reasonCode"
-          ></app-project-header-title>
-        </div>
-        <div class="heading-right-component">
-          <div class="controls-wrapper">
-            <stb-button
-              btnStyle="icon"
-              (click)="onOpenAddSprint()"
-              btnName="Config Project"
-              btnColor="primary"
-              htmlIcon="<i class='fas fa-cog'></i>"
-            ></stb-button>
-          </div>
-          <div class="controls-wrapper">
-            <stb-button
-              btnStyle="icon"
-              (click)="onOpenExport()"
-              btnName="Export"
-              btnColor="primary"
-              htmlIcon="<i class='fas fa-file-export'></i>"
-            ></stb-button>
-          </div>
-        </div>
+<div class="universal">
+  <div class="container">
+    <div class="header">
+      <div class="heading-left-component" *ngIf="_reasonCode.currentProject">
+        <app-project-header-title
+          [projectTitle]="_reasonCode"
+        ></app-project-header-title>
       </div>
-      <div class="chart-section">
-        <div class="chart">
-          <app-charts
-            [extras]="false"
-            [projectStatus]="_reasonCode.totalProjectStatus"
-            [meter]="true"
-            [options]="pieChartOptions"
-            [data]="_reasonCode.totalSprintData"
-            [title]="'Project Status'"
-          ></app-charts>
+      <div class="heading-right-component">
+        <div class="controls-wrapper">
+          <stb-button
+            btnStyle="icon"
+            (click)="onOpenAddSprint()"
+            btnName="Config Project"
+            btnColor="primary"
+            htmlIcon="<i class='fas fa-cog'></i>"
+          ></stb-button>
         </div>
-        <div class="chart">
-          <app-charts
-            [extras]="true"
-            [projectStatus]="_reasonCode.currentSprintDuration"
-            [meter]="true"
-            [options]="pieChartOptions"
-            [data]="_reasonCode.currentSprintData"
-            [title]="'Current Sprint'"
-            [selectOptions]="_reasonCode.sprintConfig"
-          ></app-charts>
-        </div>
-        <div class="chart">
-          <app-charts
-            [extras]="false"
-            [projectStatus]="_reasonCode.totalProjectStatus"
-            [meter]="false"
-            [options]="barChartOptions"
-            [title]="'Benefits'"
-            [data]="_reasonCode.benefitsChartData"
-            [ifButtonRequired]="true"
-            (onClick)="onShowBenefits($event)"
-          ></app-charts>
+        <div class="controls-wrapper">
+          <stb-button
+            btnStyle="icon"
+            (click)="onOpenExport()"
+            btnName="Export"
+            btnColor="primary"
+            htmlIcon="<i class='fas fa-file-export'></i>"
+          ></stb-button>
         </div>
       </div>
     </div>
-  </ng-container>
-  <div
-    class="userstory-container"
-    [ngClass]="{ 'userstory-container-active': fixToTop }"
-  >
-    <mat-tab-group
-      class="userstory-container-tabs"
-      (selectedTabChange)="onTabChange($event)"
-      [selectedIndex]="selectedTabIndex"
-      animationDuration="0"
-    >
-      <mat-tab label="Open U/S">
-        <div
-          class="filter-selected"
-          *ngIf="_reasonCode.filteredValues.length > 0"
-        >
+    <div class="chart-section">
+      <div class="chart">
+        <app-charts
+          [extras]="false"
+          [projectStatus]="_reasonCode.totalProjectStatus"
+          [meter]="true"
+          [options]="pieChartOptions"
+          [data]="_reasonCode.totalSprintData"
+          [title]="'Project Status'"
+        ></app-charts>
+      </div>
+      <div class="chart">
+        <app-charts
+          [extras]="true"
+          [projectStatus]="_reasonCode.currentSprintDuration"
+          [meter]="true"
+          [options]="pieChartOptions"
+          [data]="_reasonCode.currentSprintData"
+          [title]="'Current Sprint'"
+          [selectOptions]="_reasonCode.sprintConfig"
+        ></app-charts>
+      </div>
+      <div class="chart">
+        <app-charts
+          [extras]="false"
+          [projectStatus]="_reasonCode.totalProjectStatus"
+          [meter]="false"
+          [options]="barChartOptions"
+          [title]="'Benefits'"
+          [data]="_reasonCode.benefitsChartData"
+          [ifButtonRequired]="true"
+          (onClick)="onShowBenefits($event)"
+        ></app-charts>
+      </div>
+    </div>
+  </div>
+  <div class="userstory-container">
+    <div class="menubar">
+      <app-userstory-menu-bar
+        (tabChange)="selectedTab = $event"
+        (controlSelected)="onControlChange($event)"
+      ></app-userstory-menu-bar>
+      <div class="sort-menu-group" *ngIf="sortBy">
+        <app-sort (close)="sortBy = !sortBy"></app-sort>
+      </div>
+      <div class="filter" *ngIf="filter">
+        <userstory-filter
+          (closeFilter)="filter = $event"
+          *ngIf="clearAllFilter"
+        ></userstory-filter>
+      </div>
+    </div>
+    <div class="tabs" [ngSwitch]="selectedTab">
+      <div id="open-user-story" *ngSwitchCase="0">
+        <div class="filter-selected" *ngIf="_reasonCode.filteredValues.length">
           <mat-chip-list>
             <mat-chip
               *ngFor="
@@ -98,42 +100,45 @@
             Clear all filters
           </button>
         </div>
-        <div
-          class="card-holder"
-          [ngClass]="{
-            'card-holder-active': fixToTop,
-            'userstory-slide-left': openCreateSideBar
-          }"
-          *ngIf="_reasonCode.userStories"
-          #userStoryContainer
+        <ng-container
+          *ngIf="_reasonCode.userStories.length; else noOpenUserStory"
         >
-          <app-userstory-card
-            (deleteUserStory)="onDeleteUserStory($event)"
-            [restore]="false"
-            [disableDeleteBtn]="true"
-            *ngFor="let userStory of _reasonCode.userStories"
-            [userStory]="userStory"
-            (editUserStory)="onOpenUserStorySidebar($event, userStory)"
-          ></app-userstory-card>
-        </div>
-        <div
-          class="card-holder user-story-placeholder"
-          *ngIf="_reasonCode.userStories.length == 0"
-        >
-          <img
-            width="40px"
-            height="40px"
-            src="../../../assets/pics/open_user_story.svg"
-            alt="placeholder"
-          />
-          <p>Get started by creating user stories & sprints</p>
-        </div>
-      </mat-tab>
-      <mat-tab label="Completed U/S">
-        <div
-          class="filter-selected"
-          *ngIf="_reasonCode.filteredValues.length > 0"
-        >
+          <div
+            class="card-holder"
+            [ngClass]="{
+              'card-holder-active': fixToTop,
+              'userstory-slide-left': openCreateSideBar
+            }"
+            *ngIf="_reasonCode.userStories.length"
+            #userStoryContainer
+          >
+            <app-userstory-card
+              (deleteUserStory)="onDeleteUserStory($event)"
+              [restore]="false"
+              [disableDeleteBtn]="true"
+              *ngFor="let userStory of _reasonCode.userStories"
+              [userStory]="userStory"
+              (editUserStory)="onOpenUserStorySidebar($event, userStory)"
+            ></app-userstory-card>
+          </div>
+        </ng-container>
+        <ng-template #noOpenUserStory>
+          <div
+            class="card-holder user-story-placeholder"
+            *ngIf="_reasonCode.userStories.length == 0"
+          >
+            <img
+              width="40px"
+              height="40px"
+              src="../../../assets/pics/open_user_story.svg"
+              alt="placeholder"
+            />
+            <p>Get started by creating user stories & sprints</p>
+          </div>
+        </ng-template>
+      </div>
+      <div id="completed-user-story" *ngSwitchCase="1">
+        <div class="filter-selected" *ngIf="_reasonCode.filteredValues.length">
           <mat-chip-list>
             <mat-chip
               *ngFor="
@@ -163,17 +168,29 @@
             state and assign to an open/future sprint.
           </div>
         </div>
-        <div class="card-holder">
-          <app-userstory-card
-            [restore]="false"
-            [disableDeleteBtn]="false"
-            *ngFor="let userStory of _reasonCode.completeUserStories"
-            [userStory]="userStory"
-            (editUserStory)="onOpenUserStorySidebar($event, userStory)"
-          ></app-userstory-card>
-        </div>
-      </mat-tab>
-      <mat-tab label="Deleted U/S">
+        <ng-container
+          *ngIf="
+            _reasonCode.completeUserStories.length;
+            else noCompletedUserstory
+          "
+        >
+          <div class="card-holder">
+            <app-userstory-card
+              [restore]="false"
+              [disableDeleteBtn]="false"
+              *ngFor="let userStory of _reasonCode.completeUserStories"
+              [userStory]="userStory"
+              (editUserStory)="onOpenUserStorySidebar($event, userStory)"
+            ></app-userstory-card>
+          </div>
+        </ng-container>
+        <ng-template #noCompletedUserstory>
+          <div class="no-userstory">
+            <span>No Completed userstory</span>
+          </div>
+        </ng-template>
+      </div>
+      <div id="deleted-user-story" *ngSwitchCase="2">
         <div
           class="filter-selected"
           *ngIf="_reasonCode.filteredValues.length > 0"
@@ -196,66 +213,31 @@
             Clear all filters
           </button>
         </div>
-        <div class="card-holder">
-          <app-userstory-card
-            [restore]="true"
-            [disableEdit]="true"
-            *ngFor="let userStory of _reasonCode.deletedUserStories"
-            [userStory]="userStory"
-            (editUserStory)="onOpenUserStorySidebar($event, userStory)"
-          ></app-userstory-card>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
-
-    <div class="menu-btn-group">
-      <button
-        class="sort-btn btn btn-flat-grey"
-        [ngClass]="{ 'filter-btn-active': sortBy }"
-        (click)="sortBy = !sortBy"
-      >
-        <i class="fas fa-sort-amount-down"></i> Sort By
-      </button>
-      <button
-        class="btn btn-flat-grey"
-        (click)="openFilter()"
-        [ngClass]="{ 'filter-btn-active': filter }"
-      >
-        <i class="fas fa-filter"></i> Filter
-      </button>
-      <button
-        class="btn btn-flat-grey"
-        (click)="onCreate()"
-        [ngStyle]="{ width: '150px' }"
-        *ngIf="enableView"
-      >
-        <img
-          width="10px"
-          height="10px"
-          src="../../../assets/pics/plus.svg"
-          alt="create user story"
-        />
-        Create New U/S
-      </button>
-
-      <div class="sort-menu-group" *ngIf="sortBy">
-        <app-sort (close)="sortBy = !sortBy"></app-sort>
-      </div>
-
-      <div
-        class="filter"
-        [ngClass]="{
-          'filter-active': filter,
-          'filter-new-position': activateVirtualFilter
-        }"
-      >
-        <userstory-filter
-          (closeFilter)="filter = $event"
-          *ngIf="clearAllFilter"
-        ></userstory-filter>
+        <ng-container
+          *ngIf="
+            _reasonCode.deletedUserStories.length;
+            else noDeletedUserstories
+          "
+        >
+          <div class="card-holder">
+            <app-userstory-card
+              [restore]="true"
+              [disableEdit]="true"
+              *ngFor="let userStory of _reasonCode.deletedUserStories"
+              [userStory]="userStory"
+              (editUserStory)="onOpenUserStorySidebar($event, userStory)"
+            ></app-userstory-card>
+          </div>
+        </ng-container>
+        <ng-template #noDeletedUserstories>
+          <div class="no-userstory">
+            <span>No deleted userstory</span>
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>
+
   <div
     class="transparent-overlay"
     [ngClass]="{ 'transparent-overlay-active': openCreateSideBar }"
@@ -355,60 +337,3 @@
   class="myspinner"
 >
 </ngx-spinner>
-<div class="stickybar" [ngClass]="{ 'stickybar-active': activateStickybar }">
-  <div class="tabs">
-    <button
-      matRipple
-      [matRippleColor]="rippleColor"
-      (click)="onVirtualTabClicked(0)"
-      [ngClass]="{ active: selectedTabIndex == 0 }"
-    >
-      Open U/S
-    </button>
-    <button
-      matRipple
-      [matRippleColor]="rippleColor"
-      (click)="onVirtualTabClicked(1)"
-      [ngClass]="{ active: selectedTabIndex == 1 }"
-    >
-      Completed U/S
-    </button>
-    <button
-      matRipple
-      [matRippleColor]="rippleColor"
-      (click)="onVirtualTabClicked(2)"
-      [ngClass]="{ active: selectedTabIndex == 2 }"
-    >
-      Deleted U/S
-    </button>
-  </div>
-  <div class="page-options">
-    <button
-      class="sort-btn btn btn-flat-grey"
-      [ngClass]="{ 'filter-btn-active': false }"
-      (click)="sortBy = !sortBy"
-    >
-      <i class="fas fa-sort-amount-down"></i> Sort By
-    </button>
-    <button
-      class="btn btn-flat-grey"
-      (click)="openVirtualFilter()"
-      [ngClass]="{ 'filter-btn-active': filter }"
-    >
-      <i class="fas fa-filter"></i> Filter
-    </button>
-    <button
-      class="btn btn-flat-grey"
-      (click)="onCreate()"
-      [ngStyle]="{ width: '150px' }"
-    >
-      <img
-        width="10px"
-        height="10px"
-        src="../../../assets/pics/plus.svg"
-        alt="create user story"
-      />
-      Create New U/S
-    </button>
-  </div>
-</div>

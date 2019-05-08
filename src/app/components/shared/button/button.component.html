@@ -37,4 +37,20 @@
       <button mat-raised-button [innerHtml]="btnNameWithIcon"></button>
     </div>
   </div>
+  <div *ngSwitchCase="'toggle'" class="btn-icon-toggle">
+    <div
+      class="common-btn"
+      [ngClass]="{
+        primary: btnColor === 'primary',
+        accent: btnColor === 'accent'
+      }"
+    >
+      <button
+        mat-raised-button
+        [innerHtml]="btnNameWithIcon"
+        [ngClass]="{ active: active }"
+        (click)="active = !active"
+      ></button>
+    </div>
+  </div>
 </div>

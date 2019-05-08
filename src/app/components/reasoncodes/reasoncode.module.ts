@@ -29,6 +29,7 @@ import { ProjectConfigBaseComponent } from "./project-config-base/project-config
 import { ProjectHeaderTitleComponent } from "./project-header-title/project-header-title.component";
 import { ProjectConfigureService } from "./services/project-configure.service";
 import { SortComponent } from "./sort/sort.component";
+import { UserstoryMenuBarComponent } from "./userstory-menu-bar/userstory-menu-bar.component";
 
 const routes: Routes = [{ path: "", component: ReasoncodesComponent }];
 
@@ -55,6 +56,7 @@ const routes: Routes = [{ path: "", component: ReasoncodesComponent }];
     ProjectHeaderTitleComponent,
     ExportToWordModalComponent,
     ExportSopAsWordComponent,
+    UserstoryMenuBarComponent,
   ],
   imports: [
     CommonModule,
