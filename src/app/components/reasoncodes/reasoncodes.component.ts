@@ -95,8 +95,8 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
   sopId: number;
   dateCounter: number = 0;
   userStories = [];
-  openEditSideBar: boolean = false; //toggler to open or close the right side bar to edit
-  openCreateSideBar: boolean = false; //toggler to open or close the right side bar to create
+  openEditSideBar: boolean = false; // toggler to open or close the right side bar to edit
+  openCreateSideBar: boolean = false; // toggler to open or close the right side bar to create
   sprintOptions = [];
   reasonCodeOptions = [];
   fixToTop: boolean = false;
@@ -184,6 +184,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
         return;
       case UserstoryControls.CREATEUS:
         this.openCreateSideBar = !this.openCreateSideBar;
+        this.createOptionsWithSprintName();
         return;
     }
   }
