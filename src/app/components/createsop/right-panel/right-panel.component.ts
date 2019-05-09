@@ -177,14 +177,20 @@ export class RightPanelComponent implements OnInit {
       };
       this.rightPanelService
         .createStep(this.pageService.userStoryId, $event.sectionId, payload)
-        .subscribe(res => {
-          this.leftPanelService.setCurrentScreen($event.data.screen);
-          this.stepcontrolService.updateStepWithResponse(
-            $event.sectionIndex,
-            $event.stepIndex,
-            res
-          );
-        });
+        .subscribe(
+          res => {
+            this.leftPanelService.setCurrentScreen($event.data.screen);
+            this.stepcontrolService.updateStepWithResponse(
+              $event.sectionIndex,
+              $event.stepIndex,
+              res
+            );
+            this.stepcontrolService.setStepEditMode(false);
+          },
+          err => {
+            this.sharedService.raiseError(err);
+          }
+        );
     } else if ($event.mode === "edit") {
       const formData = new FormData();
       formData.append("type", $event.stepType);
@@ -217,6 +223,7 @@ export class RightPanelComponent implements OnInit {
               duration: 3000,
             });
           }
+          this.stepcontrolService.setStepEditMode(false);
         },
         err => {
           this.sharedService.raiseError(err);

@@ -39,19 +39,21 @@ export enum StepConditionType {
   MAJOR = "Major",
 }
 
-export interface MajorCondition {
-  first_variable?: string;
-  logic?: string;
-  last_variable?: string;
-  major_condition?: string;
+export interface ConditionBlock {
+  condition?: string;
+  operator?: string;
+  criteria?: string;
+  logical_condition?: string;
 }
 
 export interface ConditionStepData extends StepData {
   condition_selected: StepConditionType;
-  first_variable: string;
-  logic: string;
-  last_variable: string;
-  majors: MajorCondition[];
+  condition: string;
+  operator: string;
+  criteria: string;
+  condition_blocks: ConditionBlock[];
+  next_no_of_steps: string;
+  notes: string;
 }
 
 export enum StepType {

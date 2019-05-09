@@ -73,11 +73,13 @@
   }
 }
 .select-size {
-  width: 100px;
-  margin-top: 11px;
+  width: 100%;
 }
 .select-wrapper {
   height: 30px;
+  border: 1px solid #d1d1d1;
+  padding-left: 3px;
+  line-height: 30px;
 
   input[type="text"] {
     width: 100%;

@@ -85,10 +85,10 @@ export class StepBaseComponent implements OnInit {
   onClikedOnEdit() {
     this.stepControlService.setShouldChildrenBeSaved(true);
     this.canEdit = !this.canEdit;
+    this.stepControlService.setStepEditMode(true);
   }
 
   onClickOnOk() {
-    this.canEdit = false;
     if (this.stepData.step_id) {
       this.outputChange.emit({
         data: this.data,
@@ -109,6 +109,11 @@ export class StepBaseComponent implements OnInit {
         mode: "create",
       });
     }
+    this.stepControlService.getStepEditMode().subscribe(res => {
+      if (!res) {
+        this.canEdit = false;
+      }
+    });
   }
 
   onCancelEdit() {

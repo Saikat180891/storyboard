@@ -15,6 +15,7 @@ export class StepcontrolService {
   private startLoopCount: number = 0;
   private endLoopCount: number = 0;
   public detectUnpairedStartLoop = new BehaviorSubject<boolean>(false);
+  public stepEditMode = new BehaviorSubject<boolean>(true);
 
   private shouldChildrenBeSaved = new BehaviorSubject<boolean>(false);
 
@@ -22,6 +23,14 @@ export class StepcontrolService {
     private rightPanelService: RightPanelService,
     private pageService: PageService
   ) {}
+
+  getStepEditMode() {
+    return this.stepEditMode;
+  }
+
+  setStepEditMode(editMode: boolean) {
+    this.stepEditMode.next(editMode);
+  }
 
   updateUnpairedStartLoop() {
     this.detectUnpairedStartLoop.next(this.unpairedStartLoopExists());

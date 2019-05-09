@@ -14,18 +14,27 @@ export class StepConditionComponent extends StepBaseComponent {
   stepType = "condition";
   data: ConditionStepData = {
     condition_selected: StepConditionType.MINOR,
-    first_variable: "",
-    logic: "",
-    last_variable: "",
-    majors: [{}],
+    condition: "",
+    operator: "",
+    criteria: "",
+    condition_blocks: [],
     screen: "",
+    next_no_of_steps: "",
+    notes: "",
   };
 
   onAddAnotherRow() {
-    this.data.majors.push({});
+    this.data.condition_blocks.push({});
   }
 
   onDeleteNewRow(index: number) {
-    this.data.majors.splice(index, 1);
+    this.data.condition_blocks.splice(index, 1);
+  }
+
+  onClickOnConditionOk() {
+    if (this.data.condition_selected === "Major") {
+      this.data.next_no_of_steps = "";
+    }
+    this.onClickOnOk();
   }
 }
