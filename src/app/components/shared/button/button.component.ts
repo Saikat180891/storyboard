@@ -10,6 +10,7 @@ export class ButtonComponent implements OnInit {
   @Input("btnName") btnName: string;
   @Input("btnColor") btnColor: string;
   @Input("htmlIcon") htmlIcon: string;
+  @Input("disabled") disabled: boolean = false;
 
   btnNameWithIcon: string;
   active: boolean = false;

@@ -1,10 +1,11 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { GlobalmoduleModule } from "src/app/module/globalmodule/globalmodule.module";
-import { DateInputComponent } from "./date-input.component";
 
-describe("DateInputComponent", () => {
-  let component: DateInputComponent;
-  let fixture: ComponentFixture<DateInputComponent>;
+import { GlobalmoduleModule } from "src/app/module/globalmodule/globalmodule.module";
+import { InputComponent } from "./input.component";
+
+describe("InputTextBoxComponent", () => {
+  let component: InputComponent;
+  let fixture: ComponentFixture<InputComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -13,7 +14,7 @@ describe("DateInputComponent", () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DateInputComponent);
+    fixture = TestBed.createComponent(InputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

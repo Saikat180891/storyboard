@@ -118,7 +118,7 @@
               [disableDeleteBtn]="true"
               *ngFor="let userStory of _reasonCode.userStories"
               [userStory]="userStory"
-              (editUserStory)="onOpenUserStorySidebar($event, userStory)"
+              (editUserStory)="onEditUserstory($event, userStory)"
             ></app-userstory-card>
           </div>
         </ng-container>

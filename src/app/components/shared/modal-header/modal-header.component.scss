@@ -1,0 +1,18 @@
+div.header-wrapper {
+  width: 100%;
+  height: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+
+  span:first-child {
+    color: #2a7de1;
+    font-size: 18px;
+  }
+
+  span:last-child {
+    color: #54585a;
+    cursor: pointer;
+  }
+}

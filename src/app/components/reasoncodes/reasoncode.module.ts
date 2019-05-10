@@ -29,6 +29,8 @@ import { ProjectConfigBaseComponent } from "./project-config-base/project-config
 import { ProjectHeaderTitleComponent } from "./project-header-title/project-header-title.component";
 import { ProjectConfigureService } from "./services/project-configure.service";
 import { SortComponent } from "./sort/sort.component";
+import { UserstoryCreateEditModalComponent } from "./userstory-create-edit-modal/userstory-create-edit-modal.component";
+import { UserstoryCreateEditModalService } from "./userstory-create-edit-modal/userstory-create-edit-modal.service";
 import { UserstoryMenuBarComponent } from "./userstory-menu-bar/userstory-menu-bar.component";
 
 const routes: Routes = [{ path: "", component: ReasoncodesComponent }];
@@ -56,6 +58,7 @@ const routes: Routes = [{ path: "", component: ReasoncodesComponent }];
     ProjectHeaderTitleComponent,
     ExportToWordModalComponent,
     ExportSopAsWordComponent,
+    UserstoryCreateEditModalComponent,
     UserstoryMenuBarComponent,
   ],
   imports: [
@@ -64,7 +67,14 @@ const routes: Routes = [{ path: "", component: ReasoncodesComponent }];
     NvD3Module,
     RouterModule.forChild(routes),
   ],
-  providers: [ProjectConfigureService, ExportToWordModalService],
-  entryComponents: [ExportToWordModalComponent],
+  providers: [
+    ProjectConfigureService,
+    ExportToWordModalService,
+    UserstoryCreateEditModalService,
+  ],
+  entryComponents: [
+    ExportToWordModalComponent,
+    UserstoryCreateEditModalComponent,
+  ],
 })
 export class ReasoncodeModule {}

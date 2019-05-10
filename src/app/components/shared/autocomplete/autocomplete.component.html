@@ -1,0 +1,27 @@
+<div class="input-box">
+  <label [for]="label"
+    >{{ label }}
+    <span class="ng-required" *ngIf="required">*</span>
+  </label>
+  <input
+    [type]="type"
+    [placeholder]="placeholder ? placeholder : ''"
+    [disabled]="disabled ? disabled : false"
+    [id]="label ? label : ''"
+    [readonly]="readonly"
+    [value]="inputViewLabel"
+    autocomplete="off"
+    #autocomplete
+  />
+  <div
+    class="auto-complete-dropdown"
+    *ngIf="autocompleteOptions.length"
+    #autocompleteDropdown
+  >
+    <span
+      *ngFor="let autocompleteOption of autocompleteOptions"
+      (click)="onValueChange(autocompleteOption.value)"
+      >{{ autocompleteOption.label }}</span
+    >
+  </div>
+</div>

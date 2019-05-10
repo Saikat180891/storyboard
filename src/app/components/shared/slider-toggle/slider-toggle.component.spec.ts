@@ -1,10 +1,11 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { GlobalmoduleModule } from "src/app/module/globalmodule/globalmodule.module";
-import { DateInputComponent } from "./date-input.component";
 
-describe("DateInputComponent", () => {
-  let component: DateInputComponent;
-  let fixture: ComponentFixture<DateInputComponent>;
+import { GlobalmoduleModule } from "src/app/module/globalmodule/globalmodule.module";
+import { SliderToggleComponent } from "./slider-toggle.component";
+
+describe("SliderToggleComponent", () => {
+  let component: SliderToggleComponent;
+  let fixture: ComponentFixture<SliderToggleComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -13,7 +14,7 @@ describe("DateInputComponent", () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DateInputComponent);
+    fixture = TestBed.createComponent(SliderToggleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

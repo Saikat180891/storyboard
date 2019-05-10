@@ -4,10 +4,11 @@
       class="common-btn"
       [ngClass]="{
         primary: btnColor === 'primary',
-        accent: btnColor === 'accent'
+        accent: btnColor === 'accent',
+        disabled: disabled
       }"
     >
-      <button mat-raised-button>{{ btnName }}</button>
+      <button mat-raised-button [disabled]="disabled">{{ btnName }}</button>
     </div>
   </div>
   <div *ngSwitchCase="'stroked'" class="btn-stroked">

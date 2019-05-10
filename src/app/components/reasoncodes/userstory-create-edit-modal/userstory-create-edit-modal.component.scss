@@ -1,0 +1,65 @@
+.create-edit-userstory-modal {
+  .modal-header {
+    padding-top: 10px;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+
+    .form-group {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      height: 5rem;
+      padding: 0 1rem;
+
+      .margin-right-1REM {
+        margin-right: 1rem;
+      }
+      .margin-left-1REM {
+        margin-left: 1rem;
+      }
+      .padding-right-1REM {
+        padding-right: 1rem;
+      }
+      .padding-left-1REM {
+        padding-right: 1rem;
+      }
+
+      .btn-group {
+        display: flex;
+        justify-content: space-between;
+        width: 200px;
+      }
+
+      .us-number,
+      .productivity,
+      .dev-hrs,
+      .benefits {
+        width: 5rem;
+      }
+
+      .us-name,
+      .assignee-autocomplete {
+        width: 16rem;
+      }
+      .epic-name,
+      .sprint-name,
+      .priority,
+      .status,
+      .planned-delivery {
+        width: 10rem;
+      }
+      .description {
+        width: calc(100% - 11rem);
+      }
+    }
+    .form-align-center {
+      justify-content: center;
+    }
+    .form-group:nth-child(even) {
+      background-color: #f5f5f5;
+    }
+  }
+}

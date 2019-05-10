@@ -15,7 +15,7 @@ import {
 import { ActivatedRoute } from "@angular/router";
 import { saveAs } from "file-saver";
 import { NgxSpinnerService } from "ngx-spinner";
-import { fromEvent } from "rxjs";
+import { fromEvent, Observable } from "rxjs";
 import { environment } from "../../../environments/environment";
 import { hideInOut } from "../../animation";
 import { DataService } from "../../data.service";
@@ -30,9 +30,13 @@ import { Export } from "./export-sop-as-word/export-sop-as-word.component";
 import { createDownloadableEpicsAndUserstories } from "./export-sop-as-word/export-sop-as-word.helpers";
 import { DownloadFileType } from "./export-to-word-modal/export-to-word-modal.component";
 import { ExportToWordModalService } from "./export-to-word-modal/export-to-word-modal.service";
+import { Epics } from "./models/Epics.model";
+import { Sprint } from "./models/Sprint.model";
 import { ReasonCodeService } from "./reason-code.service";
 import { ApiService } from "./services/api.service";
 import { CreateUserstoryService } from "./userstory-card-create/create-userstory.service";
+import { UserstoryModalName } from "./userstory-create-edit-modal/modaltype.enum";
+import { UserstoryCreateEditModalService } from "./userstory-create-edit-modal/userstory-create-edit-modal.service";
 import { UserstoryControls } from "./userstory-menu-bar/userstory-menu-bar.component";
 export interface UserData {
   id: string;
@@ -147,7 +151,8 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
     private __api: DataService,
     private __scrollbar: ScrollbarService,
     private exportToModal: ExportToWordModalService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private userstoryEditCreateModal: UserstoryCreateEditModalService
   ) {}
 
   ngOnInit() {
@@ -183,8 +188,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
         this.filter = !this.filter;
         return;
       case UserstoryControls.CREATEUS:
-        this.openCreateSideBar = !this.openCreateSideBar;
-        this.createOptionsWithSprintName();
+        this.createUserstory();
         return;
     }
   }
@@ -305,17 +309,30 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
     this._reasonCode.movemodal = false;
   }
 
-  onCreate() {
-    this.openCreateSideBar = !this.openCreateSideBar;
-    this.createOptionsWithSprintName();
+  createUserstory() {
+    this.userstoryEditCreateModal
+      .openDialog(
+        this._reasonCode.sopId,
+        UserstoryModalName.CREATE,
+        this._reasonCode.sprintConfig,
+        this._reasonCode.reasonCodeData
+      )
+      .subscribe(response => this._reasonCode.refresh(this._reasonCode.sopId));
+  }
+
+  onEditUserstory(event, userStory) {
+    this.userstoryEditCreateModal
+      .openDialog(
+        this._reasonCode.sopId,
+        UserstoryModalName.EDIT,
+        this._reasonCode.sprintConfig,
+        this._reasonCode.reasonCodeData,
+        userStory
+      )
+      .subscribe(response => this._reasonCode.refresh(this._reasonCode.sopId));
   }
 
   userStoryData;
-
-  onOpenUserStorySidebar(event, userStory) {
-    this.openEditSideBar = event;
-    this.userStoryData = userStory;
-  }
 
   onCloseEditUserStories(event) {
     this.openEditSideBar = event;

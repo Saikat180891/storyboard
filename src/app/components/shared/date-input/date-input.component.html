@@ -15,8 +15,10 @@
         [matDatepicker]="datePicker"
         placeholder="Choose Date"
         readonly
-        (dateChange)="onDateChange($event)"
+        (dateChange)="onDateChange($event.value)"
         [disabled]="disabled"
+        [value]="value"
+        (blur)="onTouched()"
       />
     </div>
   </div>

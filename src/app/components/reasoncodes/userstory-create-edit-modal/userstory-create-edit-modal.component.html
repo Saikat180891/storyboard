@@ -1,0 +1,154 @@
+<div class="create-edit-userstory-modal">
+  <div class="modal-header">
+    <stb-modal-header
+      [modalName]="data.modalName"
+      (close)="onNoClick()"
+    ></stb-modal-header>
+  </div>
+  <form class="form" [formGroup]="userstoryForm">
+    <div class="form-group">
+      <div class="input-field margin-right-1REM us-number">
+        <stb-input
+          type="number"
+          label="U/S#"
+          placeholder="Ex: 1"
+          required="true"
+          formControlName="userstoryNumber"
+        ></stb-input>
+      </div>
+      <div class="input-field margin-right-1REM us-name">
+        <stb-input
+          label="User Story Name"
+          placeholder="Ex: Userstory 1"
+          required="true"
+          formControlName="userstoryName"
+        ></stb-input>
+      </div>
+      <div class="input-field margin-right-1REM epic-name">
+        <stb-dropdown
+          label="Epic"
+          placeholder="Choose an epic"
+          required="true"
+          *ngIf="epics.length"
+          [options]="epics"
+          formControlName="epic"
+        ></stb-dropdown>
+      </div>
+      <div class="input-field sprint-name">
+        <stb-dropdown
+          label="Sprint Name"
+          placeholder="Choose a sprint"
+          required="true"
+          [options]="sprints"
+          *ngIf="sprints.length"
+          formControlName="sprint"
+          (selectionChange)="onSprintChange($event.value)"
+        ></stb-dropdown>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="input-field margin-right-1REM priority">
+        <stb-dropdown
+          label="Priority"
+          placeholder="Choose priority"
+          [options]="priorityOptions"
+          formControlName="priority"
+        ></stb-dropdown>
+      </div>
+      <div class="input-field margin-right-1REM productivity">
+        <stb-input
+          label="Productivity"
+          type="number"
+          readonly="true"
+          placeholder="-------------"
+          [value]="productivity"
+          formControlName="productivity"
+        ></stb-input>
+      </div>
+      <div class="input-field margin-right-1REM dev-hrs">
+        <stb-input
+          label="Dev Hrs"
+          type="number"
+          placeholder="Ex: 23"
+          formControlName="devHrs"
+          (valueChange)="onCalculateProductivity()"
+        ></stb-input>
+      </div>
+      <div class="input-field benefits margin-right-1REM">
+        <stb-input
+          label="Benefits"
+          type="number"
+          placeholder="Ex: 23"
+          formControlName="benefits"
+          (valueChange)="onCalculateProductivity()"
+        ></stb-input>
+      </div>
+      <div class="input-field margin-right-1REM">
+        <stb-slider-toggle
+          label="Rules Approved"
+          formControlName="rulesApproved"
+        ></stb-slider-toggle>
+      </div>
+      <div class="input-field">
+        <stb-slider-toggle
+          label="Verified test Cases"
+          formControlName="verifiedTestCases"
+        ></stb-slider-toggle>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="input-field margin-right-1REM status">
+        <stb-dropdown
+          label="Status"
+          placeholder="Choose status"
+          required="true"
+          [options]="statusOptions"
+          formControlName="status"
+          (selectionChange)="onDoneSelected($event)"
+        ></stb-dropdown>
+      </div>
+      <div class="input-field description">
+        <stb-input
+          label="Description"
+          placeholder="Write description(optional)"
+          formControlName="description"
+        ></stb-input>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="input-field margin-right-1REM planned-delivery">
+        <stb-datepicker
+          label="Planned Delivery"
+          formControlName="plannedDelivery"
+        ></stb-datepicker>
+      </div>
+      <div class="input-field assignee-autocomplete">
+        <stb-autocomplete
+          label="Assign"
+          placeholder="Unassigned"
+          formControlName="assignee"
+          (valueChange)="onInputChange($event)"
+          [autocompleteOptions]="assigneeList"
+          [inputViewLabel]="inputViewLabel"
+        ></stb-autocomplete>
+      </div>
+    </div>
+    <div class="form-group form-align-center">
+      <div class="btn-group">
+        <stb-button
+          btnStyle="raised"
+          (click)="onSave()"
+          btnName="Save"
+          btnColor="primary"
+          [disabled]="!userstoryForm.valid"
+        ></stb-button>
+        <stb-button
+          btnStyle="raised"
+          (click)="onNoClick()"
+          btnName="Cancel"
+          btnColor="accent"
+        ></stb-button>
+      </div>
+    </div>
+  </form>
+</div>

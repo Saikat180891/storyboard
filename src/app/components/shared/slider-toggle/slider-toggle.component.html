@@ -1,0 +1,19 @@
+<div class="input-box">
+  <label [for]="label"
+    >{{ label }}
+    <span class="ng-required" *ngIf="required">*</span>
+  </label>
+  <div class="mat-checkbox-wrapper">
+    <div class="toggle-label">
+      <ng-container *ngIf="checked; else notChecked">Yes</ng-container>
+      <ng-template #notChecked>No</ng-template>
+    </div>
+    <div class="toggle-btn">
+      <mat-slide-toggle
+        disableRipple
+        [checked]="checked"
+        (change)="onToggle($event.checked)"
+      ></mat-slide-toggle>
+    </div>
+  </div>
+</div>

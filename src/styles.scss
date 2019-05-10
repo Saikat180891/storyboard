@@ -309,3 +309,14 @@ mat-dialog-container.mat-dialog-container {
 .mat-radio-label-content {
   font-size: 14px;
 }
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: #6cc24a;
+}
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: rgba($color: #6cc24a, $alpha: 0.6);
+}

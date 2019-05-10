@@ -17,6 +17,7 @@ export interface SprintBackend {
   end_date: string;
   sprint_name: string;
   start_date: string;
+  id?: number;
 }
 
 export class SprintAdapter {

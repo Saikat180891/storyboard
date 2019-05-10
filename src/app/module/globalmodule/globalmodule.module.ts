@@ -56,7 +56,12 @@ import {
   MatToolbarModule,
   MatTooltipModule,
 } from "@angular/material";
+import { AutocompleteComponent } from "src/app/components/shared/autocomplete/autocomplete.component";
+import { DropdownComponent } from "src/app/components/shared/dropdown/dropdown.component";
 import { FileAttachmentService } from "src/app/components/shared/file-attachment/file-attachment.service";
+import { InputComponent } from "src/app/components/shared/input/input.component";
+import { ModalHeaderComponent } from "src/app/components/shared/modal-header/modal-header.component";
+import { SliderToggleComponent } from "src/app/components/shared/slider-toggle/slider-toggle.component";
 
 @NgModule({
   declarations: [
@@ -73,6 +78,11 @@ import { FileAttachmentService } from "src/app/components/shared/file-attachment
     FileAttachmentComponent,
     CustomDropDownComponent,
     DateInputComponent,
+    InputComponent,
+    DropdownComponent,
+    AutocompleteComponent,
+    SliderToggleComponent,
+    ModalHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -155,6 +165,11 @@ import { FileAttachmentService } from "src/app/components/shared/file-attachment
     FileAttachmentComponent,
     CustomDropDownComponent,
     DateInputComponent,
+    InputComponent,
+    DropdownComponent,
+    AutocompleteComponent,
+    SliderToggleComponent,
+    ModalHeaderComponent,
   ],
   providers: [
     MatSnackBarModule,

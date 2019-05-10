@@ -25,6 +25,14 @@
       color: #54585a;
     }
   }
+
+  .disabled {
+    button {
+      background-color: #54585a;
+      color: #ffffff;
+      cursor: no-drop;
+    }
+  }
 }
 
 .btn-stroked {
