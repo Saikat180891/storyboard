@@ -1,5 +1,7 @@
 <nav class="navbar">
-  <div class="brand" routerLink="/projects">Storyboard</div>
+  <div class="brand tausy-storyboard-header" routerLink="/projects">
+    Storyboard
+  </div>
 
   <div class="profile">
     <div class="profile__name">{{ userName }}</div>
@@ -10,10 +12,11 @@
 
     <div class="arrow-menu">
       <button mat-icon-button [matMenuTriggerFor]="menu">
-        <i class="fas fa-angle-down"></i>
+        <i class="fas fa-angle-down tausy-user-dropdown-options"></i>
       </button>
       <mat-menu #menu="matMenu">
         <a
+          class="tausy-user-logout"
           mat-menu-item
           href="{{ __api.apiUrl }}/logoutUser"
           (click)="onLogout()"

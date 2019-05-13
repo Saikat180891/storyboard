@@ -21,6 +21,7 @@
       <div class="dialog-group padding-all top-input-width">
         <div class="input-box">
           <input
+            class="tausy-project-client-name"
             id="clientName"
             type="text"
             [ngClass]="{
@@ -37,6 +38,7 @@
       <div class="dialog-group padding-all top-input-width">
         <div class="input-box">
           <input
+            class="tausy-project-automation-system-name"
             type="text"
             [ngClass]="{
               'ASN-box': true,
@@ -79,6 +81,7 @@
   <div class="dialog-group padding-all margin-bottom-10">
     <div class="input-box">
       <input
+        class="tausy-project-charge-code"
         type="text"
         id="charge-code"
         placeholder="Charge Code"
@@ -105,7 +108,7 @@
           [value]="dueDate"
           (dateInput)="onDueDateChange($event.value)"
         />
-        <div class="datepicker">
+        <div class="datepicker tausy-create-project-due-date-picker">
           <mat-datepicker-toggle
             matSuffix
             [for]="picker"
@@ -193,7 +196,12 @@
     [ngSwitch]="selectedTabIndex"
   >
     <div class="button-box" *ngSwitchCase="0">
-      <button mat-raised-button color="primary" (click)="onSubmit()">
+      <button
+        mat-raised-button
+        color="primary"
+        class="tausy-project-save-button"
+        (click)="onSubmit()"
+      >
         {{ getSubmitButtonText() }}
       </button>
       <button mat-raised-button (click)="onClose()">CANCEL</button>

@@ -25,7 +25,11 @@
       >
 
       <span class="edit" (click)="onPrevent($event)">
-        <button mat-icon-button [matMenuTriggerFor]="menu">
+        <button
+          mat-icon-button
+          class="tausy-project-ellipsis"
+          [matMenuTriggerFor]="menu"
+        >
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
@@ -33,6 +37,7 @@
             <span>Edit</span>
           </button>
           <button
+            class="tausy-project-delete"
             mat-menu-item
             (click)="onDelete(localData)"
             [appCanAccess]="{

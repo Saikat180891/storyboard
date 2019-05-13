@@ -10,7 +10,7 @@
     <div class="content-body">
       <ng-container *ngFor="let sprint of sprintConfigData; let i = index">
         <div
-          class="sprint-padding"
+          class="sprint-padding tausy-config-project-present-sprints-list"
           [ngClass]="{ 'sprint-background-color': sprint.currentSprintFlag }"
         >
           <app-sprint-input-row
@@ -23,7 +23,7 @@
       </ng-container>
       <ng-container *ngFor="let sprint of addMoreSprints; let i = index">
         <div
-          class="sprint-padding"
+          class="sprint-padding tausy-config-project-new-sprints-list"
           [ngClass]="{ 'sprint-background-color-error': false }"
         >
           <app-sprint-input-row
@@ -37,6 +37,7 @@
     </div>
     <div class="add-sprints-section">
       <stb-button
+        class="tausy-add-sprints-button"
         btnStyle="stroked"
         (click)="onAddMoreSprints()"
         btnName="Add Sprints"
@@ -47,6 +48,7 @@
 
   <div class="modal-controls">
     <stb-button
+      class="tausy-config-project-save-button"
       btnStyle="raised"
       (click)="onSave()"
       btnName="Save"

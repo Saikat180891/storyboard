@@ -1,6 +1,6 @@
 <div class="infinite-scroll" #rightPanelInfiniteScroll id="scrollable-panel">
   <div
-    class="section"
+    class="section tausy-sections-list"
     *ngFor="let sectionListItem of sectionList; let i = index"
   >
     <app-section-title
@@ -17,7 +17,7 @@
       (attachmentDelete)="onAttachmentDelete($event)"
     ></app-section-title>
   </div>
-  <div class="add-section" (click)="onCreateNewSection()">
+  <div class="add-section tausy-add-new-section" (click)="onCreateNewSection()">
     <i class="fas fa-plus"></i> New Section Title
   </div>
 </div>

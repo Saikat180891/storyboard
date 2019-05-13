@@ -12,7 +12,7 @@
   <div class="content-body">
     <div
       [id]="epic.id"
-      class="grid-list"
+      class="grid-list tausy-config-project-present-epics-list"
       *ngFor="let epic of previouslySavedEpics; let i = index"
     >
       <mat-grid-list cols="12" rowHeight="70px" gutterSize="10px">
@@ -26,7 +26,10 @@
           />
         </mat-grid-tile>
         <mat-grid-tile>
-          <div class="delete" (click)="onDeleteCreatedEpic(epic.id)">
+          <div
+            class="delete tausy-epic-delete"
+            (click)="onDeleteCreatedEpic(epic.id)"
+          >
             <i class="far fa-trash-alt"></i>
           </div>
         </mat-grid-tile>
@@ -34,13 +37,17 @@
     </div>
 
     <div
-      class="grid-list"
+      class="grid-list tausy-config-project-new-epics-list"
       *ngFor="let addNewEpic of addNewEpics; let i = index"
     >
       <mat-grid-list cols="12" rowHeight="70px" gutterSize="10px">
         <mat-grid-tile>{{ previouslySavedEpics.length + i + 1 }}</mat-grid-tile>
         <mat-grid-tile [colspan]="4">
-          <input type="text" [(ngModel)]="addNewEpic.name" />
+          <input
+            type="text"
+            class="tausy-epic-name"
+            [(ngModel)]="addNewEpic.name"
+          />
         </mat-grid-tile>
         <mat-grid-tile>
           <div class="delete" (click)="onDeleteEpics(i)">
@@ -51,7 +58,7 @@
     </div>
 
     <div class="grid-list-footer">
-      <div class="add-btn-size">
+      <div class="add-btn-size tausy-add-epics-button">
         <stb-button
           btnStyle="stroked"
           (click)="onAddNewEpics()"
@@ -64,6 +71,7 @@
 </div>
 <div class="modal-controls">
   <stb-button
+    class="tausy-config-project-save-button"
     btnStyle="raised"
     (click)="onSave()"
     btnName="Save"

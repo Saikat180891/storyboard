@@ -1,5 +1,5 @@
 <div
-  class="card-box"
+  class="card-box tausy-user-stories-list"
   [ngClass]="{
     'border-high': userStory.priority === 'High',
     'border-medium': userStory.priority === 'Medium',
@@ -171,7 +171,7 @@
           <i class="fas fa-pencil-alt"></i>
         </button>
         <button
-          class="btn btn-blue"
+          class="btn btn-blue tausy-user-story-view-sop"
           matRipple
           [matRippleColor]="rippleColor"
           *ngIf="!restore; else restoreContent"
@@ -197,7 +197,7 @@
   </div>
   <ng-container>
     <div
-      class="options-btn"
+      class="options-btn tausy-user-story-ellipsis"
       [matMenuTriggerFor]="options"
       *ngIf="!restore && disableDeleteBtn"
       [appCanAccess]="{
@@ -208,7 +208,13 @@
     >
       <i class="fas fa-ellipsis-h"></i>
       <mat-menu #options="matMenu">
-        <button mat-menu-item (click)="onDelete(userStory.id)">Delete</button>
+        <button
+          mat-menu-item
+          class="tausy-user-story-delete"
+          (click)="onDelete(userStory.id)"
+        >
+          Delete
+        </button>
       </mat-menu>
     </div>
   </ng-container>

@@ -7,7 +7,7 @@
         ></app-project-header-title>
       </div>
       <div class="heading-right-component">
-        <div class="controls-wrapper">
+        <div class="controls-wrapper tausy-config-project-button">
           <stb-button
             btnStyle="icon"
             (click)="onOpenAddSprint()"
@@ -306,7 +306,10 @@
   <div class="warning">
     <p>Are you sure you want to delete this user story?</p>
     <div class="btn-group">
-      <button class="btn btn-blue" (click)="onSelectDeleteUserStory()">
+      <button
+        class="btn btn-blue tausy-user-story-warning-modal-yes"
+        (click)="onSelectDeleteUserStory()"
+      >
         Yes
       </button>
       <button class="btn btn-flat-ash" (click)="onSelectDoNotDeleteUserStory()">

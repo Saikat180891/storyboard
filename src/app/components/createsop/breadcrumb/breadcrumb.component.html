@@ -1,7 +1,10 @@
 <div class="breadcrumb">
   <div class="padding-right-10Px" routerLink="/projects">All Projects</div>
   <div class="padding-right-10Px">></div>
-  <div class="padding-right-10Px" [routerLink]="['/projects', getProjectId()]">
+  <div
+    class="padding-right-10Px tausy-breadcrumb-project-name"
+    [routerLink]="['/projects', getProjectId()]"
+  >
     {{ getProjectTitle() }}
   </div>
   <div class="padding-right-10Px">></div>

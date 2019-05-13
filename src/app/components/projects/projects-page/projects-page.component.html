@@ -12,7 +12,7 @@
               </div>
             </ng-container>
             <div
-              class="grid-item"
+              class="grid-item tausy-projects-list"
               *ngFor="
                 let cardData of projectsService.cardContents;
                 let i = index
@@ -55,7 +55,12 @@
       and user stories will be deleted.
     </p>
     <div class="btn-group">
-      <button class="btn btn-blue" (click)="onSelectDeleteSop()">Yes</button>
+      <button
+        class="btn btn-blue tausy-project-delete-warning-modal-yes"
+        (click)="onSelectDeleteSop()"
+      >
+        Yes
+      </button>
       <button class="btn btn-flat-ash" (click)="onSelectDoNotDeleteSop()">
         No
       </button>

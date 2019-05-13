@@ -1,4 +1,4 @@
-<div class="side-container">
+<div class="side-container tausy-user-story-pane">
   <div class="heading">
     <span>Create User Story</span>
     <span (click)="onClose()" class="close"><i class="fas fa-times"></i></span>
@@ -11,7 +11,7 @@
         </div>
         <div class="editable">
           <input
-            class="text-left"
+            class="text-left tausy-user-story-number"
             type="number"
             placeholder="Ex: 1"
             [(ngModel)]="userStoryPayload.us_number"
@@ -24,6 +24,7 @@
         </div>
         <div class="editable">
           <input
+            class="tausy-user-story-name"
             type="text"
             placeholder="Ex: User Story 1"
             [(ngModel)]="userStoryPayload.us_name"
@@ -44,6 +45,7 @@
         </div>
         <div class="editable">
           <normal-dropdown
+            class="tausy-epic-dropdown"
             (optionSelected)="userStoryPayload.rc_name = $event.status"
             [options]="reasonCodeOptions"
             [defaultOption]="'Select'"
@@ -59,6 +61,7 @@
         </div>
         <div class="editable">
           <normal-dropdown
+            class="tausy-sprint-dropdown"
             (optionSelected)="onSprintSelect($event)"
             [options]="sprintOptions"
             [defaultOption]="'Select'"
@@ -75,6 +78,7 @@
         </div>
         <div class="editable">
           <colored-dropdown
+            class="tausy-priority-dropdown"
             (optionSelected)="userStoryPayload.priority = $event.status"
             [options]="priorityOptions"
             [defaultOption]="'Select'"
@@ -102,6 +106,7 @@
         </div>
         <div class="editable">
           <input
+            class="tausy-user-story-dev-hrs"
             type="text"
             placeholder="Ex: 23"
             [(ngModel)]="userStoryPayload.dev_hrs"
@@ -118,6 +123,7 @@
         </div>
         <div class="editable">
           <input
+            class="tausy-user-story-benefits"
             type="text"
             placeholder="Ex: 3"
             [(ngModel)]="userStoryPayload.ftes"
@@ -133,6 +139,7 @@
         <div class="title">Rules Approved</div>
         <div class="editable align-center pad-right">
           <mat-slide-toggle
+            class="tausy-user-story-rules-approved"
             (change)="userStoryPayload.rules_approved = $event.checked"
           ></mat-slide-toggle>
         </div>
@@ -141,6 +148,7 @@
         <div class="title">Test Cases Verified</div>
         <div class="editable align-center">
           <mat-slide-toggle
+            class="tausy-user-story-verified-test-cases"
             (change)="userStoryPayload.verified_test_cases = $event.checked"
           ></mat-slide-toggle>
         </div>
@@ -155,6 +163,7 @@
         </div>
         <div class="editable">
           <colored-dropdown
+            class="tausy-status-dropdown"
             (optionSelected)="userStoryPayload.status = $event.status"
             [options]="statusOptions"
             [defaultOption]="'Select'"
@@ -165,6 +174,7 @@
         <div class="title">Description</div>
         <div class="editable">
           <input
+            class="tausy-user-story-description"
             type="text"
             placeholder="Add description here"
             maxlength="100"
@@ -188,7 +198,9 @@
             [ngStyle]="{ 'padding-left': '30px' }"
             readonly
           />
-          <div class="etd-date-picker">
+          <div
+            class="etd-date-picker tausy-user-story-planned-delivery-date-picker"
+          >
             <mat-datepicker-toggle
               matSuffix
               [for]="etd"
@@ -229,7 +241,9 @@
     </div>
 
     <div class="form-group btn-group">
-      <button class="btn btn-blue" (click)="onCreate()">Save Changes</button>
+      <button class="btn btn-blue tausy-user-story-save" (click)="onCreate()">
+        Save Changes
+      </button>
       <button class="btn btn-flat-ash" (click)="onClose()">Cancel</button>
 
       <span

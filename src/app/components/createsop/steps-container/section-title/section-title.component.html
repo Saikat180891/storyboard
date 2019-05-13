@@ -1,13 +1,13 @@
 <div class="section">
   <form class="section-header" title="Section name" [formGroup]="section">
-    <div class="section-header-title">
+    <div class="section-header-title tausy-section-name">
       <div *ngIf="isSectionNameEditable; else editTextBox">
         {{ section.value.section_name }}
       </div>
       <ng-template #editTextBox>
         <input
           type="text"
-          class="edit-section-name"
+          class="edit-section-name tausy-edit-section-name-box"
           placeholder="Section Name"
           formControlName="section_name"
           [ngClass]="{
@@ -30,14 +30,21 @@
     </div>
     <div class="section-header-options">
       <ng-container *ngIf="isSectionNameEditable; else editCreateSection">
-        <div class="common-option option-menu" [matMenuTriggerFor]="menu">
+        <div
+          class="common-option option-menu tausy-section-ellipsis"
+          [matMenuTriggerFor]="menu"
+        >
           <i class="fas fa-ellipsis-h"></i>
         </div>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="onEditSectionName()">
             Edit section name
           </button>
-          <button mat-menu-item (click)="onDeleteSection()">
+          <button
+            mat-menu-item
+            class="tausy-section-delete"
+            (click)="onDeleteSection()"
+          >
             Delete section
           </button>
         </mat-menu>
@@ -52,7 +59,7 @@
       </ng-container>
       <ng-template #editCreateSection>
         <div
-          class="common-option divider-right check-btn"
+          class="common-option divider-right check-btn tausy-section-check-button"
           (click)="onCreateSection()"
           [ngClass]="{ 'check-btn-disabled': !section.valid }"
           [title]="!section.valid ? 'Not valid section name' : 'OK'"
