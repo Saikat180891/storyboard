@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { MatSnackBar } from "@angular/material";
 import { ConfirmModalService } from "../../../components/shared/confirm-modal/confirm-modal.service";
+import { SharedService } from "../../../services/shared-services/shared.service";
 import { Epics } from "../models/Epics.model";
 import { Sprint } from "../models/Sprint.model";
 import { ReasonCodeService } from "../reason-code.service";
@@ -29,7 +31,9 @@ export class ProjectConfigBaseComponent implements OnInit {
     private apiEnpointService: ApiService,
     private projectConfigureService: ProjectConfigureService,
     private reasonCodeService: ReasonCodeService,
-    private confirm: ConfirmModalService
+    private confirm: ConfirmModalService,
+    public snackbar: MatSnackBar,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit() {}
@@ -67,9 +71,17 @@ export class ProjectConfigBaseComponent implements OnInit {
       sprints.forEach(sprint => {
         this.apiEnpointService
           .createSprint(this.reasonCodeService.sopId, sprint)
-          .subscribe(res => {
-            this.projectConfigureService.addSprint(res);
-          });
+          .subscribe(
+            res => {
+              this.projectConfigureService.addSprint(res);
+              this.snackbar.open("Created a new Sprint", "Success", {
+                duration: 5000,
+              });
+            },
+            err => {
+              this.sharedService.raiseError(err);
+            }
+          );
       });
       this.addMoreSprints = [];
     }
