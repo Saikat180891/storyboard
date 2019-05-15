@@ -52,9 +52,9 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
 
   checkIfPermissiongranted(requiredPermission: string) {
     if (requiredPermission in this.permissions) {
-      return !this.permissions[requiredPermission];
+      return !this.permissions[requiredPermission] || this.disableEdit;
     }
-    return true;
+    return true || this.disableEdit;
   }
 
   toggleRules(event: MatSlideToggleChange) {

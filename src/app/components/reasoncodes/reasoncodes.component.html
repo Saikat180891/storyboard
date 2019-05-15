@@ -186,7 +186,8 @@
               [disableDeleteBtn]="false"
               *ngFor="let userStory of reasonCodeService.completeUserStories"
               [userStory]="userStory"
-              (editUserStory)="onOpenUserStorySidebar($event, userStory)"
+              (editUserStory)="onEditUserstory($event, userStory)"
+              (userstoryEditted)="onUserstoryToggled($event)"
             ></app-userstory-card>
           </div>
         </ng-container>
@@ -231,7 +232,8 @@
               [disableEdit]="true"
               *ngFor="let userStory of reasonCodeService.deletedUserStories"
               [userStory]="userStory"
-              (editUserStory)="onOpenUserStorySidebar($event, userStory)"
+              (editUserStory)="onEditUserstory($event, userStory)"
+              (userstoryEditted)="onUserstoryToggled($event)"
             ></app-userstory-card>
           </div>
         </ng-container>
