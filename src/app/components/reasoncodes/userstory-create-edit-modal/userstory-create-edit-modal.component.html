@@ -50,6 +50,7 @@
       <div class="input-field margin-right-1REM priority">
         <stb-dropdown
           label="Priority"
+          required="true"
           placeholder="Choose priority"
           [options]="priorityOptions"
           formControlName="priority"
@@ -152,3 +153,12 @@
     </div>
   </form>
 </div>
+
+<ngx-spinner
+  bdColor="rgba(56, 73, 109,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-spin-clockwise"
+  class="myspinner"
+>
+</ngx-spinner>

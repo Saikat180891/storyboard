@@ -6,8 +6,6 @@ import { ProjectConfigComponent } from "./project-config/project-config.componen
 import { ReasoncodesComponent } from "./reasoncodes.component";
 import { ColoredDropdownComponent } from "./shared/colored-dropdown/colored-dropdown.component";
 import { NormalDropdownComponent } from "./shared/normal-dropdown/normal-dropdown.component";
-import { UserstoryCardCreateComponent } from "./userstory-card-create/userstory-card-create.component";
-import { UserstoryCardEditComponent } from "./userstory-card-edit/userstory-card-edit.component";
 import { UserstoryCardComponent } from "./userstory-card/userstory-card.component";
 import { UserstoryFilterComponent } from "./userstory-filter/userstory-filter.component";
 
@@ -40,8 +38,6 @@ const routes: Routes = [{ path: "", component: ReasoncodesComponent }];
     ReasoncodesComponent,
     UserstoryCardComponent,
     ProjectConfigComponent,
-    UserstoryCardCreateComponent,
-    UserstoryCardEditComponent,
     UserstoryFilterComponent,
     ExportDialogBoxComponent,
     ChartsComponent,

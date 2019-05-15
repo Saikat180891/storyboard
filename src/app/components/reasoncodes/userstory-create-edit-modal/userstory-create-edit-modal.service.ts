@@ -3,7 +3,7 @@ import { MatDialog } from "@angular/material";
 import { Observable } from "rxjs";
 import { Epics } from "../models/Epics.model";
 import { Sprint } from "../models/Sprint.model";
-import { Userstory } from "../models/Userstory.model";
+import { ClientUserstory } from "../models/Userstory.model";
 import { UserstoryCreateEditModalComponent } from "./userstory-create-edit-modal.component";
 
 @Injectable({
@@ -17,7 +17,7 @@ export class UserstoryCreateEditModalService {
     modalName: string,
     sprints: Sprint[],
     epics: Epics[],
-    userstoryData?: Userstory
+    userstoryData?: ClientUserstory
   ): Observable<any> {
     const dialogRef = this.dialog.open(UserstoryCreateEditModalComponent, {
       data: {

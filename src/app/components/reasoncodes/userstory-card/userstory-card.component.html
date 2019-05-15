@@ -4,7 +4,7 @@
     'border-high': userStory.priority === 'High',
     'border-medium': userStory.priority === 'Medium',
     'border-low': userStory.priority === 'Low',
-    'card-selected': __editUS.selected === userStory.id
+    'card-selected': selected === userStory.id
   }"
 >
   <div class="box row r1">
@@ -12,7 +12,7 @@
       <span>U/S#</span>
       <span>{{ userStory.us_number }}</span>
       <span>Epic</span>
-      <span>{{ userStory.rc_name ? userStory.rc_name : "Unassigned" }}</span>
+      <span>{{ display(userStory.rc_name) }}</span>
     </div>
     <div class="col c12">
       <span>User Story Name</span>
@@ -20,16 +20,17 @@
         class="wrap-content"
         matTooltip="{{ userStory.us_name }}"
         matTooltipPosition="right"
-        *ngIf="userStory.us_name.length > 20; else smallUsName"
-        >{{ userStory.us_name }}</span
+        *ngIf="
+          userStory.us_name && userStory.us_name.length > 20;
+          else smallUsName
+        "
+        >{{ display(userStory.us_name) }}</span
       >
       <ng-template #smallUsName>
-        <span class="wrap-content">{{ userStory.us_name }}</span>
+        <span class="wrap-content">{{ display(userStory.us_name) }}</span>
       </ng-template>
       <span>Sprint Name</span>
-      <span>{{
-        userStory.sprint_name ? userStory.sprint_name : "Unassigned"
-      }}</span>
+      <span>{{ display(userStory.sprint_name) }}</span>
     </div>
   </div>
   <div class="box row r2">
@@ -56,13 +57,13 @@
         </span>
       </span>
       <span class="h-center">Dev Hrs</span>
-      <span class="h-center">{{ userStory.dev_hrs }}</span>
+      <span class="h-center">{{ display(userStory.dev_hrs) }}</span>
     </div>
     <div class="col c22">
       <span class="h-center">Productivity</span>
-      <span class="h-center">{{ userStory.productivity }}</span>
+      <span class="h-center">{{ display(userStory.productivity) }}</span>
       <span class="h-center">Benefits</span>
-      <span class="h-center">{{ userStory.ftes }}</span>
+      <span class="h-center">{{ display(userStory.ftes) }}</span>
     </div>
   </div>
   <div class="box row r3">
@@ -72,7 +73,7 @@
         <mat-slide-toggle
           class="rules-approved"
           [checked]="userStory.rules_approved"
-          (change)="toggleRules($event, userStory.id, userStory.sprint_name)"
+          (change)="toggleRules($event)"
           [disabled]="checkIfPermissiongranted('Can change user stories')"
         ></mat-slide-toggle>
       </span>
@@ -86,7 +87,7 @@
       </span>
     </div>
   </div>
-  <div class="box row r4">
+  <div class="box row r4 no-border">
     <div
       class="col c4"
       [ngStyle]="{ 'border-right': '1px solid rgba(0, 0, 0, 0.1)' }"
@@ -129,31 +130,31 @@
           [ngStyle]="{ 'background-color': '#69D100' }"
         >
         </span>
-        <span class="priority-text float-l">{{ userStory.status }}</span>
+        <span class="priority-text float-l">{{
+          display(userStory.status)
+        }}</span>
       </span>
       <span>Description</span>
       <span
         class="wrap-content"
         matTooltip="{{ userStory.notes }}"
         matTooltipPosition="right"
-        *ngIf="userStory.notes.length > 20; else smallNotes"
-        >{{ userStory.notes }}</span
+        *ngIf="userStory.notes && userStory.notes.length > 20; else smallNotes"
+        >{{ userStory.notes || "-----" }}</span
       >
       <ng-template #smallNotes>
-        <span class="wrap-content">{{ userStory.notes }}</span>
+        <span class="wrap-content">{{ userStory.notes || "-----" }}</span>
       </ng-template>
     </div>
     <div class="col c4">
       <span>Planned Delivery</span>
       <span class="priority h-center">
-        <span class="priority-text float-l">{{
-          userStory.planned_delivery ? userStory.planned_delivery : "-----"
-        }}</span>
+        <span class="priority-text float-l">
+          {{ display(userStory.planned_delivery) }}</span
+        >
       </span>
       <span>Assignee Name</span>
-      <span>{{
-        userStory.assignee_name ? userStory.assignee_name : "-----"
-      }}</span>
+      <span>{{ display(userStory.assignee_name) }}</span>
     </div>
     <div class="col c42">
       <div class="btn-box">
@@ -163,34 +164,30 @@
           (click)="onEdit(userStory.id)"
           [ngClass]="{ hide: restore }"
           [appCanAccess]="{
-            role: __rcService.role,
+            role: reasonCodeService.role,
             permissionRequired: 'Can add epics',
-            permissionList: __rcService.grantedPermission
+            permissionList: reasonCodeService.grantedPermission
           }"
         >
           <i class="fas fa-pencil-alt"></i>
         </button>
-        <button
-          class="btn btn-blue tausy-user-story-view-sop"
-          matRipple
-          [matRippleColor]="rippleColor"
+        <stb-button
+          btnStyle="raised"
+          btnName="View SOP"
+          btnColor="primary"
           *ngIf="!restore; else restoreContent"
-          [ngStyle]="{ visibility: 'visible' }"
-          routerLink="/projects/{{ __rcService.sopId }}/userstory/{{
+          routerLink="/projects/{{ reasonCodeService.sopId }}/userstory/{{
             userStory.id
           }}"
-        >
-          View SOP
-        </button>
+        ></stb-button>
         <ng-template #restoreContent>
-          <button
-            class="btn btn-blue"
-            matRipple
-            [matRippleColor]="rippleColor"
+          <stb-button
+            btnStyle="raised"
             (click)="restoreUserStories(userStory.id)"
+            btnName="Restore"
+            btnColor="primary"
           >
-            Restore
-          </button>
+          </stb-button>
         </ng-template>
       </div>
     </div>
@@ -221,6 +218,6 @@
 
   <div class="created-date">
     <span>Created On</span><br />
-    <span>{{ userStory.created }}</span>
+    <span>{{ userStory.created | dateFormatter }}</span>
   </div>
 </div>

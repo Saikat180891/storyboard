@@ -1,9 +1,12 @@
 <div class="universal">
   <div class="container">
     <div class="header">
-      <div class="heading-left-component" *ngIf="_reasonCode.currentProject">
+      <div
+        class="heading-left-component"
+        *ngIf="reasonCodeService.currentProject"
+      >
         <app-project-header-title
-          [projectTitle]="_reasonCode"
+          [projectTitle]="reasonCodeService"
         ></app-project-header-title>
       </div>
       <div class="heading-right-component">
@@ -16,7 +19,7 @@
             htmlIcon="<i class='fas fa-cog'></i>"
           ></stb-button>
         </div>
-        <div class="controls-wrapper">
+        <div>
           <stb-button
             btnStyle="icon"
             (click)="onOpenExport()"
@@ -31,32 +34,32 @@
       <div class="chart">
         <app-charts
           [extras]="false"
-          [projectStatus]="_reasonCode.totalProjectStatus"
+          [projectStatus]="reasonCodeService.totalProjectStatus"
           [meter]="true"
           [options]="pieChartOptions"
-          [data]="_reasonCode.totalSprintData"
+          [data]="reasonCodeService.totalSprintData"
           [title]="'Project Status'"
         ></app-charts>
       </div>
       <div class="chart">
         <app-charts
           [extras]="true"
-          [projectStatus]="_reasonCode.currentSprintDuration"
+          [projectStatus]="reasonCodeService.currentSprintDuration"
           [meter]="true"
           [options]="pieChartOptions"
-          [data]="_reasonCode.currentSprintData"
+          [data]="reasonCodeService.currentSprintData"
           [title]="'Current Sprint'"
-          [selectOptions]="_reasonCode.sprintConfig"
+          [selectOptions]="reasonCodeService.sprintConfig"
         ></app-charts>
       </div>
       <div class="chart">
         <app-charts
           [extras]="false"
-          [projectStatus]="_reasonCode.totalProjectStatus"
+          [projectStatus]="reasonCodeService.totalProjectStatus"
           [meter]="false"
           [options]="barChartOptions"
           [title]="'Benefits'"
-          [data]="_reasonCode.benefitsChartData"
+          [data]="reasonCodeService.benefitsChartData"
           [ifButtonRequired]="true"
           (onClick)="onShowBenefits($event)"
         ></app-charts>
@@ -81,11 +84,14 @@
     </div>
     <div class="tabs" [ngSwitch]="selectedTab">
       <div id="open-user-story" *ngSwitchCase="0">
-        <div class="filter-selected" *ngIf="_reasonCode.filteredValues.length">
+        <div
+          class="filter-selected"
+          *ngIf="reasonCodeService.filteredValues.length"
+        >
           <mat-chip-list>
             <mat-chip
               *ngFor="
-                let filteredValue of _reasonCode.filteredValues;
+                let filteredValue of reasonCodeService.filteredValues;
                 let i = index
               "
             >
@@ -101,31 +107,28 @@
           </button>
         </div>
         <ng-container
-          *ngIf="_reasonCode.userStories.length; else noOpenUserStory"
+          *ngIf="reasonCodeService.userStories.length; else noOpenUserStory"
         >
           <div
             class="card-holder"
-            [ngClass]="{
-              'card-holder-active': fixToTop,
-              'userstory-slide-left': openCreateSideBar
-            }"
-            *ngIf="_reasonCode.userStories.length"
+            *ngIf="reasonCodeService.userStories.length"
             #userStoryContainer
           >
             <app-userstory-card
               (deleteUserStory)="onDeleteUserStory($event)"
               [restore]="false"
               [disableDeleteBtn]="true"
-              *ngFor="let userStory of _reasonCode.userStories"
+              *ngFor="let userStory of reasonCodeService.userStories"
               [userStory]="userStory"
               (editUserStory)="onEditUserstory($event, userStory)"
+              (userstoryEditted)="onUserstoryToggled($event)"
             ></app-userstory-card>
           </div>
         </ng-container>
         <ng-template #noOpenUserStory>
           <div
             class="card-holder user-story-placeholder"
-            *ngIf="_reasonCode.userStories.length == 0"
+            *ngIf="reasonCodeService.userStories.length == 0"
           >
             <img
               width="40px"
@@ -138,11 +141,14 @@
         </ng-template>
       </div>
       <div id="completed-user-story" *ngSwitchCase="1">
-        <div class="filter-selected" *ngIf="_reasonCode.filteredValues.length">
+        <div
+          class="filter-selected"
+          *ngIf="reasonCodeService.filteredValues.length"
+        >
           <mat-chip-list>
             <mat-chip
               *ngFor="
-                let filteredValue of _reasonCode.filteredValues;
+                let filteredValue of reasonCodeService.filteredValues;
                 let i = index
               "
             >
@@ -170,7 +176,7 @@
         </div>
         <ng-container
           *ngIf="
-            _reasonCode.completeUserStories.length;
+            reasonCodeService.completeUserStories.length;
             else noCompletedUserstory
           "
         >
@@ -178,7 +184,7 @@
             <app-userstory-card
               [restore]="false"
               [disableDeleteBtn]="false"
-              *ngFor="let userStory of _reasonCode.completeUserStories"
+              *ngFor="let userStory of reasonCodeService.completeUserStories"
               [userStory]="userStory"
               (editUserStory)="onOpenUserStorySidebar($event, userStory)"
             ></app-userstory-card>
@@ -193,12 +199,12 @@
       <div id="deleted-user-story" *ngSwitchCase="2">
         <div
           class="filter-selected"
-          *ngIf="_reasonCode.filteredValues.length > 0"
+          *ngIf="reasonCodeService.filteredValues.length > 0"
         >
           <mat-chip-list>
             <mat-chip
               *ngFor="
-                let filteredValue of _reasonCode.filteredValues;
+                let filteredValue of reasonCodeService.filteredValues;
                 let i = index
               "
             >
@@ -215,7 +221,7 @@
         </div>
         <ng-container
           *ngIf="
-            _reasonCode.deletedUserStories.length;
+            reasonCodeService.deletedUserStories.length;
             else noDeletedUserstories
           "
         >
@@ -223,7 +229,7 @@
             <app-userstory-card
               [restore]="true"
               [disableEdit]="true"
-              *ngFor="let userStory of _reasonCode.deletedUserStories"
+              *ngFor="let userStory of reasonCodeService.deletedUserStories"
               [userStory]="userStory"
               (editUserStory)="onOpenUserStorySidebar($event, userStory)"
             ></app-userstory-card>
@@ -237,85 +243,17 @@
       </div>
     </div>
   </div>
+</div>
 
-  <div
-    class="transparent-overlay"
-    [ngClass]="{ 'transparent-overlay-active': openCreateSideBar }"
-  >
-    <div
-      class="side-modal"
-      [ngClass]="{ 'side-modal-active': openCreateSideBar }"
-    >
-      <app-userstory-card-create
-        *ngIf="openCreateSideBar"
-        [reasonCodeOptions]="reasonCodeOptions"
-        [sprintOptions]="sprintOptions"
-        (close)="onCloseCreateUserStories($event)"
-      ></app-userstory-card-create>
-    </div>
-  </div>
-  <div
-    class="transparent-overlay"
-    [ngClass]="{ 'transparent-overlay-active': openEditSideBar }"
-  >
-    <div
-      class="side-modal"
-      [ngClass]="{ 'side-modal-active': openEditSideBar }"
-    >
-      <app-userstory-card-edit
-        [reasonCodeOptions]="reasonCodeOptions"
-        (warning)="onDoneWarning($event)"
-        *ngIf="openEditSideBar"
-        (close)="onCloseEditUserStories($event)"
-        [editUSData]="userStoryData"
-        [sprintOptions]="sprintOptions"
-      ></app-userstory-card-edit>
-    </div>
-  </div>
-</div>
-<div
-  class="overlay"
-  [ngClass]="{ 'overlay-show': warning, 'overlay-hide': !warning }"
->
-  <div class="warning">
-    <p>Are you sure you want to move it to <strong>Completed</strong>?</p>
-    <div class="btn-group">
-      <button class="btn btn-blue" (click)="onSelectYes()">Yes</button>
-      <button class="btn btn-flat-ash" (click)="onSelectNo()">No</button>
-    </div>
-  </div>
-</div>
 <div
   class="overlay"
   [ngClass]="{ 'overlay-show': openAddSprint, 'overlay-hide': !openAddSprint }"
 >
   <div class="sprint-config-modal" *ngIf="openAddSprint">
     <project-config
-      [reasonCodeConfigData]="_reasonCode.reasonCodeData"
+      [reasonCodeConfigData]="reasonCodeService.reasonCodeData"
       (closeSprints)="onCloseProjectConfig($event)"
     ></project-config>
-  </div>
-</div>
-<div
-  class="overlay"
-  [ngClass]="{
-    'overlay-show': warningToDeleteUserStory,
-    'overlay-hide': !warningToDeleteUserStory
-  }"
->
-  <div class="warning">
-    <p>Are you sure you want to delete this user story?</p>
-    <div class="btn-group">
-      <button
-        class="btn btn-blue tausy-user-story-warning-modal-yes"
-        (click)="onSelectDeleteUserStory()"
-      >
-        Yes
-      </button>
-      <button class="btn btn-flat-ash" (click)="onSelectDoNotDeleteUserStory()">
-        No
-      </button>
-    </div>
   </div>
 </div>
 <div

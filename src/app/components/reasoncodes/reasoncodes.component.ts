@@ -1,82 +1,24 @@
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-} from "@angular/cdk/drag-drop";
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { MatSnackBar } from "@angular/material";
 import { ActivatedRoute } from "@angular/router";
 import { saveAs } from "file-saver";
 import { NgxSpinnerService } from "ngx-spinner";
-import { fromEvent, Observable } from "rxjs";
-import { environment } from "../../../environments/environment";
+import { SharedService } from "src/app/services/shared-services/shared.service";
 import { hideInOut } from "../../animation";
-import { DataService } from "../../data.service";
-import { ScrollbarService } from "../../services/scrollbarService/scrollbar.service";
 import { ProjectsService } from "../projects/projects.service";
+import { ConfirmModalService } from "../shared/confirm-modal/confirm-modal.service";
 import { charts } from "./chartoptions";
-import {
-  Audit,
-  DownloadAuditType,
-} from "./export-dialog-box/export-dialog-box.component";
+import { Audit } from "./export-dialog-box/export-dialog-box.component";
 import { Export } from "./export-sop-as-word/export-sop-as-word.component";
 import { createDownloadableEpicsAndUserstories } from "./export-sop-as-word/export-sop-as-word.helpers";
 import { DownloadFileType } from "./export-to-word-modal/export-to-word-modal.component";
 import { ExportToWordModalService } from "./export-to-word-modal/export-to-word-modal.service";
-import { Epics } from "./models/Epics.model";
-import { Sprint } from "./models/Sprint.model";
+import { ServerUserstory } from "./models/Userstory.model";
 import { ReasonCodeService } from "./reason-code.service";
 import { ApiService } from "./services/api.service";
-import { CreateUserstoryService } from "./userstory-card-create/create-userstory.service";
 import { UserstoryModalName } from "./userstory-create-edit-modal/modaltype.enum";
 import { UserstoryCreateEditModalService } from "./userstory-create-edit-modal/userstory-create-edit-modal.service";
 import { UserstoryControls } from "./userstory-menu-bar/userstory-menu-bar.component";
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  color: string;
-}
-
-/**
- * @title Data table with sorting, pagination, and filtering.
- */
-export interface Userstories {
-  id: number;
-  sprint: number;
-  us: number;
-  uname: string;
-  priority: string;
-  rules: string;
-  verified: string;
-  fte: number;
-  devhrs: number;
-  notes: string;
-  status: string;
-  btn: string;
-}
-
-export interface SprintConfig {
-  sprint_name: string;
-  start_date: string;
-  duration: string;
-  end_date: string;
-}
-
-export interface ReceivedSprintConfig {
-  id: number;
-  sprint_name: string;
-  start_date: string;
-  duration: string;
-  end_date: string;
-}
 
 @Component({
   selector: "app-reasoncodes",
@@ -89,70 +31,38 @@ export interface ReceivedSprintConfig {
   animations: [hideInOut],
 })
 export class ReasoncodesComponent implements OnInit, OnDestroy {
-  @ViewChild("totalPage") totalPage: ElementRef;
-  @ViewChild("userStoryContainer") userStoryContainer: ElementRef;
   openAddSprint: boolean = false;
-  panelOpenState = false;
-  options = [1, 2, 3];
   pieChartOptions = {};
   barChartOptions = {};
   sopId: number;
-  dateCounter: number = 0;
   userStories = [];
-  openEditSideBar: boolean = false; // toggler to open or close the right side bar to edit
-  openCreateSideBar: boolean = false; // toggler to open or close the right side bar to create
   sprintOptions = [];
   reasonCodeOptions = [];
   fixToTop: boolean = false;
   filter: boolean = false;
   sortBy: boolean = false;
-  warning: boolean = false;
-  warningToDeleteUserStory: boolean = false;
   clearAllFilter: boolean = true;
-  openExport: boolean = false;
   showBenefitsChart: boolean = false;
   rippleColor = "rbga(0,0,0,0.2)";
-  selectedTabIndex: number = 0;
-  activateStickybar: boolean = false;
-  activateVirtualFilter: boolean = false;
   role: string;
   permissions: any;
   enableView: boolean = true;
-  currentProjectTitle: any;
+  userStoryData;
   selectedTab: number = 0;
-
-  addSprintPayload: SprintConfig = {
-    sprint_name: "",
-    start_date: "",
-    duration: "",
-    end_date: "",
-  };
-
-  validateSprintConfig = {
-    start_date: true,
-    duration: true,
-    end_date: true,
-  };
-
-  currentSprintData;
-
+  benefitChartImage: string;
   currentProject;
-
-  receivedSprintConfig: ReceivedSprintConfig;
-
-  addSprint = [this.addSprintPayload];
 
   constructor(
     private route: ActivatedRoute,
-    private _reasonCode: ReasonCodeService,
-    private _projectsService: ProjectsService,
-    private _createUserStory: CreateUserstoryService,
+    private reasonCodeService: ReasonCodeService,
+    private projectsService: ProjectsService,
     public spinner: NgxSpinnerService,
-    private __api: DataService,
-    private __scrollbar: ScrollbarService,
     private exportToModal: ExportToWordModalService,
     private apiService: ApiService,
-    private userstoryEditCreateModal: UserstoryCreateEditModalService
+    private userstoryEditCreateModal: UserstoryCreateEditModalService,
+    private confirm: ConfirmModalService,
+    private sharedService: SharedService,
+    private snackbar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -161,12 +71,10 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
 
   init() {
     this.route.params.subscribe(params => {
-      this._reasonCode.sopId = this._createUserStory.sopId = parseInt(
-        params.id
-      );
-      this.getPermissionForEpicsPage(2, this._reasonCode.sopId);
-      this._projectsService.cardContents.forEach(element => {
-        if (element.id == this._reasonCode.sopId) {
+      this.reasonCodeService.sopId = parseInt(params.id);
+      this.getPermissionForEpicsPage(2, this.reasonCodeService.sopId);
+      this.projectsService.cardContents.forEach(element => {
+        if (element.id == this.reasonCodeService.sopId) {
           this.currentProject = element;
         }
       });
@@ -194,14 +102,14 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this._reasonCode.destroyAllService();
+    this.reasonCodeService.destroyAllService();
   }
 
   getPermissionForEpicsPage(pageNumber: number, projectId: number) {
-    this._reasonCode.getPermission(pageNumber, projectId).subscribe(
+    this.reasonCodeService.getPermission(pageNumber, projectId).subscribe(
       res => {
-        this._reasonCode.role = this.role = res[0].name;
-        this._reasonCode.grantedPermission = this.permissions =
+        this.reasonCodeService.role = this.role = res[0].name;
+        this.reasonCodeService.grantedPermission = this.permissions =
           res[0].permissions;
         if ("Can add user stories" in this.permissions) {
           this.enableView = this.permissions["Can add user stories"];
@@ -209,53 +117,30 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
       },
       err => {},
       () => {
-        this._reasonCode.refresh(this._reasonCode.sopId);
+        this.reasonCodeService.refresh(this.reasonCodeService.sopId);
       }
     );
-  }
-
-  getChart() {
-    this._reasonCode.getChartData(35);
   }
 
   onCloseBenefits() {
     this.showBenefitsChart = false;
   }
 
-  benefitChartImage: string;
-
   onShowBenefits(event) {
-    this.benefitChartImage = `${this.__api.apiUrl}/sop/epics/charts/${
-      this._reasonCode.sopId
-    }/benefits_realization.png?q=${new Date().getTime()}`;
+    this.benefitChartImage = this.apiService.getBenefitsChart(
+      this.reasonCodeService.sopId
+    );
     this.showBenefitsChart = true;
   }
 
   clearAllSort() {
-    this._reasonCode.getUserStories(this._reasonCode.sopId);
-  }
-
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
+    this.reasonCodeService.getUserStories(this.reasonCodeService.sopId);
   }
 
   onOpenAddSprint() {
-    this._reasonCode.getSprint(this._reasonCode.sopId);
-    this._reasonCode.getReasonCode(this._reasonCode.sopId);
-    const sprints = this._reasonCode.sprintConfig;
+    this.reasonCodeService.getSprint(this.reasonCodeService.sopId);
+    this.reasonCodeService.getReasonCode(this.reasonCodeService.sopId);
+    const sprints = this.reasonCodeService.sprintConfig;
     this.openAddSprint = !this.openAddSprint;
   }
 
@@ -265,9 +150,9 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
   }
 
   createOptionsWithSprintName() {
-    this._reasonCode.getSprint(this._reasonCode.sopId);
+    this.reasonCodeService.getSprint(this.reasonCodeService.sopId);
     this.sprintOptions = [];
-    const sprints = this._reasonCode.sprintConfig;
+    const sprints = this.reasonCodeService.sprintConfig;
     sprints.forEach(ele => {
       let temp = {};
       temp = Object.assign(
@@ -284,10 +169,10 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
   }
 
   createOptionsWithReasonCodeName() {
-    this._reasonCode.getReasonCode(this._reasonCode.sopId);
+    this.reasonCodeService.getReasonCode(this.reasonCodeService.sopId);
     this.reasonCodeOptions = [];
 
-    const rcCodes = this._reasonCode.reasonCodeData;
+    const rcCodes = this.reasonCodeService.reasonCodeData;
     rcCodes.forEach(element => {
       let temp = {};
       temp = Object.assign(
@@ -301,70 +186,56 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
     });
   }
 
-  onCloseAddSprint() {
-    this.openAddSprint = false;
-  }
-
   onCancel() {
-    this._reasonCode.movemodal = false;
+    this.reasonCodeService.movemodal = false;
   }
 
   createUserstory() {
     this.userstoryEditCreateModal
       .openDialog(
-        this._reasonCode.sopId,
+        this.reasonCodeService.sopId,
         UserstoryModalName.CREATE,
-        this._reasonCode.sprintConfig,
-        this._reasonCode.reasonCodeData
+        this.reasonCodeService.sprintConfig,
+        this.reasonCodeService.reasonCodeData
       )
-      .subscribe(response => this._reasonCode.refresh(this._reasonCode.sopId));
+      .subscribe(response =>
+        this.reasonCodeService.refresh(this.reasonCodeService.sopId)
+      );
   }
 
   onEditUserstory(event, userStory) {
     this.userstoryEditCreateModal
       .openDialog(
-        this._reasonCode.sopId,
+        this.reasonCodeService.sopId,
         UserstoryModalName.EDIT,
-        this._reasonCode.sprintConfig,
-        this._reasonCode.reasonCodeData,
+        this.reasonCodeService.sprintConfig,
+        this.reasonCodeService.reasonCodeData,
         userStory
       )
-      .subscribe(response => this._reasonCode.refresh(this._reasonCode.sopId));
-  }
-
-  userStoryData;
-
-  onCloseEditUserStories(event) {
-    this.openEditSideBar = event;
-  }
-
-  onCloseCreateUserStories(event) {
-    this.openCreateSideBar = event;
-  }
-
-  onDoneWarning($event) {
-    this.warning = $event;
+      .subscribe(response =>
+        this.reasonCodeService.refresh(this.reasonCodeService.sopId)
+      );
   }
 
   onOpenExport() {
     this.exportToModal
       .openDialog(
         createDownloadableEpicsAndUserstories(
-          this._reasonCode.reasonCodeData,
-          this._reasonCode.userStories
+          this.reasonCodeService.reasonCodeData,
+          this.reasonCodeService.userStories
         )
       )
       .subscribe((res: any | Export | Audit) => {
         if (res && res.type && res.type === DownloadFileType.AUDIT) {
-          this._reasonCode.downLoadAuditTrailFile(
-            this._reasonCode.sopId,
+          this.reasonCodeService.downLoadAuditTrailFile(
+            this.reasonCodeService.sopId,
             res.startDate,
             res.endDate
           );
         } else if (res && res.type && res.type === DownloadFileType.EXPORT) {
           this.apiService
             .downloadExportToSop(
-              this._reasonCode.sopId,
+              this.reasonCodeService.sopId,
               res.epics,
               res.userstories
             )
@@ -375,103 +246,52 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
       });
   }
 
-  onSelectNo() {
-    this.warning = false;
-    this._reasonCode.doneSelectStatus.emit(false);
-  }
-
-  onSelectYes() {
-    this.warning = false;
-    this._reasonCode.doneSelectStatus.emit(true);
-  }
-
-  onVirtualTabClicked(value: number) {
-    let scrollPositionOfPage: number;
-    this.__scrollbar.broadCastScrollPosition.subscribe(res => {
-      scrollPositionOfPage = Number(res);
-    });
-    if (value == 0) {
-      this.selectedTabIndex = value;
-      this._reasonCode.getUserStories(this._reasonCode.sopId);
-    } else if (value == 1) {
-      this.selectedTabIndex = value;
-      this._reasonCode.getCompletedUserStories(this._reasonCode.sopId);
-    } else if (value == 2) {
-      this.selectedTabIndex = value;
-      this._reasonCode.getDeletedUserStories(this._reasonCode.sopId);
-      window.scrollTo({
-        top: scrollPositionOfPage,
-        left: 0,
-      });
-    }
-  }
-
-  onTabChange($event) {
-    if ($event.index == 0) {
-      this.selectedTabIndex = 0;
-      this._reasonCode.getUserStories(this._reasonCode.sopId);
-    } else if ($event.index == 1) {
-      this.selectedTabIndex = 1;
-      this._reasonCode.getCompletedUserStories(this._reasonCode.sopId);
-    } else if ($event.index == 2) {
-      this.selectedTabIndex = 2;
-      this._reasonCode.getDeletedUserStories(this._reasonCode.sopId);
-    }
-  }
-
-  openVirtualFilter() {
-    this.activateVirtualFilter = !this.activateVirtualFilter;
-    this.openFilter();
-  }
-
-  idOfUserStoryToDelete: number;
-
-  onDeleteUserStory($event) {
-    this.warningToDeleteUserStory = $event.status;
-    this.idOfUserStoryToDelete = $event.id;
-  }
-
-  onSelectDoNotDeleteUserStory() {
-    this.warningToDeleteUserStory = false;
-  }
-
-  onSelectDeleteUserStory() {
-    this._reasonCode.deleteUserStory(this.idOfUserStoryToDelete);
-    this.warningToDeleteUserStory = false;
+  onDeleteUserStory(userstoryId: number) {
+    this.confirm.confirmDelete(
+      "Are you sure you want to delete this user story?",
+      () => {
+        this.reasonCodeService.deleteUserStory(userstoryId);
+      },
+      () => {}
+    );
   }
 
   onClearAllFilters() {
-    this._reasonCode.filterItems = {};
-    this._reasonCode.rulesApproved = "";
-    this._reasonCode.testCasesVerified = "";
-    this._reasonCode.filteredValues = [];
-    this._reasonCode.filterPath = "";
-    this._reasonCode.getUserStories(this._reasonCode.sopId);
+    this.reasonCodeService.filterItems = {};
+    this.reasonCodeService.rulesApproved = "";
+    this.reasonCodeService.testCasesVerified = "";
+    this.reasonCodeService.filteredValues = [];
+    this.reasonCodeService.filterPath = "";
+    this.reasonCodeService.getUserStories(this.reasonCodeService.sopId);
     this.clearAllFilter = false;
-    this._reasonCode.filtersAppliedFlag = false;
+    this.reasonCodeService.filtersAppliedFlag = false;
   }
 
   makePath() {
-    const filter = this._reasonCode.convertToStringPath(
-      this._reasonCode.filterItems
+    const filter = this.reasonCodeService.convertToStringPath(
+      this.reasonCodeService.filterItems
     );
-    this._reasonCode.filterPath = filter;
+    this.reasonCodeService.filterPath = filter;
     let path = "";
-    if (this._reasonCode.sortBy != "") {
-      path = "?" + this._reasonCode.filterPath + "&" + this._reasonCode.sortBy;
+    if (this.reasonCodeService.sortBy != "") {
+      path =
+        "?" +
+        this.reasonCodeService.filterPath +
+        "&" +
+        this.reasonCodeService.sortBy;
     } else {
-      path = "?" + this._reasonCode.filterPath;
+      path = "?" + this.reasonCodeService.filterPath;
     }
     return path;
   }
 
   onRemoveFilter(value: string, index: number) {
-    for (const key in this._reasonCode.filterItems) {
+    for (const key in this.reasonCodeService.filterItems) {
       if (key.indexOf(value) != -1) {
-        delete this._reasonCode.filterItems[key];
-        this._reasonCode.filteredValues.splice(index, 1);
-        this._reasonCode.filterUserStories(
-          `/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`,
+        delete this.reasonCodeService.filterItems[key];
+        this.reasonCodeService.filteredValues.splice(index, 1);
+        this.reasonCodeService.filterUserStories(
+          `/sop/epics/${this.reasonCodeService.sopId}/userstories/filter.json`,
           this.makePath()
         );
       }
@@ -480,9 +300,9 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
       value === "Verified Test Cases = True" ||
       value === "Verified Test Cases = False"
     ) {
-      this._reasonCode.testCasesVerified = "";
-      this._reasonCode.filterUserStories(
-        `/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`,
+      this.reasonCodeService.testCasesVerified = "";
+      this.reasonCodeService.filterUserStories(
+        `/sop/epics/${this.reasonCodeService.sopId}/userstories/filter.json`,
         this.makePath()
       );
     }
@@ -491,41 +311,58 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
       value === "Rules Approved = True" ||
       value === "Rules Approved = False"
     ) {
-      this._reasonCode.rulesApproved = "";
-      this._reasonCode.filterUserStories(
-        `/sop/epics/${this._reasonCode.sopId}/userstories/filter.json`,
+      this.reasonCodeService.rulesApproved = "";
+      this.reasonCodeService.filterUserStories(
+        `/sop/epics/${this.reasonCodeService.sopId}/userstories/filter.json`,
         this.makePath()
       );
     }
   }
 
-  /**
-   * Rearrange the date in the following format DD/MM/YYYY
-   * @param date
-   */
-  formatDate(date) {
-    const dateStr = new Date(date);
-    const strDate =
-      "" +
-      dateStr.getDate() +
-      "/" +
-      (dateStr.getMonth() + 1) +
-      "/" +
-      dateStr.getFullYear();
-    return strDate;
-  }
-
-  /**
-   * Format the year as 00YY
-   * @param year
-   */
-  formatYear(year) {
-    const digits = year.toString().split("");
-    return "" + digits[2] + digits[3];
-  }
-
   onCloseProjectConfig($event) {
     this.openAddSprint = $event;
     this.onClearAllFilters();
+  }
+
+  createUserstoryPayloadForBackend(
+    userstory: ServerUserstory
+  ): ServerUserstory {
+    return {
+      dev_hrs: userstory.dev_hrs || 0,
+      ftes: userstory.ftes || 0,
+      notes: userstory.notes,
+      planned_delivery: userstory.planned_delivery,
+      rules_approved: userstory.rules_approved,
+      status: userstory.status,
+      us_name: userstory.us_name,
+      us_number: userstory.us_number,
+      verified_test_cases: userstory.verified_test_cases,
+      priority: userstory.priority || "",
+    };
+  }
+
+  onUserstoryToggled($event: ServerUserstory): void {
+    this.spinner.show();
+    this.apiService
+      .editUserstory(
+        $event.id,
+        $event.sprint_id || 0,
+        $event.rc_id || 0,
+        $event.assignee_id || 0,
+        this.createUserstoryPayloadForBackend($event)
+      )
+      .subscribe(
+        userstory => {
+          this.spinner.hide();
+          this.snackbar.open("Userstory modified successfully", "Success", {
+            duration: 5000,
+          });
+          this.reasonCodeService.refresh(this.reasonCodeService.sopId);
+        },
+        err => {
+          this.spinner.hide();
+          this.sharedService.raiseError(err);
+        }
+      );
   }
 }

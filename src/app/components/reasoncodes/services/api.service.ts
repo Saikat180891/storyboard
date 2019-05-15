@@ -36,6 +36,12 @@ export class ApiService {
     );
   }
 
+  getBenefitsChart(projectId: number): string {
+    return `${
+      this.api.apiUrl
+    }/sop/epics/charts/${projectId}/benefits_realization.png?q=${new Date().getTime()}`;
+  }
+
   deleteSprint(sopId: number): Observable<any> {
     const endpoint = `/sop/sprint/${sopId}.json`;
     return this.api.deleteValue(endpoint);
@@ -58,7 +64,8 @@ export class ApiService {
     assigneeId: number = 0,
     payload: any
   ): Observable<any> {
-    const endpoint = `/api/v1/projects/${projectId}/epics/${epicId}/sprints/${sprintID}/userstories/assignees/${assigneeId}.json`;
+    const endpoint = `/api/v1/projects/${projectId}/epics/${epicId}/sprints/${sprintID}/userstories/assignees/${assigneeId ||
+      0}.json`;
     return this.api.postData(endpoint, payload);
   }
 
@@ -66,7 +73,7 @@ export class ApiService {
     userstoryId: number,
     sprintID: number,
     epicId: number,
-    assigneeId: number = 0,
+    assigneeId: number,
     payload: any
   ): Observable<any> {
     const endpoint = `/api/v1/projects/epics/${epicId}/sprints/${sprintID}/userstories/${userstoryId}/assignees/${assigneeId}.json`;

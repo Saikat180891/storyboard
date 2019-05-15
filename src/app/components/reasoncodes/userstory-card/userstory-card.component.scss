@@ -9,7 +9,7 @@
 
   .created-date {
     position: absolute;
-    top: 46px;
+    top: 44px;
     right: 30px;
     font-size: 12px;
     color: #c1c1c1;
@@ -57,6 +57,9 @@
   .r4 {
     width: calc(100% - 54vw);
   }
+  .no-border {
+    border: none;
+  }
   .col {
     display: flex;
     flex-direction: column;
@@ -102,9 +105,7 @@
     left: 70%;
     right: 0;
     .btn-box {
-      position: absolute;
-      top: 90px;
-      right: 25px;
+      padding-left: 2rem;
 
       button {
         width: 130px;
@@ -116,8 +117,7 @@
       button:first-child {
         width: 30px;
         height: 30px;
-        position: absolute;
-        top: -44px;
+        margin-bottom: 1.5rem;
       }
     }
   }
@@ -200,6 +200,7 @@
 .r4 .c4 .priority span:last-child {
   color: #000000;
 }
+
 ::ng-deep {
   .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
     background-color: rgba($color: #6cc24a, $alpha: 0.6);

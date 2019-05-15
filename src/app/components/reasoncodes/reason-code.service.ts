@@ -2,8 +2,10 @@ import { EventEmitter, Injectable } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
 import { saveAs } from "file-saver";
 import { BehaviorSubject } from "rxjs";
+import { map } from "rxjs/operators";
 import { DataService } from "../../data.service";
 import { DateUtils } from "../shared/date-utils";
+import { ServerUserstory, Userstory } from "./models/Userstory.model";
 
 @Injectable({
   providedIn: "root",
@@ -116,81 +118,78 @@ export class ReasonCodeService {
     });
   }
 
-  /**
-   * this api is used to delete a sprint by it id
-   * @param id - id of the sprint
-   */
-  // deleteSprint(id) {
-  //   this._api.delete("/sop/sprint", `${id}.json`).subscribe(response => {
-  //     this.refresh(this.sopId);
-  //   });
-  // }
-
   editSprint(id, data) {
     data["start_date"] = DateUtils.datetypeToStringWithoutTime(
       data["start_date"]
     );
     data["end_date"] = DateUtils.datetypeToStringWithoutTime(data["end_date"]);
-    this._api.update(`/sop/sprint`, `${id}.json`, data).subscribe(response => {
-      // this.getSprint(this.sopId);
-    });
-  }
-
-  getDeletedUserStories(id) {
     this._api
-      .fetchData(`/sop/epics/${id}/userstories/fetchDeleted.json`)
-      .subscribe(response => {
-        response.forEach(element => {
-          element["productivity"] = (
-            parseFloat(element.ftes) / parseFloat(element.dev_hrs)
-          ).toFixed(1);
-          element["productivity"] = isFinite(element["productivity"])
-            ? element["productivity"]
-            : "----";
-          element["planned_delivery"] = DateUtils.formatDateToUS(
-            element["planned_delivery"]
-          );
-          element["revised_delivery"] =
-            element["revised_delivery"] != null
-              ? DateUtils.formatDateToUS(element["revised_delivery"])
-              : "-----";
-        });
-        this.deletedUserStories = response;
+      .update(`/sop/sprint`, `${id}.json`, data)
+      .subscribe(response => {});
+  }
+
+  // TODO: move all get calls to apiservice and use reasoncode.service.ts to store data only
+  getDeletedUserStories(id: number): void {
+    this._api
+      .get(`/sop/epics/${id}/userstories/fetchDeleted.json`)
+      .pipe(
+        map((serverUserstories: ServerUserstory[]) => {
+          return serverUserstories.map((serverUserstory: ServerUserstory) => {
+            return Userstory.getUserstoryForClient(serverUserstory);
+          });
+        })
+      )
+      .subscribe((serverUserstories: ServerUserstory[]) => {
+        this.deletedUserStories = serverUserstories;
       });
   }
 
-  getUserStories(id) {
-    const api = `/sop/epics/${id}/userstories.json`;
-    this._api.fetchData(api).subscribe(response => {
-      response.forEach(element => {
-        if (element["ftes"] == 0) {
-          element["ftes"] = "-----";
-        }
-        if (element["dev_hrs"] == "") {
-          element["dev_hrs"] = "-----";
-        }
-        element["ftes"] = parseFloat(element["ftes"]).toFixed(1);
-        element["ftes"] = isFinite(element["ftes"]) ? element["ftes"] : "-----";
-        element["productivity"] = (
-          parseFloat(element.ftes) / parseFloat(element.dev_hrs)
-        ).toFixed(1);
-        element["productivity"] = isFinite(element["productivity"])
-          ? element["productivity"]
-          : "-----";
-        element["planned_delivery"] = DateUtils.formatDateToUS(
-          element["planned_delivery"]
-        );
-        element["revised_delivery"] =
-          element["revised_delivery"] != null
-            ? DateUtils.formatDateToUS(element["revised_delivery"])
-            : "-----";
+  getUserStories(id: number): void {
+    const endpoint = `/sop/epics/${id}/userstories.json`;
+    this._api
+      .get(endpoint)
+      .pipe(
+        map((serverUserstories: ServerUserstory[]) => {
+          return serverUserstories.map((serverUserstory: ServerUserstory) => {
+            return Userstory.getUserstoryForClient(serverUserstory);
+          });
+        })
+      )
+      .subscribe((serverUserstories: ServerUserstory[]) => {
+        this.userStories = serverUserstories;
+        this.userStoriesList.next(this.userStories);
+        this.getProjectStatusChartData(this.sopId); // check
+        this.getChartData(this.sopId); // check
       });
+  }
 
-      this.userStories = response.reverse();
-      this.userStoriesList.next(this.userStories);
-      this.getProjectStatusChartData(this.sopId); // check
-      this.getChartData(this.sopId); // check
+  getProjectStatus(id: number) {
+    this._api.get(`/sop/${id}/duration.json`).subscribe(response => {
+      this.totalProjectStatus = response[0];
     });
+  }
+
+  getSprintStatus(id: number) {
+    this._api
+      .get(`/sop/${id}/currentSprint/duration.json`)
+      .subscribe(response => {
+        this.currentSprintDuration = response[0];
+      });
+  }
+
+  getCompletedUserStories(id: number): void {
+    this._api
+      .get(`/sop/epics/${id}/userstories/fetchCompleted.json`)
+      .pipe(
+        map((serverUserstories: ServerUserstory[]) => {
+          return serverUserstories.map((serverUserstory: ServerUserstory) => {
+            return Userstory.getUserstoryForClient(serverUserstory);
+          });
+        })
+      )
+      .subscribe((serverUserstories: ServerUserstory[]) => {
+        this.completeUserStories = serverUserstories;
+      });
   }
 
   deleteUserStory(id) {
@@ -198,43 +197,6 @@ export class ReasonCodeService {
       .delete(`/sop/epics/userstories`, `${id}.json`)
       .subscribe(response => {
         this.refresh(this.sopId);
-      });
-  }
-
-  getCompletedUserStories(id) {
-    this._api
-      .fetchData(`/sop/epics/${id}/userstories/fetchCompleted.json`)
-      .subscribe(response => {
-        response.forEach(element => {
-          element["productivity"] = (
-            parseFloat(element.ftes) / parseFloat(element.dev_hrs)
-          ).toFixed(1);
-          element["productivity"] = isFinite(element["productivity"])
-            ? element["productivity"]
-            : "----";
-          element["planned_delivery"] = DateUtils.formatDateToUS(
-            element["planned_delivery"]
-          );
-          element["revised_delivery"] =
-            element["revised_delivery"] != null
-              ? DateUtils.formatDateToUS(element["revised_delivery"])
-              : "-----";
-        });
-        this.completeUserStories = response;
-      });
-  }
-
-  getProjectStatus(id) {
-    this._api.fetchData(`/sop/${id}/duration.json`).subscribe(response => {
-      this.totalProjectStatus = response[0];
-    });
-  }
-
-  getSprintStatus(id) {
-    this._api
-      .fetchData(`/sop/${id}/currentSprint/duration.json`)
-      .subscribe(response => {
-        this.currentSprintDuration = response[0];
       });
   }
 

@@ -10,6 +10,7 @@
     [id]="label ? label : ''"
     [readonly]="readonly"
     [value]="inputViewLabel"
+    (keyup)="onInputChange($event.target.value)"
     autocomplete="off"
     #autocomplete
   />

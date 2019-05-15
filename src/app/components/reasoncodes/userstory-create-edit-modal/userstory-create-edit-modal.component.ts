@@ -9,17 +9,15 @@ import {
 } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from "@angular/material";
+import { NgxSpinnerService } from "ngx-spinner";
 import { SharedService } from "src/app/services/shared-services/shared.service";
 import { AutocompleteOption } from "../../shared/autocomplete/AutocompleteOption.model";
 import { ConfirmModalService } from "../../shared/confirm-modal/confirm-modal.service";
-import {
-  arrangeEndDateForBackend,
-  convertStartDateforBackend,
-} from "../../shared/date-utils";
+import { DateUtils } from "../../shared/date-utils";
 import { DropdownOptions } from "../../shared/dropdown/dropdown.component";
 import { Epics } from "../models/Epics.model";
 import { SprintBackend } from "../models/Sprint.model";
-import { ServerUserstory, Userstory } from "../models/Userstory.model";
+import { ClientUserstory, ServerUserstory } from "../models/Userstory.model";
 import { ApiService } from "../services/api.service";
 import { UserstoryModalName } from "./modaltype.enum";
 
@@ -97,7 +95,7 @@ export class UserstoryCreateEditModalComponent implements OnInit {
     ]),
     epic: new FormControl("", Validators.required),
     sprint: new FormControl("", Validators.required),
-    priority: new FormControl(""),
+    priority: new FormControl("", Validators.required),
     devHrs: new FormControl(0),
     benefits: new FormControl(0),
     productivity: new FormControl(""),
@@ -115,7 +113,8 @@ export class UserstoryCreateEditModalComponent implements OnInit {
     private confirmService: ConfirmModalService,
     private api: ApiService,
     private snackbar: MatSnackBar,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit() {
@@ -134,8 +133,8 @@ export class UserstoryCreateEditModalComponent implements OnInit {
     this.userstoryForm.setValue({
       userstoryNumber: userstory.us_number,
       userstoryName: userstory.us_name,
-      epic: userstory.rc_id,
-      sprint: userstory.sprint_id,
+      epic: userstory.rc_id || "",
+      sprint: userstory.sprint_id || "",
       priority: userstory.priority,
       devHrs: userstory.dev_hrs,
       benefits: userstory.ftes,
@@ -143,10 +142,8 @@ export class UserstoryCreateEditModalComponent implements OnInit {
       verifiedTestCases: userstory.verified_test_cases,
       status: userstory.status,
       description: userstory.notes,
-      plannedDelivery: new Date(
-        arrangeEndDateForBackend(userstory.planned_delivery)
-      ),
-      productivity: userstory.productivity,
+      plannedDelivery: userstory.planned_delivery,
+      productivity: userstory.productivity || "",
       assignee: userstory.assignee_id,
     });
   }
@@ -155,6 +152,7 @@ export class UserstoryCreateEditModalComponent implements OnInit {
     if (this.userstoryForm.valid) {
       switch (this.data.modalName) {
         case UserstoryModalName.CREATE:
+          this.spinner.show();
           this.api
             .createUserstory(
               this.data.projectId,
@@ -165,6 +163,7 @@ export class UserstoryCreateEditModalComponent implements OnInit {
             )
             .subscribe(
               res => {
+                this.spinner.hide();
                 this.onNoClick(res);
                 this.snackbar.open(
                   "Userstory has been created successfully",
@@ -173,21 +172,24 @@ export class UserstoryCreateEditModalComponent implements OnInit {
                 );
               },
               (err: HttpErrorResponse) => {
+                this.spinner.hide();
                 this.sharedService.raiseError(err);
               }
             );
           break;
         case UserstoryModalName.EDIT:
+          this.spinner.show();
           this.api
             .editUserstory(
               this.data.userStoryData.id,
-              this.userstoryForm.value.sprint,
-              this.userstoryForm.value.epic,
-              this.userstoryForm.value.assignee,
+              this.userstoryForm.value.sprint || 0,
+              this.userstoryForm.value.epic || 0,
+              this.userstoryForm.value.assignee || 0,
               this.createPayloadForBackend()
             )
             .subscribe(
               res => {
+                this.spinner.hide();
                 this.onNoClick();
                 this.snackbar.open(
                   "Userstory has been updated successfully",
@@ -196,6 +198,7 @@ export class UserstoryCreateEditModalComponent implements OnInit {
                 );
               },
               (err: HttpErrorResponse) => {
+                this.spinner.hide();
                 this.sharedService.raiseError(err);
               }
             );
@@ -205,10 +208,10 @@ export class UserstoryCreateEditModalComponent implements OnInit {
   }
 
   createPayloadForBackend(): ServerUserstory {
-    const payload: Userstory = { ...this.userstoryForm.value };
-    const mapFieldsForBackend: ServerUserstory = {
-      dev_hrs: payload.devHrs,
-      ftes: payload.benefits,
+    const payload: ClientUserstory = { ...this.userstoryForm.value };
+    return {
+      dev_hrs: payload.devHrs || 0,
+      ftes: payload.benefits || 0,
       notes: payload.description,
       priority: payload.priority,
       rules_approved: payload.rulesApproved,
@@ -216,9 +219,10 @@ export class UserstoryCreateEditModalComponent implements OnInit {
       status: payload.status,
       us_name: payload.userstoryName,
       us_number: payload.userstoryNumber,
-      planned_delivery: convertStartDateforBackend(payload.plannedDelivery),
+      planned_delivery: DateUtils.datetypeToStringWithoutTime(
+        payload.plannedDelivery
+      ),
     };
-    return mapFieldsForBackend;
   }
 
   onCalculateProductivity(): void {

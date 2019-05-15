@@ -62,6 +62,7 @@ import { FileAttachmentService } from "src/app/components/shared/file-attachment
 import { InputComponent } from "src/app/components/shared/input/input.component";
 import { ModalHeaderComponent } from "src/app/components/shared/modal-header/modal-header.component";
 import { SliderToggleComponent } from "src/app/components/shared/slider-toggle/slider-toggle.component";
+import { DateFormatterPipe } from "src/app/pipes/date-formatter.pipe";
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { SliderToggleComponent } from "src/app/components/shared/slider-toggle/s
     AutocompleteComponent,
     SliderToggleComponent,
     ModalHeaderComponent,
+    DateFormatterPipe,
   ],
   imports: [
     CommonModule,
@@ -170,6 +172,7 @@ import { SliderToggleComponent } from "src/app/components/shared/slider-toggle/s
     AutocompleteComponent,
     SliderToggleComponent,
     ModalHeaderComponent,
+    DateFormatterPipe,
   ],
   providers: [
     MatSnackBarModule,

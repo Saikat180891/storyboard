@@ -6,10 +6,9 @@ import {
   OnInit,
   Output,
 } from "@angular/core";
-import { DateUtils } from "../../shared/date-utils";
+import { MatSlideToggleChange } from "@angular/material";
+import { ServerUserstory } from "../models/Userstory.model";
 import { ReasonCodeService } from "../reason-code.service";
-import { ReasoncodesComponent } from "../reasoncodes.component";
-import { EditUserStoryService } from "../userstory-card-edit/edit-user-story.service";
 
 @Component({
   selector: "app-userstory-card",
@@ -17,48 +16,38 @@ import { EditUserStoryService } from "../userstory-card-edit/edit-user-story.ser
   styleUrls: ["./userstory-card.component.scss"],
 })
 export class UserstoryCardComponent implements OnInit, OnChanges {
-  @Output("editUserStory") editUserStory = new EventEmitter();
-
   @Input("userStory") inputUserStory: any = {
     notes: "",
     us_name: "",
   };
-
   @Input("restore") restore: boolean;
-
   @Input("disableDeleteBtn") disableDeleteBtn: boolean;
-
-  @Output("deleteUserStory") deleteUserStory = new EventEmitter();
-
   @Input("disableEdit") disableEdit: boolean = false;
 
-  userStory;
+  @Output("editUserStory") editUserStory = new EventEmitter();
+  @Output("userstoryEditted") userstoryEditted = new EventEmitter();
+  @Output("deleteUserStory") deleteUserStory = new EventEmitter();
 
+  userStory: ServerUserstory;
   rippleColor = "rbga(0,0,0,0.2)";
-  color = "primary";
   permissions: any = {};
   role: string;
+  selected: number = -1;
 
-  constructor(
-    private __editUS: EditUserStoryService,
-    private __rcService: ReasonCodeService,
-    private rcComponent: ReasoncodesComponent
-  ) {}
+  constructor(private reasonCodeService: ReasonCodeService) {}
 
   ngOnInit() {
-    this.userStory = JSON.parse(JSON.stringify(this.inputUserStory));
-    this.userStory.created = DateUtils.formatDateToUS(this.userStory.created);
+    this.userStory = { ...this.inputUserStory };
   }
 
   ngOnChanges() {
-    this.permissions = this.__rcService.grantedPermission;
-    this.role = this.__rcService.role;
+    this.permissions = this.reasonCodeService.grantedPermission;
+    this.role = this.reasonCodeService.role;
   }
 
   onEdit() {
     this.editUserStory.emit(true);
-    this.__editUS.selected = this.inputUserStory.id;
-    this.rcComponent.createOptionsWithSprintName();
+    this.selected = this.inputUserStory.id;
   }
 
   checkIfPermissiongranted(requiredPermission: string) {
@@ -68,73 +57,32 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
     return true;
   }
 
-  toggleRules(event, uid, uss_name) {
+  toggleRules(event: MatSlideToggleChange) {
     this.userStory.rules_approved = event.checked;
-    let sprintId = 0;
-    this.__rcService.sprintConfig.forEach(element => {
-      if (element.sprint_name === this.userStory.sprint_name) {
-        sprintId = element.id;
-      }
-    });
-    this.userStory.ftes === "-----" ? delete this.userStory.ftes : "";
-    let rc_id = 0;
-    this.__rcService.reasonCodeData.forEach(element => {
-      if (element.name === this.userStory.rc_name) {
-        rc_id = element.id;
-      }
-    });
-    this.userStory.planned_delivery = DateUtils.datetypeToStringWithoutTime(
-      this.userStory.planned_delivery
-    );
-
-    this.userStory.revised_delivery == "-----"
-      ? (this.userStory.revised_delivery = null)
-      : (this.userStory.revised_delivery = DateUtils.datetypeToStringWithoutTime(
-          this.userStory.revised_delivery
-        ));
-    this.userStory.created = DateUtils.datetypeToStringWithTime(
-      this.userStory.created
-    );
-
-    this.__editUS.editUserStory(uid, sprintId, rc_id, this.userStory);
+    this.userstoryEditted.emit(this.userStory);
   }
 
-  toggleTVC(event, uid, uss_name) {
+  toggleTVC(event: MatSlideToggleChange) {
     this.userStory.verified_test_cases = event.checked;
-    let sprintId = 0;
-    this.__rcService.sprintConfig.forEach(element => {
-      if (element.sprint_name === this.userStory.sprint_name) {
-        sprintId = element.id;
-      }
-    });
-    this.userStory.ftes === "-----" ? delete this.userStory.ftes : "";
-    let rc_id = 0;
-    this.__rcService.reasonCodeData.forEach(element => {
-      if (element.name === this.userStory.rc_name) {
-        rc_id = element.id;
-      }
-    });
-    this.userStory.planned_delivery = DateUtils.datetypeToStringWithoutTime(
-      this.userStory.planned_delivery
-    );
-
-    this.userStory.revised_delivery == "-----"
-      ? (this.userStory.revised_delivery = null)
-      : (this.userStory.revised_delivery = DateUtils.datetypeToStringWithoutTime(
-          this.userStory.revised_delivery
-        ));
-    this.userStory.created = DateUtils.datetypeToStringWithTime(
-      this.userStory.created
-    );
-
-    this.__editUS.editUserStory(uid, sprintId, rc_id, this.userStory);
+    this.userstoryEditted.emit(this.userStory);
   }
 
-  onDelete(id) {
-    this.deleteUserStory.emit({ id, status: true });
+  onDelete(id: number): void {
+    this.deleteUserStory.emit(id);
   }
 
-  restoreUserStories(id) {
-    this.__rcService.restoreUserStories(id);
+  restoreUserStories(id: number): void {
+    this.reasonCodeService.restoreUserStories(id);
+  }
+
+  display(value: any): any {
+    switch (value) {
+      case null:
+        return "Unassigned";
+      case 0:
+        return "-----";
+      default:
+        return value;
+    }
   }
 }
