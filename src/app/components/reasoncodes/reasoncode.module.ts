@@ -4,8 +4,6 @@ import { ChartsComponent } from "./charts/charts.component";
 import { ExportDialogBoxComponent } from "./export-dialog-box/export-dialog-box.component";
 import { ProjectConfigComponent } from "./project-config/project-config.component";
 import { ReasoncodesComponent } from "./reasoncodes.component";
-import { ColoredDropdownComponent } from "./shared/colored-dropdown/colored-dropdown.component";
-import { NormalDropdownComponent } from "./shared/normal-dropdown/normal-dropdown.component";
 import { UserstoryCardComponent } from "./userstory-card/userstory-card.component";
 import { UserstoryFilterComponent } from "./userstory-filter/userstory-filter.component";
 
@@ -19,7 +17,6 @@ import { ModalFooterComponent } from "./modal-footer/modal-footer.component";
 import { SprintConfigureComponent } from "./sprint-configure/sprint-configure.component";
 import { SprintInputRowComponent } from "./sprint-input-row/sprint-input-row.component";
 
-import { EpicComponent } from "./epic/epic.component";
 import { ExportSopAsWordComponent } from "./export-sop-as-word/export-sop-as-word.component";
 import { ExportToWordModalComponent } from "./export-to-word-modal/export-to-word-modal.component";
 import { ExportToWordModalService } from "./export-to-word-modal/export-to-word-modal.service";
@@ -41,15 +38,12 @@ const routes: Routes = [{ path: "", component: ReasoncodesComponent }];
     UserstoryFilterComponent,
     ExportDialogBoxComponent,
     ChartsComponent,
-    ColoredDropdownComponent,
-    NormalDropdownComponent,
     ImportStoriesComponent,
     ModalFooterComponent,
     EpicsComponent,
     SprintConfigureComponent,
     SprintInputRowComponent,
     ProjectConfigBaseComponent,
-    EpicComponent,
     SortComponent,
     ProjectHeaderTitleComponent,
     ExportToWordModalComponent,
