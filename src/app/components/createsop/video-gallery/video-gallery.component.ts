@@ -6,8 +6,10 @@ import {
   OnInit,
   Output,
 } from "@angular/core";
+import { SharedService } from "../../../services/shared-services/shared.service";
 import { PageService } from "../services/page/page.service";
 import { SidebarService } from "../services/sidebar/sidebar.service";
+
 @Component({
   selector: "app-gallery",
   templateUrl: "./video-gallery.component.html",
@@ -22,9 +24,12 @@ export class VideoGalleryComponent implements OnInit, OnChanges {
 
   selected: number = -1;
 
+  allowedFileFormats = ["video/mp4"];
+
   constructor(
     private __sidebarService: SidebarService,
-    private __page: PageService
+    private __page: PageService,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit() {}
@@ -40,7 +45,13 @@ export class VideoGalleryComponent implements OnInit, OnChanges {
   }
 
   onFileSelected($event: any) {
-    this.addNewFile.emit($event.target.files[0]);
+    if (this.isAllowedFormatFile($event.target.files[0])) {
+      this.addNewFile.emit($event.target.files[0]);
+    } else {
+      this.sharedService.raiseError(
+        "Only .mp4 video file formats are allowed to upload"
+      );
+    }
   }
 
   onPlayVideo(content: any, index: number) {
@@ -49,5 +60,9 @@ export class VideoGalleryComponent implements OnInit, OnChanges {
 
   onDeleteContent(content, i, type) {
     this.deleteContent.emit({ content, index: i, type });
+  }
+
+  isAllowedFormatFile(file) {
+    return this.allowedFileFormats.includes(file.type);
   }
 }

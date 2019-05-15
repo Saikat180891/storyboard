@@ -15,7 +15,9 @@ export class SharedService {
   constructor(private snackBar: MatSnackBar) {}
 
   raiseError(err: any) {
-    this.snackBar.open(err.error.detail, "Error", {
+    const errorMessage =
+      err && err.error && err.error.detail ? err.error.detail : err;
+    this.snackBar.open(errorMessage, "Error", {
       duration: 5000,
     });
   }
