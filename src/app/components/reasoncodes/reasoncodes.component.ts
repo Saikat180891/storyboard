@@ -91,11 +91,15 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
     switch (controlSelected) {
       case UserstoryControls.SORT:
         this.sortBy = !this.sortBy;
+        this.filter = false;
         return;
       case UserstoryControls.FILTER:
         this.filter = !this.filter;
+        this.sortBy = false;
         return;
       case UserstoryControls.CREATEUS:
+        this.sortBy = false;
+        this.filter = false;
         this.createUserstory();
         return;
     }

@@ -49,8 +49,7 @@
       <button
         mat-raised-button
         [innerHtml]="btnNameWithIcon"
-        [ngClass]="{ active: active }"
-        (click)="active = !active"
+        [ngClass]="{ active: toggleInstance }"
       ></button>
     </div>
   </div>

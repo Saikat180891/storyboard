@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 export enum UserstoryControls {
   SORT = 0,
   FILTER = 1,
@@ -10,6 +10,9 @@ export enum UserstoryControls {
   styleUrls: ["./userstory-menu-bar.component.scss"],
 })
 export class UserstoryMenuBarComponent implements OnInit {
+  @Input("toggleFilter") toggleFilter: boolean = false;
+  @Input("toggleSort") toggleSort: boolean = false;
+
   @Output("tabChange") tabChange = new EventEmitter<number>();
   @Output("controlSelected") controlSelected = new EventEmitter<number>();
 
