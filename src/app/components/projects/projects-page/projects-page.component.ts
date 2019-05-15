@@ -1,5 +1,6 @@
 import { AfterViewChecked, Component, OnInit } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
+import { ConfirmModalService } from "../../shared/confirm-modal/confirm-modal.service";
 import { ProjectDisplay } from "../models/project.model";
 import { ProjectsService } from "../projects.service";
 
@@ -16,14 +17,13 @@ export class ProjectsPageComponent implements OnInit, AfterViewChecked {
   openCreateProjectDialogBox: boolean = false;
   openEditProjectDialogBox: boolean = false;
   permissionsGrantedForBackdrop: any;
-  warningToDeleteSop: boolean = false;
-  sopIdToDelete: number;
   projectData: any;
   projectRole: any;
 
   constructor(
     private projectsService: ProjectsService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private confirm: ConfirmModalService
   ) {}
 
   ngOnInit() {
@@ -72,19 +72,13 @@ export class ProjectsPageComponent implements OnInit, AfterViewChecked {
   }
 
   onDeleteSop($event): void {
-    this.warningToDeleteSop = $event.status;
-    this.sopIdToDelete = $event.id;
-  }
-
-  onSelectDoNotDeleteSop(): void {
-    this.warningToDeleteSop = false;
-  }
-  /**
-   * Delete project
-   */
-  onSelectDeleteSop(): void {
-    this.warningToDeleteSop = false;
-    this.projectsService.deleteProject(this.sopIdToDelete);
+    this.confirm.confirmDelete(
+      "Are you sure you want to delete this SOP? All the associated sprints and user stories will be deleted.",
+      () => {
+        this.projectsService.deleteProject($event.id);
+      },
+      () => {}
+    );
   }
 
   givenPermissions(permissions): void {
