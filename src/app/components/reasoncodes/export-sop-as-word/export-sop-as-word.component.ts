@@ -16,6 +16,7 @@ export interface DownloadableEpics {
 }
 
 export interface Export {
+  includeAttachment: boolean;
   epics: string;
   userstories: string;
   type: string;
@@ -31,6 +32,7 @@ export class ExportSopAsWordComponent implements OnInit {
   @Output("close") close = new EventEmitter<boolean>();
   @Output("export") export = new EventEmitter<Export>();
   selectAll: boolean = false;
+  includeAttachment: boolean = false;
 
   constructor() {}
 
@@ -40,11 +42,16 @@ export class ExportSopAsWordComponent implements OnInit {
     const payload = getIdsOfDownloadableEpicsAndUserstories(
       this.downloadableEpics
     );
+    payload.includeAttachment = this.includeAttachment;
     if (payload.epics && payload.userstories) {
       this.export.emit(payload);
     } else {
       alert("Please choose an epic or userstory to export.");
     }
+  }
+
+  onIncludeAttachment($event: MatCheckboxChange): void {
+    this.includeAttachment = $event.checked;
   }
 
   onSelectAllChange($event: MatCheckboxChange): void {

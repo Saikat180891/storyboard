@@ -241,10 +241,11 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
             .downloadExportToSop(
               this.reasonCodeService.sopId,
               res.epics,
-              res.userstories
+              res.userstories,
+              res.includeAttachment
             )
             .subscribe((data: Blob) => {
-              saveAs(data, "export");
+              saveAs(data, `SOP-${new Date().getTime()}`);
             });
         }
       });

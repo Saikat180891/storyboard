@@ -39,6 +39,7 @@ export function getIdsOfDownloadableEpicsAndUserstories(
     epics: epics.join(","),
     userstories: userstories.join(","),
     type: DownloadFileType.EXPORT,
+    includeAttachment: false,
   };
 }
 

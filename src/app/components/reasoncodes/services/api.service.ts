@@ -112,11 +112,12 @@ export class ApiService {
   downloadExportToSop(
     projectId: number,
     listOfEpics: string,
-    listOfUserstories: string
+    listOfUserstories: string,
+    includeAttachment: boolean
   ): Observable<any> {
     const endpoint = `${
       this.api.apiUrl
-    }/projects/${projectId}/generate_sop.json?epic_id=${listOfEpics}&us_id=${listOfUserstories}`;
+    }/projects/${projectId}/generate_sop.json?epic_id=${listOfEpics}&us_id=${listOfUserstories}&include_attachment=${includeAttachment}`;
     return this.api.downloadFile(endpoint);
   }
 }
