@@ -107,11 +107,21 @@ export class ProjectConfigBaseComponent implements OnInit {
         };
       });
       sprints.forEach(sprint => {
-        this.apiEnpointService
-          .editSprint(sprint.id, sprint.values)
-          .subscribe((res: Sprint) => {
+        this.apiEnpointService.editSprint(sprint.id, sprint.values).subscribe(
+          (res: Sprint) => {
             this.projectConfigureService.updateSprint(res, res.id);
-          });
+            this.snackbar.open(
+              "Sprint details have been updated successfully.",
+              "Success",
+              {
+                duration: 5000,
+              }
+            );
+          },
+          err => {
+            this.sharedService.raiseError(err);
+          }
+        );
       });
       this.preExistingSprintModified = [];
     }
