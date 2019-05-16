@@ -3,7 +3,6 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  OnChanges,
   OnInit,
   Output,
   ViewChild,
@@ -11,6 +10,7 @@ import {
 import { MatSnackBar } from "@angular/material";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { SharedService } from "../../../services/shared-services/shared.service";
 import { PageService } from "../services/page/page.service";
 import { SidebarService } from "../services/sidebar/sidebar.service";
 import { UicontrolService } from "../services/uicontrol.service";
@@ -41,7 +41,7 @@ export class SidebarComponent implements OnInit {
   videos = [1, 2, 3, 4, 5, 6, 7, 8];
   currentImage: number = 0;
   playThisVideo: string = "";
-  createdImage: any; //optional to test if image is created or not
+  createdImage: any; // optional to test if image is created or not
   content: any;
   videoGalleryContent = [];
   imageGalleryContent = [];
@@ -59,7 +59,8 @@ export class SidebarComponent implements OnInit {
     private __uic: UicontrolService,
     private __sidebarService: SidebarService,
     private __page: PageService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit() {
@@ -116,7 +117,7 @@ export class SidebarComponent implements OnInit {
     this.close.emit({ type: "media", shouldOpen: false });
   }
 
-  //for carousel
+  // for carousel
   /**
    * this function is use to change the image in the carousel
    * by using the left button
@@ -145,7 +146,7 @@ export class SidebarComponent implements OnInit {
     this.imageName = $event.content.image_name;
   }
 
-  //for video player
+  // for video player
   /**
    * this function is used to play/pause the video
    */
@@ -413,7 +414,10 @@ export class SidebarComponent implements OnInit {
             this.uploadProgressText = "File is completely uploaded!";
           }
         },
-        err => {},
+        err => {
+          this.sharedService.raiseError(err.message);
+          this.uploadProgress = false;
+        },
         () => {
           this.fetchAllVideosAlreadyUploaded();
           this.uploadProgress = false;
