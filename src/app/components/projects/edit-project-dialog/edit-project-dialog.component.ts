@@ -268,6 +268,14 @@ export class EditProjectDialogComponent
     }
 
     const file = target.files[0];
+    const allowedFileTypes = ["image/png", "image/jpeg"];
+    if (!allowedFileTypes.includes(file.type)) {
+      this.sharedService.raiseError(
+        "Only JPEG and PNG image file formats are allowed."
+      );
+      return;
+    }
+
     this.project.logo = file;
     const reader = new FileReader();
     reader.readAsDataURL(file);
