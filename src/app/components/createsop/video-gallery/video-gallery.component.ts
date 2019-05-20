@@ -47,7 +47,7 @@ export class VideoGalleryComponent implements OnInit, OnChanges {
 
   onImageFileSelected($event: any) {
     if (this.isAllowedImageFormatFile($event.target.files[0])) {
-      this.addNewFile.emit($event.target.files[0]);
+      this.addNewFile.emit($event.target.files);
     } else {
       this.sharedService.raiseError(
         "Only .png/.jpeg image file formats are allowed to upload"

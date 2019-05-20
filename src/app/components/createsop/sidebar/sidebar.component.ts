@@ -346,13 +346,18 @@ export class SidebarComponent implements OnInit {
    * this function is used to upload image when a user uploads an image
    * from the desktop and then it fetches all the previously stored images
    */
-  onImageUpload(file) {
+  onImageUpload(files) {
     const apiEndpoint = `/sop/${this.__page.projectId}/image.json`;
-    const formData = new FormData();
-    formData.append("image", file);
-    this.__sidebarService.uploadImage(apiEndpoint, formData).subscribe(res => {
-      this.fetchAllSnapshotsAlreadyTaken();
-    });
+    const uploadedFiles = new FormData();
+    for (const file of files) {
+      uploadedFiles.append("image", file);
+    }
+
+    this.__sidebarService
+      .uploadImage(apiEndpoint, uploadedFiles)
+      .subscribe(res => {
+        this.fetchAllSnapshotsAlreadyTaken();
+      });
   }
 
   /**
