@@ -1,5 +1,4 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { CookieService } from "ngx-cookie-service";
 import { DataService } from "../../data.service";
 import { HeaderService } from "./header.service";
 
@@ -15,10 +14,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userImage: any;
 
   constructor(
-    private cookieService: CookieService,
     //the HeaderService is required in the header.component.html
     //to trigger the state of mat-progress-bar
-    private _header: HeaderService,
+    private headerService: HeaderService,
     private __api: DataService
   ) {}
 
@@ -41,8 +39,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
      * clear all cookies, session variables,
      * and loacal variables from the browser
      */
-    this.cookieService.deleteAll();
-    sessionStorage.clear();
-    localStorage.clear();
+    this.headerService.onLogout();
   }
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { HeaderService } from "src/app/components/header/header.service";
 import { environment } from "../../../environments/environment";
+import { DataService } from "../../data.service";
 import { SharedService } from "../../services/shared-services/shared.service";
 import { SignupService } from "./signup.service";
 
@@ -8,6 +10,7 @@ import { SignupService } from "./signup.service";
   selector: "app-signupusers",
   templateUrl: "./signupusers.component.html",
   styleUrls: ["./signupusers.component.scss"],
+  providers: [HeaderService],
 })
 export class SignupusersComponent implements OnInit {
   baseUrl = environment.production
@@ -15,9 +18,11 @@ export class SignupusersComponent implements OnInit {
     : "http://localhost:8000";
   constructor(
     private _api: SignupService,
+    private dataService: DataService,
     private route: ActivatedRoute,
     private router: Router,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private headerService: HeaderService
   ) {}
   password_mismatch = false;
   signup_form = 1;
@@ -43,6 +48,11 @@ export class SignupusersComponent implements OnInit {
       } else if (res.status == "failure") {
         this.signup_form = 3;
       } else {
+        this.dataService.fetchData("/checkLogin").subscribe((res: any) => {
+          if (res.user_logged_in === true) {
+            this.signup_form = 4;
+          }
+        });
         this.project_id = parseInt(res.sop);
         this.invitation_id = res.invitation_id;
         this.email = res.email;

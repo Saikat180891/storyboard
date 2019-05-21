@@ -26,7 +26,7 @@
       </mat-menu>
     </div>
   </div>
-  <ng-container *ngIf="_header.loading">
+  <ng-container *ngIf="headerService.loading">
     <div class="page-loading-progress-bar">
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>

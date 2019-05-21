@@ -5,6 +5,8 @@
  */
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { HeaderService } from "src/app/components/header/header.service";
+import { DataService } from "../../data.service";
 import { SharedService } from "../../services/shared-services/shared.service";
 import { SignupService } from "../signupusers/signup.service";
 import { ResetPasswordService } from "./reset-password.service";
@@ -13,13 +15,16 @@ import { ResetPasswordService } from "./reset-password.service";
   selector: "app-reset-password",
   templateUrl: "./reset-password.component.html",
   styleUrls: ["./reset-password.component.scss"],
+  providers: [HeaderService],
 })
 export class ResetPasswordComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private _api: ResetPasswordService,
     private signUpService: SignupService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private dataService: DataService,
+    private headerService: HeaderService
   ) {}
 
   email: string;
@@ -38,6 +43,12 @@ export class ResetPasswordComponent implements OnInit {
    */
   ngOnInit() {
     this.route.queryParams.subscribe(res => {
+      this.dataService.fetchData("/checkLogin").subscribe((res: any) => {
+        if (res.user_logged_in === true) {
+          this.reset_password_form = 4;
+        }
+      });
+
       this.email = res.email;
       this.passwordResetToken = res.reset_password_token;
     });
