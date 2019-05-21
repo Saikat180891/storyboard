@@ -96,6 +96,7 @@
               (click)="onSelectStep(step.step_id, step.screen_id)"
             >
               <app-steps-container
+                class="tausy-steps-list"
                 [StepDist]="step"
                 #stepContainerToken
                 [stepIndex]="i"
@@ -110,7 +111,7 @@
             </div>
           </ng-container>
           <div
-            class="droppable-area steps-margin-around"
+            class="droppable-area steps-margin-around tausy-step-droppable-area"
             appDroppable
             (transferedData)="onDropData($event)"
             (dragover)="allowDrop($event)"

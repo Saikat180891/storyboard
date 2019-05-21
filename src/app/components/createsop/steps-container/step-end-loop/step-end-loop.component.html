@@ -1,7 +1,9 @@
 <div class="loop-box loop-end">
   <div class="loop-box-name">End Loop</div>
   <div class="loop-box-options">
-    <span (click)="onDisplayOptions()"><i class="fas fa-ellipsis-h"></i></span>
+    <span (click)="onDisplayOptions()"
+      ><i class="fas fa-ellipsis-h tausy-end-loop-step-ellipsis"></i
+    ></span>
   </div>
   <div class="comment-box" *ngIf="displayDialogBox">
     <div class="text-area">
@@ -10,18 +12,23 @@
         <textarea
           name=""
           id="comments"
-          class="textarea"
+          class="textarea tausy-end-loop-step-loop-params"
           placeholder="Loop params"
           [(ngModel)]="data.loop_parameters"
         ></textarea>
       </ng-container>
       <ng-template #displaySpan>
-        <span>{{ data.loop_parameters }}</span>
+        <span class="tausy-end-loop-step-card-loop-params">{{
+          data.loop_parameters
+        }}</span>
       </ng-template>
     </div>
     <div class="controls-btn-group">
       <ng-container *ngIf="canEdit; else edit">
-        <div class="check-btn" (click)="onClickOnOk()">
+        <div
+          class="check-btn tausy-end-loop-step-check-button"
+          (click)="onClickOnOk()"
+        >
           <i class="fas fa-check"></i>
         </div>
         <div class="uncheck-btn" (click)="onCancelEdit()">
@@ -32,7 +39,7 @@
         <div class="edit-btn" (click)="onClikedOnEdit()">
           <i class="fas fa-pencil-alt"></i>
         </div>
-        <div class="delete-btn" (click)="onDeleteStep()">
+        <div class="delete-btn tausy-step-delete" (click)="onDeleteStep()">
           <i class="far fa-trash-alt"></i>
         </div>
       </ng-template>

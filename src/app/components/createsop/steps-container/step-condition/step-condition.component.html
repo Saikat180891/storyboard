@@ -32,7 +32,7 @@
     <ng-container *ngIf="canEdit; else edit">
       <div class="right-controls">
         <div
-          class="ctrl-btn step-edit color-green"
+          class="ctrl-btn step-edit color-green tausy-condition-step-check-button"
           (click)="onClickOnConditionOk()"
         >
           <i class="fas fa-check"></i>
@@ -65,7 +65,10 @@
         <div class="ctrl-btn step-edit" (click)="onClikedOnEdit()">
           <i class="fas fa-pencil-alt"></i>
         </div>
-        <div class="ctrl-btn step-delete" (click)="onDeleteStep()">
+        <div
+          class="ctrl-btn step-delete tausy-step-delete"
+          (click)="onDeleteStep()"
+        >
           <i class="far fa-trash-alt"></i>
         </div>
       </div>
@@ -91,10 +94,16 @@
             <div class="if-logic">
               <span class="if-text">If</span>
               <ng-container *ngIf="canEdit; else editField">
-                <input type="text" [(ngModel)]="data.condition" />
+                <input
+                  type="text"
+                  class="tausy-condition-step-condition"
+                  [(ngModel)]="data.condition"
+                />
               </ng-container>
               <ng-template #editField>
-                <span>{{ data.condition }}</span>
+                <span class="tausy-condition-step-card-condition">{{
+                  data.condition
+                }}</span>
               </ng-template>
             </div>
           </div>
@@ -103,10 +112,16 @@
           >
             <label for="Operator">Operator</label>
             <ng-container *ngIf="canEdit; else editOperator">
-              <input type="text" [(ngModel)]="data.operator" />
+              <input
+                type="text"
+                class="tausy-condition-step-operator"
+                [(ngModel)]="data.operator"
+              />
             </ng-container>
             <ng-template #editOperator>
-              <span>{{ data.operator }}</span>
+              <span class="tausy-condition-step-card-operator">{{
+                data.operator
+              }}</span>
             </ng-template>
           </div>
           <div
@@ -114,10 +129,16 @@
           >
             <label for="field">Criteria</label>
             <ng-container *ngIf="canEdit; else editCriteria">
-              <input type="text" [(ngModel)]="data.criteria" />
+              <input
+                type="text"
+                class="tausy-condition-step-criteria"
+                [(ngModel)]="data.criteria"
+              />
             </ng-container>
             <ng-template #editCriteria>
-              <span>{{ data.criteria }}</span>
+              <span class="tausy-condition-step-card-criteria">{{
+                data.criteria
+              }}</span>
             </ng-template>
           </div>
         </div>
@@ -158,10 +179,16 @@
               <div class="if-logic">
                 <span class="if-text">If</span>
                 <ng-container *ngIf="canEdit; else editField">
-                  <input type="text" [(ngModel)]="row.condition" />
+                  <input
+                    type="text"
+                    class="tausy-condition-step-condition"
+                    [(ngModel)]="row.condition"
+                  />
                 </ng-container>
                 <ng-template #editField>
-                  <span>{{ row.condition }}</span>
+                  <span class="tausy-condition-step-card-condition">{{
+                    row.condition
+                  }}</span>
                 </ng-template>
               </div>
             </div>
@@ -170,10 +197,16 @@
             >
               <label for="Operator">Operator</label>
               <ng-container *ngIf="canEdit; else editOperator">
-                <input type="text" [(ngModel)]="row.operator" />
+                <input
+                  type="text"
+                  class="tausy-condition-step-operator"
+                  [(ngModel)]="row.operator"
+                />
               </ng-container>
               <ng-template #editOperator>
-                <span>{{ row.operator }}</span>
+                <span class="tausy-condition-step-card-operator">{{
+                  row.operator
+                }}</span>
               </ng-template>
             </div>
             <div
@@ -182,14 +215,20 @@
               <label for="field">Criteria</label>
               <ng-container *ngIf="canEdit; else editValue">
                 <div class="select-with-delete">
-                  <input type="text" [(ngModel)]="row.criteria" />
+                  <input
+                    type="text"
+                    class="tausy-condition-step-criteria"
+                    [(ngModel)]="row.criteria"
+                  />
                   <div class="delete" (click)="onDeleteNewRow(i)">
                     <i class="far fa-trash-alt"></i>
                   </div>
                 </div>
               </ng-container>
               <ng-template #editValue>
-                <span>{{ row.criteria }}</span>
+                <span class="tausy-condition-step-card-criteria">{{
+                  row.criteria
+                }}</span>
               </ng-template>
             </div>
           </div>
@@ -204,10 +243,16 @@
           <div class="form-sub-group gutter-left">
             <label for="notes">Notes</label>
             <ng-container *ngIf="canEdit; else editNotes">
-              <input type="text" [(ngModel)]="data.notes" />
+              <input
+                type="text"
+                class="tausy-condition-step-notes"
+                [(ngModel)]="data.notes"
+              />
             </ng-container>
             <ng-template #editNotes>
-              <span>{{ data.notes }}</span>
+              <span class="tausy-condition-step-card-notes">{{
+                data.notes
+              }}</span>
             </ng-template>
           </div>
           <div
@@ -219,11 +264,18 @@
             >
             <ng-container *ngIf="canEdit; else editValue" class="gutter-left">
               <div class="select" class="gutter-left">
-                <input type="text" [(ngModel)]="data.next_no_of_steps" />
+                <input
+                  type="text"
+                  class="tausy-condition-step-no-of-steps-linked"
+                  [(ngModel)]="data.next_no_of_steps"
+                />
               </div>
             </ng-container>
             <ng-template #editValue>
-              <span class="gutter-left">{{ data.next_no_of_steps }} </span>
+              <span
+                class="gutter-left tausy-condition-step-card-no-of-steps-linked"
+                >{{ data.next_no_of_steps }}
+              </span>
             </ng-template>
           </div>
         </div>

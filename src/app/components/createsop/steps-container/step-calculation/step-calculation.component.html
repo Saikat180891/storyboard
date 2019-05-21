@@ -31,7 +31,10 @@
 
     <ng-container *ngIf="canEdit; else edit">
       <div class="right-controls">
-        <div class="ctrl-btn step-edit color-green" (click)="onClickOnOk()">
+        <div
+          class="ctrl-btn step-edit color-green tausy-calculation-step-check-button"
+          (click)="onClickOnOk()"
+        >
           <i class="fas fa-check"></i>
         </div>
         <div
@@ -62,7 +65,10 @@
         <div class="ctrl-btn step-edit" (click)="onClikedOnEdit()">
           <i class="fas fa-pencil-alt"></i>
         </div>
-        <div class="ctrl-btn step-delete" (click)="onDeleteStep()">
+        <div
+          class="ctrl-btn step-delete tausy-step-delete"
+          (click)="onDeleteStep()"
+        >
           <i class="far fa-trash-alt"></i>
         </div>
       </div>
@@ -74,6 +80,7 @@
         <div class="form-sub-group full-width">
           <ng-container *ngIf="canEdit; else editField">
             <textarea
+              class="tausy-calculation-step-expression"
               name=""
               id=""
               placeholder="Enter formula or equations or expressions"
@@ -82,7 +89,9 @@
             ></textarea>
           </ng-container>
           <ng-template #editField>
-            <span>{{ data.calc_value }}</span>
+            <span class="tausy-calculation-step-card-expression">{{
+              data.calc_value
+            }}</span>
           </ng-template>
         </div>
       </div>

@@ -1,6 +1,6 @@
 <div class="operation-button-box">
   <div
-    class="partial-blue-btn"
+    class="partial-blue-btn tausy-read-step-button"
     appDraggable
     data-buttontype="Read"
     title="Read"
@@ -11,7 +11,7 @@
     Read
   </div>
   <div
-    class="partial-blue-btn"
+    class="partial-blue-btn tausy-type-step-button"
     appDraggable
     data-buttontype="Type"
     title="Type"
@@ -22,7 +22,7 @@
     Type
   </div>
   <div
-    class="partial-blue-btn"
+    class="partial-blue-btn tausy-ui-interaction-step-button"
     appDraggable
     data-buttontype="ui-interaction"
     title="UI Interaction"
@@ -33,7 +33,7 @@
     UI Interaction
   </div>
   <div
-    class="partial-blue-btn"
+    class="partial-blue-btn tausy-calculation-step-button"
     appDraggable
     data-buttontype="calculation"
     title="Calculation"
@@ -44,7 +44,7 @@
     Calculation
   </div>
   <div
-    class="partial-blue-btn"
+    class="partial-blue-btn tausy-condition-step-button"
     appDraggable
     data-buttontype="condition"
     title="Condition"
@@ -56,7 +56,7 @@
   </div>
   <ng-container *ngIf="isStartLoopDisplayed; else displayEndLoop">
     <div
-      class="full-blue-btn"
+      class="full-blue-btn tausy-start-loop-step-button"
       appDraggable
       data-buttontype="start-loop"
       title="Loop"
@@ -66,7 +66,7 @@
   </ng-container>
   <ng-template #displayEndLoop>
     <div
-      class="full-red-btn"
+      class="full-red-btn tausy-end-loop-step-button"
       appDraggable
       data-buttontype="end-loop"
       title="End Loop"

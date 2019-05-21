@@ -31,7 +31,10 @@
 
     <ng-container *ngIf="canEdit; else edit">
       <div class="right-controls">
-        <div class="ctrl-btn step-edit color-green" (click)="onClickOnOk()">
+        <div
+          class="ctrl-btn step-edit color-green tausy-ui-interaction-step-check-button"
+          (click)="onClickOnOk()"
+        >
           <i class="fas fa-check"></i>
         </div>
         <div
@@ -62,7 +65,10 @@
         <div class="ctrl-btn step-edit" (click)="onClikedOnEdit()">
           <i class="fas fa-pencil-alt"></i>
         </div>
-        <div class="ctrl-btn step-delete" (click)="onDeleteStep()">
+        <div
+          class="ctrl-btn step-delete tausy-step-delete"
+          (click)="onDeleteStep()"
+        >
           <i class="far fa-trash-alt"></i>
         </div>
       </div>
@@ -74,7 +80,7 @@
         <div class="form-sub-group form-sub-group-3 padding-right">
           <label for="interaction">Interaction Type</label>
           <ng-container *ngIf="canEdit; else editInteractionType">
-            <div class="select">
+            <div class="select tausy-ui-interaction-step-interaction-type">
               <mat-select
                 [(value)]="data.interaction_type"
                 placeholder="None"
@@ -89,13 +95,15 @@
             </div>
           </ng-container>
           <ng-template #editInteractionType>
-            <span>{{ data.interaction_type }}</span>
+            <span class="tausy-ui-interaction-step-card-interaction-type">{{
+              data.interaction_type
+            }}</span>
           </ng-template>
         </div>
         <div class="form-sub-group form-sub-group-3 padding-both">
           <label for="click">Click Option</label>
           <ng-container *ngIf="canEdit; else editClick">
-            <div class="select">
+            <div class="select tausy-ui-interaction-step-click-option">
               <mat-select
                 [(value)]="data.click_option"
                 placeholder="None"
@@ -111,13 +119,16 @@
             </div>
           </ng-container>
           <ng-template #editClick>
-            <span>{{ data.click_option }}</span>
+            <span class="tausy-ui-interaction-step-card-click-option">{{
+              data.click_option
+            }}</span>
           </ng-template>
         </div>
         <div class="form-sub-group form-sub-group-3 padding-left">
           <label for="field">Field</label>
           <ng-container *ngIf="canEdit; else editField">
             <input
+              class="tausy-ui-interaction-step-field"
               type="text"
               id="field"
               [(ngModel)]="data.field"
@@ -125,7 +136,9 @@
             />
           </ng-container>
           <ng-template #editField>
-            <span>{{ data.field }}</span>
+            <span class="tausy-ui-interaction-step-card-field">{{
+              data.field
+            }}</span>
           </ng-template>
         </div>
       </div>
@@ -135,6 +148,7 @@
           <label for="notes">Notes</label>
           <ng-container *ngIf="canEdit; else editNotes">
             <textarea
+              class="tausy-ui-interaction-step-notes"
               name=""
               id="notes"
               [(ngModel)]="data.notes"
@@ -142,13 +156,16 @@
             ></textarea>
           </ng-container>
           <ng-template #editNotes>
-            <span>{{ data.notes }}</span>
+            <span class="tausy-ui-interaction-step-card-notes">{{
+              data.notes
+            }}</span>
           </ng-template>
         </div>
         <div class="form-sub-group padding-left">
           <label for="exception-handling">Exception Handling</label>
           <ng-container *ngIf="canEdit; else editException">
             <textarea
+              class="tausy-ui-interaction-step-exception-handling"
               name=""
               id="exception-handling"
               [(ngModel)]="data.exception_handling"
@@ -156,7 +173,9 @@
             ></textarea>
           </ng-container>
           <ng-template #editException>
-            <span>{{ data.exception_handling }}</span>
+            <span class="tausy-ui-interaction-step-card-exception-handling">{{
+              data.exception_handling
+            }}</span>
           </ng-template>
         </div>
       </div>
