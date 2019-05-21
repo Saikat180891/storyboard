@@ -27,14 +27,13 @@ export class ForgotPasswordComponent implements OnInit {
       this.errorMessage = "";
       this.authService.forgotPasswordUser(payLoad).subscribe(
         res => {
-          if (res === "Password Reset, Email has been Sent") {
+          if (res) {
             this.forgotPasswordEmailSent = true;
-          } else {
-            this.emailNotRegistered = true;
           }
         },
         err => {
           this.sharedService.raiseError(err);
+          this.emailNotRegistered = true;
         }
       );
     } else {

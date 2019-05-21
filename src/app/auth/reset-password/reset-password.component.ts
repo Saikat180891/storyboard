@@ -85,19 +85,23 @@ export class ResetPasswordComponent implements OnInit {
       password: this.password,
       reset_password_token: this.passwordResetToken,
     };
-    if (this.strong_password && this.password == this.confirmPassword) {
-      this._api.resetPasswordUser(reset_password_fields).subscribe(
-        res => {
-          if (res == "Success") {
+    if (this.strong_password) {
+      if (this.password == this.confirmPassword) {
+        this._api.resetPasswordUser(reset_password_fields).subscribe(
+          res => {
             this.reset_password_form = 2;
-          } else {
+          },
+          err => {
+            this.sharedService.raiseError(err);
             this.reset_password_form = 3;
           }
-        },
-        err => {
-          this.sharedService.raiseError(err);
-        }
-      );
+        );
+      } else {
+        this.passwordMessage = "Password Mismatch";
+      }
+    } else {
+      this.passwordMessage =
+        "Password should contain atleast 1 Small Alphabet, 1 Capital Alphabet , 1 Number, 1 Special Character";
     }
   }
 }

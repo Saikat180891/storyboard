@@ -94,13 +94,12 @@ export class SignupusersComponent implements OnInit {
         this.password_mismatch = false;
         this._api.signUpUser(signup_details).subscribe(
           res => {
-            if (res == "Success") {
+            if (res) {
               this.signup_form = 2;
-            } else {
-              this.signup_form = 3;
             }
           },
           err => {
+            this.signup_form = 3;
             this.sharedService.raiseError(err);
           }
         );
