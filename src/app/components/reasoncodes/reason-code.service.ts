@@ -4,6 +4,7 @@ import { saveAs } from "file-saver";
 import { BehaviorSubject } from "rxjs";
 import { map } from "rxjs/operators";
 import { DataService } from "../../data.service";
+import { SharedService } from "../../services/shared-services/shared.service";
 import { DateUtils } from "../shared/date-utils";
 import { ServerUserstory, Userstory } from "./models/Userstory.model";
 
@@ -39,7 +40,11 @@ export class ReasonCodeService {
   grantedPermission: any = {};
   role: string;
 
-  constructor(private _api: DataService, public snackbar: MatSnackBar) {}
+  constructor(
+    private _api: DataService,
+    public snackbar: MatSnackBar,
+    private sharedService: SharedService
+  ) {}
 
   selectedProject: any = new BehaviorSubject<any>("");
   userStoriesList: any = new BehaviorSubject<any>([]);
@@ -253,8 +258,9 @@ export class ReasonCodeService {
         this.snackbar.open("Created a new Epic", "Success", { duration: 5000 });
         this.reasonCodeData.push(response);
       },
-      err =>
-        this.snackbar.open("Failed to create epic", "Error", { duration: 5000 })
+      err => {
+        this.sharedService.raiseError(err);
+      }
     );
   }
 
@@ -291,10 +297,9 @@ export class ReasonCodeService {
             }
           });
         },
-        err =>
-          this.snackbar.open("Failed to update epic", "Error", {
-            duration: 5000,
-          })
+        err => {
+          this.sharedService.raiseError(err);
+        }
       );
     }
   }
