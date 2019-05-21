@@ -26,8 +26,9 @@ export class SortComponent implements OnInit {
     } else {
       path = "?" + this.reasonCodeService.sortBy;
     }
+    this.reasonCodeService.sortAndFilterPath = path;
     this.reasonCodeService.filterUserStories(
-      `/sop/epics/${this.reasonCodeService.sopId}/userstories/filter.json`,
+      `/sop/epics/${this.reasonCodeService.sopId}/userstories.json`,
       path
     );
     this.close.emit(false);

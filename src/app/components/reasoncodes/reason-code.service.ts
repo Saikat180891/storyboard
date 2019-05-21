@@ -35,6 +35,7 @@ export class ReasonCodeService {
   doneSelectStatus: EventEmitter<boolean> = new EventEmitter();
 
   sortBy = "";
+  sortAndFilterPath = "";
   filterPath = "";
 
   grantedPermission: any = {};
@@ -150,7 +151,10 @@ export class ReasonCodeService {
   }
 
   getUserStories(id: number): void {
-    const endpoint = `/sop/epics/${id}/userstories.json`;
+    let endpoint = `/sop/epics/${id}/userstories.json`;
+    if (this.sortAndFilterPath != "") {
+      endpoint += this.sortAndFilterPath;
+    }
     this._api
       .get(endpoint)
       .pipe(

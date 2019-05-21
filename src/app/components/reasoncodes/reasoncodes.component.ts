@@ -310,7 +310,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
         delete this.reasonCodeService.filterItems[key];
         this.reasonCodeService.filteredValues.splice(index, 1);
         this.reasonCodeService.filterUserStories(
-          `/sop/epics/${this.reasonCodeService.sopId}/userstories/filter.json`,
+          `/sop/epics/${this.reasonCodeService.sopId}/userstories.json`,
           this.makePath()
         );
       }
@@ -321,7 +321,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
     ) {
       this.reasonCodeService.testCasesVerified = "";
       this.reasonCodeService.filterUserStories(
-        `/sop/epics/${this.reasonCodeService.sopId}/userstories/filter.json`,
+        `/sop/epics/${this.reasonCodeService.sopId}/userstories.json`,
         this.makePath()
       );
     }
@@ -332,7 +332,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
     ) {
       this.reasonCodeService.rulesApproved = "";
       this.reasonCodeService.filterUserStories(
-        `/sop/epics/${this.reasonCodeService.sopId}/userstories/filter.json`,
+        `/sop/epics/${this.reasonCodeService.sopId}/userstories.json`,
         this.makePath()
       );
     }
