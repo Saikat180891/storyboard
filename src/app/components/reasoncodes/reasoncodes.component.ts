@@ -221,6 +221,20 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
       );
   }
 
+  onCopyUserstory(userStory) {
+    this.userstoryEditCreateModal
+      .openDialog(
+        this.reasonCodeService.sopId,
+        UserstoryModalName.COPY,
+        this.reasonCodeService.sprintConfig,
+        this.reasonCodeService.reasonCodeData,
+        userStory
+      )
+      .subscribe(response =>
+        this.reasonCodeService.refresh(this.reasonCodeService.sopId)
+      );
+  }
+
   onOpenExport() {
     this.exportToModal
       .openDialog(

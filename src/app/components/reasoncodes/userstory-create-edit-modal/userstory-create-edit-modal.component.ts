@@ -120,7 +120,10 @@ export class UserstoryCreateEditModalComponent implements OnInit {
   ngOnInit() {
     this.sprints = this.getSprintsForDropdown(this.data.sprints);
     this.epics = this.getEpicsForDropdown(this.data.epics);
-    if (this.data.modalName === UserstoryModalName.EDIT) {
+    if (
+      this.data.modalName === UserstoryModalName.EDIT ||
+      this.data.modalName === UserstoryModalName.COPY
+    ) {
       this.prepopulatedFormInEditMode(this.data.userStoryData);
       this.inputViewLabel =
         this.data.userStoryData && this.data.userStoryData.assignee_name
@@ -146,12 +149,27 @@ export class UserstoryCreateEditModalComponent implements OnInit {
       productivity: userstory.productivity || "",
       assignee: userstory.assignee_id,
     });
+    if (this.data.modalName === UserstoryModalName.COPY) {
+      this.userstoryForm.patchValue({
+        userstoryNumber: "",
+        userstoryName: `Copy of - ${userstory.us_name}`,
+      });
+    }
   }
 
   onSave(): void {
     if (this.userstoryForm.valid) {
       switch (this.data.modalName) {
         case UserstoryModalName.CREATE:
+        case UserstoryModalName.COPY:
+          const payload = this.createPayloadForBackend();
+          Object.assign(payload, { us_copy_id: null });
+          let snackbarMessage = "Userstory has been created successfully";
+          if (this.data.modalName === UserstoryModalName.COPY) {
+            Object.assign(payload, { us_copy_id: this.data.userStoryData.id });
+            snackbarMessage =
+              "Your Copy of user story with SOP details has been created successfully.";
+          }
           this.spinner.show();
           this.api
             .createUserstory(
@@ -159,17 +177,15 @@ export class UserstoryCreateEditModalComponent implements OnInit {
               this.userstoryForm.value.sprint,
               this.userstoryForm.value.epic,
               this.userstoryForm.value.assignee,
-              this.createPayloadForBackend()
+              payload
             )
             .subscribe(
               res => {
                 this.spinner.hide();
                 this.onNoClick(res);
-                this.snackbar.open(
-                  "Userstory has been created successfully",
-                  "Success",
-                  { duration: 3000 }
-                );
+                this.snackbar.open(snackbarMessage, "Success", {
+                  duration: 3000,
+                });
               },
               (err: HttpErrorResponse) => {
                 this.spinner.hide();

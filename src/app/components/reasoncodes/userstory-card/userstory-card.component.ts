@@ -27,6 +27,7 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
   @Output("editUserStory") editUserStory = new EventEmitter();
   @Output("userstoryEditted") userstoryEditted = new EventEmitter();
   @Output("deleteUserStory") deleteUserStory = new EventEmitter();
+  @Output("copyUserStory") copyUserStory = new EventEmitter();
 
   userStory: ServerUserstory;
   rippleColor = "rbga(0,0,0,0.2)";
@@ -69,6 +70,10 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
 
   onDelete(id: number): void {
     this.deleteUserStory.emit(id);
+  }
+
+  onCopy(id: number): void {
+    this.copyUserStory.emit(this.userStory);
   }
 
   restoreUserStories(id: number): void {

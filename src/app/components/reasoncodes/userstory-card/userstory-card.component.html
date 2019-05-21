@@ -197,18 +197,32 @@
       class="options-btn tausy-user-story-ellipsis"
       [matMenuTriggerFor]="options"
       *ngIf="!restore && disableDeleteBtn"
-      [appCanAccess]="{
-        role: role,
-        permissionRequired: 'Can delete user stories',
-        permissionList: permissions
-      }"
     >
-      <i class="fas fa-ellipsis-h"></i>
+      <i
+        class="fas fa-ellipsis-h"
+        [appCanAccess]="{
+          role: role,
+          permissionRequired: 'Can add user stories',
+          permissionList: permissions
+        }"
+      ></i>
       <mat-menu #options="matMenu">
+        <button
+          mat-menu-item
+          class="tausy-user-story-copy"
+          (click)="onCopy(userStory.id)"
+        >
+          Copy
+        </button>
         <button
           mat-menu-item
           class="tausy-user-story-delete"
           (click)="onDelete(userStory.id)"
+          [appCanAccess]="{
+            role: role,
+            permissionRequired: 'Can delete user stories',
+            permissionList: permissions
+          }"
         >
           Delete
         </button>

@@ -118,6 +118,7 @@
           >
             <app-userstory-card
               (deleteUserStory)="onDeleteUserStory($event)"
+              (copyUserStory)="onCopyUserstory($event)"
               [restore]="false"
               [disableDeleteBtn]="true"
               *ngFor="let userStory of reasonCodeService.userStories"
