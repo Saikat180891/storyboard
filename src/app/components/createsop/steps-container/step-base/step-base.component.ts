@@ -121,6 +121,14 @@ export class StepBaseComponent implements OnInit {
     this.data = {
       ...this.stepData.data,
     };
+
+    if (!(this.stepData.step_id || this.stepData.id)) {
+      this.deleteStep.emit({
+        sectionIndex: this.sectionIndex,
+        stepIndex: this.stepIndex,
+        mode: "local",
+      });
+    }
   }
 
   getStepNumber() {
