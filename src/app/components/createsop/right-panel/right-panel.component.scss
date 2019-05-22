@@ -7,11 +7,27 @@
   flex-direction: column;
   scroll-behavior: smooth;
 
+  .section-family {
+    display: flex;
+    width: 100%;
+    .branching-disabled {
+      background-color: #54585a;
+      color: #ffffff;
+      cursor: no-drop;
+    }
+  }
+  .section-disabled {
+    .button {
+      background-color: #54585a;
+      color: #ffffff;
+      cursor: no-drop;
+    }
+  }
   .section {
     margin: 10px 0;
   }
   .add-section {
-    width: 100%;
+    width: 31%;
     height: 30px;
     color: #ffffff;
     background-color: #2a7de1;

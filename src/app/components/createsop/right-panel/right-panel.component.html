@@ -17,7 +17,32 @@
       (attachmentDelete)="onAttachmentDelete($event)"
     ></app-section-title>
   </div>
-  <div class="add-section tausy-add-new-section" (click)="onCreateNewSection()">
-    <i class="fas fa-plus"></i> New Section Title
+  <div
+    class="section-family"
+    [ngClass]="{
+      'section-disabled': isCreateConditionSection || isCreationSection === true
+    }"
+  >
+    <div
+      class="add-section button tausy-add-regular-section"
+      (click)="onCreateNewSection()"
+    >
+      <i class="fas fa-plus"></i> Regular
+    </div>
+    <div
+      class="add-section button tausy-add-condition-section"
+      [ngClass]="{
+        'section-disabled':
+          isCreateConditionSection || isCreationSection === true
+      }"
+      (click)="onCreateConditionSection()"
+    >
+      <i class="fas fa-plus"></i> Condition
+    </div>
+    <div
+      class="add-section button tausy-add-branching-section branching-disabled"
+    >
+      <i class="fas fa-plus"></i> Branching
+    </div>
   </div>
 </div>

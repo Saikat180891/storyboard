@@ -152,6 +152,9 @@ export class SectionTitleComponent implements OnInit {
   onSectionEditClose() {
     if (!this.stepParameters.section_id) {
       this.__step.deleteSection(this.sectionIndex);
+      this.sectionChange.emit({
+        mode: "cancel",
+      });
     } else {
       this.section.patchValue({
         section_name: this.__step.getSopSectionList()[this.sectionIndex][

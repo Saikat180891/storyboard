@@ -76,15 +76,6 @@
   </div>
   <div class="step-body">
     <div class="form">
-      <div class="radio-group" *ngIf="canEdit">
-        <mat-radio-group [(ngModel)]="data.condition_selected">
-          <mat-radio-button
-            [value]="condition"
-            *ngFor="let condition of conditions"
-            >{{ condition }}</mat-radio-button
-          >
-        </mat-radio-group>
-      </div>
       <ng-container>
         <div class="form-group">
           <div
@@ -253,29 +244,6 @@
               <span class="tausy-condition-step-card-notes">{{
                 data.notes
               }}</span>
-            </ng-template>
-          </div>
-          <div
-            class="form-sub-group"
-            *ngIf="data.condition_selected === 'Minor'"
-          >
-            <label for="nextNoSteps" class="gutter-left"
-              >Link the next no. of steps</label
-            >
-            <ng-container *ngIf="canEdit; else editValue" class="gutter-left">
-              <div class="select" class="gutter-left">
-                <input
-                  type="text"
-                  class="tausy-condition-step-no-of-steps-linked"
-                  [(ngModel)]="data.next_no_of_steps"
-                />
-              </div>
-            </ng-container>
-            <ng-template #editValue>
-              <span
-                class="gutter-left tausy-condition-step-card-no-of-steps-linked"
-                >{{ data.next_no_of_steps }}
-              </span>
             </ng-template>
           </div>
         </div>

@@ -34,6 +34,8 @@ export class RightPanelComponent implements OnInit {
   @ViewChild("rightPanelInfiniteScroll") rightPanelInfiniteScroll: ElementRef;
   @ViewChild("section") section: QueryList<ElementRef>;
   isSectionApiRunning: boolean = false;
+  isCreateConditionSection: boolean = false;
+  isCreationSection: boolean = false;
 
   constructor(
     private stepcontrolService: StepcontrolService,
@@ -103,7 +105,17 @@ export class RightPanelComponent implements OnInit {
    * make any request yet
    */
   onCreateNewSection() {
-    this.stepcontrolService.appendSection();
+    if (!(this.isCreateConditionSection || this.isCreationSection)) {
+      this.stepcontrolService.appendSection();
+      this.isCreationSection = true;
+    }
+  }
+
+  onCreateConditionSection() {
+    if (!(this.isCreateConditionSection || this.isCreationSection)) {
+      this.stepcontrolService.appendSection();
+      this.isCreateConditionSection = true;
+    }
   }
 
   /**
@@ -240,6 +252,11 @@ export class RightPanelComponent implements OnInit {
    * execute the edit or the create block
    */
   onSectionChange($event) {
+    if ($event.mode === "cancel") {
+      this.isCreateConditionSection = false;
+      this.isCreationSection = false;
+      return;
+    }
     // to create a section
     if ($event.mode === "create") {
       const payload = {
@@ -257,6 +274,15 @@ export class RightPanelComponent implements OnInit {
         .createSection(this.pageService.userStoryId, payload)
         .subscribe(res => {
           this.stepcontrolService.setSectionItem(res, $event["sectionIndex"]);
+          this.isCreationSection = false;
+
+          if (this.isCreateConditionSection) {
+            this.onButtonDragged(
+              { data: "condition", index: $event["sectionIndex"] },
+              $event["sectionIndex"]
+            );
+            this.isCreateConditionSection = false;
+          }
         });
       // to edit a section
     } else if ($event.mode === "edit") {
