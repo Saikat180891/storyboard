@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { PageService } from "../services/page/page.service";
 
 @Component({
   selector: "recent-screen-shots",
@@ -11,9 +12,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 export class RecentScreenShotsComponent implements OnInit {
   toggleExpansionPanel: boolean = false;
   @Output("open") open = new EventEmitter<boolean>();
+  @Output("exportSelectedImageToSop")
+  exportSelectedImageToSop = new EventEmitter<any>();
   @Input("data") data: any;
   selected: number = -1;
-  constructor() {}
+  constructor(private page: PageService) {}
 
   ngOnInit() {}
 
@@ -27,5 +30,11 @@ export class RecentScreenShotsComponent implements OnInit {
 
   onThumbnailSelect(index: number, content: any) {
     this.selected = index;
+  }
+  onExportImage(index: number, content: any) {
+    this.exportSelectedImageToSop.emit({
+      content,
+    });
+    this.page.shouldShowExportToSopModal = true;
   }
 }
