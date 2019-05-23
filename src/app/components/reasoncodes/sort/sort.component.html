@@ -13,6 +13,15 @@
       </div>
     </li>
     <li class="sort-list-item">
+      <span>U/S#</span>
+      <div class="sub-menu">
+        <ul>
+          <li (click)="onSortBy('sort=us_number,High_to_Low')">High to Low</li>
+          <li (click)="onSortBy('sort=us_number,Low_to_High')">Low to High</li>
+        </ul>
+      </div>
+    </li>
+    <li class="sort-list-item">
       <span>Sprint Name</span>
       <div class="sub-menu">
         <ul>
