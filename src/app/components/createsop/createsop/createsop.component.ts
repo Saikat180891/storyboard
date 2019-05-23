@@ -29,7 +29,7 @@ export class CreatesopComponent
   constructor(
     private routes: ActivatedRoute,
     private __uic: UicontrolService,
-    private __page: PageService,
+    public __page: PageService,
     private __steps: StepcontrolService,
     private __api: DataService,
     private router: Router,

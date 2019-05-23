@@ -81,7 +81,7 @@
       <span class="block">
         <mat-slide-toggle
           [checked]="userStory.verified_test_cases"
-          (change)="toggleTVC($event, userStory.id, userStory.sprint_name)"
+          (change)="toggleTVC($event)"
           [disabled]="checkIfPermissiongranted('Can change user stories')"
         ></mat-slide-toggle>
       </span>
@@ -161,7 +161,7 @@
         <button
           class="btn btn-flat-ash"
           matRipple
-          (click)="onEdit(userStory.id)"
+          (click)="onEdit()"
           [ngClass]="{ hide: restore }"
           [appCanAccess]="{
             role: reasonCodeService.role,

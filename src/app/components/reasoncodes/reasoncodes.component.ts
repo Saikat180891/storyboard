@@ -54,7 +54,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private reasonCodeService: ReasonCodeService,
+    public reasonCodeService: ReasonCodeService,
     private projectsService: ProjectsService,
     public spinner: NgxSpinnerService,
     private exportToModal: ExportToWordModalService,

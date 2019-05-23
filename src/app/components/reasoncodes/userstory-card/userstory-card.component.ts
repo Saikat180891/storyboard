@@ -35,7 +35,7 @@ export class UserstoryCardComponent implements OnInit, OnChanges {
   role: string;
   selected: number = -1;
 
-  constructor(private reasonCodeService: ReasonCodeService) {}
+  constructor(public reasonCodeService: ReasonCodeService) {}
 
   ngOnInit() {
     this.userStory = { ...this.inputUserStory };

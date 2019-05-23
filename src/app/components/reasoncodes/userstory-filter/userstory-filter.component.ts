@@ -1,6 +1,5 @@
 import {
   AfterContentChecked,
-  AfterContentInit,
   Component,
   EventEmitter,
   OnInit,
@@ -38,7 +37,7 @@ export class UserstoryFilterComponent implements OnInit, AfterContentChecked {
   testCasesVerified: string;
   epics: any;
 
-  constructor(private __rcService: ReasonCodeService) {}
+  constructor(public __rcService: ReasonCodeService) {}
 
   ngOnInit() {}
 

@@ -21,7 +21,7 @@ export class ProjectsPageComponent implements OnInit, AfterViewChecked {
   projectRole: any;
 
   constructor(
-    private projectsService: ProjectsService,
+    public projectsService: ProjectsService,
     private spinner: NgxSpinnerService,
     private confirm: ConfirmModalService
   ) {}

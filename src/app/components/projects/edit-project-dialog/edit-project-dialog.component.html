@@ -1,8 +1,4 @@
-<div
-  class="dialog"
-  (keydown.esc)="onEscape($event)"
-  (click)="preventPropagation($event)"
->
+<div class="dialog" (click)="preventPropagation($event)">
   <div class="dialog-group padding-all header-banner">
     <div class="dialog-header">
       <span class="heading">
@@ -140,7 +136,7 @@
                 placeholder="Type name or email address"
                 (keyup)="onKeyPress($event)"
               />
-              <div class="autocomplete" *ngIf="options; else load">
+              <div class="autocomplete" *ngIf="options">
                 <ng-container *ngFor="let option of options; let i = index">
                   <span class="autocomplete-item" (click)="onSelect(option)">{{
                     option.name ? option.name : option.email

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { allRoles, Role } from "../models/enums";
 import { InviteUser } from "../models/invite-user.model";
@@ -16,7 +16,7 @@ export class InviteUserFieldComponent implements OnInit {
   // validation failed styling.
   // TODO: this is kind of a hack, but we need to refactor the
   // entire dialog if we want to do it a better way.
-  private submitted: boolean = false;
+  public submitted: boolean = false;
 
   roles: Role[] = allRoles;
 

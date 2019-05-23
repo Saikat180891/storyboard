@@ -36,7 +36,7 @@ export class InputComponent implements ControlValueAccessor, OnInit {
   @Output("valueChange") valueChange = new EventEmitter<any>();
   @ViewChild("inputElement") inputElement: ElementRef;
 
-  onChange: () => void;
+  onChange: ($event) => void;
   onTouched: () => void;
 
   constructor(private render: Renderer2) {}

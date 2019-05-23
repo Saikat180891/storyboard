@@ -18,9 +18,9 @@ enum FileIcon {
   styleUrls: ["./file-attachment.component.scss"],
 })
 export class FileAttachmentComponent {
-  private fileNameSelected: string = "File Name";
-  private fileSelected: any;
-  private fileIconType: string;
+  fileNameSelected: string = "File Name";
+  fileSelected: any;
+  fileIconType: string;
 
   constructor(
     public dialogRef: MatDialogRef<FileAttachmentComponent>,

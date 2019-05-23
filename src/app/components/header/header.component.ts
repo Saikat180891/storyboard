@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { DataService } from "../../data.service";
 import { HeaderService } from "./header.service";
 
@@ -8,16 +8,16 @@ import { HeaderService } from "./header.service";
   styleUrls: ["./header.component.scss"],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  //a variable to store username
+  // a variable to store username
   userName: string = "";
-  //a variable to store the link of the user's image
+  // a variable to store the link of the user's image
   userImage: any;
 
   constructor(
-    //the HeaderService is required in the header.component.html
-    //to trigger the state of mat-progress-bar
-    private headerService: HeaderService,
-    private __api: DataService
+    // the HeaderService is required in the header.component.html
+    // to trigger the state of mat-progress-bar
+    public headerService: HeaderService,
+    public __api: DataService
   ) {}
 
   ngOnInit() {

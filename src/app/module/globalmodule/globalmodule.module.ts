@@ -12,7 +12,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { RouterModule } from "@angular/router";
 import { NgxSpinnerModule } from "ngx-spinner";
-import { CustomDropDownComponent } from "src/app/components/shared/custom-drop-down/custom-drop-down.component";
 import { DateInputComponent } from "src/app/components/shared/date-input/date-input.component";
 import { FileAttachmentComponent } from "src/app/components/shared/file-attachment/file-attachment.component";
 import { ButtonComponent } from "../../components/shared/button/button.component";
@@ -77,7 +76,6 @@ import { DateFormatterPipe } from "src/app/pipes/date-formatter.pipe";
     ButtonComponent,
     ConfirmModalComponent,
     FileAttachmentComponent,
-    CustomDropDownComponent,
     DateInputComponent,
     InputComponent,
     DropdownComponent,
@@ -165,7 +163,6 @@ import { DateFormatterPipe } from "src/app/pipes/date-formatter.pipe";
     ButtonComponent,
     ConfirmModalComponent,
     FileAttachmentComponent,
-    CustomDropDownComponent,
     DateInputComponent,
     InputComponent,
     DropdownComponent,
