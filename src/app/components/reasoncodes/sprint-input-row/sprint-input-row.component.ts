@@ -22,7 +22,7 @@ export class SprintInputRowComponent implements OnInit {
   };
   @Output("valueChange") valueChange = new EventEmitter<SprintRowValue>();
   @Output("deleteSprint") deleteSprint = new EventEmitter<number>();
-  private weeks = 0;
+  private weeks = 1;
 
   formValues: SprintRowValue;
 
@@ -40,6 +40,7 @@ export class SprintInputRowComponent implements OnInit {
         duration: `${this.weeks}W`,
         endDate: null,
       };
+      this.formValues.endDate = this.calculateEndDate(this.weeks);
     } else {
       this.formValues = this.value;
       this.weeks = parseInt(
@@ -59,19 +60,19 @@ export class SprintInputRowComponent implements OnInit {
   }
 
   onDatePickerClose($event) {
-    this.calculateEndDate(this.weeks);
+    this.formValues.endDate = this.calculateEndDate(this.weeks);
     this.valueChange.emit(this.formValues);
   }
 
   onArrowUp() {
     const weeks = this.incDate();
-    this.calculateEndDate(weeks);
+    this.formValues.endDate = this.calculateEndDate(weeks);
     this.valueChange.emit(this.formValues);
   }
 
   onArrowDown() {
     const weeks = this.decDate();
-    this.calculateEndDate(weeks);
+    this.formValues.endDate = this.calculateEndDate(weeks);
     this.valueChange.emit(this.formValues);
   }
 
@@ -84,7 +85,7 @@ export class SprintInputRowComponent implements OnInit {
   }
 
   decDate(): number {
-    if (this.weeks > 0) {
+    if (this.weeks > 1) {
       this.weeks -= 1;
       this.formValues.duration = `${this.weeks}W`;
     }
@@ -96,6 +97,6 @@ export class SprintInputRowComponent implements OnInit {
     const date = new Date(this.formValues.startDate);
     date.setDate(date.getDate() + days);
     const endDate = new Date(date);
-    this.formValues.endDate = endDate;
+    return endDate;
   }
 }
