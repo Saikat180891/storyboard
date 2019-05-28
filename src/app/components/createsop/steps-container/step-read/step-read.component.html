@@ -111,18 +111,17 @@
         <div class="form-sub-group padding-right">
           <label for="data-type">Data Type</label>
           <ng-container *ngIf="canEdit; else editDataType">
-            <div class="select tausy-read-step-data-type">
+            <div class="select tausy-read-step-data-type select-border">
               <mat-select
                 [(value)]="data.data_type"
                 placeholder="Any"
                 [disabled]="!canEdit"
                 disableOptionCentering
               >
-                <mat-option>Any</mat-option>
                 <mat-option
-                  [value]="dataTypeOption.value"
+                  [value]="dataTypeOption"
                   *ngFor="let dataTypeOption of dataTypeOptions"
-                  >{{ dataTypeOption.viewValue }}</mat-option
+                  >{{ dataTypeOption }}</mat-option
                 >
               </mat-select>
             </div>

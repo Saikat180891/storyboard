@@ -7,6 +7,7 @@ import { StepBaseComponent } from "../step-base/step-base.component";
 })
 export class StepReadComponent extends StepBaseComponent {
   stepType = "read";
+  dataTypeOptions = ["Any", "Integer", "String", "Float"];
 
   data = {
     field: "",
