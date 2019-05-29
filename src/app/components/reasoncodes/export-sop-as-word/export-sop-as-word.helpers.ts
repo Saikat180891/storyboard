@@ -1,3 +1,4 @@
+import { BehaviorSubject, combineLatest, forkJoin, Observable } from "rxjs";
 import { DownloadFileType } from "../export-to-word-modal/export-to-word-modal.component";
 import { Epics } from "../models/Epics.model";
 import { ServerUserstory } from "../models/Userstory.model";
@@ -44,29 +45,36 @@ export function getIdsOfDownloadableEpicsAndUserstories(
 }
 
 export function createDownloadableEpicsAndUserstories(
-  epics: Epics[],
-  userstories: ServerUserstory[]
-) {
+  epicsObservable: Observable<Epics[]>,
+  userstoriesObservable: Observable<ServerUserstory[]>
+): DownloadableEpics[] {
   const downloadableEpics: DownloadableEpics[] = [];
 
-  epics.forEach(epic => {
-    const tempEpic: DownloadableEpics = {
-      epicName: epic.name,
-      epicId: epic.id,
-      selected: false,
-      userstories: [],
-    };
-    userstories.forEach(userstory => {
-      if (userstory.rc_id === epic.id) {
-        const tempUserstory: DownloadableUserstories = {
-          userstoryName: userstory.us_name,
-          userstoryId: userstory.id,
-          selected: false,
-        };
-        tempEpic.userstories.push(tempUserstory);
+  combineLatest([epicsObservable, userstoriesObservable]).subscribe(
+    responseList => {
+      if (responseList[0] && responseList[1]) {
+        responseList[0].forEach(epic => {
+          const tempEpic: DownloadableEpics = {
+            epicName: epic.name,
+            epicId: epic.id,
+            selected: false,
+            userstories: [],
+          };
+          responseList[1].forEach(userstory => {
+            if (userstory.rc_id === epic.id) {
+              const tempUserstory: DownloadableUserstories = {
+                userstoryName: userstory.us_name,
+                userstoryId: userstory.id,
+                selected: false,
+              };
+              tempEpic.userstories.push(tempUserstory);
+            }
+          });
+          downloadableEpics.push(tempEpic);
+        });
       }
-    });
-    downloadableEpics.push(tempEpic);
-  });
+    }
+  );
+
   return downloadableEpics;
 }

@@ -1,11 +1,12 @@
 import { EventEmitter, Injectable } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
 import { saveAs } from "file-saver";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { DataService } from "../../data.service";
 import { SharedService } from "../../services/shared-services/shared.service";
 import { DateUtils } from "../shared/date-utils";
+import { createDownloadableEpicsAndUserstories } from "./export-sop-as-word/export-sop-as-word.helpers";
 import { ServerUserstory, Userstory } from "./models/Userstory.model";
 
 @Injectable({
@@ -33,6 +34,8 @@ export class ReasonCodeService {
   rulesApproved: string;
   testCasesVerified: string;
   doneSelectStatus: EventEmitter<boolean> = new EventEmitter();
+
+  epicsObservable = new BehaviorSubject(null);
 
   sortBy = "";
   sortAndFilterPath = "";
@@ -271,6 +274,7 @@ export class ReasonCodeService {
   getReasonCode(id) {
     this._api.fetchData(`/sop/${id}/epics.json`).subscribe(response => {
       this.reasonCodeData = response;
+      this.epicsObservable.next(this.reasonCodeData);
     });
   }
 
@@ -306,6 +310,14 @@ export class ReasonCodeService {
         }
       );
     }
+  }
+
+  getUserstoriesForExport(): Observable<any> {
+    return this.userStoriesList.asObservable();
+  }
+
+  getEpicsForExport(): Observable<any> {
+    return this.epicsObservable.asObservable();
   }
 
   refresh(sopID?: number) {

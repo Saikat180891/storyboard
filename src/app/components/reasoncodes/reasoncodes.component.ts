@@ -239,8 +239,8 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
     this.exportToModal
       .openDialog(
         createDownloadableEpicsAndUserstories(
-          this.reasonCodeService.reasonCodeData,
-          this.reasonCodeService.userStories
+          this.reasonCodeService.getEpicsForExport(),
+          this.reasonCodeService.getUserstoriesForExport()
         )
       )
       .subscribe((res: any | Export | Audit) => {
