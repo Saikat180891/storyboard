@@ -446,13 +446,10 @@ export class SidebarComponent implements OnInit {
       },
       err => {},
       () => {
-        if (
-          this.deleteContent.index - 1 != -1 &&
-          this.deleteContent.index != this.videoGalleryContent.length - 1
-        ) {
-          this.playThisVideo = this.videoGalleryContent[
-            this.deleteContent.index - 1
-          ].video_url;
+        if (this.videoGalleryContent && this.videoGalleryContent.length) {
+          this.playThisVideo = this.videoGalleryContent[0].video_url;
+        } else {
+          this.playThisVideo = null;
         }
       }
     );
