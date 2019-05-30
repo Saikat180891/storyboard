@@ -1,10 +1,11 @@
-import { Injectable } from "@angular/core";
+import { EventEmitter, Injectable, Output } from "@angular/core";
 import { Sprint } from "../models/Sprint.model";
 @Injectable({
   providedIn: "root",
 })
 export class ProjectConfigureService {
   private sprints: Sprint[] = [];
+  @Output("saveEvent") saveEvent = new EventEmitter<boolean>();
 
   constructor() {}
 
@@ -31,5 +32,9 @@ export class ProjectConfigureService {
 
   deleteSprint(sprintIndex: number) {
     this.sprints.splice(sprintIndex, 1);
+  }
+
+  getSaveEvent() {
+    return this.saveEvent;
   }
 }

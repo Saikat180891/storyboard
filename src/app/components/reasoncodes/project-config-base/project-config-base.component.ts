@@ -26,6 +26,7 @@ export class ProjectConfigBaseComponent implements OnInit {
   changeDetectedInEpics = [];
   addMoreSprints = [];
   preExistingSprintModified = [];
+  saveEvent: any;
 
   constructor(
     private apiEnpointService: ApiService,
@@ -36,7 +37,16 @@ export class ProjectConfigBaseComponent implements OnInit {
     private sharedService: SharedService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.saveEvent = this.projectConfigureService.getSaveEvent();
+    this.saveEvent.subscribe(res => {
+      if (res) {
+        this.saveSprints();
+        this.saveEpics();
+        this.onClose();
+      }
+    });
+  }
 
   onAddMoreSprints() {
     this.addMoreSprints.push({});
@@ -133,9 +143,7 @@ export class ProjectConfigBaseComponent implements OnInit {
   }
 
   onSave() {
-    this.saveSprints();
-    this.saveEpics();
-    this.onClose();
+    this.projectConfigureService.saveEvent.emit(true);
   }
 
   ondeleteSprint($event) {
