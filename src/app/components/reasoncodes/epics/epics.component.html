@@ -19,6 +19,7 @@
         <mat-grid-tile>{{ i + 1 }}</mat-grid-tile>
         <mat-grid-tile [colspan]="4">
           <input
+            class="tausy-epic-name"
             maxlength="100"
             type="text"
             [(ngModel)]="epic.name"
@@ -78,6 +79,7 @@
     btnColor="primary"
   ></stb-button>
   <stb-button
+    class="tausy-config-project-cancel-button"
     btnStyle="raised"
     (click)="onClose()"
     btnName="Cancel"

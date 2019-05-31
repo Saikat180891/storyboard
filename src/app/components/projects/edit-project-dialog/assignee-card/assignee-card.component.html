@@ -6,7 +6,7 @@
         <span *ngIf="assignee.user">{{ assignee.user }}</span>
       </b>
     </div>
-    <div class="select-role">
+    <div class="select-role tausy-project-select-role-dropdown">
       <mat-select
         [(value)]="assignee.role"
         (selectionChange)="onRoleChange($event.value)"

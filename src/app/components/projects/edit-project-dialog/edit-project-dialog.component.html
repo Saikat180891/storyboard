@@ -69,7 +69,11 @@
           >
         </button>
 
-        <input type="file" (change)="onFileSelected($event)" />
+        <input
+          type="file"
+          class="tausy-project-edit-logo"
+          (change)="onFileSelected($event)"
+        />
       </div>
     </div>
   </div>
@@ -132,15 +136,18 @@
             <!-- TODO this could be user-search-box.component -->
             <ng-container>
               <input
+                class="tausy-project-assignee-box"
                 type="text"
                 placeholder="Type name or email address"
                 (keyup)="onKeyPress($event)"
               />
               <div class="autocomplete" *ngIf="options">
                 <ng-container *ngFor="let option of options; let i = index">
-                  <span class="autocomplete-item" (click)="onSelect(option)">{{
-                    option.name ? option.name : option.email
-                  }}</span>
+                  <span
+                    class="autocomplete-item tausy-project-autocomplete-elements"
+                    (click)="onSelect(option)"
+                    >{{ option.name ? option.name : option.email }}</span
+                  >
                 </ng-container>
               </div>
             </ng-container>
@@ -150,6 +157,7 @@
         <div class="dialog-group height-auto margin-bottom-10 assignee-list">
           <ul>
             <app-assignee-card
+              class="tausy-project-present-assignee-list"
               *ngFor="let user of alreadyCreatedAssignees; let i = index"
               [invalid]="formValidationFailed && !validateAssignee(user)"
               [assignee]="user"
@@ -160,6 +168,7 @@
             >
             </app-assignee-card>
             <app-assignee-card
+              class="tausy-project-new-created-assignee-list"
               *ngFor="let user of newlyCreatedAssignees; let i = index"
               [invalid]="formValidationFailed && !validateAssignee(user)"
               [assignee]="user"
@@ -200,7 +209,13 @@
       >
         {{ getSubmitButtonText() }}
       </button>
-      <button mat-raised-button (click)="onClose()">CANCEL</button>
+      <button
+        mat-raised-button
+        class="tausy-project-cancel-button"
+        (click)="onClose()"
+      >
+        CANCEL
+      </button>
     </div>
     <div class="button-box" *ngSwitchCase="1">
       <button mat-raised-button color="primary" (click)="onSendInvitation()">

@@ -10,14 +10,16 @@
   <div class="box row r1">
     <div class="col c1">
       <span>U/S#</span>
-      <span>{{ userStory.us_number }}</span>
+      <span class="tausy-user-story-number">{{ userStory.us_number }}</span>
       <span>Epic</span>
-      <span>{{ display(userStory.rc_name) }}</span>
+      <span class="tausy-user-story-epic-name">{{
+        display(userStory.rc_name)
+      }}</span>
     </div>
     <div class="col c12">
       <span>User Story Name</span>
       <span
-        class="wrap-content"
+        class="wrap-content tausy-user-story-name"
         matTooltip="{{ userStory.us_name }}"
         matTooltipPosition="right"
         *ngIf="
@@ -27,16 +29,23 @@
         >{{ display(userStory.us_name) }}</span
       >
       <ng-template #smallUsName>
-        <span class="wrap-content">{{ display(userStory.us_name) }}</span>
+        <span class="wrap-content tausy-user-story-name">{{
+          display(userStory.us_name)
+        }}</span>
       </ng-template>
       <span>Sprint Name</span>
-      <span>{{ display(userStory.sprint_name) }}</span>
+      <span class="tausy-user-story-sprint-name">{{
+        display(userStory.sprint_name)
+      }}</span>
     </div>
   </div>
   <div class="box row r2">
     <div class="col c2 reduce-padding">
       <span class="h-center">Priority</span>
-      <span class="priority" [ngStyle]="{ margin: '7px auto' }">
+      <span
+        class="priority tausy-user-story-priority"
+        [ngStyle]="{ margin: '7px auto' }"
+      >
         <span
           class="circle"
           [ngClass]="{
@@ -57,19 +66,25 @@
         </span>
       </span>
       <span class="h-center">Dev Hrs</span>
-      <span class="h-center">{{ display(userStory.dev_hrs) }}</span>
+      <span class="h-center tausy-user-story-dev-hrs">{{
+        display(userStory.dev_hrs)
+      }}</span>
     </div>
     <div class="col c22">
       <span class="h-center">Productivity</span>
-      <span class="h-center">{{ display(userStory.productivity) }}</span>
+      <span class="h-center tausy-user-story-productivity">{{
+        display(userStory.productivity)
+      }}</span>
       <span class="h-center">Benefits</span>
-      <span class="h-center">{{ display(userStory.ftes) }}</span>
+      <span class="h-center tausy-user-story-benefits">{{
+        display(userStory.ftes)
+      }}</span>
     </div>
   </div>
   <div class="box row r3">
     <div class="col c3">
       <span class="h-center reduce-margin">Rules Approved</span>
-      <span class="block">
+      <span class="block tausy-user-story-rules-approved">
         <mat-slide-toggle
           class="rules-approved"
           [checked]="userStory.rules_approved"
@@ -78,7 +93,7 @@
         ></mat-slide-toggle>
       </span>
       <span class="h-center reduce-margin">Test Case Verified</span>
-      <span class="block">
+      <span class="block tausy-user-story-test-case-verified">
         <mat-slide-toggle
           [checked]="userStory.verified_test_cases"
           (change)="toggleTVC($event)"
@@ -93,7 +108,7 @@
       [ngStyle]="{ 'border-right': '1px solid rgba(0, 0, 0, 0.1)' }"
     >
       <span>Status</span>
-      <span class="priority h-center">
+      <span class="priority h-center tausy-user-story-status">
         <span
           *ngIf="userStory.status === 'Backlog'"
           class="circle"
@@ -136,14 +151,16 @@
       </span>
       <span>Description</span>
       <span
-        class="wrap-content"
+        class="wrap-content tausy-user-story-description"
         matTooltip="{{ userStory.notes }}"
         matTooltipPosition="right"
         *ngIf="userStory.notes && userStory.notes.length > 20; else smallNotes"
         >{{ userStory.notes || "-----" }}</span
       >
       <ng-template #smallNotes>
-        <span class="wrap-content">{{ userStory.notes || "-----" }}</span>
+        <span class="wrap-content tausy-user-story-description">{{
+          userStory.notes || "-----"
+        }}</span>
       </ng-template>
     </div>
     <div class="col c4">
@@ -154,12 +171,14 @@
         >
       </span>
       <span>Assignee</span>
-      <span>{{ display(userStory.assignee_name) }}</span>
+      <span class="tausy-user-story-assignee-name">{{
+        display(userStory.assignee_name)
+      }}</span>
     </div>
     <div class="col c42">
       <div class="btn-box">
         <button
-          class="btn btn-flat-ash"
+          class="btn btn-flat-ash tausy-user-story-edit"
           matRipple
           (click)="onEdit()"
           [ngClass]="{ hide: restore }"
