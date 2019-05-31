@@ -95,7 +95,7 @@ export class SprintInputRowComponent implements OnInit {
   calculateEndDate(weeks: number) {
     const days = weeks * 7;
     const date = new Date(this.formValues.startDate);
-    date.setDate(date.getDate() + days);
+    date.setDate(date.getDate() + days - 1);
     const endDate = new Date(date);
     return endDate;
   }
