@@ -9,7 +9,6 @@ export interface ServerUserstory {
   productivity?: string | number;
   rc_id?: number;
   rc_name?: string;
-  revised_delivery?: string;
   rules_approved: boolean;
   sprint_id?: number;
   sprint_name?: string;
@@ -62,7 +61,6 @@ export class Userstory {
           : 0.0,
       rc_id: userstory.rc_id ? userstory.rc_id : null,
       rc_name: userstory.rc_name || null,
-      revised_delivery: userstory.revised_delivery,
       rules_approved: userstory.rules_approved,
       sprint_id: userstory.sprint_id ? userstory.sprint_id : null,
       sprint_name: userstory.sprint_name || null,

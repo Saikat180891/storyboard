@@ -368,10 +368,6 @@ export class ReasonCodeService {
         element["planned_delivery"] = DateUtils.formatDateToUS(
           element["planned_delivery"]
         );
-        element["revised_delivery"] =
-          element["revised_delivery"] != null
-            ? DateUtils.formatDateToUS(element["revised_delivery"])
-            : "-----";
       });
       this.userStories = response;
     });
