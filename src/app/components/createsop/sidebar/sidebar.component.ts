@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
-import { Subject } from "rxjs";
+import { Subject, Subscriber, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { SharedService } from "../../../services/shared-services/shared.service";
 import { PageService } from "../services/page/page.service";
@@ -31,7 +31,6 @@ export class SidebarComponent implements OnInit {
   @ViewChild("videoPlayer") videoPlayer: ElementRef;
   @ViewChild("canvas") canvas: ElementRef;
   @ViewChild("volumeController") volumeController: ElementRef;
-  protected ngUnsubscribe = new Subject<void>();
 
   isPlaying: boolean = false;
   isMuted: boolean = false;
@@ -48,7 +47,7 @@ export class SidebarComponent implements OnInit {
   uploadProgress: boolean = false;
   uploadProgressPercentage: any;
   uploadProgressText: any;
-  videoUpload: any;
+  videoUpload: Subscription;
   buffered: number;
   videoName: string;
   imageName: string;
@@ -406,7 +405,6 @@ export class SidebarComponent implements OnInit {
     videoData.append("video", $event);
     this.videoUpload = this.__sidebarService
       .sendVideo(apiEndpoint, videoData)
-      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         event => {
           if (event.type === HttpEventType.UploadProgress) {
@@ -465,8 +463,8 @@ export class SidebarComponent implements OnInit {
    * which appears while any video is being uploaded
    */
   onCancelVideoUpload() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.videoUpload.unsubscribe();
+    this.uploadProgress = false;
   }
 
   /**

@@ -1,10 +1,12 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Output,
+  ViewChild,
 } from "@angular/core";
 import { SharedService } from "../../../services/shared-services/shared.service";
 import { PageService } from "../services/page/page.service";
@@ -21,6 +23,7 @@ export class VideoGalleryComponent implements OnInit, OnChanges {
   @Output("optionSelected") optionSelected = new EventEmitter<any>();
   @Output("addNewFile") addNewFile = new EventEmitter<any>();
   @Output("deleteContent") deleteContent = new EventEmitter<any>();
+  @ViewChild("videoSelector") videoSelector: ElementRef;
 
   selected: number = -1;
 
@@ -58,6 +61,7 @@ export class VideoGalleryComponent implements OnInit, OnChanges {
   onVideoFileSelected($event: any) {
     if (this.isAllowedVideoFormatFile($event.target.files[0])) {
       this.addNewFile.emit($event.target.files[0]);
+      this.videoSelector.nativeElement.value = null;
     } else {
       this.sharedService.raiseError(
         "Only .mp4 video file formats are allowed to upload"
