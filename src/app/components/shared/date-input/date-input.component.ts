@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { MatDatepickerInputEvent } from "@angular/material";
-import { convertStartDateforBackend } from "../date-utils";
+import { convertDateforBackend } from "../date-utils";
 
 @Component({
   selector: "stb-datepicker",
@@ -27,6 +27,8 @@ export class DateInputComponent implements ControlValueAccessor {
   @Input("label") label: string;
   @Input("disabled") disabled: boolean;
   @Output("dateChange") dateChange = new EventEmitter<string>();
+  @Input("max") maxDate: Date;
+  @Input("min") minDate: Date;
 
   value: any;
   onChange: () => void;
@@ -52,7 +54,7 @@ export class DateInputComponent implements ControlValueAccessor {
 
   onDateChange(date: Date) {
     // to be used for ngModel
-    this.dateChange.emit(convertStartDateforBackend(date));
+    this.dateChange.emit(convertDateforBackend(date));
     // to be used with formControl
     this.value = date;
   }

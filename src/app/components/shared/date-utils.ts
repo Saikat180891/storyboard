@@ -69,7 +69,7 @@ export function arrangeEndDateForBackend(date: string) {
   return `${yyyy}-${mm}-${dd}`;
 }
 
-export function convertStartDateforBackend(date: Date) {
+export function convertDateforBackend(date: Date) {
   const yyyy = date.getFullYear();
   const mm = date.getMonth() + 1;
   const dd = date.getDate();

@@ -8,10 +8,7 @@ import { ReasonCodeService } from "../reason-code.service";
 import { ApiService } from "../services/api.service";
 import { ProjectConfigureService } from "../services/project-configure.service";
 
-import {
-  arrangeEndDateForBackend,
-  convertStartDateforBackend,
-} from "../../shared/date-utils";
+import { convertDateforBackend } from "../../shared/date-utils";
 
 @Component({
   selector: "app-project-config-base",
@@ -73,9 +70,9 @@ export class ProjectConfigBaseComponent implements OnInit {
       const sprints = this.addMoreSprints.map((element: Sprint) => {
         return {
           duration: element.duration,
-          end_date: convertStartDateforBackend(new Date(element.endDate)),
+          end_date: convertDateforBackend(new Date(element.endDate)),
           sprint_name: element.sprintName,
-          start_date: convertStartDateforBackend(new Date(element.startDate)),
+          start_date: convertDateforBackend(new Date(element.startDate)),
         };
       });
       sprints.forEach(sprint => {
@@ -107,12 +104,12 @@ export class ProjectConfigBaseComponent implements OnInit {
           id: sprint.id,
           values: {
             duration: sprint.duration,
-            end_date: convertStartDateforBackend(new Date(sprint.endDate)),
+            end_date: convertDateforBackend(new Date(sprint.endDate)),
             sprint_name: sprint.sprintName,
             start_date:
               typeof sprint.startDate === "string"
                 ? sprint.startDate
-                : convertStartDateforBackend(new Date(sprint.startDate)),
+                : convertDateforBackend(new Date(sprint.startDate)),
           },
         };
       });

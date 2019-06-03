@@ -11,35 +11,57 @@
         >
       </mat-radio-group>
     </div>
-    <div class="form-group form-group-expand">
+    <form class="form-group form-group-expand" [formGroup]="exportForm">
       <div class="date-picker">
         <stb-datepicker
           label="Start Date"
-          [disabled]="disableDatePicker"
-          [(date)]="startDate"
+          formControlName="startDate"
         ></stb-datepicker>
+        <div
+          class="warn"
+          *ngIf="
+            !disableDatePicker &&
+            exportForm.get('startDate').touched &&
+            exportForm.get('startDate').invalid
+          "
+        >
+          <small>*Please enter a valid Start Date</small>
+        </div>
       </div>
       <div class="date-picker">
         <stb-datepicker
           label="End Date"
-          [disabled]="disableDatePicker"
-          [(date)]="endDate"
+          formControlName="endDate"
+          [max]="maxDate"
         ></stb-datepicker>
+        <div
+          class="warn"
+          *ngIf="
+            !disableDatePicker &&
+            exportForm.get('endDate').touched &&
+            exportForm.get('endDate').invalid
+          "
+        >
+          <small>*Please enter a valid End Date</small>
+        </div>
       </div>
+      <div class="warn" *ngIf="!disableDatePicker && invalidDates">
+        <small>*Please ensure Start Date is less than End Date</small>
+      </div>
+    </form>
+    <div class="footer-position">
+      <stb-button
+        btnStyle="raised"
+        (click)="onExport()"
+        btnName="Export"
+        btnColor="primary"
+      ></stb-button>
+      <stb-button
+        btnStyle="raised"
+        (click)="onClose()"
+        btnName="Cancel"
+        btnColor="accent"
+      ></stb-button>
     </div>
-  </div>
-  <div class="footer-position">
-    <stb-button
-      btnStyle="raised"
-      (click)="onExport()"
-      btnName="Export"
-      btnColor="primary"
-    ></stb-button>
-    <stb-button
-      btnStyle="raised"
-      (click)="onClose()"
-      btnName="Cancel"
-      btnColor="accent"
-    ></stb-button>
   </div>
 </div>
