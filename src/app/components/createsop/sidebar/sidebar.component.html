@@ -82,6 +82,7 @@
           <div class="video-gellery">
             <app-gallery
               [data]="videoGalleryContent"
+              [uploadProgress]="uploadProgress"
               [type]="'VIDEO'"
               (optionSelected)="onSelectedVideo($event)"
               (addNewFile)="onVideoUpload($event)"

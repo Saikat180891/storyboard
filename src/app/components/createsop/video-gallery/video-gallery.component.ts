@@ -20,6 +20,7 @@ import { SidebarService } from "../services/sidebar/sidebar.service";
 export class VideoGalleryComponent implements OnInit, OnChanges {
   @Input("type") type: string;
   @Input("data") data: any;
+  @Input("uploadProgress") uploadProgress: boolean;
   @Output("optionSelected") optionSelected = new EventEmitter<any>();
   @Output("addNewFile") addNewFile = new EventEmitter<any>();
   @Output("deleteContent") deleteContent = new EventEmitter<any>();

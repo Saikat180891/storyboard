@@ -23,6 +23,7 @@
             <ng-container *ngIf="type === 'VIDEO'; else selectImg">
               <input
                 type="file"
+                [disabled]="uploadProgress"
                 name=""
                 id=""
                 #videoSelector
