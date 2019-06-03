@@ -236,6 +236,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
   }
 
   onOpenExport() {
+    this.onClearAllFilters();
     this.exportToModal
       .openDialog(
         createDownloadableEpicsAndUserstories(
@@ -281,6 +282,7 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
     this.reasonCodeService.testCasesVerified = "";
     this.reasonCodeService.filteredValues = [];
     this.reasonCodeService.filterPath = "";
+    this.reasonCodeService.sortAndFilterPath = "";
     this.reasonCodeService.getUserStories(this.reasonCodeService.sopId);
     this.clearAllFilter = false;
     this.reasonCodeService.filtersAppliedFlag = false;
