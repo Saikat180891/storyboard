@@ -70,6 +70,23 @@ export class SectionTitleComponent implements OnInit {
       this.section.setValue({
         section_name: this.stepParameters.section_name,
       });
+
+      // this is to set the first section's, first step as active,so that
+      // associated screen shot can be updated.
+      // Bug - 7943
+      setTimeout(() => {
+        if (
+          this.stepParameters &&
+          this.stepParameters.steps_list &&
+          this.stepParameters.steps_list.length &&
+          !this.leftPanelService.getCurrentActiveStepId()
+        ) {
+          this.hightLightStep = this.stepParameters.steps_list[0].step_id;
+          const screenId = this.stepParameters.steps_list[0].screen_id;
+          this.leftPanelService.setCurrentActiveStepId(this.hightLightStep);
+          this.onSelectStep(this.hightLightStep, screenId);
+        }
+      }, 100);
     } else {
       this.isSectionNameEditable = false;
     }
@@ -217,12 +234,14 @@ export class SectionTitleComponent implements OnInit {
    * saves them, and exits out of edit mode.
    */
   saveAndCloseAllChildren() {
-    this.containerChildren.forEach(container => {
-      const stepChild = container.stepChild;
-      if (stepChild.canEdit) {
-        stepChild.onClickOnOk();
-      }
-    });
+    if (this.containerChildren && this.containerChildren.length) {
+      this.containerChildren.forEach(container => {
+        const stepChild = container.stepChild;
+        if (stepChild.canEdit) {
+          stepChild.onClickOnOk();
+        }
+      });
+    }
   }
 
   onAttachmentDelete($event) {

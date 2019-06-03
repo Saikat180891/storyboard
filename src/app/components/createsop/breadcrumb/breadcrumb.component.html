@@ -3,7 +3,7 @@
   <div class="padding-right-10Px">></div>
   <div
     class="padding-right-10Px tausy-breadcrumb-project-name"
-    [routerLink]="['/projects', getProjectId()]"
+    (click)="onProjectNameClick()"
   >
     {{ getProjectTitle() }}
   </div>
