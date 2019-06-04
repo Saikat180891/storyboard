@@ -32,7 +32,6 @@
           label="Epic"
           placeholder="Choose an epic"
           required="true"
-          *ngIf="epics.length"
           [options]="epics"
           formControlName="epic"
         ></stb-dropdown>
@@ -44,7 +43,6 @@
           placeholder="Choose a sprint"
           required="true"
           [options]="sprints"
-          *ngIf="sprints.length"
           formControlName="sprint"
           (selectionChange)="onSprintChange($event.value)"
         ></stb-dropdown>

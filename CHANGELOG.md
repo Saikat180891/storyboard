@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- Bug-8090-Not able to see epic/sprint box in create/edit userstory modal.
+
 ## 1.0.0 - 2019-05-31
 
 ### Added
