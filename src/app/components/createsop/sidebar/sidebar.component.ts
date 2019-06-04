@@ -11,6 +11,7 @@ import { MatSnackBar } from "@angular/material";
 import { Subject, Subscriber, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { SharedService } from "../../../services/shared-services/shared.service";
+import { ConfirmModalService } from "../../shared/confirm-modal/confirm-modal.service";
 import { PageService } from "../services/page/page.service";
 import { SidebarService } from "../services/sidebar/sidebar.service";
 import { UicontrolService } from "../services/uicontrol.service";
@@ -59,7 +60,8 @@ export class SidebarComponent implements OnInit {
     private __sidebarService: SidebarService,
     private __page: PageService,
     private snackBar: MatSnackBar,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private confirm: ConfirmModalService
   ) {}
 
   ngOnInit() {
@@ -432,8 +434,14 @@ export class SidebarComponent implements OnInit {
    * This Function will show the warning Box
    */
   onDeleteVideo($event) {
-    this.warningToDeleteVideo = true;
     this.deleteContent = $event;
+    this.confirm.confirmDelete(
+      "Are you sure you want to delete the video?",
+      () => {
+        this.onSelectDeleteVideo();
+      },
+      () => {}
+    );
   }
 
   onSelectDeleteVideo() {
@@ -451,7 +459,6 @@ export class SidebarComponent implements OnInit {
         }
       }
     );
-    this.warningToDeleteVideo = false;
   }
 
   onSelectDoNotDeleteVideo() {
@@ -471,27 +478,37 @@ export class SidebarComponent implements OnInit {
    * this function is used to delete an image from the gallery
    */
   onDeleteImage($event) {
-    const apiEndpoint = `/sop/image/${$event.content.id}.json`;
-    this.__sidebarService.deleteContent(apiEndpoint).subscribe(
-      res => {
-        if (
-          this.currentImage > 0 &&
-          this.currentImage < this.__page.imageGalleryContent.length - 1
-        ) {
-          this.currentImage = this.currentImage - 1;
-        }
-        this.snackBar.open("Snapshot deleted successfully", "Success", {
-          duration: 3000,
-        });
-      },
-      err => {
-        this.snackBar.open("Failed to delete the selected snapshot", "Failed", {
-          duration: 3000,
-        });
-      },
+    this.confirm.confirmDelete(
+      "Are you sure you want to delete the image?",
       () => {
-        this.fetchAllSnapshotsAlreadyTaken();
-      }
+        const apiEndpoint = `/sop/image/${$event.content.id}.json`;
+        this.__sidebarService.deleteContent(apiEndpoint).subscribe(
+          res => {
+            if (
+              this.currentImage > 0 &&
+              this.currentImage < this.__page.imageGalleryContent.length - 1
+            ) {
+              this.currentImage = this.currentImage - 1;
+            }
+            this.snackBar.open("Snapshot deleted successfully", "Success", {
+              duration: 3000,
+            });
+          },
+          err => {
+            this.snackBar.open(
+              "Failed to delete the selected snapshot",
+              "Failed",
+              {
+                duration: 3000,
+              }
+            );
+          },
+          () => {
+            this.fetchAllSnapshotsAlreadyTaken();
+          }
+        );
+      },
+      () => {}
     );
   }
 
