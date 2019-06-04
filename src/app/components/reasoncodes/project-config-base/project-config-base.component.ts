@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from "@angular/core";
 import { MatSnackBar } from "@angular/material";
 import { ConfirmModalService } from "../../../components/shared/confirm-modal/confirm-modal.service";
 import { SharedService } from "../../../services/shared-services/shared.service";
@@ -8,13 +15,14 @@ import { ReasonCodeService } from "../reason-code.service";
 import { ApiService } from "../services/api.service";
 import { ProjectConfigureService } from "../services/project-configure.service";
 
+import { Subscription } from "rxjs";
 import { convertDateforBackend } from "../../shared/date-utils";
 
 @Component({
   selector: "app-project-config-base",
   template: "",
 })
-export class ProjectConfigBaseComponent implements OnInit {
+export class ProjectConfigBaseComponent implements OnInit, OnDestroy {
   @Input("previouslySavedEpics") previouslySavedEpics;
   @Input("sprintConfigData") sprintConfigData: Sprint[];
   @Output("close") close = new EventEmitter<boolean>();
@@ -24,10 +32,11 @@ export class ProjectConfigBaseComponent implements OnInit {
   addMoreSprints = [];
   preExistingSprintModified = [];
   saveEvent: any;
+  subscription: Subscription;
 
   constructor(
     private apiEnpointService: ApiService,
-    private projectConfigureService: ProjectConfigureService,
+    public projectConfigureService: ProjectConfigureService,
     private reasonCodeService: ReasonCodeService,
     private confirm: ConfirmModalService,
     public snackbar: MatSnackBar,
@@ -36,13 +45,18 @@ export class ProjectConfigBaseComponent implements OnInit {
 
   ngOnInit() {
     this.saveEvent = this.projectConfigureService.getSaveEvent();
-    this.saveEvent.subscribe(res => {
-      if (res) {
+    this.subscription = this.saveEvent.subscribe(res => {
+      const responseData: string = res;
+      if (responseData === "sprint") {
         this.saveSprints();
+      } else if (responseData === "epic") {
         this.saveEpics();
-        this.onClose();
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   onAddMoreSprints() {
@@ -137,10 +151,6 @@ export class ProjectConfigBaseComponent implements OnInit {
   saveSprints() {
     this.createNewSprints();
     this.saveEdittedSprints();
-  }
-
-  onSave() {
-    this.projectConfigureService.saveEvent.emit(true);
   }
 
   ondeleteSprint($event) {

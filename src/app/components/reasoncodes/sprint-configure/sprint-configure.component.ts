@@ -6,4 +6,10 @@ import { ProjectConfigBaseComponent } from "../project-config-base/project-confi
   templateUrl: "./sprint-configure.component.html",
   styleUrls: ["./sprint-configure.component.scss"],
 })
-export class SprintConfigureComponent extends ProjectConfigBaseComponent {}
+export class SprintConfigureComponent extends ProjectConfigBaseComponent {
+  onSave() {
+    this.saveSprints();
+    this.projectConfigureService.saveEvent.emit("epic");
+    this.onClose();
+  }
+}

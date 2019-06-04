@@ -41,6 +41,7 @@ export class SprintInputRowComponent implements OnInit {
         endDate: null,
       };
       this.formValues.endDate = this.calculateEndDate(this.weeks);
+      this.valueChange.emit(this.formValues);
     } else {
       this.formValues = this.value;
       this.weeks = parseInt(

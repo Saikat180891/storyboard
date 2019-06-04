@@ -342,7 +342,9 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
 
   onCloseProjectConfig($event) {
     this.openAddSprint = $event;
-    this.onClearAllFilters();
+    if (this.reasonCodeService.filteredValues.length > 0) {
+      this.onClearAllFilters();
+    }
   }
 
   createUserstoryPayloadForBackend(

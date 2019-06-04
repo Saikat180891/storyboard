@@ -5,7 +5,7 @@ import { Sprint } from "../models/Sprint.model";
 })
 export class ProjectConfigureService {
   private sprints: Sprint[] = [];
-  @Output("saveEvent") saveEvent = new EventEmitter<boolean>();
+  @Output("saveEvent") saveEvent = new EventEmitter<string>();
 
   constructor() {}
 

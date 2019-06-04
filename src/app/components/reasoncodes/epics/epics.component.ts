@@ -6,4 +6,10 @@ import { ProjectConfigBaseComponent } from "../project-config-base/project-confi
   templateUrl: "./epics.component.html",
   styleUrls: ["./epics.component.scss"],
 })
-export class EpicsComponent extends ProjectConfigBaseComponent {}
+export class EpicsComponent extends ProjectConfigBaseComponent {
+  onSave() {
+    this.saveEpics();
+    this.projectConfigureService.saveEvent.emit("sprint");
+    this.onClose();
+  }
+}
