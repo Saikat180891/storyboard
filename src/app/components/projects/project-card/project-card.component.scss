@@ -94,6 +94,10 @@
   top: 25px;
   color: #fff;
   font-size: 15px;
+  width: 16rem;
+  height: 3rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .fa-calendar-alt {
   color: #f47074;
@@ -107,6 +111,7 @@
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0px 2px 10px #ccc;
+  cursor: pointer;
 }
 .container a {
   position: absolute;
@@ -307,6 +312,9 @@ li span {
   position: absolute;
   top: 20px;
   left: 0;
+  width: 16rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 mat-toolbar span .automation-system-name {
   font-size: 15px;
