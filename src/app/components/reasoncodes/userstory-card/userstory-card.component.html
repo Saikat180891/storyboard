@@ -177,19 +177,27 @@
     </div>
     <div class="col c42">
       <div class="btn-box">
-        <button
-          class="btn btn-flat-ash tausy-user-story-edit"
-          matRipple
-          (click)="onEdit()"
-          [ngClass]="{ hide: restore }"
-          [appCanAccess]="{
-            role: reasonCodeService.role,
-            permissionRequired: 'Can add epics',
-            permissionList: reasonCodeService.grantedPermission
-          }"
-        >
-          <i class="fas fa-pencil-alt"></i>
-        </button>
+        <div class="edit-and-create-date-timestamp">
+          <button
+            class="btn btn-flat-ash tausy-user-story-edit"
+            matRipple
+            (click)="onEdit()"
+            [ngClass]="{ hide: restore }"
+            [appCanAccess]="{
+              role: reasonCodeService.role,
+              permissionRequired: 'Can add epics',
+              permissionList: reasonCodeService.grantedPermission
+            }"
+          >
+            <i class="fas fa-pencil-alt"></i>
+          </button>
+          <div class="created-date">
+            <span>Created On</span>
+            <span class="display-date">{{
+              userStory.created | dateFormatter
+            }}</span>
+          </div>
+        </div>
         <stb-button
           class="tausy-user-story-view-sop"
           btnStyle="raised"
@@ -226,6 +234,7 @@
           permissionList: permissions
         }"
       ></i>
+
       <mat-menu #options="matMenu">
         <button
           mat-menu-item
@@ -249,9 +258,4 @@
       </mat-menu>
     </div>
   </ng-container>
-
-  <div class="created-date">
-    <span>Created On</span><br />
-    <span>{{ userStory.created | dateFormatter }}</span>
-  </div>
 </div>
