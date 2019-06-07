@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ReasonCodeService } from "../reason-code.service";
 @Component({
   selector: "app-sort",
@@ -7,6 +7,10 @@ import { ReasonCodeService } from "../reason-code.service";
 })
 export class SortComponent implements OnInit {
   @Output("close") close = new EventEmitter<boolean>();
+  @Input("selectedTab") selectedTab: number;
+
+  userstoryType = ["open", "completed", "deleted"];
+
   sortBy: boolean = false;
 
   constructor(private reasonCodeService: ReasonCodeService) {}
@@ -27,9 +31,13 @@ export class SortComponent implements OnInit {
       path = "?" + this.reasonCodeService.sortBy;
     }
     this.reasonCodeService.sortAndFilterPath = path;
+    if (path) {
+      path += `&&us_type=${this.userstoryType[this.selectedTab]}`;
+    }
     this.reasonCodeService.filterUserStories(
       `/sop/epics/${this.reasonCodeService.sopId}/userstories.json`,
-      path
+      path,
+      this.selectedTab
     );
     this.close.emit(false);
   }

@@ -69,18 +69,22 @@
   <div class="userstory-container">
     <div class="menubar">
       <app-userstory-menu-bar
-        (tabChange)="selectedTab = $event"
+        (tabChange)="onTabChange($event)"
         (controlSelected)="onControlChange($event)"
         [toggleFilter]="filter"
         [toggleSort]="sortBy"
       ></app-userstory-menu-bar>
       <div class="sort-menu-group" *ngIf="sortBy">
-        <app-sort (close)="sortBy = !sortBy"></app-sort>
+        <app-sort
+          (close)="sortBy = !sortBy"
+          [selectedTab]="selectedTab"
+        ></app-sort>
       </div>
       <div class="filter" *ngIf="filter">
         <userstory-filter
           (closeFilter)="filter = $event"
           *ngIf="filter"
+          [selectedTab]="selectedTab"
         ></userstory-filter>
       </div>
     </div>

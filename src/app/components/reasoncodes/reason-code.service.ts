@@ -348,7 +348,11 @@ export class ReasonCodeService {
     window.location.href = endPoint;
   }
 
-  filterUserStories(endpointUrl: string, queryParameter: string) {
+  filterUserStories(
+    endpointUrl: string,
+    queryParameter: string,
+    selectedTab: number
+  ) {
     this._api.fetchData(endpointUrl + queryParameter).subscribe(response => {
       response.forEach(element => {
         if (element["ftes"] == 0) {
@@ -369,7 +373,17 @@ export class ReasonCodeService {
           element["planned_delivery"]
         );
       });
-      this.userStories = response;
+      switch (selectedTab) {
+        case 0:
+          this.userStories = response;
+          break;
+        case 1:
+          this.completeUserStories = response;
+          break;
+        case 2:
+          this.deletedUserStories = response;
+          break;
+      }
     });
   }
 

@@ -87,6 +87,11 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
     this.barChartOptions = charts.barChart;
   }
 
+  onTabChange($event) {
+    this.onClearAllFilters();
+    this.selectedTab = $event;
+  }
+
   onControlChange(controlSelected: number): void {
     switch (controlSelected) {
       case UserstoryControls.SORT:
@@ -283,7 +288,21 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
     this.reasonCodeService.filteredValues = [];
     this.reasonCodeService.filterPath = "";
     this.reasonCodeService.sortAndFilterPath = "";
-    this.reasonCodeService.getUserStories(this.reasonCodeService.sopId);
+    switch (this.selectedTab) {
+      case 0:
+        this.reasonCodeService.getUserStories(this.reasonCodeService.sopId);
+        break;
+      case 1:
+        this.reasonCodeService.getCompletedUserStories(
+          this.reasonCodeService.sopId
+        );
+        break;
+      case 2:
+        this.reasonCodeService.getDeletedUserStories(
+          this.reasonCodeService.sopId
+        );
+        break;
+    }
     this.clearAllFilter = false;
     this.reasonCodeService.filtersAppliedFlag = false;
   }
@@ -313,7 +332,8 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
         this.reasonCodeService.filteredValues.splice(index, 1);
         this.reasonCodeService.filterUserStories(
           `/sop/epics/${this.reasonCodeService.sopId}/userstories.json`,
-          this.makePath()
+          this.makePath(),
+          this.selectedTab
         );
       }
     }
@@ -324,7 +344,8 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
       this.reasonCodeService.testCasesVerified = "";
       this.reasonCodeService.filterUserStories(
         `/sop/epics/${this.reasonCodeService.sopId}/userstories.json`,
-        this.makePath()
+        this.makePath(),
+        this.selectedTab
       );
     }
 
@@ -335,7 +356,8 @@ export class ReasoncodesComponent implements OnInit, OnDestroy {
       this.reasonCodeService.rulesApproved = "";
       this.reasonCodeService.filterUserStories(
         `/sop/epics/${this.reasonCodeService.sopId}/userstories.json`,
-        this.makePath()
+        this.makePath(),
+        this.selectedTab
       );
     }
   }

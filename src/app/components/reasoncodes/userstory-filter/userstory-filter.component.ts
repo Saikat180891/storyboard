@@ -2,6 +2,7 @@ import {
   AfterContentChecked,
   Component,
   EventEmitter,
+  Input,
   OnInit,
   Output,
 } from "@angular/core";
@@ -21,7 +22,10 @@ interface Filter {
 })
 export class UserstoryFilterComponent implements OnInit, AfterContentChecked {
   @Output("closeFilter") closeFilter = new EventEmitter<boolean>();
+  @Input("selectedTab") selectedTab: number;
+
   sprints: any;
+  userstoryType = ["open", "completed", "deleted"];
   statuss = [
     "Backlog",
     "Rules",
@@ -67,9 +71,13 @@ export class UserstoryFilterComponent implements OnInit, AfterContentChecked {
       path = "?" + this.__rcService.filterPath;
     }
     this.__rcService.sortAndFilterPath = path;
+    if (path) {
+      path += `&&us_type=${this.userstoryType[this.selectedTab]}`;
+    }
     this.__rcService.filterUserStories(
       `/sop/epics/${this.__rcService.sopId}/userstories.json`,
-      path
+      path,
+      this.selectedTab
     );
     this.__rcService.filtersAppliedFlag = true;
     this.closeFilter.emit(false);
