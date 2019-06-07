@@ -4,6 +4,7 @@ import {
   OnInit,
   QueryList,
   ViewChild,
+  ViewChildren,
 } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
 import { saveAs } from "file-saver";
@@ -16,6 +17,7 @@ import { LeftPanelService } from "../services/left-panel/left-panel.service";
 import { PageService } from "../services/page/page.service";
 import { RightPanelService } from "../services/right-panel/right-panel.service";
 import { StepcontrolService } from "../services/stepcontrol/stepcontrol.service";
+import { SectionTitleComponent } from "../steps-container/section-title/section-title.component";
 
 interface StepTypeDropEvent {
   data: string;
@@ -33,6 +35,7 @@ export class RightPanelComponent implements OnInit {
   sectionList: SectionListItem[] = [];
   @ViewChild("rightPanelInfiniteScroll") rightPanelInfiniteScroll: ElementRef;
   @ViewChild("section") section: QueryList<ElementRef>;
+  @ViewChildren("section") sections: QueryList<SectionTitleComponent>;
   isSectionApiRunning: boolean = false;
   isCreateConditionSection: boolean = false;
   isCreationSection: boolean = false;

@@ -44,6 +44,8 @@ export class SectionTitleComponent implements OnInit {
     StepsContainerComponent
   >;
 
+  @Input("sections") sections: QueryList<SectionTitleComponent>;
+
   // to make section name editable
   isSectionNameEditable: boolean = true;
   // to collapse the accordion
@@ -234,14 +236,16 @@ export class SectionTitleComponent implements OnInit {
    * saves them, and exits out of edit mode.
    */
   saveAndCloseAllChildren() {
-    if (this.containerChildren && this.containerChildren.length) {
-      this.containerChildren.forEach(container => {
-        const stepChild = container.stepChild;
-        if (stepChild.canEdit) {
-          stepChild.onClickOnOk();
-        }
-      });
-    }
+    this.sections.forEach(section => {
+      if (section.containerChildren && section.containerChildren.length) {
+        section.containerChildren.forEach(container => {
+          const stepChild = container.stepChild;
+          if (stepChild.canEdit) {
+            stepChild.onClickOnOk();
+          }
+        });
+      }
+    });
   }
 
   onAttachmentDelete($event) {
