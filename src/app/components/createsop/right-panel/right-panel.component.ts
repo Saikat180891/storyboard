@@ -67,6 +67,9 @@ export class RightPanelComponent implements OnInit {
         res => {
           // store the response in the step control service
           this.stepcontrolService.setSectionList(res);
+          if (res && res.length === 0) {
+            this.leftPanelService.setCurrentScreen(null);
+          }
         },
         err => {
           // initiate the 'sectionList' with the step control service
