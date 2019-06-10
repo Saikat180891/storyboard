@@ -21,7 +21,10 @@ export class InviteUserFieldComponent implements OnInit {
   roles: Role[] = allRoles;
 
   inviteUserForm = new FormGroup({
-    email: new FormControl("", Validators.required),
+    email: new FormControl(
+      "",
+      Validators.compose([Validators.email, Validators.required])
+    ),
     role: new FormControl("", Validators.required),
     firstName: new FormControl("", Validators.required),
     lastName: new FormControl(""),
