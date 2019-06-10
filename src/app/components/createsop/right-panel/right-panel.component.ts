@@ -129,23 +129,32 @@ export class RightPanelComponent implements OnInit {
    * @param $event
    */
   onDeleteStep($event) {
-    if ($event.mode === "local") {
-      this.stepcontrolService.deleteStep($event.sectionIndex, $event.stepIndex);
-    } else if ($event.mode === "server") {
-      this.rightPanelService
-        .deleteStep(
-          this.pageService.userStoryId,
-          $event.stepId,
-          $event.insertionId,
-          $event.sectionInsertionId
-        )
-        .subscribe(res => {
+    this.confirm.confirmDelete(
+      "Are you sure you want to delete this step?",
+      () => {
+        if ($event.mode === "local") {
           this.stepcontrolService.deleteStep(
             $event.sectionIndex,
             $event.stepIndex
           );
-        });
-    }
+        } else if ($event.mode === "server") {
+          this.rightPanelService
+            .deleteStep(
+              this.pageService.userStoryId,
+              $event.stepId,
+              $event.insertionId,
+              $event.sectionInsertionId
+            )
+            .subscribe(res => {
+              this.stepcontrolService.deleteStep(
+                $event.sectionIndex,
+                $event.stepIndex
+              );
+            });
+        }
+      },
+      () => {}
+    );
   }
 
   /**

@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bug-8090-Not able to see epic/sprint box in create/edit userstory modal.
 - Auto-save current step on creating new section or step in another section.
 - Added validation on character count of client name in project.
+- Added confirmation prompt on deletion of step.
 
 ## 1.0.0 - 2019-05-31
 
