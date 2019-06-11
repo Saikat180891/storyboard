@@ -13,7 +13,9 @@ import {
   ViewChildren,
 } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { BehaviorSubject, Observable } from "rxjs";
+import { Mode } from "src/app/components/projects/models/enums";
+import { ConfirmModalWithOptionService } from "src/app/components/shared/confirm-modal-with-options/confirm-modal.service";
+import { MessageDialogService } from "src/app/components/shared/message-dialog/message-dialog.service";
 import { SectionListItem } from "../../common-model/section-list-item.model";
 import { LeftPanelService } from "../../services/left-panel/left-panel.service";
 import { RightPanelService } from "../../services/right-panel/right-panel.service";
@@ -51,16 +53,21 @@ export class SectionTitleComponent implements OnInit {
   // to collapse the accordion
   isCollapsed: boolean = false;
   hightLightStep: number = -1;
+  isSectionLinked: boolean = true;
 
   // form to store section name
   section = new FormGroup({
     section_name: new FormControl("", Validators.required),
+    section_link: new FormControl(false),
   });
 
+  hello = "Hello";
   constructor(
     private __step: StepcontrolService,
     private __rpService: RightPanelService,
-    private leftPanelService: LeftPanelService
+    private leftPanelService: LeftPanelService,
+    private confirm: ConfirmModalWithOptionService,
+    private message: MessageDialogService
   ) {}
 
   /**
@@ -68,10 +75,16 @@ export class SectionTitleComponent implements OnInit {
    * then set the value of the formcontrol and make the editable flag false
    */
   ngOnInit() {
+    this.sectionChangeDetector();
     if (this.stepParameters.section_name !== null) {
-      this.section.setValue({
+      this.section.patchValue({
         section_name: this.stepParameters.section_name,
       });
+      if (this.stepParameters.section_link !== null) {
+        this.section.patchValue({
+          section_link: this.stepParameters.section_link,
+        });
+      }
 
       // this is to set the first section's, first step as active,so that
       // associated screen shot can be updated.
@@ -97,7 +110,6 @@ export class SectionTitleComponent implements OnInit {
       this.hightLightStep = res.stepId;
       this.leftPanelService.setCurrentScreen(res.screenId);
     });
-
     this.saveAllChildren();
   }
 
@@ -123,6 +135,28 @@ export class SectionTitleComponent implements OnInit {
     $event.preventDefault();
   }
 
+  sectionChangeDetector() {
+    const changeDetector = this.__step.getSectionChangeDetector();
+    changeDetector.subscribe(res => {
+      if (res) {
+        this.onRefreshLink();
+      }
+    });
+  }
+
+  onRefreshLink() {
+    if (this.stepParameters.section_name !== null) {
+      this.section.patchValue({
+        section_name: this.stepParameters.section_name,
+      });
+    }
+    if (this.stepParameters.section_link !== null) {
+      this.section.patchValue({
+        section_link: this.stepParameters.section_link,
+      });
+    }
+    this.isSectionNameEditable = true;
+  }
   /**
    * this function is triggered the user drops a step on the droppable area
    * @param $event
@@ -132,6 +166,37 @@ export class SectionTitleComponent implements OnInit {
     this.sectionPayload.emit({
       data: $event,
       index: this.sectionIndex,
+    });
+  }
+
+  openMessageDialog() {
+    this.message.openMessageDialog(
+      this.stepParameters.section_name,
+      this.stepParameters.copy_list
+    );
+  }
+
+  updateSingleSection() {
+    this.sectionChange.emit({
+      sectionName: this.section.value,
+      sectionIndex: this.sectionIndex,
+      mode: Mode.edit,
+      sectionId: this.stepParameters.section_id,
+      propagate: false,
+      userStoryId: this.stepParameters.user_story_id,
+      insertionId: this.stepParameters.insertion_id,
+    });
+  }
+
+  updateAllSection() {
+    this.sectionChange.emit({
+      sectionName: this.section.value,
+      sectionIndex: this.sectionIndex,
+      mode: Mode.edit,
+      sectionId: this.stepParameters.section_id,
+      propagate: true,
+      userStoryId: this.stepParameters.user_story_id,
+      insertionId: this.stepParameters.insertion_id,
     });
   }
 
@@ -145,14 +210,17 @@ export class SectionTitleComponent implements OnInit {
    */
   onCreateSection() {
     if (this.section.valid) {
-      this.isSectionNameEditable = !this.isSectionNameEditable;
       if (this.stepParameters.section_id) {
-        this.sectionChange.emit({
-          sectionName: this.section.value,
-          sectionIndex: this.sectionIndex,
-          mode: "edit",
-          sectionId: this.stepParameters.section_id,
-        });
+        if (this.section.value.section_link) {
+          this.confirm.confirmDialog(
+            this.stepParameters.section_name,
+            this.stepParameters.copy_list,
+            this.updateAllSection.bind(this),
+            this.updateSingleSection.bind(this)
+          );
+        } else {
+          this.updateAllSection();
+        }
       } else {
         this.sectionChange.emit({
           sectionName: this.section.value,
@@ -189,16 +257,42 @@ export class SectionTitleComponent implements OnInit {
    * @param event
    */
   drop(event: CdkDragDrop<string[]>) {
-    this.__step.moveStepsInsideSection(
-      this.sectionIndex,
-      event.previousIndex,
-      event.currentIndex
-    );
+    if (event.previousIndex !== event.currentIndex) {
+      if (this.stepParameters.section_link) {
+        this.confirm.confirmDialog(
+          this.stepParameters.section_name,
+          this.stepParameters.copy_list,
+          () => {
+            this.__step.moveStepsInsideSection(
+              this.sectionIndex,
+              event.previousIndex,
+              event.currentIndex,
+              true
+            );
+          },
+          () => {
+            this.__step.moveStepsInsideSection(
+              this.sectionIndex,
+              event.previousIndex,
+              event.currentIndex,
+              false
+            );
+          }
+        );
+      } else {
+        this.__step.moveStepsInsideSection(
+          this.sectionIndex,
+          event.previousIndex,
+          event.currentIndex,
+          true
+        );
+      }
+    }
   }
 
   // convey the delete message to the parent component
   onDeleteStep($event: Event) {
-    if ($event["mode"] === "server") {
+    if ($event["mode"] === Mode.server) {
       this.deleteStep.emit(
         Object.assign(
           { sectionInsertionId: this.stepParameters.insertion_id },
@@ -215,7 +309,15 @@ export class SectionTitleComponent implements OnInit {
    * @param $event
    */
   onOutputChange($event: Event) {
-    this.outputChange.emit($event);
+    this.outputChange.emit(
+      Object.assign(
+        {
+          sectionInsertionId: this.stepParameters.insertion_id,
+          userStoryId: this.stepParameters.user_story_id,
+        },
+        $event
+      )
+    );
   }
 
   // toggle section name editable
@@ -249,7 +351,15 @@ export class SectionTitleComponent implements OnInit {
   }
 
   onAttachmentDelete($event) {
-    this.attachmentDelete.emit($event);
+    this.attachmentDelete.emit(
+      Object.assign(
+        {
+          sectionInsertionId: this.stepParameters.insertion_id,
+          userStoryId: this.stepParameters.user_story_id,
+        },
+        $event
+      )
+    );
   }
   onAttachmentDownload($event) {
     this.downloadAttachment.emit($event);

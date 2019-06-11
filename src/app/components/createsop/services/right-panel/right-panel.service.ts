@@ -91,8 +91,12 @@ export class RightPanelService {
    * @param sectionId
    * @param payload
    */
-  updateSection(sectionId: number, payload: EditSectionName): Observable<any> {
-    const endpoint = `/sop/epics/userstories/sections/${sectionId}.json`;
+  updateSection(
+    sectionId: number,
+    payload: EditSectionName,
+    propagate: string
+  ): Observable<any> {
+    const endpoint = `/sop/epics/userstories/sections/${sectionId}.json?propagate=${propagate}`;
     return this.__api.updatePost(endpoint, payload);
   }
 
@@ -138,9 +142,11 @@ export class RightPanelService {
     userStory: number,
     stepId: number,
     prevStepId: number,
-    nextStepId: number
+    nextStepId: number,
+    sectionInsertionId: number,
+    propagate: boolean
   ) {
-    const endpoint = `/sop/epics/userstories/${userStory}/sections/steps/move/${stepId}/?move=intra_section`;
+    const endpoint = `/sop/epics/userstories/${userStory}/sections/steps/move/${stepId}/?move=intra_section&&propagate=${propagate}&&section_insertion_id=${sectionInsertionId}`;
     return this.__api.updatePost(endpoint, {
       prev_step_id: prevStepId,
       next_step_id: nextStepId,
@@ -151,9 +157,10 @@ export class RightPanelService {
     userStoryId: number,
     stepNumber: number,
     insertionId: number,
-    sectionInsertionId: number
+    sectionInsertionId: number,
+    propagate: boolean
   ): Observable<any> {
-    const endpoint = `/sop/epics/userstories/${userStoryId}/sections/steps/destroy/${stepNumber}.json?insertion_id=${insertionId}&&section_insertion_id=${sectionInsertionId}&&propagate=${true}`;
+    const endpoint = `/sop/epics/userstories/${userStoryId}/sections/steps/destroy/${stepNumber}.json?insertion_id=${insertionId}&&section_insertion_id=${sectionInsertionId}&&propagate=${propagate}`;
     return this.__api.deleteValue(endpoint);
   }
 

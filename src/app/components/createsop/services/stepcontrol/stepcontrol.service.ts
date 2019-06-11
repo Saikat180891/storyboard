@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import { Injectable } from "@angular/core";
+import { EventEmitter, Injectable, Output } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { SectionListItem } from "../../common-model/section-list-item.model";
 import { Step, StepType } from "../../common-model/step-type.model";
@@ -18,6 +18,10 @@ export class StepcontrolService {
   public stepEditMode = new BehaviorSubject<boolean>(true);
 
   private shouldChildrenBeSaved = new BehaviorSubject<boolean>(false);
+
+  @Output("sectionChangeDetector") sectionChangeDetector = new EventEmitter<
+    any
+  >();
 
   constructor(
     private rightPanelService: RightPanelService,
@@ -130,23 +134,39 @@ export class StepcontrolService {
    * @param stepIndex index of the step
    * @param data response received from the backend
    */
-  updateStepWithResponse(sectionIndex: number, stepIndex: number, data: Step) {
-    this.sopSectionList[sectionIndex].steps_list[stepIndex] = {
-      ...data,
-    };
+  updateStepWithResponse(
+    sectionIndex: number,
+    stepIndex: number,
+    data,
+    updateAll: boolean
+  ) {
+    if (updateAll) {
+      this.sopSectionList[sectionIndex].steps_list[stepIndex] = {
+        ...data,
+      };
+    } else {
+      this.sopSectionList[sectionIndex] = data;
+      this.sopSectionList[sectionIndex].section_link = false;
+    }
+    this.sectionChangeDetector.emit(true);
   }
 
-  modifyStepOnEdit(sectionIndex: number, stepIndex: number, data: Step) {
-    for (const key in data) {
-      if (key === "screenID") {
-        this.sopSectionList[sectionIndex].steps_list[stepIndex]["screen_id"] =
-          data[key];
-      } else if (
-        key in this.sopSectionList[sectionIndex].steps_list[stepIndex]
-      ) {
-        this.sopSectionList[sectionIndex].steps_list[stepIndex][key] =
-          data[key];
+  modifyStepOnEdit(sectionIndex: number, stepIndex: number, data, propagate) {
+    if (propagate) {
+      for (const key in data) {
+        if (key === "screenID") {
+          this.sopSectionList[sectionIndex].steps_list[stepIndex]["screen_id"] =
+            data[key];
+        } else if (
+          key in this.sopSectionList[sectionIndex].steps_list[stepIndex]
+        ) {
+          this.sopSectionList[sectionIndex].steps_list[stepIndex][key] =
+            data[key];
+        }
       }
+    } else {
+      this.sopSectionList[sectionIndex] = data;
+      this.sopSectionList[sectionIndex].section_link = false;
     }
   }
 
@@ -162,8 +182,23 @@ export class StepcontrolService {
     this.sopSectionList.push(data);
   }
 
+  setSectionLinking() {
+    this.sopSectionList.forEach(section => {
+      if (section.copy_list && section.copy_list.length > 1) {
+        section.section_link = true;
+      } else {
+        section.section_link = false;
+      }
+    });
+  }
+
+  getSectionChangeDetector() {
+    return this.sectionChangeDetector;
+  }
+
   setSectionList(sectionList: SectionListItem[]) {
     this.sopSectionList = sectionList;
+    this.setSectionLinking();
     this.recalculateLoopCounters();
   }
 
@@ -194,7 +229,8 @@ export class StepcontrolService {
   moveStepsInsideSection(
     sectionIndex: number,
     previousIndex: number,
-    currentIndex: number
+    currentIndex: number,
+    propagate: boolean
   ) {
     moveItemInArray(
       this.sopSectionList[sectionIndex].steps_list,
@@ -204,12 +240,26 @@ export class StepcontrolService {
     const stepId = this.getStepId(sectionIndex, currentIndex);
     const stepBeforeId = this.getStepId(sectionIndex, currentIndex - 1);
     const stepAfterId = this.getStepId(sectionIndex, currentIndex + 1);
+    const sectionInsertionId = this.sopSectionList[sectionIndex].insertion_id;
     this.rightPanelService
-      .moveStep(this.pageService.userStoryId, stepId, stepBeforeId, stepAfterId)
+      .moveStep(
+        this.pageService.userStoryId,
+        stepId,
+        stepBeforeId,
+        stepAfterId,
+        sectionInsertionId,
+        propagate
+      )
       .subscribe(res => {
         this.sopSectionList[sectionIndex].steps_list[
           currentIndex
         ].insertion_id = res["insertion_id"];
+        const responseData: any = res;
+        if (!propagate) {
+          this.sopSectionList[sectionIndex] = responseData;
+          this.sopSectionList[sectionIndex]["section_link"] = false;
+        }
+        this.sectionChangeDetector.emit(true);
       });
   }
 
@@ -221,6 +271,7 @@ export class StepcontrolService {
    */
   setSectionItem(responseData: any, sectionIndex: number) {
     this.sopSectionList[sectionIndex] = responseData;
+    this.sectionChangeDetector.emit(true);
   }
 
   /**
@@ -228,13 +279,23 @@ export class StepcontrolService {
    * @param responseData
    * @param sectionIndex
    */
-  updateSectionItem(responseData: any, sectionIndex: number) {
-    const keys = ["section_name", "description"];
-    for (const i in keys) {
-      if (keys[i] in responseData) {
-        this.sopSectionList[sectionIndex][keys[i]] = responseData[keys[i]];
-      }
+  updateSectionItem(
+    responseData: any,
+    sectionIndex: number,
+    propagate: boolean
+  ) {
+    if (!propagate) {
+      this.sopSectionList[sectionIndex] = responseData;
+      this.sopSectionList[sectionIndex]["section_link"] = false;
+    } else {
+      const keys = ["section_id", "section_name", "description"];
+      keys.forEach(value => {
+        if (value in responseData) {
+          this.sopSectionList[sectionIndex][value] = responseData[value];
+        }
+      });
     }
+    this.sectionChangeDetector.emit(true);
   }
 
   /**
@@ -255,12 +316,21 @@ export class StepcontrolService {
     return this.sopSectionList.length;
   }
 
-  deleteStep(sectionIndex, stepIndex) {
+  deleteStep(sectionIndex, stepIndex, propagate: boolean, response) {
     const step = this.sopSectionList[sectionIndex].steps_list.splice(
       stepIndex,
       1
     )[0];
+
+    // Update the section with new section instance from response if we want to delink
+    if (!propagate) {
+      this.sopSectionList[sectionIndex].section_link = false;
+      this.sopSectionList[sectionIndex] = response;
+    }
+
     this.decrementLoopCounter(step.type);
+    // Refresh Link state on the steps page
+    this.sectionChangeDetector.emit(true);
   }
 
   deleteSection(stepIndex: number) {

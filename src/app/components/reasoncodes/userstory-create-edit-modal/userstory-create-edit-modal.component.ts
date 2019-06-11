@@ -162,11 +162,13 @@ export class UserstoryCreateEditModalComponent implements OnInit {
       switch (this.data.modalName) {
         case UserstoryModalName.CREATE:
         case UserstoryModalName.COPY:
-          const payload = this.createPayloadForBackend();
-          Object.assign(payload, { us_copy_id: null });
+          const payload_create = this.createPayloadForBackend();
+          Object.assign(payload_create, { userstory_copied_from_id: null });
           let snackbarMessage = "Userstory has been created successfully";
           if (this.data.modalName === UserstoryModalName.COPY) {
-            Object.assign(payload, { us_copy_id: this.data.userStoryData.id });
+            Object.assign(payload_create, {
+              userstory_copied_from_id: this.data.userStoryData.id,
+            });
             snackbarMessage =
               "Your Copy of user story with SOP details has been created successfully.";
           }
@@ -177,7 +179,7 @@ export class UserstoryCreateEditModalComponent implements OnInit {
               this.userstoryForm.value.sprint,
               this.userstoryForm.value.epic,
               this.userstoryForm.value.assignee,
-              payload
+              payload_create
             )
             .subscribe(
               res => {
@@ -195,13 +197,15 @@ export class UserstoryCreateEditModalComponent implements OnInit {
           break;
         case UserstoryModalName.EDIT:
           this.spinner.show();
+          const payload = this.createPayloadForBackend();
+          Object.assign(payload, { userstory_copied_from_id: null });
           this.api
             .editUserstory(
               this.data.userStoryData.id,
               this.userstoryForm.value.sprint || 0,
               this.userstoryForm.value.epic || 0,
               this.userstoryForm.value.assignee || 0,
-              this.createPayloadForBackend()
+              payload
             )
             .subscribe(
               res => {

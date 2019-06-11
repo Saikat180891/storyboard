@@ -11,6 +11,8 @@ import { saveAs } from "file-saver";
 import { NgxSpinnerService } from "ngx-spinner";
 import { DataService } from "../../../data.service";
 import { SharedService } from "../../../services/shared-services/shared.service";
+import { Mode } from "../../projects/models/enums";
+import { ConfirmModalWithOptionService } from "../../shared/confirm-modal-with-options/confirm-modal.service";
 import { ConfirmModalService } from "../../shared/confirm-modal/confirm-modal.service";
 import { SectionListItem } from "../common-model/section-list-item.model";
 import { LeftPanelService } from "../services/left-panel/left-panel.service";
@@ -46,6 +48,7 @@ export class RightPanelComponent implements OnInit {
     private pageService: PageService,
     private rightPanelService: RightPanelService,
     private confirm: ConfirmModalService,
+    private confirmWithOptions: ConfirmModalWithOptionService,
     private leftPanelService: LeftPanelService,
     private snackBar: MatSnackBar,
     private ngxSpinnerService: NgxSpinnerService,
@@ -124,37 +127,55 @@ export class RightPanelComponent implements OnInit {
     }
   }
 
+  deleteStep($event, propagate: boolean) {
+    this.rightPanelService
+      .deleteStep(
+        this.pageService.userStoryId,
+        $event.stepId,
+        $event.insertionId,
+        $event.sectionInsertionId,
+        propagate
+      )
+      .subscribe(res => {
+        this.stepcontrolService.deleteStep(
+          $event.sectionIndex,
+          $event.stepIndex,
+          propagate,
+          res
+        );
+      });
+  }
+
   /**
    * this function will delete a step
    * @param $event
    */
   onDeleteStep($event) {
-    this.confirm.confirmDelete(
-      "Are you sure you want to delete this step?",
-      () => {
-        if ($event.mode === "local") {
-          this.stepcontrolService.deleteStep(
-            $event.sectionIndex,
-            $event.stepIndex
-          );
-        } else if ($event.mode === "server") {
-          this.rightPanelService
-            .deleteStep(
-              this.pageService.userStoryId,
-              $event.stepId,
-              $event.insertionId,
-              $event.sectionInsertionId
-            )
-            .subscribe(res => {
-              this.stepcontrolService.deleteStep(
-                $event.sectionIndex,
-                $event.stepIndex
-              );
-            });
-        }
-      },
-      () => {}
-    );
+    if ($event.mode === Mode.local) {
+      this.stepcontrolService.deleteStep(
+        $event.sectionIndex,
+        $event.stepIndex,
+        true,
+        ""
+      );
+    } else if ($event.mode === Mode.server) {
+      let propagate = true;
+      if (this.sectionList[$event.sectionIndex].section_link) {
+        this.confirmWithOptions.confirmDialog(
+          this.sectionList[$event.sectionIndex].section_name,
+          this.sectionList[$event.sectionIndex].copy_list,
+          () => {
+            this.deleteStep($event, propagate);
+          },
+          () => {
+            propagate = false;
+            this.deleteStep($event, propagate);
+          }
+        );
+      } else {
+        this.deleteStep($event, propagate);
+      }
+    }
   }
 
   /**
@@ -178,84 +199,119 @@ export class RightPanelComponent implements OnInit {
     );
   }
 
-  /**
-   * this function will be triggered to create steps
-   * @param $event
-   */
-  onOutputChange($event) {
-    if ($event.mode === "create") {
-      const payload = {
-        prev_insertion_id: this.stepcontrolService.getPreviousInsertionIdOfStepInSection(
-          $event.sectionIndex,
-          $event.stepIndex
-        ),
-        next_insertion_id: this.stepcontrolService.getNextInsertionIdOfStepInSection(
-          $event.sectionIndex,
-          $event.stepIndex
-        ),
-        section_insertion_id: $event.sectionId,
-        step_group_insertion_id: "",
-        propagate: true,
-        type: $event.stepType,
-        data: $event.data,
-        attachment: null,
-        screen_id:
-          typeof $event.data.screen === "string" ? null : $event.data.screen,
-      };
-      this.rightPanelService
-        .createStep(this.pageService.userStoryId, $event.sectionId, payload)
-        .subscribe(
-          res => {
-            this.leftPanelService.setCurrentScreen($event.data.screen);
-            this.stepcontrolService.updateStepWithResponse(
-              $event.sectionIndex,
-              $event.stepIndex,
-              res
-            );
-            this.stepcontrolService.setStepEditMode(false);
-          },
-          err => {
-            this.sharedService.raiseError(err);
-          }
-        );
-    } else if ($event.mode === "edit") {
-      const formData = new FormData();
-      formData.append("type", $event.stepType);
-      formData.append("data", JSON.stringify($event.data));
-
-      if ($event.attachment instanceof File) {
-        formData.append("attachment", $event.attachment);
-      } else {
-        formData.append("attachment", "");
-      }
-      formData.append(
-        "attachment_delete",
-        $event.attachmentDelete ? $event.attachmentDelete : false
-      );
-      formData.append(
-        "screen_id",
-        typeof $event.data.screen === "number" ? $event.data.screen : ""
-      );
-
-      this.rightPanelService.updateStep($event.stepId, formData).subscribe(
+  onCreateStep($event, propagate: boolean) {
+    const payload = {
+      prev_insertion_id: this.stepcontrolService.getPreviousInsertionIdOfStepInSection(
+        $event.sectionIndex,
+        $event.stepIndex
+      ),
+      next_insertion_id: this.stepcontrolService.getNextInsertionIdOfStepInSection(
+        $event.sectionIndex,
+        $event.stepIndex
+      ),
+      section_insertion_id: $event.sectionInsertionId,
+      propagate,
+      type: $event.stepType,
+      data: $event.data,
+      attachment: null,
+      screen_id:
+        typeof $event.data.screen === "string" ? null : $event.data.screen,
+    };
+    this.rightPanelService
+      .createStep(this.pageService.userStoryId, $event.sectionId, payload)
+      .subscribe(
         res => {
           this.leftPanelService.setCurrentScreen($event.data.screen);
-          this.stepcontrolService.modifyStepOnEdit(
+          this.stepcontrolService.updateStepWithResponse(
             $event.sectionIndex,
             $event.stepIndex,
-            res
+            res,
+            propagate
           );
-          if ($event.attachment instanceof File) {
-            this.snackBar.open("Attachment added successfully", "Success", {
-              duration: 3000,
-            });
-          }
           this.stepcontrolService.setStepEditMode(false);
         },
         err => {
           this.sharedService.raiseError(err);
         }
       );
+  }
+
+  onEditStep($event, propagate) {
+    const formData = new FormData();
+    formData.append("type", $event.stepType);
+    formData.append("data", JSON.stringify($event.data));
+    formData.append("propagate", propagate);
+    formData.append("section_insertion_id", $event.sectionInsertionId);
+    formData.append("us_id", $event.userStoryId);
+    if ($event.attachment instanceof File) {
+      formData.append("attachment", $event.attachment);
+    } else {
+      formData.append("attachment", "");
+    }
+    formData.append(
+      "attachment_delete",
+      $event.attachmentDelete ? $event.attachmentDelete : false
+    );
+    formData.append(
+      "screen_id",
+      typeof $event.data.screen === "number" ? $event.data.screen : ""
+    );
+
+    this.rightPanelService.updateStep($event.stepId, formData).subscribe(
+      res => {
+        this.leftPanelService.setCurrentScreen($event.data.screen);
+        this.stepcontrolService.modifyStepOnEdit(
+          $event.sectionIndex,
+          $event.stepIndex,
+          res,
+          propagate
+        );
+        if ($event.attachment instanceof File) {
+          this.snackBar.open("Attachment added successfully", "Success", {
+            duration: 3000,
+          });
+        }
+        this.stepcontrolService.setStepEditMode(false);
+      },
+      err => {
+        this.sharedService.raiseError(err);
+      }
+    );
+  }
+
+  /**
+   * this function will be triggered to create steps
+   * @param $event
+   */
+  onOutputChange($event) {
+    let propagate = true;
+    if (this.sectionList[$event.sectionIndex].section_link) {
+      this.confirmWithOptions.confirmDialog(
+        this.sectionList[$event.sectionIndex].section_name,
+        this.sectionList[$event.sectionIndex].copy_list,
+        () => {
+          propagate = true;
+          if ($event.mode === Mode.create) {
+            this.onCreateStep($event, propagate);
+          } else {
+            this.onEditStep($event, propagate);
+          }
+        },
+        () => {
+          propagate = false;
+          if ($event.mode === Mode.create) {
+            this.onCreateStep($event, propagate);
+          } else {
+            this.onEditStep($event, propagate);
+          }
+        }
+      );
+    } else {
+      if ($event.mode === Mode.create) {
+        this.onCreateStep($event, propagate);
+      } else {
+        this.onEditStep($event, propagate);
+      }
     }
   }
 
@@ -273,7 +329,7 @@ export class RightPanelComponent implements OnInit {
       return;
     }
     // to create a section
-    if ($event.mode === "create") {
+    if ($event.mode === Mode.create) {
       const payload = {
         section_name: $event["sectionName"]["section_name"],
         prev_insertion_id: this.stepcontrolService.getPreviousInsertionIdOfSection(
@@ -300,22 +356,26 @@ export class RightPanelComponent implements OnInit {
           }
         });
       // to edit a section
-    } else if ($event.mode === "edit") {
+    } else if ($event.mode === Mode.edit) {
       const payload = {
         section_name: $event["sectionName"]["section_name"],
         section_id: $event.sectionId,
         description: "test",
+        insertion_id: $event.insertionId,
+        us_id: $event.userStoryId,
       };
       // make the call with the payload and body
       this.rightPanelService
-        .updateSection($event.sectionId, payload)
+        .updateSection($event.sectionId, payload, $event.propagate)
         .subscribe(res => {
           this.stepcontrolService.updateSectionItem(
             res,
-            $event["sectionIndex"]
+            $event["sectionIndex"],
+            $event.propagate
           );
         });
     }
+    this.sectionList = this.stepcontrolService.getList();
   }
 
   onDownloadAttachment($event) {

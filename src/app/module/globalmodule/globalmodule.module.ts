@@ -56,9 +56,13 @@ import {
   MatTooltipModule,
 } from "@angular/material";
 import { AutocompleteComponent } from "src/app/components/shared/autocomplete/autocomplete.component";
+import { ConfirmModalWithOptionComponent } from "src/app/components/shared/confirm-modal-with-options/confirm-modal-with-options.component";
+import { ConfirmModalWithOptionService } from "src/app/components/shared/confirm-modal-with-options/confirm-modal.service";
 import { DropdownComponent } from "src/app/components/shared/dropdown/dropdown.component";
 import { FileAttachmentService } from "src/app/components/shared/file-attachment/file-attachment.service";
 import { InputComponent } from "src/app/components/shared/input/input.component";
+import { MessageDialogComponent } from "src/app/components/shared/message-dialog/message-dialog.component";
+import { MessageDialogService } from "src/app/components/shared/message-dialog/message-dialog.service";
 import { ModalHeaderComponent } from "src/app/components/shared/modal-header/modal-header.component";
 import { SliderToggleComponent } from "src/app/components/shared/slider-toggle/slider-toggle.component";
 import { DateFormatterPipe } from "src/app/pipes/date-formatter.pipe";
@@ -83,6 +87,8 @@ import { DateFormatterPipe } from "src/app/pipes/date-formatter.pipe";
     SliderToggleComponent,
     ModalHeaderComponent,
     DateFormatterPipe,
+    ConfirmModalWithOptionComponent,
+    MessageDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -170,14 +176,23 @@ import { DateFormatterPipe } from "src/app/pipes/date-formatter.pipe";
     SliderToggleComponent,
     ModalHeaderComponent,
     DateFormatterPipe,
+    ConfirmModalWithOptionComponent,
+    MessageDialogComponent,
   ],
   providers: [
     MatSnackBarModule,
     DataService,
     ConfirmModalService,
     FileAttachmentService,
+    ConfirmModalWithOptionService,
+    MessageDialogService,
     { provide: MatDialogRef, useValue: {} },
   ],
-  entryComponents: [ConfirmModalComponent, FileAttachmentComponent],
+  entryComponents: [
+    ConfirmModalComponent,
+    FileAttachmentComponent,
+    ConfirmModalWithOptionComponent,
+    MessageDialogComponent,
+  ],
 })
 export class GlobalmoduleModule {}

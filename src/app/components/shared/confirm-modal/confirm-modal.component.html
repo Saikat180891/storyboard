@@ -1,7 +1,7 @@
 <div class="modal-content tausy-warning-modal">
   <h2>Confirm</h2>
 
-  <div class="content-message">
+  <div class="content-message" [innerHTML]="data.message">
     <p>{{ data.message }}</p>
   </div>
 

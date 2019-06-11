@@ -1,0 +1,25 @@
+<div class="modal-content tausy-warning-modal">
+  <div class="modal-header">
+    <stb-modal-header
+      modalName="Linked Section"
+      (close)="onNoClick()"
+    ></stb-modal-header>
+  </div>
+  <div class="content-message">
+    <p>
+      This section - <strong> {{ data.sectionName }} </strong> is linked between
+      following user stories
+    </p>
+    <div *ngFor="let option of data.options">
+      <li>
+        <strong>{{ option.us_name }}</strong>
+        <span *ngIf="option.completed">*</span>
+        <span *ngIf="option.archived">**</span>
+      </li>
+    </div>
+  </div>
+  <div class="footer-info">
+    <div>* Completed User Stories</div>
+    <div>** Deleted User Stories</div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="modal-content tausy-warning-modal">
+  <div class="modal-header">
+    <stb-modal-header
+      modalName="Confirm"
+      (close)="onNoClick()"
+    ></stb-modal-header>
+  </div>
+
+  <div class="content-message">
+    <p>
+      This section - <strong> {{ data.sectionName }} </strong> is linked between
+      following user stories
+    </p>
+    <span *ngFor="let option of data.options">
+      <li>
+        <strong>{{ option.us_name }}</strong>
+        <span *ngIf="option.completed">*</span>
+        <span *ngIf="option.archived">**</span>
+      </li>
+    </span>
+  </div>
+  <div class="footer-info">
+    <div>* Completed User Stories</div>
+    <div>** Deleted User Stories</div>
+  </div>
+  <div class="confirm-message">
+    <strong>Note:</strong> Any changes made to this section will be reflected in
+    other linked user stories as well. Do you wish to continue?
+  </div>
+  <div class="confirm-buttons">
+    <stb-button
+      class="tausy-warning-modal-yes-button"
+      btnStyle="raised"
+      (click)="onButtonSelected(true)"
+      btnName="Yes"
+      btnColor="primary"
+    ></stb-button>
+    <stb-button
+      btnStyle="raised"
+      (click)="onButtonSelected(false)"
+      btnName="No"
+      btnColor="accent"
+    ></stb-button>
+  </div>
+</div>

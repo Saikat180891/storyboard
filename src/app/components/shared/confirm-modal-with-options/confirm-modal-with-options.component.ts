@@ -3,20 +3,24 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 
 export interface DialogData {
   message: string;
+  options: any;
 }
 
 @Component({
-  selector: "app-confirm-modal",
-  templateUrl: "./confirm-modal.component.html",
-  styleUrls: ["./confirm-modal.component.scss"],
+  selector: "app-confirm-modal-with-options",
+  templateUrl: "./confirm-modal-with-options.component.html",
+  styleUrls: ["./confirm-modal-with-options.component.scss"],
 })
-export class ConfirmModalComponent {
+export class ConfirmModalWithOptionComponent {
   constructor(
-    public dialogRef: MatDialogRef<ConfirmModalComponent>,
+    public dialogRef: MatDialogRef<ConfirmModalWithOptionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 
   onButtonSelected(status: boolean): void {
     this.dialogRef.close(status);
+  }
+  onNoClick(): void {
+    this.dialogRef.close("cancel");
   }
 }

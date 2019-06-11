@@ -8,4 +8,7 @@ export interface SectionListItem {
   section_name: string;
   description?: string | null;
   steps_list: Array<Step>;
+  section_link?: boolean;
+  copy_list?: Array<any>;
+  linked_userstory_name?: Array<string>;
 }

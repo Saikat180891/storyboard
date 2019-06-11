@@ -11,4 +11,11 @@ export enum Role {
   ANALYST = "Analyst",
 }
 
+export enum Mode {
+  create = "create",
+  local = "local",
+  server = "server",
+  edit = "edit",
+}
+
 export const allRoles: Role[] = [Role.SUPER_ADMIN, Role.MANAGER, Role.ANALYST];

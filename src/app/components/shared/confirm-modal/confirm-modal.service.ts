@@ -8,7 +8,7 @@ import { ConfirmModalComponent } from "./confirm-modal.component";
 export class ConfirmModalService {
   constructor(private dialog: MatDialog) {}
 
-  private openDialog(message: string): Observable<boolean> {
+  private openDeleteDialog(message: string): Observable<boolean> {
     const dialogRef = this.dialog.open(ConfirmModalComponent, {
       width: "30rem",
       height: "15rem",
@@ -19,7 +19,7 @@ export class ConfirmModalService {
 
   //added a new callback method
   confirmDelete(message: string, onSuccess: Function, onFailure?: Function) {
-    this.openDialog(message).subscribe(result => {
+    this.openDeleteDialog(message).subscribe(result => {
       if (result) {
         onSuccess();
       } else {

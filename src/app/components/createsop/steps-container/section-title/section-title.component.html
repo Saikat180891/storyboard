@@ -1,5 +1,5 @@
 <div class="section">
-  <form class="section-header" title="Section name" [formGroup]="section">
+  <form class="section-header" [formGroup]="section">
     <div class="section-header-title tausy-section-name">
       <div *ngIf="isSectionNameEditable; else editTextBox">
         {{ section.value.section_name }}
@@ -30,6 +30,9 @@
     </div>
     <div class="section-header-options">
       <ng-container *ngIf="isSectionNameEditable; else editCreateSection">
+        <div class="common-option link-icon" *ngIf="section.value.section_link">
+          <i class="fas fa-link" (click)="openMessageDialog()"></i>
+        </div>
         <div
           class="common-option option-menu tausy-section-ellipsis"
           [matMenuTriggerFor]="menu"
@@ -107,6 +110,7 @@
                 [stepData]="step"
                 (attachmentDownload)="onAttachmentDownload($event)"
                 (attachmentDelete)="onAttachmentDelete($event)"
+                (refreshLink)="onRefreshLink()"
               ></app-steps-container>
             </div>
           </ng-container>
