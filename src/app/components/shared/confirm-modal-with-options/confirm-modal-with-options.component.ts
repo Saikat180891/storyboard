@@ -2,8 +2,8 @@ import { Component, HostListener, Inject, OnInit } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 
 export interface DialogData {
-  message: string;
-  options: any;
+  options: Array<any>;
+  sectionName: string;
 }
 
 @Component({

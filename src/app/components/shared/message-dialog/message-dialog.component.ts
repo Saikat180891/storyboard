@@ -1,6 +1,10 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
-import { DialogData } from "../file-attachment/file-attachment.component";
+
+export interface DialogData {
+  options: Array<any>;
+  sectionName: string;
+}
 
 @Component({
   selector: "app-message-dialog",
