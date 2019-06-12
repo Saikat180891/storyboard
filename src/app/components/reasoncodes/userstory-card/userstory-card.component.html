@@ -12,9 +12,21 @@
       <span>U/S#</span>
       <span class="tausy-user-story-number">{{ userStory.us_number }}</span>
       <span>Epic</span>
-      <span class="tausy-user-story-epic-name">{{
-        display(userStory.rc_name)
-      }}</span>
+      <span
+        class="wrap-content tausy-user-story-epic-name"
+        matTooltip="{{ userStory.rc_name }}"
+        matTooltipPosition="right"
+        *ngIf="
+          userStory.rc_name && userStory.rc_name.length > 12;
+          else smallEpicName
+        "
+        >{{ display(userStory.rc_name) }}
+      </span>
+      <ng-template #smallEpicName>
+        <span class="wrap-content tausy-user-story-epic-name">
+          {{ display(userStory.rc_name) }}
+        </span>
+      </ng-template>
     </div>
     <div class="col c12">
       <span>User Story Name</span>
@@ -23,7 +35,7 @@
         matTooltip="{{ userStory.us_name }}"
         matTooltipPosition="right"
         *ngIf="
-          userStory.us_name && userStory.us_name.length > 20;
+          userStory.us_name && userStory.us_name.length > 30;
           else smallUsName
         "
         >{{ display(userStory.us_name) }}</span
@@ -34,9 +46,21 @@
         }}</span>
       </ng-template>
       <span>Sprint Name</span>
-      <span class="tausy-user-story-sprint-name">{{
-        display(userStory.sprint_name)
-      }}</span>
+      <span
+        class="wrap-content tausy-user-story-sprint-name"
+        matTooltip="{{ userStory.sprint_name }}"
+        matTooltipPosition="right"
+        *ngIf="
+          userStory.sprint_name && userStory.sprint_name.length > 30;
+          else smallSprintName
+        "
+        >{{ display(userStory.sprint_name) }}</span
+      >
+      <ng-template #smallSprintName>
+        <span class="wrap-content tausy-user-story-sprint-name">{{
+          display(userStory.sprint_name)
+        }}</span>
+      </ng-template>
     </div>
   </div>
   <div class="box row r2">

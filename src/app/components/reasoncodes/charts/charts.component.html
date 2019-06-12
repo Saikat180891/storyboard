@@ -1,17 +1,24 @@
 <div class="container" #dimensionController>
   <div class="header">
-    <span
-      >{{ title }}
-      <span *ngIf="extras">-</span>
-      {{ getCurrentSprint() }}
-      <span
-        *ngIf="ifButtonRequired"
-        (click)="onButtonClick()"
-        class="extra-btn"
-      >
-        | View Details <i class="far fa-eye"></i
-      ></span>
+    <span>
+      {{ title }}
     </span>
+    <span *ngIf="extras">&nbsp;-&nbsp;</span>
+    <span
+      *ngIf="getCurrentSprint().length > 17; else normalSprintName"
+      class="wrap-content"
+      [ngStyle]="{ width: ifButtonRequired ? '30%' : '55%' }"
+      matTooltip="{{ getCurrentSprint() }}"
+      matTooltipPosition="right"
+    >
+      {{ getCurrentSprint() }}
+    </span>
+    <ng-template #normalSprintName>
+      <span> {{ getCurrentSprint() }}</span>
+    </ng-template>
+    <span *ngIf="ifButtonRequired" (click)="onButtonClick()" class="extra-btn">
+      &nbsp;&nbsp;| View Details <i class="far fa-eye"></i
+    ></span>
     <span *ngIf="selectedSprint"> ({{ selectedSprint }})</span>
   </div>
   <div class="option" *ngIf="data.length && projectStatus">

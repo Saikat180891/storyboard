@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bug-8120-empty string match while quering by removing beginning and trailing spaces.
 - Bug-8023-assignee options to show both username and email.
 - Prevent search query in case of empty strings.
+- Bug-8014-Epic and sprint names overflow boundaries
 
 ## 1.0.0 - 2019-05-31
 
