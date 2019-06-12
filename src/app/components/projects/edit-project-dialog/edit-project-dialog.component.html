@@ -143,13 +143,16 @@
                 (keyup)="onKeyPress($event)"
               />
               <div class="autocomplete" *ngIf="options">
-                <ng-container *ngFor="let option of options; let i = index">
-                  <span
-                    class="autocomplete-item tausy-project-autocomplete-elements"
-                    (click)="onSelect(option)"
-                    >{{ option.name ? option.name : option.email }}</span
-                  >
-                </ng-container>
+                <div
+                  *ngFor="let option of options"
+                  class="autocomplete-item"
+                  (click)="onSelect(option)"
+                >
+                  <span>{{ option.name ? option.name : "--" }}</span>
+                  <span class="autocomplete-item-desc">{{
+                    option.email ? option.email : "--"
+                  }}</span>
+                </div>
               </div>
             </ng-container>
             <!-- TODO this could be user-search-box.component -->

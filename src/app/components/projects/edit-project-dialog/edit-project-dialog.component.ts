@@ -195,14 +195,19 @@ export class EditProjectDialogComponent
     // Must explicitly declare event as any to access target.value
     // TODO this API call and the component that calls this function should
     // be separated out
-    this.dataService
-      .fetchData(`/users.json?startsWith=${event.target.value}`)
-      .subscribe(
+    const query = event.target.value.trim();
+    if (query.length) {
+      this.dataService.fetchData(`/users.json?startsWith=${query}`).subscribe(
         res => {
           this.options = res;
         },
-        err => {}
+        err => {
+          this.options = [];
+        }
       );
+    } else {
+      this.options = [];
+    }
   }
 
   /**

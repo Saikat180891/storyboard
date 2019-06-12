@@ -262,9 +262,14 @@ export class UserstoryCreateEditModalComponent implements OnInit {
   }
 
   onInputChange($event: string): void {
-    this.api
-      .getAssigneeList(this.data.projectId, $event)
-      .subscribe(assignees => (this.assigneeList = assignees));
+    const query = $event.trim();
+    if (query.length) {
+      this.api
+        .getAssigneeList(this.data.projectId, query)
+        .subscribe(assignees => (this.assigneeList = assignees));
+    } else {
+      this.assigneeList = [];
+    }
   }
 
   onDoneSelected($event: DropdownOptions): void {

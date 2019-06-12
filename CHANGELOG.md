@@ -16,9 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Display default value `0` for Input component of type number.
 - Added validation on character count of client name in project.
 - Added confirmation prompt on deletion of step.
+- Bug-8120-empty string match while quering by removing beginning and trailing spaces.
+- Bug-8023-assignee options to show both username and email.
+- Prevent search query in case of empty strings.
 
 ## 1.0.0 - 2019-05-31
 
 ### Added
+
+- `description` property to `AutocompleteOption` model
 
 - Changelog

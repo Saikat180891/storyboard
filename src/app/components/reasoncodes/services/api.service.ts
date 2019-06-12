@@ -103,6 +103,7 @@ export class ApiService {
           return {
             label: assignee.user,
             value: assignee.id,
+            description: assignee.email,
           };
         })
       )

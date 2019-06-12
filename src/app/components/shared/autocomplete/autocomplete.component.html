@@ -14,15 +14,25 @@
     autocomplete="off"
     #autocomplete
   />
-  <div
-    class="auto-complete-dropdown"
-    *ngIf="autocompleteOptions.length"
-    #autocompleteDropdown
-  >
-    <span
-      *ngFor="let autocompleteOption of autocompleteOptions"
-      (click)="onValueChange(autocompleteOption.value)"
-      >{{ autocompleteOption.label }}</span
+  <div style="position: relative">
+    <div
+      class="autocomplete-wrapper auto-complete-dropdown"
+      *ngIf="autocompleteOptions.length"
+      #autocompleteDropdown
     >
+      <div
+        *ngFor="let autocompleteOption of autocompleteOptions"
+        class="auto-complete-item"
+        (click)="onValueChange(autocompleteOption.value)"
+      >
+        <span>{{ autocompleteOption.label }}</span>
+        <span
+          *ngIf="autocompleteOption.description"
+          class="autocomplete-item-desc"
+        >
+          {{ autocompleteOption.description }}
+        </span>
+      </div>
+    </div>
   </div>
 </div>
