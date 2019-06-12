@@ -61,7 +61,7 @@ export class InputComponent implements ControlValueAccessor, OnInit {
   }
 
   writeValue(value: any): void {
-    this.value = value ? value : "";
+    this.value = value;
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;

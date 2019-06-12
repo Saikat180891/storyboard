@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Bug-8090-Not able to see epic/sprint box in create/edit userstory modal.
 - Auto-save current step on creating new section or step in another section.
+- Bug-8015-Validation for MAX_VALUE of dev hrs and benefits fields.
+- `NaN` and `Infinity` warning for productivity calculation in `userstory-create-edit-modal.component.ts`.
+- Display default value `0` for Input component of type number.
 - Added validation on character count of client name in project.
 - Added confirmation prompt on deletion of step.
 

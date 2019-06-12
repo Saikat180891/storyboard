@@ -96,8 +96,14 @@ export class UserstoryCreateEditModalComponent implements OnInit {
     epic: new FormControl("", Validators.required),
     sprint: new FormControl("", Validators.required),
     priority: new FormControl("", Validators.required),
-    devHrs: new FormControl(0),
-    benefits: new FormControl(0),
+    devHrs: new FormControl(
+      0,
+      Validators.compose([Validators.min(0), Validators.max(9999999.99)])
+    ),
+    benefits: new FormControl(
+      0,
+      Validators.compose([Validators.min(0), Validators.max(9999999.99)])
+    ),
     productivity: new FormControl(""),
     rulesApproved: new FormControl(false),
     verifiedTestCases: new FormControl(false),
@@ -245,11 +251,14 @@ export class UserstoryCreateEditModalComponent implements OnInit {
     };
   }
 
+  /**
+   * Calculate Productivity if valid dev hrs and benefits are provided
+   */
   onCalculateProductivity(): void {
-    this.productivity = (
+    const value =
       parseFloat(this.userstoryForm.value.benefits) /
-      parseFloat(this.userstoryForm.value.devHrs)
-    ).toFixed(1);
+      parseFloat(this.userstoryForm.value.devHrs);
+    this.productivity = Number.isFinite(value) ? value.toFixed(1) : null;
   }
 
   onInputChange($event: string): void {
