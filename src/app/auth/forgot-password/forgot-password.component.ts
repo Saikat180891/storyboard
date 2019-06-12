@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { SharedService } from "../../services/shared-services/shared.service";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AuthGuardService } from "../auth-guard.service";
 
 @Component({
@@ -8,38 +8,38 @@ import { AuthGuardService } from "../auth-guard.service";
   styleUrls: ["./forgot-password.component.scss"],
 })
 export class ForgotPasswordComponent implements OnInit {
-  constructor(
-    private authService: AuthGuardService,
-    private sharedService: SharedService
-  ) {}
+  constructor(private authService: AuthGuardService) {}
 
-  email: string;
-  password: string;
+  forgotPasswordForm = new FormGroup({
+    email: new FormControl(
+      "",
+      Validators.compose([Validators.required, Validators.email])
+    ),
+  });
   errorMessage: string = "";
-  emailNotRegistered: boolean = false;
-  forgotPasswordEmailSent: boolean = false;
 
   ngOnInit() {}
 
   forgotPassword() {
-    const payLoad = { email: this.email };
-    if (this.email) {
+    const payLoad = { email: this.forgotPasswordForm.get("email").value };
+    if (this.forgotPasswordForm.valid) {
       this.errorMessage = "";
       this.authService.forgotPasswordUser(payLoad).subscribe(
         res => {
           if (res) {
-            this.forgotPasswordEmailSent = true;
+            this.errorMessage = "Email has been sent to the provided email id";
           }
         },
         err => {
-          this.sharedService.raiseError(err);
-          this.emailNotRegistered = true;
+          if (err.error.detail) {
+            this.errorMessage = err.error.detail;
+          } else {
+            this.errorMessage = "Could not send email to user.";
+          }
         }
       );
     } else {
-      this.errorMessage = "Please Enter the email ID";
-      this.forgotPasswordEmailSent = false;
-      this.emailNotRegistered = false;
+      this.errorMessage = "Please Enter a valid Email ID";
     }
   }
 }
